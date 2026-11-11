@@ -8,8 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Desk">
-<meta name="theme-color" content="#F7E6C4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1C1E3A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F2F9F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#051F20" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -467,6 +467,80 @@ body,.drawer,.ditem,.ditem small,.prof span,.pl,.prof .btn.ghost,.dnav .sh,.r-t,
 .ditem{letter-spacing:-.01em}
 .c-lab,.sh,.s-l{font-family:"Inter",-apple-system,system-ui,sans-serif;letter-spacing:.08em;font-weight:700}
 @media (prefers-color-scheme:dark){mark{background:#6D324F!important}}
+
+/* ==========================================================================
+   Green theme, subtle and clean — overrides the capsule colours above (shapes stay).
+   Palette: #051F20 · #0B2B26 · #163832 · #235347 · #8EB69B · #DAF1DE
+   ========================================================================== */
+:root{
+  --bg:#F2F9F3;--surface:#FFFFFF;--surface-2:#E3F2E6;--line:#CFE5D5;--sep:rgba(11,43,38,.10);--bar:rgba(242,249,243,.9);
+  --fg:#0B2B26;--fg-2:#163832;--fg-3:#56766A;--scrim:rgba(5,31,32,.35);
+  --accent:#235347;--accent-soft:#DAF1DE;--label:#163832;--on-label:#DAF1DE;--ring:#235347;--on-ring:#DAF1DE;
+  --good:#2f6b4f;--good-soft:#d8efdf;--warn:#8a5a14;--warn-soft:#f6ead2;--danger:#9b3b3b;
+  --tile-shadow:0 6px 14px -10px rgba(5,31,32,.35),0 1px 2px rgba(5,31,32,.06);
+  --tile-bevel:inset 0 1px 0 rgba(255,255,255,.6);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#051F20;--surface:#0B2B26;--surface-2:#163832;--line:#235347;--sep:rgba(218,241,222,.10);--bar:rgba(5,31,32,.9);
+  --fg:#DAF1DE;--fg-2:#B7D6BF;--fg-3:#8EB69B;--scrim:rgba(0,0,0,.55);
+  --accent:#8EB69B;--accent-soft:#163832;--label:#8EB69B;--on-label:#051F20;--ring:#8EB69B;--on-ring:#051F20;
+  --good:#9fd3ae;--good-soft:#173a2c;--warn:#e8c27a;--warn-soft:#3a3018;--danger:#f0a3a3;
+  --tile-shadow:0 8px 16px -10px rgba(0,0,0,.7);--tile-bevel:inset 0 1px 0 rgba(218,241,222,.06);
+}}
+.card,.group,.stat,.calbox,.dcard,.ngame,.tblwrap{box-shadow:var(--tile-shadow)!important;border:1px solid var(--sep)}
+.hero{background:linear-gradient(135deg,#163832,#235347)!important;color:#DAF1DE!important;border:0}
+.hero .c-lab,.hero .c-s,.hero .c-m{color:#DAF1DE!important}
+.stats .stat,.stats .stat:nth-child(n){background:var(--surface-2)!important;color:var(--fg)!important;box-shadow:none!important;border:0}
+.stats .stat .s-l,.stats .stat .s-m{color:var(--fg-3)!important;opacity:1}
+.stats .stat .pill{background:var(--surface);color:var(--accent)}
+.btn{box-shadow:0 4px 10px -6px rgba(5,31,32,.35)}
+.btn.ghost{background:var(--accent-soft);color:var(--accent)}
+.lt{box-shadow:none}
+/* menu: quiet tiles, only the current one is filled */
+.drawer{background:linear-gradient(180deg,var(--bg),var(--bg))!important}
+.prof{background:linear-gradient(140deg,#0B2B26,#235347)!important;box-shadow:var(--tile-shadow)!important}
+.prof::before{background:linear-gradient(90deg,#051F20,#0B2B26,#163832,#235347,#8EB69B,#DAF1DE)!important}
+.prof .av{background:#8EB69B!important;color:#051F20!important}
+.pl svg{stroke:#8EB69B!important}
+.ditem,.ditem[data-tab]{--tf:var(--surface);--ti:var(--fg-2);background:var(--surface)!important;color:var(--fg-2)!important;font-weight:600!important;box-shadow:var(--tile-shadow)!important;border:1px solid var(--sep)!important}
+.ditem svg,.ditem[data-tab] svg{background:var(--surface-2)!important;color:var(--accent)!important}
+.ditem small{background:var(--surface-2)!important;color:var(--accent)!important}
+.ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#235347!important;color:#DAF1DE!important;font-weight:800!important;border-color:transparent!important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.7),0 0 0 6px rgba(142,182,155,.35),0 8px 18px -10px rgba(5,31,32,.5)!important}
+@media (prefers-color-scheme:dark){.ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#8EB69B!important;color:#051F20!important;box-shadow:0 0 0 3px rgba(218,241,222,.25),0 0 0 6px rgba(142,182,155,.18),0 8px 18px -10px rgba(0,0,0,.7)!important}}
+.ditem[aria-current="page"] svg,.ditem[aria-current="page"] small{background:rgba(255,255,255,.22)!important;color:inherit!important}
+.avbtn{background:#163832;color:#DAF1DE;box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #8EB69B}
+mark{background:#DAF1DE!important}
+@media (prefers-color-scheme:dark){mark{background:#235347!important}}
+
+/* lighter, softer: fewer heavy weights and dark blocks */
+.lt{background:var(--accent-soft)!important;color:var(--fg)!important;font-weight:600!important;font-size:30px!important;padding:7px 18px 5px!important}
+.nb-t{font-weight:600}
+.c-big{font-weight:600!important;font-size:26px!important}
+.c-t{font-weight:600!important}
+.s-n{font-weight:600!important}
+.c-lab,.sh,.s-l{font-weight:600!important}
+.btn{font-weight:600!important}
+.r-t{font-weight:400}
+.ditem,.ditem[data-tab]{font-weight:500!important}
+.ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{font-weight:600!important;transform:none!important;background:#DAF1DE!important;color:#0B2B26!important;
+  box-shadow:0 0 0 2px rgba(255,255,255,.9),0 0 0 4px rgba(142,182,155,.35),0 6px 14px -10px rgba(5,31,32,.35)!important}
+.ditem[aria-current="page"] svg{background:#FFFFFF!important;color:#235347!important}
+.ditem[aria-current="page"] small{background:#FFFFFF!important;color:#235347!important}
+.ditem[aria-current="page"]::after{opacity:.6}
+.hero{background:linear-gradient(135deg,#DAF1DE,#C9E6D1)!important;color:#0B2B26!important;box-shadow:var(--tile-shadow)!important}
+.hero .c-lab,.hero .c-s,.hero .c-m{color:#235347!important}
+.hero .c-big{color:#0B2B26!important}
+.prof{background:linear-gradient(140deg,#163832,#235347)!important}
+.prof b{font-weight:500!important}
+@media (prefers-color-scheme:dark){
+  .lt{background:#163832!important;color:#DAF1DE!important}
+  .hero{background:linear-gradient(135deg,#163832,#1B4339)!important;color:#DAF1DE!important}
+  .hero .c-lab,.hero .c-s,.hero .c-m{color:#8EB69B!important}.hero .c-big{color:#DAF1DE!important}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#235347!important;color:#DAF1DE!important;box-shadow:0 0 0 2px rgba(218,241,222,.22),0 0 0 4px rgba(142,182,155,.15),0 6px 14px -10px rgba(0,0,0,.7)!important}
+  .ditem[aria-current="page"] svg,.ditem[aria-current="page"] small{background:rgba(218,241,222,.14)!important;color:#DAF1DE!important}
+  .prof{background:linear-gradient(140deg,#0B2B26,#163832)!important}
+}
 </style>
 </head>
 <body data-sec="today">
@@ -488,7 +562,7 @@ body,.drawer,.ditem,.ditem small,.prof span,.pl,.prof .btn.ghost,.dnav .sh,.r-t,
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.6 · Inter';
+const APP_VERSION = '3.7 · green soft';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
