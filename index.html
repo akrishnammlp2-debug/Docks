@@ -256,6 +256,32 @@ body.locked .dock{transform:translate(-50%,160%)}
 .sbar input:focus{box-shadow:inset 0 0 0 2px var(--accent)}
 #s-res{display:flex;flex-direction:column;gap:16px;min-height:60vh}
 mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
+/* OT table: every column kept, scrolls sideways; tick + procedure pinned left */
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;background:var(--surface);border-radius:12px}
+.otbl{border-collapse:separate;border-spacing:0;min-width:100%;font-size:15px}
+.otbl th,.otbl td{padding:11px 12px;text-align:left;vertical-align:top;white-space:nowrap;border-bottom:.5px solid var(--sep);background:var(--surface)}
+.otbl thead th{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);border-bottom:1px solid var(--line);padding-block:9px}
+.otbl tbody tr:last-child>*{border-bottom:0}
+.otbl .c-tick{position:sticky;left:0;z-index:2;width:50px;min-width:50px;padding:9px 6px 9px 12px}
+.otbl .c-proc{position:sticky;left:50px;z-index:2;min-width:150px;max-width:190px;white-space:normal;font-weight:600;box-shadow:8px 0 8px -8px rgba(0,0,0,.35)}
+.otbl .c-proc button{text-align:left;font-weight:600}
+.otbl .c-wrap{white-space:normal;min-width:150px;max-width:230px}
+.otbl .c-mono{font-family:var(--font-mono);font-size:13px}
+.otbl tr.done>*{background:var(--good-soft)}
+.otbl tr.done .c-proc button{text-decoration:line-through;color:var(--fg-3)}
+.prog-row{display:flex;align-items:center;gap:16px}
+.prog-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ring{position:relative;width:var(--sz);height:var(--sz);flex:none}
+.ring svg{width:100%;height:100%;display:block}
+.ring:not(.smile) svg{transform:rotate(-90deg)}
+.rg-tr{fill:none;stroke:var(--surface-2);stroke-width:7}
+.rg-fg{fill:none;stroke:var(--label);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.2,.9,.25,1)}
+.rg-v{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:calc(var(--sz)*.3);color:var(--fg);font-variant-numeric:tabular-nums}
+.rg-v small{font-size:.55em;margin-left:1px}
+.sm-face{fill:var(--label)}.sm-eye{fill:var(--on-label)}.sm-mouth{fill:none;stroke:var(--on-label);stroke-width:3.6;stroke-linecap:round}
+@keyframes smilepop{0%{transform:scale(.3) rotate(-25deg);opacity:0}70%{transform:scale(1.12) rotate(4deg);opacity:1}100%{transform:none}}
+.ring.smile.anim svg{animation:smilepop .6s cubic-bezier(.2,.9,.25,1)}
+@media (prefers-reduced-motion:reduce){.rg-fg{transition:none}.ring.smile.anim svg{animation:none}}
 @media (min-width:560px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.dc-g{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (min-width:900px){
   :root{--side:300px}
@@ -294,7 +320,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.5 · private sync';
+const APP_VERSION = '2.6 · OT table';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -408,7 +434,13 @@ const OTL = () => (D.ot && D.ot.items) || [];
 const ROSTER = () => (state.private && state.private.roster && state.private.roster.days) || [];
 const RCOLS = () => (state.private && state.private.roster && state.private.roster.cols) || [];
 const presenters = k => (state.private && state.private.presenters && state.private.presenters[k]) || '';
-const otName = id => (state.private && state.private.ot && state.private.ot[id]) || '';
+function otInfo(id) {
+  const v = state.private && state.private.ot && state.private.ot[id];
+  if (!v) return {};
+  if (typeof v === 'string') { const p = v.split(' · '); return { patient: p[0] || '', age: p[1] || '', uhid: p[2] || '' }; }
+  return v;
+}
+const otName = id => { const i = otInfo(id); return [i.patient, i.age, i.uhid].filter(Boolean).join(' · '); };
 const caseUhid = n => (state.private && state.private.cases && state.private.cases[n]) || '';
 
 /* ---------- roster helpers ---------- */
@@ -508,7 +540,7 @@ function pageToday() {
   const od = otDefaultDay();
   if (od) {
     const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length;
-    h += `<button class="card" type="button" data-act="goto" data-tab="ot" style="--c:var(--i-ot)"><div class="c-top"><span class="c-lab">OT list · ${relDay(od)}</span>${CHEV}</div><span class="c-t">${n} of ${plural(rows.length, 'case')} ticked</span><div class="track"><div class="fill" style="width:${rows.length ? n / rows.length * 100 : 0}%;background:var(--f-ot)"></div></div></button>`;
+    h += `<button class="card" type="button" data-act="goto" data-tab="ot" style="--c:var(--i-ot);--label:var(--f-ot);--on-label:#121316"><div class="prog-row">${ring(n, rows.length, 56, 'today-' + od)}<div class="prog-txt"><span class="c-lab">OT list · ${relDay(od)}</span><span class="c-t">${n === rows.length && n ? 'All done' : n + ' of ' + plural(rows.length, 'case') + ' ticked'}</span></div>${CHEV}</div></button>`;
   }
   const items = itemsFor(t);
   const open = state.todos.filter(x => !x.done).length;
@@ -592,17 +624,37 @@ function pageCalendar() {
 function otDates() { return [...new Set(OTL().map(r => r.date))].sort(); }
 function otRows(d) { return OTL().filter(r => r.date === d).sort((a, b) => (a.time || '').localeCompare(b.time || '') || (a.order || 0) - (b.order || 0)); }
 function otDefaultDay() { const ds = otDates(); return ds.find(d => d >= today()) || ds[ds.length - 1] || null; }
+let otJustDone = null;
+function ring(done, total, size, key) {
+  const pct = total ? Math.round(done / total * 100) : 0;
+  if (total && done >= total) return `<div class="ring smile${otJustDone === key ? ' anim' : ''}" style="--sz:${size}px" role="img" aria-label="All done"><svg viewBox="0 0 72 72"><circle class="sm-face" cx="36" cy="36" r="33"/><circle class="sm-eye" cx="25" cy="29" r="4.2"/><circle class="sm-eye" cx="47" cy="29" r="4.2"/><path class="sm-mouth" d="M22 42 Q36 56 50 42"/></svg></div>`;
+  const C = 2 * Math.PI * 30;
+  return `<div class="ring" style="--sz:${size}px" role="img" aria-label="${pct} percent done"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - pct / 100)).toFixed(1)}"/></svg><span class="rg-v">${pct}<small>%</small></span></div>`;
+}
+/* Columns: public fields from data/ot.json + private fields opened on this phone. Any column with a value in any row is shown. */
+const OT_COLS = [['time', 'Time'], ['ot', 'OT'], ['patient', 'Patient', 'p'], ['age', 'Age / sex', 'p'], ['uhid', 'Hospital no.', 'p'], ['ward', 'Ward / bed', 'p'], ['unit', 'Unit'], ['payer', 'Payer', 'p'], ['status', 'Status'], ['notes', 'Notes']];
+const OT_SKIP = new Set(['id', 'date', 'order', 'procedure']);
+function otTable(rows) {
+  const full = rows.map(r => ({ ...r, ...otInfo(r.id) }));
+  const has = k => full.some(r => r[k] != null && String(r[k]).trim() !== '');
+  const cols = OT_COLS.filter(c => has(c[0]));
+  full.forEach(r => Object.keys(r).forEach(k => { if (!OT_SKIP.has(k) && !cols.some(c => c[0] === k) && (typeof r[k] === 'string' || typeof r[k] === 'number') && String(r[k]).trim()) cols.push([k, k.replace(/[_-]+/g, ' ').replace(/^./, x => x.toUpperCase())]); }));
+  const wide = new Set(['notes', 'payer', 'patient']);
+  return `<div class="tblwrap"><table class="otbl"><thead><tr><th class="c-tick"><span class="muted">✓</span></th><th class="c-proc">Procedure</th>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
+    const on = !!state.otDone[r.id];
+    return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
+  }).join('')}</tbody></table></div>`;
+}
 function pageOt() {
   const ds = otDates(); if (!otDay || !ds.includes(otDay)) otDay = otDefaultDay();
   let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics');
-  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list (photo or text). It's added to the data folder and shows up here.</span></div>`;
+  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list (photo or text). It's added to Docks and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
-  const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length;
-  h += `<div class="card"><div class="c-top"><span class="c-lab">Progress</span><span class="c-m">${n} of ${rows.length}</span></div><div class="track"><div class="fill" style="width:${rows.length ? n / rows.length * 100 : 0}%"></div></div></div>`;
-  h += `<div class="group">${rows.map(r => { const on = !!state.otDone[r.id];
-    return `<button class="row${on ? ' done' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}"><span class="check${on ? ' on' : ''}"></span><span class="r-time">${esc(r.time || '')}</span><span class="r-main"><span class="r-t">${esc(r.procedure)}</span>${otName(r.id) ? `<span class="r-s" style="color:var(--fg-2);font-weight:600">${esc(otName(r.id))}</span>` : ''}<span class="r-s">${esc([r.ot, r.unit && 'Unit ' + r.unit, r.notes].filter(Boolean).join(' · '))}</span></span></button>`; }).join('')}</div>`;
-  const named = rows.filter(r => otName(r.id)).length;
-  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient names are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient names here. On the website they only exist locked.'}</p>`;
+  const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
+  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
+  h += `<div class="sec"><h2 class="sh"><span>Cases</span><span>Scroll sideways for all columns →</span></h2>${otTable(rows)}</div>`;
+  const named = rows.some(r => otInfo(r.id).patient);
+  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient details are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient details here. On the website they only exist locked.'}</p>`;
 }
 
 function pageRoster() {
@@ -838,7 +890,7 @@ function renderSearch(q) {
   SCHED().forEach(x => { if (hit(x.session, x.topic, presenters(x.date), dShort(x.date), MONTHS[+x.date.slice(5, 7) - 1])) { const id = reg({ date: x.date, kind: x.kind, title: x.session, topic: x.topic, who: presenters(x.date), src: 'Department program' }); acad.push([x.date, row(`data-act="item" data-id="${id}"`, x.session + (x.topic ? ': ' + x.topic : ''), [presenters(x.date)].filter(Boolean).join(''), dShort(x.date))]); } });
   state.events.forEach(e => { if (hit(e.text, (KINDS[e.kind] || {}).label, dShort(e.date))) { const id = reg({ date: e.date, kind: e.kind, title: e.text, evId: e.id }); acad.push([e.date, row(`data-act="item" data-id="${id}"`, e.text, 'Your entry · ' + (KINDS[e.kind] || KINDS.acad).label, dShort(e.date))]); } });
   add('Academics', acad.sort((a, b) => a[0].localeCompare(b[0])).map(x => x[1]));
-  add('OT list', OTL().filter(r => hit(r.procedure, r.ot, r.unit, r.notes, otName(r.id), r.time))
+  add('OT list', OTL().filter(r => { const i = otInfo(r.id); return hit(r.procedure, r.ot, r.unit, r.notes, r.status, r.time, i.patient, i.age, i.uhid, i.ward, i.payer); })
     .map(r => row(`data-act="sres-ot" data-d="${r.date}"`, r.procedure, [otName(r.id), r.ot, r.time].filter(Boolean).join(' · '), dShort(r.date))));
   add('SLCM cases', CASES().filter(c => hit(c.procedure, c.specialty, c.consultant, c.or, c.plan, c.type, caseUhid(c.n), '#' + c.n))
     .map(c => row(`data-act="case" data-n="${c.n}"`, c.procedure, ['#' + c.n, c.specialty, c.consultant, caseUhid(c.n)].filter(Boolean).join(' · '), dShort(c.date))));
@@ -879,7 +931,13 @@ document.addEventListener('click', e => {
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
-    case 'ot-tick': if (state.otDone[id]) delete state.otDone[id]; else state.otDone[id] = nowISO(); commit(); break;
+    case 'ot-tick': {
+      const day = (OTL().find(r => r.id === id) || {}).date; const rows = otRows(day);
+      const before = rows.filter(r => state.otDone[r.id]).length;
+      if (state.otDone[id]) delete state.otDone[id]; else state.otDone[id] = nowISO();
+      const after = rows.filter(r => state.otDone[r.id]).length;
+      otJustDone = (after === rows.length && before < rows.length) ? day : null;
+      commit(otJustDone ? 'All cases done 🎉' : null); otJustDone = null; break; }
     case 'del-event': {
       const idx = state.events.findIndex(x => x.id === id); if (idx < 0) return; const [rm] = state.events.splice(idx, 1);
       closeSheet(); commit('Entry deleted', () => { state.events.splice(idx, 0, rm); commit(); }); break; }
