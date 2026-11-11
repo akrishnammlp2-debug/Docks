@@ -543,6 +543,21 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.bk{padding:0;overflow:hidden}
+.bk-head{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;text-align:left;color:var(--fg)}
+.bk-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.bk-info b{font-weight:600;font-size:16px;line-height:1.25}
+.bk-info small{font-size:12.5px;color:var(--fg-3)}
+.bk-info span{font-size:13.5px;color:var(--fg-2)}
+.bk-chev{color:var(--fg-3);transition:transform .2s;transform:rotate(90deg);display:flex}
+.bk-chev.up{transform:rotate(-90deg)}
+.bk-list{border-top:1px solid var(--line);padding:4px 8px 10px;display:flex;flex-direction:column}
+.bk-part{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);padding:12px 8px 4px}
+.bk-row{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:12px;text-align:left;color:var(--fg);min-height:44px}
+.bk-row .check{flex:none}
+.bk-n{font-size:12.5px;color:var(--fg-3);min-width:22px;font-variant-numeric:tabular-nums}
+.bk-t{font-size:14.5px;line-height:1.3}
+.bk-row.done .bk-t{color:var(--fg-3);text-decoration:line-through;text-decoration-color:var(--line)}
 .readc{gap:8px}
 .read-i{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:var(--surface-2);color:var(--fg);text-decoration:none}
 .read-i b{font-weight:600;font-size:15px;line-height:1.3}
@@ -575,9 +590,9 @@ mark{background:#DAF1DE!important}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.9 · green';
+const APP_VERSION = '4.0 · books';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -629,7 +644,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -637,7 +652,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, sync: s.sync || null, active: s.active || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, sync: s.sync || null, active: s.active || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -689,6 +704,23 @@ async function loadData(manual) {
 const CASES = () => (D.cases && D.cases.items) || [];
 const SCHED = () => (D.schedule && D.schedule.items) || [];
 const SESSION_TIME = () => (D.schedule && D.schedule.sessionTime) || '';
+const BOOKS = () => (D.books && D.books.books) || [];
+let bookOpen = null;
+function bookStats(b) { const n = b.chapters.length; const d = b.chapters.filter(c => state.bookDone[b.id + '|' + c.n]).length; return { n, d }; }
+function booksSection() {
+  const B = BOOKS();
+  let h = `<div class="sec"><h2 class="sh">Textbooks</h2>`;
+  if (!B.length) return h + `<div class="card"><span class="c-s">Tell Claude which textbook (and edition) you're reading. Its chapters show up here for you to tick off as you finish them.</span></div></div>`;
+  h += B.map(b => { const x = bookStats(b); const open = bookOpen === b.id;
+    let parts = '', last = null;
+    const rows = b.chapters.map(c => { const k = b.id + '|' + c.n; const on = !!state.bookDone[k];
+      let ph = ''; if (c.part && c.part !== last) { last = c.part; ph = `<div class="bk-part">${esc(c.part)}</div>`; }
+      return ph + `<button class="bk-row${on ? ' done' : ''}" type="button" data-act="book-tick" data-id="${esc(k)}"><span class="check${on ? ' on' : ''}" aria-hidden="true"></span><span class="bk-n">${esc(String(c.n))}</span><span class="bk-t">${esc(c.title)}</span></button>`; }).join('');
+    const next = b.chapters.find(c => !state.bookDone[b.id + '|' + c.n]);
+    return `<div class="card bk"><button class="bk-head" type="button" data-act="book-open" data-id="${esc(b.id)}">${ring(x.d, x.n, 56, 'bk-' + b.id)}<span class="bk-info"><b>${esc(b.title)}</b><small>${esc([b.edition, b.authors].filter(Boolean).join(' · '))}</small><span>${x.d} of ${x.n} chapters done${next && !open ? ' · next: ' + esc(next.title) : ''}</span></span><span class="bk-chev${open ? ' up' : ''}">${CHEV}</span></button>${open ? `<div class="bk-list">${rows}</div>` : ''}</div>`;
+  }).join('');
+  return h + `</div>`;
+}
 const OTL = () => (D.ot && D.ot.items) || [];
 const ROSTER = () => (state.private && state.private.roster && state.private.roster.days) || [];
 const RCOLS = () => (state.private && state.private.roster && state.private.roster.cols) || [];
@@ -847,6 +879,7 @@ function pageStudy() {
   const W = state.log.filter(l => dayOf(l.date) >= wk);
   let h = head('Study', `${plural(state.topics.length, 'topic')}${state.settings.revisionsOn ? ' · ' + due.length + ' ready to revise' : ''}`);
   h += timerCard();
+  h += booksSection();
   if (state.topics.length) {
     h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
       <div class="stats wk3" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Time', fmtMins(W.reduce((a, l) => a + (+l.mins || 0), 0)), '')}${stat('Sessions', W.length, '')}${stat('Topics', new Set(W.map(l => l.topicId)).size, '')}</div>
@@ -1458,6 +1491,14 @@ document.addEventListener('click', e => {
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
+    case 'book-open': bookOpen = bookOpen === id ? null : id; render(); break;
+    case 'book-tick': {
+      const bid = id.split('|')[0]; const b = BOOKS().find(x => x.id === bid);
+      const before = b ? bookStats(b).d : 0;
+      if (state.bookDone[id]) delete state.bookDone[id]; else state.bookDone[id] = nowISO();
+      const all = b && bookStats(b).d === b.chapters.length && before < b.chapters.length;
+      if (all) otJustDone = 'bk-' + bid;
+      commit(all ? 'Book finished 🎉' : null); otJustDone = null; break; }
     case 'ot-tick': {
       const day = (OTL().find(r => r.id === id) || {}).date; const rows = otRows(day);
       const before = rows.filter(r => state.otDone[r.id]).length;
@@ -1602,7 +1643,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
