@@ -1,26 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<rect width="512" height="512" fill="#121316"/>
-<path d="M70 150 h130 l26 30 h216 a16 16 0 0 1 16 16 v40 h-404 v-70 a16 16 0 0 1 16-16z" fill="#0b6d97"/>
-<g transform="rotate(-8 170 250)"><rect x="100" y="150" width="140" height="190" rx="10" fill="#f1f2f4"/><path d="M124 186h92M124 214h92M124 242h60" stroke="#b8bcc4" stroke-width="10" stroke-linecap="round"/></g>
-<g transform="rotate(9 350 250)"><rect x="282" y="148" width="140" height="190" rx="10" fill="#fff"/><path d="M306 184h92M306 212h92M306 240h70" stroke="#b8bcc4" stroke-width="10" stroke-linecap="round"/></g>
-<g fill="#e4c29c"><circle cx="350.0" cy="234.0" r="27"/><circle cx="346.2" cy="257.1" r="27"/><circle cx="335.1" cy="278.3" r="27"/><circle cx="317.6" cy="296.0" r="27"/><circle cx="295.0" cy="308.6" r="27"/><circle cx="269.4" cy="315.2" r="27"/><circle cx="242.6" cy="315.2" r="27"/><circle cx="217.0" cy="308.6" r="27"/><circle cx="194.4" cy="296.0" r="27"/><circle cx="176.9" cy="278.3" r="27"/><circle cx="165.8" cy="257.1" r="27"/><circle cx="162.0" cy="234.0" r="27"/><circle cx="165.8" cy="210.9" r="27"/><circle cx="176.9" cy="189.7" r="27"/><circle cx="194.4" cy="172.0" r="27"/><circle cx="217.0" cy="159.4" r="27"/><circle cx="242.6" cy="152.8" r="27"/><circle cx="269.4" cy="152.8" r="27"/><circle cx="295.0" cy="159.4" r="27"/><circle cx="317.6" cy="172.0" r="27"/><circle cx="335.1" cy="189.7" r="27"/><circle cx="346.2" cy="210.9" r="27"/><ellipse cx="256" cy="234" rx="96" ry="84"/><circle cx="176" cy="288" r="20"/><circle cx="199" cy="294" r="20"/><circle cx="222" cy="288" r="20"/><circle cx="245" cy="294" r="20"/><circle cx="268" cy="288" r="20"/><circle cx="291" cy="294" r="20"/><circle cx="314" cy="288" r="20"/><circle cx="337" cy="294" r="20"/></g>
-<path d="M162 250 l-22 6 l20 10 l-16 10 l24 2 Z M350 250 l22 6 l-20 10 l16 10 l-24 2 Z" fill="#e4c29c"/>
-<path d="M170 176 L176 92 L232 140 Z M342 176 L336 92 L280 140 Z" fill="#cfa47a" stroke="#cfa47a" stroke-width="14" stroke-linejoin="round"/>
-<path d="M184 160 L187 112 L218 140 Z M328 160 L325 112 L294 140 Z" fill="#e2a993"/>
-<path d="M190 150 l-6 -14 M199 146 l-3 -15 M322 150 l6 -14 M313 146 l3 -15" stroke="#fbeee0" stroke-width="3" stroke-linecap="round"/>
-<ellipse cx="256" cy="168" rx="60" ry="26" fill="#cfa47a" opacity=".55"/>
-<ellipse cx="256" cy="268" rx="44" ry="30" fill="#f5e3c8"/>
-<ellipse cx="256" cy="300" rx="70" ry="22" fill="#f5e3c8"/>
-<circle cx="216" cy="228" r="21" fill="#a06a2e"/><circle cx="296" cy="228" r="21" fill="#a06a2e"/>
-<circle cx="216" cy="229" r="12" fill="#1a1410"/><circle cx="296" cy="229" r="12" fill="#1a1410"/>
-<circle cx="223" cy="220" r="5.5" fill="#fff"/><circle cx="303" cy="220" r="5.5" fill="#fff"/>
-<path d="M249 250 h14 a3 3 0 0 1 2 5 l-7 7 a3 3 0 0 1 -4 0 l-7 -7 a3 3 0 0 1 2 -5z" fill="#c98577"/>
-<path d="M256 262 v5 q-7 7 -14 2 M256 267 q7 7 14 2" fill="none" stroke="#b4875e" stroke-width="3.5" stroke-linecap="round"/>
-<path d="M226 262 h-36 M226 270 l-32 7 M286 262 h36 M286 270 l32 7" stroke="#fffaf2" stroke-width="2.5" stroke-linecap="round" opacity=".95"/>
-<rect x="54" y="310" width="404" height="168" rx="18" fill="#14a5e2"/>
-<rect x="146" y="358" width="220" height="68" rx="12" fill="#fff"/><text x="256" y="408" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="50" letter-spacing="4" fill="#121316">DOCKS</text>
-<g fill="#f5e3c8"><ellipse cx="240" cy="318" rx="34" ry="17"/><circle cx="222" cy="314" r="13"/><circle cx="240" cy="310" r="14"/><circle cx="258" cy="314" r="13"/></g>
-<g fill="#e4c29c"><ellipse cx="272" cy="321" rx="34" ry="17"/><circle cx="254" cy="317" r="13"/><circle cx="272" cy="313" r="14"/><circle cx="290" cy="317" r="13"/></g>
-<path d="M263 313 v10 M281 313 v10" stroke="#b4875e" stroke-width="3" stroke-linecap="round"/>
-<text x="384" y="132" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="44" fill="#ffd400">z</text><text x="418" y="96" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="30" fill="#ffd400">z</text>
+<rect width="512" height="512" fill="#ece9e2"/>
+<rect x="96" y="318" width="320" height="150" rx="16" fill="#14a5e2"/>
+<rect x="86" y="300" width="340" height="34" rx="10" fill="#0b6d97"/>
+<text x="256" y="408" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="46" letter-spacing="4" fill="#0a5577">DOCKS</text>
+<g transform="rotate(-6 300 296)"><rect x="236" y="284" width="120" height="20" rx="4" fill="#fff"/></g>
+<path d="M330 300 C 380 300 392 250 360 230 C 344 220 330 236 344 244" fill="none" stroke="#121316" stroke-width="18" stroke-linecap="round"/>
+<path d="M190 300 C 186 240 210 196 256 196 C 302 196 326 240 322 300 Z" fill="#121316"/>
+<path d="M196 150 L200 84 Q203 76 210 81 L244 112 Z M316 150 L312 84 Q309 76 302 81 L268 112 Z" fill="#121316"/>
+<circle cx="256" cy="158" r="64" fill="#121316"/>
+<circle cx="230" cy="160" r="14" fill="#ffd400"/><circle cx="282" cy="160" r="14" fill="#ffd400"/>
+<circle cx="230" cy="161" r="6" fill="#121316"/><circle cx="282" cy="161" r="6" fill="#121316"/>
+<circle cx="233" cy="156" r="2.5" fill="#fff"/><circle cx="285" cy="156" r="2.5" fill="#fff"/>
+<path d="M251 184 h10 l-5 6 z" fill="#f9a08f"/>
+<ellipse cx="232" cy="300" rx="20" ry="11" fill="#121316"/><ellipse cx="280" cy="300" rx="20" ry="11" fill="#121316"/>
 </svg>
