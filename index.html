@@ -225,7 +225,18 @@ body.locked .dock{transform:translate(-50%,160%)}
 .drawer.open{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.9,.25,1),visibility 0s}
 .prof{position:relative;overflow:hidden;background:#121316;color:#fff;border-radius:16px;padding:24px 16px 16px;display:flex;align-items:center;gap:12px;flex:none}
 .prof::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:linear-gradient(90deg,var(--f-today) 0 12.5%,var(--f-study) 0 25%,var(--f-todos) 0 37.5%,var(--f-calendar) 0 50%,var(--f-ot) 0 62.5%,var(--f-roster) 0 75%,var(--f-cases) 0 87.5%,var(--f-nba) 0)}
-.prof .av{width:52px;height:52px;border-radius:50%;background:var(--f-today);color:#121316;display:grid;place-items:center;font-family:var(--font-display);font-size:24px;font-weight:800;flex:none}
+.prof{flex-direction:column;align-items:stretch;gap:12px}
+.prof-top{display:flex;align-items:center;gap:14px}
+.prof .av{width:64px;height:64px;border-radius:50%;background:var(--f-today);color:#121316;display:grid;place-items:center;font-family:var(--font-display);font-size:28px;font-weight:800;flex:none;overflow:hidden;box-shadow:0 0 0 3px rgba(255,255,255,.18)}
+.av img,.avbtn img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.avbtn{overflow:hidden;padding:0}
+.prof-l{display:flex;flex-direction:column;gap:7px}
+.pl{display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;min-width:0}
+.pl svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--f-today);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pl span{min-width:0;overflow-wrap:anywhere}
+.prof .btn.ghost{background:rgba(255,255,255,.12);color:#fff;min-height:36px;font-size:15px}
+.photo-row{display:flex;align-items:center;gap:14px}
+.photo-row .av{width:72px;height:72px;border-radius:50%;background:var(--f-today);display:grid;place-items:center;font-family:var(--font-display);font-size:30px;font-weight:800;overflow:hidden;flex:none}
 .prof b{display:block;font-family:var(--font-display);font-size:22px}
 .prof span{font-size:13px;opacity:.85}
 .dnav{display:flex;flex-direction:column;gap:4px}
@@ -327,9 +338,10 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <div id="toast" role="status"></div>
 <input type="file" id="importFile" hidden>
 <input type="file" id="privateFile" hidden>
+<input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.7 · reminders';
+const APP_VERSION = '2.8 · profile';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -390,7 +402,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {},
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -517,7 +529,7 @@ const head = (title, sub, eyebrow) => `<div class="lt-wrap">${eyebrow ? `<span c
 const stat = (l, n, m) => `<div class="stat"><span class="s-l">${l}</span><span class="s-n">${n}</span>${m}</div>`;
 
 function pageToday() {
-  const t = today(); let h = head('Today', esc(dLong(t)), 'Study Desk');
+  const t = today(); const P = profile(); let h = head('Today', esc(dLong(t)), P.name ? greeting() + ', ' + P.name.split(' ')[0] : 'Study Desk');
   const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -687,6 +699,28 @@ function pageReminders() {
   h += `<button class="btn ghost wide" type="button" data-act="rem-add">+ Add reminder</button>`;
   return h + `<p class="foot">Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.</p>`;
 }
+function profileSheet() {
+  const P = profile();
+  openSheet(`<form data-form="profile" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Profile</h2><button type="submit" class="link strong">Save</button></div>
+    <div class="photo-row"><div class="av" id="pf-av">${avatarHTML(P)}</div><div class="btns" style="flex:1"><button class="btn small ghost" type="button" data-act="photo-pick">${P.photo ? 'Change photo' : 'Add photo'}</button>${P.photo ? '<button class="btn small danger" type="button" data-act="photo-remove">Remove photo</button>' : ''}</div></div>
+    <div class="group">
+      <label class="row field"><span class="f-l">Name</span><input class="left" name="name" maxlength="40" value="${esc(P.name)}" placeholder="Your name"></label>
+      <label class="row field"><span class="f-l">Role</span><input class="left" name="job" maxlength="60" value="${esc(P.job)}" placeholder="e.g. Anaesthesiology resident"></label>
+      <label class="row field"><span class="f-l">Place</span><input class="left" name="place" maxlength="60" value="${esc(P.place)}" placeholder="e.g. Manipal"></label>
+      <label class="row field"><span class="f-l">Email</span><input class="left" name="email" type="email" maxlength="80" value="${esc(P.email)}" placeholder="optional"></label>
+    </div><p class="foot">Your profile stays on this phone (and in your backup). It is never put on the website.</p></form>`);
+}
+async function pickPhoto(file) {
+  try {
+    const url = URL.createObjectURL(file); const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error("this photo couldn't be opened")); img.src = url; });
+    const side = Math.min(img.naturalWidth, img.naturalHeight); const c = document.createElement('canvas'); c.width = c.height = 256;
+    c.getContext('2d').drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, 256, 256);
+    URL.revokeObjectURL(url);
+    state.profile = { ...state.profile, photo: c.toDataURL('image/jpeg', 0.85) };
+    if (commit('Photo updated ✓')) profileSheet();
+  } catch (e) { banners.info = "Couldn't use that photo: " + ((e && e.message) || 'unknown error') + '. Nothing was changed.'; renderBanner(); }
+}
 function remSheet(id) {
   const r = id ? byId(state.reminders, id) : null; const freq = r ? r.freq : 'monthly'; const day = r ? r.day : 1;
   openSheet(`<form data-form="rem" data-id="${id || ''}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${r ? 'Edit reminder' : 'New reminder'}</h2><button type="submit" class="link strong">Save</button></div>
@@ -839,18 +873,27 @@ function render() {
   document.body.dataset.sec = tab;
   $('nb-title').textContent = SECS[tab];
   $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar' || tab === 'reminders') ? 'visible' : 'hidden';
-  const P = state.private && state.private.profile;
-  $('nb-av').textContent = ((P && P.name) || 'S').slice(0, 1).toUpperCase();
+  $('nb-av').innerHTML = avatarHTML(profile());
   $('page').innerHTML = PAGES[tab]();
   $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
 function renderDrawer() {
-  const P = state.private && state.private.profile; const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
+  const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
   const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
-  $('drawer').innerHTML = `<div class="prof"><div class="av">${esc(((P && P.name) || 'S').slice(0, 1))}</div><div><b>${esc((P && P.name) || 'Study Desk')}</b><span>${esc(P ? [P.job, P.place].filter(Boolean).join(' · ') : 'Load your private file to add your name')}</span></div></div>
+  const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
+  const lines = [
+    P.job && [ico('<path d="M4 7h16v12H4z"/><path d="M9 7V5h6v2"/>'), P.job],
+    P.place && [ico('<path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'), P.place],
+    P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
+    ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
+  ].filter(Boolean);
+  $('drawer').innerHTML = `<div class="prof"><div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
+    ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
+    <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
     <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav>`;
@@ -994,6 +1037,9 @@ document.addEventListener('click', e => {
     case 'dismiss-info': banners.info = null; renderBanner(); break;
     case 'add': if (tab === 'reminders') remSheet(null); else addEventSheet(); break;
     case 'rem-add': remSheet(null); break;
+    case 'prof-edit': closeDrawer(); profileSheet(); break;
+    case 'photo-pick': $('photoFile').click(); break;
+    case 'photo-remove': state.profile = { ...state.profile, photo: '' }; if (commit('Photo removed')) profileSheet(); break;
     case 'rem-edit': remSheet(id); break;
     case 'rem-freq': { const f = b.dataset.f; const form = b.closest('form'); form.querySelector('[name=freq]').value = f; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); $('rem-m').hidden = f !== 'monthly'; $('rem-w').hidden = f !== 'weekly'; break; }
     case 'rem-done': { const key = id + '|' + b.dataset.k; state.remDone[key] = nowISO(); const r = byId(state.reminders, id);
@@ -1073,6 +1119,9 @@ document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault();
   const fd = new FormData(f); const id = f.dataset.id;
   switch (f.dataset.form) {
+    case 'profile': {
+      state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
+      closeSheet(); commit('Profile saved'); break; }
     case 'rem': {
       const title = (fd.get('title') || '').trim(); if (!title) return; const freq = fd.get('freq') === 'weekly' ? 'weekly' : 'monthly';
       const day = freq === 'weekly' ? +fd.get('wday') : +fd.get('mday');
@@ -1141,6 +1190,7 @@ $('importFile').addEventListener('change', async e => {
   const prev = state; state = normalise(data);
   if (save()) { collapsed.clear(); render(); toast('Backup restored ✓'); } else { state = prev; render(); }
 });
+$('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
 /* A private file can carry any of: profile, roster, presenters, ot (patient names by OT case id), cases (hospital IDs by case number).
    Loading one merges it with what's already on the phone, so a small daily OT file doesn't wipe the roster. */
@@ -1173,6 +1223,10 @@ const b64u = {
 function keyDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-keys', 1); r.onupgradeneeded = () => r.result.createObjectStore('keys'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((res, rej) => { const tx = db.transaction('keys', mode); const out = fn(tx.objectStore('keys')); tx.oncomplete = () => res(out && out.result); tx.onerror = () => rej(tx.error); }); }
 let device = null; let deviceChecked = false;
+/* Profile: what arrives in the private file, overridden by anything edited on this phone. Never on the website in readable form. */
+function profile() { return { ...((state.private && state.private.profile) || {}), ...(state.profile || {}) }; }
+const avatarHTML = P => P.photo ? `<img src="${esc(P.photo)}" alt="">` : esc(((P.name || 'S').trim()[0] || 'S').toUpperCase());
+function greeting() { const h = new Date().getHours(); return h < 5 ? 'Good night' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; }
 let syncState = { status: 'off' };
 async function loadDevice() { try { device = (await keyOp('readonly', st => st.get('device'))) || null; } catch (e) { device = null; } deviceChecked = true; }
 async function setupSync() {
