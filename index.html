@@ -288,7 +288,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.1 · batch 2';
+const APP_VERSION = '2.2 · batch 2';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -947,7 +947,7 @@ async function checkPersist() {
 renderBanner(); render(); checkPersist(); loadData(false);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadData(false); });
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>
 </html>
