@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Desk">
 <meta name="theme-color" content="#F2F9F3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#051F20" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1B4339" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -569,6 +569,29 @@ mark{background:#DAF1DE!important}
 .hello-d{font-family:var(--font-body,Inter,system-ui);font-size:13px;font-weight:500;color:var(--fg-3);letter-spacing:0;text-transform:none}
 .hello-t{margin:0;font-family:var(--font-body,Inter,system-ui);font-size:25px;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:var(--fg);text-transform:none}
 .hello-s{font-size:14.5px;color:var(--fg-2);font-weight:400}
+
+/* Dark mode = the light (white-tile) look on a deep green background */
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1B4339;--surface:#FFFFFF;--surface-2:#E3F2E6;--line:#CFE5D5;--sep:rgba(11,43,38,.10);--bar:rgba(27,67,57,.88);
+    --fg:#0B2B26;--fg-2:#163832;--fg-3:#56766A;--scrim:rgba(5,31,32,.5);
+    --accent:#235347;--accent-soft:#DAF1DE;--label:#163832;--on-label:#DAF1DE;--ring:#235347;--on-ring:#DAF1DE;
+    --good:#2f6b4f;--good-soft:#d8efdf;--warn:#8a5a14;--warn-soft:#f6ead2;--danger:#9b3b3b;
+    --tile-shadow:0 8px 18px -12px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.15);--tile-bevel:inset 0 1px 0 rgba(255,255,255,.6);color-scheme:light}
+  body{background:#1B4339}
+  .navbar,.navbar .nb-t,.navbar button,.navbar svg{color:#DAF1DE!important}
+  .hello-d{color:#8EB69B!important}.hello-t{color:#F2F9F3!important}.hello-s{color:#C9E6D1!important}
+  .lt-wrap .lt-sub,.lt-wrap .eyebrow{color:#C9E6D1!important}
+  .lt{background:#DAF1DE!important;color:#0B2B26!important}
+  #page>.sh,.sec>.sh,#page>.foot,.sec>.foot,.drawer .sh{color:#B7D6BF!important}
+  .drawer{background:#163832!important;border-right-color:rgba(218,241,222,.12)!important}
+  .hero{background:linear-gradient(135deg,#DAF1DE,#C9E6D1)!important;color:#0B2B26!important}
+  .hero .c-lab,.hero .c-s,.hero .c-m{color:#235347!important}.hero .c-big{color:#0B2B26!important}
+  .ditem,.ditem[data-tab]{background:#FFFFFF!important;color:#163832!important}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#DAF1DE!important;color:#0B2B26!important;box-shadow:0 0 0 2px rgba(255,255,255,.85),0 0 0 4px rgba(142,182,155,.45)!important}
+  .ditem[aria-current="page"] svg,.ditem[aria-current="page"] small{background:#FFFFFF!important;color:#235347!important}
+  .prof{background:linear-gradient(140deg,#0B2B26,#235347)!important}
+  .toast{background:#0B2B26!important;color:#DAF1DE!important}
+}
 </style>
 </head>
 <body data-sec="today">
@@ -590,7 +613,7 @@ mark{background:#DAF1DE!important}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.0 · books';
+const APP_VERSION = '4.1 · books';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
