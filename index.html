@@ -690,6 +690,18 @@ body{background:var(--bg)}
 .ditem,.ditem[data-tab]{border:0!important;outline:0}
 .prof::before,.prof::after{display:none!important}
 .navbar .avbtn,.navbar .avbtn *{color:var(--t-sage-i)!important}
+/* sheets: always light card colours so text stays readable in dark mode */
+.sheet,#sheet{background:#FFFFFF!important;color:#1F2A24!important}
+.sheet .bk-t,.sheet .bk-info b,.sheet h2,.sheet .row,.sheet .r-t,.sheet label,.sheet input,.sheet textarea,.sheet select{color:#1F2A24!important}
+.sheet .bk-n,.sheet .bk-part,.sheet small,.sheet .foot,.sheet .bk-info span,.sheet .r-s{color:#6F7A74!important}
+.sheet .bk-row.done .bk-t{color:#9AA39E!important}
+.sheet .check{border-color:#C9CFC9!important;background:#FFFFFF}
+.sheet .check.on{background:#3E7B5E!important;border-color:#3E7B5E!important}
+.sheet .group,.sheet .field,.sheet input,.sheet textarea,.sheet select{background:#F6F3EC!important}
+.sheet .bk-list{border-top-color:#E7E2D7!important}
+.sheet .ring circle:first-child{stroke:#ECE8DF}
+.sheet .sheet-head{background:#FFFFFF!important;color:#1F2A24!important;border-bottom-color:#E7E2D7!important}
+.sheet .sheet-head .link{color:#3E7B5E!important}
 </style>
 </head>
 <body data-sec="today">
@@ -711,7 +723,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.3 · minimal today';
+const APP_VERSION = '4.3.1 · minimal today';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
