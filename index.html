@@ -32,6 +32,7 @@
   --f-cases:#5fbd47;--i-cases:#2d6a1e;--s-cases:#e0f3d9;
   --f-nba:#ff8a1f;--i-nba:#a54b00;--s-nba:#ffe8d2;
   --f-backup:#d9dce1;--i-backup:#3b3e45;--s-backup:#e9ebee;
+  --f-reminders:#4fd1b5;--i-reminders:#0f6e5c;--s-reminders:#d5f5ec;
   --accent:var(--i-today);--accent-soft:var(--s-today);--label:var(--f-today);
   --font-body:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --font-display:"Barlow Condensed","Arial Narrow",-apple-system,system-ui,sans-serif;
@@ -45,9 +46,10 @@
   --k-acad:#acd06a;--k-exam:#fb7f9b;--k-posting:#74b8d8;--k-duty:#c9a8e8;--k-case:#8bd776;
   --i-today:#ffd400;--s-today:#332a00;--i-study:#ffb3a3;--s-study:#3a1d17;--i-todos:#c9ccd2;--s-todos:#26282c;
   --i-calendar:#4cc2f2;--s-calendar:#0b2a38;--i-ot:#ff6b73;--s-ot:#3a1215;--i-roster:#c9a7e6;--s-roster:#2a1e36;
-  --i-cases:#8bd776;--s-cases:#182e12;--i-nba:#ffa24d;--s-nba:#382210;--i-backup:#c3c6cc;--s-backup:#222428;--f-backup:#8f939b;
+  --i-cases:#8bd776;--s-cases:#182e12;--i-nba:#ffa24d;--s-nba:#382210;--i-backup:#c3c6cc;--s-backup:#222428;--f-backup:#8f939b;--i-reminders:#4fd1b5;--s-reminders:#11332c;
   color-scheme:dark}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
 body{background:var(--bg);color:var(--fg);font:16.5px/1.38 var(--font-body);-webkit-font-smoothing:antialiased;padding-left:var(--side)}
 body.locked{overflow:hidden}
@@ -281,6 +283,12 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 .sm-face{fill:var(--label)}.sm-eye{fill:var(--on-label)}.sm-mouth{fill:none;stroke:var(--on-label);stroke-width:3.6;stroke-linecap:round}
 @keyframes smilepop{0%{transform:scale(.3) rotate(-25deg);opacity:0}70%{transform:scale(1.12) rotate(4deg);opacity:1}100%{transform:none}}
 .ring.smile.anim svg{animation:smilepop .6s cubic-bezier(.2,.9,.25,1)}
+.ring.late .rg-fg{stroke:var(--warn)}.ring.late .rg-tr{stroke:var(--warn-soft)}
+.rg-v.stack{flex-direction:column;line-height:1}
+.rg-v.stack small{font-family:var(--font-mono);font-size:calc(var(--sz)*.13);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--fg-3);margin:2px 0 0}
+.rem{display:flex;align-items:center;gap:14px;padding:12px 14px}
+.rem .r-main{gap:3px}
+.nudge{color:var(--warn);font-size:13.5px}
 @media (prefers-reduced-motion:reduce){.rg-fg{transition:none}.ring.smile.anim svg{animation:none}}
 @media (min-width:560px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.dc-g{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (min-width:900px){
@@ -298,6 +306,7 @@ body[data-sec="ot"]{--accent:var(--i-ot);--accent-soft:var(--s-ot);--label:var(-
 body[data-sec="roster"]{--accent:var(--i-roster);--accent-soft:var(--s-roster);--label:var(--f-roster)}
 body[data-sec="cases"]{--accent:var(--i-cases);--accent-soft:var(--s-cases);--label:var(--f-cases)}
 body[data-sec="nba"]{--accent:var(--i-nba);--accent-soft:var(--s-nba);--label:var(--f-nba)}
+body[data-sec="reminders"]{--accent:var(--i-reminders);--accent-soft:var(--s-reminders);--label:var(--f-reminders)}
 body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);--label:var(--f-backup)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -320,7 +329,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.6 · OT table';
+const APP_VERSION = '2.7 · reminders';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -334,13 +343,14 @@ const IC = {
   roster: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M6.5 9.5h8v3h-8zM6.5 15h4"/>',
   cases: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M7.5 14h2l1.5-3 2 5 1.5-2h2"/>',
   nba: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 3 3 9.8 0 12.8M18.4 5.6c-3 3-3 9.8 0 12.8"/>',
+  reminders: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
   backup: '<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>'
 };
 const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Academics', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', backup: 'Backup & settings'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', reminders: 'Reminders', backup: 'Backup & settings'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -372,7 +382,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null,
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {},
     settings: { backupLine: true, myName: '', countdownOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -380,6 +390,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -542,6 +553,8 @@ function pageToday() {
     const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length;
     h += `<button class="card" type="button" data-act="goto" data-tab="ot" style="--c:var(--i-ot);--label:var(--f-ot);--on-label:#121316"><div class="prog-row">${ring(n, rows.length, 56, 'today-' + od)}<div class="prog-txt"><span class="c-lab">OT list · ${relDay(od)}</span><span class="c-t">${n === rows.length && n ? 'All done' : n + ' of ' + plural(rows.length, 'case') + ' ticked'}</span></div>${CHEV}</div></button>`;
   }
+  const att = remAttention();
+  if (att.length) h += `<div class="sec" style="--accent:var(--i-reminders);--accent-soft:var(--s-reminders);--label:var(--f-reminders)"><h2 class="sh"><span>Reminders</span><button type="button" data-act="goto" data-tab="reminders" style="color:var(--i-reminders);font:inherit;letter-spacing:inherit;text-transform:inherit">See all</button></h2><div class="group">${att.map(x => remRow(x.r, 52, true)).join('')}</div></div>`;
   const items = itemsFor(t);
   const open = state.todos.filter(x => !x.done).length;
   h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}${open ? `<button class="row" type="button" data-act="goto" data-tab="todos"><span class="r-bar" style="--c:var(--f-todos)"></span><span class="r-time">To-do</span><span class="r-main"><span class="r-t">${plural(open, 'open task')}</span></span>${CHEV}</button>` : ''}${!items.length && !open ? '<div class="row empty">Nothing on today. Tap + to add an entry.</div>' : ''}</div></div>`;
@@ -624,6 +637,68 @@ function pageCalendar() {
 function otDates() { return [...new Set(OTL().map(r => r.date))].sort(); }
 function otRows(d) { return OTL().filter(r => r.date === d).sort((a, b) => (a.time || '').localeCompare(b.time || '') || (a.order || 0) - (b.order || 0)); }
 function otDefaultDay() { const ds = otDates(); return ds.find(d => d >= today()) || ds[ds.length - 1] || null; }
+/* ---------- reminders ---------- */
+const WEEKDAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const ord = n => n + (n % 10 === 1 && n !== 11 ? 'st' : n % 10 === 2 && n !== 12 ? 'nd' : n % 10 === 3 && n !== 13 ? 'rd' : 'th');
+function remRule(r) { return r.freq === 'weekly' ? (r.day === 6 ? 'Every weekend, by Sunday' : 'Every week, by ' + WEEKDAYS[r.day]) : 'Every month, by the ' + ord(r.day); }
+function remPeriod(r, base, shift) {
+  if (r.freq === 'weekly') {
+    const d = dt(base); const mon = addDays(base, -((d.getDay() + 6) % 7) + 7 * shift);
+    return { key: mon, due: addDays(mon, r.day), label: r.day >= 5 ? 'weekend of ' + dShort(addDays(mon, 5)) : 'week of ' + dShort(mon) };
+  }
+  const d = dt(base); const y = d.getFullYear(), m = d.getMonth() + shift; const first = new Date(y, m, 1);
+  const last = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+  const key = isoOf(first).slice(0, 7);
+  return { key, due: key + '-' + pad(Math.min(r.day, last)), label: MONTHS[first.getMonth()] };
+}
+function remStatus(r) {
+  const t = today(); const pv = remPeriod(r, t, -1), cu = remPeriod(r, t, 0), nx = remPeriod(r, t, 1);
+  const done = p => !!state.remDone[r.id + '|' + p.key]; const owed = p => dayOf(r.created) <= p.due;
+  const span = r.freq === 'weekly' ? 7 : 30; const gap = d => Math.round((dt(d) - dt(t)) / 864e5);
+  if (!done(pv) && owed(pv) && pv.due < t && cu.due > t) return { s: 'late', p: pv, days: -gap(pv.due), span };
+  if (!done(cu) && owed(cu)) return cu.due === t ? { s: 'today', p: cu, days: 0, span } : cu.due > t ? { s: 'soon', p: cu, days: gap(cu.due), span } : { s: 'late', p: cu, days: -gap(cu.due), span };
+  const p = cu.due >= t && !done(cu) ? cu : nx;
+  return { s: 'soon', p, days: gap(p.due), span, doneFor: done(cu) ? cu : null };
+}
+function remRing(st, size) {
+  const C = 2 * Math.PI * 30;
+  if (st.s === 'today') return `<div class="ring" style="--sz:${size}px"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="0"/></svg><span class="rg-v stack">0<small>today</small></span></div>`;
+  if (st.s === 'late') return `<div class="ring late" style="--sz:${size}px"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="0"/></svg><span class="rg-v stack">${st.days}<small>${st.days === 1 ? 'day ago' : 'days ago'}</small></span></div>`;
+  const left = Math.min(st.days, st.span);
+  return `<div class="ring" style="--sz:${size}px"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * left / st.span).toFixed(1)}"/></svg><span class="rg-v stack">${st.days}<small>${st.days === 1 ? 'day' : 'days'}</small></span></div>`;
+}
+const NUDGES = ['A gentle nudge: this was due on {d}. Tick it off once it’s done.', 'Still open from {d}. Whenever you get a moment.', 'Just a friendly reminder, this one was due {d}.'];
+function remLine(r, st) {
+  if (st.s === 'late') { const i = [...r.id].reduce((a, c) => a + c.charCodeAt(0), 0) % NUDGES.length; return `<span class="nudge">${esc(NUDGES[i].replace('{d}', dDow(st.p.due) + ' ' + dShort(st.p.due)))}</span>`; }
+  if (st.s === 'today') return `<span class="r-s">Due today (${esc(st.p.label)})</span>`;
+  return `<span class="r-s">${st.doneFor ? '✓ Done for ' + esc(st.doneFor.label) + ' · ' : ''}Next: ${dDow(st.p.due)} ${dShort(st.p.due)}</span>`;
+}
+function remRow(r, size, compact) {
+  const st = remStatus(r); const open = st.s !== 'soon' || (!st.doneFor && st.days <= 3);
+  return `<div class="rowwrap rem">${remRing(st, size)}<button type="button" class="r-main" style="text-align:left" data-act="rem-edit" data-id="${r.id}"><span class="r-t" style="font-weight:600">${esc(r.title)}</span>${compact ? '' : `<span class="r-s">${esc(remRule(r))}</span>`}${remLine(r, st)}</button>${open && !st.doneFor ? `<button class="btn small ghost" type="button" data-act="rem-done" data-id="${r.id}" data-k="${st.p.key}">Done</button>` : ''}</div>`;
+}
+const remAttention = () => state.reminders.map(r => ({ r, st: remStatus(r) })).filter(x => x.st.s !== 'soon' || (!x.st.doneFor && x.st.days <= 3));
+function pageReminders() {
+  const att = remAttention().length;
+  let h = head('Reminders', state.reminders.length ? (att ? plural(att, 'reminder') + ' need attention' : 'All on track') : '', 'Daily');
+  if (!state.reminders.length) return h + `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No reminders yet</span><span class="c-s">Add monthly or weekly reminders. Each one shows a countdown and comes back by itself.</span><button class="btn" type="button" data-act="rem-add" style="margin-top:8px">Add a reminder</button></div>`;
+  const sorted = state.reminders.map(r => ({ r, st: remStatus(r) })).sort((a, b) => (a.st.s === 'late' ? -1e3 - a.st.days : a.st.s === 'today' ? -500 : a.st.days) - (b.st.s === 'late' ? -1e3 - b.st.days : b.st.s === 'today' ? -500 : b.st.days));
+  h += `<div class="group">${sorted.map(x => remRow(x.r, 60)).join('')}</div>`;
+  h += `<button class="btn ghost wide" type="button" data-act="rem-add">+ Add reminder</button>`;
+  return h + `<p class="foot">Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.</p>`;
+}
+function remSheet(id) {
+  const r = id ? byId(state.reminders, id) : null; const freq = r ? r.freq : 'monthly'; const day = r ? r.day : 1;
+  openSheet(`<form data-form="rem" data-id="${id || ''}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${r ? 'Edit reminder' : 'New reminder'}</h2><button type="submit" class="link strong">Save</button></div>
+    <input class="tin" name="title" value="${esc(r && r.title)}" maxlength="80" required placeholder="e.g. Pay electricity bill" data-autofocus>
+    <div class="seg"><button type="button" data-act="rem-freq" data-f="monthly" aria-pressed="${freq === 'monthly'}">Every month</button><button type="button" data-act="rem-freq" data-f="weekly" aria-pressed="${freq === 'weekly'}">Every week</button></div>
+    <input type="hidden" name="freq" value="${freq}">
+    <div class="group"><label class="row field" id="rem-m"${freq === 'weekly' ? ' hidden' : ''}><span class="f-l">Due by</span><select name="mday">${Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}"${freq === 'monthly' && day === i + 1 ? ' selected' : ''}>${ord(i + 1)} of the month</option>`).join('')}</select></label>
+    <label class="row field" id="rem-w"${freq === 'monthly' ? ' hidden' : ''}><span class="f-l">Due by</span><select name="wday">${WEEKDAYS.map((w, i) => `<option value="${i}"${freq === 'weekly' && day === i ? ' selected' : ''}>${w}${i === 6 ? ' (weekend)' : ''}</option>`).join('')}</select></label></div>
+    <p class="foot">If a month is shorter, it's due on its last day.</p></form>
+    ${r ? `<button class="btn danger wide" type="button" data-act="rem-del" data-id="${r.id}">Delete reminder</button>` : ''}`);
+}
+
 let otJustDone = null;
 function ring(done, total, size, key) {
   const pct = total ? Math.round(done / total * 100) : 0;
@@ -758,12 +833,12 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, backup: pageBackup };
+const PAGES = { reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, backup: pageBackup };
 function render() {
   REG = [];
   document.body.dataset.sec = tab;
   $('nb-title').textContent = SECS[tab];
-  $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar') ? 'visible' : 'hidden';
+  $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar' || tab === 'reminders') ? 'visible' : 'hidden';
   const P = state.private && state.private.profile;
   $('nb-av').textContent = ((P && P.name) || 'S').slice(0, 1).toUpperCase();
   $('page').innerHTML = PAGES[tab]();
@@ -776,7 +851,7 @@ function renderDrawer() {
   const le = state.meta.lastExport;
   const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
   $('drawer').innerHTML = `<div class="prof"><div class="av">${esc(((P && P.name) || 'S').slice(0, 1))}</div><div><b>${esc((P && P.name) || 'Study Desk')}</b><span>${esc(P ? [P.job, P.place].filter(Boolean).join(' · ') : 'Load your private file to add your name')}</span></div></div>
-    <nav class="dnav"><p class="sh">Daily</p>${item('today')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
+    <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
     <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav>`;
 }
@@ -885,6 +960,7 @@ function renderSearch(q) {
   add('Study topics', state.topics.filter(t => { const s = byId(state.subjects, t.subjectId); return hit(t.name, t.pointer, s && s.name, ...state.log.filter(l => l.topicId === t.id).map(l => l.note)); })
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
+  add('Reminders', state.reminders.filter(r => hit(r.title, remRule(r))).map(r => row(`data-act="rem-edit" data-id="${r.id}"`, r.title, remRule(r))));
   add('To-do', state.todos.filter(t => hit(t.text)).map(t => row(`data-act="goto" data-tab="todos"`, t.text, t.done ? 'Done' : 'Open')));
   const acad = [];
   SCHED().forEach(x => { if (hit(x.session, x.topic, presenters(x.date), dShort(x.date), MONTHS[+x.date.slice(5, 7) - 1])) { const id = reg({ date: x.date, kind: x.kind, title: x.session, topic: x.topic, who: presenters(x.date), src: 'Department program' }); acad.push([x.date, row(`data-act="item" data-id="${id}"`, x.session + (x.topic ? ': ' + x.topic : ''), [presenters(x.date)].filter(Boolean).join(''), dShort(x.date))]); } });
@@ -916,7 +992,14 @@ document.addEventListener('click', e => {
     case 'drawerclose': closeDrawer(); break;
     case 'close': closeSheet(); break;
     case 'dismiss-info': banners.info = null; renderBanner(); break;
-    case 'add': addEventSheet(); break;
+    case 'add': if (tab === 'reminders') remSheet(null); else addEventSheet(); break;
+    case 'rem-add': remSheet(null); break;
+    case 'rem-edit': remSheet(id); break;
+    case 'rem-freq': { const f = b.dataset.f; const form = b.closest('form'); form.querySelector('[name=freq]').value = f; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); $('rem-m').hidden = f !== 'monthly'; $('rem-w').hidden = f !== 'weekly'; break; }
+    case 'rem-done': { const key = id + '|' + b.dataset.k; state.remDone[key] = nowISO(); const r = byId(state.reminders, id);
+      commit('Done ✓ ' + (r ? r.title : ''), () => { delete state.remDone[key]; commit(); }); break; }
+    case 'rem-del': { const idx = state.reminders.findIndex(x => x.id === id); if (idx < 0) return; const [rm] = state.reminders.splice(idx, 1);
+      closeSheet(); commit('Reminder deleted', () => { state.reminders.splice(idx, 0, rm); commit(); }); break; }
     case 'search': searchSheet(); break;
     case 'sres-topic': closeSheet(); goTab('study'); topicSheet(id); break;
     case 'sres-ot': otDay = b.dataset.d; closeSheet(); goTab('ot'); break;
@@ -990,6 +1073,12 @@ document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault();
   const fd = new FormData(f); const id = f.dataset.id;
   switch (f.dataset.form) {
+    case 'rem': {
+      const title = (fd.get('title') || '').trim(); if (!title) return; const freq = fd.get('freq') === 'weekly' ? 'weekly' : 'monthly';
+      const day = freq === 'weekly' ? +fd.get('wday') : +fd.get('mday');
+      if (id) { const r = byId(state.reminders, id); r.title = title; r.freq = freq; r.day = day; }
+      else state.reminders.push({ id: 'r-' + uid(), title, freq, day, created: nowISO() });
+      closeSheet(); commit(id ? 'Saved' : 'Reminder added'); break; }
     case 'event': {
       const text = (fd.get('text') || '').trim(), date = fd.get('date'); if (!text || !date) return;
       state.events.push({ id: uid(), date, kind: addKind, text }); sel = date; closeSheet(); commit('Entry added'); break; }
@@ -1062,6 +1151,7 @@ function mergePrivate(prev, data) {
   if (data.roster) next.roster = data.roster;
   if (data.presenters) next.presenters = { ...(cur.presenters || {}), ...data.presenters };
   if (data.cases) next.cases = { ...(cur.cases || {}), ...data.cases };
+  if (data.reminders) next.reminders = data.reminders;
   if (data.ot) {
     const keepFrom = addDays(today(), -14); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
@@ -1133,7 +1223,7 @@ async function privateSync(manual) {
     }
     if (!opened) { syncState = { status: 'waiting', msg: "This phone's code isn't in the locked files yet. Send it to Claude." }; return; }
     const prev = state.private;
-    state.private = { ...merged, synced: true };
+    state.private = { ...merged, synced: true }; seedReminders();
     if (!save()) { state.private = prev; syncState = { status: 'error', msg: "Opened the locked files but couldn't save them on this phone." }; return; }
     syncState = { status: 'ok', at: nowISO(), msg: missing ? missing + ' older file(s) were locked before this phone was paired and were skipped.' : '' };
     if (manual) toast('Private data synced ✓');
@@ -1155,10 +1245,17 @@ async function turnOffSync() {
   commit('Private sync turned off');
 }
 
+/* Reminders sent through a private file are added once; after that they belong to this phone (edits and deletes stick). */
+function seedReminders() {
+  const list = (state.private && state.private.reminders) || []; let added = 0;
+  list.forEach(r => { if (!r || !r.id || state.remSeeded[r.id]) return; state.remSeeded[r.id] = nowISO();
+    if (!state.reminders.some(x => x.id === r.id)) { state.reminders.push({ id: r.id, title: r.title, freq: r.freq === 'weekly' ? 'weekly' : 'monthly', day: +r.day, created: nowISO() }); added++; } });
+  return added;
+}
 function applyPrivate(data) {
   if (data.app !== 'study-desk-private') { banners.info = "That isn't a Study Desk private file. Nothing was changed."; return renderBanner(); }
   const prev = state.private;
-  state.private = mergePrivate(prev, data);
+  state.private = mergePrivate(prev, data); seedReminders();
   const parts = [data.roster && 'roster', data.presenters && 'presenters', data.ot && plural(Object.keys(data.ot).length, 'OT name'), data.cases && 'hospital IDs'].filter(Boolean);
   if (!commit('Loaded ' + (parts.join(', ') || 'private file') + ' ✓')) { state.private = prev; render(); }
 }
