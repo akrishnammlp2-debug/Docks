@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Desk</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Study Desk">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16181a" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1f2328;--muted:#6b6f76;--line:#e6e2d9;--accent:#2f7d6d;--accent-ink:#fff;--warn-bg:#fff1e6;--warn-ink:#8a3b00;--soft:#eef5f3;--danger:#b3261e}
+@media (prefers-color-scheme: dark){:root{--bg:#16181a;--card:#202326;--ink:#ecebe7;--muted:#9a9ea4;--line:#2e3236;--accent:#5bb7a3;--accent-ink:#0f1a17;--warn-bg:#3a2516;--warn-ink:#ffc89a;--soft:#1d2a27;--danger:#ff8a80}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+body{padding:env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom))}
+header{padding:18px 16px 6px;max-width:640px;margin:0 auto}
+h1{font-size:30px;margin:0;letter-spacing:-.02em}
+h2{font-size:22px;margin:2px 0 4px}
+h3{font-size:15px;margin:18px 0 8px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.card h3{margin-top:0}
+.sub{color:var(--muted);font-size:14px;margin-top:2px;min-height:1.2em}
+main{padding:8px 16px 24px;max-width:640px;margin:0 auto}
+.muted{color:var(--muted)}.small{font-size:14px}.center{text-align:center}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input[type=text],input:not([type]){font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;outline:none}
+input:focus{border-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:12px 18px;font-weight:600;min-height:46px}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--card);border:1px solid var(--line)}
+.btn.danger{color:var(--danger);background:var(--card);border:1px solid var(--line)}
+.wide{width:100%;margin-top:10px}
+.link{color:var(--accent);font-weight:600;padding:8px 0}
+.link.danger{color:var(--danger)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.card.pad{padding:16px}
+.card p{margin:0 0 8px}
+.card-head{display:flex;align-items:center}
+.subj{flex:1;display:flex;align-items:center;gap:10px;padding:14px 4px 14px 16px;text-align:left}
+.subj-name{font-weight:650;font-size:17px;flex:1}
+.count{color:var(--muted);font-size:14px;background:var(--soft);border-radius:999px;padding:2px 9px}
+.chev{display:inline-block;transition:transform .15s;color:var(--muted);font-size:20px;width:12px}
+.chev.open{transform:rotate(90deg)}
+.icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px}
+.icon.small{width:36px;height:36px;font-size:18px;flex:none}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rows li+li{border-top:1px solid var(--line)}
+.row{display:block;width:100%;text-align:left;padding:12px 16px}
+.row-main{display:block;font-weight:500}
+.row-sub{display:block;color:var(--muted);font-size:13px;margin-top:1px}
+.add-line{display:block;width:100%;text-align:left;padding:12px 16px;color:var(--accent);font-weight:600;border-top:1px solid var(--line)}
+.empty{text-align:center;padding:40px 12px}
+.empty p{margin:0 0 6px}
+.quick{display:flex;gap:8px;margin-bottom:14px}
+.quick .btn{flex:none}
+.todos{list-style:none;margin:0 0 6px;padding:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.todos li{display:flex;align-items:center;gap:10px;padding:8px 6px 8px 12px}
+.todos li+li{border-top:1px solid var(--line)}
+.todos.done .todo-text{color:var(--muted)}
+.check{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.check.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.todo-text{flex:1;word-break:break-word}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+.tabs button{flex:1;padding:10px 0 12px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs button .ti{font-size:21px;line-height:1}
+.tabs button.on{color:var(--accent);font-weight:600}
+#banner{max-width:640px;margin:0 auto;padding:0 16px}
+.banner{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:12px 14px;margin:8px 0;display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.banner span{flex:1}
+.sheet{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;justify-content:flex-end}
+.sheet.hidden{display:none}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.sheet-panel{position:relative;background:var(--bg);border-radius:20px 20px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto;max-width:640px;width:100%;margin:0 auto}
+.sheet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.pointer{color:var(--muted);font-size:14px}
+.lbl{display:block;font-size:14px;color:var(--muted);margin:10px 0 6px}
+.hist{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.hist li{display:flex;align-items:center;gap:8px;padding:6px 4px 6px 14px;font-size:15px}
+.hist li+li{border-top:1px solid var(--line)}
+.hist li span{flex:1}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.toggle input{width:22px;height:22px;accent-color:var(--accent);flex:none}
+#toast{position:fixed;left:50%;transform:translate(-50%,20px);bottom:calc(86px + env(safe-area-inset-bottom));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:15px;opacity:0;pointer-events:none;transition:all .2s;z-index:20;white-space:nowrap}
+#toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast .link{color:var(--bg);text-decoration:underline;padding:0 0 0 8px}
+</style>
+</head>
+<body>
+<header><h1 id="title">Topics</h1><div class="sub" id="subtitle"></div></header>
+<div id="banner"></div>
+<main id="main"></main>
+<nav class="tabs">
+  <button data-tab="topics"><span class="ti">📚</span>Topics</button>
+  <button data-tab="todos"><span class="ti">✓</span>To-do</button>
+  <button data-tab="backup"><span class="ti">💾</span>Backup</button>
+</nav>
+<div id="sheet" class="sheet hidden"><div class="sheet-backdrop" data-action="close-sheet"></div><div class="sheet-panel" id="sheet-panel"></div></div>
+<div id="toast" role="status"></div>
+<input type="file" id="importFile" hidden>
+<script>
+'use strict';
+const KEY='studydesk.v1';
+const APP_VERSION='1.0 · batch 1';
+const collapsed=new Set();
+let tab='topics', showDone=false, persistText='Checking…', toastTimer=null;
+const banners={save:null,info:null};
+
+/* ---------- storage ---------- */
+function blank(){return {version:1,subjects:[],topics:[],log:[],todos:[],settings:{backupLine:true},meta:{lastExport:null,created:new Date().toISOString()}}}
+function normalise(s){const b=blank();return {version:1,subjects:s.subjects||[],topics:s.topics||[],log:s.log||[],todos:s.todos||[],settings:{...b.settings,...(s.settings||{})},meta:{...b.meta,...(s.meta||{})}}}
+function load(){
+  let raw=null;
+  try{raw=localStorage.getItem(KEY)}catch(e){banners.info="This phone isn't letting the app store data right now, so changes won't be kept. Try opening the app from the home screen.";return blank()}
+  if(!raw) return blank();
+  try{return normalise(JSON.parse(raw))}catch(e){
+    try{localStorage.setItem(KEY+'.unreadable-'+Date.now(),raw)}catch(_){}
+    banners.info="Your saved data couldn't be read, so the app started empty. A copy of it was kept aside. Use Backup → Restore to bring back your last backup.";
+    return blank();
+  }
+}
+let state=load();
+function save(){
+  try{
+    const s=JSON.stringify(state);
+    localStorage.setItem(KEY,s);
+    if(localStorage.getItem(KEY)!==s) throw new Error('check failed');
+    if(banners.save){banners.save=null;renderBanner()}
+    return true;
+  }catch(e){
+    banners.save="Couldn't save. Your last change is only on screen and will be lost when the app closes. Try again, or export a backup from the Backup tab.";
+    renderBanner();return false;
+  }
+}
+function commit(msg,undo){const ok=save();render();if(ok&&msg)toast(msg,undo)}
+
+/* ---------- helpers ---------- */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const nowISO=()=>new Date().toISOString();
+function ago(iso){const d=new Date(iso),n=new Date();const a=new Date(d.getFullYear(),d.getMonth(),d.getDate()),b=new Date(n.getFullYear(),n.getMonth(),n.getDate());const k=Math.round((b-a)/864e5);if(k<=0)return 'today';if(k===1)return 'yesterday';return k+' days ago'}
+const fmtDate=iso=>new Date(iso).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+function lastStudied(topicId){let m=null;for(const l of state.log)if(l.topicId===topicId&&(!m||l.date>m))m=l.date;return m}
+const byId=(arr,id)=>arr.find(x=>x.id===id);
+
+/* ---------- UI bits ---------- */
+function renderBanner(){
+  const el=document.getElementById('banner');let h='';
+  if(banners.save)h+=`<div class="banner"><span>${esc(banners.save)}</span></div>`;
+  if(banners.info)h+=`<div class="banner"><span>${esc(banners.info)}</span><button class="icon small" data-action="dismiss-info" aria-label="Dismiss">×</button></div>`;
+  el.innerHTML=h;
+}
+function toast(msg,undo){
+  const el=document.getElementById('toast');
+  el.innerHTML=esc(msg)+(undo?'<button class="link" id="undoBtn">Undo</button>':'');
+  el.classList.add('show');clearTimeout(toastTimer);
+  if(undo)document.getElementById('undoBtn').onclick=()=>{undo();el.classList.remove('show')};
+  toastTimer=setTimeout(()=>el.classList.remove('show'),undo?5000:1800);
+}
+function openSheet(html){document.getElementById('sheet-panel').innerHTML=html;document.getElementById('sheet').classList.remove('hidden')}
+function closeSheet(){document.getElementById('sheet').classList.add('hidden');document.getElementById('sheet-panel').innerHTML=''}
+const sheetOpen=()=>!document.getElementById('sheet').classList.contains('hidden');
+
+/* ---------- screens ---------- */
+function renderTopics(){
+  if(!state.subjects.length)return `<div class="empty"><p><strong>No subjects yet.</strong></p><p class="muted">Start with one, for example “Cardiac” or “Regional”.</p><button class="btn primary wide" data-action="add-subject">Add a subject</button></div>`;
+  let h='';
+  for(const s of state.subjects){
+    const ts=state.topics.filter(t=>t.subjectId===s.id);const open=!collapsed.has(s.id);
+    h+=`<section class="card"><div class="card-head"><button class="subj" data-action="toggle-subject" data-id="${s.id}"><span class="chev ${open?'open':''}">›</span><span class="subj-name">${esc(s.name)}</span><span class="count">${ts.length}</span></button><button class="icon" data-action="edit-subject" data-id="${s.id}" aria-label="Edit subject">⋯</button></div>`;
+    if(open){
+      if(ts.length){h+='<ul class="rows">';for(const t of ts){const last=lastStudied(t.id);h+=`<li><button class="row" data-action="open-topic" data-id="${t.id}"><span class="row-main">${esc(t.name)}</span><span class="row-sub">${last?'Last studied '+ago(last):'Not studied yet'}${t.pointer?' · 📓 '+esc(t.pointer):''}</span></button></li>`}h+='</ul>'}
+      h+=`<button class="add-line" data-action="add-topic" data-id="${s.id}">+ Add topic</button>`;
+    }
+    h+='</section>';
+  }
+  return h+`<button class="btn ghost wide" data-action="add-subject">+ Add subject</button>`;
+}
+function todoRow(t){return `<li><button class="check ${t.done?'on':''}" data-action="toggle-todo" data-id="${t.id}" aria-label="${t.done?'Mark not done':'Mark done'}">${t.done?'✓':''}</button><span class="todo-text">${esc(t.text)}${t.done&&t.doneAt?`<span class="row-sub">done ${ago(t.doneAt)}</span>`:''}</span><button class="icon small" data-action="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></li>`}
+function renderTodos(){
+  const open=state.todos.filter(t=>!t.done);
+  const done=state.todos.filter(t=>t.done).sort((a,b)=>(b.doneAt||'').localeCompare(a.doneAt||''));
+  let h=`<form data-form="todo" class="quick"><input name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn primary" type="submit">Add</button></form>`;
+  h+=open.length?`<ul class="todos">${open.map(todoRow).join('')}</ul>`:`<p class="muted center">${state.todos.length?'All clear.':'No tasks yet. Add one above.'}</p>`;
+  if(done.length){
+    h+=`<button class="link" data-action="toggle-done">${showDone?'Hide':'Show'} done (${done.length})</button>`;
+    if(showDone)h+=`<ul class="todos done">${done.map(todoRow).join('')}</ul><button class="link danger" data-action="clear-done">Clear done tasks</button>`;
+  }
+  return h;
+}
+function renderBackup(){
+  const le=state.meta.lastExport;
+  const standalone=window.navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+  return `<section class="card pad"><h3>Backup</h3><p>${le?'Last backup: '+ago(le)+' ('+fmtDate(le)+')':'No backup made yet.'}</p>
+  <p class="muted small">Your data lives only on this phone. A backup is one small file you can keep in Files, iCloud Drive, or email to yourself.</p>
+  <button class="btn primary wide" data-action="export">Export backup</button>
+  <button class="btn ghost wide" data-action="import">Restore from a backup file</button></section>
+  <section class="card pad"><h3>Settings</h3><label class="toggle"><span>Show “last backup” line at the top of the Topics screen</span><input type="checkbox" data-setting="backupLine" ${state.settings.backupLine?'checked':''}></label></section>
+  <section class="card pad"><h3>Storage on this phone</h3><p class="small" id="persistInfo">${esc(persistText)}</p>${standalone?'':'<p class="small">You\'re viewing this in Safari. For the app to keep your data properly, add it to your Home Screen and open it from there.</p>'}
+  <p class="muted small">Study Desk ${APP_VERSION} · ${state.subjects.length} subjects · ${state.topics.length} topics · ${state.log.length} sessions logged · ${state.todos.length} tasks</p></section>`;
+}
+function render(){
+  const titles={topics:'Topics',todos:'To-do',backup:'Backup'};
+  document.getElementById('title').textContent=titles[tab];
+  let sub='';
+  if(tab==='topics'&&state.settings.backupLine)sub=state.meta.lastExport?'Last backup '+ago(state.meta.lastExport):'No backup yet';
+  if(tab==='todos'){const n=state.todos.filter(t=>!t.done).length;sub=n?n+' open':''}
+  document.getElementById('subtitle').textContent=sub;
+  document.getElementById('main').innerHTML=tab==='topics'?renderTopics():tab==='todos'?renderTodos():renderBackup();
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+}
+
+/* ---------- sheets ---------- */
+function subjectSheet(id){
+  const s=id?byId(state.subjects,id):null;
+  openSheet(`<h2>${s?'Edit subject':'New subject'}</h2><form data-form="subject" data-id="${id||''}"><label class="lbl">Name</label><input name="name" value="${esc(s?.name)}" maxlength="80" required autocomplete="off" placeholder="e.g. Cardiac anaesthesia"><button class="btn primary wide" type="submit">Save</button></form>
+  ${s?`<button class="btn danger wide" data-action="delete-subject" data-id="${id}">Delete subject</button>`:''}<button class="btn ghost wide" data-action="close-sheet">Cancel</button>`);
+  setTimeout(()=>document.querySelector('#sheet-panel input')?.focus(),50);
+}
+function topicEditSheet(id,subjectId){
+  const t=id?byId(state.topics,id):null;
+  openSheet(`<h2>${t?'Edit topic':'New topic'}</h2><form data-form="topic" data-id="${id||''}" data-subject="${subjectId||t?.subjectId||''}"><label class="lbl">Topic</label><input name="name" value="${esc(t?.name)}" maxlength="120" required autocomplete="off" placeholder="e.g. Aortic stenosis">
+  <label class="lbl">Where your notes are (optional)</label><input name="pointer" value="${esc(t?.pointer)}" maxlength="80" autocomplete="off" placeholder="e.g. GoodNotes › Cardiac › p. 40"><button class="btn primary wide" type="submit">Save</button></form>
+  ${t?`<button class="btn danger wide" data-action="delete-topic" data-id="${id}">Delete topic</button>`:''}<button class="btn ghost wide" data-action="${t?'open-topic':'close-sheet'}" data-id="${id||''}">Cancel</button>`);
+  setTimeout(()=>document.querySelector('#sheet-panel input')?.focus(),50);
+}
+function topicSheet(id){
+  const t=byId(state.topics,id);if(!t)return closeSheet();
+  const s=byId(state.subjects,t.subjectId);
+  const entries=state.log.filter(l=>l.topicId===id).sort((a,b)=>b.date.localeCompare(a.date));
+  openSheet(`<div class="sheet-top"><div><div class="muted small">${esc(s?.name)}</div><h2>${esc(t.name)}</h2>${t.pointer?`<div class="pointer">📓 ${esc(t.pointer)}</div>`:''}</div><button class="link" data-action="edit-topic" data-id="${id}">Edit</button></div>
+  <form data-form="mark" data-id="${id}"><label class="lbl">Note (optional)</label><input name="note" maxlength="140" autocomplete="off" placeholder="One line, e.g. covered Starling curve"><button class="btn primary wide" type="submit">Mark studied today</button></form>
+  <h3>History</h3>${entries.length?'<ul class="hist">'+entries.slice(0,30).map(l=>`<li><span>${fmtDate(l.date)}${l.note?' · '+esc(l.note):''}</span><button class="icon small" data-action="del-log" data-id="${l.id}" aria-label="Remove entry">×</button></li>`).join('')+'</ul>':'<p class="muted">Nothing logged yet.</p>'}
+  <button class="btn ghost wide" data-action="close-sheet">Done</button>`);
+}
+
+/* ---------- actions ---------- */
+document.addEventListener('click',e=>{
+  const tb=e.target.closest('[data-tab]');
+  if(tb){tab=tb.dataset.tab;render();window.scrollTo(0,0);return}
+  const b=e.target.closest('[data-action]');if(!b)return;
+  const id=b.dataset.id;
+  switch(b.dataset.action){
+    case 'close-sheet':closeSheet();break;
+    case 'dismiss-info':banners.info=null;renderBanner();break;
+    case 'add-subject':subjectSheet(null);break;
+    case 'edit-subject':subjectSheet(id);break;
+    case 'toggle-subject':collapsed.has(id)?collapsed.delete(id):collapsed.add(id);render();break;
+    case 'delete-subject':{
+      const s=byId(state.subjects,id);const tids=state.topics.filter(t=>t.subjectId===id).map(t=>t.id);
+      const nl=state.log.filter(l=>tids.includes(l.topicId)).length;
+      if(!confirm(`Delete “${s.name}”, its ${tids.length} topic(s) and ${nl} logged session(s)? This can't be undone.`))return;
+      state.subjects=state.subjects.filter(x=>x.id!==id);state.topics=state.topics.filter(t=>t.subjectId!==id);state.log=state.log.filter(l=>!tids.includes(l.topicId));
+      closeSheet();commit('Subject deleted');break;}
+    case 'add-topic':topicEditSheet(null,id);break;
+    case 'open-topic':topicSheet(id);break;
+    case 'edit-topic':topicEditSheet(id);break;
+    case 'delete-topic':{
+      const t=byId(state.topics,id);const nl=state.log.filter(l=>l.topicId===id).length;
+      if(!confirm(`Delete “${t.name}” and its ${nl} logged session(s)? This can't be undone.`))return;
+      state.topics=state.topics.filter(x=>x.id!==id);state.log=state.log.filter(l=>l.topicId!==id);
+      closeSheet();commit('Topic deleted');break;}
+    case 'del-log':{
+      const idx=state.log.findIndex(l=>l.id===id);if(idx<0)return;const [removed]=state.log.splice(idx,1);
+      commit('Entry removed',()=>{state.log.push(removed);commit();if(sheetOpen())topicSheet(removed.topicId)});
+      topicSheet(removed.topicId);break;}
+    case 'toggle-todo':{const t=byId(state.todos,id);t.done=!t.done;t.doneAt=t.done?nowISO():null;commit(t.done?'Done ✓':null);break}
+    case 'del-todo':{
+      const idx=state.todos.findIndex(t=>t.id===id);if(idx<0)return;const [removed]=state.todos.splice(idx,1);
+      commit('Task deleted',()=>{state.todos.splice(idx,0,removed);commit()});break;}
+    case 'toggle-done':showDone=!showDone;render();break;
+    case 'clear-done':{
+      const kept=state.todos.filter(t=>!t.done),gone=state.todos.filter(t=>t.done);
+      state.todos=kept;commit(gone.length+' done task(s) cleared',()=>{state.todos=state.todos.concat(gone);commit()});break;}
+    case 'export':exportData();break;
+    case 'import':document.getElementById('importFile').click();break;
+  }
+});
+document.addEventListener('submit',e=>{
+  const f=e.target.closest('form[data-form]');if(!f)return;e.preventDefault();
+  const fd=new FormData(f);const id=f.dataset.id;
+  switch(f.dataset.form){
+    case 'subject':{const name=(fd.get('name')||'').trim();if(!name)return;
+      if(id){byId(state.subjects,id).name=name}else{state.subjects.push({id:uid(),name,created:nowISO()})}
+      closeSheet();commit(id?'Saved':'Subject added');break;}
+    case 'topic':{const name=(fd.get('name')||'').trim();const pointer=(fd.get('pointer')||'').trim();if(!name)return;
+      let tid=id;
+      if(id){const t=byId(state.topics,id);t.name=name;t.pointer=pointer}
+      else{tid=uid();state.topics.push({id:tid,subjectId:f.dataset.subject,name,pointer,created:nowISO()});collapsed.delete(f.dataset.subject)}
+      commit(id?'Saved':'Topic added');if(id)topicSheet(tid);else closeSheet();break;}
+    case 'mark':{const note=(fd.get('note')||'').trim();
+      state.log.push({id:uid(),topicId:id,date:nowISO(),note});commit('Logged ✓');topicSheet(id);break;}
+    case 'todo':{const text=(fd.get('text')||'').trim();if(!text)return;
+      state.todos.push({id:uid(),text,done:false,created:nowISO(),doneAt:null});commit();
+      document.querySelector('form[data-form="todo"] input')?.focus();break;}
+  }
+});
+document.addEventListener('change',e=>{
+  const k=e.target.dataset&&e.target.dataset.setting;
+  if(k){state.settings[k]=e.target.checked;commit('Saved')}
+});
+
+/* ---------- backup ---------- */
+async function exportData(){
+  const name=`study-desk-backup-${new Date().toISOString().slice(0,10)}.json`;
+  const json=JSON.stringify({app:'study-desk',exportedAt:nowISO(),...state},null,2);
+  try{
+    const file=new File([json],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:name})}
+    else{const url=URL.createObjectURL(file);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000)}
+    state.meta.lastExport=nowISO();commit('Backup file ready ✓');
+  }catch(e){
+    if(e&&e.name==='AbortError')toast('Backup cancelled. No file was made.');
+    else{banners.info="Couldn't create the backup file ("+((e&&e.message)||'unknown error')+"). Nothing on the phone was changed.";renderBanner()}
+  }
+}
+document.getElementById('importFile').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;
+  let data;
+  try{data=JSON.parse(await f.text())}catch(_){banners.info="That file couldn't be read as a Study Desk backup. Nothing was changed.";return renderBanner()}
+  if(!data||data.app!=='study-desk'||!Array.isArray(data.subjects)){banners.info="That file doesn't look like a Study Desk backup. Nothing was changed.";return renderBanner()}
+  const n=`${data.subjects.length} subjects, ${(data.topics||[]).length} topics, ${(data.log||[]).length} sessions, ${(data.todos||[]).length} tasks`;
+  if(!confirm(`Replace everything on this phone with this backup?\n\nBackup has: ${n}\nMade on: ${data.exportedAt?fmtDate(data.exportedAt):'unknown date'}\n\nWhat's on the phone now will be replaced.`))return;
+  const prev=state;state=normalise(data);
+  if(save()){collapsed.clear();render();toast('Backup restored ✓')}else{state=prev;render()}
+});
+async function checkPersist(){
+  try{
+    if(navigator.storage&&navigator.storage.persist){
+      const p=(await navigator.storage.persisted())||(await navigator.storage.persist());
+      persistText=p?'This phone has agreed to keep the app’s data (persistent storage is on).':'This phone hasn’t promised to keep the data long-term. An occasional backup is your safety net.';
+    }else persistText='This phone gives no storage guarantee here. An occasional backup is your safety net.';
+  }catch(_){persistText='Couldn’t check storage status. An occasional backup is your safety net.'}
+  const el=document.getElementById('persistInfo');if(el)el.textContent=persistText;
+}
+
+/* ---------- start ---------- */
+renderBanner();render();checkPersist();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
