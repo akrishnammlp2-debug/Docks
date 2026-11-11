@@ -250,6 +250,12 @@ body.locked .dock{transform:translate(-50%,160%)}
 #toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 #toast button{color:var(--bg);text-decoration:underline;padding-left:8px;font-weight:600}
 
+.sbar{position:relative;display:flex;align-items:center}
+.sbar svg{position:absolute;left:12px;width:18px;height:18px;fill:none;stroke:var(--fg-3);stroke-width:2;stroke-linecap:round;pointer-events:none}
+.sbar input{width:100%;height:44px;border:0;border-radius:12px;background:var(--surface);color:var(--fg);padding:0 14px 0 38px;font-size:17px;outline:none;-webkit-appearance:none;appearance:none}
+.sbar input:focus{box-shadow:inset 0 0 0 2px var(--accent)}
+#s-res{display:flex;flex-direction:column;gap:16px;min-height:60vh}
+mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 @media (min-width:560px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.dc-g{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (min-width:900px){
   :root{--side:300px}
@@ -274,7 +280,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <header class="navbar"><div class="nb-in">
   <button class="avbtn" id="nb-av" type="button" data-act="drawer" aria-label="Open menu">S</button>
   <span class="nb-t" id="nb-title">Today</span>
-  <span class="nb-r"><button class="iconbtn" id="nb-add" type="button" data-act="add" aria-label="Add entry"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></span>
+  <span class="nb-r"><button class="iconbtn" type="button" data-act="search" aria-label="Search everything"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button class="iconbtn" id="nb-add" type="button" data-act="add" aria-label="Add entry"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></span>
 </div></header>
 <div id="banner"></div>
 <main class="page" id="page"></main>
@@ -288,7 +294,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.2 · batch 2';
+const APP_VERSION = '2.3 · search';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -459,6 +465,7 @@ let tab = SECS[location.hash.slice(1)] ? location.hash.slice(1) : 'today';
 const now0 = new Date();
 let view = { y: now0.getFullYear(), m: now0.getMonth() };
 let sel = today();
+let searchHitDate = null;
 let rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
 
@@ -614,7 +621,7 @@ function pageRoster() {
   if (!rows.length) note = 'No duty roster for ' + MONTHS[view.m] + ' yet.';
   h += note && !list.length ? `<div class="group"><div class="row empty">${esc(note)}</div></div>` : `<div class="rlist">${list.map(r => {
     const isT = r.date === t;
-    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT ? ' past' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; }).join('')}</div>`;
+    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT && r.date !== searchHitDate ? ' past' : ''}${r.date === searchHitDate ? ' today hit' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; }).join('')}</div>`;
   if (state.private.roster.note) h += `<p class="foot">${esc(state.private.roster.note)}</p>`;
   return h;
 }
@@ -784,6 +791,53 @@ function topicSheet(id) {
     <div class="sec"><h3 class="sh">History</h3>${entries.length ? `<div class="group">${entries.slice(0, 40).map(l => `<div class="rowwrap"><div class="row"><span class="r-main"><span class="r-t" style="font-size:15px">${esc(dShort(dayOf(l.date)))} ${dt(dayOf(l.date)).getFullYear()}</span>${l.note ? `<span class="r-s">${esc(l.note)}</span>` : ''}</span></div><button class="xbtn" type="button" data-act="del-log" data-id="${l.id}" aria-label="Remove entry">×</button></div>`).join('')}</div>` : '<p class="foot">Nothing logged yet.</p>'}</div>`);
 }
 
+/* ---------- search ---------- */
+function hl(text, terms) {
+  const t = String(text ?? '');
+  if (!terms.length) return esc(t);
+  const re = new RegExp('(' + terms.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'ig');
+  return t.split(re).map((part, i) => i % 2 ? '<mark>' + esc(part) + '</mark>' : esc(part)).join('');
+}
+function searchSheet() {
+  openSheet(`<div class="sheet-head"><span></span><h2>Search</h2><button class="link strong" type="button" data-act="close">Done</button></div>
+    <div class="sbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" data-search placeholder="Topics, tasks, sessions, cases, OT, roster…" aria-label="Search everything" autocomplete="off" autocapitalize="off" enterkeyhint="search" maxlength="60"></div>
+    <div id="s-res"></div>`);
+  renderSearch('');
+  setTimeout(() => { const i = document.querySelector('[data-search]'); if (i) i.focus(); }, 80);
+}
+function renderSearch(q) {
+  const box = $('s-res'); if (!box) return;
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!terms.length) { box.innerHTML = '<p class="foot">Searches study topics and notes, to-dos, academic sessions, your entries, the OT list, cases, the duty roster and NBA teams. Everything is searched on this phone.</p>'; return; }
+  const hit = (...fields) => { const h = fields.filter(Boolean).join(' ').toLowerCase(); return terms.every(t => h.includes(t)); };
+  const groups = [];
+  const add = (title, rows) => { if (rows.length) groups.push({ title, rows }); };
+  const row = (attrs, title, sub, side) => `<button class="row" type="button" ${attrs}><span class="r-main"><span class="r-t">${hl(title, terms)}</span>${sub ? `<span class="r-s">${hl(sub, terms)}</span>` : ''}</span>${side ? `<span class="r-k" style="--c:var(--fg-3)">${esc(side)}</span>` : ''}${CHEV}</button>`;
+
+  add('Study topics', state.topics.filter(t => { const s = byId(state.subjects, t.subjectId); return hit(t.name, t.pointer, s && s.name, ...state.log.filter(l => l.topicId === t.id).map(l => l.note)); })
+    .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
+      return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
+  add('To-do', state.todos.filter(t => hit(t.text)).map(t => row(`data-act="goto" data-tab="todos"`, t.text, t.done ? 'Done' : 'Open')));
+  const acad = [];
+  SCHED().forEach(x => { if (hit(x.session, x.topic, presenters(x.date), dShort(x.date), MONTHS[+x.date.slice(5, 7) - 1])) { const id = reg({ date: x.date, kind: x.kind, title: x.session, topic: x.topic, who: presenters(x.date), src: 'Department program' }); acad.push([x.date, row(`data-act="item" data-id="${id}"`, x.session + (x.topic ? ': ' + x.topic : ''), [presenters(x.date)].filter(Boolean).join(''), dShort(x.date))]); } });
+  state.events.forEach(e => { if (hit(e.text, (KINDS[e.kind] || {}).label, dShort(e.date))) { const id = reg({ date: e.date, kind: e.kind, title: e.text, evId: e.id }); acad.push([e.date, row(`data-act="item" data-id="${id}"`, e.text, 'Your entry · ' + (KINDS[e.kind] || KINDS.acad).label, dShort(e.date))]); } });
+  add('Academics', acad.sort((a, b) => a[0].localeCompare(b[0])).map(x => x[1]));
+  add('OT list', OTL().filter(r => hit(r.procedure, r.ot, r.unit, r.notes, otName(r.id), r.time))
+    .map(r => row(`data-act="sres-ot" data-d="${r.date}"`, r.procedure, [otName(r.id), r.ot, r.time].filter(Boolean).join(' · '), dShort(r.date))));
+  add('SLCM cases', CASES().filter(c => hit(c.procedure, c.specialty, c.consultant, c.or, c.plan, c.type, caseUhid(c.n), '#' + c.n))
+    .map(c => row(`data-act="case" data-n="${c.n}"`, c.procedure, ['#' + c.n, c.specialty, c.consultant, caseUhid(c.n)].filter(Boolean).join(' · '), dShort(c.date))));
+  add('Duty roster', ROSTER().filter(r => hit(...r.p, r.cover, dShort(r.date)))
+    .map(r => { const roles = r.p.map((c, i) => terms.some(t => c.toLowerCase().includes(t)) ? (RCOLS()[i] || '') + ': ' + c : null).filter(Boolean);
+      return row(`data-act="sres-roster" data-d="${r.date}"`, dDow(r.date) + ' ' + dShort(r.date), roles.join(' · ') || (r.cover ? 'Cover: ' + r.cover : '')); }));
+  if (D.nba) add('NBA', Object.keys(D.nba.names).filter(ab => hit(ab, D.nba.names[ab])).map(ab => {
+    const st = D.nba.west.concat(D.nba.east).find(x => x[0] === ab); return row(`data-act="sres-nba"`, D.nba.names[ab], st ? st[1] + '-' + st[2] : '', ab); }));
+
+  box.innerHTML = groups.length ? groups.map(g => `<div class="sec"><h3 class="sh"><span>${g.title}</span><span>${g.rows.length}</span></h3><div class="group">${g.rows.slice(0, 12).join('')}</div>${g.rows.length > 12 ? `<p class="foot">${g.rows.length - 12} more. Type a few more letters to narrow it down.</p>` : ''}</div>`).join('')
+    : `<p class="foot">Nothing found for “${esc(q)}”.</p>`;
+}
+document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); });
+document.addEventListener('keydown', e => { if (e.key === '/' && !sheetOpen() && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); searchSheet(); } });
+
 /* ---------- actions ---------- */
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
@@ -795,6 +849,11 @@ document.addEventListener('click', e => {
     case 'close': closeSheet(); break;
     case 'dismiss-info': banners.info = null; renderBanner(); break;
     case 'add': addEventSheet(); break;
+    case 'search': searchSheet(); break;
+    case 'sres-topic': closeSheet(); goTab('study'); topicSheet(id); break;
+    case 'sres-ot': otDay = b.dataset.d; closeSheet(); goTab('ot'); break;
+    case 'sres-roster': { const d = b.dataset.d; view = { y: +d.slice(0, 4), m: +d.slice(5, 7) - 1 }; rmode = 'all'; closeSheet(); goTab('roster'); setTimeout(() => { const el = document.querySelector('.dcard.hit'); if (el) el.scrollIntoView({ block: 'center' }); }, 50); searchHitDate = d; render(); break; }
+    case 'sres-nba': nbaSub = 'standings'; closeSheet(); goTab('nba'); break;
     case 'akind': addKind = b.dataset.k; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); break;
     case 'item': itemSheet(REG[+id]); break;
     case 'case': caseSheet(+b.dataset.n); break;
