@@ -541,6 +541,14 @@ mark{background:#DAF1DE!important}
   .ditem[aria-current="page"] svg,.ditem[aria-current="page"] small{background:rgba(218,241,222,.14)!important;color:#DAF1DE!important}
   .prof{background:linear-gradient(140deg,#0B2B26,#163832)!important}
 }
+
+/* Today: friendly greeting instead of a big label */
+.nb-t{font-family:var(--font-body,Inter,system-ui)!important;text-transform:none!important;font-weight:600!important;font-size:17px!important;letter-spacing:0!important}
+.hero .c-big{font-family:var(--font-body,Inter,system-ui)!important;text-transform:none!important;font-size:22px!important;font-weight:600!important;letter-spacing:-.01em}
+.hello{display:flex;flex-direction:column;gap:3px;margin:18px 2px 4px}
+.hello-d{font-family:var(--font-body,Inter,system-ui);font-size:13px;font-weight:500;color:var(--fg-3);letter-spacing:0;text-transform:none}
+.hello-t{margin:0;font-family:var(--font-body,Inter,system-ui);font-size:25px;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:var(--fg);text-transform:none}
+.hello-s{font-size:14.5px;color:var(--fg-2);font-weight:400}
 </style>
 </head>
 <body data-sec="today">
@@ -562,7 +570,7 @@ mark{background:#DAF1DE!important}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.7 · green soft';
+const APP_VERSION = '3.8 · green';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
@@ -752,7 +760,8 @@ const head = (title, sub, eyebrow) => `<div class="lt-wrap">${eyebrow ? `<span c
 const stat = (l, n, m) => `<div class="stat"><span class="s-l">${l}</span><span class="s-n">${n}</span>${m}</div>`;
 
 function pageToday() {
-  const t = today(); const P = profile(); let h = head('Today', esc(dLong(t)), P.name ? greeting() + ', ' + P.name.split(' ')[0] : 'Study Desk');
+  const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
+  let h = `<div class="hello"><span class="hello-d">${esc(dLong(t))}</span><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div>`;
   const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -1777,6 +1786,7 @@ let device = null; let deviceChecked = false;
 /* Profile: what arrives in the private file, overridden by anything edited on this phone. Never on the website in readable form. */
 function profile() { return { ...((state.private && state.private.profile) || {}), ...(state.profile || {}) }; }
 const avatarHTML = P => P.photo ? `<img src="${esc(P.photo)}" alt="">` : esc(((P.name || 'S').trim()[0] || 'S').toUpperCase());
+function helloLine() { const h = new Date().getHours(); return h < 5 ? 'Late one — be gentle with yourself.' : h < 12 ? 'Here’s your day at a glance.' : h < 17 ? 'Here’s how the day looks.' : 'Here’s what’s still on today.'; }
 function greeting() { const h = new Date().getHours(); return h < 5 ? 'Good night' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; }
 let syncState = { status: 'off' };
 async function loadDevice() { try { device = (await keyOp('readonly', st => st.get('device'))) || null; } catch (e) { device = null; } deviceChecked = true; }
