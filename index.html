@@ -294,7 +294,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.4';
+const APP_VERSION = '2.5 · private sync';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -602,7 +602,7 @@ function pageOt() {
   h += `<div class="group">${rows.map(r => { const on = !!state.otDone[r.id];
     return `<button class="row${on ? ' done' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}"><span class="check${on ? ' on' : ''}"></span><span class="r-time">${esc(r.time || '')}</span><span class="r-main"><span class="r-t">${esc(r.procedure)}</span>${otName(r.id) ? `<span class="r-s" style="color:var(--fg-2);font-weight:600">${esc(otName(r.id))}</span>` : ''}<span class="r-s">${esc([r.ot, r.unit && 'Unit ' + r.unit, r.notes].filter(Boolean).join(' · '))}</span></span></button>`; }).join('')}</div>`;
   const named = rows.filter(r => otName(r.id)).length;
-  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient names come from your private file and exist only on this phone.' : 'Load the private OT file (Backup & settings) to see patient names on this phone. They are never put on the website.'}</p>`;
+  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient names are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient names here. On the website they only exist locked.'}</p>`;
 }
 
 function pageRoster() {
@@ -665,13 +665,29 @@ function pageNba() {
 }
 
 let persistText = 'Checking…';
+function syncCard() {
+  if (!deviceChecked) return '<span class="c-s">Checking…</span>';
+  if (!device) return `<span class="c-s">Patient names, hospital IDs and the roster arrive by themselves, locked so only this phone can open them.</span>
+    <span class="c-m">This phone makes its own key, which never leaves it. You send Claude the phone's code once; after that, nothing to load by hand.</span>
+    <button class="btn" type="button" data-act="sync-setup" style="margin-top:8px">Set up private sync</button>`;
+  const P = state.private || {};
+  const st = syncState.status === 'ok' ? `<span class="pill good">Synced ${esc(ago(syncState.at))}</span>`
+    : syncState.status === 'error' ? '<span class="pill warn">Not synced</span>' : syncState.status === 'waiting' ? '<span class="pill warn">Waiting for Claude</span>' : '';
+  return `<div class="c-top"><span class="c-lab">Phone code</span>${st}</div>
+    ${syncState.msg ? `<span class="c-s">${esc(syncState.msg)}</span>` : ''}
+    ${syncState.status === 'ok' ? `<span class="c-m">${plural(ROSTER().length, 'roster day')} · ${plural(Object.keys(P.ot || {}).length, 'OT name')} · ${plural(Object.keys(P.cases || {}).length, 'hospital ID')}</span>` : ''}
+    <code id="paircode" style="display:block;font-family:var(--font-mono);font-size:12px;word-break:break-all;background:var(--surface-2);border-radius:10px;padding:10px;user-select:all;-webkit-user-select:all">${esc(pairCode())}</code>
+    <span class="c-m">This code can only lock things for this phone, not open them, so it's safe to paste in chat.</span>
+    <div class="btns" style="margin-top:6px"><button class="btn" type="button" data-act="sync-copy">Copy code</button><button class="btn ghost" type="button" data-act="sync-now">Sync now</button><button class="btn danger" type="button" data-act="sync-off">Turn off on this phone</button></div>`;
+}
 function pageBackup() {
   const S = state.settings; const le = state.meta.lastExport; const P = state.private;
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   let h = head('Backup', 'Your data, the website data, and settings', 'App');
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Private file</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
+  h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Private file (manual)</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
@@ -905,7 +921,11 @@ document.addEventListener('click', e => {
     case 'remove-private':
       if (!confirm('Remove everything from private files (roster, presenters, patient names, hospital IDs) from this phone? You can load the files again any time.')) return;
       state.private = null; commit('Private file removed'); break;
-    case 'refresh': loadData(true); break;
+    case 'refresh': loadData(true); privateSync(false); break;
+    case 'sync-setup': setupSync(); break;
+    case 'sync-copy': copyCode(); break;
+    case 'sync-now': privateSync(true); break;
+    case 'sync-off': turnOffSync(); break;
   }
 });
 document.addEventListener('submit', e => {
@@ -977,9 +997,8 @@ $('importFile').addEventListener('change', async e => {
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
 /* A private file can carry any of: profile, roster, presenters, ot (patient names by OT case id), cases (hospital IDs by case number).
    Loading one merges it with what's already on the phone, so a small daily OT file doesn't wipe the roster. */
-function applyPrivate(data) {
-  if (data.app !== 'study-desk-private') { banners.info = "That isn't a Study Desk private file. Nothing was changed."; return renderBanner(); }
-  const prev = state.private; const cur = prev || {};
+function mergePrivate(prev, data) {
+  const cur = prev || {};
   const next = { ...cur, updated: data.updated || cur.updated };
   if (data.profile) next.profile = data.profile;
   if (data.roster) next.roster = data.roster;
@@ -990,7 +1009,98 @@ function applyPrivate(data) {
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
     next.ot = ot;
   }
-  state.private = next;
+  return next;
+}
+
+/* ---------- private sync ----------
+   This phone makes an ECDH P-256 key pair. The private half is created non-extractable and kept in IndexedDB:
+   it never leaves the phone and is not in backups. The public half is the "phone code" sent to Claude.
+   Claude locks private data for that code (tools/lock.mjs) and pushes it to data/private/ on GitHub.
+   Each locked file: a random AES-256-GCM content key encrypts the JSON; for each paired device the content key
+   is wrapped with SHA-256(ECDH(ephemeral, device) || "studydesk-v1|" + kid) using AES-256-GCM. */
+const b64u = {
+  enc: buf => { let bin = ''; new Uint8Array(buf).forEach(b => bin += String.fromCharCode(b)); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
+  dec: str => { let x = str.replace(/-/g, '+').replace(/_/g, '/'); while (x.length % 4) x += '='; const bin = atob(x); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
+};
+function keyDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-keys', 1); r.onupgradeneeded = () => r.result.createObjectStore('keys'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((res, rej) => { const tx = db.transaction('keys', mode); const out = fn(tx.objectStore('keys')); tx.oncomplete = () => res(out && out.result); tx.onerror = () => rej(tx.error); }); }
+let device = null; let deviceChecked = false;
+let syncState = { status: 'off' };
+async function loadDevice() { try { device = (await keyOp('readonly', st => st.get('device'))) || null; } catch (e) { device = null; } deviceChecked = true; }
+async function setupSync() {
+  try {
+    if (!(window.crypto && crypto.subtle && window.indexedDB)) throw new Error('this browser has no secure key storage');
+    const kp = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']);
+    const raw = await crypto.subtle.exportKey('raw', kp.publicKey);
+    const h = new Uint8Array(await crypto.subtle.digest('SHA-256', raw));
+    const kid = [...h.slice(0, 4)].map(b => b.toString(16).padStart(2, '0')).join('');
+    const d = { kid, pub: b64u.enc(raw), privateKey: kp.privateKey, created: nowISO() };
+    await keyOp('readwrite', st => st.put(d, 'device'));
+    const check = await keyOp('readonly', st => st.get('device'));
+    if (!check || check.kid !== kid) throw new Error("the key couldn't be stored on this phone");
+    device = check; syncState = { status: 'waiting', msg: "Send this phone's code to Claude to finish." };
+    render(); toast('Phone code created ✓');
+  } catch (e) { banners.info = "Couldn't set up private sync: " + ((e && e.message) || 'unknown error') + '. Nothing was changed.'; renderBanner(); }
+}
+const pairCode = () => device ? 'SD1-' + device.pub : '';
+async function openEnvelope(env) {
+  const r = (env.recipients || []).find(x => x.kid === device.kid);
+  if (!r) return { missing: true };
+  const epk = await crypto.subtle.importKey('raw', b64u.dec(r.epk), { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+  const shared = new Uint8Array(await crypto.subtle.deriveBits({ name: 'ECDH', public: epk }, device.privateKey, 256));
+  const info = new TextEncoder().encode('studydesk-v1|' + device.kid);
+  const mat = new Uint8Array(shared.length + info.length); mat.set(shared, 0); mat.set(info, shared.length);
+  const kek = await crypto.subtle.importKey('raw', await crypto.subtle.digest('SHA-256', mat), 'AES-GCM', false, ['decrypt']);
+  const cekRaw = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64u.dec(r.iv) }, kek, b64u.dec(r.wk));
+  const cek = await crypto.subtle.importKey('raw', cekRaw, 'AES-GCM', false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64u.dec(env.iv) }, cek, b64u.dec(env.ct));
+  return { data: JSON.parse(new TextDecoder().decode(pt)) };
+}
+let syncing = false;
+async function privateSync(manual) {
+  if (!deviceChecked) await loadDevice();
+  if (!device) { syncState = { status: 'off' }; return; }
+  if (syncing) return; syncing = true;
+  try {
+    const r = await fetch('data/private/index.json?t=' + Date.now(), { cache: 'no-store' });
+    if (r.status === 404) { syncState = { status: 'waiting', msg: "No locked files on the website yet. Send this phone's code to Claude." }; return; }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const idx = await r.json(); let merged = null, opened = 0, missing = 0;
+    for (const f of (idx.files || [])) {
+      const er = await fetch('data/private/' + encodeURIComponent(f) + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!er.ok) throw new Error(f + ': HTTP ' + er.status);
+      const out = await openEnvelope(await er.json());
+      if (out.missing) { missing++; continue; }
+      merged = mergePrivate(merged, out.data); opened++;
+    }
+    if (!opened) { syncState = { status: 'waiting', msg: "This phone's code isn't in the locked files yet. Send it to Claude." }; return; }
+    const prev = state.private;
+    state.private = { ...merged, synced: true };
+    if (!save()) { state.private = prev; syncState = { status: 'error', msg: "Opened the locked files but couldn't save them on this phone." }; return; }
+    syncState = { status: 'ok', at: nowISO(), msg: missing ? missing + ' older file(s) were locked before this phone was paired and were skipped.' : '' };
+    if (manual) toast('Private data synced ✓');
+  } catch (e) {
+    const offline = e instanceof TypeError || !navigator.onLine;
+    syncState = { status: 'error', msg: offline ? "Couldn't reach GitHub just now. Showing the last synced copy." : "Couldn't open the locked files (" + ((e && e.message) || 'unknown error') + '). Showing the last synced copy.' };
+    if (manual) toast(offline ? 'No connection. Showing saved copy.' : "Couldn't sync. See Backup & settings.");
+  } finally { syncing = false; render(); }
+}
+async function copyCode() {
+  try { await navigator.clipboard.writeText(pairCode()); toast('Code copied ✓'); }
+  catch (_) { const el = $('paircode'); if (el) { const rg = document.createRange(); rg.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(rg); } toast('Select the code and copy it'); }
+}
+async function turnOffSync() {
+  if (!confirm("Turn off private sync on this phone? The phone's key is deleted and the synced names are removed from this phone. You can set it up again any time with a new code.")) return;
+  try { await keyOp('readwrite', st => st.delete('device')); } catch (_) {}
+  device = null; syncState = { status: 'off' };
+  if (state.private && state.private.synced) state.private = null;
+  commit('Private sync turned off');
+}
+
+function applyPrivate(data) {
+  if (data.app !== 'study-desk-private') { banners.info = "That isn't a Study Desk private file. Nothing was changed."; return renderBanner(); }
+  const prev = state.private;
+  state.private = mergePrivate(prev, data);
   const parts = [data.roster && 'roster', data.presenters && 'presenters', data.ot && plural(Object.keys(data.ot).length, 'OT name'), data.cases && 'hospital IDs'].filter(Boolean);
   if (!commit('Loaded ' + (parts.join(', ') || 'private file') + ' ✓')) { state.private = prev; render(); }
 }
@@ -1005,9 +1115,9 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); checkPersist(); loadData(false);
+renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); });
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadData(false); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>

@@ -1,0 +1,4 @@
+# Never commit unlocked private data
+*.plain.json
+private-src/
+study-desk-private*.json
