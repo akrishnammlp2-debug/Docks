@@ -288,7 +288,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.0 · batch 2';
+const APP_VERSION = '2.1 · batch 2';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -402,6 +402,8 @@ const OTL = () => (D.ot && D.ot.items) || [];
 const ROSTER = () => (state.private && state.private.roster && state.private.roster.days) || [];
 const RCOLS = () => (state.private && state.private.roster && state.private.roster.cols) || [];
 const presenters = k => (state.private && state.private.presenters && state.private.presenters[k]) || '';
+const otName = id => (state.private && state.private.ot && state.private.ot[id]) || '';
+const caseUhid = n => (state.private && state.private.cases && state.private.cases[n]) || '';
 
 /* ---------- roster helpers ---------- */
 const cellHas = (cell, n) => cell.split('/').some(t => t.trim().toLowerCase() === n);
@@ -591,8 +593,9 @@ function pageOt() {
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length;
   h += `<div class="card"><div class="c-top"><span class="c-lab">Progress</span><span class="c-m">${n} of ${rows.length}</span></div><div class="track"><div class="fill" style="width:${rows.length ? n / rows.length * 100 : 0}%"></div></div></div>`;
   h += `<div class="group">${rows.map(r => { const on = !!state.otDone[r.id];
-    return `<button class="row${on ? ' done' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}"><span class="check${on ? ' on' : ''}"></span><span class="r-time">${esc(r.time || '')}</span><span class="r-main"><span class="r-t">${esc(r.procedure)}</span><span class="r-s">${esc([r.ot, r.unit && 'Unit ' + r.unit, r.notes].filter(Boolean).join(' · '))}</span></span></button>`; }).join('')}</div>`;
-  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. Patient names are never put on the website.</p>`;
+    return `<button class="row${on ? ' done' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}"><span class="check${on ? ' on' : ''}"></span><span class="r-time">${esc(r.time || '')}</span><span class="r-main"><span class="r-t">${esc(r.procedure)}</span>${otName(r.id) ? `<span class="r-s" style="color:var(--fg-2);font-weight:600">${esc(otName(r.id))}</span>` : ''}<span class="r-s">${esc([r.ot, r.unit && 'Unit ' + r.unit, r.notes].filter(Boolean).join(' · '))}</span></span></button>`; }).join('')}</div>`;
+  const named = rows.filter(r => otName(r.id)).length;
+  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient names come from your private file and exist only on this phone.' : 'Load the private OT file (Backup & settings) to see patient names on this phone. They are never put on the website.'}</p>`;
 }
 
 function pageRoster() {
@@ -661,7 +664,7 @@ function pageBackup() {
   let h = head('Backup', 'Your data, the website data, and settings', 'App');
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Private file</h2><div class="card"><span class="c-s">${P ? 'Loaded (updated ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + '.' : 'Not loaded.'}</span><span class="c-m">Names of colleagues (duty roster, presenters) never go on the website. They come in a separate file I send you, which you load here.</span>
+  h += `<div class="sec"><h2 class="sh">Private file</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
@@ -752,9 +755,9 @@ function caseSheet(n) {
   const c = CASES().find(x => x.n === n); if (!c) return;
   const nr = v => v ? esc(v) : '<span class="muted">Not recorded</span>';
   openSheet(`${sheetHead('Case ' + c.n)}<div class="sheet-title"><span class="pill ${c.synced ? 'good' : 'warn'}">${c.synced ? 'Synced to SLCM' : 'Not synced to SLCM yet'}</span><h3>${esc(c.procedure)}</h3><span class="muted">${esc(dLong(c.date))}</span></div>
-    <div class="group">${kv('Specialty', nr(c.specialty))}${kv('ASA grade', nr(c.asa))}${kv('Urgency', nr(c.urgency))}</div>
+    <div class="group">${kv('Hospital ID', caseUhid(c.n) ? esc(caseUhid(c.n)) : '<span class="muted">In private file</span>')}${kv('Specialty', nr(c.specialty))}${kv('ASA grade', nr(c.asa))}${kv('Urgency', nr(c.urgency))}</div>
     <div class="group">${kv('Anaesthesia', nr(c.type))}${kv('Plan', nr(c.plan))}${kv('OR', nr(c.or))}${kv('Consultant', nr(c.consultant))}</div>
-    <p class="foot">Hospital ID is kept in your logbook spreadsheet only.</p>`);
+    <p class="foot">${caseUhid(c.n) ? 'Hospital ID comes from your private file and exists only on this phone.' : 'Hospital IDs never go on the website. Load your private file to see them on this phone.'}</p>`);
 }
 function subjectSheet(id) {
   const s = id ? byId(state.subjects, id) : null;
@@ -841,7 +844,7 @@ document.addEventListener('click', e => {
     case 'import': $('importFile').click(); break;
     case 'import-private': $('privateFile').click(); break;
     case 'remove-private':
-      if (!confirm('Remove the roster and presenter names from this phone? You can load the file again any time.')) return;
+      if (!confirm('Remove everything from private files (roster, presenters, patient names, hospital IDs) from this phone? You can load the files again any time.')) return;
       state.private = null; commit('Private file removed'); break;
     case 'refresh': loadData(true); break;
   }
@@ -911,10 +914,24 @@ $('importFile').addEventListener('change', async e => {
   if (save()) { collapsed.clear(); render(); toast('Backup restored ✓'); } else { state = prev; render(); }
 });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
+/* A private file can carry any of: profile, roster, presenters, ot (patient names by OT case id), cases (hospital IDs by case number).
+   Loading one merges it with what's already on the phone, so a small daily OT file doesn't wipe the roster. */
 function applyPrivate(data) {
   if (data.app !== 'study-desk-private') { banners.info = "That isn't a Study Desk private file. Nothing was changed."; return renderBanner(); }
-  const prev = state.private; state.private = { updated: data.updated, profile: data.profile || null, roster: data.roster || null, presenters: data.presenters || {} };
-  if (!commit('Private file loaded ✓')) { state.private = prev; render(); }
+  const prev = state.private; const cur = prev || {};
+  const next = { ...cur, updated: data.updated || cur.updated };
+  if (data.profile) next.profile = data.profile;
+  if (data.roster) next.roster = data.roster;
+  if (data.presenters) next.presenters = { ...(cur.presenters || {}), ...data.presenters };
+  if (data.cases) next.cases = { ...(cur.cases || {}), ...data.cases };
+  if (data.ot) {
+    const keepFrom = addDays(today(), -14); const ot = { ...(cur.ot || {}), ...data.ot };
+    Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
+    next.ot = ot;
+  }
+  state.private = next;
+  const parts = [data.roster && 'roster', data.presenters && 'presenters', data.ot && plural(Object.keys(data.ot).length, 'OT name'), data.cases && 'hospital IDs'].filter(Boolean);
+  if (!commit('Loaded ' + (parts.join(', ') || 'private file') + ' ✓')) { state.private = prev; render(); }
 }
 async function checkPersist() {
   try {
