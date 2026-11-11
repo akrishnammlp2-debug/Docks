@@ -18,7 +18,7 @@
 <path d="M256 262 v5 q-7 7 -14 2 M256 267 q7 7 14 2" fill="none" stroke="#b4875e" stroke-width="3.5" stroke-linecap="round"/>
 <path d="M226 262 h-36 M226 270 l-32 7 M286 262 h36 M286 270 l32 7" stroke="#fffaf2" stroke-width="2.5" stroke-linecap="round" opacity=".95"/>
 <rect x="54" y="310" width="404" height="168" rx="18" fill="#14a5e2"/>
-<rect x="196" y="372" width="120" height="34" rx="8" fill="#fff" opacity=".9"/>
+<rect x="146" y="358" width="220" height="68" rx="12" fill="#fff"/><text x="256" y="408" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="50" letter-spacing="4" fill="#121316">DOCKS</text>
 <g fill="#f5e3c8"><ellipse cx="240" cy="318" rx="34" ry="17"/><circle cx="222" cy="314" r="13"/><circle cx="240" cy="310" r="14"/><circle cx="258" cy="314" r="13"/></g>
 <g fill="#e4c29c"><ellipse cx="272" cy="321" rx="34" ry="17"/><circle cx="254" cy="317" r="13"/><circle cx="272" cy="313" r="14"/><circle cx="290" cy="317" r="13"/></g>
 <path d="M263 313 v10 M281 313 v10" stroke="#b4875e" stroke-width="3" stroke-linecap="round"/>
