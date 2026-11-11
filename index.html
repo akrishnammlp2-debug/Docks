@@ -294,7 +294,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="privateFile" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.3 · search';
+const APP_VERSION = '2.4';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -961,6 +961,8 @@ async function exportData() {
 }
 async function readJsonFile(input) {
   const f = input.files && input.files[0]; input.value = ''; if (!f) return null;
+  if (/^image\//.test(f.type) || /\.(jpe?g|png|heic|heif)$/i.test(f.name)) { banners.info = "That's a photo. The app can't read photos: send the photo to Claude in chat, and you'll get back a small file ending in .json to load here."; renderBanner(); return null; }
+  if (/\.pdf$/i.test(f.name)) { banners.info = "That's a PDF. Send it to Claude in chat, and you'll get back a small file ending in .json to load here."; renderBanner(); return null; }
   try { return JSON.parse(await f.text()); } catch (_) { banners.info = "That file couldn't be read. Nothing was changed."; renderBanner(); return null; }
 }
 $('importFile').addEventListener('change', async e => {
