@@ -33,6 +33,7 @@
   --f-nba:#ff8a1f;--i-nba:#a54b00;--s-nba:#ffe8d2;
   --f-backup:#d9dce1;--i-backup:#3b3e45;--s-backup:#e9ebee;
   --f-reminders:#4fd1b5;--i-reminders:#0f6e5c;--s-reminders:#d5f5ec;
+  --f-advances:#7dd3fc;
   --font-body:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --font-display:"Barlow Condensed","Arial Narrow",-apple-system,system-ui,sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -235,6 +236,13 @@ body.locked .dock{transform:translate(-50%,160%)}
 .pl span{min-width:0;overflow-wrap:anywhere}
 .prof .btn.ghost{background:rgba(255,255,255,.12);color:#fff;min-height:36px;font-size:15px}
 .photo-row{display:flex;align-items:center;gap:14px}
+.adv{display:flex;flex-direction:column;gap:8px}
+.adv .pills{display:flex;flex-wrap:wrap;gap:6px}
+.adv h3{margin:0;font-size:17px;line-height:1.3;font-weight:600}
+.adv h3 a{color:inherit;text-decoration:none}
+.adv .why{border-left:3px solid var(--ring);padding:2px 0 2px 10px;font-size:14.5px;color:var(--fg-2)}
+.adv .acts{display:flex;gap:8px;flex-wrap:wrap}
+.adv.new{box-shadow:inset 4px 0 0 var(--ring)}
 .wx{display:flex;align-items:center;gap:14px}
 .wx-ico{font-size:44px;line-height:1;flex:none}
 .wx-t{font-family:var(--font-display);font-size:40px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
@@ -372,9 +380,9 @@ mark{background:#F1D0C8;color:inherit}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.0 · plum theme';
+const APP_VERSION = '3.1 · new advances';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -386,6 +394,7 @@ const IC = {
   roster: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M6.5 9.5h8v3h-8zM6.5 15h4"/>',
   cases: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M7.5 14h2l1.5-3 2 5 1.5-2h2"/>',
   nba: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 3 3 9.8 0 12.8M18.4 5.6c-3 3-3 9.8 0 12.8"/>',
+  advances: '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>',
   reminders: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
   backup: '<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>'
 };
@@ -393,7 +402,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Academics', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', reminders: 'Reminders', backup: 'Backup & settings'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -425,7 +434,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -433,7 +442,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -828,6 +837,34 @@ function weatherCard() {
     <span class="c-m">Weather data by Open-Meteo.com</span></div>`;
 }
 
+/* ---------- new advances (daily PubMed digest in data/advances.json) ---------- */
+let advArea = 'All', advTag = '';
+const ADV = () => (D.advances && D.advances.items) || [];
+const advNew = () => ADV().filter(a => !state.advSeen || a.added > state.advSeen).length;
+function pageAdvances() {
+  const items = ADV(); const seen = state.advSeen;
+  let h = head('New advances', D.advances ? 'From PubMed · updated ' + esc(dShort(D.advances.updated)) : 'Not loaded yet', 'Academics');
+  if (!items.length) return h + '<div class="card"><span class="c-s">No papers yet. The daily PubMed digest will fill this in.</span></div>';
+  const tags = [...new Set(items.flatMap(a => a.tags || []))].sort();
+  h += `<div class="seg">${['All', 'Anaesthesia', 'Critical care', 'Saved'].map(a => `<button type="button" data-act="adv-area" data-a="${a}" aria-pressed="${advArea === a}">${a}</button>`).join('')}</div>`;
+  h += `<div class="strip"><button type="button" data-act="adv-tag" data-t="" aria-pressed="${!advTag}">All topics</button>${tags.map(t => `<button type="button" data-act="adv-tag" data-t="${esc(t)}" aria-pressed="${advTag === t}">${esc(t)}</button>`).join('')}</div>`;
+  const list = items.filter(a => (advArea === 'All' || (advArea === 'Saved' ? state.advSaved[a.pmid] : a.area === advArea)) && (!advTag || (a.tags || []).includes(advTag)))
+    .sort((a, b) => (b.added || '').localeCompare(a.added || '') || (b.date || '').localeCompare(a.date || ''));
+  let lastDay = '';
+  h += list.map(a => {
+    const isNew = !seen || a.added > seen; let sep = '';
+    if (a.added !== lastDay) { lastDay = a.added; sep = `<h2 class="sh">${a.added === today() ? 'Today' : esc(dLong(a.added))}</h2>`; }
+    const url = 'https://pubmed.ncbi.nlm.nih.gov/' + encodeURIComponent(a.pmid) + '/';
+    return `${sep}<article class="card adv${isNew ? ' new' : ''}"><div class="pills">${isNew ? '<span class="pill warn">New</span>' : ''}<span class="pill acc">${esc(a.type || 'Paper')}</span><span class="pill" style="background:var(--surface-2);color:var(--fg-2)">${esc(a.area || '')}</span>${(a.tags || []).map(t => `<span class="pill" style="background:var(--surface-2);color:var(--fg-3)">${esc(t)}</span>`).join('')}</div>
+      <h3><a href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a></h3>
+      <span class="c-m">${esc(a.journal || '')}${a.date ? ' · ' + esc(dShort(a.date)) + ' ' + esc(a.date.slice(0, 4)) : ''}</span>
+      <p class="c-s" style="margin:0">${esc(a.summary || '')}</p>
+      ${a.why ? `<div class="why"><b>Why it matters:</b> ${esc(a.why)}</div>` : ''}
+      <div class="acts"><a class="btn small ghost" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">Read on PubMed</a><button class="btn small ghost" type="button" data-act="adv-save" data-id="${esc(a.pmid)}">${state.advSaved[a.pmid] ? '★ Saved' : '☆ Save'}</button><button class="btn small ghost" type="button" data-act="adv-study" data-id="${esc(a.pmid)}">+ Add to Study</button></div></article>`;
+  }).join('') || '<p class="foot">Nothing here for this filter.</p>';
+  return h + `<p class="foot">Summaries are short plain-language digests written from the PubMed abstracts. Always read the original before changing practice. Data from PubMed (NCBI).</p>`;
+}
+
 let otJustDone = null;
 function ring(done, total, size, key) {
   const pct = total ? Math.round(done / total * 100) : 0;
@@ -947,7 +984,7 @@ function pageBackup() {
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
-    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
+    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
@@ -963,7 +1000,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, backup: pageBackup };
+const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, backup: pageBackup };
 function render() {
   REG = [];
   document.body.dataset.sec = tab;
@@ -992,7 +1029,7 @@ function renderDrawer() {
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
-    <p class="sh">Academics</p>${item('calendar')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
+    <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
     <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav>`;
 }
 function renderBanner() {
@@ -1009,7 +1046,7 @@ function toast(msg, undo) {
   if (undo) $('undoBtn').onclick = () => { undo(); el.classList.remove('show'); };
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
-function goTab(k) { tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
+function goTab(k) { if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
 function openDrawer() { $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
@@ -1101,6 +1138,7 @@ function renderSearch(q) {
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
   add('Reminders', state.reminders.filter(r => hit(r.title, remRule(r))).map(r => row(`data-act="rem-edit" data-id="${r.id}"`, r.title, remRule(r))));
+  add('New advances', ADV().filter(a => hit(a.title, a.summary, a.why, a.journal, ...(a.tags || []))).map(a => row(`data-act="goto" data-tab="advances"`, a.title, [a.journal, a.type].filter(Boolean).join(' · '))));
   add('To-do', state.todos.filter(t => hit(t.text)).map(t => row(`data-act="goto" data-tab="todos"`, t.text, t.done ? 'Done' : 'Open')));
   const acad = [];
   SCHED().forEach(x => { if (hit(x.session, x.topic, presenters(x.date), dShort(x.date), MONTHS[+x.date.slice(5, 7) - 1])) { const id = reg({ date: x.date, kind: x.kind, title: x.session, topic: x.topic, who: presenters(x.date), src: 'Department program' }); acad.push([x.date, row(`data-act="item" data-id="${id}"`, x.session + (x.topic ? ': ' + x.topic : ''), [presenters(x.date)].filter(Boolean).join(''), dShort(x.date))]); } });
@@ -1135,6 +1173,16 @@ document.addEventListener('click', e => {
     case 'add': if (tab === 'reminders') remSheet(null); else addEventSheet(); break;
     case 'rem-add': remSheet(null); break;
     case 'prof-edit': closeDrawer(); profileSheet(); break;
+    case 'adv-area': advArea = b.dataset.a; render(); break;
+    case 'adv-tag': advTag = b.dataset.t; render(); break;
+    case 'adv-save': if (state.advSaved[id]) delete state.advSaved[id]; else state.advSaved[id] = nowISO(); commit(state.advSaved[id] ? 'Saved ★' : 'Removed from saved'); break;
+    case 'adv-study': {
+      const a = ADV().find(x => x.pmid === id); if (!a) return;
+      let sub = state.subjects.find(x => x.name === 'New advances'); if (!sub) { sub = { id: uid(), name: 'New advances', created: nowISO() }; state.subjects.push(sub); }
+      if (state.topics.some(t => t.subjectId === sub.id && t.pointer === 'PubMed ' + a.pmid)) { toast('Already in Study'); return; }
+      const name = a.title.length > 110 ? a.title.slice(0, 107) + '…' : a.title;
+      state.topics.push({ id: uid(), subjectId: sub.id, name, pointer: 'PubMed ' + a.pmid, created: nowISO() });
+      commit('Added to Study → New advances'); break; }
     case 'wx-locate': updateLocation(true); break;
     case 'wx-refresh': fetchWeather(true); break;
     case 'prof-useloc': if (state.loc && state.loc.place) { state.profile = { ...state.profile, place: state.loc.place }; commit('Place set to ' + state.loc.place); profileSheet(); } else updateLocation(true); break;
