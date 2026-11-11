@@ -543,6 +543,21 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.hello-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wxchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;background:var(--t-sky,#E2EEF8);color:var(--t-sky-i,#2F5E86);font-size:13.5px;font-weight:500;white-space:nowrap;max-width:60%;overflow:hidden}
+.wxchip b{font-weight:700}.wxchip .wxp{overflow:hidden;text-overflow:ellipsis}
+.gtiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.gt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px;border-radius:20px;background:var(--surface);box-shadow:var(--tile-shadow);text-align:left;color:var(--fg);min-height:104px}
+.gt-i{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:var(--tb);color:var(--ti);font-size:16px}
+.gt .ring{--sz:40px!important}
+.gt-v{font-family:var(--f-head,inherit);font-weight:700;font-size:19px;line-height:1.1;margin-top:4px;letter-spacing:-.01em}
+.gt-l{font-size:12px;color:var(--fg-3);line-height:1.25}
+.bktiles{display:flex;flex-direction:column;gap:10px}
+.bkt{display:flex!important;flex-direction:row!important;align-items:center;gap:14px;text-align:left}
+.bkt .bk-info small{font-size:12.5px;color:var(--fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet-head h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}
+.bk-sum{display:flex;align-items:center;gap:14px;padding:4px 4px 12px}
+.bk-sum .bk-info b{font-size:16px}
 .bk{padding:0;overflow:hidden}
 .bk-head{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;text-align:left;color:var(--fg)}
 .bk-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
@@ -696,7 +711,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.2 · sage & oat';
+const APP_VERSION = '4.3 · minimal today';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -817,15 +832,19 @@ function booksSection() {
   const B = BOOKS();
   let h = `<div class="sec"><h2 class="sh">Textbooks</h2>`;
   if (!B.length) return h + `<div class="card"><span class="c-s">Tell Claude which textbook (and edition) you're reading. Its chapters show up here for you to tick off as you finish them.</span></div></div>`;
-  h += B.map(b => { const x = bookStats(b); const open = bookOpen === b.id;
-    let parts = '', last = null;
-    const rows = b.chapters.map(c => { const k = b.id + '|' + c.n; const on = !!state.bookDone[k];
-      let ph = ''; if (c.part && c.part !== last) { last = c.part; ph = `<div class="bk-part">${esc(c.part)}</div>`; }
-      return ph + `<button class="bk-row${on ? ' done' : ''}" type="button" data-act="book-tick" data-id="${esc(k)}"><span class="check${on ? ' on' : ''}" aria-hidden="true"></span><span class="bk-n">${esc(String(c.n))}</span><span class="bk-t">${esc(c.title)}</span></button>`; }).join('');
-    const next = b.chapters.find(c => !state.bookDone[b.id + '|' + c.n]);
-    return `<div class="card bk"><button class="bk-head" type="button" data-act="book-open" data-id="${esc(b.id)}">${ring(x.d, x.n, 56, 'bk-' + b.id)}<span class="bk-info"><b>${esc(b.title)}</b><small>${esc([b.edition, b.authors].filter(Boolean).join(' · '))}</small><span>${x.d} of ${x.n} chapters done${next && !open ? ' · next: ' + esc(next.title) : ''}</span></span><span class="bk-chev${open ? ' up' : ''}">${CHEV}</span></button>${open ? `<div class="bk-list">${rows}</div>` : ''}</div>`;
-  }).join('');
+  h += `<div class="bktiles">` + B.map(b => { const x = bookStats(b); const next = b.chapters.find(c => !state.bookDone[b.id + '|' + c.n]);
+    return `<button class="card bkt" type="button" data-act="book-open" data-id="${esc(b.id)}">${ring(x.d, x.n, 52, 'bk-' + b.id)}<span class="bk-info"><b>${esc(b.title)}</b><span>${x.d} of ${x.n} chapters</span>${next ? `<small>Next: ${esc(next.title)}</small>` : '<small>Finished 🎉</small>'}</span>${CHEV}</button>`; }).join('') + `</div>`;
   return h + `</div>`;
+}
+function bookSheet(id) {
+  const b = BOOKS().find(x => x.id === id); if (!b) return; const x = bookStats(b);
+  let last = null;
+  const rows = b.chapters.map(c => { const k = b.id + '|' + c.n; const on = !!state.bookDone[k];
+    let ph = ''; if (c.part && c.part !== last) { last = c.part; ph = `<div class="bk-part">${esc(c.part)}</div>`; }
+    return ph + `<button class="bk-row${on ? ' done' : ''}" type="button" data-act="book-tick" data-id="${esc(k)}"><span class="check${on ? ' on' : ''}" aria-hidden="true"></span><span class="bk-n">${esc(String(c.n))}</span><span class="bk-t">${esc(c.title)}</span></button>`; }).join('');
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Chapters</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <div class="bk-sum">${ring(x.d, x.n, 56, 'bks-' + b.id)}<span class="bk-info"><b>${esc(b.title)}</b><span>${x.d} of ${x.n} chapters done</span><small>${esc([b.edition, b.authors].filter(Boolean).join(' · '))}</small></span></div>
+    <div class="bk-list">${rows}</div></div>`);
 }
 const OTL = () => (D.ot && D.ot.items) || [];
 const ROSTER = () => (state.private && state.private.roster && state.private.roster.days) || [];
@@ -902,9 +921,20 @@ const collapsed = new Set();
 const head = (title, sub, eyebrow) => `<div class="lt-wrap">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ''}<h1 class="lt">${esc(title)}</h1>${sub ? `<span class="lt-sub">${sub}</span>` : ''}</div>`;
 const stat = (l, n, m) => `<div class="stat"><span class="s-l">${l}</span><span class="s-n">${n}</span>${m}</div>`;
 
+function wxChip() {
+  if (!state.settings.weatherOn) return '';
+  const L = state.loc; const W = state.weather && state.weather.data;
+  if (!L) return `<button class="wxchip" type="button" data-act="wx-locate">${wxBusy ? 'Finding you…' : '📍 Add weather'}</button>`;
+  if (!W || !W.current) return `<button class="wxchip" type="button" data-act="wx-refresh">${wxBusy ? 'Loading…' : '🌡️ Weather'}</button>`;
+  const c = W.current; const [ico] = wmo(c.weather_code, c.is_day);
+  return `<button class="wxchip" type="button" data-act="wx-sheet" aria-label="Weather details"><span aria-hidden="true">${ico}</span><b>${Math.round(c.temperature_2m)}°</b><span class="wxp">${esc(L.place || '')}</span></button>`;
+}
+function gTile(tab, tint, ico, val, lab, ringHTML) {
+  return `<button class="gt" type="button" data-act="goto" data-tab="${tab}" style="--tb:var(--t-${tint});--ti:var(--t-${tint}-i)">${ringHTML || `<span class="gt-i" aria-hidden="true">${ico}</span>`}<span class="gt-v">${val}</span><span class="gt-l">${lab}</span></button>`;
+}
 function pageToday() {
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
-  let h = `<div class="hello"><span class="hello-d">${esc(dLong(t))}</span><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div>`;
+  let h = `<div class="hello"><div class="hello-row"><span class="hello-d">${esc(dLong(t))}</span>${wxChip()}</div><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div>`;
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -913,51 +943,20 @@ function pageToday() {
   }
   const S = state.settings;
   h += timerCard();
-  h += weatherCard();
-  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) {
-    const n = daysUntil(S.examDate);
-    h += `<div class="card" style="--c:var(--k-exam)"><div class="c-top"><span class="c-lab">${esc(S.examLabel || 'Exam')}</span><span class="c-m">${esc(dLong(S.examDate))} ${dt(S.examDate).getFullYear()}</span></div><span class="c-t">${n === 0 ? 'Today' : plural(n, 'day') + ' to go'}</span></div>`;
-  }
-  if (S.revisionsOn) {
-    const due = dueTopics();
-    if (due.length) {
-      h += `<button class="card" type="button" data-act="goto" data-tab="study" style="--c:var(--i-study)"><div class="c-top"><span class="c-lab">Ready to revise</span>${CHEV}</div><span class="c-t">${plural(due.length, 'topic')}</span><span class="c-s">${esc(due.slice(0, 3).map(x => x.t.name).join(' · '))}${due.length > 3 ? ' …' : ''}</span></button>`;
-    } else if (state.topics.length) {
-      const next = state.topics.map(x => revStatus(x)).filter(s => s.state === 'scheduled').sort((a, b) => a.due.localeCompare(b.due))[0];
-      h += `<button class="card" type="button" data-act="goto" data-tab="study" style="--c:var(--i-study)"><div class="c-top"><span class="c-lab">Revision</span>${CHEV}</div><span class="c-s">Nothing to revise today.${next ? ' Next one on ' + dShort(next.due) + '.' : ''}</span></button>`;
-    } else {
-      h += `<button class="card" type="button" data-act="goto" data-tab="study" style="--c:var(--i-study)"><div class="c-top"><span class="c-lab">Study</span>${CHEV}</div><span class="c-s">Add your first subject and topics to start the revision schedule.</span></button>`;
-    }
-  }
-  if (ROSTER().length) {
-    if (!S.myName.trim()) {
-      h += `<button class="card" type="button" data-act="goto" data-tab="roster" style="--c:var(--k-duty)"><span class="c-lab">Emergency duty</span><span class="c-s">Pick your name on the roster to see your duty days here.</span></button>`;
-    } else {
-      const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length);
-      h += nx ? `<button class="card" type="button" data-act="goto" data-tab="roster" style="--c:var(--k-duty)"><div class="c-top"><span class="c-lab">Next duty · ${relDay(nx.date)}</span>${CHEV}</div><span class="c-t">${dDow(nx.date)} ${dShort(nx.date)}</span><span class="c-s">${esc(dutiesFor(nx.date).join(', '))}${nx.cover ? ' · Cover ' + esc(nx.cover) : ''}</span></button>`
-        : `<button class="card" type="button" data-act="goto" data-tab="roster" style="--c:var(--k-duty)"><span class="c-lab">Emergency duty</span><span class="c-s">No upcoming duty found for ${esc(S.myName)} on the roster.</span></button>`;
-    }
-  }
+  // minimal glance tiles
+  const T = [];
+  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : n, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam'))); }
+  BOOKS().forEach(b => { const x = bookStats(b); T.push(gTile('study', 'peach', '', x.d + '/' + x.n, esc(b.title.length > 22 ? b.title.slice(0, 20) + '…' : b.title), ring(x.d, x.n, 40, 'gt-' + b.id))); });
+  if (S.revisionsOn && state.topics.length) { const due = dueTopics().length; T.push(gTile('study', 'peach', '🔁', due, due === 1 ? 'topic to revise' : 'topics to revise')); }
   const od = otDefaultDay();
-  if (od) {
-    const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length;
-    h += `<button class="card" type="button" data-act="goto" data-tab="ot"><div class="prog-row">${ring(n, rows.length, 56, 'today-' + od)}<div class="prog-txt"><span class="c-lab">OT list · ${relDay(od)}</span><span class="c-t">${n === rows.length && n ? 'All done' : n + ' of ' + plural(rows.length, 'case') + ' ticked'}</span></div>${CHEV}</div></button>`;
-  }
-  const att = remAttention();
-  if (att.length) h += `<div class="sec"><h2 class="sh"><span>Reminders</span><button type="button" data-act="goto" data-tab="reminders" style="color:var(--accent);font:inherit;letter-spacing:inherit;text-transform:inherit">See all</button></h2><div class="group">${att.map(x => remRow(x.r, 52, true)).join('')}</div></div>`;
+  if (od) { const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length; T.push(gTile('ot', 'sky', '', n + '/' + rows.length, 'OT · ' + relDay(od), ring(n, rows.length, 40, 'today-' + od))); }
+  if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
+  const att = remAttention().length; T.push(gTile('reminders', 'rose', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
+  const open = state.todos.filter(x => !x.done).length; T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
+  const unsynced = CASES().filter(c => !c.synced).length; T.push(gTile('cases', 'sage', '📋', unsynced, unsynced ? 'cases to sync' : 'cases all synced'));
+  h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
-  const open = state.todos.filter(x => !x.done).length;
-  h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}${open ? `<button class="row" type="button" data-act="goto" data-tab="todos"><span class="r-bar" style="--c:var(--f-todos)"></span><span class="r-time">To-do</span><span class="r-main"><span class="r-t">${plural(open, 'open task')}</span></span>${CHEV}</button>` : ''}${!items.length && !open ? '<div class="row empty">Nothing on today. Tap + to add an entry.</div>' : ''}</div></div>`;
-  const unsynced = CASES().filter(c => !c.synced).length; const pre = t.slice(0, 8);
-  h += `<div class="sec"><h2 class="sh">At a glance</h2><div class="stats">
-    ${stat('Cases logged', CASES().length, '<span class="s-m">On the case log</span>')}
-    ${stat('Not synced', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs SLCM entry' : 'All synced'}</span>`)}
-    ${stat('Sessions in ' + MON[+pre.slice(5, 7) - 1], SCHED().filter(x => x.date.startsWith(pre)).length, '<span class="s-m">Department program</span>')}
-    ${stat('Study time', fmtMins(state.log.filter(l => dayOf(l.date) >= addDays(t, -6)).reduce((a, l) => a + (+l.mins || 0), 0)), '<span class="s-m">Last 7 days · ' + plural(weekCount(), 'topic') + '</span>')}</div></div>`;
-  if (D.nba && D.nba.games && D.nba.games.length) {
-    const d = nbaLatestDay(); const n = D.nba.games.filter(g => g[0] === d).length;
-    h += `<div class="sec"><h2 class="sh">Sports</h2><div class="group"><button class="row" type="button" data-act="goto" data-tab="nba"><span class="spec" style="background:var(--s-nba);color:var(--i-nba)">NBA</span><span class="r-main"><span class="r-t">Latest results, ${esc(d)}</span><span class="r-s">${n} games</span></span>${CHEV}</button></div></div>`;
-  }
+  if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}</div></div>`;
   return h;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
@@ -1597,14 +1596,15 @@ document.addEventListener('click', e => {
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
-    case 'book-open': bookOpen = bookOpen === id ? null : id; render(); break;
+    case 'book-open': bookOpen = id; bookSheet(id); break;
+    case 'wx-sheet': openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Weather</h2><button type="button" class="link strong" data-act="close">Done</button></div>${weatherCard()}</div>`); break;
     case 'book-tick': {
       const bid = id.split('|')[0]; const b = BOOKS().find(x => x.id === bid);
       const before = b ? bookStats(b).d : 0;
       if (state.bookDone[id]) delete state.bookDone[id]; else state.bookDone[id] = nowISO();
       const all = b && bookStats(b).d === b.chapters.length && before < b.chapters.length;
       if (all) otJustDone = 'bk-' + bid;
-      commit(all ? 'Book finished 🎉' : null); otJustDone = null; break; }
+      commit(all ? 'Book finished 🎉' : null); otJustDone = null; if (sheetOpen()) bookSheet(bid); break; }
     case 'ot-tick': {
       const day = (OTL().find(r => r.id === id) || {}).date; const rows = otRows(day);
       const before = rows.filter(r => state.otDone[r.id]).length;
