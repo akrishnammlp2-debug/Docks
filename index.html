@@ -8,8 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Desk">
-<meta name="theme-color" content="#f1f2f4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d0e10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FBE4D8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#190019" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,6 @@
   --f-nba:#ff8a1f;--i-nba:#a54b00;--s-nba:#ffe8d2;
   --f-backup:#d9dce1;--i-backup:#3b3e45;--s-backup:#e9ebee;
   --f-reminders:#4fd1b5;--i-reminders:#0f6e5c;--s-reminders:#d5f5ec;
-  --accent:var(--i-today);--accent-soft:var(--s-today);--label:var(--f-today);
   --font-body:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --font-display:"Barlow Condensed","Arial Narrow",-apple-system,system-ui,sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -315,16 +314,43 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
   .sheet{left:var(--side)}
   #toast{bottom:30px}
 }
-body[data-sec="study"]{--accent:var(--i-study);--accent-soft:var(--s-study);--label:var(--f-study)}
-body[data-sec="todos"]{--accent:var(--i-todos);--accent-soft:var(--s-todos);--label:var(--f-todos)}
-body[data-sec="calendar"]{--accent:var(--i-calendar);--accent-soft:var(--s-calendar);--label:var(--f-calendar)}
-body[data-sec="ot"]{--accent:var(--i-ot);--accent-soft:var(--s-ot);--label:var(--f-ot)}
-body[data-sec="roster"]{--accent:var(--i-roster);--accent-soft:var(--s-roster);--label:var(--f-roster)}
-body[data-sec="cases"]{--accent:var(--i-cases);--accent-soft:var(--s-cases);--label:var(--f-cases)}
-body[data-sec="nba"]{--accent:var(--i-nba);--accent-soft:var(--s-nba);--label:var(--f-nba)}
-body[data-sec="reminders"]{--accent:var(--i-reminders);--accent-soft:var(--s-reminders);--label:var(--f-reminders)}
-body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);--label:var(--f-backup)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- Plum theme (Apoorva's palette) ----------
+   #190019 · #2B124C · #522B5B · #854F6C · #DFB6B2 · #FBE4D8
+   Section icons in the menu keep their own colours; everything else uses the palette. */
+:root{
+  --bg:#FBE4D8;--surface:#FFF6F1;--surface-2:#F5D9CF;--line:#E7C6BE;--sep:rgba(82,43,91,.16);--bar:rgba(251,228,216,.9);
+  --fg:#190019;--fg-2:#522B5B;--fg-3:#854F6C;--scrim:rgba(25,0,25,.38);
+  --accent:#522B5B;--accent-soft:#F1D0C8;--label:#2B124C;--on-label:#FBE4D8;--ring:#854F6C;--on-ring:#FBE4D8;
+  --good:#3d6b45;--good-soft:#dcebd5;--warn:#9a5a12;--warn-soft:#fbe2c4;--danger:#a3243b;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#190019;--surface:#2B124C;--surface-2:#3A1D5E;--line:#522B5B;--sep:rgba(223,182,178,.16);--bar:rgba(25,0,25,.9);
+  --fg:#FBE4D8;--fg-2:#DFB6B2;--fg-3:#B48AA6;--scrim:rgba(0,0,0,.55);
+  --accent:#DFB6B2;--accent-soft:#3D1F54;--label:#DFB6B2;--on-label:#190019;--ring:#DFB6B2;--on-ring:#190019;
+  --good:#9fd8a8;--good-soft:#1f3a2a;--warn:#f0be63;--warn-soft:#3d2a10;--danger:#ff8fa3;
+}}
+.c-lab{color:var(--accent)!important}
+.hero .c-lab{color:var(--on-label)!important}
+.rg-fg,.ring:not(.late) .rg-fg{stroke:var(--ring)}
+.fill{background:var(--ring)}
+.sm-face{fill:var(--ring)}.sm-eye{fill:var(--on-ring)}.sm-mouth{stroke:var(--on-ring)}
+.btn{color:var(--surface)}
+@media (prefers-color-scheme:dark){.btn:not(.ghost):not(.danger){color:#190019}}
+.avbtn{background:var(--label);color:var(--on-label);box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px var(--ring)}
+.prof{background:#2B124C;border:1px solid #522B5B}
+@media (prefers-color-scheme:dark){.prof{background:#522B5B;border-color:#854F6C}}
+.prof::before{background:linear-gradient(90deg,#190019,#2B124C,#522B5B,#854F6C,#DFB6B2,#FBE4D8)}
+.prof .av{background:#DFB6B2;color:#190019}
+.pl svg{stroke:#DFB6B2}
+.ditem[aria-current="page"]{background:var(--surface)}
+mark{background:#F1D0C8;color:inherit}
+@media (prefers-color-scheme:dark){mark{background:#522B5B}}
+/* no bottom bar: navigation lives in the side menu */
+.dock{display:none!important}
+.page{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+#toast{bottom:calc(24px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body data-sec="today">
@@ -346,7 +372,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.9 · weather';
+const APP_VERSION = '3.0 · plum theme';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -569,10 +595,10 @@ function pageToday() {
   const od = otDefaultDay();
   if (od) {
     const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length;
-    h += `<button class="card" type="button" data-act="goto" data-tab="ot" style="--c:var(--i-ot);--label:var(--f-ot);--on-label:#121316"><div class="prog-row">${ring(n, rows.length, 56, 'today-' + od)}<div class="prog-txt"><span class="c-lab">OT list · ${relDay(od)}</span><span class="c-t">${n === rows.length && n ? 'All done' : n + ' of ' + plural(rows.length, 'case') + ' ticked'}</span></div>${CHEV}</div></button>`;
+    h += `<button class="card" type="button" data-act="goto" data-tab="ot"><div class="prog-row">${ring(n, rows.length, 56, 'today-' + od)}<div class="prog-txt"><span class="c-lab">OT list · ${relDay(od)}</span><span class="c-t">${n === rows.length && n ? 'All done' : n + ' of ' + plural(rows.length, 'case') + ' ticked'}</span></div>${CHEV}</div></button>`;
   }
   const att = remAttention();
-  if (att.length) h += `<div class="sec" style="--accent:var(--i-reminders);--accent-soft:var(--s-reminders);--label:var(--f-reminders)"><h2 class="sh"><span>Reminders</span><button type="button" data-act="goto" data-tab="reminders" style="color:var(--i-reminders);font:inherit;letter-spacing:inherit;text-transform:inherit">See all</button></h2><div class="group">${att.map(x => remRow(x.r, 52, true)).join('')}</div></div>`;
+  if (att.length) h += `<div class="sec"><h2 class="sh"><span>Reminders</span><button type="button" data-act="goto" data-tab="reminders" style="color:var(--accent);font:inherit;letter-spacing:inherit;text-transform:inherit">See all</button></h2><div class="group">${att.map(x => remRow(x.r, 52, true)).join('')}</div></div>`;
   const items = itemsFor(t);
   const open = state.todos.filter(x => !x.done).length;
   h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}${open ? `<button class="row" type="button" data-act="goto" data-tab="todos"><span class="r-bar" style="--c:var(--f-todos)"></span><span class="r-time">To-do</span><span class="r-main"><span class="r-t">${plural(open, 'open task')}</span></span>${CHEV}</button>` : ''}${!items.length && !open ? '<div class="row empty">Nothing on today. Tap + to add an entry.</div>' : ''}</div></div>`;
@@ -945,7 +971,7 @@ function render() {
   $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar' || tab === 'reminders') ? 'visible' : 'hidden';
   $('nb-av').innerHTML = avatarHTML(profile());
   $('page').innerHTML = PAGES[tab]();
-  $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
+  if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
@@ -1399,6 +1425,13 @@ async function checkPersist() {
 
 /* ---------- start ---------- */
 renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); }); if (state.settings.weatherOn) fetchWeather(false);
+(() => {
+  let x0 = null, y0 = null, from = null;
+  document.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
+    from = $('drawer').classList.contains('open') ? 'drawer' : (x0 < 24 && !sheetOpen() ? 'edge' : null); }, { passive: true });
+  document.addEventListener('touchend', e => { if (!from) return; const t = e.changedTouches[0]; const dx = t.clientX - x0, dy = Math.abs(t.clientY - y0);
+    if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
+})();
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
