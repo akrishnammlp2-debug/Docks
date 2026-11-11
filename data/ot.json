@@ -1,0 +1,18 @@
+{"updated":"2026-11-11","note":"OT list without patient names, ages or sex.","items":[
+{"id":"2026-11-12-01","date":"2026-11-12","order":1,"time":"09:00","ot":"OR1","procedure":"Abdominal hysterectomy (simple)","unit":"GYN003"},
+{"id":"2026-11-12-02","date":"2026-11-12","order":2,"time":"14:00","ot":"OR1","procedure":"Inguinal/femoral hernia repair, unilateral","unit":"SUR001"},
+{"id":"2026-11-12-03","date":"2026-11-12","order":3,"time":"16:30","ot":"OR1","procedure":"Hip fracture fixation with nail","unit":"ORT002"},
+{"id":"2026-11-12-04","date":"2026-11-12","order":4,"time":"14:00","ot":"Cath Lab","procedure":"Stenting","unit":"RADIVR"},
+{"id":"2026-11-12-05","date":"2026-11-12","order":5,"time":"10:00","ot":"GEC","procedure":"Endosonography (EUS)","unit":"GEC001"},
+{"id":"2026-11-12-06","date":"2026-11-12","order":6,"time":"12:00","ot":"GEC","procedure":"OGD (oesophagogastroduodenoscopy)","unit":"GEC001"},
+{"id":"2026-11-12-07","date":"2026-11-12","order":7,"time":"14:00","ot":"GEC","procedure":"OGD (oesophagogastroduodenoscopy)","unit":"GEC001"},
+{"id":"2026-11-12-08","date":"2026-11-12","order":8,"time":"10:30","ot":"OR2","procedure":"Amputation stump revision","unit":"SUR004"},
+{"id":"2026-11-12-09","date":"2026-11-12","order":9,"time":"12:00","ot":"OR2","procedure":"Lumpectomy","unit":"SUR001"},
+{"id":"2026-11-12-10","date":"2026-11-12","order":10,"time":"14:00","ot":"OR2","procedure":"Incisional hernioplasty","unit":"SUR001"},
+{"id":"2026-11-12-11","date":"2026-11-12","order":11,"time":"16:30","ot":"OR2","procedure":"Split skin graft (medium)","unit":"SUR001","notes":"Same patient also listed in OR4 at 15:00"},
+{"id":"2026-11-12-12","date":"2026-11-12","order":12,"time":"09:00","ot":"OR3","procedure":"Breast conservative surgery + axillary dissection","unit":"SUO002"},
+{"id":"2026-11-12-13","date":"2026-11-12","order":13,"time":"14:30","ot":"OR3","procedure":"Hemithyroidectomy","unit":"SUO002"},
+{"id":"2026-11-12-14","date":"2026-11-12","order":14,"time":"08:30","ot":"OR4","procedure":"Total thyroidectomy","unit":"SUO001"},
+{"id":"2026-11-12-15","date":"2026-11-12","order":15,"time":"11:00","ot":"OR4","procedure":"Hartmann's reversal","unit":"SUO001"},
+{"id":"2026-11-12-16","date":"2026-11-12","order":16,"time":"15:00","ot":"OR4","procedure":"Split skin graft","unit":"SUR001","notes":"Same patient also listed in OR2 at 16:30"}
+]}

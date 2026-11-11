@@ -1,0 +1,97 @@
+{
+ "updated": "2026-11-11",
+ "note": "De-identified copy of the case logbook (no names, no hospital IDs).",
+ "items": [
+  {
+   "n": 7,
+   "date": "2026-11-11",
+   "procedure": "Right submandibular sialadenectomy (right submandibular sialolith)",
+   "specialty": "ENT",
+   "asa": "",
+   "urgency": "Elective",
+   "type": "General Anaesthesia",
+   "or": "KHSB-OT4",
+   "consultant": "Dr. Diksha Melba DMello",
+   "plan": "GA + ETT",
+   "synced": true
+  },
+  {
+   "n": 6,
+   "date": "2026-11-11",
+   "procedure": "UGI scopy (UGI bleed; HCC with CLD and bone mets, small oesophageal varices, portal HTN)",
+   "specialty": "Gastroenterology",
+   "asa": "",
+   "urgency": "Elective",
+   "type": "Monitored Anaesthesia Care",
+   "or": "GEC (Remote Locations)",
+   "consultant": "Dr. Diksha Melba DMello",
+   "plan": "MAC",
+   "synced": true
+  },
+  {
+   "n": 5,
+   "date": "2026-11-11",
+   "procedure": "UGI scopy (suspected UGI bleed; decompensated cirrhosis with portal HTN, post-TIPSS)",
+   "specialty": "Gastroenterology",
+   "asa": "",
+   "urgency": "Elective",
+   "type": "Monitored Anaesthesia Care",
+   "or": "GEC (Remote Locations)",
+   "consultant": "Dr. Diksha Melba DMello",
+   "plan": "MAC",
+   "synced": true
+  },
+  {
+   "n": 4,
+   "date": "2026-11-11",
+   "procedure": "Adenoidectomy ± FESS + Septoplasty (chronic adenoiditis, DNS to right)",
+   "specialty": "ENT",
+   "asa": "",
+   "urgency": "Elective",
+   "type": "General Anaesthesia",
+   "or": "KHSB-OT1",
+   "consultant": "Dr. Ajith",
+   "plan": "GA + ETT + throat pack",
+   "synced": true
+  },
+  {
+   "n": 3,
+   "date": "2026-11-11",
+   "procedure": "TURP (BPE, 80 cc gland)",
+   "specialty": "Urology",
+   "asa": "II",
+   "urgency": "Elective",
+   "type": "Regional Anaesthesia",
+   "or": "OR 4",
+   "consultant": "Dr. Ajith Bhat",
+   "plan": "Spinal (SAB)",
+   "synced": true
+  },
+  {
+   "n": 1,
+   "date": "2026-11-10",
+   "procedure": "RARP (robot-assisted radical prostatectomy)",
+   "specialty": "Urology",
+   "asa": "II",
+   "urgency": "Elective",
+   "type": "General Anaesthesia",
+   "or": "KHSB-OT1",
+   "consultant": "Dr. Diksha Melba DMello",
+   "plan": "GA + ETT",
+   "synced": true
+  },
+  {
+   "n": 2,
+   "date": "2026-11-05",
+   "procedure": "Hemiarthroplasty, right hip (fracture neck of femur)",
+   "specialty": "Orthopaedics",
+   "asa": "",
+   "urgency": "",
+   "type": "General Anaesthesia",
+   "or": "KHSB-OT1",
+   "consultant": "Dr. Diksha Melba DMello",
+   "plan": "GA + ETT",
+   "synced": true
+  }
+ ]
+}

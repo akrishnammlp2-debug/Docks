@@ -1,5 +1,6 @@
-// Study Desk offline support. Bump CACHE when any app file changes.
-const CACHE = 'study-desk-v1';
+// Study Desk offline support. Bump CACHE whenever index.html, icons or manifest change.
+// The data folder is NOT cached here: the app keeps its own saved copy of each data file.
+const CACHE = 'study-desk-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -16,9 +17,10 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  const url = new URL(req.url);
+  if (req.method !== 'GET' || url.origin !== location.origin) return;
+  if (url.pathname.includes('/data/')) return; // always straight to the network
   if (req.mode === 'navigate') {
-    // Try the network first so updates arrive; fall back to the saved copy offline.
     e.respondWith(
       fetch(req)
         .then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return res; })

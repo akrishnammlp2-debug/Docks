@@ -1,0 +1,98 @@
+{
+ "updated": "2026-11-11",
+ "sessionTime": "7:45 to 8:45 AM",
+ "source": "Department of Anaesthesiology academic program, November 2026",
+ "items": [
+  {
+   "date": "2026-11-03",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "65-year-old with alcoholic liver cirrhosis for laparoscopic umbilical hernia repair"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "50-year-old with supratentorial space-occupying lesion for craniotomy and evacuation"
+  },
+  {
+   "date": "2026-11-06",
+   "kind": "acad",
+   "short": "Seminar",
+   "session": "Postgraduate Seminar",
+   "topic": "Neuromuscular physiology and monitoring"
+  },
+  {
+   "date": "2026-11-10",
+   "kind": "acad",
+   "short": "Group disc.",
+   "session": "Group Discussion",
+   "topic": "High pressure system: supply of medical gases"
+  },
+  {
+   "date": "2026-11-11",
+   "kind": "acad",
+   "short": "Journal club",
+   "session": "Journal Club",
+   "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
+  },
+  {
+   "date": "2026-11-13",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "55-year-old with large thyroid and retrosternal extension for total thyroidectomy"
+  },
+  {
+   "date": "2026-11-17",
+   "kind": "acad",
+   "short": "Regional",
+   "session": "Regional Anaesthesia",
+   "topic": "Intrathecal and epidural space anatomy; spinal and epidural techniques"
+  },
+  {
+   "date": "2026-11-19",
+   "kind": "acad",
+   "short": "Group disc.",
+   "session": "Group Discussion",
+   "topic": "Intermediate pressure system of the anaesthesia machine: components and mechanisms"
+  },
+  {
+   "date": "2026-11-20",
+   "kind": "acad",
+   "short": "Faculty lecture",
+   "session": "Faculty Lecture",
+   "topic": "Anaesthesia for hepatic resection"
+  },
+  {
+   "date": "2026-11-24",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "28-year-old primigravida with severe mitral stenosis scheduled for caesarean delivery"
+  },
+  {
+   "date": "2026-11-26",
+   "kind": "acad",
+   "short": "Group disc.",
+   "session": "Group Discussion",
+   "topic": "Low pressure system of the anaesthesia machine: components and mechanism"
+  },
+  {
+   "date": "2026-11-27",
+   "kind": "acad",
+   "short": "Regional",
+   "session": "Regional Anaesthesia",
+   "topic": "Segmental spinal anaesthesia; complications of spinal anaesthesia"
+  },
+  {
+   "date": "2026-11-30",
+   "kind": "exam",
+   "short": "OSCE",
+   "session": "OSCE test / quiz",
+   "topic": ""
+  }
+ ]
+}
