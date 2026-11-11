@@ -8,8 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Desk">
-<meta name="theme-color" content="#F2F9F3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1B4339" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1E2622" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -592,6 +592,89 @@ mark{background:#DAF1DE!important}
   .prof{background:linear-gradient(140deg,#0B2B26,#235347)!important}
   .toast{background:#0B2B26!important;color:#DAF1DE!important}
 }
+
+/* ==========================================================================
+   "Sage & Oat" — friendly, clean (v4.2). Ideas: warm neutral background instead of stark white,
+   soft pastel tints per kind of card, rounded friendly type, sentence case, gentle shadows.
+   Fonts: Plus Jakarta Sans (headings, labels, menu) + Inter (body text).
+   ========================================================================== */
+:root{
+  --bg:#F6F3EC;--surface:#FFFFFF;--surface-2:#F2EFE7;--line:#E7E2D7;--sep:rgba(31,42,36,.08);--bar:rgba(246,243,236,.86);
+  --fg:#1F2A24;--fg-2:#4A5650;--fg-3:#8A938D;--scrim:rgba(20,26,23,.35);
+  --accent:#3E7B5E;--accent-soft:#E3EFE6;--label:#3E7B5E;--on-label:#FFFFFF;--ring:#3E7B5E;--on-ring:#FFFFFF;
+  --t-sage:#E3EFE6;--t-sage-i:#2F6B4F;--t-peach:#FBE9DD;--t-peach-i:#9A5A33;--t-sky:#E2EEF8;--t-sky-i:#2F5E86;
+  --t-lav:#ECE7F6;--t-lav-i:#5B4A8A;--t-butter:#FBF2D4;--t-butter-i:#7A6214;--t-rose:#F8E4E6;--t-rose-i:#93404B;
+  --tile-shadow:0 1px 2px rgba(31,42,36,.04),0 8px 24px -14px rgba(31,42,36,.18);--tile-bevel:none;
+  --f-head:"Plus Jakarta Sans",-apple-system,system-ui,sans-serif;--font-body:"Inter",-apple-system,system-ui,sans-serif;
+  --font-display:"Plus Jakarta Sans",-apple-system,system-ui,sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#1E2622;--bar:rgba(30,38,34,.86);--scrim:rgba(0,0,0,.5);
+  --tile-shadow:0 1px 2px rgba(0,0,0,.2),0 10px 26px -14px rgba(0,0,0,.6)}
+  body{background:#1E2622}}
+body{background:var(--bg)}
+/* type */
+.card,.c-s,.c-m,.r-t,.r-s,.field,.foot{font-family:var(--font-body)}
+.nb-t,.hello-t,.lt,.c-big,.c-t,.s-n,.btn,.ditem,.sh,.c-lab,.prof b,.bk-info b,.read-i b,.pill,.seg button{font-family:var(--f-head)!important}
+.c-lab,.sh,.s-l,.bk-part,.otbl thead th,.nhead,.cell small,.r-when small{text-transform:none!important;letter-spacing:0!important}
+.c-lab{font-size:13px!important;font-weight:600!important;color:var(--fg-3)!important}
+.sh{font-size:15px!important;font-weight:700!important;color:var(--fg)!important;padding:0 4px!important}
+.bk-part{font-family:var(--f-head);font-size:12.5px!important;font-weight:700!important;color:var(--fg-3)!important}
+.c-big{text-transform:none!important;font-size:22px!important;font-weight:700!important;letter-spacing:-.01em!important;line-height:1.2!important}
+.c-t,.s-n{font-weight:700!important;letter-spacing:-.01em}
+.btn{text-transform:none!important;letter-spacing:0!important;font-size:15.5px!important;font-weight:600!important;border-radius:999px!important;background:var(--accent)!important;color:#fff!important;box-shadow:none!important}
+.btn.ghost{background:var(--accent-soft)!important;color:var(--accent)!important}
+/* page headings: friendly, no boxed labels */
+.lt{background:none!important;color:var(--fg)!important;box-shadow:none!important;padding:0!important;text-transform:none!important;font-size:27px!important;font-weight:700!important;letter-spacing:-.02em!important;line-height:1.15!important;border-radius:0!important}
+.lt-sub{color:var(--fg-3)!important;font-size:14.5px!important}
+.eyebrow{font-family:var(--f-head)!important;text-transform:none!important;letter-spacing:0!important;font-size:13px!important;color:var(--fg-3)!important;font-weight:600!important}
+.hello-t{font-weight:700!important;font-size:27px!important;letter-spacing:-.02em!important;color:var(--fg)!important}
+.hello-d{color:var(--fg-3)!important}.hello-s{color:var(--fg-2)!important}
+.nb-t{color:var(--fg)!important;font-weight:700!important}
+.navbar,.navbar button,.navbar svg{color:var(--fg)!important}
+/* cards */
+.card{background:var(--surface)!important;border:0!important;border-radius:22px!important;box-shadow:var(--tile-shadow)!important;color:var(--fg)!important}
+.hero{background:var(--t-sage)!important;color:var(--fg)!important}
+.hero .c-lab{color:var(--t-sage-i)!important}.hero .c-big{color:var(--fg)!important}.hero .c-s{color:var(--fg-2)!important}.hero .c-m{color:var(--t-sage-i)!important}
+.readc{background:var(--t-peach)!important}.readc .c-lab,.readc .c-m{color:var(--t-peach-i)!important}
+.read-i{background:rgba(255,255,255,.7)!important;border-radius:16px!important}.read-i small{color:var(--t-peach-i)!important}
+.card[style*="k-exam"]{background:var(--t-lav)!important}.card[style*="k-exam"] .c-lab{color:var(--t-lav-i)!important}
+.wx,.card:has(.wx-acts){background:var(--t-sky)!important}.card:has(.wx-acts) .c-lab{color:var(--t-sky-i)!important}
+.stats .stat,.stats .stat:nth-child(n){background:var(--surface-2)!important;border-radius:16px!important;color:var(--fg)!important}
+.group{border-radius:22px!important;overflow:hidden;box-shadow:var(--tile-shadow)!important;border:0!important}
+.check.on{background:var(--accent)!important;border-color:var(--accent)!important}
+.track{background:var(--surface-2)!important}.fill{background:var(--accent)!important}
+/* side menu */
+.drawer{background:var(--bg)!important;border-right:1px solid var(--line)!important}
+.drawer .sh{font-size:12.5px!important;color:var(--fg-3)!important;font-weight:600!important}
+.ditem,.ditem[data-tab]{background:transparent!important;box-shadow:none!important;color:var(--fg-2)!important;text-transform:none!important;letter-spacing:0!important;font-size:15.5px!important;font-weight:500!important;border-radius:16px!important;min-height:46px!important;transform:none!important}
+.ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:var(--surface)!important;color:var(--fg)!important;font-weight:700!important;box-shadow:var(--tile-shadow)!important}
+.ditem[aria-current="page"]::after,.ditem::after{display:none!important}
+.ditem svg,.ditem[data-tab] svg,.ditem[aria-current="page"] svg{width:34px!important;height:34px!important;padding:7px!important;border-radius:12px!important;background:var(--t-sage)!important;color:var(--t-sage-i)!important}
+.ditem[data-tab="today"] svg{background:var(--t-butter)!important;color:var(--t-butter-i)!important}
+.ditem[data-tab="reminders"] svg,.ditem[data-tab="backup"] svg{background:var(--t-rose)!important;color:var(--t-rose-i)!important}
+.ditem[data-tab="study"] svg,.ditem[data-tab="todos"] svg{background:var(--t-peach)!important;color:var(--t-peach-i)!important}
+.ditem[data-tab="calendar"] svg,.ditem[data-tab="advances"] svg{background:var(--t-lav)!important;color:var(--t-lav-i)!important}
+.ditem[data-tab="ot"] svg,.ditem[data-tab="roster"] svg,.ditem[data-tab="cases"] svg{background:var(--t-sky)!important;color:var(--t-sky-i)!important}
+.ditem small,.ditem[aria-current="page"] small{background:var(--accent-soft)!important;color:var(--accent)!important;font-weight:600!important}
+.prof{background:var(--surface)!important;color:var(--fg)!important;box-shadow:var(--tile-shadow)!important;border-radius:22px!important}
+.prof *{color:var(--fg-2)}.prof b{color:var(--fg)!important;font-weight:700!important}
+.prof .btn,.prof .btn.ghost{background:var(--accent-soft)!important;color:var(--accent)!important}
+.avbtn{background:var(--t-sage)!important;color:var(--t-sage-i)!important}
+#toast,.toast{background:#1F2A24!important;color:#F6F3EC!important;border-radius:999px!important}
+/* dark mode: same friendly cards on a deep warm background */
+@media (prefers-color-scheme:dark){
+  .nb-t,.navbar,.navbar button,.navbar svg,.hello-t,.lt{color:#F1EEE6!important}
+  .hello-d,.lt-sub,.eyebrow,.drawer .sh{color:#9AA59F!important}.hello-s{color:#C9CFCB!important}
+  #page>.sh,.sec>.sh{color:#F1EEE6!important}#page>.foot,.sec>.foot{color:#9AA59F!important}
+  .drawer{background:#19201D!important;border-right-color:rgba(255,255,255,.06)!important}
+  .ditem,.ditem[data-tab]{color:#C9CFCB!important}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#FFFFFF!important;color:#1F2A24!important}
+  .prof{background:#FFFFFF!important}
+  #toast,.toast{background:#F6F3EC!important;color:#1F2A24!important}
+}
+.ditem,.ditem[data-tab]{border:0!important;outline:0}
+.prof::before,.prof::after{display:none!important}
+.navbar .avbtn,.navbar .avbtn *{color:var(--t-sage-i)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -613,7 +696,7 @@ mark{background:#DAF1DE!important}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.1 · books';
+const APP_VERSION = '4.2 · sage & oat';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
