@@ -406,7 +406,7 @@ mark{background:#F1D0C8;color:inherit}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.2 · glass menu';
+const APP_VERSION = '3.3 · device sync';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
@@ -468,7 +468,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {},
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, sync: s.sync || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -483,6 +483,7 @@ function load() {
 }
 let state = load();
 function save() {
+  try { stampAll(); } catch (_) {}
   try {
     const s = JSON.stringify(state);
     localStorage.setItem(KEY, s);
@@ -494,7 +495,7 @@ function save() {
     renderBanner(); return false;
   }
 }
-function commit(msg, undo) { const ok = save(); render(); if (ok && msg) toast(msg, undo); return ok; }
+function commit(msg, undo) { const ok = save(); render(); if (ok && msg) toast(msg, undo); if (ok) syncSoon(); return ok; }
 
 /* ---------- shared data (from the data folder on GitHub) ---------- */
 const D = {}; const dataStatus = {};
@@ -1006,6 +1007,7 @@ function pageBackup() {
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">iPhone ↔ iPad sync</h2><div class="card">${devSyncCard()}</div></div>`;
   h += `<div class="sec"><h2 class="sh">Private file (manual)</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
@@ -1287,12 +1289,21 @@ document.addEventListener('click', e => {
     case 'sync-copy': copyCode(); break;
     case 'sync-now': privateSync(true); break;
     case 'sync-off': turnOffSync(); break;
+    case 'devsync-now': deviceSync(true); break;
+    case 'devsync-off': if (!confirm('Disconnect device sync on this device? The access key is removed from this device; your data stays here.')) return;
+      try { localStorage.removeItem(SYNC_TOKEN_KEY); } catch (_) {} devSync = { status: 'off' }; render(); toast('Device sync disconnected'); break;
   }
 });
 document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault();
   const fd = new FormData(f); const id = f.dataset.id;
   switch (f.dataset.form) {
+    case 'synccfg': {
+      const repo = (fd.get('repo') || '').trim().replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '').replace(/\/$/, ''); const token = (fd.get('token') || '').trim();
+      if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { toast('Repository should look like owner/name'); return; }
+      if (!token) { toast('Paste the access key first'); return; }
+      try { localStorage.setItem(SYNC_REPO_KEY, repo); localStorage.setItem(SYNC_TOKEN_KEY, token); } catch (_) { toast("Couldn't store the key on this device"); return; }
+      devSync = { status: 'busy' }; render(); deviceSync(true); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
       closeSheet(); commit('Profile saved'); break; }
@@ -1335,10 +1346,143 @@ document.addEventListener('change', e => {
   commit('Saved');
 });
 
+/* ---------- device sync (iPhone <-> iPad) ----------
+   Every record gets a timestamp when it changes (stampAll). Each device writes ONE locked file, sync/<kid>.json, to a
+   PRIVATE GitHub repository, encrypted for every paired device listed in keys/devices.json (same scheme as private sync).
+   Other devices read those files and keep the newest version of each record; deletions travel as dated tombstones.
+   The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
+const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
+const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded'], SYNC_OBJ = ['settings', 'profile'];
+function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
+function syncRecords() {
+  const r = {};
+  SYNC_ARR.forEach(c => (state[c] || []).forEach(x => { if (x && x.id) r[c + ':' + x.id] = x; }));
+  SYNC_MAP.forEach(c => Object.keys(state[c] || {}).forEach(k => { r[c + ':' + k] = state[c][k]; }));
+  SYNC_OBJ.forEach(c => Object.keys(state[c] || {}).forEach(k => { r[c + ':' + k] = state[c][k]; }));
+  r['advSeen:'] = state.advSeen || '';
+  return r;
+}
+function syncBook() { if (!state.sync) state.sync = { stamps: {}, deleted: {}, joined: false }; return state.sync; }
+function stampAll() {
+  const S = syncBook(); const cur = syncRecords(); const now = Date.now();
+  for (const k in cur) { const h = fnv(JSON.stringify(cur[k])); const st = S.stamps[k]; if (!st || st.h !== h) { S.stamps[k] = { h, t: now }; delete S.deleted[k]; } }
+  for (const k in S.stamps) if (!(k in cur)) { S.deleted[k] = now; delete S.stamps[k]; }
+  const old = now - 60 * 864e5; for (const k in S.deleted) if (S.deleted[k] < old) delete S.deleted[k];
+}
+function applyRecord(k, v) {
+  const i = k.indexOf(':'); const c = k.slice(0, i), id = k.slice(i + 1);
+  if (SYNC_ARR.includes(c)) { const arr = state[c] || (state[c] = []); const ix = arr.findIndex(x => x.id === id); if (ix >= 0) arr[ix] = v; else arr.push(v); }
+  else if (SYNC_MAP.includes(c) || SYNC_OBJ.includes(c)) { state[c] = { ...(state[c] || {}), [id]: v }; }
+  else if (c === 'advSeen') state.advSeen = v;
+}
+function removeRecord(k) {
+  const i = k.indexOf(':'); const c = k.slice(0, i), id = k.slice(i + 1);
+  if (SYNC_ARR.includes(c)) state[c] = (state[c] || []).filter(x => x.id !== id);
+  else if (SYNC_MAP.includes(c) || SYNC_OBJ.includes(c)) { if (state[c]) delete state[c][id]; }
+}
+async function sealEnvelope(obj, devices) {
+  const rnd = n => crypto.getRandomValues(new Uint8Array(n));
+  const cekRaw = rnd(32); const cek = await crypto.subtle.importKey('raw', cekRaw, 'AES-GCM', false, ['encrypt']); const iv = rnd(12);
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, cek, new TextEncoder().encode(JSON.stringify(obj)));
+  const recipients = [];
+  for (const d of devices) {
+    const pub = await crypto.subtle.importKey('raw', b64u.dec(d.pub), { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+    const eph = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+    const shared = new Uint8Array(await crypto.subtle.deriveBits({ name: 'ECDH', public: pub }, eph.privateKey, 256));
+    const info = new TextEncoder().encode('studydesk-v1|' + d.kid); const mat = new Uint8Array(shared.length + info.length); mat.set(shared); mat.set(info, shared.length);
+    const kek = await crypto.subtle.importKey('raw', await crypto.subtle.digest('SHA-256', mat), 'AES-GCM', false, ['encrypt']);
+    const wiv = rnd(12); const wk = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: wiv }, kek, cekRaw);
+    recipients.push({ kid: d.kid, epk: b64u.enc(await crypto.subtle.exportKey('raw', eph.publicKey)), iv: b64u.enc(wiv), wk: b64u.enc(wk) });
+  }
+  return { v: 1, alg: 'ECDH-P256+SHA256+A256GCM', created: nowISO(), recipients, iv: b64u.enc(iv), ct: b64u.enc(ct) };
+}
+const utf8b64 = str => { const bytes = new TextEncoder().encode(str); let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b)); return btoa(bin); };
+const b64utf8 = b64 => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, '')), c => c.charCodeAt(0)));
+function gh(cfg, path, opt) {
+  return fetch('https://api.github.com/repos/' + cfg.repo + path, { ...(opt || {}), cache: 'no-store',
+    headers: { Authorization: 'Bearer ' + cfg.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...((opt && opt.headers) || {}) } });
+}
+let devSync = { status: 'off' }, devSyncBusy = false, devSyncTimer = null, pairedDevices = [];
+function syncSoon() { if (!syncCfg().token || !device) return; clearTimeout(devSyncTimer); devSyncTimer = setTimeout(() => deviceSync(false), 4000); }
+async function deviceSync(manual) {
+  const cfg = syncCfg();
+  if (!cfg.token) { devSync = { status: 'off' }; return; }
+  if (!deviceChecked) await loadDevice();
+  if (!device) { devSync = { status: 'error', msg: 'Set up private sync on this device first (the card above).' }; render(); return; }
+  if (devSyncBusy) return; devSyncBusy = true;
+  try {
+    const dr = await fetch('keys/devices.json?t=' + Date.now(), { cache: 'no-store' });
+    pairedDevices = dr.ok ? await dr.json() : [];
+    if (!pairedDevices.some(d => d.kid === device.kid)) throw new Error("this device isn't paired yet. Send its phone code (card above) to Claude");
+    // pull: newest version of every record across the other devices' files
+    const lr = await gh(cfg, '/contents/sync');
+    if (lr.status === 401) throw new Error('the access key was refused (expired or mistyped)');
+    if (lr.status === 403) throw new Error("the access key isn't allowed to write to this repository");
+    const files = lr.status === 404 ? [] : lr.ok ? (await lr.json()).filter(f => f.type === 'file' && /\.json$/.test(f.name) && f.name !== device.kid + '.json') : null;
+    if (files === null) throw new Error('GitHub answered ' + lr.status);
+    const best = {}, gone = {}; const from = [];
+    for (const f of files) {
+      const fr = await gh(cfg, '/contents/sync/' + encodeURIComponent(f.name)); if (!fr.ok) continue;
+      const env = JSON.parse(b64utf8((await fr.json()).content || ''));
+      const out = await openEnvelope(env); if (out.missing) continue;
+      const snap = out.data; from.push(snap.name || snap.device);
+      for (const k in snap.records || {}) { const r = snap.records[k]; if (!best[k] || r.t > best[k].t) best[k] = r; }
+      for (const k in snap.deleted || {}) gone[k] = Math.max(gone[k] || 0, snap.deleted[k]);
+    }
+    const S = syncBook(); let changed = 0;
+    for (const k in best) {
+      const r = best[k], st = S.stamps[k], del = S.deleted[k];
+      if (!S.joined ? !(del && del > r.t) : ((!st || r.t > st.t) && (!del || r.t > del))) {
+        if (!st || st.h !== fnv(JSON.stringify(r.v))) { applyRecord(k, r.v); changed++; }
+        S.stamps[k] = { h: fnv(JSON.stringify(r.v)), t: r.t }; delete S.deleted[k];
+      }
+    }
+    for (const k in gone) { const st = S.stamps[k]; if (st && gone[k] > st.t) { removeRecord(k); delete S.stamps[k]; S.deleted[k] = gone[k]; changed++; } }
+    S.joined = true; save();
+    // push: this device's full snapshot (only if it changed since the last push)
+    const records = {}; const cur = syncRecords(); for (const k in cur) records[k] = { t: (S.stamps[k] || {}).t || Date.now(), v: cur[k] };
+    const me = pairedDevices.find(d => d.kid === device.kid);
+    const snap = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), records, deleted: S.deleted };
+    const sig = fnv(JSON.stringify({ records, deleted: S.deleted, to: pairedDevices.map(d => d.kid) }));
+    if (sig !== S.lastPush) {
+      const env = await sealEnvelope(snap, pairedDevices);
+      const path = '/contents/sync/' + device.kid + '.json';
+      const cr = await gh(cfg, path); const sha = cr.ok ? (await cr.json()).sha : undefined;
+      const pr = await gh(cfg, path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'sync ' + (me ? me.name : device.kid), content: utf8b64(JSON.stringify(env)), sha }) });
+      if (!pr.ok) throw new Error(pr.status === 403 || pr.status === 404 ? "the access key can't write to " + cfg.repo + ' (check Contents: Read and write)' : 'GitHub answered ' + pr.status + ' while saving');
+      S.lastPush = sig; save();
+    }
+    devSync = { status: 'ok', at: nowISO(), from, changed };
+    if (manual) toast(changed ? plural(changed, 'change') + ' from your other devices ✓' : 'In sync ✓');
+  } catch (e) {
+    const offline = e instanceof TypeError || !navigator.onLine;
+    devSync = { status: 'error', msg: offline ? "Couldn't reach GitHub just now. Your changes are kept and will sync later." : "Couldn't sync: " + ((e && e.message) || 'unknown error') + '.' };
+    if (manual) toast(offline ? 'No connection. Will sync later.' : "Couldn't sync. See Backup & settings.");
+  } finally { devSyncBusy = false; render(); }
+}
+function devSyncCard() {
+  const cfg = syncCfg();
+  if (!device) return '<span class="c-s">Set up private sync (above) on this device first. Then you can connect device sync.</span>';
+  if (!cfg.token) return `<span class="c-s">Keep topics, study sessions, to-dos, reminders, ticks and settings the same on your iPhone and iPad.</span>
+    <span class="c-m">Needs a private GitHub repository and an access key that can only use that repository. Type the key here yourself on each device; it stays on this device.</span>
+    <form data-form="synccfg" class="sheet-in" style="gap:8px" autocomplete="off">
+      <input class="tin" name="repo" value="${esc(cfg.repo || 'akrishnammlp2-debug/docks-sync')}" placeholder="owner/repository" autocapitalize="off" spellcheck="false">
+      <input class="tin" name="token" type="password" placeholder="Access key (starts with github_pat_)" autocapitalize="off" spellcheck="false" autocomplete="off">
+      <button class="btn" type="submit">Connect</button></form>`;
+  const pill = devSync.status === 'ok' ? `<span class="pill good">Synced ${esc(ago(devSync.at))}</span>` : devSync.status === 'error' ? '<span class="pill warn">Not synced</span>' : devSyncBusy ? '<span class="pill acc">Syncing…</span>' : '';
+  const names = pairedDevices.map(d => esc(d.name) + (device && d.kid === device.kid ? ' (this one)' : '')).join(' · ');
+  return `<div class="c-top"><span class="c-lab">Device sync</span>${pill}</div>
+    ${devSync.msg ? `<span class="c-s">${esc(devSync.msg)}</span>` : ''}
+    <span class="c-m">Repository: ${esc(cfg.repo)}${names ? '<br>Devices: ' + names : ''}${devSync.from && devSync.from.length ? '<br>Last pulled from: ' + esc(devSync.from.join(', ')) : ''}</span>
+    <div class="btns" style="margin-top:6px"><button class="btn ghost" type="button" data-act="devsync-now">Sync now</button><button class="btn danger" type="button" data-act="devsync-off">Disconnect this device</button></div>`;
+}
+
 /* ---------- backup ---------- */
 async function exportData() {
   const name = `study-desk-backup-${today()}.json`;
-  const json = JSON.stringify({ app: 'study-desk', exportedAt: nowISO(), ...state }, null, 1);
+  const { sync: _s, ...exportable } = state;
+  const json = JSON.stringify({ app: 'study-desk', exportedAt: nowISO(), ...exportable }, null, 1);
   try {
     const file = new File([json], name, { type: 'application/json' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: name });
@@ -1498,7 +1642,7 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); }); if (state.settings.weatherOn) fetchWeather(false);
+renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); }); if (state.settings.weatherOn) fetchWeather(false);
 (() => {
   let x0 = null, y0 = null, from = null;
   document.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
@@ -1507,7 +1651,7 @@ renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() 
     if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
 })();
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>
