@@ -543,6 +543,11 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.readc{gap:8px}
+.read-i{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:var(--surface-2);color:var(--fg);text-decoration:none}
+.read-i b{font-weight:600;font-size:15px;line-height:1.3}
+.read-i small{font-size:12.5px;color:var(--accent);font-weight:500}
+.read-i span{font-size:13.5px;color:var(--fg-2);line-height:1.35}
 .nb-t{font-family:var(--font-body,Inter,system-ui)!important;text-transform:none!important;font-weight:600!important;font-size:17px!important;letter-spacing:0!important}
 .hero .c-big{font-family:var(--font-body,Inter,system-ui)!important;text-transform:none!important;font-size:22px!important;font-weight:600!important;letter-spacing:-.01em}
 .hello{display:flex;flex-direction:column;gap:3px;margin:18px 2px 4px}
@@ -570,7 +575,7 @@ mark{background:#DAF1DE!important}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.8 · green';
+const APP_VERSION = '3.9 · green';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
@@ -625,7 +630,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 const banners = { save: null, info: null };
 function blank() {
   return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {},
-    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
+    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
 function normalise(s) {
@@ -762,10 +767,11 @@ const stat = (l, n, m) => `<div class="stat"><span class="s-l">${l}</span><span 
 function pageToday() {
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   let h = `<div class="hello"><span class="hello-d">${esc(dLong(t))}</span><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div>`;
-  const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
+  const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
+    if (S0.readOn !== false && Array.isArray(up.read) && up.read.length) h += `<div class="card readc"><div class="c-top"><span class="c-lab">Read before class</span><span class="c-m">${esc(up.short || up.session)}</span></div>${up.read.map(r => `<a class="read-i" href="${esc(r.url)}" target="_blank" rel="noopener"><b>${esc(r.title)}</b><small>${esc(r.journal)}${r.year ? ' · ' + esc(String(r.year)) : ''}</small>${r.why ? `<span>${esc(r.why)}</span>` : ''}</a>`).join('')}</div>`;
   }
   const S = state.settings;
   h += timerCard();
@@ -1211,6 +1217,7 @@ function pageBackup() {
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
