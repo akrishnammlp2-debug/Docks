@@ -236,6 +236,13 @@ body.locked .dock{transform:translate(-50%,160%)}
 .pl span{min-width:0;overflow-wrap:anywhere}
 .prof .btn.ghost{background:rgba(255,255,255,.12);color:#fff;min-height:36px;font-size:15px}
 .photo-row{display:flex;align-items:center;gap:14px}
+.timer{display:flex;align-items:center;gap:12px}
+.timer .t-min{font-family:var(--font-display);font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.wk3 .s-n{font-size:24px;white-space:nowrap}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) 92px 64px;gap:10px;align-items:center;font-size:15px}
+.prow .v{text-align:right;color:var(--fg-2);font-variant-numeric:tabular-nums;font-size:13.5px}
+.mini{width:40px;height:40px;flex:none}
+.field input[type=number]{max-width:110px}
 .adv{display:flex;flex-direction:column;gap:8px}
 .adv .pills{display:flex;flex-wrap:wrap;gap:6px}
 .adv h3{margin:0;font-size:17px;line-height:1.3;font-weight:600}
@@ -406,7 +413,7 @@ mark{background:#F1D0C8;color:inherit}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '3.3 · device sync';
+const APP_VERSION = '3.4 · study progress';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances'];
 
@@ -468,7 +475,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, sync: s.sync || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, sync: s.sync || null, active: s.active || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -603,6 +610,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += timerCard();
   h += weatherCard();
   if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) {
     const n = daysUntil(S.examDate);
@@ -643,7 +651,7 @@ function pageToday() {
     ${stat('Cases logged', CASES().length, '<span class="s-m">On the case log</span>')}
     ${stat('Not synced', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs SLCM entry' : 'All synced'}</span>`)}
     ${stat('Sessions in ' + MON[+pre.slice(5, 7) - 1], SCHED().filter(x => x.date.startsWith(pre)).length, '<span class="s-m">Department program</span>')}
-    ${stat('Studied this week', weekCount(), '<span class="s-m">Topics, last 7 days</span>')}</div></div>`;
+    ${stat('Study time', fmtMins(state.log.filter(l => dayOf(l.date) >= addDays(t, -6)).reduce((a, l) => a + (+l.mins || 0), 0)), '<span class="s-m">Last 7 days · ' + plural(weekCount(), 'topic') + '</span>')}</div></div>`;
   if (D.nba && D.nba.games && D.nba.games.length) {
     const d = nbaLatestDay(); const n = D.nba.games.filter(g => g[0] === d).length;
     h += `<div class="sec"><h2 class="sh">Sports</h2><div class="group"><button class="row" type="button" data-act="goto" data-tab="nba"><span class="spec" style="background:var(--s-nba);color:var(--i-nba)">NBA</span><span class="r-main"><span class="r-t">Latest results, ${esc(d)}</span><span class="r-s">${n} games</span></span>${CHEV}</button></div></div>`;
@@ -651,14 +659,40 @@ function pageToday() {
   return h;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
-
+const fmtMins = m => { m = Math.round(m || 0); return m < 60 ? m + ' min' : Math.floor(m / 60) + 'h' + (m % 60 ? ' ' + (m % 60) + 'm' : ''); };
+function topicStats(t) {
+  const L = state.log.filter(l => l.topicId === t.id);
+  const mins = L.reduce((a, l) => a + (+l.mins || 0), 0); const page = L.reduce((a, l) => Math.max(a, +l.page || 0), 0);
+  const total = +t.pagesTotal || 0; const pct = total ? Math.min(100, Math.round(page / total * 100)) : null;
+  return { sessions: L.length, mins, page, total, pct, last: L.reduce((a, l) => l.date > a ? l.date : a, '') };
+}
+function subjectStats(sid) {
+  const ts = state.topics.filter(t => t.subjectId === sid).map(topicStats);
+  const withPages = ts.filter(x => x.total); const done = withPages.reduce((a, x) => a + Math.min(x.page, x.total), 0), tot = withPages.reduce((a, x) => a + x.total, 0);
+  return { mins: ts.reduce((a, x) => a + x.mins, 0), sessions: ts.reduce((a, x) => a + x.sessions, 0), pct: tot ? Math.round(done / tot * 100) : null, done, tot };
+}
+const activeMins = () => state.active ? Math.max(0, Math.round((Date.now() - new Date(state.active.start)) / 60e3)) : 0;
+function timerCard() {
+  if (!state.active) return '';
+  const t = byId(state.topics, state.active.topicId); if (!t) return '';
+  return `<div class="card hero"><span class="c-lab">Studying now</span><div class="timer"><span class="t-min">⏱ ${fmtMins(activeMins())}</span><span class="c-s" style="flex:1;min-width:0">${esc(t.name)}</span></div>
+    <div class="btns" style="flex-direction:row;margin-top:4px"><button class="btn small" type="button" data-act="finish-open" style="background:var(--on-label);color:var(--label)">Finish &amp; log</button>${t.link ? `<a class="btn small ghost" href="${esc(t.link)}" style="text-decoration:none">Open notes</a>` : ''}</div></div>`;
+}
 function pageStudy() {
-  const due = dueTopics();
+  const due = dueTopics(); const wk = addDays(today(), -6);
+  const W = state.log.filter(l => dayOf(l.date) >= wk);
   let h = head('Study', `${plural(state.topics.length, 'topic')}${state.settings.revisionsOn ? ' · ' + due.length + ' ready to revise' : ''}`);
+  h += timerCard();
+  if (state.topics.length) {
+    h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
+      <div class="stats wk3" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Time', fmtMins(W.reduce((a, l) => a + (+l.mins || 0), 0)), '')}${stat('Sessions', W.length, '')}${stat('Topics', new Set(W.map(l => l.topicId)).size, '')}</div>
+      ${state.subjects.length ? `<div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">${state.subjects.map(sb => { const x = subjectStats(sb.id);
+        return `<div class="prow"><span>${esc(sb.name)}</span><div class="track"><div class="fill" style="width:${x.pct || 0}%"></div></div><span class="v">${x.pct === null ? fmtMins(x.mins) : x.pct + '%'}</span></div>`; }).join('')}</div><p class="foot" style="padding:0;margin-top:2px">Bars show pages read out of total pages, where you've entered page counts.</p>` : ''}</div>`;
+  }
   if (due.length) {
     h += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${due.map(({ t, st }) => {
       const s = byId(state.subjects, t.subjectId);
-      return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(s ? s.name : '')} · revision ${st.step} of ${state.settings.intervals.length} · last studied ${ago(st.last + 'T12:00:00')}</span></span></button><button class="btn small ghost" style="margin-right:12px" type="button" data-act="revise" data-id="${t.id}">Revised</button></div>`;
+      return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(s ? s.name : '')} · revision ${st.step} of ${state.settings.intervals.length} · last studied ${ago(st.last + 'T12:00:00')}</span></span></button><button class="btn small ghost" style="margin-right:12px" type="button" data-act="study-now" data-id="${t.id}">▶ Study</button></div>`;
     }).join('')}</div><p class="foot">Each topic comes back after ${state.settings.intervals.join(', ')} days. Change this in Backup & settings.</p></div>`;
   }
   if (!state.subjects.length) {
@@ -666,20 +700,23 @@ function pageStudy() {
     return h;
   }
   h += `<div class="sec"><h2 class="sh">Subjects</h2>`;
-  for (const s of state.subjects) {
-    const ts = state.topics.filter(t => t.subjectId === s.id); const open = !collapsed.has(s.id);
-    h += `<div class="group" style="margin-bottom:10px"><div class="rowwrap"><button class="row" type="button" data-act="toggle-subject" data-id="${s.id}"><span class="spec">${esc(s.name.slice(0, 2))}</span><span class="r-main"><span class="r-t" style="font-weight:600">${esc(s.name)}</span><span class="r-s">${plural(ts.length, 'topic')}</span></span><span class="muted">${open ? '▾' : '▸'}</span></button><button class="xbtn" type="button" data-act="edit-subject" data-id="${s.id}" aria-label="Edit subject">⋯</button></div>`;
+  for (const sb of state.subjects) {
+    const ts = state.topics.filter(t => t.subjectId === sb.id); const open = !collapsed.has(sb.id); const x = subjectStats(sb.id);
+    h += `<div class="group" style="margin-bottom:10px"><div class="rowwrap"><button class="row" type="button" data-act="toggle-subject" data-id="${sb.id}">${x.pct !== null ? miniRing(x.pct) : `<span class="spec">${esc(sb.name.slice(0, 2))}</span>`}<span class="r-main"><span class="r-t" style="font-weight:600">${esc(sb.name)}</span><span class="r-s">${plural(ts.length, 'topic')}${x.mins ? ' · ' + fmtMins(x.mins) : ''}${x.tot ? ' · ' + x.done + '/' + x.tot + ' pages' : ''}</span></span><span class="muted">${open ? '▾' : '▸'}</span></button><button class="xbtn" type="button" data-act="edit-subject" data-id="${sb.id}" aria-label="Edit subject">⋯</button></div>`;
     if (open) {
-      h += ts.map(t => { const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (topicDays(t.id).length ? 'Last studied ' + ago(topicDays(t.id).slice(-1)[0] + 'T12:00:00') : 'Not studied yet');
-        return `<button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(st)}${t.pointer ? ' · 📓 ' + esc(t.pointer) : ''}</span></span>${CHEV}</button>`; }).join('');
-      h += `<button class="row" type="button" data-act="add-topic" data-id="${s.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
+      h += ts.map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
+        return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}">${q.pct !== null ? miniRing(q.pct) : ''}<span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${[q.total ? q.page + '/' + q.total + ' pages' : '', q.mins ? fmtMins(q.mins) : '', st].filter(Boolean).map(esc).join(' · ')}</span></span></button><button class="btn small ghost" style="margin-right:10px" type="button" data-act="study-now" data-id="${t.id}" aria-label="Study ${esc(t.name)} now">▶</button></div>`; }).join('');
+      h += `<button class="row" type="button" data-act="add-topic" data-id="${sb.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
     }
     h += `</div>`;
   }
   h += `<button class="btn ghost wide" type="button" data-act="add-subject">+ Add subject</button></div>`;
-  return h;
+  return h + `<p class="foot">▶ starts a timer and opens the topic's notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.</p>`;
 }
-
+function miniRing(pct) {
+  const C = 2 * Math.PI * 15;
+  return `<svg class="mini" viewBox="0 0 40 40" role="img" aria-label="${pct}%"><circle cx="20" cy="20" r="15" fill="none" stroke="var(--surface-2)" stroke-width="5"/><circle cx="20" cy="20" r="15" fill="none" stroke="var(--ring)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - pct / 100)).toFixed(1)}" transform="rotate(-90 20 20)"/><text x="20" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="var(--fg)" font-family="Barlow, sans-serif">${pct}</text></svg>`;
+}
 function pageTodos() {
   const open = state.todos.filter(t => !t.done);
   const done = state.todos.filter(t => t.done).sort((a, b) => (b.doneAt || '').localeCompare(a.doneAt || ''));
@@ -1125,18 +1162,38 @@ function topicEditSheet(id, subjectId) {
   const t = id ? byId(state.topics, id) : null;
   openSheet(`<form data-form="topic" data-id="${id || ''}" data-subject="${subjectId || (t && t.subjectId) || ''}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="${t ? 'open-topic' : 'close'}" data-id="${id || ''}">Cancel</button><h2>${t ? 'Edit topic' : 'New topic'}</h2><button type="submit" class="link strong">Save</button></div>
     <input class="tin" name="name" value="${esc(t && t.name)}" maxlength="120" required placeholder="Topic, e.g. Aortic stenosis" data-autofocus>
-    <input class="tin" name="pointer" value="${esc(t && t.pointer)}" maxlength="80" placeholder="Where your notes are (optional): GoodNotes › Cardiac › p. 40"></form>
+    <input class="tin" name="pointer" value="${esc(t && t.pointer)}" maxlength="80" placeholder="Where your notes are (optional): GoodNotes › Cardiac › p. 40">
+    <input class="tin" name="link" value="${esc(t && t.link)}" maxlength="500" autocapitalize="off" spellcheck="false" placeholder="GoodNotes link (optional): paste from Copy link">
+    <div class="group"><label class="row field"><span class="f-l">Total pages</span><input name="pagesTotal" type="number" min="0" max="5000" inputmode="numeric" value="${t && t.pagesTotal ? esc(t.pagesTotal) : ''}" placeholder="e.g. 80"></label></div>
+    <p class="foot">In GoodNotes, open the notebook's ⋯ menu (or a page's) and choose <b>Copy link</b>, then paste it here. ▶ Study now will open it directly.</p></form>
     ${t ? `<button class="btn danger wide" type="button" data-act="delete-topic" data-id="${id}">Delete topic</button>` : ''}`);
   focusFirst();
 }
 function topicSheet(id) {
   const t = byId(state.topics, id); if (!t) return closeSheet();
-  const s = byId(state.subjects, t.subjectId); const st = revStatus(t);
+  const s = byId(state.subjects, t.subjectId); const st = revStatus(t); const q = topicStats(t);
   const entries = state.log.filter(l => l.topicId === id).sort((a, b) => b.date.localeCompare(a.date));
   openSheet(`<div class="sheet-head"><button type="button" class="link" data-act="edit-topic" data-id="${id}">Edit</button><h2>Topic</h2><button class="link strong" type="button" data-act="close">Done</button></div>
     <div class="sheet-title"><span class="c-lab">${esc(s ? s.name : '')}</span><h3>${esc(t.name)}</h3>${t.pointer ? `<span class="muted">📓 ${esc(t.pointer)}</span>` : ''}${state.settings.revisionsOn ? `<span class="pill acc">${esc(statusLine(st))}</span>` : ''}</div>
-    <form data-form="mark" data-id="${id}" class="sheet-in" style="gap:8px"><input class="tin" name="note" maxlength="140" autocomplete="off" placeholder="One-line note (optional)"><button class="btn wide" type="submit">${st.state === 'new' ? 'Mark studied today' : 'Log study session today'}</button></form>
-    <div class="sec"><h3 class="sh">History</h3>${entries.length ? `<div class="group">${entries.slice(0, 40).map(l => `<div class="rowwrap"><div class="row"><span class="r-main"><span class="r-t" style="font-size:15px">${esc(dShort(dayOf(l.date)))} ${dt(dayOf(l.date)).getFullYear()}</span>${l.note ? `<span class="r-s">${esc(l.note)}</span>` : ''}</span></div><button class="xbtn" type="button" data-act="del-log" data-id="${l.id}" aria-label="Remove entry">×</button></div>`).join('')}</div>` : '<p class="foot">Nothing logged yet.</p>'}</div>`);
+    <div class="card"><div class="prog-row">${q.total ? ring(Math.min(q.page, q.total), q.total, 72, 'topic-' + id) : ''}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${q.total ? q.page + ' of ' + q.total + ' pages' : plural(q.sessions, 'session')}</span><span class="c-m">${[q.mins ? fmtMins(q.mins) + ' in total' : '', q.total ? plural(q.sessions, 'session') : '', q.last ? 'last ' + ago(q.last) : ''].filter(Boolean).join(' · ') || 'Not studied yet'}</span></div></div></div>
+    <button class="btn wide" type="button" data-act="study-now" data-id="${id}">▶ Study now${t.link ? ' in GoodNotes' : ''}</button>
+    <form data-form="mark" data-id="${id}" class="sheet-in" style="gap:8px"><h3 class="sh">Or log a session</h3>
+      <div class="group"><label class="row field"><span class="f-l">Minutes</span><input name="mins" type="number" min="0" max="900" inputmode="numeric" placeholder="e.g. 45"></label>
+      <label class="row field"><span class="f-l">Up to page</span><input name="page" type="number" min="0" max="5000" inputmode="numeric" placeholder="${q.page ? 'last: ' + q.page : 'optional'}"></label></div>
+      <input class="tin" name="note" maxlength="140" autocomplete="off" placeholder="One-line note (optional)"><button class="btn ghost wide" type="submit">Log session today</button></form>
+    <div class="sec"><h3 class="sh">History</h3>${entries.length ? `<div class="group">${entries.slice(0, 40).map(l => `<div class="rowwrap"><div class="row"><span class="r-main"><span class="r-t" style="font-size:15px">${esc(dShort(dayOf(l.date)))} ${dt(dayOf(l.date)).getFullYear()}${l.mins ? ' · ' + fmtMins(l.mins) : ''}${l.page ? ' · to p. ' + esc(l.page) : ''}</span>${l.note ? `<span class="r-s">${esc(l.note)}</span>` : ''}</span></div><button class="xbtn" type="button" data-act="del-log" data-id="${l.id}" aria-label="Remove entry">×</button></div>`).join('')}</div>` : '<p class="foot">Nothing logged yet.</p>'}</div>`);
+}
+function finishSheet() {
+  const a = state.active; if (!a) return; const t = byId(state.topics, a.topicId); if (!t) { state.active = null; save(); return; }
+  const q = topicStats(t);
+  openSheet(`<form data-form="finish" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Later</button><h2>Finish session</h2><button type="submit" class="link strong">Log</button></div>
+    <div class="sheet-title"><span class="c-lab">Studied</span><h3>${esc(t.name)}</h3><span class="muted">Started ${new Date(a.start).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span></div>
+    <div class="group"><label class="row field"><span class="f-l">Minutes</span><input name="mins" type="number" min="0" max="900" inputmode="numeric" value="${activeMins()}"></label>
+    <label class="row field"><span class="f-l">Up to page</span><input name="page" type="number" min="0" max="5000" inputmode="numeric" placeholder="${q.total ? 'of ' + q.total + (q.page ? ', last ' + q.page : '') : (q.page ? 'last: ' + q.page : 'optional')}" data-autofocus></label></div>
+    <input class="tin" name="note" maxlength="140" placeholder="One-line note (optional)">
+    <button class="btn wide" type="submit">Log session</button></form>
+    <button class="btn danger wide" type="button" data-act="finish-discard">Discard this session</button>`);
+  focusFirst();
 }
 
 /* ---------- search ---------- */
@@ -1257,6 +1314,23 @@ document.addEventListener('click', e => {
       closeSheet(); commit('Subject deleted'); break; }
     case 'add-topic': topicEditSheet(null, id); break;
     case 'open-topic': topicSheet(id); break;
+    case 'study-now': {
+      const t = byId(state.topics, id); if (!t) return;
+      if (state.active && state.active.topicId !== id && !confirm('You are already timing “' + ((byId(state.topics, state.active.topicId) || {}).name || 'another topic') + '”. Switch to this topic? (That session is not logged.)')) return;
+      state.active = { topicId: id, start: state.active && state.active.topicId === id ? state.active.start : nowISO() }; closeSheet(); save(); render();
+      if (t.link) { toast('Timer started. Opening GoodNotes…'); setTimeout(() => { location.href = t.link; }, 400); }
+      else toast('Timer started. Open your notes in GoodNotes, then come back here.');
+      break; }
+    case 'finish-open': finishSheet(); break;
+    case 'finish-discard': if (!confirm('Discard this study session? Nothing will be logged.')) return; state.active = null; closeSheet(); commit('Session discarded'); break;
+    case 'log-any': {
+      if (!state.topics.length) { toast('Add a topic first'); return; }
+      openSheet(`<form data-form="logany" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Log a session</h2><button type="submit" class="link strong">Log</button></div>
+        <div class="group"><label class="row field"><span class="f-l">Topic</span><select name="topic">${state.subjects.map(sb => `<optgroup label="${esc(sb.name)}">${state.topics.filter(t => t.subjectId === sb.id).map(t => `<option value="${t.id}">${esc(t.name)}</option>`).join('')}</optgroup>`).join('')}</select></label>
+        <label class="row field"><span class="f-l">Minutes</span><input name="mins" type="number" min="0" max="900" inputmode="numeric" placeholder="e.g. 45"></label>
+        <label class="row field"><span class="f-l">Up to page</span><input name="page" type="number" min="0" max="5000" inputmode="numeric" placeholder="optional"></label></div>
+        <input class="tin" name="note" maxlength="140" placeholder="One-line note (optional)"><button class="btn wide" type="submit">Log session today</button></form>`);
+      break; }
     case 'edit-topic': topicEditSheet(id); break;
     case 'delete-topic': {
       const t = byId(state.topics, id); const nl = state.log.filter(l => l.topicId === id).length;
@@ -1321,13 +1395,23 @@ document.addEventListener('submit', e => {
       if (id) byId(state.subjects, id).name = name; else state.subjects.push({ id: uid(), name, created: nowISO() });
       closeSheet(); commit(id ? 'Saved' : 'Subject added'); break; }
     case 'topic': {
-      const name = (fd.get('name') || '').trim(), pointer = (fd.get('pointer') || '').trim(); if (!name) return;
-      if (id) { const t = byId(state.topics, id); t.name = name; t.pointer = pointer; commit('Saved'); topicSheet(id); }
-      else { state.topics.push({ id: uid(), subjectId: f.dataset.subject, name, pointer, created: nowISO() }); collapsed.delete(f.dataset.subject); closeSheet(); commit('Topic added'); }
+      const name = (fd.get('name') || '').trim(), pointer = (fd.get('pointer') || '').trim(), link = (fd.get('link') || '').trim(), pagesTotal = Math.max(0, parseInt(fd.get('pagesTotal'), 10) || 0); if (!name) return;
+      if (link && !/^(goodnotes|https?):/i.test(link)) { toast('That link should start with goodnotes:// or https://'); return; }
+      if (id) { const t = byId(state.topics, id); t.name = name; t.pointer = pointer; t.link = link; t.pagesTotal = pagesTotal; commit('Saved'); topicSheet(id); }
+      else { state.topics.push({ id: uid(), subjectId: f.dataset.subject, name, pointer, link, pagesTotal, created: nowISO() }); collapsed.delete(f.dataset.subject); closeSheet(); commit('Topic added'); }
       break; }
     case 'mark': {
-      state.log.push({ id: uid(), topicId: id, date: nowISO(), note: (fd.get('note') || '').trim() });
+      const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
+      state.log.push({ id: uid(), topicId: id, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page });
       commit('Logged ✓'); topicSheet(id); break; }
+    case 'finish': {
+      const a = state.active; if (!a) { closeSheet(); return; }
+      const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
+      state.log.push({ id: uid(), topicId: a.topicId, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page });
+      state.active = null; closeSheet(); commit('Session logged ✓ ' + fmtMins(mins)); break; }
+    case 'logany': {
+      const tid = fd.get('topic'); if (!tid) return; const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
+      state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
@@ -1650,6 +1734,8 @@ renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() 
   document.addEventListener('touchend', e => { if (!from) return; const t = e.changedTouches[0]; const dx = t.clientX - x0, dy = Math.abs(t.clientY - y0);
     if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
 })();
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.active && activeMins() >= 1 && !sheetOpen()) setTimeout(finishSheet, 600); });
+setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
