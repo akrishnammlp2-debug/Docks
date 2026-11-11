@@ -236,6 +236,11 @@ body.locked .dock{transform:translate(-50%,160%)}
 .pl span{min-width:0;overflow-wrap:anywhere}
 .prof .btn.ghost{background:rgba(255,255,255,.12);color:#fff;min-height:36px;font-size:15px}
 .photo-row{display:flex;align-items:center;gap:14px}
+.wx{display:flex;align-items:center;gap:14px}
+.wx-ico{font-size:44px;line-height:1;flex:none}
+.wx-t{font-family:var(--font-display);font-size:40px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.wx-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;color:var(--fg-2)}
+.wx-acts{display:flex;gap:8px;margin-top:4px}
 .photo-row .av{width:72px;height:72px;border-radius:50%;background:var(--f-today);display:grid;place-items:center;font-family:var(--font-display);font-size:30px;font-weight:800;overflow:hidden;flex:none}
 .prof b{display:block;font-family:var(--font-display);font-size:22px}
 .prof span{font-size:13px;opacity:.85}
@@ -341,7 +346,7 @@ body[data-sec="backup"]{--accent:var(--i-backup);--accent-soft:var(--s-backup);-
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '2.8 · profile';
+const APP_VERSION = '2.9 · weather';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba'];
 
@@ -395,14 +400,14 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 const banners = { save: null, info: null };
 function blank() {
   return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {},
-    settings: { backupLine: true, myName: '', countdownOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
+    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
 function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {},
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -536,6 +541,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += weatherCard();
   if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) {
     const n = daysUntil(S.examDate);
     h += `<div class="card" style="--c:var(--k-exam)"><div class="c-top"><span class="c-lab">${esc(S.examLabel || 'Exam')}</span><span class="c-m">${esc(dLong(S.examDate))} ${dt(S.examDate).getFullYear()}</span></div><span class="c-t">${n === 0 ? 'Today' : plural(n, 'day') + ' to go'}</span></div>`;
@@ -706,7 +712,7 @@ function profileSheet() {
     <div class="group">
       <label class="row field"><span class="f-l">Name</span><input class="left" name="name" maxlength="40" value="${esc(P.name)}" placeholder="Your name"></label>
       <label class="row field"><span class="f-l">Role</span><input class="left" name="job" maxlength="60" value="${esc(P.job)}" placeholder="e.g. Anaesthesiology resident"></label>
-      <label class="row field"><span class="f-l">Place</span><input class="left" name="place" maxlength="60" value="${esc(P.place)}" placeholder="e.g. Manipal"></label>
+      <label class="row field"><span class="f-l">Place</span><input class="left" name="place" maxlength="60" value="${esc(P.place)}" placeholder="e.g. Manipal"><button class="btn small ghost" type="button" data-act="prof-useloc">📍 Use mine</button></label>
       <label class="row field"><span class="f-l">Email</span><input class="left" name="email" type="email" maxlength="80" value="${esc(P.email)}" placeholder="optional"></label>
     </div><p class="foot">Your profile stays on this phone (and in your backup). It is never put on the website.</p></form>`);
 }
@@ -731,6 +737,69 @@ function remSheet(id) {
     <label class="row field" id="rem-w"${freq === 'monthly' ? ' hidden' : ''}><span class="f-l">Due by</span><select name="wday">${WEEKDAYS.map((w, i) => `<option value="${i}"${freq === 'weekly' && day === i ? ' selected' : ''}>${w}${i === 6 ? ' (weekend)' : ''}</option>`).join('')}</select></label></div>
     <p class="foot">If a month is shorter, it's due on its last day.</p></form>
     ${r ? `<button class="btn danger wide" type="button" data-act="rem-del" data-id="${r.id}">Delete reminder</button>` : ''}`);
+}
+
+/* ---------- location & weather ----------
+   Off until turned on. Location comes from the phone (asks permission); place name from BigDataCloud's free client-side
+   reverse geocoding (device's current position only), weather from Open-Meteo (free, no key). Coordinates kept on this phone, rounded to ~1 km. */
+const WMO = { 0: ['☀️', 'Clear'], 1: ['🌤️', 'Mostly clear'], 2: ['⛅', 'Partly cloudy'], 3: ['☁️', 'Cloudy'], 45: ['🌫️', 'Fog'], 48: ['🌫️', 'Fog'],
+  51: ['🌦️', 'Light drizzle'], 53: ['🌦️', 'Drizzle'], 55: ['🌧️', 'Heavy drizzle'], 56: ['🌧️', 'Freezing drizzle'], 57: ['🌧️', 'Freezing drizzle'],
+  61: ['🌦️', 'Light rain'], 63: ['🌧️', 'Rain'], 65: ['🌧️', 'Heavy rain'], 66: ['🌧️', 'Freezing rain'], 67: ['🌧️', 'Freezing rain'],
+  71: ['🌨️', 'Light snow'], 73: ['🌨️', 'Snow'], 75: ['🌨️', 'Heavy snow'], 77: ['🌨️', 'Snow grains'],
+  80: ['🌦️', 'Light showers'], 81: ['🌧️', 'Showers'], 82: ['⛈️', 'Heavy showers'], 85: ['🌨️', 'Snow showers'], 86: ['🌨️', 'Snow showers'],
+  95: ['⛈️', 'Thunderstorm'], 96: ['⛈️', 'Thunderstorm with hail'], 99: ['⛈️', 'Thunderstorm with hail'] };
+const wmo = (code, day) => { const w = WMO[code] || ['🌡️', 'Weather']; return code <= 1 && day === 0 ? ['🌙', code === 0 ? 'Clear night' : 'Mostly clear'] : w; };
+let wxBusy = false;
+function locate() {
+  return new Promise((res, rej) => {
+    if (!navigator.geolocation) return rej(new Error('this phone has no location service for the app'));
+    navigator.geolocation.getCurrentPosition(p => res(p.coords), e => rej(e), { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 });
+  });
+}
+async function updateLocation(manual) {
+  if (wxBusy) return; wxBusy = true; render();
+  try {
+    const c = await locate();
+    let place = '', region = '';
+    try { const r = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${c.latitude}&longitude=${c.longitude}&localityLanguage=en`); if (r.ok) { const g = await r.json(); place = g.city || g.locality || ''; region = g.principalSubdivision || ''; } } catch (_) {}
+    state.loc = { lat: Math.round(c.latitude * 100) / 100, lon: Math.round(c.longitude * 100) / 100, place, region, at: nowISO() };
+    state.settings.weatherOn = true; save();
+    wxBusy = false; await fetchWeather(true);
+    if (manual) toast(place ? '📍 ' + place : 'Location updated');
+  } catch (e) {
+    wxBusy = false;
+    banners.info = e && e.code === 1
+      ? "Location isn't allowed for this app yet. To allow it: iPhone Settings → Privacy & Security → Location Services → Safari Websites → While Using the App. Then tap Update location."
+      : "Couldn't get your location just now (" + ((e && e.message) || 'unknown error') + '). Try again outside or in a minute.';
+    renderBanner(); render();
+  }
+}
+async function fetchWeather(force) {
+  if (!state.loc || wxBusy) return;
+  if (!force && state.weather && Date.now() - new Date(state.weather.at) < 30 * 60e3) return;
+  wxBusy = true;
+  try {
+    const { lat, lon } = state.loc;
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=2`, { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    state.weather = { at: nowISO(), data: await r.json() }; save();
+  } catch (e) { /* keep the last saved weather; the card says how old it is */ }
+  finally { wxBusy = false; render(); }
+}
+function weatherCard() {
+  if (!state.settings.weatherOn) return '';
+  const L = state.loc; const W = state.weather && state.weather.data;
+  if (!L) return `<div class="card"><span class="c-lab" style="--c:var(--k-posting)">Weather</span><span class="c-s">${wxBusy ? 'Finding your location…' : 'Tap below and allow location to see the weather here.'}</span><div class="wx-acts"><button class="btn small ghost" type="button" data-act="wx-locate">Use my location</button></div></div>`;
+  if (!W || !W.current) return `<div class="card"><span class="c-lab" style="--c:var(--k-posting)">Weather · ${esc(L.place || 'your location')}</span><span class="c-s">${wxBusy ? 'Loading the weather…' : "Couldn't load the weather yet."}</span><div class="wx-acts"><button class="btn small ghost" type="button" data-act="wx-refresh">Try again</button></div></div>`;
+  const c = W.current, d = W.daily || {}; const [ico, txt] = wmo(c.weather_code, c.is_day);
+  const tm = d.weather_code && d.weather_code.length > 1 ? wmo(d.weather_code[1], 1) : null;
+  const age = Math.round((Date.now() - new Date(state.weather.at)) / 60e3);
+  return `<div class="card"><div class="c-top"><span class="c-lab" style="--c:var(--k-posting)">📍 ${esc(L.place || 'Your location')}${L.region ? ', ' + esc(L.region) : ''}</span><span class="c-m">${age < 2 ? 'Just now' : age < 60 ? age + ' min ago' : 'Updated ' + ago(state.weather.at)}</span></div>
+    <div class="wx"><span class="wx-ico" aria-hidden="true">${ico}</span><div style="flex:1;min-width:0"><span class="wx-t">${Math.round(c.temperature_2m)}°</span><div class="c-s">${esc(txt)} · feels ${Math.round(c.apparent_temperature)}°</div></div></div>
+    <div class="wx-meta">${d.temperature_2m_max ? `<span>Today ${Math.round(d.temperature_2m_max[0])}° / ${Math.round(d.temperature_2m_min[0])}°</span>` : ''}${d.precipitation_probability_max ? `<span>🌂 ${d.precipitation_probability_max[0]}% rain</span>` : ''}<span>💧 ${c.relative_humidity_2m}%</span><span>💨 ${Math.round(c.wind_speed_10m)} km/h</span></div>
+    ${tm ? `<div class="wx-meta"><span>Tomorrow ${tm[0]} ${Math.round(d.temperature_2m_max[1])}° / ${Math.round(d.temperature_2m_min[1])}°${d.precipitation_probability_max ? ' · ' + d.precipitation_probability_max[1] + '% rain' : ''}</span></div>` : ''}
+    <div class="wx-acts"><button class="btn small ghost" type="button" data-act="wx-refresh">${wxBusy ? 'Updating…' : 'Refresh'}</button><button class="btn small ghost" type="button" data-act="wx-locate">Update location</button></div>
+    <span class="c-m">Weather data by Open-Meteo.com</span></div>`;
 }
 
 let otJustDone = null;
@@ -855,6 +924,7 @@ function pageBackup() {
     return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
+    <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
@@ -887,7 +957,8 @@ function renderDrawer() {
   const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
   const lines = [
     P.job && [ico('<path d="M4 7h16v12H4z"/><path d="M9 7V5h6v2"/>'), P.job],
-    P.place && [ico('<path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'), P.place],
+    (state.settings.weatherOn && state.loc && state.loc.place || P.place) && [ico('<path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'),
+      (state.settings.weatherOn && state.loc && state.loc.place ? state.loc.place : P.place) + (state.settings.weatherOn && state.weather && state.weather.data && state.weather.data.current ? ' · ' + wmo(state.weather.data.current.weather_code, state.weather.data.current.is_day)[0] + ' ' + Math.round(state.weather.data.current.temperature_2m) + '°' : '')],
     P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
     ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
   ].filter(Boolean);
@@ -1038,6 +1109,9 @@ document.addEventListener('click', e => {
     case 'add': if (tab === 'reminders') remSheet(null); else addEventSheet(); break;
     case 'rem-add': remSheet(null); break;
     case 'prof-edit': closeDrawer(); profileSheet(); break;
+    case 'wx-locate': updateLocation(true); break;
+    case 'wx-refresh': fetchWeather(true); break;
+    case 'prof-useloc': if (state.loc && state.loc.place) { state.profile = { ...state.profile, place: state.loc.place }; commit('Place set to ' + state.loc.place); profileSheet(); } else updateLocation(true); break;
     case 'photo-pick': $('photoFile').click(); break;
     case 'photo-remove': state.profile = { ...state.profile, photo: '' }; if (commit('Photo removed')) profileSheet(); break;
     case 'rem-edit': remSheet(id); break;
@@ -1152,7 +1226,7 @@ document.addEventListener('submit', e => {
 document.addEventListener('change', e => {
   const k = e.target.dataset && e.target.dataset.setting; if (!k) return;
   const S = state.settings; const el = e.target;
-  if (el.type === 'checkbox') S[k] = el.checked;
+  if (el.type === 'checkbox') { S[k] = el.checked; if (k === 'weatherOn' && el.checked && !state.loc) { commit(); updateLocation(true); return; } }
   else if (k === 'intervals') {
     const nums = String(el.value).split(/[,\s]+/).filter(Boolean).map(Number);
     if (!nums.length || nums.length > 10 || nums.some(n => !Number.isInteger(n) || n < 1 || n > 365)) { toast("Couldn't read that. Use whole days, e.g. 1, 3, 7, 14, 30"); render(); return; }
@@ -1324,9 +1398,9 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); });
+renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); }); if (state.settings.weatherOn) fetchWeather(false);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>
