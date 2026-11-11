@@ -1,0 +1,15 @@
+{
+ "v": 1,
+ "alg": "ECDH-P256+SHA256+A256GCM",
+ "created": "2026-11-11T17:43:55.219Z",
+ "recipients": [
+  {
+   "kid": "9a0b232c",
+   "epk": "BIywfcz1sbTikpmLPQAka8xVf4C_iWWgaOgBxOAR9JSmeFSQ6rl0oC86RGVu1uroQc5V8B07GZ_FR9QRjdhQ7uI",
+   "iv": "7y1VP7MxiyvGYst2",
+   "wk": "79nwv94Va8urUvE3G-0zlzOrrJfzGmPFLUGj_3feVFFLmRl6Ihrx9yD21jBczN_Y"
+  }
+ ],
+ "iv": "12lQKBvDkEdD8Xv5",
+ "ct": "Hij3bmcvdb-M72crW7eBwURabym8xAKfqTnAXnrQvWWuK2LbTvqzMRW9N3uxIGHnN_VUGYP6kqi95wgk7txMGOFwvqg3DXHS88_6QSjcQ-GQN9JmF7PnTP-m8Bsxj-BVHSOJf5tMdNARg6mSRD34W8EteFAntGB4a4-M-oOU-vgHeeEhpQ4yBUyfiAO8rqLy3EfH_LnKXHDzRTvjt6qAQtHVNWpwZBQd0Edc9vOGJg"
+}
