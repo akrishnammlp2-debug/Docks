@@ -1,5 +1,459 @@
 {
  "updated": "2026-11-12",
  "note": "Textbooks Apoorva is reading. Chapter titles only (from the publisher's table of contents); ticks are kept on her devices.",
- "books": []
+ "books": [
+  {
+   "id": "chambers-physiology",
+   "title": "Basic Physiology for Anaesthetists",
+   "edition": "2nd ed (2019)",
+   "authors": "Chambers, Huang & Matthews",
+   "chapters": [
+    {
+     "n": 1,
+     "title": "General organisation of the body",
+     "part": "Section 1 · The basics"
+    },
+    {
+     "n": 2,
+     "title": "Cell components and function",
+     "part": "Section 1 · The basics"
+    },
+    {
+     "n": 3,
+     "title": "Genetics",
+     "part": "Section 1 · The basics"
+    },
+    {
+     "n": 4,
+     "title": "The cell membrane",
+     "part": "Section 1 · The basics"
+    },
+    {
+     "n": 5,
+     "title": "Enzymes",
+     "part": "Section 1 · The basics"
+    },
+    {
+     "n": 6,
+     "title": "The upper airways",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 7,
+     "title": "The lower airways",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 8,
+     "title": "Oxygen transport",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 9,
+     "title": "Carbon dioxide transport",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 10,
+     "title": "Alveolar diffusion",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 11,
+     "title": "Ventilation and dead space",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 12,
+     "title": "Static lung volumes",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 13,
+     "title": "Spirometry",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 14,
+     "title": "Hypoxia and shunts",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 15,
+     "title": "Ventilation-perfusion relationships",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 16,
+     "title": "Ventilation-perfusion zones in the lung",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 17,
+     "title": "Oxygen delivery and demand",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 18,
+     "title": "Alveolar gas equation",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 19,
+     "title": "Oxygen cascade",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 20,
+     "title": "Lung compliance",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 21,
+     "title": "Work of breathing",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 22,
+     "title": "Control of ventilation",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 23,
+     "title": "Pulmonary circulation",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 24,
+     "title": "Oxygen toxicity",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 25,
+     "title": "Ventilatory failure",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 26,
+     "title": "Anaesthesia and the lung",
+     "part": "Section 2 · Respiratory physiology"
+    },
+    {
+     "n": 27,
+     "title": "Cardiac anatomy and function",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 28,
+     "title": "Cardiac cycle",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 29,
+     "title": "Cardiac output and its measurement",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 30,
+     "title": "Starling's law and cardiac dysfunction",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 31,
+     "title": "Cardiac pressure-volume loops",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 32,
+     "title": "Cardiac ischaemia",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 33,
+     "title": "Systemic circulation",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 34,
+     "title": "Arterial system",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 35,
+     "title": "Arterial pressure waveforms",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 36,
+     "title": "Capillaries and endothelium",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 37,
+     "title": "Venous system",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 38,
+     "title": "Venous pressure waveforms",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 39,
+     "title": "Lymphatics",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 40,
+     "title": "Cardiovascular reflexes",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 41,
+     "title": "Valsalva manoeuvre",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 42,
+     "title": "Exercise physiology",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 43,
+     "title": "Exercise testing",
+     "part": "Section 3 · Cardiovascular physiology"
+    },
+    {
+     "n": 44,
+     "title": "Neuronal structure and function",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 45,
+     "title": "The brain",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 46,
+     "title": "Cerebrospinal fluid",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 47,
+     "title": "Blood-brain barrier",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 48,
+     "title": "Cerebral blood flow",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 49,
+     "title": "Intracranial pressure and head injury",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 50,
+     "title": "The spinal cord",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 51,
+     "title": "Resting membrane potential",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 52,
+     "title": "Nerve action potential and propagation",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 53,
+     "title": "Synapses and the neuromuscular junction",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 54,
+     "title": "Skeletal muscle",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 55,
+     "title": "Muscle spindles and Golgi tendon organs",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 56,
+     "title": "Smooth muscle",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 57,
+     "title": "Cardiac muscle",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 58,
+     "title": "The electrocardiogram",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 59,
+     "title": "Autonomic nervous system",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 60,
+     "title": "Pain physiology",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 61,
+     "title": "The eye and intraocular pressure",
+     "part": "Section 4 · Neurophysiology"
+    },
+    {
+     "n": 62,
+     "title": "Saliva, oesophagus and swallowing",
+     "part": "Section 5 · Gastrointestinal tract"
+    },
+    {
+     "n": 63,
+     "title": "Stomach and vomiting",
+     "part": "Section 5 · Gastrointestinal tract"
+    },
+    {
+     "n": 64,
+     "title": "Gastrointestinal digestion and absorption",
+     "part": "Section 5 · Gastrointestinal tract"
+    },
+    {
+     "n": 65,
+     "title": "Liver: anatomy and blood supply",
+     "part": "Section 5 · Gastrointestinal tract"
+    },
+    {
+     "n": 66,
+     "title": "Liver function",
+     "part": "Section 5 · Gastrointestinal tract"
+    },
+    {
+     "n": 67,
+     "title": "Renal function, anatomy and blood flow",
+     "part": "Section 6 · Kidney and body fluids"
+    },
+    {
+     "n": 68,
+     "title": "Renal filtration and reabsorption",
+     "part": "Section 6 · Kidney and body fluids"
+    },
+    {
+     "n": 69,
+     "title": "Renal regulation of water and electrolyte balance",
+     "part": "Section 6 · Kidney and body fluids"
+    },
+    {
+     "n": 70,
+     "title": "Acid-base physiology",
+     "part": "Section 6 · Kidney and body fluids"
+    },
+    {
+     "n": 71,
+     "title": "Micturition",
+     "part": "Section 6 · Kidney and body fluids"
+    },
+    {
+     "n": 72,
+     "title": "Haemostasis",
+     "part": "Section 7 · Blood and immune system"
+    },
+    {
+     "n": 73,
+     "title": "Transfusion",
+     "part": "Section 7 · Blood and immune system"
+    },
+    {
+     "n": 74,
+     "title": "Anaemia and polycythaemia",
+     "part": "Section 7 · Blood and immune system"
+    },
+    {
+     "n": 75,
+     "title": "Immune system",
+     "part": "Section 7 · Blood and immune system"
+    },
+    {
+     "n": 76,
+     "title": "Plasma constituents",
+     "part": "Section 7 · Blood and immune system"
+    },
+    {
+     "n": 77,
+     "title": "Metabolism",
+     "part": "Section 8 · Energy balance"
+    },
+    {
+     "n": 78,
+     "title": "Starvation",
+     "part": "Section 8 · Energy balance"
+    },
+    {
+     "n": 79,
+     "title": "Stress response",
+     "part": "Section 8 · Energy balance"
+    },
+    {
+     "n": 80,
+     "title": "Hypothalamus and pituitary",
+     "part": "Section 9 · Endocrine physiology"
+    },
+    {
+     "n": 81,
+     "title": "Thyroid, parathyroid and adrenal",
+     "part": "Section 9 · Endocrine physiology"
+    },
+    {
+     "n": 82,
+     "title": "Maternal physiology during pregnancy",
+     "part": "Section 10 · Developmental physiology"
+    },
+    {
+     "n": 83,
+     "title": "Fetal physiology",
+     "part": "Section 10 · Developmental physiology"
+    },
+    {
+     "n": 84,
+     "title": "Paediatric physiology",
+     "part": "Section 10 · Developmental physiology"
+    },
+    {
+     "n": 85,
+     "title": "Physiology of ageing",
+     "part": "Section 10 · Developmental physiology"
+    },
+    {
+     "n": 86,
+     "title": "Physiology of obesity",
+     "part": "Section 10 · Developmental physiology"
+    },
+    {
+     "n": 87,
+     "title": "Altitude",
+     "part": "Section 11 · Environmental physiology"
+    },
+    {
+     "n": 88,
+     "title": "Diving",
+     "part": "Section 11 · Environmental physiology"
+    },
+    {
+     "n": 89,
+     "title": "Temperature regulation",
+     "part": "Section 11 · Environmental physiology"
+    }
+   ]
+  }
+ ]
 }
