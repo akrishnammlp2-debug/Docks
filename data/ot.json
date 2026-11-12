@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11",
+ "updated": "2026-11-12",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -162,6 +162,106 @@
    "procedure": "Split skin graft",
    "unit": "SUR001",
    "notes": "Same patient also listed in OR2 at 16:30",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-01",
+   "date": "2026-11-13",
+   "order": 1,
+   "time": "06:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Pilonidal sinus excision",
+   "unit": "SUR004",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-02",
+   "date": "2026-11-13",
+   "order": 2,
+   "time": "07:30",
+   "ot": "KHSB-OR1",
+   "procedure": "Fistulectomy",
+   "unit": "SUR004",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-03",
+   "date": "2026-11-13",
+   "order": 3,
+   "time": "09:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Laparoscopic hysterectomy",
+   "unit": "GYN006",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-04",
+   "date": "2026-11-13",
+   "order": 4,
+   "time": "06:30",
+   "ot": "KHSB-OR3",
+   "procedure": "TURP (complex)",
+   "unit": "URO001",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-05",
+   "date": "2026-11-13",
+   "order": 5,
+   "time": "08:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Robotic surgery (complex)",
+   "unit": "SUO002",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-06",
+   "date": "2026-11-13",
+   "order": 6,
+   "time": "05:30",
+   "ot": "KHSB-OR4",
+   "procedure": "TURP (complex)",
+   "unit": "URO002",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-07",
+   "date": "2026-11-13",
+   "order": 7,
+   "time": "07:00",
+   "ot": "KHSB-OR4",
+   "procedure": "TAH + BSO",
+   "unit": "SUO001",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-08",
+   "date": "2026-11-13",
+   "order": 8,
+   "time": "12:30",
+   "ot": "KHSB-OR4",
+   "procedure": "Debridement (large)",
+   "unit": "PLS",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-09",
+   "date": "2026-11-13",
+   "order": 9,
+   "time": "12:00",
+   "ot": "KHSB Cath Lab",
+   "procedure": "Venaseal glue injection",
+   "unit": "RADIVR",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-13-10",
+   "date": "2026-11-13",
+   "order": 10,
+   "time": "14:30",
+   "ot": "KHSB Cath Lab",
+   "procedure": "Embolization",
+   "unit": "RADIVR",
    "status": "Pending"
   }
  ]

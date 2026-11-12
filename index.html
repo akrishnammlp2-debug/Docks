@@ -829,7 +829,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.4.2 · live NBA';
+const APP_VERSION = '5.4.3 · live NBA';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1648,14 +1648,14 @@ const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Su
 const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
 const SL_MGMT = ['GA + ETT', 'GA + LMA/IGEL', 'GA + MASK HOLDING', 'GA + EPIDURAL', 'GA + NERVE BLOCK', 'SPINAL', 'SPINAL + NERVE BLOCK', 'EPIDURAL', 'GSE', 'NERVE BLOCK', 'MAC'];
 const SL_REMOTE = ['GEC', 'CT', 'MRI', 'Cobalt', 'Radio Cath', 'Cath Lab', 'Pedo', 'MARC', 'MECT'];
-const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', SUO: 'Surgical Oncology' };
+const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', SUO: 'Surgical Oncology', PLS: 'Plastic Surgery' };
 const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return DEPT_BY_UNIT[k] || DEPT_BY_UNIT[k.slice(0, 3)] || ''; };
 const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
 const FACULTY = () => (state.private && state.private.faculty) || [];
 const REMOTE_RX = /^(GEC|CT|MRI|Cobalt|Radio ?Cath|Cath ?Lab|Pedo|MARC|MECT)$/i;
-function locFromOt(ot) { const o = (ot || '').trim(); if (REMOTE_RX.test(o)) return o; const m = /^OR\s*(\d+)$/i.exec(o); if (m) return 'OR' + m[1]; const k = /^KHSB[\s-]*O[RT]\s*(\d+)$/i.exec(o); return k ? 'KHSB-OT' + k[1] : o; } // OR4 and KHSB-OT4 are different theatres: never convert one into the other
+function locFromOt(ot) { const o = (ot || '').trim(); if (/cath\s*lab/i.test(o)) return 'Cath Lab'; if (REMOTE_RX.test(o)) return o; const m = /^OR\s*(\d+)$/i.exec(o); if (m) return 'OR' + m[1]; const k = /^KHSB[\s-]*O[RT]\s*(\d+)$/i.exec(o); return k ? 'KHSB-OT' + k[1] : o; } // OR4 and KHSB-OT4 are different theatres: never convert one into the other
 function slFromOt(r) {
-  const o = (r.ot || '').trim(); const u = (r.unit || '').toUpperCase(); const remote = REMOTE_RX.test(o) || /^(GEC|RAD)/.test(u) || isGI(r.procedure);
+  const o = (r.ot || '').trim(); const u = (r.unit || '').toUpperCase(); const remote = REMOTE_RX.test(o) || /cath\s*lab/i.test(o) || /^(GEC|RAD)/.test(u) || isGI(r.procedure);
   const gi = /^GEC/.test(u) || /^GEC$/i.test(o) || isGI(r.procedure);
   return { posting: remote ? 'Remote Locations' : 'OT', dept: gi ? 'Gastro Intestinal Surgery' : deptFor(r.unit), loc: gi && !REMOTE_RX.test(o) ? 'GEC' : locFromOt(o), mgmt: gi ? 'MAC' : 'GA + ETT' };
 }
