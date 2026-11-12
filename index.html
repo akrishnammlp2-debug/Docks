@@ -543,6 +543,20 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.pdf-row{padding:0!important;gap:0!important}
+.pdf-open{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:12px 14px;text-align:left;color:var(--fg)}
+.pdf-ico{flex:none;width:38px;height:46px;border-radius:8px;background:var(--t-rose,#F8E4E6);color:var(--t-rose-i,#93404B);font-size:10.5px;font-weight:800;display:grid;place-items:center;letter-spacing:.04em}
+.pdf-more{flex:none;width:44px;align-self:stretch;color:var(--fg-3);font-size:20px}
+.reader{position:fixed;inset:0;z-index:60;background:#ECE8E0;display:flex;flex-direction:column}
+.rd-bar{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 8px) 14px 8px;background:#FFFFFF;border-bottom:1px solid #E7E2D7;color:#1F2A24}
+.rd-bar b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--f-head,inherit);font-size:15px}
+.rd-bar .link{color:#3E7B5E;font-weight:700}
+.rd-bar span{font-size:13px;color:#6F7A74;font-variant-numeric:tabular-nums}
+.rd-pages{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:8px 8px calc(env(safe-area-inset-bottom) + 70px);display:flex;flex-direction:column;align-items:center;gap:8px}
+.rd-page{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);flex:none}
+.rd-msg{margin:40px 16px;color:#4A5650;text-align:center}
+.rd-zoom{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);display:flex;gap:8px}
+.rd-zoom button{width:44px;height:44px;border-radius:999px;background:#1F2A24;color:#fff;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .pwx,.prof .pwx{color:#1F2A24!important}
 .prof .pwx-moon,.prof .pwx-partlyn,.pwx-moon,.pwx-partlyn{color:#F1EEE6!important}
 .pwx{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border-radius:18px;text-align:left;background:linear-gradient(135deg,#E6F1FB,#F4F8FC);color:#1F2A24;margin:4px 0 2px}
@@ -758,9 +772,11 @@ body{background:var(--bg)}
 <input type="file" id="importFile" hidden>
 <input type="file" id="privateFile" hidden>
 <input type="file" id="photoFile" accept="image/*" hidden>
+<input type="file" id="pdfFile" accept="application/pdf,.pdf" multiple hidden>
+<div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '4.9 · weather art';
+const APP_VERSION = '5.0 · topics';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1050,9 +1066,10 @@ function timerCard() {
 function pageStudy() {
   const due = dueTopics(); const wk = addDays(today(), -6);
   const W = state.log.filter(l => dayOf(l.date) >= wk);
-  let h = head('Study', `${plural(state.topics.length, 'topic')}${state.settings.revisionsOn ? ' · ' + due.length + ' ready to revise' : ''}`);
+  let h = head('Study', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
   h += timerCard();
   h += booksSection();
+  h += pdfSection();
   if (state.topics.length) {
     h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
       <div class="stats wk3" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Time', fmtMins(W.reduce((a, l) => a + (+l.mins || 0), 0)), '')}${stat('Sessions', W.length, '')}${stat('Topics', new Set(W.map(l => l.topicId)).size, '')}</div>
@@ -1716,6 +1733,12 @@ document.addEventListener('click', e => {
     case 'wx-refresh': fetchWeather(true); break;
     case 'prof-useloc': if (state.loc && state.loc.place) { state.profile = { ...state.profile, place: state.loc.place }; commit('Place set to ' + state.loc.place); profileSheet(); } else updateLocation(true); break;
     case 'photo-pick': $('photoFile').click(); break;
+    case 'pdf-add': $('pdfFile').click(); break;
+    case 'pdf-read': pdfRead(id); break;
+    case 'pdf-edit': pdfEditSheet(id); break;
+    case 'pdf-del': { const m = (pdfList || []).find(x => x.id === id); if (m && confirm('Remove "' + m.name + '" from this device? The original in Files or Drive is not touched.')) { pdfTx('meta', 'readwrite', st => st.delete(id)).then(() => pdfTx('blobs', 'readwrite', st => st.delete(id))).then(() => { closeSheet(); toast('Removed'); pdfLoad(); }).catch(() => toast("Couldn't remove it")); } break; }
+    case 'rd-close': rdClose(); break;
+    case 'rd-zoom': if (rd) { rd.zoom = Math.max(.6, Math.min(2.6, rd.zoom * (b.dataset.z === '1' ? 1.25 : .8))); rdLayout(); } break;
     case 'photo-remove': state.profile = { ...state.profile, photo: '' }; if (commit('Photo removed')) profileSheet(); break;
     case 'rem-edit': remSheet(id); break;
     case 'rem-freq': { const f = b.dataset.f; const form = b.closest('form'); form.querySelector('[name=freq]').value = f; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); $('rem-m').hidden = f !== 'monthly'; $('rem-w').hidden = f !== 'weekly'; break; }
@@ -1842,6 +1865,9 @@ document.addEventListener('submit', e => {
       const mid = id || 'mc-' + uid(); const old = state.myCases[mid] || {};
       state.myCases = { ...state.myCases, [mid]: { ...old, id: mid, otId: f.dataset.ot || old.otId || '', date: v('date'), uhid: v('uhid').toUpperCase(), procedure: v('procedure'), posting: v('posting'), dept: v('dept'), loc: v('loc'), mgmt: v('mgmt'), faculty: v('faculty'), details: v('details'), diagnosis: v('diagnosis'), asa: v('asa'), urgency: v('urgency'), created: old.created || nowISO(), updated: nowISO() } };
       closeSheet(); commit(id ? 'Saved' : 'Case saved ✓'); break; }
+    case 'pdfmeta': {
+      const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
+      pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
       closeSheet(); commit('Profile saved'); break; }
@@ -2066,6 +2092,7 @@ $('importFile').addEventListener('change', async e => {
   const prev = state; state = normalise(data);
   if (save()) { collapsed.clear(); render(); toast('Backup restored ✓'); } else { state = prev; render(); }
 });
+$('pdfFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) pdfAdd(fs); });
 $('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
 /* A private file can carry any of: profile, roster, presenters, ot (patient names by OT case id), cases (hospital IDs by case number).
@@ -2097,6 +2124,80 @@ const b64u = {
   enc: buf => { let bin = ''; new Uint8Array(buf).forEach(b => bin += String.fromCharCode(b)); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
   dec: str => { let x = str.replace(/-/g, '+').replace(/_/g, '/'); while (x.length % 4) x += '='; const bin = atob(x); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
 };
+/* ---------- Topics: the person's own PDFs, kept on this device (IndexedDB), read with PDF.js ---------- */
+let pdfList = null, pdfBusy = false;
+function pdfDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-pdfs', 1); r.onupgradeneeded = () => { r.result.createObjectStore('meta', { keyPath: 'id' }); r.result.createObjectStore('blobs'); }; r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function pdfTx(store, mode, fn) { const db = await pdfDb(); return new Promise((res, rej) => { const t = db.transaction(store, mode); const out = fn(t.objectStore(store)); t.oncomplete = () => res(out && out.result !== undefined ? out.result : out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error || new Error('storage full')); }); }
+async function pdfLoad() { try { pdfList = (await pdfTx('meta', 'readonly', st => st.getAll())) || []; } catch (_) { pdfList = []; } render(); }
+async function pdfAdd(files) {
+  pdfBusy = true; render(); let ok = 0, bad = 0;
+  try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (_) {}
+  for (const f of files) {
+    if (!/pdf$/i.test(f.type) && !/\.pdf$/i.test(f.name)) { bad++; continue; }
+    const id = 'pdf-' + uid(); const meta = { id, name: f.name.replace(/\.pdf$/i, ''), topic: '', size: f.size, added: nowISO(), page: 1, pages: 0 };
+    try { await pdfTx('blobs', 'readwrite', st => st.put(f, id)); await pdfTx('meta', 'readwrite', st => st.put(meta)); ok++; } catch (e) { bad++; }
+  }
+  pdfBusy = false; await pdfLoad();
+  toast(bad ? (ok ? plural(ok, 'PDF') + ' added; ' + bad + " couldn't be saved (not a PDF or phone storage full)" : "Couldn't save that file. Is it a PDF, and is there space on the phone?") : plural(ok, 'PDF') + ' added ✓');
+}
+async function pdfSaveMeta(m) { try { await pdfTx('meta', 'readwrite', st => st.put(m)); } catch (_) {} }
+function pdfSection() {
+  if (pdfList === null) { pdfLoad(); return ''; }
+  let h = `<div class="sec"><h2 class="sh"><span>Topics</span><button type="button" data-act="pdf-add" style="color:var(--accent);font:inherit">${pdfBusy ? 'Saving…' : '+ Add PDF'}</button></h2>`;
+  if (!pdfList.length) return h + `<div class="card"><span class="c-s">Add PDFs from Files (or Google Drive in Files) and read them here any time, even offline. They're kept on this device only.</span></div></div>`;
+  const groups = {}; pdfList.slice().sort((a, b) => (b.opened || b.added).localeCompare(a.opened || a.added)).forEach(m => { (groups[m.topic || 'Other'] = groups[m.topic || 'Other'] || []).push(m); });
+  const keys = Object.keys(groups).sort((a, b) => a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
+  h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${groups[k].map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}"><span class="pdf-ico" aria-hidden="true">PDF</span><span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? 'Page ' + m.page + ' of ' + m.pages : 'Not opened yet'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}</div>`).join('');
+  return h + `<p class="foot">Kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.</p></div>`;
+}
+function pdfEditSheet(id) {
+  const m = (pdfList || []).find(x => x.id === id); if (!m) return;
+  const topics = [...new Set((pdfList || []).map(x => x.topic).filter(Boolean))];
+  openSheet(`<form data-form="pdfmeta" data-id="${id}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>PDF</h2><button type="submit" class="link strong">Save</button></div>
+    <div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="name" value="${esc(m.name)}" required></label>
+    <label class="row field"><span class="f-l">Topic</span><input class="left" name="topic" value="${esc(m.topic)}" list="pdf-topics" placeholder="e.g. Cardiac, Airway"></label></div>
+    <datalist id="pdf-topics">${topics.map(t => `<option value="${esc(t)}">`).join('')}</datalist>
+    <button class="btn ghost danger" type="button" data-act="pdf-del" data-id="${id}">Remove from this device</button></form>`);
+}
+let pdfLib = null, rd = null;
+function loadPdfJs() {
+  if (pdfLib) return Promise.resolve(pdfLib);
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    sc.onload = () => { pdfLib = window.pdfjsLib; pdfLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; res(pdfLib); };
+    sc.onerror = () => rej(new Error('the PDF reader needs the internet the first time')); document.head.appendChild(sc); });
+}
+async function pdfRead(id) {
+  const m = (pdfList || []).find(x => x.id === id); if (!m) return;
+  const R = $('reader'); R.hidden = false; document.body.classList.add('locked');
+  R.innerHTML = `<div class="rd-bar"><button type="button" class="link" data-act="rd-close">Done</button><b>${esc(m.name)}</b><span id="rd-pg"></span></div><div class="rd-pages" id="rd-pages"><div class="rd-msg">Opening…</div></div><div class="rd-zoom"><button type="button" data-act="rd-zoom" data-z="-1" aria-label="Smaller">−</button><button type="button" data-act="rd-zoom" data-z="1" aria-label="Bigger">+</button></div>`;
+  try {
+    const [lib, blob] = await Promise.all([loadPdfJs(), pdfTx('blobs', 'readonly', st => st.get(id))]);
+    if (!blob) throw new Error('the file is no longer on this device');
+    const doc = await lib.getDocument({ data: new Uint8Array(await blob.arrayBuffer()) }).promise;
+    rd = { id, m, doc, zoom: 1, obs: null, cur: m.page || 1 };
+    m.pages = doc.numPages; m.opened = nowISO(); pdfSaveMeta(m);
+    rdLayout();
+  } catch (e) { $('rd-pages').innerHTML = `<div class="rd-msg">Couldn't open this PDF: ${esc((e && e.message) || 'unknown error')}.</div>`; }
+}
+async function rdLayout() {
+  const box = $('rd-pages'); if (!rd || !box) return; const w = Math.min(box.clientWidth - 16, 900) * rd.zoom;
+  const p1 = await rd.doc.getPage(1); const v1 = p1.getViewport({ scale: 1 }); const ratio = v1.height / v1.width;
+  box.innerHTML = Array.from({ length: rd.doc.numPages }, (_, i) => `<div class="rd-page" data-n="${i + 1}" style="width:${w}px;height:${Math.round(w * ratio)}px"></div>`).join('');
+  if (rd.obs) rd.obs.disconnect();
+  rd.obs = new IntersectionObserver(es => es.forEach(e => { const n = +e.target.dataset.n; if (e.isIntersecting) { rdDraw(e.target, n, w); } else if (e.target.firstChild && Math.abs(n - rd.cur) > 4) e.target.innerHTML = ''; }), { root: box, rootMargin: '800px 0px' });
+  box.querySelectorAll('.rd-page').forEach(el => rd.obs.observe(el));
+  box.onscroll = () => { const els = box.querySelectorAll('.rd-page'); const mid = box.scrollTop + box.clientHeight / 3; let n = 1; for (const el of els) { if (el.offsetTop <= mid) n = +el.dataset.n; else break; } if (n !== rd.cur) { rd.cur = n; $('rd-pg').textContent = n + ' / ' + rd.doc.numPages; clearTimeout(rd.t); rd.t = setTimeout(() => { rd.m.page = n; pdfSaveMeta(rd.m); }, 600); } };
+  $('rd-pg').textContent = rd.cur + ' / ' + rd.doc.numPages;
+  const target = box.querySelector(`.rd-page[data-n="${rd.cur}"]`); if (target) box.scrollTop = target.offsetTop - 8;
+}
+async function rdDraw(el, n, w) {
+  if (el.dataset.drawn === String(w)) return; el.dataset.drawn = String(w);
+  try { const page = await rd.doc.getPage(n); const vp0 = page.getViewport({ scale: 1 }); const scale = w / vp0.width; const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    const vp = page.getViewport({ scale: scale * dpr }); const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height; c.style.width = '100%'; c.style.height = '100%';
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise; el.innerHTML = ''; el.appendChild(c);
+  } catch (_) { el.dataset.drawn = ''; }
+}
+function rdClose() { if (rd) { rd.m.page = rd.cur; pdfSaveMeta(rd.m); if (rd.obs) rd.obs.disconnect(); if (rd.doc) rd.doc.destroy(); } rd = null; const R = $('reader'); R.hidden = true; R.innerHTML = ''; document.body.classList.remove('locked'); pdfLoad(); }
 function keyDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-keys', 1); r.onupgradeneeded = () => r.result.createObjectStore('keys'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((res, rej) => { const tx = db.transaction('keys', mode); const out = fn(tx.objectStore('keys')); tx.oncomplete = () => res(out && out.result); tx.onerror = () => rej(tx.error); }); }
 let device = null; let deviceChecked = false;
