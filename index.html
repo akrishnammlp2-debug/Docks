@@ -33,7 +33,7 @@
   --f-nba:#ff8a1f;--i-nba:#a54b00;--s-nba:#ffe8d2;
   --f-backup:#d9dce1;--i-backup:#3b3e45;--s-backup:#e9ebee;
   --f-reminders:#4fd1b5;--i-reminders:#0f6e5c;--s-reminders:#d5f5ec;
-  --f-advances:#7dd3fc;
+  --f-advances:#7dd3fc;--f-music:#b39ddb;
   --font-body:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   --font-display:"Barlow Condensed","Arial Narrow",-apple-system,system-ui,sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -543,6 +543,11 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.msong{text-decoration:none;color:var(--fg)}
+.mrank{flex:none;min-width:40px;font-family:var(--f-head,inherit);font-weight:700;font-size:14px;color:var(--fg-3);text-align:center}
+.mplay{flex:none;width:36px;height:36px;border-radius:999px;background:#1DB954;display:grid;place-items:center}
+.mplay svg{width:16px;height:16px;fill:#fff;stroke:none;margin-left:2px}
+.ditem[data-tab="music"] svg{background:var(--t-lav)!important;color:var(--t-lav-i)!important}
 .appver{margin:14px 0 6px;text-align:center;font-size:11.5px;color:var(--fg-3)!important;opacity:.8;font-family:var(--font-body,inherit)}
 .note-ico{background:var(--t-sage,#E3EFE6)!important;color:var(--t-sage-i,#2F6B4F)!important;font-size:10px!important}
 .note-sum{font-size:15px;line-height:1.5;color:#1F2A24;margin:0 2px}
@@ -784,9 +789,9 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.1.2 · topics';
+const APP_VERSION = '5.2 · music';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -797,6 +802,7 @@ const IC = {
   ot: '<path d="M14.5 6.5l3 3L9 18l-3-3z"/><path d="M13.5 5.5l5 5M16 8l3.5-3.5M18 3l3 3M7.5 16.5L3 21"/>',
   roster: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M6.5 9.5h8v3h-8zM6.5 15h4"/>',
   cases: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M7.5 14h2l1.5-3 2 5 1.5-2h2"/>',
+  music: '<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
   nba: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 3 3 9.8 0 12.8M18.4 5.6c-3 3-3 9.8 0 12.8"/>',
   advances: '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>',
   reminders: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
@@ -806,7 +812,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Academics', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -1394,6 +1400,16 @@ function pageCases() {
 }
 
 const hue = ab => { let x = 0; for (const c of ab) x = (x * 31 + c.charCodeAt(0) * 7) % 360; return x; };
+let musicSub = 'global';
+const spotifyUrl = x => 'https://open.spotify.com/search/' + encodeURIComponent(x.t + ' ' + x.a.replace(/\b(ft\.|feat\.|featuring)\b/gi, ' ').replace(/[&,]/g, ' ').replace(/\s+/g, ' ').trim());
+function pageMusic() {
+  const M = D.music; let h = head('Music', M ? 'Updated ' + esc(dShort(M.updated)) : '', 'Leisure');
+  if (!M || !M.lists) return h + '<div class="card"><span class="c-s">No music lists yet.</span></div>';
+  const L = M.lists.find(x => x.id === musicSub) || M.lists[0];
+  h += `<div class="seg">${M.lists.map(x => `<button type="button" data-act="msub" data-s="${x.id}" aria-pressed="${x.id === L.id}">${esc(x.label)}</button>`).join('')}</div>`;
+  h += `<p class="foot" style="margin:2px 4px 0">${esc(L.sub || '')}</p><div class="group mlist">${L.songs.map((x, i) => `<a class="row msong" href="${esc(spotifyUrl(x))}" target="_blank" rel="noopener"><span class="mrank">${x.era ? esc(x.era.replace(/0s$/, '0s')) : i + 1}</span><span class="r-main"><span class="r-t">${esc(x.t)}</span><span class="r-s">${esc(x.a)}</span></span><span class="mplay" aria-label="Play on Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></a>`).join('')}</div>`;
+  return h + `<p class="foot">Tap a song to open it in Spotify.${L.source ? ` Chart: <a href="${esc(L.source)}" target="_blank" rel="noopener">source</a>.` : ''}</p>`;
+}
 function nbaLatestDay() { const N = D.nba; if (!N) return null; const ds = [...new Set(N.games.map(g => g[0]))]; const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); return ds.includes(k) ? k : ds[ds.length - 1]; }
 function pageNba() {
   const N = D.nba;
@@ -1462,7 +1478,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, backup: pageBackup };
+const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup };
 function render() {
   REG = [];
   document.body.dataset.sec = tab;
@@ -1493,7 +1509,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -1748,6 +1764,7 @@ document.addEventListener('click', e => {
     case 'photo-pick': $('photoFile').click(); break;
     case 'pdf-add': $('pdfFile').click(); break;
     case 'pdf-read': pdfRead(id); break;
+    case 'msub': musicSub = b.dataset.s; render(); break;
     case 'note-open': noteSheet(id); break;
     case 'pdf-edit': pdfEditSheet(id); break;
     case 'pdf-del': { const m = (pdfList || []).find(x => x.id === id); if (m && confirm('Remove "' + m.name + '" from this device? The original in Files or Drive is not touched.')) { pdfTx('meta', 'readwrite', st => st.delete(id)).then(() => pdfTx('blobs', 'readwrite', st => st.delete(id))).then(() => { closeSheet(); toast('Removed'); pdfLoad(); }).catch(() => toast("Couldn't remove it")); } break; }

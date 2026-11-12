@@ -1,0 +1,223 @@
+{
+ "updated": "2026-11-12",
+ "lists": [
+  {
+   "id": "global",
+   "label": "Top worldwide",
+   "sub": "Billboard Global 200, week of 14 Nov 2026",
+   "source": "https://www.billboard.com/charts/billboard-global-200/",
+   "songs": [
+    {
+     "t": "Housewife",
+     "a": "Tate McRae"
+    },
+    {
+     "t": "BbY WOW",
+     "a": "Karol G, Judeline & rusowsky"
+    },
+    {
+     "t": "Nicole Kidman",
+     "a": "ADELA"
+    },
+    {
+     "t": "Thriller",
+     "a": "Michael Jackson"
+    },
+    {
+     "t": "Stop The Wedding!",
+     "a": "Ashe"
+    },
+    {
+     "t": "Expectations",
+     "a": "Olivia Rodrigo & Chappell Roan"
+    },
+    {
+     "t": "Choosin' Texas",
+     "a": "Ella Langley"
+    },
+    {
+     "t": "Ain't In LA",
+     "a": "ADELA"
+    },
+    {
+     "t": "Dracula",
+     "a": "Tame Impala & JENNIE"
+    },
+    {
+     "t": "Babydoll",
+     "a": "Jamie Miller"
+    },
+    {
+     "t": "The Cure",
+     "a": "Olivia Rodrigo"
+    },
+    {
+     "t": "Man I Need",
+     "a": "Olivia Dean"
+    },
+    {
+     "t": "Ordinary",
+     "a": "Alex Warren"
+    },
+    {
+     "t": "Stupid Song",
+     "a": "Olivia Rodrigo"
+    },
+    {
+     "t": "Beauty And A Beat",
+     "a": "Justin Bieber ft. Nicki Minaj"
+    }
+   ]
+  },
+  {
+   "id": "insta",
+   "label": "Instagram",
+   "sub": "Most-used on Instagram Reels, week of 10 Nov 2026",
+   "source": "https://soundmatcha.com/trending/",
+   "songs": [
+    {
+     "t": "APT.",
+     "a": "ROSÉ & Bruno Mars"
+    },
+    {
+     "t": "Ordinary",
+     "a": "Alex Warren"
+    },
+    {
+     "t": "Beautiful Things",
+     "a": "Benson Boone"
+    },
+    {
+     "t": "Die With A Smile",
+     "a": "Lady Gaga & Bruno Mars"
+    },
+    {
+     "t": "Papaoutai (Afro Soul)",
+     "a": "mikeeysmind, Chill77 & Unjaps"
+    },
+    {
+     "t": "The Sound of Silence (CYRIL Remix)",
+     "a": "Disturbed"
+    },
+    {
+     "t": "As It Was",
+     "a": "Harry Styles"
+    },
+    {
+     "t": "Viva La Vida",
+     "a": "Coldplay"
+    },
+    {
+     "t": "Dai Dai",
+     "a": "Shakira & Burna Boy"
+    },
+    {
+     "t": "Raindance",
+     "a": "Dave & Tems"
+    },
+    {
+     "t": "Dracula",
+     "a": "Tame Impala"
+    },
+    {
+     "t": "So Easy (To Fall In Love)",
+     "a": "Olivia Dean"
+    },
+    {
+     "t": "End of Beginning",
+     "a": "Djo"
+    },
+    {
+     "t": "Runaway",
+     "a": "AURORA"
+    },
+    {
+     "t": "Perfect",
+     "a": "Ed Sheeran"
+    }
+   ]
+  },
+  {
+   "id": "eras",
+   "label": "Through the eras",
+   "sub": "One classic after another, 1960s to now",
+   "songs": [
+    {
+     "t": "Here Comes The Sun",
+     "a": "The Beatles",
+     "era": "1960s"
+    },
+    {
+     "t": "Respect",
+     "a": "Aretha Franklin",
+     "era": "1960s"
+    },
+    {
+     "t": "Bohemian Rhapsody",
+     "a": "Queen",
+     "era": "1970s"
+    },
+    {
+     "t": "Dancing Queen",
+     "a": "ABBA",
+     "era": "1970s"
+    },
+    {
+     "t": "Billie Jean",
+     "a": "Michael Jackson",
+     "era": "1980s"
+    },
+    {
+     "t": "Take On Me",
+     "a": "a-ha",
+     "era": "1980s"
+    },
+    {
+     "t": "Sweet Child O' Mine",
+     "a": "Guns N' Roses",
+     "era": "1980s"
+    },
+    {
+     "t": "Smells Like Teen Spirit",
+     "a": "Nirvana",
+     "era": "1990s"
+    },
+    {
+     "t": "Wannabe",
+     "a": "Spice Girls",
+     "era": "1990s"
+    },
+    {
+     "t": "Crazy In Love",
+     "a": "Beyoncé ft. JAY-Z",
+     "era": "2000s"
+    },
+    {
+     "t": "Mr. Brightside",
+     "a": "The Killers",
+     "era": "2000s"
+    },
+    {
+     "t": "Rolling in the Deep",
+     "a": "Adele",
+     "era": "2010s"
+    },
+    {
+     "t": "Uptown Funk",
+     "a": "Mark Ronson ft. Bruno Mars",
+     "era": "2010s"
+    },
+    {
+     "t": "Shape of You",
+     "a": "Ed Sheeran",
+     "era": "2010s"
+    },
+    {
+     "t": "Blinding Lights",
+     "a": "The Weeknd",
+     "era": "2020s"
+    }
+   ]
+  }
+ ]
+}
