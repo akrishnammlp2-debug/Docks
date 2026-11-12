@@ -1,0 +1,97 @@
+{
+ "updated": "2026-11-12",
+ "note": "Short study notes written for Apoorva in plain words, with references.",
+ "notes": [
+  {
+   "id": "asa-grading",
+   "title": "ASA grading",
+   "topic": "Preoperative assessment",
+   "updated": "2026-11-12",
+   "summary": "The ASA Physical Status (ASA-PS) classification grades a patient's overall health before anaesthesia. Current version: amended by the ASA House of Delegates on 13 Dec 2020 (first approved in this form on 15 Oct 2014). The class definitions did not change in 2020; the update added adult, paediatric and obstetric examples.",
+   "sections": [
+    {
+     "h": "The classes",
+     "rows": [
+      [
+       "ASA I",
+       "Normal healthy patient: no systemic disease, non-smoker, little or no alcohol."
+      ],
+      [
+       "ASA II",
+       "Mild systemic disease without real functional limitation, e.g. current smoker, social drinker, normal pregnancy, BMI 30–40, well-controlled diabetes or hypertension, mild lung disease."
+      ],
+      [
+       "ASA III",
+       "Severe systemic disease with functional limitation, e.g. poorly controlled diabetes or hypertension, COPD, BMI 40 or more, active hepatitis, alcohol dependence, implanted pacemaker, moderately reduced ejection fraction, end-stage renal disease on regular dialysis, MI/stroke/TIA/coronary stent more than 3 months ago."
+      ],
+      [
+       "ASA IV",
+       "Severe systemic disease that is a constant threat to life, e.g. MI/stroke/TIA/coronary stent within the last 3 months, ongoing cardiac ischaemia or severe valve disease, severely reduced ejection fraction, sepsis, DIC, ARDS, end-stage renal disease not on regular dialysis."
+      ],
+      [
+       "ASA V",
+       "Moribund: not expected to survive without the operation, e.g. ruptured abdominal or thoracic aneurysm, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multiple organ failure."
+      ],
+      [
+       "ASA VI",
+       "Declared brain-dead patient whose organs are being removed for donation."
+      ],
+      [
+       "E",
+       "Added to the class for an emergency operation: one where delay would significantly increase the threat to life or to a body part (e.g. ASA IIIE). Not used with ASA VI."
+      ]
+     ]
+    },
+    {
+     "h": "Obstetric examples (2020)",
+     "items": [
+      "Normal pregnancy is ASA II (not ASA I).",
+      "Moves up a class as pregnancy complications become severe: e.g. pre-eclampsia with severe features is ASA III, and the same with HELLP or decompensated heart disease is ASA IV.",
+      "Uterine rupture is given as an ASA V example.",
+      "Add E when the case is an emergency (e.g. category 1 caesarean: ASA IIE or higher)."
+     ]
+    },
+    {
+     "h": "Paediatric examples (2020)",
+     "items": [
+      "The 2020 update added a separate column of children's examples, which improved agreement between paediatric anaesthetists.",
+      "Typical pattern: well-controlled chronic conditions (asthma without exacerbation, controlled epilepsy) are ASA II; poorly controlled disease, ex-premature infants under 60 weeks postconceptional age and difficult airway are ASA III; symptomatic heart disease, sepsis or ventilator dependence are ASA IV.",
+      "See the ASA page (reference 1) for the full table of children's examples."
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "The examples are illustrative, not exhaustive; the ASA gives no further rules, so the final grade is the anaesthetist's clinical judgement.",
+      "ASA-PS describes the patient's health, not the risk of the operation itself: it does not include the type of surgery, age alone, or airway difficulty in adults.",
+      "Inter-rater agreement is only fair to moderate (kappa about 0.4 to 0.6 in most studies); ASA II and III are the classes most often disputed. Using the official examples improves agreement.",
+      "Despite this, higher ASA class is consistently linked with more postoperative complications and mortality, and ASA-PS is built into many risk scores (e.g. POSSUM-type models, NSQIP calculator).",
+      "In India, SLCM and most hospital PAC forms record ASA with the E suffix for emergencies."
+     ]
+    }
+   ],
+   "refs": [
+    {
+     "title": "ASA Physical Status Classification System (ASA; last amended 13 Dec 2020, first approved 15 Oct 2014)",
+     "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
+    },
+    {
+     "title": "Günaydın B. ASA Physical Status Classification System. Turk J Anaesthesiol Reanim 2021;49:192–3",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8098734"
+    },
+    {
+     "title": "Parenti N et al. Reliability of ASA physical status classification. Indian J Anaesth 2016;60:208–14",
+     "url": "https://doi.org/10.4103/0019-5049.177875"
+    },
+    {
+     "title": "Riley R et al. Inter-rater reliability of the ASA physical status classification. Anaesth Intensive Care 2014;42:614–8",
+     "url": "https://doi.org/10.1177/0310057X1404200511"
+    },
+    {
+     "title": "SPA: Updated ASA physical status classification with paediatric examples",
+     "url": "https://pedsanesthesia.org/updated-asa-physical-status-classification-system-with-pediatric-examples"
+    }
+   ]
+  }
+ ]
+}

@@ -543,6 +543,13 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.note-ico{background:var(--t-sage,#E3EFE6)!important;color:var(--t-sage-i,#2F6B4F)!important;font-size:10px!important}
+.note-sum{font-size:15px;line-height:1.5;color:#1F2A24;margin:0 2px}
+.note-row{flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:12px 14px!important}
+.note-row b{font-family:var(--f-head,inherit);font-weight:700;color:#3E7B5E!important}
+.note-row span{font-size:14.5px;line-height:1.45;color:#1F2A24!important}
+.note-ul,.note-refs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.45;color:#1F2A24}
+.note-refs a{color:#3E7B5E}
 .pdf-row{padding:0!important;gap:0!important}
 .pdf-open{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:12px 14px;text-align:left;color:var(--fg)}
 .pdf-ico{flex:none;width:38px;height:46px;border-radius:8px;background:var(--t-rose,#F8E4E6);color:var(--t-rose-i,#93404B);font-size:10.5px;font-weight:800;display:grid;place-items:center;letter-spacing:.04em}
@@ -776,9 +783,9 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.0 · topics';
+const APP_VERSION = '5.1 · topics';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1735,6 +1742,7 @@ document.addEventListener('click', e => {
     case 'photo-pick': $('photoFile').click(); break;
     case 'pdf-add': $('pdfFile').click(); break;
     case 'pdf-read': pdfRead(id); break;
+    case 'note-open': noteSheet(id); break;
     case 'pdf-edit': pdfEditSheet(id); break;
     case 'pdf-del': { const m = (pdfList || []).find(x => x.id === id); if (m && confirm('Remove "' + m.name + '" from this device? The original in Files or Drive is not touched.')) { pdfTx('meta', 'readwrite', st => st.delete(id)).then(() => pdfTx('blobs', 'readwrite', st => st.delete(id))).then(() => { closeSheet(); toast('Removed'); pdfLoad(); }).catch(() => toast("Couldn't remove it")); } break; }
     case 'rd-close': rdClose(); break;
@@ -2141,9 +2149,19 @@ async function pdfAdd(files) {
   toast(bad ? (ok ? plural(ok, 'PDF') + ' added; ' + bad + " couldn't be saved (not a PDF or phone storage full)" : "Couldn't save that file. Is it a PDF, and is there space on the phone?") : plural(ok, 'PDF') + ' added ✓');
 }
 async function pdfSaveMeta(m) { try { await pdfTx('meta', 'readwrite', st => st.put(m)); } catch (_) {} }
+const NOTES = () => (D.topics && D.topics.notes) || [];
+function noteRows() { const N = NOTES(); return N.length ? `<div class="group">${N.map(n => `<button class="row" type="button" data-act="note-open" data-id="${esc(n.id)}"><span class="pdf-ico note-ico" aria-hidden="true">Note</span><span class="r-main"><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.topic || '')}${n.updated ? ' · updated ' + esc(dShort(n.updated)) : ''}</span></span>${CHEV}</button>`).join('')}</div>` : ''; }
+function noteSheet(id) {
+  const n = NOTES().find(x => x.id === id); if (!n) return;
+  openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(n.title)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    ${n.summary ? `<p class="note-sum">${esc(n.summary)}</p>` : ''}
+    ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.rows ? `<div class="group">${sc.rows.map(r => `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
+    ${n.refs && n.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${n.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}
+    <p class="foot">Summary written in plain words for revision. Check the original references for exact wording.</p></div>`);
+}
 function pdfSection() {
   if (pdfList === null) { pdfLoad(); return ''; }
-  let h = `<div class="sec"><h2 class="sh"><span>Topics</span><button type="button" data-act="pdf-add" style="color:var(--accent);font:inherit">${pdfBusy ? 'Saving…' : '+ Add PDF'}</button></h2>`;
+  let h = `<div class="sec"><h2 class="sh"><span>Topics</span><button type="button" data-act="pdf-add" style="color:var(--accent);font:inherit">${pdfBusy ? 'Saving…' : '+ Add PDF'}</button></h2>` + noteRows();
   if (!pdfList.length) return h + `<div class="card"><span class="c-s">Add PDFs from Files (or Google Drive in Files) and read them here any time, even offline. They're kept on this device only.</span></div></div>`;
   const groups = {}; pdfList.slice().sort((a, b) => (b.opened || b.added).localeCompare(a.opened || a.added)).forEach(m => { (groups[m.topic || 'Other'] = groups[m.topic || 'Other'] || []).push(m); });
   const keys = Object.keys(groups).sort((a, b) => a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
