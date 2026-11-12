@@ -836,6 +836,19 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .hg img{width:100%;height:100%;object-fit:cover}
 .hg button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:18px;line-height:1}
 @media (prefers-color-scheme:dark){.tban .hello-t,.tban .hello-d,.tban .hello-s{color:#fff!important}}
+
+/* profile card: soft wash of colour taken from your photo */
+.prof.tinted{position:relative;overflow:hidden;isolation:isolate}
+.prof.tinted>*{position:relative;z-index:1}
+.prof.tinted>.prof-bg{position:absolute;z-index:0;inset:-40px;background-size:cover;background-position:center;filter:blur(30px) saturate(1.5);transform:scale(1.15)}
+.prof.tinted::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.72) 70%)}
+.prof.tinted.none>.prof-bg{background:radial-gradient(circle at 20% 20%,#BFE3CB,transparent 60%),radial-gradient(circle at 85% 30%,#F8D9C4,transparent 55%),radial-gradient(circle at 60% 90%,#D9D2F2,transparent 60%),#F6F3EC;filter:none;transform:none;inset:0}
+.prof.tinted .prof-top b,.prof.tinted .prof-top>div>b{font-size:22px!important;letter-spacing:-.02em;color:#14201A!important}
+.prof.tinted .prof-top span{color:#2E3B34!important;font-weight:500}
+.prof.tinted .av{width:64px!important;height:64px!important;box-shadow:0 0 0 3px rgba(255,255,255,.9),0 6px 16px -6px rgba(0,0,0,.35)}
+.prof.tinted .pl span,.prof.tinted .pl{color:#25322B!important}
+.prof.tinted .btn.ghost{background:rgba(255,255,255,.7)!important;color:#2F6B4F!important}
+.prof.tinted .pwx{box-shadow:0 4px 14px -8px rgba(0,0,0,.3)}
 </style>
 </head>
 <body data-sec="today">
@@ -860,7 +873,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.7 · banner';
+const APP_VERSION = '5.7.1 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1645,7 +1658,7 @@ function renderDrawer() {
     P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
     ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
   ].filter(Boolean);
-  $('drawer').innerHTML = `<div class="prof"><div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
+  $('drawer').innerHTML = `<div class="prof${P.photo ? ' tinted' : ' tinted none'}">${P.photo ? `<div class="prof-bg" style="background-image:url('${esc(P.photo)}')"></div>` : '<div class="prof-bg"></div>'}<div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
     ${profWeather()}
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
