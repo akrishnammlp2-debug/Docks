@@ -814,6 +814,28 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .r-main,.prog-txt,.bk-info,.pwx-t,.hello,.card,.row>span{min-width:0}
 .otbl .c-proc,.otbl .c-proc button{white-space:normal!important;overflow-wrap:anywhere;word-break:break-word;max-width:44vw}
 .c-mono,.mrank,.gt-v,.bk-n,.r-time{word-break:normal;overflow-wrap:normal;hyphens:none}
+
+/* Today banner */
+.tban{position:relative;margin:4px 0 2px;min-height:190px;border-radius:26px;overflow:hidden;display:flex;align-items:flex-end;box-shadow:var(--tile-shadow)}
+.tban-day{background:linear-gradient(180deg,#9CC9EF,#D6EAF6 72%)}
+.tban-dawn{background:linear-gradient(180deg,#5B6FA8,#E9A9A0 75%)}
+.tban-dusk{background:linear-gradient(180deg,#45507F,#E7A27A 78%)}
+.tban-night{background:linear-gradient(180deg,#0E1428,#2A3866 82%)}
+.tban-art,.tban-pic{position:absolute;inset:0;width:100%;height:100%}
+.tban-pic{object-fit:cover}
+.tban::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(8,12,20,.62));pointer-events:none}
+.tban-txt{position:relative;z-index:2;width:100%;padding:16px 16px 14px;display:flex;flex-direction:column;gap:3px}
+.tban .hello-row{margin-bottom:2px}
+.tban .hello-d,.tban .hello-s{color:rgba(255,255,255,.88)!important;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.tban .hello-t{color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.tban .wxchip{background:rgba(255,255,255,.22)!important;color:#fff!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.tban-cam{position:absolute;z-index:3;top:12px;right:12px;width:38px;height:38px;border-radius:999px;background:rgba(10,14,24,.38);display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.tban-cam svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
+.hero-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hg{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#eee}
+.hg img{width:100%;height:100%;object-fit:cover}
+.hg button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:18px;line-height:1}
+@media (prefers-color-scheme:dark){.tban .hello-t,.tban .hello-d,.tban .hello-s{color:#fff!important}}
 </style>
 </head>
 <body data-sec="today">
@@ -834,10 +856,11 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <input type="file" id="privateFile" hidden>
 <input type="file" id="photoFile" accept="image/*" hidden>
 <input type="file" id="pdfFile" accept="application/pdf,.pdf" multiple hidden>
+<input type="file" id="heroFile" accept="image/*" multiple hidden>
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.5.1 · reader';
+const APP_VERSION = '5.7 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1068,6 +1091,36 @@ function profWeather() {
   const c = W.current, d = W.daily || {}; const k = wxKind(c.weather_code, c.is_day); const [, txt] = wmo(c.weather_code, c.is_day);
   return `<button class="pwx pwx-${k}" type="button" data-act="wx-sheet">${wxArt(k)}<span class="pwx-t"><b>${Math.round(c.temperature_2m)}°</b><span>${esc(txt)}${d.temperature_2m_max ? ' · ' + Math.round(d.temperature_2m_max[0]) + '° / ' + Math.round(d.temperature_2m_min[0]) + '°' : ''}</span><small>${esc(L.place || '')}</small></span></button>`;
 }
+/* Today banner: your own pictures (kept on this device, a different one each visit) or a drawn landscape that follows the time of day */
+let heroPics = [], heroIdx = 0, heroLoaded = false;
+async function heroLoad() { heroLoaded = true; try { const v = await pdfTx('blobs', 'readonly', st => st.get('hero-pics')); heroPics = Array.isArray(v) ? v : []; } catch (_) { heroPics = []; } heroIdx = heroPics.length ? Math.floor(Math.random() * heroPics.length) : 0; if (tab === 'today') render(); }
+function shrinkImage(f, max) { return new Promise((res, rej) => { const url = URL.createObjectURL(f); const im = new Image(); im.onload = () => { const k = Math.min(1, max / Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.82)); }; im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('unreadable')); }; im.src = url; }); }
+async function heroAdd(files) {
+  let ok = 0; for (const f of files) { try { heroPics.push(await shrinkImage(f, 1600)); ok++; } catch (_) {} }
+  heroPics = heroPics.slice(-12);
+  try { await pdfTx('blobs', 'readwrite', st => st.put(heroPics, 'hero-pics')); heroIdx = heroPics.length - 1; toast(ok ? plural(ok, 'picture') + ' added ✓' : "Couldn't read that picture"); }
+  catch (_) { toast("Couldn't save the picture (phone storage full?)"); }
+  render(); if (sheetOpen()) heroSheet();
+}
+async function heroRemove(i) { heroPics.splice(i, 1); try { await pdfTx('blobs', 'readwrite', st => st.put(heroPics, 'hero-pics')); } catch (_) {} heroIdx = 0; render(); heroSheet(); }
+function heroSheet() {
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Banner pictures</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <p class="foot" style="margin:0">Your pictures show at the top of Today, a different one each time you open it. Kept on this device only. Up to 12.</p>
+    ${heroPics.length ? `<div class="hero-grid">${heroPics.map((u, i) => `<div class="hg"><img src="${u}" alt=""><button type="button" data-act="hero-del" data-i="${i}" aria-label="Remove picture">×</button></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No pictures yet, so a drawn landscape shows (it changes with the time of day).</span></div>'}
+    <button class="btn" type="button" data-act="hero-add">Add pictures</button></div>`);
+}
+function skyPhase() { const h = new Date().getHours(); return h < 5 || h >= 20 ? 'night' : h < 7 ? 'dawn' : h < 17 ? 'day' : 'dusk'; }
+function tbanArt(ph) {
+  const stars = ph === 'night' ? [[30, 22], [80, 40], [140, 18], [200, 34], [250, 14], [300, 44], [60, 60], [180, 62], [340, 26]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.2" fill="#fff" opacity=".8"/>`).join('') : '';
+  const orb = ph === 'night' ? '<circle cx="250" cy="40" r="13" fill="#F4E6B0"/><circle cx="256" cy="36" r="12" fill="#22305A"/>' : ph === 'day' ? '<circle cx="250" cy="42" r="15" fill="#FFE08A"/>' : '<circle cx="290" cy="92" r="20" fill="#FFB36B" opacity=".9"/>';
+  const hill = { night: ['#2A3A5E', '#1E2B4A', '#152038'], dawn: ['#8C79AE', '#6B5C90', '#4A4070'], day: ['#8CC09B', '#6BA67D', '#4A8A66'], dusk: ['#7B679A', '#5A4B7C', '#3A325C'] }[ph];
+  const win = ph === 'night' || ph === 'dusk' ? '#FFD27A' : 'rgba(255,255,255,.55)';
+  const town = [[40, 104, 14, 22], [58, 98, 12, 28], [74, 108, 16, 18], [226, 100, 14, 26], [244, 94, 10, 32], [258, 106, 18, 20]].map(([x, y, w, hh]) => `<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${hill[2]}"/><rect x="${x + 3}" y="${y + 5}" width="3" height="3" fill="${win}"/><rect x="${x + w - 6}" y="${y + 11}" width="3" height="3" fill="${win}"/>`).join('');
+  return `<svg class="tban-art" viewBox="0 0 360 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${stars}${orb}
+    <path d="M0 112 Q60 84 130 104 T260 98 T360 104 V170 H0z" fill="${hill[0]}"/>${town}
+    <path d="M0 128 Q90 108 180 124 T360 120 V170 H0z" fill="${hill[1]}"/>
+    <path d="M0 146 Q100 136 190 146 T360 142 V170 H0z" fill="${hill[2]}"/></svg>`;
+}
 function wxChip() {
   if (!state.settings.weatherOn) return '';
   const L = state.loc; const W = state.weather && state.weather.data;
@@ -1080,8 +1133,10 @@ function gTile(tab, tint, ico, val, lab, ringHTML) {
   return `<button class="gt" type="button" data-act="goto" data-tab="${tab}" style="--tb:var(--t-${tint});--ti:var(--t-${tint}-i)">${ringHTML || `<span class="gt-i" aria-hidden="true">${ico}</span>`}<span class="gt-v">${val}</span><span class="gt-l">${lab}</span></button>`;
 }
 function pageToday() {
+  if (!heroLoaded) heroLoad();
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
-  let h = `<div class="hello"><div class="hello-row"><span class="hello-d">${esc(dLong(t))}</span>${wxChip()}</div><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div>`;
+  const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
+  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${pic}" alt="">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-txt"><div class="hello-row"><span class="hello-d">${esc(dLong(t))}</span>${wxChip()}</div><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -1612,7 +1667,7 @@ function toast(msg, undo) {
   if (undo) $('undoBtn').onclick = () => { undo(); el.classList.remove('show'); };
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
-function goTab(k) { if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
+function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1) heroIdx = (heroIdx + 1) % heroPics.length; if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
 function openDrawer() { $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
@@ -1855,6 +1910,9 @@ document.addEventListener('click', e => {
     case 'prof-useloc': if (state.loc && state.loc.place) { state.profile = { ...state.profile, place: state.loc.place }; commit('Place set to ' + state.loc.place); profileSheet(); } else updateLocation(true); break;
     case 'photo-pick': $('photoFile').click(); break;
     case 'pdf-add': $('pdfFile').click(); break;
+    case 'hero-pics': heroSheet(); break;
+    case 'hero-add': $('heroFile').click(); break;
+    case 'hero-del': heroRemove(+b.dataset.i); break;
     case 'pdf-read': pdfRead(id); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
     case 'note-open': noteSheet(id); break;
@@ -2215,6 +2273,7 @@ $('importFile').addEventListener('change', async e => {
   const prev = state; state = normalise(data);
   if (save()) { collapsed.clear(); render(); toast('Backup restored ✓'); } else { state = prev; render(); }
 });
+$('heroFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) heroAdd(fs); });
 $('pdfFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) pdfAdd(fs); });
 $('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
