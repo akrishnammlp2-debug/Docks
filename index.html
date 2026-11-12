@@ -814,56 +814,6 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .r-main,.prog-txt,.bk-info,.pwx-t,.hello,.card,.row>span{min-width:0}
 .otbl .c-proc,.otbl .c-proc button{white-space:normal!important;overflow-wrap:anywhere;word-break:break-word;max-width:44vw}
 .c-mono,.mrank,.gt-v,.bk-n,.r-time{word-break:normal;overflow-wrap:normal;hyphens:none}
-
-/* ===== side menu, "evening dashboard" look (v5.6) ===== */
-.drawer,.drawer[data-x]{background:#121826!important;color:#E8ECF4!important;border-right:0!important;padding:0 0 18px!important}
-.hero-d{display:flex;flex-direction:column;gap:12px;padding:0 14px}
-.hero-top{position:relative;margin:0 -14px;height:178px;overflow:hidden;border-radius:0 0 26px 26px;display:flex;align-items:flex-end;padding:0 16px 14px}
-.hero-day .hero-top{background:linear-gradient(180deg,#9CC9EF,#CFE6F6 70%)}
-.hero-dawn .hero-top{background:linear-gradient(180deg,#5B6FA8,#E9A9A0 75%)}
-.hero-dusk .hero-top{background:linear-gradient(180deg,#45507F,#E7A27A 78%)}
-.hero-night .hero-top{background:linear-gradient(180deg,#0E1428,#24305A 80%)}
-.hero-art{position:absolute;inset:0;width:100%;height:100%}
-.hero-top h2{position:relative;margin:0;font-family:var(--f-head,inherit);font-size:25px;font-weight:800;letter-spacing:-.02em;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.45)}
-.hero-av{position:absolute;top:calc(env(safe-area-inset-top) + 12px);right:14px;width:46px;height:46px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.25);box-shadow:0 0 0 2px rgba(255,255,255,.6);display:grid;place-items:center;color:#fff;font-weight:700}
-.hero-av img{width:100%;height:100%;object-fit:cover}
-.hero-date{display:flex;align-items:center;gap:10px;color:#AEB6C8;font-size:16px;font-weight:500;margin-top:4px}
-.hero-time{padding:3px 11px;border-radius:999px;background:rgba(94,224,208,.14);color:#5EE0D0;font-weight:600}
-.hero-big{white-space:nowrap;font-family:var(--f-head,inherit);font-size:clamp(22px,8vw,30px);font-weight:800;letter-spacing:-.035em;line-height:1;color:#fff}
-.hero-big small{font-size:15px;font-weight:700;color:#AEB6C8;letter-spacing:-.01em}
-.hero-cd{display:flex;align-items:center;gap:10px}
-.cd-box{flex:1;min-width:0;border:1.5px solid rgba(232,170,80,.55);background:rgba(232,170,80,.08);border-radius:18px;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
-.cd-r{display:flex;gap:12px;font-size:14.5px;color:#E8ECF4}
-.cd-r b{min-width:66px;font-weight:700;white-space:nowrap}.cd-r b.amber{color:#F2B45A}.cd-r b.teal{color:#5EE0D0}
-.cd-r span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.scal{position:relative;width:76px;height:84px;flex:none;display:flex;flex-direction:column;align-items:center}
-.scal svg{width:76px;height:76px}.scal b{position:absolute;top:26px;left:0;right:0;text-align:center;font-size:15px;font-weight:700;color:#fff}
-.scal small{font-size:11px;color:#AEB6C8;margin-top:-6px}
-.hero-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.ht{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:11px 12px;border-radius:16px;background:#1C2333;text-align:left;color:#E8ECF4}
-.ht b{font-family:var(--f-head,inherit);font-size:21px;font-weight:700;color:#fff}.ht span{font-size:12px;color:#AEB6C8}
-.hero-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:0 14px}
-.hero-chips::-webkit-scrollbar{display:none}
-.hc{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:9px 13px;border-radius:14px;background:#1C2333;color:#E8ECF4;text-align:left;max-width:200px}
-.hc b{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600}.hc span{font-size:12px;color:#AEB6C8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
-.hc-dot{width:8px;height:8px;border-radius:50%;flex:none}
-.drawer .dnav{padding:6px 10px 0}
-.drawer .sh,.drawer .dnav .sh{color:#7F889C!important}
-.drawer .ditem,.drawer .ditem[data-tab]{background:transparent!important;color:#C9D0DE!important;box-shadow:none!important}
-.drawer .ditem[aria-current="page"],.drawer .ditem[aria-current="page"][data-tab]{background:#232C40!important;color:#fff!important;box-shadow:inset 0 0 0 1px rgba(94,224,208,.35)!important}
-.drawer .ditem svg{filter:saturate(.9)}
-.drawer .ditem small,.drawer .ditem[aria-current="page"] small{background:rgba(94,224,208,.14)!important;color:#5EE0D0!important}
-.drawer .appver{color:#7F889C!important}
-@media (prefers-color-scheme:dark){.drawer{background:#121826!important}}
-.hero-pic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-top.has-pic::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(10,14,24,.65))}
-.hero-top>h2,.hero-top>.hero-av,.hero-top>.hero-edit{z-index:2}
-.hero-edit{position:absolute;top:calc(env(safe-area-inset-top) + 12px);left:14px;width:40px;height:40px;border-radius:999px;background:rgba(18,24,38,.45);display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.hero-edit svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
-.hero-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.hg{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#eee}
-.hg img{width:100%;height:100%;object-fit:cover}
-.hg button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:18px;line-height:1}
 </style>
 </head>
 <body data-sec="today">
@@ -884,11 +834,10 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <input type="file" id="privateFile" hidden>
 <input type="file" id="photoFile" accept="image/*" hidden>
 <input type="file" id="pdfFile" accept="application/pdf,.pdf" multiple hidden>
-<input type="file" id="heroFile" accept="image/*" multiple hidden>
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.6 · new menu';
+const APP_VERSION = '5.5 · reader';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1628,73 +1577,7 @@ function render() {
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
-/* side menu hero: own drawn landscape that changes with the time of day, big date, countdowns, quick stats */
-/* your own pictures for the menu banner: kept on this device (IndexedDB), a different one each time the menu opens */
-let heroPics = [], heroIdx = 0;
-async function heroLoad() { try { const v = await pdfTx('blobs', 'readonly', st => st.get('hero-pics')); heroPics = Array.isArray(v) ? v : []; } catch (_) { heroPics = []; } heroIdx = heroPics.length ? Math.floor(Math.random() * heroPics.length) : 0; if ($('drawer').classList.contains('open')) renderDrawer(); }
-function shrinkImage(f, max) { return new Promise((res, rej) => { const url = URL.createObjectURL(f); const im = new Image(); im.onload = () => { const k = Math.min(1, max / Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.82)); }; im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('not a picture iPhone can read')); }; im.src = url; }); }
-async function heroAdd(files) {
-  let ok = 0; for (const f of files) { try { heroPics.push(await shrinkImage(f, 1400)); ok++; } catch (_) {} }
-  heroPics = heroPics.slice(-12);
-  try { await pdfTx('blobs', 'readwrite', st => st.put(heroPics, 'hero-pics')); heroIdx = heroPics.length - 1; toast(ok ? plural(ok, 'picture') + ' added ✓' : "Couldn't read that picture"); }
-  catch (_) { toast("Couldn't save the picture (phone storage full?)"); }
-  renderDrawer(); if (sheetOpen()) heroSheet();
-}
-async function heroRemove(i) { heroPics.splice(i, 1); try { await pdfTx('blobs', 'readwrite', st => st.put(heroPics, 'hero-pics')); } catch (_) {} heroIdx = 0; renderDrawer(); heroSheet(); }
-function heroSheet() {
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Menu pictures</h2><button type="button" class="link strong" data-act="close">Done</button></div>
-    <p class="foot" style="margin:0">Your pictures show at the top of the side menu, a different one each time you open it. Kept on this device only. Up to 12.</p>
-    ${heroPics.length ? `<div class="hero-grid">${heroPics.map((u, i) => `<div class="hg"><img src="${u}" alt=""><button type="button" data-act="hero-del" data-i="${i}" aria-label="Remove picture">×</button></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No pictures yet, so the drawn landscape is showing (it changes with the time of day).</span></div>'}
-    <button class="btn" type="button" data-act="hero-add">Add pictures</button></div>`);
-}
-function skyPhase() { const h = new Date().getHours(); return h < 5 || h >= 20 ? 'night' : h < 7 ? 'dawn' : h < 17 ? 'day' : 'dusk'; }
-function heroGreet(name) { const h = new Date().getHours(); const g = h < 5 ? 'Up late' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : h < 20 ? 'Good evening' : 'Nearly night'; return g + (name ? ', ' + name.split(' ')[0] : ''); }
-function heroArt(ph) {
-  const stars = ph === 'night' ? [[30, 22], [80, 40], [140, 18], [200, 34], [250, 14], [300, 44], [60, 60], [180, 62]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.2" fill="#fff" opacity=".8"/>`).join('') : '';
-  const orb = ph === 'night' ? '<circle cx="150" cy="44" r="13" fill="#F4E6B0"/><circle cx="156" cy="40" r="12" fill="#1B2440"/>' : ph === 'day' ? '<circle cx="150" cy="46" r="15" fill="#FFE08A"/>' : '<circle cx="250" cy="96" r="20" fill="#FFB36B" opacity=".9"/>';
-  const hill = { night: ['#1E2A44', '#16203A', '#101830'], dawn: ['#7C6A9E', '#5D4F80', '#3F3762'], day: ['#7FB38F', '#5E9A72', '#3F7D5C'], dusk: ['#6E5A8A', '#4D3F6E', '#302A50'] }[ph];
-  const win = ph === 'night' || ph === 'dusk' ? '#FFD27A' : 'rgba(255,255,255,.55)';
-  const town = [[40, 104, 14, 22], [58, 98, 12, 28], [74, 108, 16, 18], [196, 100, 14, 26], [214, 94, 10, 32], [228, 106, 18, 20]].map(([x, y, w, hh]) => `<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${hill[2]}"/><rect x="${x + 3}" y="${y + 5}" width="3" height="3" fill="${win}"/><rect x="${x + w - 6}" y="${y + 11}" width="3" height="3" fill="${win}"/>`).join('');
-  return `<svg class="hero-art" viewBox="0 0 320 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${stars}${orb}
-    <path d="M0 112 Q60 84 120 104 T240 98 T320 104 V170 H0z" fill="${hill[0]}"/>${town}
-    <path d="M0 128 Q80 108 160 124 T320 120 V170 H0z" fill="${hill[1]}"/>
-    <path d="M0 146 Q90 136 170 146 T320 142 V170 H0z" fill="${hill[2]}"/>
-    <path d="M10 152 Q120 144 200 152 T320 150" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/></svg>`;
-}
-function scallop(pct, label) {
-  const N = 12, R = 30, A = 3.2, pts = []; for (let i = 0; i <= 240; i++) { const t = i / 240 * Math.PI * 2; const r = R + A * Math.cos(N * t); pts.push((40 + r * Math.cos(t - Math.PI / 2)).toFixed(1) + ',' + (40 + r * Math.sin(t - Math.PI / 2)).toFixed(1)); }
-  const d = 'M' + pts.join('L'); return `<div class="scal"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="${d}" fill="none" stroke="rgba(94,224,208,.18)" stroke-width="5"/><path d="${d}" fill="none" stroke="#5EE0D0" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="${pct} 100"/></svg><b>${pct}%</b><small>${esc(label)}</small></div>`;
-}
-function drawerHero(P, ex) {
-  const now = new Date(); const ph = skyPhase(); const t = today();
-  const dnum = now.getDate(); const suf = (dnum % 10 === 1 && dnum !== 11) ? 'st' : (dnum % 10 === 2 && dnum !== 12) ? 'nd' : (dnum % 10 === 3 && dnum !== 13) ? 'rd' : 'th';
-  const rows = [];
-  const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
-  if (up) rows.push([daysUntil(up.date), up.short || up.session, 'teal']);
-  if (ROSTER().length && state.settings.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx) rows.push([daysUntil(nx.date), 'Next duty', 'amber']); }
-  if (ex !== null && state.settings.countdownOn) rows.push([ex, state.settings.examLabel || 'MD finals', 'teal']);
-  const fmt = n => n === 0 ? 'Today' : n === 1 ? '1 day' : n + ' days';
-  const B = BOOKS(); let bd = 0, bn = 0; B.forEach(b => { const x = bookStats(b); bd += x.d; bn += x.n; });
-  const pct = bn ? Math.round(100 * bd / bn) : 0;
-  const tiles = [[toSyncCount(), 'cases to sync', 'cases'], [remAttention().length, 'reminders due', 'reminders'], [bn ? bd + '/' + bn : '0', 'chapters read', 'study'], [advNew(), 'new papers', 'advances']];
-  const W = state.settings.weatherOn && state.weather && state.weather.data && state.weather.data.current ? state.weather.data.current : null;
-  const odDay = otDefaultDay(); const otN = odDay ? otRows(odDay).length : 0;
-  const chips = [
-    W ? [`<span class="hc-dot" style="background:#7FB2E5"></span>${Math.round(W.temperature_2m)}° · ${esc(wmo(W.weather_code, W.is_day)[1])}`, state.loc && state.loc.place ? esc(state.loc.place) : 'Weather', 'wx-sheet', ''] : null,
-    otN ? [`<span class="hc-dot" style="background:#5EE0D0"></span>OT list`, otN + ' cases · ' + relDay(odDay), 'tab', 'ot'] : null,
-    remAttention().length ? [`<span class="hc-dot" style="background:#F0707A"></span>Heads-up`, plural(remAttention().length, 'reminder') + ' due', 'tab', 'reminders'] : null
-  ].filter(Boolean);
-  const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : '';
-  return `<div class="hero-d hero-${ph}"><div class="hero-top${pic ? ' has-pic' : ''}">${pic ? `<img class="hero-pic" src="${pic}" alt="">` : heroArt(ph)}<button class="hero-edit" type="button" data-act="hero-pics" aria-label="Change menu pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><button class="hero-av" type="button" data-act="prof-edit" aria-label="Edit profile">${avatarHTML(P)}</button><h2>${esc(heroGreet(P.name))}</h2></div>
-    <div class="hero-date"><span>${esc(now.toLocaleDateString('en-GB', { weekday: 'long' }))}</span><span class="hero-time">${esc(now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }))}</span></div>
-    <div class="hero-big">${dnum}${suf} ${esc(MONTHS[now.getMonth()])}<small>, ${now.getFullYear()}</small></div>
-    ${rows.length || bn ? `<div class="hero-cd"><div class="cd-box">${rows.map(r => `<div class="cd-r"><b class="${r[2]}">${fmt(r[0])}</b><span>${esc(r[1])}</span></div>`).join('') || '<div class="cd-r"><span>Nothing coming up</span></div>'}</div>${bn ? scallop(pct, 'Books') : ''}</div>` : ''}
-    <div class="hero-tiles">${tiles.map(x => `<button type="button" class="ht" data-act="tab" data-tab="${x[2]}"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div>
-    ${chips.length ? `<div class="hero-chips">${chips.map(c => `<button type="button" class="hc" data-act="${c[2]}"${c[3] ? ` data-tab="${c[3]}"` : ''}><b>${c[0]}</b><span>${c[1]}</span></button>`).join('')}</div>` : ''}
-  </div>`;
-}
 function renderDrawer() {
-  if (!renderDrawer.loaded) { renderDrawer.loaded = true; heroLoad(); }
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
   const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
@@ -1707,7 +1590,10 @@ function renderDrawer() {
     P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
     ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
   ].filter(Boolean);
-  $('drawer').innerHTML = drawerHero(P, ex) + `
+  $('drawer').innerHTML = `<div class="prof"><div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
+    ${profWeather()}
+    ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
+    <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
     <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
@@ -1727,7 +1613,7 @@ function toast(msg, undo) {
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
 function goTab(k) { if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
-function openDrawer() { if (heroPics.length > 1) { heroIdx = (heroIdx + 1) % heroPics.length; renderDrawer(); } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
+function openDrawer() { $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
 /* ---------- sheets ---------- */
@@ -1969,9 +1855,6 @@ document.addEventListener('click', e => {
     case 'prof-useloc': if (state.loc && state.loc.place) { state.profile = { ...state.profile, place: state.loc.place }; commit('Place set to ' + state.loc.place); profileSheet(); } else updateLocation(true); break;
     case 'photo-pick': $('photoFile').click(); break;
     case 'pdf-add': $('pdfFile').click(); break;
-    case 'hero-pics': closeDrawer(); heroSheet(); break;
-    case 'hero-add': $('heroFile').click(); break;
-    case 'hero-del': heroRemove(+b.dataset.i); break;
     case 'pdf-read': pdfRead(id); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
     case 'note-open': noteSheet(id); break;
@@ -2332,7 +2215,6 @@ $('importFile').addEventListener('change', async e => {
   const prev = state; state = normalise(data);
   if (save()) { collapsed.clear(); render(); toast('Backup restored ✓'); } else { state = prev; render(); }
 });
-$('heroFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) heroAdd(fs); });
 $('pdfFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) pdfAdd(fs); });
 $('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
