@@ -849,6 +849,16 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .prof.tinted .pl span,.prof.tinted .pl{color:#25322B!important}
 .prof.tinted .btn.ghost{background:rgba(255,255,255,.7)!important;color:#2F6B4F!important}
 .prof.tinted .pwx{box-shadow:0 4px 14px -8px rgba(0,0,0,.3)}
+
+/* readability on the tinted card */
+.prof.tinted::after{background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.82) 45%,rgba(255,255,255,.93) 100%)!important}
+.prof.tinted>.prof-bg{filter:blur(34px) saturate(1.25)!important;opacity:.85}
+.prof.tinted .prof-top b,.prof.tinted .prof-top>div>b{color:#0E1913!important;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.prof.tinted .prof-top span{color:#1F2B24!important;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.prof.tinted .prof-l{background:rgba(255,255,255,.88);border-radius:16px;padding:10px 12px;box-shadow:0 2px 10px -6px rgba(0,0,0,.25)}
+.prof.tinted .pl,.prof.tinted .pl span{color:#1A2620!important;font-weight:500}
+.prof.tinted .pl svg{color:#3E7B5E!important;stroke:#3E7B5E!important}
+.prof.tinted .btn.ghost{background:#FFFFFF!important;color:#2F6B4F!important;box-shadow:0 2px 10px -6px rgba(0,0,0,.25)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -873,7 +883,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.7.1 · banner';
+const APP_VERSION = '5.7.2 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
