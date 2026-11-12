@@ -729,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7 · SLCM form';
+const APP_VERSION = '4.7.1 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1277,7 +1277,7 @@ function pageOt() {
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh"><span>Cases</span><span>Scroll sideways for all columns →</span></h2>${otTable(rows)}</div>`;
+  h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(rows)}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
   return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient details are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient details here. On the website they only exist locked.'}</p>`;
 }
