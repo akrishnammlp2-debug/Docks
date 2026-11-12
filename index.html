@@ -729,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7.2 · SLCM form';
+const APP_VERSION = '4.7.3 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1481,7 +1481,7 @@ const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) ret
 const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
 const FACULTY = () => (state.private && state.private.faculty) || [];
 const REMOTE_RX = /^(GEC|CT|MRI|Cobalt|Radio ?Cath|Cath ?Lab|Pedo|MARC|MECT)$/i;
-function locFromOt(ot) { const o = (ot || '').trim(); if (REMOTE_RX.test(o)) return o; const m = /^OR\s*(\d+)$/i.exec(o); return m ? 'KHSB-OT' + m[1] : o; }
+function locFromOt(ot) { const o = (ot || '').trim(); if (REMOTE_RX.test(o)) return o; const m = /^OR\s*(\d+)$/i.exec(o); if (m) return 'OR' + m[1]; const k = /^KHSB[\s-]*O[RT]\s*(\d+)$/i.exec(o); return k ? 'KHSB-OT' + k[1] : o; } // OR4 and KHSB-OT4 are different theatres: never convert one into the other
 function slFromOt(r) {
   const o = (r.ot || '').trim(); const u = (r.unit || '').toUpperCase(); const remote = REMOTE_RX.test(o) || /^(GEC|RAD)/.test(u) || isGI(r.procedure);
   const gi = /^GEC/.test(u) || /^GEC$/i.test(o) || isGI(r.procedure);
