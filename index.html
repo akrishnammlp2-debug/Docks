@@ -543,6 +543,7 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.appver{margin:14px 0 6px;text-align:center;font-size:11.5px;color:var(--fg-3)!important;opacity:.8;font-family:var(--font-body,inherit)}
 .note-ico{background:var(--t-sage,#E3EFE6)!important;color:var(--t-sage-i,#2F6B4F)!important;font-size:10px!important}
 .note-sum{font-size:15px;line-height:1.5;color:#1F2A24;margin:0 2px}
 .note-row{flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:12px 14px!important}
@@ -783,7 +784,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.1 · topics';
+const APP_VERSION = '5.1.1 · topics';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics'];
 
@@ -1048,7 +1049,7 @@ function pageToday() {
   h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
   if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}</div></div>`;
-  return h;
+  return h + `<p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
 const fmtMins = m => { m = Math.round(m || 0); return m < 60 ? m + ' min' : Math.floor(m / 60) + 'h' + (m % 60 ? ' ' + (m % 60) + 'm' : ''); };
@@ -1492,7 +1493,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
