@@ -576,8 +576,10 @@ mark{background:#DAF1DE!important}
 .rd-bar b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--f-head,inherit);font-size:15px}
 .rd-bar .link{color:#3E7B5E;font-weight:700}
 .rd-bar span{font-size:13px;color:#6F7A74;font-variant-numeric:tabular-nums}
-.rd-pages{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:8px 8px calc(env(safe-area-inset-bottom) + 70px);display:flex;flex-direction:column;align-items:center;gap:8px}
+.rd-pages{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:8px 8px calc(env(safe-area-inset-bottom) + 70px);touch-action:pan-x pan-y}
+.rd-inner{display:flex;flex-direction:column;align-items:center;gap:8px;width:max-content;min-width:100%;will-change:transform}
 .rd-page{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);flex:none}
+.pdf-open .ring{flex:none}
 .rd-msg{margin:40px 16px;color:#4A5650;text-align:center}
 .rd-zoom{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);display:flex;gap:8px}
 .rd-zoom button{width:44px;height:44px;border-radius:999px;background:#1F2A24;color:#fff;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
@@ -962,7 +964,7 @@ function booksSection() {
   return h + `</div>`;
 }
 function bookSheet(id) {
-  const b = BOOKS().find(x => x.id === id); if (!b) return; const x = bookStats(b);
+  const b = BOOKS().find(x => x.id === id); if (!b) return; const x = bookStats(b); const keep = sheetOpen() && $('sheet-body').querySelector('.bk-list') ? $('sheet').scrollTop : null;
   let last = null;
   const rows = b.chapters.map(c => { const k = b.id + '|' + c.n; const on = !!state.bookDone[k];
     let ph = ''; if (c.part && c.part !== last) { last = c.part; ph = `<div class="bk-part">${esc(c.part)}</div>`; }
@@ -970,6 +972,7 @@ function bookSheet(id) {
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Chapters</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <div class="bk-sum">${ring(x.d, x.n, 56, 'bks-' + b.id)}<span class="bk-info"><b>${esc(b.title)}</b><span>${x.d} of ${x.n} chapters done</span><small>${esc([b.edition, b.authors].filter(Boolean).join(' · '))}</small></span></div>
     <div class="bk-list">${rows}</div></div>`);
+  if (keep !== null) $('sheet').scrollTop = keep;
 }
 const OTL = () => (D.ot && D.ot.items) || [];
 const ROSTER = () => (state.private && state.private.roster && state.private.roster.days) || [];
@@ -1858,7 +1861,7 @@ document.addEventListener('click', e => {
     case 'pdf-edit': pdfEditSheet(id); break;
     case 'pdf-del': { const m = (pdfList || []).find(x => x.id === id); if (m && confirm('Remove "' + m.name + '" from this device? The original in Files or Drive is not touched.')) { pdfTx('meta', 'readwrite', st => st.delete(id)).then(() => pdfTx('blobs', 'readwrite', st => st.delete(id))).then(() => { closeSheet(); toast('Removed'); pdfLoad(); }).catch(() => toast("Couldn't remove it")); } break; }
     case 'rd-close': rdClose(); break;
-    case 'rd-zoom': if (rd) { rd.zoom = Math.max(.6, Math.min(2.6, rd.zoom * (b.dataset.z === '1' ? 1.25 : .8))); rdLayout(); } break;
+    case 'rd-zoom': if (rd) { rd.zoom = Math.max(.6, Math.min(4, rd.zoom * (b.dataset.z === '1' ? 1.25 : .8))); rdLayout(true); } break;
     case 'photo-remove': state.profile = { ...state.profile, photo: '' }; if (commit('Photo removed')) profileSheet(); break;
     case 'rem-edit': remSheet(id); break;
     case 'rem-freq': { const f = b.dataset.f; const form = b.closest('form'); form.querySelector('[name=freq]').value = f; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); $('rem-m').hidden = f !== 'monthly'; $('rem-w').hidden = f !== 'weekly'; break; }
@@ -1894,7 +1897,7 @@ document.addEventListener('click', e => {
       if (state.bookDone[id]) delete state.bookDone[id]; else state.bookDone[id] = nowISO();
       const all = b && bookStats(b).d === b.chapters.length && before < b.chapters.length;
       if (all) otJustDone = 'bk-' + bid;
-      commit(all ? 'Book finished 🎉' : null); otJustDone = null; if (sheetOpen()) bookSheet(bid); break; }
+      commit(all ? 'Book finished 🎉' : null); otJustDone = null; if (sheetOpen()) { const sh = $('sheet'), y = sh.scrollTop; bookSheet(bid); sh.scrollTop = y; } break; }
     case 'ot-tick': {
       const day = (OTL().find(r => r.id === id) || {}).date; const rows = otRows(day);
       const before = rows.filter(r => state.otDone[r.id]).length;
@@ -2248,18 +2251,22 @@ const b64u = {
 let pdfList = null, pdfBusy = false;
 function pdfDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-pdfs', 1); r.onupgradeneeded = () => { r.result.createObjectStore('meta', { keyPath: 'id' }); r.result.createObjectStore('blobs'); }; r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function pdfTx(store, mode, fn) { const db = await pdfDb(); return new Promise((res, rej) => { const t = db.transaction(store, mode); const out = fn(t.objectStore(store)); t.oncomplete = () => res(out && out.result !== undefined ? out.result : out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error || new Error('storage full')); }); }
-async function pdfLoad() { try { pdfList = (await pdfTx('meta', 'readonly', st => st.getAll())) || []; } catch (_) { pdfList = []; } render(); }
+async function pdfLoad() { try { pdfList = (await pdfTx('meta', 'readonly', st => st.getAll())) || []; } catch (_) { pdfList = []; } render();
+  for (const m of pdfList.filter(x => !x.pages)) { try { const b = await pdfTx('blobs', 'readonly', st => st.get(m.id)); if (b) { m.pages = await pdfCount(b); await pdfSaveMeta(m); render(); } } catch (_) {} } }
 async function pdfAdd(files) {
   pdfBusy = true; render(); let ok = 0, bad = 0;
   try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (_) {}
   for (const f of files) {
     if (!/pdf$/i.test(f.type) && !/\.pdf$/i.test(f.name)) { bad++; continue; }
     const id = 'pdf-' + uid(); const meta = { id, name: f.name.replace(/\.pdf$/i, ''), topic: '', size: f.size, added: nowISO(), page: 1, pages: 0 };
+    try { meta.pages = await pdfCount(f); } catch (_) {}
     try { await pdfTx('blobs', 'readwrite', st => st.put(f, id)); await pdfTx('meta', 'readwrite', st => st.put(meta)); ok++; } catch (e) { bad++; }
   }
   pdfBusy = false; await pdfLoad();
   toast(bad ? (ok ? plural(ok, 'PDF') + ' added; ' + bad + " couldn't be saved (not a PDF or phone storage full)" : "Couldn't save that file. Is it a PDF, and is there space on the phone?") : plural(ok, 'PDF') + ' added ✓');
 }
+async function pdfCount(blob) { const lib = await loadPdfJs(); const doc = await lib.getDocument({ data: new Uint8Array(await blob.arrayBuffer()) }).promise; const n = doc.numPages; doc.destroy(); return n; }
+const pdfRead_ = m => Array.isArray(m.seen) ? m.seen.length : 0;
 async function pdfSaveMeta(m) { try { await pdfTx('meta', 'readwrite', st => st.put(m)); } catch (_) {} }
 const NOTES = () => (D.topics && D.topics.notes) || [];
 function noteRows() { const N = NOTES(); return N.length ? `<div class="group">${N.map(n => `<button class="row" type="button" data-act="note-open" data-id="${esc(n.id)}"><span class="pdf-ico note-ico" aria-hidden="true">Note</span><span class="r-main"><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.topic || '')}${n.updated ? ' · updated ' + esc(dShort(n.updated)) : ''}</span></span>${CHEV}</button>`).join('')}</div>` : ''; }
@@ -2277,7 +2284,7 @@ function pdfSection() {
   if (!pdfList.length) return h + `<div class="card"><span class="c-s">Add PDFs from Files (or Google Drive in Files) and read them here any time, even offline. They're kept on this device only.</span></div></div>`;
   const groups = {}; pdfList.slice().sort((a, b) => (b.opened || b.added).localeCompare(a.opened || a.added)).forEach(m => { (groups[m.topic || 'Other'] = groups[m.topic || 'Other'] || []).push(m); });
   const keys = Object.keys(groups).sort((a, b) => a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
-  h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${groups[k].map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}"><span class="pdf-ico" aria-hidden="true">PDF</span><span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? 'Page ' + m.page + ' of ' + m.pages : 'Not opened yet'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}</div>`).join('');
+  h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${groups[k].map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}">${m.pages ? ring(pdfRead_(m), m.pages, 44, 'pdf-' + m.id) : '<span class="pdf-ico" aria-hidden="true">PDF</span>'}<span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? pdfRead_(m) + ' of ' + m.pages + ' pages read' + (pdfRead_(m) && m.page ? ' · last on p. ' + m.page : '') : 'Counting pages…'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}</div>`).join('');
   return h + `<p class="foot">Kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.</p></div>`;
 }
 function pdfEditSheet(id) {
@@ -2309,24 +2316,44 @@ async function pdfRead(id) {
     rdLayout();
   } catch (e) { $('rd-pages').innerHTML = `<div class="rd-msg">Couldn't open this PDF: ${esc((e && e.message) || 'unknown error')}.</div>`; }
 }
-async function rdLayout() {
-  const box = $('rd-pages'); if (!rd || !box) return; const w = Math.min(box.clientWidth - 16, 900) * rd.zoom;
-  const p1 = await rd.doc.getPage(1); const v1 = p1.getViewport({ scale: 1 }); const ratio = v1.height / v1.width;
-  box.innerHTML = Array.from({ length: rd.doc.numPages }, (_, i) => `<div class="rd-page" data-n="${i + 1}" style="width:${w}px;height:${Math.round(w * ratio)}px"></div>`).join('');
+async function rdLayout(keepFrac) {
+  const box = $('rd-pages'); if (!rd || !box) return; const base = Math.min(box.clientWidth - 16, 900); const w = Math.round(base * rd.zoom);
+  const fy = keepFrac ? box.scrollTop / Math.max(1, box.scrollHeight) : null, fx = keepFrac ? (box.scrollLeft + box.clientWidth / 2) / Math.max(1, box.scrollWidth) : null;
+  if (!rd.ratio) { const p1 = await rd.doc.getPage(1); const v1 = p1.getViewport({ scale: 1 }); rd.ratio = v1.height / v1.width; }
+  box.classList.toggle('wide', rd.zoom > 1.01);
+  box.innerHTML = `<div class="rd-inner" id="rd-inner">` + Array.from({ length: rd.doc.numPages }, (_, i) => `<div class="rd-page" data-n="${i + 1}" style="width:${w}px;height:${Math.round(w * rd.ratio)}px"></div>`).join('') + `</div>`;
   if (rd.obs) rd.obs.disconnect();
-  rd.obs = new IntersectionObserver(es => es.forEach(e => { const n = +e.target.dataset.n; if (e.isIntersecting) { rdDraw(e.target, n, w); } else if (e.target.firstChild && Math.abs(n - rd.cur) > 4) e.target.innerHTML = ''; }), { root: box, rootMargin: '800px 0px' });
+  rd.timers = rd.timers || {};
+  rd.obs = new IntersectionObserver(es => es.forEach(e => { const n = +e.target.dataset.n;
+    if (e.isIntersecting) rdDraw(e.target, n, w); else if (e.target.firstChild && Math.abs(n - rd.cur) > 4) { e.target.innerHTML = ''; e.target.dataset.drawn = ''; }
+    if (e.intersectionRatio >= 0.5) { if (!rd.timers[n]) rd.timers[n] = setTimeout(() => rdSeen(n), 2000); } else { clearTimeout(rd.timers[n]); delete rd.timers[n]; } }), { root: box, rootMargin: '600px 0px', threshold: [0, 0.5] });
   box.querySelectorAll('.rd-page').forEach(el => rd.obs.observe(el));
-  box.onscroll = () => { const els = box.querySelectorAll('.rd-page'); const mid = box.scrollTop + box.clientHeight / 3; let n = 1; for (const el of els) { if (el.offsetTop <= mid) n = +el.dataset.n; else break; } if (n !== rd.cur) { rd.cur = n; $('rd-pg').textContent = n + ' / ' + rd.doc.numPages; clearTimeout(rd.t); rd.t = setTimeout(() => { rd.m.page = n; pdfSaveMeta(rd.m); }, 600); } };
-  $('rd-pg').textContent = rd.cur + ' / ' + rd.doc.numPages;
-  const target = box.querySelector(`.rd-page[data-n="${rd.cur}"]`); if (target) box.scrollTop = target.offsetTop - 8;
+  box.onscroll = () => { const els = box.querySelectorAll('.rd-page'); const mid = box.scrollTop + box.clientHeight / 3; let n = 1; for (const el of els) { if (el.offsetTop <= mid) n = +el.dataset.n; else break; } if (n !== rd.cur) { rd.cur = n; rdBar(); clearTimeout(rd.t); rd.t = setTimeout(() => { rd.m.page = n; pdfSaveMeta(rd.m); }, 600); } };
+  rdBar();
+  if (fy !== null) { box.scrollTop = fy * box.scrollHeight; box.scrollLeft = Math.max(0, fx * box.scrollWidth - box.clientWidth / 2); }
+  else { const target = box.querySelector(`.rd-page[data-n="${rd.cur}"]`); if (target) box.scrollTop = target.offsetTop - 8; }
 }
+function rdSeen(n) { if (!rd) return; const s = new Set(rd.m.seen || []); if (s.has(n)) return; s.add(n); rd.m.seen = [...s].sort((a, b) => a - b); pdfSaveMeta(rd.m); rdBar(); }
+function rdBar() { if (!rd) return; const r = (rd.m.seen || []).length; const el = $('rd-pg'); if (el) el.textContent = rd.cur + ' / ' + rd.doc.numPages + ' · ' + Math.round(100 * r / rd.doc.numPages) + '% read'; }
 async function rdDraw(el, n, w) {
   if (el.dataset.drawn === String(w)) return; el.dataset.drawn = String(w);
   try { const page = await rd.doc.getPage(n); const vp0 = page.getViewport({ scale: 1 }); const scale = w / vp0.width; const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
     const vp = page.getViewport({ scale: scale * dpr }); const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height; c.style.width = '100%'; c.style.height = '100%';
-    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise; el.innerHTML = ''; el.appendChild(c);
+    await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise; if (el.dataset.drawn === String(w)) { el.innerHTML = ''; el.appendChild(c); }
   } catch (_) { el.dataset.drawn = ''; }
 }
+/* pinch to zoom inside the reader: live CSS scale while pinching, sharp re-render on release */
+(() => { let d0 = 0, z0 = 1, live = 1, origin = null;
+  const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  document.addEventListener('touchstart', e => { if (!rd || e.touches.length !== 2 || !e.target.closest('#rd-pages')) return; d0 = dist(e.touches); z0 = rd.zoom; live = 1;
+    const box = $('rd-pages'), r = box.getBoundingClientRect(); origin = { x: (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left + box.scrollLeft, y: (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top + box.scrollTop }; }, { passive: true });
+  document.addEventListener('touchmove', e => { if (!d0 || e.touches.length !== 2) return; e.preventDefault(); live = Math.max(0.6 / z0, Math.min(4 / z0, dist(e.touches) / d0));
+    const inner = $('rd-inner'); if (inner) { inner.style.transformOrigin = origin.x + 'px ' + origin.y + 'px'; inner.style.transform = 'scale(' + live + ')'; } }, { passive: false });
+  document.addEventListener('touchend', e => { if (!d0 || e.touches.length > 1) return; const box = $('rd-pages'), inner = $('rd-inner');
+    const fx = origin.x / Math.max(1, box.scrollWidth), fy = origin.y / Math.max(1, box.scrollHeight), vx = origin.x - box.scrollLeft, vy = origin.y - box.scrollTop;
+    d0 = 0; if (inner) inner.style.transform = ''; if (Math.abs(live - 1) < 0.03 || !rd) return;
+    rd.zoom = Math.max(0.6, Math.min(4, z0 * live)); rdLayout(false).then(() => { box.scrollLeft = Math.max(0, fx * box.scrollWidth - vx); box.scrollTop = Math.max(0, fy * box.scrollHeight - vy); }); }, { passive: true });
+})();
 function rdClose() { if (rd) { rd.m.page = rd.cur; pdfSaveMeta(rd.m); if (rd.obs) rd.obs.disconnect(); if (rd.doc) rd.doc.destroy(); } rd = null; const R = $('reader'); R.hidden = true; R.innerHTML = ''; document.body.classList.remove('locked'); pdfLoad(); }
 function keyDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-keys', 1); r.onupgradeneeded = () => r.result.createObjectStore('keys'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((res, rej) => { const tx = db.transaction('keys', mode); const out = fn(tx.objectStore('keys')); tx.oncomplete = () => res(out && out.result); tx.onerror = () => rej(tx.error); }); }
