@@ -725,7 +725,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.4 · my cases';
+const APP_VERSION = '4.5 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1467,40 +1467,52 @@ const specFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) ret
 const MC_LIST = () => Object.values(state.myCases || {}).sort((a, b) => b.date.localeCompare(a.date) || (b.created || '').localeCompare(a.created || ''));
 const mcForOt = otId => MC_LIST().find(c => c.otId === otId);
 function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'In logbook · #' + k.n, cls: 'acc' }) : { t: syncCfg().token ? 'Waiting for Claude' : 'Saved on phone', cls: 'warn' }; }
+const SL_POST = ['OT', 'ICU', 'Pain Clinics', 'Remote Locations'];
+const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Surgery', 'Urology', 'Obstetrics & Gynaecology', 'Paediatric Surgery', 'ENT', 'Cardiac Surgery', 'Neuro Surgery', 'Maxillofacial Surgery', 'Plastic Surgery', 'Surgical Oncology', 'Opthalmology'];
+const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
+const SL_MGMT = ['GA + ETT', 'GA + LMA/IGEL', 'GA + MASK HOLDING', 'GA + EPIDURAL', 'GA + NERVE BLOCK', 'SPINAL', 'SPINAL + NERVE BLOCK', 'EPIDURAL', 'GSE', 'NERVE BLOCK', 'MAC'];
+const SL_REMOTE = ['GEC', 'CT', 'MRI', 'Cobalt', 'Radio Cath', 'Cath Lab', 'Pedo', 'MARC', 'MECT'];
+const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology' };
+const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return DEPT_BY_UNIT[k] || DEPT_BY_UNIT[k.slice(0, 3)] || ''; };
+const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
+const FACULTY = () => (state.private && state.private.faculty) || [];
+function locFromOt(ot) { const m = /(\d+)/.exec(ot || ''); return m ? 'KHSB-OT' + m[1] : ''; }
 function mcSheet(id, otId) {
   let c = id ? state.myCases[id] : null;
-  if (!c) { const r = otId ? OTL().find(x => x.id === otId) : null; const pi = otId ? otInfo(otId) : {};
-    c = { id: '', otId: otId || '', date: r ? r.date : today(), uhid: pi.uhid || '', procedure: r ? r.procedure : '', diagnosis: '', specialty: r ? specFor(r.unit) : '', or: r && r.ot ? 'KHSB-' + String(r.ot).replace(/^OR\s*/i, 'OT') : '', consultant: '', asa: '', urgency: 'Elective', type: 'General Anaesthesia', plan: 'GA + ETT', role: '', notes: '' }; }
-  const opt = (arr, v) => arr.map(x => `<option${x === v ? ' selected' : ''}>${esc(x)}</option>`).join('');
-  const st = c.id ? mcStatus(c) : null;
+  if (!c) { const r = otId ? OTL().find(x => x.id === otId) : null; const pi = otId ? otInfo(otId) : {}; const gi = r && isGI(r.procedure);
+    c = { id: '', otId: otId || '', date: r ? r.date : today(), uhid: pi.uhid || '', procedure: r ? r.procedure : '', posting: gi ? 'Remote Locations' : 'OT', dept: r ? (gi ? 'Gastro Intestinal Surgery' : deptFor(r.unit)) : '', loc: gi ? 'GEC' : r ? locFromOt(r.ot) : '', mgmt: gi ? 'MAC' : 'GA + ETT', details: '', faculty: '', asa: '', urgency: 'Elective', diagnosis: '' }; }
+  const opt = (arr, v, blank) => (blank ? `<option value=""${!v ? ' selected' : ''}>Choose…</option>` : '') + arr.map(x => `<option${x === v ? ' selected' : ''}>${esc(x)}</option>`).join('') + (v && !arr.includes(v) ? `<option selected>${esc(v)}</option>` : '');
+  const st = c.id ? mcStatus(c) : null; const F = FACULTY();
   openSheet(`<form data-form="mycase" data-id="${esc(c.id)}" data-ot="${esc(c.otId || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${c.id ? 'My case' : 'Log my case'}</h2><button type="submit" class="link strong">Save</button></div>
     ${st ? `<div><span class="pill ${st.cls}">${st.t}</span></div>` : ''}
+    <h3 class="sh">For SLCM</h3>
     <div class="group">
+      <label class="row field"><span class="f-l">Clinical posting</span><select name="posting">${opt(SL_POST, c.posting)}</select></label>
+      <label class="row field"><span class="f-l">Department</span><select name="dept">${opt(SL_DEPT, c.dept, true)}</select></label>
+      <label class="row field"><span class="f-l">Location</span><input class="left" name="loc" value="${esc(c.loc)}" list="mc-loc" placeholder="e.g. KHSB-OT4 or GEC"></label>
       <label class="row field"><span class="f-l">Date</span><input name="date" type="date" value="${esc(c.date)}" required></label>
       <label class="row field"><span class="f-l">Hospital no.</span><input class="left" name="uhid" value="${esc(c.uhid)}" placeholder="UHID" autocapitalize="characters" spellcheck="false"></label>
       <label class="row field"><span class="f-l">Procedure</span><input class="left" name="procedure" value="${esc(c.procedure)}" required></label>
-      <label class="row field"><span class="f-l">Diagnosis</span><input class="left" name="diagnosis" value="${esc(c.diagnosis)}" placeholder="e.g. Multinodular goitre"></label>
-      <label class="row field"><span class="f-l">Specialty</span><input class="left" name="specialty" value="${esc(c.specialty)}" list="mc-spec"></label>
+      <label class="row field"><span class="f-l">Anaesthetic management</span><select name="mgmt">${opt(SL_MGMT, c.mgmt)}</select></label>
+      <label class="row field"><span class="f-l">Faculty</span>${F.length ? `<select name="faculty">${opt(F, c.faculty, true)}</select>` : `<input class="left" name="faculty" value="${esc(c.faculty)}" placeholder="Consultant">`}</label>
+      <label class="row field"><span class="f-l">Additional details</span><input class="left" name="details" value="${esc(c.details)}" placeholder="e.g. throat pack, difficult airway"></label>
     </div>
+    <h3 class="sh">For your logbook</h3>
     <div class="group">
-      <label class="row field"><span class="f-l">ASA</span><select name="asa">${opt(['', 'I', 'II', 'III', 'IV', 'V', 'IE', 'IIE', 'IIIE', 'IVE', 'VE'], c.asa)}</select></label>
+      <label class="row field"><span class="f-l">Diagnosis</span><input class="left" name="diagnosis" value="${esc(c.diagnosis)}" placeholder="e.g. Multinodular goitre"></label>
+      <label class="row field"><span class="f-l">ASA</span><select name="asa">${opt(['I', 'II', 'III', 'IV', 'V', 'IE', 'IIE', 'IIIE', 'IVE', 'VE'], c.asa, true)}</select></label>
       <label class="row field"><span class="f-l">Urgency</span><select name="urgency">${opt(['Elective', 'Emergency'], c.urgency)}</select></label>
-      <label class="row field"><span class="f-l">Anaesthesia</span><select name="type">${opt(['General Anaesthesia', 'Spinal', 'Epidural', 'Combined spinal-epidural', 'Regional (nerve block)', 'GA + Regional', 'MAC / Sedation', 'Local'], c.type)}</select></label>
-      <label class="row field"><span class="f-l">Plan</span><input class="left" name="plan" value="${esc(c.plan)}" placeholder="e.g. GA + ETT + throat pack"></label>
-      <label class="row field"><span class="f-l">OR</span><input class="left" name="or" value="${esc(c.or)}" placeholder="KHSB-OT1"></label>
-      <label class="row field"><span class="f-l">Consultant</span><input class="left" name="consultant" value="${esc(c.consultant)}"></label>
-      <label class="row field"><span class="f-l">Notes</span><input class="left" name="notes" value="${esc(c.notes)}" placeholder="optional"></label>
     </div>
-    <datalist id="mc-spec">${[...new Set(Object.values(SPEC))].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
+    <datalist id="mc-loc">${[...SL_LOC, ...SL_REMOTE].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
     ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
-    <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number never goes on the website.</p></form>`);
+    <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
 }
 function myCasesSection(limit) {
   const L = MC_LIST(); const pend = L.filter(c => mcStatus(c).t !== 'On SLCM');
   let h = `<div class="sec"><h2 class="sh"><span>My cases</span><button type="button" data-act="mc-new" style="color:var(--accent);font:inherit">+ Log a case</button></h2>`;
   if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>Mine</b> next to a case on the OT list (or "+ Log a case") and add ASA, plan and consultant. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
   const show = limit ? pend.slice(0, limit) : L;
-  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.asa ? 'ASA ' + c.asa : 'ASA ?', c.plan].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
+  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
 }
 function caseSheet(n) {
   const c = CASES().find(x => x.n === n); if (!c) return;
@@ -1753,7 +1765,7 @@ document.addEventListener('submit', e => {
     case 'mycase': {
       const v = k => (fd.get(k) || '').trim(); if (!v('procedure') || !v('date')) { toast('Add the date and procedure'); return; }
       const mid = id || 'mc-' + uid(); const old = state.myCases[mid] || {};
-      state.myCases = { ...state.myCases, [mid]: { ...old, id: mid, otId: f.dataset.ot || old.otId || '', date: v('date'), uhid: v('uhid').toUpperCase(), procedure: v('procedure'), diagnosis: v('diagnosis'), specialty: v('specialty'), asa: v('asa'), urgency: v('urgency'), type: v('type'), plan: v('plan'), or: v('or'), consultant: v('consultant'), notes: v('notes'), created: old.created || nowISO(), updated: nowISO() } };
+      state.myCases = { ...state.myCases, [mid]: { ...old, id: mid, otId: f.dataset.ot || old.otId || '', date: v('date'), uhid: v('uhid').toUpperCase(), procedure: v('procedure'), posting: v('posting'), dept: v('dept'), loc: v('loc'), mgmt: v('mgmt'), faculty: v('faculty'), details: v('details'), diagnosis: v('diagnosis'), asa: v('asa'), urgency: v('urgency'), created: old.created || nowISO(), updated: nowISO() } };
       closeSheet(); commit(id ? 'Saved' : 'Case saved ✓'); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
@@ -1991,6 +2003,7 @@ function mergePrivate(prev, data) {
   if (data.presenters) next.presenters = { ...(cur.presenters || {}), ...data.presenters };
   if (data.cases) next.cases = { ...(cur.cases || {}), ...data.cases };
   if (data.reminders) next.reminders = data.reminders;
+  if (data.faculty) next.faculty = data.faculty;
   if (data.ot) {
     const keepFrom = addDays(today(), -14); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
