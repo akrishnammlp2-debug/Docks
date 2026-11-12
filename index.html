@@ -543,6 +543,11 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.ptr{height:34px;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--fg-3);transition:height .15s;overflow:hidden}
+.ptr.ready{color:var(--accent);font-weight:600}
+.ngame.live{box-shadow:0 0 0 2px #E8505B inset!important}
+.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#E8505B;margin-right:6px;animation:ldot 1.2s infinite}
+@keyframes ldot{50%{opacity:.25}}
 .msong{text-decoration:none;color:var(--fg)}
 .mrank{flex:none;min-width:40px;font-family:var(--f-head,inherit);font-weight:700;font-size:14px;color:var(--fg-3);text-align:center}
 .mplay{flex:none;width:36px;height:36px;border-radius:999px;background:#1DB954;display:grid;place-items:center}
@@ -817,7 +822,7 @@ body[data-sec="backup"]::before{background-image:url("data:image/svg+xml,%3Csvg%
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.3.1 · doodles';
+const APP_VERSION = '5.4 · live NBA';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1438,20 +1443,58 @@ function pageMusic() {
   h += `<p class="foot" style="margin:2px 4px 0">${esc(L.sub || '')}</p><div class="group mlist">${L.songs.map((x, i) => `<a class="row msong" href="${esc(spotifyUrl(x))}" target="_blank" rel="noopener"><span class="mrank">${x.era ? esc(x.era.replace(/0s$/, '0s')) : i + 1}</span><span class="r-main"><span class="r-t">${esc(x.t)}</span><span class="r-s">${esc(x.a)}</span></span><span class="mplay" aria-label="Play on Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></a>`).join('')}</div>`;
   return h + `<p class="foot">Tap a song to open it in Spotify.${L.source ? ` Chart: <a href="${esc(L.source)}" target="_blank" rel="noopener">source</a>.` : ''}</p>`;
 }
+/* live NBA scores: pull down on the NBA tab -> ESPN's public scoreboard (no key, read-only) */
+const ESPN_AB = { GS: 'GSW', NY: 'NYK', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS', BKN: 'BKN', PHX: 'PHX' };
+let nbaLive = (() => { try { return JSON.parse(localStorage.getItem('studydesk.nbalive') || 'null'); } catch (_) { return null; } })(), nbaBusy = false;
+const usDay = iso => { const d = new Date(iso); const p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' }).formatToParts(d); return p.find(x => x.type === 'month').value + ' ' + p.find(x => x.type === 'day').value; };
+const ymdNY = off => { const d = new Date(Date.now() + off * 864e5); const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); return p.replace(/-/g, ''); };
+async function nbaRefresh() {
+  if (nbaBusy) return; nbaBusy = true; render();
+  try {
+    const days = [ymdNY(-1), ymdNY(0)]; const games = [];
+    for (const dd of days) {
+      const r = await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=' + dd, { cache: 'no-store' });
+      if (!r.ok) throw new Error('ESPN answered ' + r.status);
+      const j = await r.json();
+      (j.events || []).forEach(ev => { const c = ev.competitions && ev.competitions[0]; if (!c) return; const tm = side => c.competitors.find(x => x.homeAway === side) || {};
+        const ab = x => { const a = ((x.team || {}).abbreviation || '').toUpperCase(); return ESPN_AB[a] || a; };
+        const st = (ev.status || c.status || {}).type || {}; const a = tm('away'), hm = tm('home');
+        games.push({ day: usDay(ev.date), away: ab(a), as: +a.score || 0, home: ab(hm), hs: +hm.score || 0, state: st.state || 'pre', label: st.shortDetail || st.description || '', ot: /OT/.test(st.shortDetail || '') ? 1 : 0, start: ev.date }); });
+    }
+    const seen = new Set(); const uniq = games.filter(g => { const k = g.day + g.away + g.home; if (seen.has(k)) return false; seen.add(k); return true; });
+    games.length = 0; games.push(...uniq);
+    nbaLive = { at: nowISO(), games }; try { localStorage.setItem('studydesk.nbalive', JSON.stringify(nbaLive)); } catch (_) {}
+    const live = games.filter(g => g.state === 'in').length;
+    toast(games.length ? 'Scores updated' + (live ? ' · ' + live + ' live' : '') + ' ✓' : 'No games today');
+    const liveG = games.find(g => g.state === 'in'); const todayK = usDay(new Date().toISOString()); const lastDone = games.filter(g => g.state === 'post').pop();
+    nbaDay = liveG ? liveG.day : games.some(g => g.day === todayK && g.state !== 'pre') ? todayK : lastDone ? lastDone.day : (games[0] || {}).day || nbaDay;
+  } catch (e) { toast(e instanceof TypeError ? "Couldn't reach the scores just now. Try again in a bit." : "Couldn't refresh: " + e.message); }
+  finally { nbaBusy = false; render(); }
+}
+function nbaGames() {
+  const N = D.nba; const base = (N ? N.games : []).map(g => ({ day: g[0], away: g[1], as: g[2], home: g[3], hs: g[4], ot: g[5], state: 'post', label: g[5] ? 'Final · OT' : 'Final' }));
+  if (!nbaLive || !nbaLive.games) return base;
+  const liveDays = new Set(nbaLive.games.map(g => g.day));
+  return base.filter(g => !liveDays.has(g.day)).concat(nbaLive.games.map(g => ({ ...g, label: g.state === 'post' ? (g.ot ? 'Final · OT' : 'Final') : g.state === 'in' ? g.label : (g.label || 'Today') })));
+}
 function nbaLatestDay() { const N = D.nba; if (!N) return null; const ds = [...new Set(N.games.map(g => g[0]))]; const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); return ds.includes(k) ? k : ds[ds.length - 1]; }
 function pageNba() {
   const N = D.nba;
   let h = head('NBA', N ? esc(N.asOf || '') : '', 'Sports');
   if (!N) return h + '<div class="card"><span class="c-s">No NBA data yet.</span></div>';
-  const ds = [...new Set(N.games.map(g => g[0]))]; if (!nbaDay || !ds.includes(nbaDay)) nbaDay = nbaLatestDay();
+  const G = nbaGames(); const MI = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
+  const ord = d => { const [m, n] = d.split(' '); const mi = MI[m]; return (mi >= 9 ? mi : mi + 12) * 100 + +n; };
+  const ds = [...new Set(G.map(g => g.day))].sort((a, b) => ord(a) - ord(b)); if (!nbaDay || !ds.includes(nbaDay)) { const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); nbaDay = ds.includes(k) ? k : ds[ds.length - 1]; }
+  h += `<div class="ptr" id="ptr">${nbaBusy ? 'Refreshing scores…' : nbaLive ? 'Pull down to refresh · updated ' + esc(ago(nbaLive.at)) : 'Pull down to refresh scores'}</div>`;
   h += `<div class="seg">${[['scores', 'Scores'], ['standings', 'Standings'], ['stats', 'Leaders']].map(([k, l]) => `<button type="button" data-act="nsub" data-s="${k}" aria-pressed="${nbaSub === k}">${l}</button>`).join('')}</div>`;
   const nm = ab => N.names[ab] || ab;
   const split = ab => { const s = nm(ab), k = /(Trail Blazers|76ers)$/.test(s) ? 2 : 1, w = s.split(' '); return [w.slice(0, w.length - k).join(' '), w.slice(w.length - k).join(' ')]; };
   if (nbaSub === 'scores') {
-    const list = N.games.filter(g => g[0] === nbaDay);
+    const list = G.filter(g => g.day === nbaDay).sort((a, b) => (a.state === 'in' ? -1 : 0) - (b.state === 'in' ? -1 : 0));
     const row = (ab, sc, win) => { const p = split(ab); return `<div class="nrow${win ? ' win' : ''}" style="--h:${hue(ab)}"><span class="badge">${esc(ab)}</span><span class="tn"><em>${esc(p[1])}</em><small>${esc(p[0])}</small></span><b>${sc}</b></div>`; };
     h += `<div class="strip" id="nba-strip">${ds.map(d => `<button type="button" data-act="nday" data-d="${esc(d)}" aria-pressed="${d === nbaDay}">${esc(d)}</button>`).join('')}</div>
-      <h2 class="sh">${esc(nbaDay)} · ${list.length} games</h2><div class="ngrid">${list.map(g => { const aw = g[2] > g[4]; return `<div class="ngame"><div class="nhead">${g[5] ? 'Final · OT' : 'Final'}</div>${row(g[1], g[2], aw)}${row(g[3], g[4], !aw)}</div>`; }).join('')}</div>`;
+      <h2 class="sh">${esc(nbaDay)} · ${list.length} games</h2><div class="ngrid">${list.map(g => { const done = g.state === 'post'; const aw = g.as > g.hs; const pre = g.state === 'pre';
+        return `<div class="ngame${g.state === 'in' ? ' live' : ''}"><div class="nhead">${g.state === 'in' ? '<span class="ldot"></span>' : ''}${esc(pre && g.start ? new Date(g.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' your time' : g.label)}</div>${row(g.away, pre ? '' : g.as, done && aw)}${row(g.home, pre ? '' : g.hs, done && !aw)}</div>`; }).join('')}</div>`;
   } else if (nbaSub === 'standings') {
     const conf = (rows, title) => `<div class="sec"><h2 class="sh">${title}</h2><div class="group">${rows.map((r, i) => `<div class="row" style="gap:10px"><span class="st-z" style="--c:${i < 6 ? 'var(--f-nba)' : i < 10 ? 'var(--fg-3)' : 'transparent'}"></span><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[0])}">${esc(r[0])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(nm(r[0]))}</span></span><span class="st-wl">${r[1]}-${r[2]}</span><span class="st-p">${(r[1] / (r[1] + r[2] || 1)).toFixed(3).replace(/^0/, '')}</span></div>`).join('')}</div></div>`;
     h += conf(N.west, 'Western Conference') + conf(N.east, 'Eastern Conference') + '<p class="foot">Orange bar: top 6, direct playoff places. Grey bar: 7 to 10, play-in.</p>';
@@ -1761,6 +1804,11 @@ function renderSearch(q) {
     : `<p class="foot">Nothing found for “${esc(q)}”.</p>`;
 }
 document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); });
+(() => { let y0 = null, pulled = 0;
+  document.addEventListener('touchstart', e => { y0 = tab === 'nba' && !sheetOpen() && (window.scrollY || document.documentElement.scrollTop) <= 0 ? e.touches[0].clientY : null; pulled = 0; }, { passive: true });
+  document.addEventListener('touchmove', e => { if (y0 === null) return; pulled = e.touches[0].clientY - y0; const p = $('ptr'); if (p) { p.style.height = Math.min(70, Math.max(0, pulled / 2.2)) + 34 + 'px'; p.classList.toggle('ready', pulled > 110); if (pulled > 110) p.textContent = 'Let go to refresh'; } }, { passive: true });
+  document.addEventListener('touchend', () => { if (y0 === null) return; const p = $('ptr'); if (p) { p.style.height = ''; p.classList.remove('ready'); } if (pulled > 110) nbaRefresh(); y0 = null; pulled = 0; }, { passive: true });
+})();
 document.addEventListener('keydown', e => { if (e.key === '/' && !sheetOpen() && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); searchSheet(); } });
 
 /* ---------- actions ---------- */
