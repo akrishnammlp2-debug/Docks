@@ -543,6 +543,11 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.pill.tosync{background:#FDE7C8!important;color:#8A4B08!important;font-weight:700!important}
+.row-tosync{box-shadow:inset 4px 0 0 #F0A044!important}
+.stats .stat:has(.pill.tosync){background:#FFF3E2!important}
+.stats .stat:has(.pill.tosync) .s-n{color:#8A4B08!important}
+.gt:has(.gt-l.tosync){background:#FFF3E2}
 .auto-sum{background:var(--t-sage,#E3EFE6)!important;gap:2px}
 .auto-edit summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14.5px;padding:6px 4px;list-style:none}
 .auto-edit summary::-webkit-details-marker{display:none}
@@ -729,7 +734,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7.5 · SLCM form';
+const APP_VERSION = '4.8 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -971,7 +976,7 @@ function pageToday() {
   if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
   const att = remAttention().length; T.push(gTile('reminders', 'rose', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
   const open = state.todos.filter(x => !x.done).length; T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
-  const unsynced = toSyncCount(); T.push(gTile('cases', 'sage', '📋', unsynced, unsynced ? 'cases to sync' : 'cases all synced'));
+  const unsynced = toSyncCount(); T.push(gTile('cases', unsynced ? 'butter' : 'sage', '📋', unsynced, unsynced ? '<span class="tosync">cases to sync</span>' : 'cases all synced'));
   h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
   if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}</div></div>`;
@@ -1307,8 +1312,8 @@ function pageCases() {
   const C = CASES(); const unsynced = toSyncCount();
   let h = head('SLCM cases', '', 'Logbook');
   h += myCasesSection(0);
-  h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs entry' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
-  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'warn'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div>
+  h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'tosync' : 'good'}">${unsynced ? 'Not on SLCM' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
+  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div>
     <p class="foot">De-identified copy: no patient names or hospital IDs. Your full logbook stays in your spreadsheet.</p></div>`;
   const total = C.length || 1;
   h += `<div class="sec"><h2 class="sh">Case mix</h2><div class="card" style="gap:10px">${[['Anaesthesia', 'type'], ['Specialty', 'specialty'], ['ASA grade', 'asa']].map(([name, key]) => {
@@ -1472,7 +1477,7 @@ const mcNew = () => MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
 const toSyncCount = () => CASES().filter(c => !c.synced).length + mcNew().length;
 const MC_LIST = () => Object.values(state.myCases || {}).sort((a, b) => b.date.localeCompare(a.date) || (b.created || '').localeCompare(a.created || ''));
 const mcForOt = otId => MC_LIST().find(c => c.otId === otId);
-function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'Logged · SLCM later', cls: 'acc' }) : { t: 'Logged · SLCM later', cls: 'acc' }; }
+function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k && k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'To sync', cls: 'tosync' }; }
 const SL_POST = ['OT', 'ICU', 'Pain Clinics', 'Remote Locations'];
 const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Surgery', 'Urology', 'Obstetrics & Gynaecology', 'Paediatric Surgery', 'ENT', 'Cardiac Surgery', 'Neuro Surgery', 'Maxillofacial Surgery', 'Plastic Surgery', 'Surgical Oncology', 'Opthalmology'];
 const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
@@ -1534,12 +1539,12 @@ function myCasesSection(limit) {
   let h = `<div class="sec"><h2 class="sh"><span>My cases</span><button type="button" data-act="mc-new" style="color:var(--accent);font:inherit">+ Log a case</button></h2>`;
   if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>+ Log a case</b>, pick your case from the OT list, and add the anaesthetic management and faculty. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
   const show = limit ? pend.slice(0, limit) : L;
-  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
+  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row${st.cls === 'tosync' ? ' row-tosync' : ''}" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
 }
 function caseSheet(n) {
   const c = CASES().find(x => x.n === n); if (!c) return;
   const nr = v => v ? esc(v) : '<span class="muted">Not recorded</span>';
-  openSheet(`${sheetHead('Case ' + c.n)}<div class="sheet-title"><span class="pill ${c.synced ? 'good' : 'warn'}">${c.synced ? 'Synced to SLCM' : 'Not synced to SLCM yet'}</span><h3>${esc(c.procedure)}</h3><span class="muted">${esc(dLong(c.date))}</span></div>
+  openSheet(`${sheetHead('Case ' + c.n)}<div class="sheet-title"><span class="pill ${c.synced ? 'good' : 'tosync'}">${c.synced ? 'Synced to SLCM' : 'To sync on SLCM'}</span><h3>${esc(c.procedure)}</h3><span class="muted">${esc(dLong(c.date))}</span></div>
     <div class="group">${kv('Hospital ID', caseUhid(c.n) ? esc(caseUhid(c.n)) : '<span class="muted">In private file</span>')}${kv('Specialty', nr(c.specialty))}${kv('ASA grade', nr(c.asa))}${kv('Urgency', nr(c.urgency))}</div>
     <div class="group">${kv('Anaesthesia', nr(c.type))}${kv('Plan', nr(c.plan))}${kv('OR', nr(c.or))}${kv('Consultant', nr(c.consultant))}</div>
     <p class="foot">${caseUhid(c.n) ? 'Hospital ID comes from your private file and exists only on this phone.' : 'Hospital IDs never go on the website. Load your private file to see them on this phone.'}</p>`);
