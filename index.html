@@ -543,6 +543,8 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.mine{padding:5px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);font-size:12.5px;font-weight:600;white-space:nowrap;font-family:var(--f-head,inherit)}
+.mine.on{background:var(--accent);color:#fff}
 .hello-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .wxchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;background:var(--t-sky,#E2EEF8);color:var(--t-sky-i,#2F5E86);font-size:13.5px;font-weight:500;white-space:nowrap;max-width:60%;overflow:hidden}
 .wxchip b{font-weight:700}.wxchip .wxp{overflow:hidden;text-overflow:ellipsis}
@@ -723,7 +725,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.3.1 · minimal today';
+const APP_VERSION = '4.4 · my cases';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -777,7 +779,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -785,7 +787,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, sync: s.sync || null, active: s.active || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, sync: s.sync || null, active: s.active || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -1259,9 +1261,9 @@ function otTable(rows) {
   const cols = OT_COLS.filter(c => has(c[0]));
   full.forEach(r => Object.keys(r).forEach(k => { if (!OT_SKIP.has(k) && !cols.some(c => c[0] === k) && (typeof r[k] === 'string' || typeof r[k] === 'number') && String(r[k]).trim()) cols.push([k, k.replace(/[_-]+/g, ' ').replace(/^./, x => x.toUpperCase())]); }));
   const wide = new Set(['notes', 'payer', 'patient']);
-  return `<div class="tblwrap"><table class="otbl"><thead><tr><th class="c-tick"><span class="muted">✓</span></th><th class="c-proc">Procedure</th>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
+  return `<div class="tblwrap"><table class="otbl"><thead><tr><th class="c-tick"><span class="muted">✓</span></th><th class="c-proc">Procedure</th><th>Mine</th>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
     const on = !!state.otDone[r.id];
-    return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
+    return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td><td>${(() => { const m = mcForOt(r.id); return m ? `<button class="mine on" type="button" data-act="mc-open" data-id="${esc(m.id)}">✓ Mine</button>` : `<button class="mine" type="button" data-act="mc-ot" data-id="${esc(r.id)}">+ Mine</button>`; })()}</td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
   }).join('')}</tbody></table></div>`;
 }
 function pageOt() {
@@ -1300,6 +1302,7 @@ function pageRoster() {
 function pageCases() {
   const C = CASES(); const unsynced = C.filter(c => !c.synced).length;
   let h = head('SLCM cases', '', 'Logbook');
+  h += myCasesSection(0);
   h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs entry' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
   h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'warn'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div>
     <p class="foot">De-identified copy: no patient names or hospital IDs. Your full logbook stays in your spreadsheet.</p></div>`;
@@ -1458,6 +1461,47 @@ function itemSheet(it) {
   rows += kv('Source', it.evId ? 'Added by you' : esc(it.src || ''));
   openSheet(`${sheetHead('Details')}<div class="sheet-title"><h3>${esc(it.title)}</h3>${it.topic ? `<span class="c-s">${esc(it.topic)}</span>` : ''}</div><div class="group">${rows}</div>${it.evId ? `<button class="btn danger wide" type="button" data-act="del-event" data-id="${it.evId}">Delete entry</button>` : ''}`);
 }
+/* ---------- my cases: log from the OT list, handed to Claude via the private sync repo ---------- */
+const SPEC = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedics', ORTH: 'Orthopaedics', URO: 'Urology', NEU: 'Neurosurgery', NSU: 'Neurosurgery', CTV: 'Cardiothoracic', CVT: 'Cardiothoracic', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Ophthalmology', EYE: 'Ophthalmology', DEN: 'Dental / OMFS', OMF: 'Dental / OMFS', SGE: 'Surgical Gastroenterology', GAS: 'Surgical Gastroenterology', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', VAS: 'Vascular Surgery' };
+const specFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return SPEC[k] || SPEC[k.slice(0, 3)] || ''; };
+const MC_LIST = () => Object.values(state.myCases || {}).sort((a, b) => b.date.localeCompare(a.date) || (b.created || '').localeCompare(a.created || ''));
+const mcForOt = otId => MC_LIST().find(c => c.otId === otId);
+function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'In logbook · #' + k.n, cls: 'acc' }) : { t: syncCfg().token ? 'Waiting for Claude' : 'Saved on phone', cls: 'warn' }; }
+function mcSheet(id, otId) {
+  let c = id ? state.myCases[id] : null;
+  if (!c) { const r = otId ? OTL().find(x => x.id === otId) : null; const pi = otId ? otInfo(otId) : {};
+    c = { id: '', otId: otId || '', date: r ? r.date : today(), uhid: pi.uhid || '', procedure: r ? r.procedure : '', diagnosis: '', specialty: r ? specFor(r.unit) : '', or: r && r.ot ? 'KHSB-' + String(r.ot).replace(/^OR\s*/i, 'OT') : '', consultant: '', asa: '', urgency: 'Elective', type: 'General Anaesthesia', plan: 'GA + ETT', role: '', notes: '' }; }
+  const opt = (arr, v) => arr.map(x => `<option${x === v ? ' selected' : ''}>${esc(x)}</option>`).join('');
+  const st = c.id ? mcStatus(c) : null;
+  openSheet(`<form data-form="mycase" data-id="${esc(c.id)}" data-ot="${esc(c.otId || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${c.id ? 'My case' : 'Log my case'}</h2><button type="submit" class="link strong">Save</button></div>
+    ${st ? `<div><span class="pill ${st.cls}">${st.t}</span></div>` : ''}
+    <div class="group">
+      <label class="row field"><span class="f-l">Date</span><input name="date" type="date" value="${esc(c.date)}" required></label>
+      <label class="row field"><span class="f-l">Hospital no.</span><input class="left" name="uhid" value="${esc(c.uhid)}" placeholder="UHID" autocapitalize="characters" spellcheck="false"></label>
+      <label class="row field"><span class="f-l">Procedure</span><input class="left" name="procedure" value="${esc(c.procedure)}" required></label>
+      <label class="row field"><span class="f-l">Diagnosis</span><input class="left" name="diagnosis" value="${esc(c.diagnosis)}" placeholder="e.g. Multinodular goitre"></label>
+      <label class="row field"><span class="f-l">Specialty</span><input class="left" name="specialty" value="${esc(c.specialty)}" list="mc-spec"></label>
+    </div>
+    <div class="group">
+      <label class="row field"><span class="f-l">ASA</span><select name="asa">${opt(['', 'I', 'II', 'III', 'IV', 'V', 'IE', 'IIE', 'IIIE', 'IVE', 'VE'], c.asa)}</select></label>
+      <label class="row field"><span class="f-l">Urgency</span><select name="urgency">${opt(['Elective', 'Emergency'], c.urgency)}</select></label>
+      <label class="row field"><span class="f-l">Anaesthesia</span><select name="type">${opt(['General Anaesthesia', 'Spinal', 'Epidural', 'Combined spinal-epidural', 'Regional (nerve block)', 'GA + Regional', 'MAC / Sedation', 'Local'], c.type)}</select></label>
+      <label class="row field"><span class="f-l">Plan</span><input class="left" name="plan" value="${esc(c.plan)}" placeholder="e.g. GA + ETT + throat pack"></label>
+      <label class="row field"><span class="f-l">OR</span><input class="left" name="or" value="${esc(c.or)}" placeholder="KHSB-OT1"></label>
+      <label class="row field"><span class="f-l">Consultant</span><input class="left" name="consultant" value="${esc(c.consultant)}"></label>
+      <label class="row field"><span class="f-l">Notes</span><input class="left" name="notes" value="${esc(c.notes)}" placeholder="optional"></label>
+    </div>
+    <datalist id="mc-spec">${[...new Set(Object.values(SPEC))].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
+    ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
+    <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number never goes on the website.</p></form>`);
+}
+function myCasesSection(limit) {
+  const L = MC_LIST(); const pend = L.filter(c => mcStatus(c).t !== 'On SLCM');
+  let h = `<div class="sec"><h2 class="sh"><span>My cases</span><button type="button" data-act="mc-new" style="color:var(--accent);font:inherit">+ Log a case</button></h2>`;
+  if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>Mine</b> next to a case on the OT list (or "+ Log a case") and add ASA, plan and consultant. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
+  const show = limit ? pend.slice(0, limit) : L;
+  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.asa ? 'ASA ' + c.asa : 'ASA ?', c.plan].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
+}
 function caseSheet(n) {
   const c = CASES().find(x => x.n === n); if (!c) return;
   const nr = v => v ? esc(v) : '<span class="muted">Not recorded</span>';
@@ -1609,6 +1653,10 @@ document.addEventListener('click', e => {
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
     case 'book-open': bookOpen = id; bookSheet(id); break;
+    case 'mc-ot': mcSheet('', id); break;
+    case 'mc-new': mcSheet('', ''); break;
+    case 'mc-open': mcSheet(id); break;
+    case 'mc-del': if (state.myCases[id]) { delete state.myCases[id]; closeSheet(); commit('Case removed'); } break;
     case 'wx-sheet': openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Weather</h2><button type="button" class="link strong" data-act="close">Done</button></div>${weatherCard()}</div>`); break;
     case 'book-tick': {
       const bid = id.split('|')[0]; const b = BOOKS().find(x => x.id === bid);
@@ -1702,6 +1750,11 @@ document.addEventListener('submit', e => {
       if (!token) { toast('Paste the access key first'); return; }
       try { localStorage.setItem(SYNC_REPO_KEY, repo); localStorage.setItem(SYNC_TOKEN_KEY, token); } catch (_) { toast("Couldn't store the key on this device"); return; }
       devSync = { status: 'busy' }; render(); deviceSync(true); break; }
+    case 'mycase': {
+      const v = k => (fd.get(k) || '').trim(); if (!v('procedure') || !v('date')) { toast('Add the date and procedure'); return; }
+      const mid = id || 'mc-' + uid(); const old = state.myCases[mid] || {};
+      state.myCases = { ...state.myCases, [mid]: { ...old, id: mid, otId: f.dataset.ot || old.otId || '', date: v('date'), uhid: v('uhid').toUpperCase(), procedure: v('procedure'), diagnosis: v('diagnosis'), specialty: v('specialty'), asa: v('asa'), urgency: v('urgency'), type: v('type'), plan: v('plan'), or: v('or'), consultant: v('consultant'), notes: v('notes'), created: old.created || nowISO(), updated: nowISO() } };
+      closeSheet(); commit(id ? 'Saved' : 'Case saved ✓'); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
       closeSheet(); commit('Profile saved'); break; }
@@ -1761,7 +1814,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -1860,6 +1913,16 @@ async function deviceSync(manual) {
       const pr = await gh(cfg, path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'sync ' + (me ? me.name : device.kid), content: utf8b64(JSON.stringify(env)), sha }) });
       if (!pr.ok) throw new Error(pr.status === 403 || pr.status === 404 ? "the access key can't write to " + cfg.repo + ' (check Contents: Read and write)' : 'GitHub answered ' + pr.status + ' while saving');
       S.lastPush = sig; save();
+    }
+    // outbox for Claude: my cases not yet in the logbook (plain JSON, private repository only)
+    const pending = MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
+    const osig = fnv(JSON.stringify(pending));
+    if (osig !== S.lastOutbox) {
+      const op = '/contents/outbox/' + device.kid + '.json';
+      const oc = await gh(cfg, op); const osha = oc.ok ? (await oc.json()).sha : undefined;
+      const body = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), note: 'Cases Apoorva logged in Docks for Claude to add to the logbook sheet and SLCM. Private.', cases: pending };
+      const or2 = await gh(cfg, op, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'outbox ' + pending.length, content: utf8b64(JSON.stringify(body, null, 1)), sha: osha }) });
+      if (or2.ok) { S.lastOutbox = osig; save(); }
     }
     devSync = { status: 'ok', at: nowISO(), from, changed };
     if (manual) toast(changed ? plural(changed, 'change') + ' from your other devices ✓' : 'In sync ✓');
