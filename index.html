@@ -768,7 +768,7 @@ body{background:var(--bg)}
 .prof .pwx-moon .pwx-t b,.prof .pwx-moon .pwx-t span,.prof .pwx-moon .pwx-t small,.prof .pwx-partlyn .pwx-t b,.prof .pwx-partlyn .pwx-t span,.prof .pwx-partlyn .pwx-t small{color:#F1EEE6!important}
 /* per-tab background doodles (original simple line drawings), very faint */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.2;background-repeat:repeat;background-size:170px 170px}
-#page,.navbar,.drawer{position:relative;z-index:1}
+#page{position:relative;z-index:1}
 @media (prefers-color-scheme:dark){body::before{opacity:.16}}
 body[data-sec="today"]::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22170%22%20height%3D%22170%22%20viewBox%3D%220%200%20170%20170%22%20fill%3D%22none%22%20stroke%3D%22%233E7B5E%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cg%20transform%3D%22translate%2818%2014%29%20rotate%28-12%2012%2012%29%20scale%280.9%29%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22/%3E%3Cpath%20d%3D%22M12%202v3M12%2019v3M2%2012h3M19%2012h3M5%205l2%202M17%2017l2%202M5%2019l2-2M17%207l2-2%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28102%2030%29%20rotate%2814%2012%2012%29%20scale%280.7%29%22%3E%3Cpath%20d%3D%22M12%203l2.6%205.6%206%20.7-4.5%204%201.3%206-5.4-3.1-5.4%203.1%201.3-6-4.5-4%206-.7z%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%2854%2092%29%20rotate%280%2012%2012%29%20scale%280.55%29%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%222%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28128%20112%29%20rotate%28-20%2012%2012%29%20scale%280.85%29%22%3E%3Cpath%20d%3D%22M12%203l2.6%205.6%206%20.7-4.5%204%201.3%206-5.4-3.1-5.4%203.1%201.3-6-4.5-4%206-.7z%22/%3E%3C/g%3E%3C/svg%3E")}
 @media (prefers-color-scheme:dark){body[data-sec="today"]::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22170%22%20height%3D%22170%22%20viewBox%3D%220%200%20170%20170%22%20fill%3D%22none%22%20stroke%3D%22%23E8E2D4%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cg%20transform%3D%22translate%2818%2014%29%20rotate%28-12%2012%2012%29%20scale%280.9%29%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22/%3E%3Cpath%20d%3D%22M12%202v3M12%2019v3M2%2012h3M19%2012h3M5%205l2%202M17%2017l2%202M5%2019l2-2M17%207l2-2%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28102%2030%29%20rotate%2814%2012%2012%29%20scale%280.7%29%22%3E%3Cpath%20d%3D%22M12%203l2.6%205.6%206%20.7-4.5%204%201.3%206-5.4-3.1-5.4%203.1%201.3-6-4.5-4%206-.7z%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%2854%2092%29%20rotate%280%2012%2012%29%20scale%280.55%29%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%222%22/%3E%3C/g%3E%3Cg%20transform%3D%22translate%28128%20112%29%20rotate%28-20%2012%2012%29%20scale%280.85%29%22%3E%3Cpath%20d%3D%22M12%203l2.6%205.6%206%20.7-4.5%204%201.3%206-5.4-3.1-5.4%203.1%201.3-6-4.5-4%206-.7z%22/%3E%3C/g%3E%3C/svg%3E")}}
@@ -817,7 +817,7 @@ body[data-sec="backup"]::before{background-image:url("data:image/svg+xml,%3Csvg%
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.3 · doodles';
+const APP_VERSION = '5.3.1 · doodles';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
