@@ -784,7 +784,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.1.1 · topics';
+const APP_VERSION = '5.1.2 · topics';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics'];
 
@@ -1674,7 +1674,7 @@ function hl(text, terms) {
 }
 function searchSheet() {
   openSheet(`<div class="sheet-head"><span></span><h2>Search</h2><button class="link strong" type="button" data-act="close">Done</button></div>
-    <div class="sbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" data-search placeholder="Topics, tasks, sessions, cases, OT, roster…" aria-label="Search everything" autocomplete="off" autocapitalize="off" enterkeyhint="search" maxlength="60"></div>
+    <div class="sbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" data-search placeholder="Topics, chapters, PDFs, cases, OT, roster…" aria-label="Search everything" autocomplete="off" autocapitalize="off" enterkeyhint="search" maxlength="60"></div>
     <div id="s-res"></div>`);
   renderSearch('');
   setTimeout(() => { const i = document.querySelector('[data-search]'); if (i) i.focus(); }, 80);
@@ -1682,7 +1682,7 @@ function searchSheet() {
 function renderSearch(q) {
   const box = $('s-res'); if (!box) return;
   const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
-  if (!terms.length) { box.innerHTML = '<p class="foot">Searches study topics and notes, to-dos, academic sessions, your entries, the OT list, cases, the duty roster and NBA teams. Everything is searched on this phone.</p>'; return; }
+  if (!terms.length) { box.innerHTML = '<p class="foot">Searches Topics notes and PDFs, textbook chapters, study topics, to-dos, academic sessions, your entries, the OT list, your cases, the duty roster and NBA teams. Everything is searched on this phone.</p>'; return; }
   const hit = (...fields) => { const h = fields.filter(Boolean).join(' ').toLowerCase(); return terms.every(t => h.includes(t)); };
   const groups = [];
   const add = (title, rows) => { if (rows.length) groups.push({ title, rows }); };
@@ -1691,6 +1691,11 @@ function renderSearch(q) {
   add('Study topics', state.topics.filter(t => { const s = byId(state.subjects, t.subjectId); return hit(t.name, t.pointer, s && s.name, ...state.log.filter(l => l.topicId === t.id).map(l => l.note)); })
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
+  add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
+  add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
+  const chap = []; BOOKS().forEach(b => b.chapters.forEach(c => { if (hit(c.title, c.part, b.title)) chap.push(row(`data-act="book-open" data-id="${esc(b.id)}"`, c.n + '. ' + c.title, [b.title, state.bookDone[b.id + '|' + c.n] ? 'Done ✓' : ''].filter(Boolean).join(' · '))); }));
+  add('Textbook chapters', chap);
+  add('My cases', MC_LIST().filter(c => hit(c.procedure, c.diagnosis, c.dept, c.loc, c.mgmt, c.faculty, c.uhid, c.details)).map(c => row(`data-act="mc-open" data-id="${esc(c.id)}"`, c.procedure, [c.mgmt, c.faculty, mcStatus(c).t].filter(Boolean).join(' · '), dShort(c.date))));
   add('Reminders', state.reminders.filter(r => hit(r.title, remRule(r))).map(r => row(`data-act="rem-edit" data-id="${r.id}"`, r.title, remRule(r))));
   add('New advances', ADV().filter(a => hit(a.title, a.summary, a.why, a.journal, ...(a.tags || []))).map(a => row(`data-act="goto" data-tab="advances"`, a.title, [a.journal, a.type].filter(Boolean).join(' · '))));
   add('To-do', state.todos.filter(t => hit(t.text)).map(t => row(`data-act="goto" data-tab="todos"`, t.text, t.done ? 'Done' : 'Open')));
