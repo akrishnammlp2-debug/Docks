@@ -543,6 +543,10 @@ mark{background:#DAF1DE!important}
 }
 
 /* Today: friendly greeting instead of a big label */
+.auto-sum{background:var(--t-sage,#E3EFE6)!important;gap:2px}
+.auto-edit summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14.5px;padding:6px 4px;list-style:none}
+.auto-edit summary::-webkit-details-marker{display:none}
+.auto-edit[open] summary{margin-bottom:8px}
 .mine{padding:5px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);font-size:12.5px;font-weight:600;white-space:nowrap;font-family:var(--f-head,inherit)}
 .mine.on{background:var(--accent);color:#fff}
 .hello-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -725,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.6 · SLCM form';
+const APP_VERSION = '4.7 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1476,16 +1480,32 @@ const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynae
 const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return DEPT_BY_UNIT[k] || DEPT_BY_UNIT[k.slice(0, 3)] || ''; };
 const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
 const FACULTY = () => (state.private && state.private.faculty) || [];
-function locFromOt(ot) { const m = /(\d+)/.exec(ot || ''); return m ? 'KHSB-OT' + m[1] : ''; }
+const REMOTE_RX = /^(GEC|CT|MRI|Cobalt|Radio ?Cath|Cath ?Lab|Pedo|MARC|MECT)$/i;
+function locFromOt(ot) { const o = (ot || '').trim(); if (REMOTE_RX.test(o)) return o; const m = /^OR\s*(\d+)$/i.exec(o); return m ? 'KHSB-OT' + m[1] : o; }
+function slFromOt(r) {
+  const o = (r.ot || '').trim(); const u = (r.unit || '').toUpperCase(); const remote = REMOTE_RX.test(o) || /^(GEC|RAD)/.test(u) || isGI(r.procedure);
+  const gi = /^GEC/.test(u) || /^GEC$/i.test(o) || isGI(r.procedure);
+  return { posting: remote ? 'Remote Locations' : 'OT', dept: gi ? 'Gastro Intestinal Surgery' : deptFor(r.unit), loc: gi && !REMOTE_RX.test(o) ? 'GEC' : locFromOt(o), mgmt: gi ? 'MAC' : 'GA + ETT' };
+}
 function mcSheet(id, otId) {
   let c = id ? state.myCases[id] : null;
-  if (!c) { const r = otId ? OTL().find(x => x.id === otId) : null; const pi = otId ? otInfo(otId) : {}; const gi = r && isGI(r.procedure);
-    c = { id: '', otId: otId || '', date: r ? r.date : today(), uhid: pi.uhid || '', procedure: r ? r.procedure : '', posting: gi ? 'Remote Locations' : 'OT', dept: r ? (gi ? 'Gastro Intestinal Surgery' : deptFor(r.unit)) : '', loc: gi ? 'GEC' : r ? locFromOt(r.ot) : '', mgmt: gi ? 'MAC' : 'GA + ETT', details: '', faculty: '', asa: '', urgency: 'Elective', diagnosis: '' }; }
+  if (!c) { const r = otId ? OTL().find(x => x.id === otId) : null; const pi = otId ? otInfo(otId) : {}; const a = r ? slFromOt(r) : { posting: 'OT', dept: '', loc: '', mgmt: 'GA + ETT' };
+    c = { id: '', otId: otId || '', date: r ? r.date : today(), uhid: pi.uhid || '', procedure: r ? r.procedure : '', ...a, details: '', faculty: '', asa: '', urgency: 'Elective', diagnosis: '' }; }
   const opt = (arr, v, blank) => (blank ? `<option value=""${!v ? ' selected' : ''}>Choose…</option>` : '') + arr.map(x => `<option${x === v ? ' selected' : ''}>${esc(x)}</option>`).join('') + (v && !arr.includes(v) ? `<option selected>${esc(v)}</option>` : '');
   const st = c.id ? mcStatus(c) : null; const F = FACULTY();
   openSheet(`<form data-form="mycase" data-id="${esc(c.id)}" data-ot="${esc(c.otId || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${c.id ? 'My case' : 'Log my case'}</h2><button type="submit" class="link strong">Save</button></div>
     ${st ? `<div><span class="pill ${st.cls}">${st.t}</span></div>` : ''}
-    <h3 class="sh">For SLCM</h3>
+    ${c.otId ? `<div class="card auto-sum"><span class="c-lab">From the OT list</span><span class="c-t" style="font-size:16px">${esc(c.procedure)}</span><span class="c-s">${esc([dShort(c.date), c.loc, c.dept || 'Department ?', c.posting, c.uhid || 'Hospital no. ?'].filter(Boolean).join(' · '))}</span></div>` : ''}
+    <h3 class="sh">You add</h3>
+    <div class="group">
+      <label class="row field"><span class="f-l">Anaesthetic management</span><select name="mgmt">${opt(SL_MGMT, c.mgmt)}</select></label>
+      <label class="row field"><span class="f-l">Faculty</span>${F.length ? `<select name="faculty">${opt(F, c.faculty, true)}</select>` : `<input class="left" name="faculty" value="${esc(c.faculty)}" placeholder="Consultant">`}</label>
+      <label class="row field"><span class="f-l">Additional details</span><input class="left" name="details" value="${esc(c.details)}" placeholder="e.g. throat pack, difficult airway"></label>
+      <label class="row field"><span class="f-l">Diagnosis</span><input class="left" name="diagnosis" value="${esc(c.diagnosis)}" placeholder="e.g. Multinodular goitre"></label>
+      <label class="row field"><span class="f-l">ASA</span><select name="asa">${opt(['I', 'II', 'III', 'IV', 'V', 'IE', 'IIE', 'IIIE', 'IVE', 'VE'], c.asa, true)}</select></label>
+      <label class="row field"><span class="f-l">Urgency</span><select name="urgency">${opt(['Elective', 'Emergency'], c.urgency)}</select></label>
+    </div>
+    <details class="auto-edit"${c.otId ? '' : ' open'}><summary>${c.otId ? 'Change OT list details' : 'Case details'}</summary>
     <div class="group">
       <label class="row field"><span class="f-l">Clinical posting</span><select name="posting">${opt(SL_POST, c.posting)}</select></label>
       <label class="row field"><span class="f-l">Department</span><select name="dept">${opt(SL_DEPT, c.dept, true)}</select></label>
@@ -1493,16 +1513,7 @@ function mcSheet(id, otId) {
       <label class="row field"><span class="f-l">Date</span><input name="date" type="date" value="${esc(c.date)}" required></label>
       <label class="row field"><span class="f-l">Hospital no.</span><input class="left" name="uhid" value="${esc(c.uhid)}" placeholder="UHID" autocapitalize="characters" spellcheck="false"></label>
       <label class="row field"><span class="f-l">Procedure</span><input class="left" name="procedure" value="${esc(c.procedure)}" required></label>
-      <label class="row field"><span class="f-l">Anaesthetic management</span><select name="mgmt">${opt(SL_MGMT, c.mgmt)}</select></label>
-      <label class="row field"><span class="f-l">Faculty</span>${F.length ? `<select name="faculty">${opt(F, c.faculty, true)}</select>` : `<input class="left" name="faculty" value="${esc(c.faculty)}" placeholder="Consultant">`}</label>
-      <label class="row field"><span class="f-l">Additional details</span><input class="left" name="details" value="${esc(c.details)}" placeholder="e.g. throat pack, difficult airway"></label>
-    </div>
-    <h3 class="sh">For your logbook</h3>
-    <div class="group">
-      <label class="row field"><span class="f-l">Diagnosis</span><input class="left" name="diagnosis" value="${esc(c.diagnosis)}" placeholder="e.g. Multinodular goitre"></label>
-      <label class="row field"><span class="f-l">ASA</span><select name="asa">${opt(['I', 'II', 'III', 'IV', 'V', 'IE', 'IIE', 'IIIE', 'IVE', 'VE'], c.asa, true)}</select></label>
-      <label class="row field"><span class="f-l">Urgency</span><select name="urgency">${opt(['Elective', 'Emergency'], c.urgency)}</select></label>
-    </div>
+    </div></details>
     <datalist id="mc-loc">${[...SL_LOC, ...SL_REMOTE].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
     ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
     <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
