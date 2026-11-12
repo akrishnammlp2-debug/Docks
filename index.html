@@ -729,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7.1 · SLCM form';
+const APP_VERSION = '4.7.2 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1495,9 +1495,10 @@ function mcSheet(id, otId) {
   const st = c.id ? mcStatus(c) : null; const F = FACULTY();
   openSheet(`<form data-form="mycase" data-id="${esc(c.id)}" data-ot="${esc(c.otId || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${c.id ? 'My case' : 'Log my case'}</h2><button type="submit" class="link strong">Save</button></div>
     ${st ? `<div><span class="pill ${st.cls}">${st.t}</span></div>` : ''}
-    ${c.otId ? `<div class="card auto-sum"><span class="c-lab">From the OT list</span><span class="c-t" style="font-size:16px">${esc(c.procedure)}</span><span class="c-s">${esc([dShort(c.date), c.loc, c.dept || 'Department ?', c.posting, c.uhid || 'Hospital no. ?'].filter(Boolean).join(' · '))}</span></div>` : ''}
+    ${c.otId ? `<div class="card auto-sum"><span class="c-lab">From the OT list</span><span class="c-t" style="font-size:16px">${esc(c.procedure)}</span><span class="c-s">${esc([dShort(c.date), c.dept || 'Department ?', c.posting, c.uhid || 'Hospital no. ?'].filter(Boolean).join(' · '))}</span></div>` : ''}
     <h3 class="sh">You add</h3>
     <div class="group">
+      <label class="row field"><span class="f-l">Location</span><select name="loc">${opt(c.posting === 'Remote Locations' ? [...SL_REMOTE, ...SL_LOC] : [...SL_LOC, ...SL_REMOTE], c.loc, true)}</select></label>
       <label class="row field"><span class="f-l">Anaesthetic management</span><select name="mgmt">${opt(SL_MGMT, c.mgmt)}</select></label>
       <label class="row field"><span class="f-l">Faculty</span>${F.length ? `<select name="faculty">${opt(F, c.faculty, true)}</select>` : `<input class="left" name="faculty" value="${esc(c.faculty)}" placeholder="Consultant">`}</label>
       <label class="row field"><span class="f-l">Additional details</span><input class="left" name="details" value="${esc(c.details)}" placeholder="e.g. throat pack, difficult airway"></label>
@@ -1509,7 +1510,6 @@ function mcSheet(id, otId) {
     <div class="group">
       <label class="row field"><span class="f-l">Clinical posting</span><select name="posting">${opt(SL_POST, c.posting)}</select></label>
       <label class="row field"><span class="f-l">Department</span><select name="dept">${opt(SL_DEPT, c.dept, true)}</select></label>
-      <label class="row field"><span class="f-l">Location</span><input class="left" name="loc" value="${esc(c.loc)}" list="mc-loc" placeholder="e.g. KHSB-OT4 or GEC"></label>
       <label class="row field"><span class="f-l">Date</span><input name="date" type="date" value="${esc(c.date)}" required></label>
       <label class="row field"><span class="f-l">Hospital no.</span><input class="left" name="uhid" value="${esc(c.uhid)}" placeholder="UHID" autocapitalize="characters" spellcheck="false"></label>
       <label class="row field"><span class="f-l">Procedure</span><input class="left" name="procedure" value="${esc(c.procedure)}" required></label>
