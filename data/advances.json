@@ -1,90 +1,209 @@
 {
- "updated": "2026-11-12",
- "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
- "items": [
-  {
-   "pmid": "43003764", "doi": "10.1111/anae.70456", "added": "2026-11-12", "date": "2026-11-09",
-   "title": "Videolaryngoscopy vs. direct laryngoscopy for tracheal intubation by anaesthesia resident doctors (VILARE): a pragmatic multicentre randomised trial.",
-   "journal": "Anaesthesia", "type": "RCT", "area": "Anaesthesia", "tags": ["Airway"],
-   "summary": "About 1000 adults intubated by supervised anaesthesia residents were randomised to a videolaryngoscope or a direct laryngoscope for the first attempt. First-pass success was higher with videolaryngoscopy (79% vs 70%), with better glottic views, less reported difficulty and fewer complications (8% vs 18%), and no meaningful difference in intubation time.",
-   "why": "Strong support for making videolaryngoscopy the default first device when trainees intubate."
-  },
-  {
-   "pmid": "43007421", "doi": "10.1007/s00134-026-08643-8", "added": "2026-11-12", "date": "2026-11-10",
-   "title": "Efficacy and safety of oliceridine versus remifentanil for analgesia in mechanically ventilated critically ill adults (CO-ROAM): a multicenter, assessor-blinded, non-inferiority randomized controlled trial.",
-   "journal": "Intensive Care Med", "type": "RCT", "area": "Critical care", "tags": ["Analgesia", "Ventilation"],
-   "summary": "In 304 ventilated ICU adults across 19 Chinese ICUs, oliceridine (a G-protein-biased mu-opioid agonist) kept patients in the target analgesia range as well as remifentanil. It caused fewer mild-to-moderate drug reactions, no respiratory depression (vs about 5% with remifentanil, and 0% vs 8% after extubation) and lower costs; ventilation time, ICU stay and 28-day mortality were similar.",
-   "why": "A possible opioid option with a better respiratory safety profile for ICU analgesia, though availability in India may be limited."
-  },
-  {
-   "pmid": "42973066", "doi": "10.1097/EJA.0000000000002526", "added": "2026-11-12", "date": "2026-11-03",
-   "title": "Sugammadex versus neostigmine for neuromuscular blockade reversal in adults: A systematic review and meta-analysis of randomised controlled trials.",
-   "journal": "Eur J Anaesthesiol", "type": "Meta-analysis", "area": "Anaesthesia", "tags": ["Neuromuscular block"],
-   "summary": "This update of the 2017 Cochrane review pooled 165 trials (about 19,000 adults). Sugammadex 2 mg/kg reversed blockade to TOF ratio above 0.9 about 10 minutes faster than neostigmine and probably lowered the chance of any adverse event (RR 0.72), including residual block, desaturation, atelectasis, bradycardia and urinary retention. Certainty was moderate and many trials had risk of bias.",
-   "why": "As sugammadex gets cheaper, this is the most complete summary of what it actually gains you over neostigmine."
-  },
-  {
-   "pmid": "42993977", "doi": "10.1097/ALN.0000000000006471", "added": "2026-11-12", "date": "2026-11-06",
-   "title": "Individualized mean arterial pressure during cardiac surgery The OPTIPAM Randomized Clinical Trial.",
-   "journal": "Anesthesiology", "type": "RCT", "area": "Anaesthesia", "tags": ["Cardiac", "Haemodynamics"],
-   "summary": "In 10 French centres, cardiac surgery patients on bypass were targeted either to within 10% of their own baseline MAP or to a standard MAP of 65 mmHg or more. The trial was stopped early (172 patients) because bleeding complications were higher with individualised targets (18% vs 3%); death, AKI or neurological complications were not reduced (32% vs 29%).",
-   "why": "A safety signal: pushing pressure higher with vasopressors during cardiac surgery may increase bleeding without clear benefit."
-  },
-  {
-   "pmid": "43006814", "doi": "10.1097/ALN.0000000000006476", "added": "2026-11-12", "date": "2026-11-10",
-   "title": "Quality of Recovery After Primary Breast Cancer Surgery: A Randomized, Two-Centre, Triple-Blinded Trial Comparing Erector Spinae Plane Block and Intravenous Lidocaine Infusion Within a Multimodal Analgesia Framework.",
-   "journal": "Anesthesiology", "type": "RCT", "area": "Anaesthesia", "tags": ["Regional", "Analgesia"],
-   "summary": "Eighty women having breast cancer surgery with standard multimodal analgesia received either an ultrasound-guided erector spinae plane block or an intraoperative lidocaine infusion. Quality of recovery at 24 hours (QoR-15), pain and opioid use were similar and low in both groups, with no block- or lidocaine-related adverse events.",
-   "why": "IV lidocaine may be a practical alternative when a block isn't feasible, at least within a good multimodal plan."
-  },
-  {
-   "pmid": "43001745", "doi": "10.1097/ALN.0000000000006467", "added": "2026-11-12", "date": "2026-11-05",
-   "title": "Intravenous Lidocaine in Liver Surgery ‒ A Randomized Double-Blind Trial.",
-   "journal": "Anesthesiology", "type": "RCT", "area": "Anaesthesia", "tags": ["Analgesia", "Hepatobiliary"],
-   "summary": "In 124 patients having minor liver resection, a lidocaine bolus (1.5 mg/kg) plus infusion (1.5 mg/kg/h until 1 h after surgery) did not reduce 24-hour opioid use compared with placebo. Pain scores were lower only early after surgery; recovery scores and adverse events were similar, and plasma levels stayed below toxic range after brief early peaks in two patients.",
-   "why": "Lidocaine infusion looks safe in minor liver surgery but adds little beyond the first hours."
-  },
-  {
-   "pmid": "42994751", "doi": "10.1016/j.chest.2026.10.033", "added": "2026-11-12", "date": "2026-11-06",
-   "title": "Efficacy and Safety of Ulinastatin in the Treatment of Patients with Sepsis: The ADJUST Trial.",
-   "journal": "Chest", "type": "RCT", "area": "Critical care", "tags": ["Sepsis"],
-   "summary": "In a double-blind placebo-controlled trial of 335 adults with sepsis, ulinastatin 400,000 IU every 8 hours for up to 10 days did not change 28-day mortality (about 23% in both groups) or other outcomes. Adverse events were more frequent with ulinastatin (57% vs 43%).",
-   "why": "Ulinastatin is used in some Indian ICUs for sepsis; this trial does not support routine use."
-  },
-  {
-   "pmid": "42970124", "doi": "10.1007/s00134-026-08602-3", "added": "2026-11-12", "date": "2026-11-02",
-   "title": "Sodium bicarbonate therapy for metabolic acidosis in critically ill patients: a Bayesian systematic review and meta-analysis of randomised controlled trials.",
-   "journal": "Intensive Care Med", "type": "Meta-analysis", "area": "Critical care", "tags": ["Acid-base", "Renal"],
-   "summary": "Pooling four RCTs (about 1500 ICU adults with metabolic acidosis), IV sodium bicarbonate showed no clear survival benefit (RR 0.94) but a high probability of reducing the need for renal replacement therapy (RR 0.74, 97% probability of benefit). No consistent safety concern was seen.",
-   "why": "Bicarbonate may spare some patients dialysis even if it doesn't save lives; who benefits most is still open."
-  },
-  {
-   "pmid": "43012617", "doi": "10.1097/CCM.0000000000007434", "added": "2026-11-12", "date": "2026-11-11",
-   "title": "Normocapnia Versus Mild Hypercapnia During Lung Protective Ventilation in Acute Respiratory Distress Syndrome: A Target Trial Emulation.",
-   "journal": "Crit Care Med", "type": "Trial emulation", "area": "Critical care", "tags": ["ARDS", "Ventilation"],
-   "summary": "Using data from seven ARDS Network/PETAL trials, the authors compared aiming for normal PaCO2 (35-45, by raising respiratory rate) with tolerating mild hypercapnia (50-55) during low tidal volume ventilation. 90-day mortality was identical (29% in each group, 292 per arm), including in older and obese patients.",
-   "why": "Supports permissive mild hypercapnia; no need to chase normal CO2 with high respiratory rates. Observational design, so interpret cautiously."
-  },
-  {
-   "pmid": "42958418", "doi": "10.1186/s13054-026-06217-0", "added": "2026-11-12", "date": "2026-10-29",
-   "title": "Chlorhexidine within a standardized oral-care bundle for the prevention of ventilator-associated pneumonia: a pragmatic cluster-randomized crossover trial in six medical intensive care units.",
-   "journal": "Crit Care", "type": "RCT", "area": "Critical care", "tags": ["VAP", "Infection"],
-   "summary": "In six medical ICUs in Bhubaneswar (about 1000 ventilated patients), adding 0.12% chlorhexidine to a standard oral-care bundle did not reduce VAP (about 17-19 per 1000 ventilator-days) or 28-day mortality, and ICU stay was slightly longer with chlorhexidine.",
-   "why": "An Indian trial adding to the evidence that chlorhexidine mouthwash can be dropped from VAP bundles in medical ICUs."
-  },
-  {
-   "pmid": "42968677", "added": "2026-11-12", "date": "2026-11-04",
-   "title": "The effect of intravenous ondansetron on maternal spinal-induced hypotension in preeclamptic patients undergoing caesarean delivery: a randomised, controlled clinical trial.",
-   "journal": "Eur J Anaesthesiol", "type": "RCT", "area": "Anaesthesia", "tags": ["Obstetric", "Spinal"],
-   "summary": "A randomised trial testing whether IV ondansetron reduces spinal-induced hypotension in women with preeclampsia having caesarean delivery. The abstract isn't on PubMed yet, so the results aren't summarised here.",
-   "why": "Directly relevant to obstetric spinal anaesthesia; worth opening the full paper."
-  },
-  {
-   "pmid": "42968686", "added": "2026-11-12", "date": "2026-11-04",
-   "title": "Prophylactic esketamine to reduce postpartum depression in primiparous women: A multicentre, double-blind, randomised clinical trial.",
-   "journal": "Eur J Anaesthesiol", "type": "RCT", "area": "Anaesthesia", "tags": ["Obstetric"],
-   "summary": "A multicentre double-blind trial of prophylactic esketamine to prevent postpartum depression in first-time mothers. The abstract isn't on PubMed yet, so the results aren't summarised here.",
-   "why": "Part of a growing set of trials on perioperative esketamine in obstetrics."
-  }
- ]
+  "updated": "2026-11-12",
+  "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
+  "items": [
+    {
+      "pmid": "43012620",
+      "doi": "10.1097/CCM.0000000000007448",
+      "added": "2026-11-12",
+      "date": "2026-11-11",
+      "title": "The Effect of Guanfacine on Delirium in Surgical and Trauma ICU Patients: A Pilot Randomized Clinical Trial.",
+      "journal": "Crit Care Med",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Delirium",
+        "Sedation",
+        "Pharmacology"
+      ],
+      "summary": "In a single-centre pilot, 100 surgical and trauma ICU adults who already had delirium got either oral guanfacine 2 mg each night or a placebo for up to two weeks. The trial ran smoothly (full adherence and follow-up), and guanfacine patients had slightly more days alive without delirium or coma (median 2 vs 1), though this lost significance after adjustment. No blood pressure or heart rate problems were seen, and ICU stay and ventilation time were similar.",
+      "why": "Guanfacine is a cheap oral alpha-2 agonist, so if a larger trial confirms benefit it could be an affordable alternative to dexmedetomidine for ICU delirium in Indian units."
+    },
+    {
+      "pmid": "43003764",
+      "doi": "10.1111/anae.70456",
+      "added": "2026-11-12",
+      "date": "2026-11-09",
+      "title": "Videolaryngoscopy vs. direct laryngoscopy for tracheal intubation by anaesthesia resident doctors (VILARE): a pragmatic multicentre randomised trial.",
+      "journal": "Anaesthesia",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Airway"
+      ],
+      "summary": "About 1000 adults intubated by supervised anaesthesia residents were randomised to a videolaryngoscope or a direct laryngoscope for the first attempt. First-pass success was higher with videolaryngoscopy (79% vs 70%), with better glottic views, less reported difficulty and fewer complications (8% vs 18%), and no meaningful difference in intubation time.",
+      "why": "Strong support for making videolaryngoscopy the default first device when trainees intubate."
+    },
+    {
+      "pmid": "43007421",
+      "doi": "10.1007/s00134-026-08643-8",
+      "added": "2026-11-12",
+      "date": "2026-11-10",
+      "title": "Efficacy and safety of oliceridine versus remifentanil for analgesia in mechanically ventilated critically ill adults (CO-ROAM): a multicenter, assessor-blinded, non-inferiority randomized controlled trial.",
+      "journal": "Intensive Care Med",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Analgesia",
+        "Ventilation"
+      ],
+      "summary": "In 304 ventilated ICU adults across 19 Chinese ICUs, oliceridine (a G-protein-biased mu-opioid agonist) kept patients in the target analgesia range as well as remifentanil. It caused fewer mild-to-moderate drug reactions, no respiratory depression (vs about 5% with remifentanil, and 0% vs 8% after extubation) and lower costs; ventilation time, ICU stay and 28-day mortality were similar.",
+      "why": "A possible opioid option with a better respiratory safety profile for ICU analgesia, though availability in India may be limited."
+    },
+    {
+      "pmid": "42973066",
+      "doi": "10.1097/EJA.0000000000002526",
+      "added": "2026-11-12",
+      "date": "2026-11-03",
+      "title": "Sugammadex versus neostigmine for neuromuscular blockade reversal in adults: A systematic review and meta-analysis of randomised controlled trials.",
+      "journal": "Eur J Anaesthesiol",
+      "type": "Meta-analysis",
+      "area": "Anaesthesia",
+      "tags": [
+        "Neuromuscular block"
+      ],
+      "summary": "This update of the 2017 Cochrane review pooled 165 trials (about 19,000 adults). Sugammadex 2 mg/kg reversed blockade to TOF ratio above 0.9 about 10 minutes faster than neostigmine and probably lowered the chance of any adverse event (RR 0.72), including residual block, desaturation, atelectasis, bradycardia and urinary retention. Certainty was moderate and many trials had risk of bias.",
+      "why": "As sugammadex gets cheaper, this is the most complete summary of what it actually gains you over neostigmine."
+    },
+    {
+      "pmid": "42993977",
+      "doi": "10.1097/ALN.0000000000006471",
+      "added": "2026-11-12",
+      "date": "2026-11-06",
+      "title": "Individualized mean arterial pressure during cardiac surgery The OPTIPAM Randomized Clinical Trial.",
+      "journal": "Anesthesiology",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Cardiac",
+        "Haemodynamics"
+      ],
+      "summary": "In 10 French centres, cardiac surgery patients on bypass were targeted either to within 10% of their own baseline MAP or to a standard MAP of 65 mmHg or more. The trial was stopped early (172 patients) because bleeding complications were higher with individualised targets (18% vs 3%); death, AKI or neurological complications were not reduced (32% vs 29%).",
+      "why": "A safety signal: pushing pressure higher with vasopressors during cardiac surgery may increase bleeding without clear benefit."
+    },
+    {
+      "pmid": "43006814",
+      "doi": "10.1097/ALN.0000000000006476",
+      "added": "2026-11-12",
+      "date": "2026-11-10",
+      "title": "Quality of Recovery After Primary Breast Cancer Surgery: A Randomized, Two-Centre, Triple-Blinded Trial Comparing Erector Spinae Plane Block and Intravenous Lidocaine Infusion Within a Multimodal Analgesia Framework.",
+      "journal": "Anesthesiology",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Regional",
+        "Analgesia"
+      ],
+      "summary": "Eighty women having breast cancer surgery with standard multimodal analgesia received either an ultrasound-guided erector spinae plane block or an intraoperative lidocaine infusion. Quality of recovery at 24 hours (QoR-15), pain and opioid use were similar and low in both groups, with no block- or lidocaine-related adverse events.",
+      "why": "IV lidocaine may be a practical alternative when a block isn't feasible, at least within a good multimodal plan."
+    },
+    {
+      "pmid": "43001745",
+      "doi": "10.1097/ALN.0000000000006467",
+      "added": "2026-11-12",
+      "date": "2026-11-05",
+      "title": "Intravenous Lidocaine in Liver Surgery ‒ A Randomized Double-Blind Trial.",
+      "journal": "Anesthesiology",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Analgesia",
+        "Hepatobiliary"
+      ],
+      "summary": "In 124 patients having minor liver resection, a lidocaine bolus (1.5 mg/kg) plus infusion (1.5 mg/kg/h until 1 h after surgery) did not reduce 24-hour opioid use compared with placebo. Pain scores were lower only early after surgery; recovery scores and adverse events were similar, and plasma levels stayed below toxic range after brief early peaks in two patients.",
+      "why": "Lidocaine infusion looks safe in minor liver surgery but adds little beyond the first hours."
+    },
+    {
+      "pmid": "42994751",
+      "doi": "10.1016/j.chest.2026.10.033",
+      "added": "2026-11-12",
+      "date": "2026-11-06",
+      "title": "Efficacy and Safety of Ulinastatin in the Treatment of Patients with Sepsis: The ADJUST Trial.",
+      "journal": "Chest",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis"
+      ],
+      "summary": "In a double-blind placebo-controlled trial of 335 adults with sepsis, ulinastatin 400,000 IU every 8 hours for up to 10 days did not change 28-day mortality (about 23% in both groups) or other outcomes. Adverse events were more frequent with ulinastatin (57% vs 43%).",
+      "why": "Ulinastatin is used in some Indian ICUs for sepsis; this trial does not support routine use."
+    },
+    {
+      "pmid": "42970124",
+      "doi": "10.1007/s00134-026-08602-3",
+      "added": "2026-11-12",
+      "date": "2026-11-02",
+      "title": "Sodium bicarbonate therapy for metabolic acidosis in critically ill patients: a Bayesian systematic review and meta-analysis of randomised controlled trials.",
+      "journal": "Intensive Care Med",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Acid-base",
+        "Renal"
+      ],
+      "summary": "Pooling four RCTs (about 1500 ICU adults with metabolic acidosis), IV sodium bicarbonate showed no clear survival benefit (RR 0.94) but a high probability of reducing the need for renal replacement therapy (RR 0.74, 97% probability of benefit). No consistent safety concern was seen.",
+      "why": "Bicarbonate may spare some patients dialysis even if it doesn't save lives; who benefits most is still open."
+    },
+    {
+      "pmid": "43012617",
+      "doi": "10.1097/CCM.0000000000007434",
+      "added": "2026-11-12",
+      "date": "2026-11-11",
+      "title": "Normocapnia Versus Mild Hypercapnia During Lung Protective Ventilation in Acute Respiratory Distress Syndrome: A Target Trial Emulation.",
+      "journal": "Crit Care Med",
+      "type": "Trial emulation",
+      "area": "Critical care",
+      "tags": [
+        "ARDS",
+        "Ventilation"
+      ],
+      "summary": "Using data from seven ARDS Network/PETAL trials, the authors compared aiming for normal PaCO2 (35-45, by raising respiratory rate) with tolerating mild hypercapnia (50-55) during low tidal volume ventilation. 90-day mortality was identical (29% in each group, 292 per arm), including in older and obese patients.",
+      "why": "Supports permissive mild hypercapnia; no need to chase normal CO2 with high respiratory rates. Observational design, so interpret cautiously."
+    },
+    {
+      "pmid": "42958418",
+      "doi": "10.1186/s13054-026-06217-0",
+      "added": "2026-11-12",
+      "date": "2026-10-29",
+      "title": "Chlorhexidine within a standardized oral-care bundle for the prevention of ventilator-associated pneumonia: a pragmatic cluster-randomized crossover trial in six medical intensive care units.",
+      "journal": "Crit Care",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "VAP",
+        "Infection"
+      ],
+      "summary": "In six medical ICUs in Bhubaneswar (about 1000 ventilated patients), adding 0.12% chlorhexidine to a standard oral-care bundle did not reduce VAP (about 17-19 per 1000 ventilator-days) or 28-day mortality, and ICU stay was slightly longer with chlorhexidine.",
+      "why": "An Indian trial adding to the evidence that chlorhexidine mouthwash can be dropped from VAP bundles in medical ICUs."
+    },
+    {
+      "pmid": "42968677",
+      "added": "2026-11-12",
+      "date": "2026-11-04",
+      "title": "The effect of intravenous ondansetron on maternal spinal-induced hypotension in preeclamptic patients undergoing caesarean delivery: a randomised, controlled clinical trial.",
+      "journal": "Eur J Anaesthesiol",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Obstetric",
+        "Spinal"
+      ],
+      "summary": "A randomised trial testing whether IV ondansetron reduces spinal-induced hypotension in women with preeclampsia having caesarean delivery. The abstract isn't on PubMed yet, so the results aren't summarised here.",
+      "why": "Directly relevant to obstetric spinal anaesthesia; worth opening the full paper."
+    },
+    {
+      "pmid": "42968686",
+      "added": "2026-11-12",
+      "date": "2026-11-04",
+      "title": "Prophylactic esketamine to reduce postpartum depression in primiparous women: A multicentre, double-blind, randomised clinical trial.",
+      "journal": "Eur J Anaesthesiol",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Obstetric"
+      ],
+      "summary": "A multicentre double-blind trial of prophylactic esketamine to prevent postpartum depression in first-time mothers. The abstract isn't on PubMed yet, so the results aren't summarised here.",
+      "why": "Part of a growing set of trials on perioperative esketamine in obstetrics."
+    }
+  ]
 }
