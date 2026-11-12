@@ -725,7 +725,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.5 · SLCM form';
+const APP_VERSION = '4.6 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1261,9 +1261,9 @@ function otTable(rows) {
   const cols = OT_COLS.filter(c => has(c[0]));
   full.forEach(r => Object.keys(r).forEach(k => { if (!OT_SKIP.has(k) && !cols.some(c => c[0] === k) && (typeof r[k] === 'string' || typeof r[k] === 'number') && String(r[k]).trim()) cols.push([k, k.replace(/[_-]+/g, ' ').replace(/^./, x => x.toUpperCase())]); }));
   const wide = new Set(['notes', 'payer', 'patient']);
-  return `<div class="tblwrap"><table class="otbl"><thead><tr><th class="c-tick"><span class="muted">✓</span></th><th class="c-proc">Procedure</th><th>Mine</th>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
+  return `<div class="tblwrap"><table class="otbl"><thead><tr><th class="c-tick"><span class="muted">✓</span></th><th class="c-proc">Procedure</th>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
     const on = !!state.otDone[r.id];
-    return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td><td>${(() => { const m = mcForOt(r.id); return m ? `<button class="mine on" type="button" data-act="mc-open" data-id="${esc(m.id)}">✓ Mine</button>` : `<button class="mine" type="button" data-act="mc-ot" data-id="${esc(r.id)}">+ Mine</button>`; })()}</td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
+    return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
   }).join('')}</tbody></table></div>`;
 }
 function pageOt() {
@@ -1472,7 +1472,7 @@ const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Su
 const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
 const SL_MGMT = ['GA + ETT', 'GA + LMA/IGEL', 'GA + MASK HOLDING', 'GA + EPIDURAL', 'GA + NERVE BLOCK', 'SPINAL', 'SPINAL + NERVE BLOCK', 'EPIDURAL', 'GSE', 'NERVE BLOCK', 'MAC'];
 const SL_REMOTE = ['GEC', 'CT', 'MRI', 'Cobalt', 'Radio Cath', 'Cath Lab', 'Pedo', 'MARC', 'MECT'];
-const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology' };
+const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', SUO: 'Surgical Oncology' };
 const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return DEPT_BY_UNIT[k] || DEPT_BY_UNIT[k.slice(0, 3)] || ''; };
 const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
 const FACULTY = () => (state.private && state.private.faculty) || [];
@@ -1507,10 +1507,19 @@ function mcSheet(id, otId) {
     ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
     <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
 }
+function mcPick(day) {
+  const ds = otDates(); const d = day && ds.includes(day) ? day : otDefaultDay();
+  const rows = d ? otRows(d) : [];
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Which case?</h2><span></span></div>
+    ${ds.length > 1 ? `<div class="strip">${ds.map(x => `<button type="button" data-act="mc-pickday" data-d="${x}" aria-pressed="${x === d}">${dDow(x)} ${dShort(x)}</button>`).join('')}</div>` : ''}
+    ${d ? `<h3 class="sh">OT list · ${esc(dLong(d))}</h3><div class="group">${rows.map(r => { const m = mcForOt(r.id); const pi = otInfo(r.id);
+      return `<button class="row" type="button" data-act="${m ? 'mc-open' : 'mc-ot'}" data-id="${esc(m ? m.id : r.id)}"><span class="r-time">${esc(r.time || '')}</span><span class="r-main"><span class="r-t">${esc(r.procedure)}</span><span class="r-s">${esc([r.ot, r.unit, pi.patient].filter(Boolean).join(' · '))}</span></span>${m ? '<span class="pill good">Logged</span>' : CHEV}</button>`; }).join('')}</div>` : '<div class="card"><span class="c-s">No OT list yet.</span></div>'}
+    <button class="btn ghost" type="button" data-act="mc-blank">A case not on the list</button></div>`);
+}
 function myCasesSection(limit) {
   const L = MC_LIST(); const pend = L.filter(c => mcStatus(c).t !== 'On SLCM');
   let h = `<div class="sec"><h2 class="sh"><span>My cases</span><button type="button" data-act="mc-new" style="color:var(--accent);font:inherit">+ Log a case</button></h2>`;
-  if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>Mine</b> next to a case on the OT list (or "+ Log a case") and add ASA, plan and consultant. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
+  if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>+ Log a case</b>, pick your case from the OT list, and add the anaesthetic management and faculty. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
   const show = limit ? pend.slice(0, limit) : L;
   return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
 }
@@ -1666,7 +1675,9 @@ document.addEventListener('click', e => {
     case 'otday': otDay = b.dataset.d; render(); break;
     case 'book-open': bookOpen = id; bookSheet(id); break;
     case 'mc-ot': mcSheet('', id); break;
-    case 'mc-new': mcSheet('', ''); break;
+    case 'mc-new': mcPick(); break;
+    case 'mc-pickday': mcPick(b.dataset.d); break;
+    case 'mc-blank': mcSheet('', ''); break;
     case 'mc-open': mcSheet(id); break;
     case 'mc-del': if (state.myCases[id]) { delete state.myCases[id]; closeSheet(); commit('Case removed'); } break;
     case 'wx-sheet': openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Weather</h2><button type="button" class="link strong" data-act="close">Done</button></div>${weatherCard()}</div>`); break;
