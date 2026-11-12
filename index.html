@@ -729,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7.3 · SLCM form';
+const APP_VERSION = '4.7.4 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -1470,7 +1470,7 @@ const SPEC = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology',
 const specFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return SPEC[k] || SPEC[k.slice(0, 3)] || ''; };
 const MC_LIST = () => Object.values(state.myCases || {}).sort((a, b) => b.date.localeCompare(a.date) || (b.created || '').localeCompare(a.created || ''));
 const mcForOt = otId => MC_LIST().find(c => c.otId === otId);
-function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'In logbook · #' + k.n, cls: 'acc' }) : { t: syncCfg().token ? 'Waiting for Claude' : 'Saved on phone', cls: 'warn' }; }
+function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'Logged · SLCM later', cls: 'acc' }) : { t: 'Logged · SLCM later', cls: 'acc' }; }
 const SL_POST = ['OT', 'ICU', 'Pain Clinics', 'Remote Locations'];
 const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Surgery', 'Urology', 'Obstetrics & Gynaecology', 'Paediatric Surgery', 'ENT', 'Cardiac Surgery', 'Neuro Surgery', 'Maxillofacial Surgery', 'Plastic Surgery', 'Surgical Oncology', 'Opthalmology'];
 const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
@@ -1516,7 +1516,7 @@ function mcSheet(id, otId) {
     </div></details>
     <datalist id="mc-loc">${[...SL_LOC, ...SL_REMOTE].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
     ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
-    <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'Claude picks it up from your private sync repository, adds it to your logbook sheet, and enters it on SLCM when you say "sync SLCM".' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
+    <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'It is only logged here. Nothing goes to the SLCM portal until you sign in to SLCM in Claude\'s browser and say "sync SLCM" (end of the day or week).' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
 }
 function mcPick(day) {
   const ds = otDates(); const d = day && ds.includes(day) ? day : otDefaultDay();
