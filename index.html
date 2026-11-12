@@ -729,7 +729,7 @@ body{background:var(--bg)}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <script>
 'use strict';
-const APP_VERSION = '4.7.4 · SLCM form';
+const APP_VERSION = '4.7.5 · SLCM form';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books'];
 
@@ -971,7 +971,7 @@ function pageToday() {
   if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
   const att = remAttention().length; T.push(gTile('reminders', 'rose', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
   const open = state.todos.filter(x => !x.done).length; T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
-  const unsynced = CASES().filter(c => !c.synced).length; T.push(gTile('cases', 'sage', '📋', unsynced, unsynced ? 'cases to sync' : 'cases all synced'));
+  const unsynced = toSyncCount(); T.push(gTile('cases', 'sage', '📋', unsynced, unsynced ? 'cases to sync' : 'cases all synced'));
   h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
   if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}</div></div>`;
@@ -1304,10 +1304,10 @@ function pageRoster() {
 }
 
 function pageCases() {
-  const C = CASES(); const unsynced = C.filter(c => !c.synced).length;
+  const C = CASES(); const unsynced = toSyncCount();
   let h = head('SLCM cases', '', 'Logbook');
   h += myCasesSection(0);
-  h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs entry' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
+  h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'warn' : 'good'}">${unsynced ? 'Needs entry' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
   h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'warn'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div>
     <p class="foot">De-identified copy: no patient names or hospital IDs. Your full logbook stays in your spreadsheet.</p></div>`;
   const total = C.length || 1;
@@ -1468,6 +1468,8 @@ function itemSheet(it) {
 /* ---------- my cases: log from the OT list, handed to Claude via the private sync repo ---------- */
 const SPEC = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedics', ORTH: 'Orthopaedics', URO: 'Urology', NEU: 'Neurosurgery', NSU: 'Neurosurgery', CTV: 'Cardiothoracic', CVT: 'Cardiothoracic', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Ophthalmology', EYE: 'Ophthalmology', DEN: 'Dental / OMFS', OMF: 'Dental / OMFS', SGE: 'Surgical Gastroenterology', GAS: 'Surgical Gastroenterology', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', VAS: 'Vascular Surgery' };
 const specFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return SPEC[k] || SPEC[k.slice(0, 3)] || ''; };
+const mcNew = () => MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
+const toSyncCount = () => CASES().filter(c => !c.synced).length + mcNew().length;
 const MC_LIST = () => Object.values(state.myCases || {}).sort((a, b) => b.date.localeCompare(a.date) || (b.created || '').localeCompare(a.created || ''));
 const mcForOt = otId => MC_LIST().find(c => c.otId === otId);
 function mcStatus(c) { const k = CASES().find(x => x.ref === c.id); return k ? (k.synced ? { t: 'On SLCM', cls: 'good' } : { t: 'Logged · SLCM later', cls: 'acc' }) : { t: 'Logged · SLCM later', cls: 'acc' }; }
