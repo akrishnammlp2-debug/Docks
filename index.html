@@ -561,6 +561,12 @@ mark{background:#DAF1DE!important}
 .note-row span{font-size:14.5px;line-height:1.45;color:#1F2A24!important}
 .note-ul,.note-refs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.45;color:#1F2A24}
 .note-refs a{color:#3E7B5E}
+.note-fig{margin:0;padding:10px 6px;background:var(--surface,#fff);border:1px solid var(--line);border-radius:12px}
+.note-fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+.nf-t{font-size:12px;fill:var(--fg-2,#3b3e45);font-family:inherit}.nf-h{font-size:13px;font-weight:600}
+.nf-l{stroke:var(--fg-3,#676b73);stroke-width:.75;stroke-dasharray:3 3;fill:none}
+.nf-a{stroke:var(--fg-2,#3b3e45);stroke-width:1.25;fill:none}.nf-m{stroke:var(--fg-2,#3b3e45)}
+.nf-p{stroke:#2F6FB0;stroke-width:2;fill:none;stroke-linejoin:round}.nf-f{stroke:#2F8F6B;stroke-width:2;fill:none;stroke-linejoin:round}.nf-dot{fill:#2F8F6B}
 .pdf-row{padding:0!important;gap:0!important}
 .pdf-open{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:12px 14px;text-align:left;color:var(--fg)}
 .pdf-ico{flex:none;width:38px;height:46px;border-radius:8px;background:var(--t-rose,#F8E4E6);color:var(--t-rose-i,#93404B);font-size:10.5px;font-weight:800;display:grid;place-items:center;letter-spacing:.04em}
@@ -829,7 +835,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.4.3 · live NBA';
+const APP_VERSION = '5.4.4 · PSV note';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -2261,7 +2267,7 @@ function noteSheet(id) {
   const n = NOTES().find(x => x.id === id); if (!n) return;
   openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(n.title)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${n.summary ? `<p class="note-sum">${esc(n.summary)}</p>` : ''}
-    ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.rows ? `<div class="group">${sc.rows.map(r => `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
+    ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.rows ? `<div class="group">${sc.rows.map(r => `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.svg && /^<svg[ >]/.test(sc.svg) ? `<figure class="note-fig" role="img" aria-label="${esc(sc.alt || sc.h)}">${sc.svg}</figure>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
     ${n.refs && n.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${n.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}
     <p class="foot">Summary written in plain words for revision. Check the original references for exact wording.</p></div>`);
 }
