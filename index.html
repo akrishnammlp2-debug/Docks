@@ -890,6 +890,17 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .ditem[data-tab="calendar"] .demo,.ditem[data-tab="advances"] .demo,.ditem[data-tab="music"] .demo{background:var(--t-lav)}
 .ditem[data-tab="ot"] .demo,.ditem[data-tab="roster"] .demo,.ditem[data-tab="cases"] .demo{background:var(--t-sky)}
 .ditem[aria-current="page"] .demo{background:#FFFFFF;box-shadow:0 0 0 1.5px rgba(62,123,94,.35)}
+
+/* Today banner v2: small greeting in a frosted chip, more of the picture visible */
+.tban{min-height:220px;align-items:flex-end}
+.tban::after{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 65%,rgba(0,0,0,.25))!important}
+.tban-top{position:absolute;z-index:3;top:12px;left:12px;right:60px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tban-date{font-size:12.5px;font-weight:600;color:#fff;padding:5px 10px;border-radius:999px;background:rgba(10,14,24,.32);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.tban .wxchip{font-size:12.5px!important;padding:5px 10px!important;max-width:none!important}
+.tban-txt{width:auto!important;max-width:78%;margin:0 12px 12px;padding:9px 13px!important;border-radius:16px;background:rgba(10,14,24,.36);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);gap:1px!important}
+.tban .hello-t{font-size:18px!important;line-height:1.2!important;display:flex;align-items:center;gap:6px;text-shadow:none!important;margin:0}
+.tban .hello-s{font-size:12.5px!important;text-shadow:none!important}
+.paw{width:17px;height:17px;flex:none;fill:#fff;opacity:.95}
 </style>
 </head>
 <body data-sec="today">
@@ -914,7 +925,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.8.3 · bite-size';
+const APP_VERSION = '5.8.4 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1190,7 +1201,7 @@ function pageToday() {
   if (!heroLoaded) heroLoad();
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
-  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${pic}" alt="">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-txt"><div class="hello-row"><span class="hello-d">${esc(dLong(t))}</span>${wxChip()}</div><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''} <span aria-hidden="true">${gi}</span></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${pic}" alt="">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
