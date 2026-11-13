@@ -905,7 +905,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.8 · bite-size';
+const APP_VERSION = '5.8.1 · bite-size';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1895,7 +1895,7 @@ function renderSearch(q) {
   add('Study topics', state.topics.filter(t => { const s = byId(state.subjects, t.subjectId); return hit(t.name, t.pointer, s && s.name, ...state.log.filter(l => l.topicId === t.id).map(l => l.note)); })
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
-  add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, ...(x.aliases || []), ...(x.points || []))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
+  add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
   const chap = []; BOOKS().forEach(b => b.chapters.forEach(c => { if (hit(c.title, c.part, b.title)) chap.push(row(`data-act="book-open" data-id="${esc(b.id)}"`, c.n + '. ' + c.title, [b.title, state.bookDone[b.id + '|' + c.n] ? 'Done ✓' : ''].filter(Boolean).join(' · '))); }));
@@ -2378,12 +2378,17 @@ const pdfRead_ = m => Array.isArray(m.seen) ? m.seen.length : 0;
 async function pdfSaveMeta(m) { try { await pdfTx('meta', 'readwrite', st => st.put(m)); } catch (_) {} }
 const NOTES = () => (D.topics && D.topics.notes) || [];
 function noteRows() { const N = NOTES(); return N.length ? `<div class="group">${N.map(n => `<button class="row" type="button" data-act="note-open" data-id="${esc(n.id)}"><span class="pdf-ico note-ico" aria-hidden="true">Note</span><span class="r-main"><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.topic || '')}${n.updated ? ' · updated ' + esc(dShort(n.updated)) : ''}</span></span>${CHEV}</button>`).join('')}</div>` : ''; }
-function noteSheet(id) {
-  const n = NOTES().find(x => x.id === id); if (!n) return;
-  openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(n.title)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+function noteBody(n) {
+  return `
     ${n.summary ? `<p class="note-sum">${esc(n.summary)}</p>` : ''}
     ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.rows ? `<div class="group">${sc.rows.map(r => `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.svg && /^<svg[ >]/.test(sc.svg) ? `<figure class="note-fig" role="img" aria-label="${esc(sc.alt || sc.h)}">${sc.svg}</figure>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
     ${n.refs && n.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${n.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}
+`;
+}
+function noteSheet(id) {
+  const n = NOTES().find(x => x.id === id); if (!n) return;
+  openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(n.title)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    ${noteBody(n)}
     <p class="foot">Summary written in plain words for revision. Check the original references for exact wording.</p></div>`);
 }
 /* ---------- Bite-size: short notes from her academic questions, one per topic, sorted into columns ---------- */
@@ -2397,16 +2402,15 @@ function bitesSection() {
   if (!biteCat || !cats.includes(biteCat)) biteCat = 'All';
   h += `<div class="strip bcats"><button type="button" data-act="bcat" data-c="All" aria-pressed="${biteCat === 'All'}">All · ${B.length}</button>${cats.map(c => `<button type="button" data-act="bcat" data-c="${esc(c)}" aria-pressed="${biteCat === c}">${BCAT_ICON[c] || '•'} ${esc(c)} · ${B.filter(b => b.cat === c).length}</button>`).join('')}</div>`;
   const list = B.filter(b => biteCat === 'All' || b.cat === biteCat).sort((a, b) => (b.updated || '').localeCompare(a.updated || ''));
-  h += `<div class="bgrid">${list.map(b => `<button class="card bite" type="button" data-act="bite" data-id="${esc(b.id)}"><span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b>${esc(b.title)}</b><span class="bite-1">${esc((b.points || [])[0] || '')}</span><small>${b.updated && b.updated !== b.created ? 'Updated ' + esc(dShort(b.updated)) : 'Added ' + esc(dShort(b.created || b.updated || today()))}</small></button>`).join('')}</div>`;
+  h += `<div class="bgrid">${list.map(b => `<button class="card bite" type="button" data-act="bite" data-id="${esc(b.id)}"><span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b>${esc(b.title)}</b><span class="bite-1">${esc(b.summary || (b.points || [])[0] || '')}</span><small>${b.updated && b.updated !== b.created ? 'Updated ' + esc(dShort(b.updated)) : 'Added ' + esc(dShort(b.created || b.updated || today()))}</small></button>`).join('')}</div>`;
   return h + `</div>`;
 }
 function biteSheet(id) {
   const b = BITES().find(x => x.id === id); if (!b) return;
   openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(b.cat)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <h3 class="bite-t">${esc(b.title)}</h3>
-    <ul class="note-ul">${(b.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>
+    ${b.sections ? noteBody(b) : `<ul class="note-ul">${(b.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>${b.refs && b.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${b.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}`}
     ${b.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(b.pearl)}</span></div>` : ''}
-    ${b.refs && b.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${b.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}
     <p class="foot">Added ${esc(dShort(b.created || b.updated))}${b.updated && b.updated !== b.created ? ' · updated ' + esc(dShort(b.updated)) : ''}${b.seen > 1 ? ' · asked ' + b.seen + ' times' : ''}. Written in plain words for revision; check references for detail.</p></div>`);
 }
 function pdfSection() {
