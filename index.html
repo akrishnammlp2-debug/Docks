@@ -905,7 +905,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.8.1 · bite-size';
+const APP_VERSION = '5.8.2 · bite-size';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1186,7 +1186,6 @@ function pageToday() {
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
-    if (S0.readOn !== false && Array.isArray(up.read) && up.read.length) h += `<div class="card readc"><div class="c-top"><span class="c-lab">Read before class</span><span class="c-m">${esc(up.short || up.session)}</span></div>${up.read.map(r => `<a class="read-i" href="${esc(r.url)}" target="_blank" rel="noopener"><b>${esc(r.title)}</b><small>${esc(r.journal)}${r.year ? ' · ' + esc(String(r.year)) : ''}</small>${r.why ? `<span>${esc(r.why)}</span>` : ''}</a>`).join('')}</div>`;
   }
   const S = state.settings;
   h += timerCard();
@@ -1743,7 +1742,9 @@ function itemSheet(it) {
   if (it.role) rows += kv('Role', esc(it.role));
   if (it.kind === 'duty' && it.src) { const r = ROSTER().find(x => x.date === it.date); if (r && r.cover) rows += kv('Cover', esc(r.cover)); }
   rows += kv('Source', it.evId ? 'Added by you' : esc(it.src || ''));
-  openSheet(`${sheetHead('Details')}<div class="sheet-title"><h3>${esc(it.title)}</h3>${it.topic ? `<span class="c-s">${esc(it.topic)}</span>` : ''}</div><div class="group">${rows}</div>${it.evId ? `<button class="btn danger wide" type="button" data-act="del-event" data-id="${it.evId}">Delete entry</button>` : ''}`);
+  const sc = it.src === 'Department program' ? SCHED().find(x => x.date === it.date && x.session === it.title) : null;
+  const rd = sc && Array.isArray(sc.read) && sc.read.length && state.settings.readOn !== false ? `<div class="card readc"><div class="c-top"><span class="c-lab">Read before class</span></div>${sc.read.map(r => `<a class="read-i" href="${esc(r.url)}" target="_blank" rel="noopener"><b>${esc(r.title)}</b><small>${esc(r.journal)}${r.year ? ' · ' + esc(String(r.year)) : ''}</small>${r.why ? `<span>${esc(r.why)}</span>` : ''}</a>`).join('')}</div>` : '';
+  openSheet(`${sheetHead('Details')}<div class="sheet-title"><h3>${esc(it.title)}</h3>${it.topic ? `<span class="c-s">${esc(it.topic)}</span>` : ''}</div><div class="group">${rows}</div>${rd}${it.evId ? `<button class="btn danger wide" type="button" data-act="del-event" data-id="${it.evId}">Delete entry</button>` : ''}`);
 }
 /* ---------- my cases: log from the OT list, handed to Claude via the private sync repo ---------- */
 const SPEC = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedics', ORTH: 'Orthopaedics', URO: 'Urology', NEU: 'Neurosurgery', NSU: 'Neurosurgery', CTV: 'Cardiothoracic', CVT: 'Cardiothoracic', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Ophthalmology', EYE: 'Ophthalmology', DEN: 'Dental / OMFS', OMF: 'Dental / OMFS', SGE: 'Surgical Gastroenterology', GAS: 'Surgical Gastroenterology', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', VAS: 'Vascular Surgery' };
