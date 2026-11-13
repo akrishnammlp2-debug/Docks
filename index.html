@@ -1009,6 +1009,75 @@ body{background:var(--bg)}
 .prof .pwx.pwx-ph-dusk .pwx-t b,.prof .pwx.pwx-ph-dusk .pwx-t span,.prof .pwx.pwx-ph-dusk .pwx-t small,
 .prof .pwx.pwx-ph-night .pwx-t b,.prof .pwx.pwx-ph-night .pwx-t span,.prof .pwx.pwx-ph-night .pwx-t small{color:#F3F1EA!important}
 .prof .pwx.pwx-ph-day .pwx-t b,.prof .pwx.pwx-ph-day .pwx-t span,.prof .pwx.pwx-ph-dawn .pwx-t b,.prof .pwx.pwx-ph-dawn .pwx-t span{color:#1F2A24!important}
+
+/* ===== readability layer (v5.10): one place that decides text colours, checked automatically for contrast ===== */
+:root{--fg:#1C2621;--fg-2:#36433C;--fg-3:#56625B;--accent-t:#2B6448}
+.link,.link.strong,a{color:var(--accent-t)}
+.pill.good{background:#D2E8D9!important;color:#1E5A3C!important}
+.pill.acc{background:#D6E6F2!important;color:#1F4E73!important}
+.pill.warn{background:#F6E3C6!important;color:#7A4A0B!important}
+.pill.tosync{background:#FADDB7!important;color:#723E05!important}
+.badge{color:#1C2621!important}
+mark{background:#F3DD8C;color:#1C2621}
+@media (prefers-color-scheme:dark){
+  :root{--fg:#EAF2EC;--fg-2:#CCDDD1;--fg-3:#A8C3B1;--accent-t:#9FD0B2}
+  body,.page,#page{color:var(--fg)}
+  #page th,#page td,#page em,#page b,#page small,#page .n,#page .spec,#page .dw,#page .nhead,#page .r-k,#page .s-l,#page .s-m,#page .r-s,#page .r-t,#page .c-mono,#page .lt-sub,#page .eyebrow,#page .foot,#page .sh,#page p,#page span:not(.pill):not(.badge):not(.hab-e):not(.gt-i):not(.pdf-ico){color:inherit}
+  #page .r-s,#page small,#page .s-l,#page .s-m,#page .r-k,#page .lt-sub,#page .eyebrow,#page .foot,#page .nhead,#page .dw,#page .spec,#page .c-mono{color:var(--fg-3)!important}
+  #page .r-t,#page b,#page em,#page td,#page th,#page .n{color:var(--fg)!important}
+  #page .otbl,#page table{background:transparent!important}
+  #page .otbl th,#page .otbl td{background:#1D3D35!important;border-color:#2F5A4E!important}
+  #page .otbl tr.done td{background:#18332C!important;color:#8FB09B!important}
+  #page .seg button,#page .strip button{background:#24493F!important;color:#E4EFE6!important}
+  #page .seg button[aria-pressed="true"],#page .strip button[aria-pressed="true"]{background:#9FD0B2!important;color:#0B2B26!important}
+  #page .btn.ghost{background:#24493F!important;color:#DAF1DE!important}
+  #page .badge{background:#DCE8DF!important;color:#14201A!important}
+  #page .hab-done{background:#24493F!important;color:#DAF1DE!important}
+  #page .appver,.drawer .appver{color:#A8C3B1!important}
+  #page a,#page .link{color:var(--accent-t)!important}
+  .drawer .ditem small{background:#DCE8DF!important;color:#14201A!important}
+  #sheet .link,#sheet .link.strong{color:#1E5A3C!important}
+}
+#sheet .link,#sheet .link.strong{color:#1E5A3C!important}
+#sheet .r-s,#sheet small,#sheet .bk-n,#sheet .bk-part,#sheet .r-l,#sheet .foot,#sheet .hm-sum span,#sheet .bk-info span{color:#45514A!important}
+#sheet .bk-row.done .bk-t{color:#5E6862!important}
+#sheet .rg-v,#sheet .ring small{color:#1C2621!important}
+#sheet mark{background:#F3DD8C;color:#1C2621}
+#sheet h3.sh,#sheet .sh,#sheet .sh span{color:#1C2621!important}
+
+/* readability layer, round 2 */
+.hero .c-lab,.hero .c-m{color:#1E5A3C!important}
+.appver{opacity:1!important;color:var(--fg-3)!important}
+.r-k{filter:brightness(.72) saturate(1.2)}
+.btn.ghost,.btn.small.ghost,.bite-cat,.drawer .ditem small{color:var(--accent-t)!important}
+.drawer .ditem small{color:#1C2621!important}
+#page .seg button,#page .nba-tabs button{color:var(--fg)!important}
+.badge{filter:none;color:#1C2621!important}
+.spec{color:#1C2621!important}
+#sheet .r-v span{color:#1C2621!important}
+#sheet .c-lab{color:#1E5A3C!important}
+#sheet .readc .c-lab,#sheet .read-i small{color:#7A3F1A!important}
+#sheet .sheet-title .c-s,#sheet .c-s{color:#36433C!important}
+#sheet .btn.ghost{color:#1E5A3C!important}
+@media (prefers-color-scheme:dark){
+  .hero .c-lab,.hero .c-m{color:#C2E2CC!important}
+  #page .hero .c-s{color:#DCEAE0!important}
+  #page .r-k{filter:none;color:#C2E2CC!important}
+  #page .spec{background:#DCE8DF!important;color:#14201A!important}
+  #page .n{color:var(--fg)!important}
+  #page button:not(.pill):not(.hab):not(.mine):not(.mine.on){color:inherit}
+  #page .sh button{color:var(--accent-t)!important}
+  #sheet mark{background:#F3DD8C!important;color:#1C2621!important}
+  #sheet .btn.ghost{background:#B9C9B5!important;color:#14201A!important}
+}
+
+#page .hero .c-lab,#page .hero .c-m{color:#1A4F35!important}
+.r-k,#page .r-k{color:var(--fg-2)!important;filter:none!important}
+.badge,#page .badge{color:#0E1512!important}
+#page .cal-nav button,#page .mhead button,#page .sh button{color:var(--accent-t)!important}
+@media (prefers-color-scheme:dark){#page .hero .c-lab,#page .hero .c-m{color:#C2E2CC!important}#page .n{color:#FFFFFF!important}}
+
+.badge,#page .badge{background:hsl(var(--h) 70% 86%)!important;color:#0E1512!important;border-color:hsl(var(--h) 45% 55%)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1033,7 +1102,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.6 · green blocks';
+const APP_VERSION = '5.10 · readable';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
