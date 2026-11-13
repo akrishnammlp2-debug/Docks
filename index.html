@@ -894,7 +894,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.7.4 · banner';
+const APP_VERSION = '5.7.5 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1476,8 +1476,8 @@ function ring(done, total, size, key) {
   return `<div class="ring" style="--sz:${size}px" role="img" aria-label="${pct} percent done"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - pct / 100)).toFixed(1)}"/></svg><span class="rg-v">${pct}<small>%</small></span></div>`;
 }
 /* Columns: public fields from data/ot.json + private fields opened on this phone. Any column with a value in any row is shown. */
-const OT_COLS = [['time', 'Time'], ['ot', 'OT'], ['patient', 'Patient', 'p'], ['age', 'Age / sex', 'p'], ['uhid', 'Hospital no.', 'p'], ['ward', 'Ward / bed', 'p'], ['unit', 'Unit'], ['payer', 'Payer', 'p'], ['status', 'Status']];
-const OT_SKIP = new Set(['id', 'date', 'order', 'procedure', 'notes']);
+const OT_COLS = [['time', 'Time'], ['ot', 'OT'], ['patient', 'Patient', 'p'], ['age', 'Age / sex', 'p'], ['uhid', 'Hospital no.', 'p'], ['unit', 'Unit']];
+const OT_SKIP = new Set(['id', 'date', 'order', 'procedure', 'notes', 'ward', 'payer', 'status']);
 function otTable(rows) {
   const full = rows.map(r => ({ ...r, ...otInfo(r.id) }));
   const has = k => full.some(r => r[k] != null && String(r[k]).trim() !== '');
@@ -2323,7 +2323,7 @@ function mergePrivate(prev, data) {
   if (data.reminders) next.reminders = data.reminders;
   if (data.faculty) next.faculty = data.faculty;
   if (data.ot) {
-    const keepFrom = addDays(today(), -14); const ot = { ...(cur.ot || {}), ...data.ot };
+    const keepFrom = addDays(today(), -7); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
     next.ot = ot;
   }
