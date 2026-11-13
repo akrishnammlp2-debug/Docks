@@ -1,7 +1,119 @@
 {
-  "updated": "2026-11-12",
+  "updated": "2026-11-13",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43014822",
+      "doi": "10.1136/bmj-2026-101087",
+      "added": "2026-11-13",
+      "date": "2026-11-11",
+      "title": "Effect of discontinuing antihypertensives on perioperative hypotension in older patients before non-cardiac surgery: multicentre, randomised, double blind, controlled trial.",
+      "journal": "BMJ",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Haemodynamics",
+        "Perioperative medicine",
+        "Pharmacology"
+      ],
+      "summary": "About 2000 patients aged 60-80 on an ACE inhibitor or ARB, having non-cardiac surgery under general anaesthesia at five Chinese centres, were given either their usual morning dose or an identical placebo capsule. Skipping the dose cut hypotension needing treatment from 46% to 31% (adjusted OR 0.52) and reduced vasopressor use, with no difference in 30-day complications or deaths.",
+      "why": "A large blinded trial that settles a daily pre-op question: holding the ACEi/ARB on the morning of surgery costs nothing and means less post-induction hypotension, and it is a likely viva topic."
+    },
+    {
+      "pmid": "43015817",
+      "doi": "10.1186/s13054-026-06251-y",
+      "added": "2026-11-13",
+      "date": "2026-08-17",
+      "title": "Sigh ventilation versus conventional protective ventilation in cardiac surgery: a proof-of-concept randomized controlled trial.",
+      "journal": "Crit Care",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Ventilation",
+        "Cardiac"
+      ],
+      "summary": "In 192 adults having elective on-pump cardiac surgery, low tidal volume ventilation alone was compared with the same strategy plus one large 'sigh' breath (plateau about 35 cmH2O) every 6 minutes. The sigh group had better compliance, lower driving pressure, and a higher SpO2/FiO2 ratio in the first hour after extubation (about 380 vs 338), with less severe respiratory failure and no extra harm.",
+      "why": "Periodic sighs need only a ventilator setting, so this is an easy-to-try add-on to lung-protective ventilation, though the oxygenation gain was small and needs confirming in bigger trials."
+    },
+    {
+      "pmid": "43014330",
+      "doi": "10.1016/S2213-2600(26)00296-1",
+      "added": "2026-11-13",
+      "date": "2026-11-11",
+      "title": "Consensus on the definition, components, and grading of composite postoperative pulmonary complication outcomes (PrECiSIOn): insights from an international Delphi expert panel.",
+      "journal": "Lancet Respir Med",
+      "type": "Consensus",
+      "area": "Anaesthesia",
+      "tags": [
+        "Perioperative medicine",
+        "Ventilation"
+      ],
+      "summary": "An international panel of 44 experts, with input from patients, used a Delphi process to agree on what should count as a postoperative pulmonary complication. They grouped components into four domains (symptoms, diagnoses, therapies, outcomes) and ranked them by severity so trials can use graded composite outcomes; no agreement was reached on how long follow-up should last.",
+      "why": "Useful for anyone planning a thesis or reading PPC trials, since it gives a standard, severity-weighted way to define the outcome."
+    },
+    {
+      "pmid": "43018419",
+      "doi": "10.1097/CCM.0000000000007417",
+      "added": "2026-11-13",
+      "date": "2026-11-12",
+      "title": "Global Prevalence of Obstetric Causes of Critical Illness in Pregnancy: A Systematic Review and Meta-Analysis.",
+      "journal": "Crit Care Med",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Obstetric"
+      ],
+      "summary": "Pooling 50 studies covering over 7.7 million obstetric patients in 20 countries, about 1 in 100 pregnant or postpartum women needed ICU care, rising to roughly 4% in low-income countries. Most admissions had direct obstetric causes, mainly hypertensive disorders (27%) and haemorrhage (23%); a third needed respiratory or transfusion support and 8.5% died.",
+      "why": "Led by an ICMR team, it underlines that PPH and pre-eclampsia drive obstetric ICU load in settings like India, which shapes how obstetric HDU and ICU beds are planned."
+    },
+    {
+      "pmid": "43018413",
+      "doi": "10.1097/CCM.0000000000007412",
+      "added": "2026-11-13",
+      "date": "2026-11-12",
+      "title": "New-Onset Atrial Fibrillation in Critically Ill Patients: A Systematic Review of In-Hospital and Post-Discharge Outcomes.",
+      "journal": "Crit Care Med",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Cardiac",
+        "Haemodynamics"
+      ],
+      "summary": "A Bayesian meta-analysis of 54 studies (about 368,000 ICU patients) found that around 11% developed atrial fibrillation for the first time during critical illness. These patients had roughly double the risk of stroke or other thromboembolism after discharge (about 7% absolute), about a quarter were later diagnosed with ongoing AF, yet only about a third received anticoagulation.",
+      "why": "Shows that ICU-onset AF is not always transient, so it is worth flagging in discharge summaries for follow-up and anticoagulation review."
+    },
+    {
+      "pmid": "43015887",
+      "doi": "10.1186/s13054-026-06237-w",
+      "added": "2026-11-13",
+      "date": "2026-08-17",
+      "title": "Early albumin use and mortality in critically III children with severe hypoalbuminemia: a target trial emulation study.",
+      "journal": "Crit Care",
+      "type": "Trial emulation",
+      "area": "Critical care",
+      "tags": [
+        "Paediatric",
+        "Fluids"
+      ],
+      "summary": "Using records of 1649 children in a Chinese PICU whose first albumin was below 30 g/L, the authors mimicked a trial of giving human albumin within 24 hours versus not. Early albumin was linked to lower 7-day mortality (HR 0.42) but not 28-day mortality, and the signal faded with looser albumin cut-offs or later treatment.",
+      "why": "Albumin is expensive in Indian PICUs, and this observational signal is not strong enough to justify routine use without a proper randomised trial."
+    },
+    {
+      "pmid": "43016359",
+      "doi": "10.1002/pan.70349",
+      "added": "2026-11-13",
+      "date": "2026-11-12",
+      "title": "Volume Guarantee Versus Manual Tidal Volume Monitoring During High-Frequency Oscillatory Ventilation in Neonates: A Pilot Randomized Controlled Trial.",
+      "journal": "Paediatr Anaesth",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Paediatric",
+        "Ventilation"
+      ],
+      "summary": "At AIIMS Rishikesh, 60 neonates who failed conventional ventilation were rescued with high-frequency oscillation using either automatic volume guarantee or careful manual tidal volume adjustment. Abnormal CO2 at 1 hour was similar (50% vs 43%), as were CO2 trends, cerebral oxygenation, duration of support and complications.",
+      "why": "An Indian trial suggesting that close manual tidal volume monitoring can match volume guarantee, which matters where oscillators with that feature are not available."
+    },
     {
       "pmid": "43012620",
       "doi": "10.1097/CCM.0000000000007448",
