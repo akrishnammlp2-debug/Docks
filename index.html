@@ -901,6 +901,27 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .tban .hello-t{font-size:18px!important;line-height:1.2!important;display:flex;align-items:center;gap:6px;text-shadow:none!important;margin:0}
 .tban .hello-s{font-size:12.5px!important;text-shadow:none!important}
 .paw{width:17px;height:17px;flex:none;fill:#fff;opacity:.95}
+
+/* habits */
+.habc{gap:8px}
+.hab-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:2px}
+.hab-row::-webkit-scrollbar{display:none}
+.hab{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:74px;color:var(--fg-2)}
+.hab-e{width:46px;height:46px;border-radius:999px;display:grid;place-items:center;font-size:21px;background:var(--surface-2);transition:transform .15s}
+.hab.on .hab-e{background:var(--accent);color:#fff;font-size:20px;font-weight:700}
+.hab:active .hab-e{transform:scale(.92)}
+.hab-n{font-size:11.5px;line-height:1.15;text-align:center;word-break:normal!important;overflow-wrap:normal!important;white-space:nowrap}
+.hab-done{align-self:flex-start;padding:7px 13px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600}
+.hm-sum{display:flex;align-items:center;gap:14px;padding:4px 2px 8px;color:#1F2A24}
+.hm-sum b{display:block;font-size:17px}.hm-sum span{font-size:13px;color:#6F7A74}
+.hm-list{display:flex;flex-direction:column;gap:10px}
+.hm-bar{display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:14px;color:#1F2A24}.hm-bar .track{grid-column:1/-1;height:7px;border-radius:9px;background:#ECE8DF}.hm-bar .fill{height:100%;border-radius:9px;background:#3E7B5E}
+.hm-grid{display:flex;flex-direction:column;gap:8px}
+.hm-row{display:flex;flex-direction:column;gap:4px}.hm-n{font-size:13px;color:#4A5650}
+.hm-days{display:grid;grid-template-columns:repeat(16,1fr);gap:3px}
+.hm-days i{aspect-ratio:1;border-radius:4px;background:#ECE8DF}.hm-days i.on{background:#3E7B5E}.hm-days i.fut{background:transparent;border:1px dashed #DDD7CC}
+.hab-ed{gap:6px!important;flex-wrap:wrap}.hab-ed input{min-width:0}.hab-ed input[name^=e]{width:44px;text-align:center}.hab-ed input[type=number]{width:52px}
+.hab-x{font-size:12px;color:#93404B;display:flex;align-items:center;gap:4px}
 </style>
 </head>
 <body data-sec="today">
@@ -925,7 +946,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.8.4 · banner';
+const APP_VERSION = '5.9 · habits';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -980,7 +1001,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -988,7 +1009,7 @@ function normalise(s) {
   const b = blank();
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
-    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, sync: s.sync || null, active: s.active || null,
+    reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -1186,6 +1207,48 @@ function tbanArt(ph) {
     <path d="M0 128 Q90 108 180 124 T360 120 V170 H0z" fill="${hill[1]}"/>
     <path d="M0 146 Q100 136 190 146 T360 142 V170 H0z" fill="${hill[2]}"/></svg>`;
 }
+/* ---------- gentle habits: shown on Today only in their time window; monthly tracker ---------- */
+const HABIT_DEFAULTS = [
+  { id: 'h-brush', name: 'Brush', emoji: '🪥', from: 21, to: 3 }, { id: 'h-floss', name: 'Floss', emoji: '🧵', from: 21, to: 3 },
+  { id: 'h-supp', name: 'Supplements', emoji: '💊', from: 21, to: 3 }, { id: 'h-moist', name: 'Moisturise', emoji: '🧴', from: 21, to: 3 },
+  { id: 'h-water', name: 'Water', emoji: '💧', from: 21, to: 3 }];
+const HABITS = () => (Array.isArray(state.habits) ? state.habits : HABIT_DEFAULTS).filter(h => !h.deleted);
+const inWin = (h, hr) => h.from <= h.to ? hr >= h.from && hr < h.to : hr >= h.from || hr < h.to;
+function habitDay(h) { const n = new Date(); const hr = n.getHours(); if (h.from > h.to && hr < h.to) return addDays(today(), -1); return today(); }
+const habitKey = (h, day) => day + '|' + h.id;
+function habitCard() {
+  if (state.settings.habitsOn === false) return '';
+  const hr = new Date().getHours(); const now = HABITS().filter(h => inWin(h, hr)); if (!now.length) return '';
+  const done = now.filter(h => state.habitDone[habitKey(h, habitDay(h))]).length;
+  const label = hr >= 17 || hr < 4 ? 'Night routine' : hr < 12 ? 'Morning routine' : 'Today';
+  if (done === now.length) return `<button class="hab-done" type="button" data-act="hab-month">🐾 ${label} done · ${now.length}/${now.length}</button>`;
+  return `<div class="card habc"><div class="c-top"><span class="c-lab">${label} · ${done}/${now.length}</span><button type="button" class="link" data-act="hab-month">This month</button></div>
+    <div class="hab-row">${now.map(h => { const on = !!state.habitDone[habitKey(h, habitDay(h))]; return `<button type="button" class="hab${on ? ' on' : ''}" data-act="hab-tick" data-id="${esc(h.id)}" aria-pressed="${on}"><span class="hab-e">${on ? '✓' : esc(h.emoji)}</span><span class="hab-n">${esc(h.name)}</span></button>`; }).join('')}</div></div>`;
+}
+function monthStats(ym) {
+  const [y, m] = ym.split('-').map(Number); const days = new Date(y, m, 0).getDate(); const last = ym === today().slice(0, 7) ? +today().slice(8) : days;
+  const H = HABITS(); let first = 1; for (let d = 1; d <= last; d++) { const pre = ym + '-' + String(d).padStart(2, '0') + '|'; if (Object.keys(state.habitDone).some(k => k.startsWith(pre))) { first = d; break; } if (d === last) first = last; }
+  const per = H.map(h => { let c = 0; for (let d = first; d <= last; d++) if (state.habitDone[ym + '-' + String(d).padStart(2, '0') + '|' + h.id]) c++; return { h, c }; });
+  const span = last - first + 1; const total = per.reduce((a, x) => a + x.c, 0), possible = H.length * span; return { days, last, first, span, per, pct: possible ? Math.round(100 * total / possible) : 0 };
+}
+function habitMonthSheet(ym) {
+  ym = ym || today().slice(0, 7); const [y, m] = ym.split('-').map(Number); const st = monthStats(ym); const H = HABITS();
+  const prev = new Date(y, m - 2, 1), next = new Date(y, m, 1); const fmt = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  const grid = H.map(h => `<div class="hm-row"><span class="hm-n">${esc(h.emoji)} ${esc(h.name)}</span><div class="hm-days">${Array.from({ length: st.days }, (_, i) => { const k = ym + '-' + String(i + 1).padStart(2, '0') + '|' + h.id; const fut = i + 1 > st.last; return `<i class="${state.habitDone[k] ? 'on' : fut ? 'fut' : ''}"></i>`; }).join('')}</div></div>`).join('');
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="hab-m" data-ym="${fmt(prev)}">‹ ${MONTHS[prev.getMonth()].slice(0, 3)}</button><h2>${MONTHS[m - 1]} ${y}</h2>${fmt(next) <= today().slice(0, 7) ? `<button type="button" class="link" data-act="hab-m" data-ym="${fmt(next)}">${MONTHS[next.getMonth()].slice(0, 3)} ›</button>` : '<span></span>'}</div>
+    <div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + st.span + ' days)' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
+    <div class="hm-list">${st.per.map(x => `<div class="hm-bar"><span>${esc(x.h.emoji)} ${esc(x.h.name)}</span><b>${x.c}/${st.span}</b><div class="track"><div class="fill" style="width:${st.span ? Math.round(100 * x.c / st.span) : 0}%"></div></div></div>`).join('')}</div>
+    <h3 class="sh">Day by day</h3><div class="hm-grid">${grid}</div>
+    <button class="btn ghost" type="button" data-act="hab-edit">Edit habits</button></div>`);
+}
+function habitEditSheet() {
+  const H = HABITS();
+  openSheet(`<form data-form="habits" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Habits</h2><button type="submit" class="link strong">Save</button></div>
+    <p class="foot" style="margin:0">Each habit shows on Today only between its hours. 21 to 3 means 9 PM to 3 AM (counted for the evening's date).</p>
+    <div class="group">${H.map((h, i) => `<div class="row field hab-ed"><input name="e${i}" value="${esc(h.emoji)}" maxlength="4" aria-label="Emoji"><input class="left" name="n${i}" value="${esc(h.name)}" aria-label="Name"><input name="f${i}" type="number" min="0" max="23" value="${h.from}" aria-label="From hour"><input name="t${i}" type="number" min="0" max="24" value="${h.to}" aria-label="To hour"><input type="hidden" name="id${i}" value="${esc(h.id)}"><label class="hab-x"><input type="checkbox" name="x${i}"> remove</label></div>`).join('')}
+      <div class="row field hab-ed"><input name="eN" placeholder="🙂" maxlength="4"><input class="left" name="nN" placeholder="New habit (e.g. Stretch)"><input name="fN" type="number" min="0" max="23" value="21"><input name="tN" type="number" min="0" max="24" value="3"></div></div>
+    <input type="hidden" name="count" value="${H.length}"></form>`);
+}
 function wxChip() {
   if (!state.settings.weatherOn) return '';
   const L = state.loc; const W = state.weather && state.weather.data;
@@ -1208,6 +1271,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += habitCard();
   h += timerCard();
   // minimal glance tiles
   const T = [];
@@ -1672,6 +1736,7 @@ function pageBackup() {
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
@@ -1983,6 +2048,10 @@ document.addEventListener('click', e => {
     case 'hero-add': $('heroFile').click(); break;
     case 'hero-del': heroRemove(+b.dataset.i); break;
     case 'pdf-read': pdfRead(id); break;
+    case 'hab-tick': { const h = HABITS().find(x => x.id === id); if (h) { const k = habitKey(h, habitDay(h)); if (state.habitDone[k]) delete state.habitDone[k]; else state.habitDone[k] = nowISO(); const hr = new Date().getHours(); const now = HABITS().filter(x => inWin(x, hr)); const all = now.every(x => state.habitDone[habitKey(x, habitDay(x))]); commit(all ? 'All done for tonight 🐾' : null); } break; }
+    case 'hab-month': habitMonthSheet(); break;
+    case 'hab-m': habitMonthSheet(b.dataset.ym); break;
+    case 'hab-edit': habitEditSheet(); break;
     case 'bcat': biteCat = b.dataset.c; render(); break;
     case 'bite': biteSheet(id); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
@@ -2120,6 +2189,12 @@ document.addEventListener('submit', e => {
     case 'pdfmeta': {
       const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
       pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
+    case 'habits': {
+      const n = +fd.get('count'); const out = []; const old = HABITS();
+      for (let i = 0; i < n; i++) { const nm = (fd.get('n' + i) || '').trim(); const id = fd.get('id' + i); if (!nm || fd.get('x' + i)) { const o = old.find(x => x.id === id); if (o) out.push({ ...o, deleted: true }); continue; }
+        out.push({ id, name: nm, emoji: (fd.get('e' + i) || '•').trim() || '•', from: Math.max(0, Math.min(23, +fd.get('f' + i) || 0)), to: Math.max(0, Math.min(24, +fd.get('t' + i) || 0)) }); }
+      const nn = (fd.get('nN') || '').trim(); if (nn) out.push({ id: 'h-' + uid(), name: nn, emoji: (fd.get('eN') || '🙂').trim() || '🙂', from: +fd.get('fN') || 21, to: +fd.get('tN') || 3 });
+      state.habits = out; closeSheet(); commit('Habits saved'); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
       closeSheet(); commit('Profile saved'); break; }
@@ -2179,7 +2254,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
