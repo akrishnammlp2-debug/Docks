@@ -976,6 +976,26 @@ body{background:var(--bg)}
 }
 #sheet .hm-bar .track{background:#E6E0D3!important}
 .sheet{transition:transform .25s ease}
+
+/* pop-up sheets: soft sage instead of bright ivory (v5.9.4); a deeper muted sage at night */
+:root{--sh-bg:#EDF1E8;--sh-blk:#E0E9DC;--sh-in:#F3F6F0;--sh-line:#D3DECF}
+@media (prefers-color-scheme:dark){:root{--sh-bg:#C7D4C3;--sh-blk:#B9C9B5;--sh-in:#D6E0D2;--sh-line:#A9BBA5}}
+.sheet,#sheet,.sheet .sheet-head,#sheet .sheet-head{background:var(--sh-bg)!important}
+.sheet .sheet-head,#sheet .sheet-head{border-bottom-color:var(--sh-line)!important}
+#sheet .group,#sheet .card,.sheet .group{background:var(--sh-blk)!important}
+#sheet .row,#sheet .kv{border-color:var(--sh-line)!important}
+#sheet .read-i,#sheet .note-row,#sheet .hab-ed input,#sheet .field input,#sheet .field select,#sheet .field textarea{background:var(--sh-in)!important}
+#sheet .readc{background:#F3E3D6!important}
+#sheet .bite-pearl{background:#EFE6C4!important}
+#sheet .hm-days i,#sheet .track,#sheet .hm-bar .track{background:var(--sh-line)!important}
+#sheet .hm-days i.on,#sheet .fill,#sheet .hm-bar .fill{background:#2F6B4F!important}
+#sheet .hm-days i.fut{background:transparent!important;border-color:var(--sh-line)!important}
+#sheet .btn.ghost{background:var(--sh-blk)!important}
+#sheet .ring circle:first-child{stroke:var(--sh-line)}
+@media (prefers-color-scheme:dark){#sheet .readc{background:#E2CBB8!important}#sheet .bite-pearl{background:#DCCF9F!important}}
+.reader .rd-bar{background:var(--sh-bg)!important}
+#sheet .r-v{color:#1F2A24!important}#sheet .r-l{color:#4A5650!important}
+#sheet .read-i b,#sheet .note-row span,#sheet .note-ul li,#sheet .note-sum{color:#1F2A24!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1000,7 +1020,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.3 · green blocks';
+const APP_VERSION = '5.9.4 · green blocks';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
