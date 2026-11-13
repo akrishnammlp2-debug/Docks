@@ -881,6 +881,15 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .bite-t{margin:2px 2px 6px;font-family:var(--f-head,inherit);font-size:20px;color:#14201A}
 .bite-pearl{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:#FBF2D4;color:#5C4A10}
 .bite-pearl b{font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+
+/* side menu: emoji icons in soft pastel tiles, like Bite-size */
+.ditem .demo{flex:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-size:18px;line-height:1;background:var(--t-sage)}
+.ditem[data-tab="today"] .demo{background:var(--t-butter)}
+.ditem[data-tab="reminders"] .demo,.ditem[data-tab="backup"] .demo{background:var(--t-rose)}
+.ditem[data-tab="study"] .demo,.ditem[data-tab="todos"] .demo{background:var(--t-peach)}
+.ditem[data-tab="calendar"] .demo,.ditem[data-tab="advances"] .demo,.ditem[data-tab="music"] .demo{background:var(--t-lav)}
+.ditem[data-tab="ot"] .demo,.ditem[data-tab="roster"] .demo,.ditem[data-tab="cases"] .demo{background:var(--t-sky)}
+.ditem[aria-current="page"] .demo{background:#FFFFFF;box-shadow:0 0 0 1.5px rgba(62,123,94,.35)}
 </style>
 </head>
 <body data-sec="today">
@@ -905,7 +914,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.8.2 · bite-size';
+const APP_VERSION = '5.8.3 · bite-size';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1677,10 +1686,11 @@ function render() {
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
+const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
-  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
+  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
   const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
   const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
   const lines = [
