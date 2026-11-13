@@ -996,6 +996,19 @@ body{background:var(--bg)}
 .reader .rd-bar{background:var(--sh-bg)!important}
 #sheet .r-v{color:#1F2A24!important}#sheet .r-l{color:#4A5650!important}
 #sheet .read-i b,#sheet .note-row span,#sheet .note-ul li,#sheet .note-sum{color:#1F2A24!important}
+
+/* weather card follows the time of day (v5.9.6) */
+.pwx.pwx-ph-day{background:linear-gradient(135deg,#BFDDF5,#E6F2FB)!important}
+.pwx.pwx-ph-day.pwx-cloud,.pwx.pwx-ph-day.pwx-fog{background:linear-gradient(135deg,#C9D4DD,#E7ECF0)!important}
+.pwx.pwx-ph-day.pwx-rain,.pwx.pwx-ph-day.pwx-storm{background:linear-gradient(135deg,#9FB2C4,#D3DDE6)!important}
+.pwx.pwx-ph-dawn{background:linear-gradient(135deg,#F4C6A8,#C9C2E3)!important}
+.pwx.pwx-ph-dusk{background:linear-gradient(135deg,#4F5D8E,#E59C78)!important}
+.pwx.pwx-ph-night{background:linear-gradient(135deg,#141C36,#2B3A66)!important}
+.pwx.pwx-ph-night.pwx-cloud,.pwx.pwx-ph-night.pwx-fog{background:linear-gradient(135deg,#1A2235,#3A465E)!important}
+.pwx.pwx-ph-night.pwx-rain,.pwx.pwx-ph-night.pwx-storm{background:linear-gradient(135deg,#151B2A,#34405A)!important}
+.prof .pwx.pwx-ph-dusk .pwx-t b,.prof .pwx.pwx-ph-dusk .pwx-t span,.prof .pwx.pwx-ph-dusk .pwx-t small,
+.prof .pwx.pwx-ph-night .pwx-t b,.prof .pwx.pwx-ph-night .pwx-t span,.prof .pwx.pwx-ph-night .pwx-t small{color:#F3F1EA!important}
+.prof .pwx.pwx-ph-day .pwx-t b,.prof .pwx.pwx-ph-day .pwx-t span,.prof .pwx.pwx-ph-dawn .pwx-t b,.prof .pwx.pwx-ph-dawn .pwx-t span{color:#1F2A24!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1020,7 +1033,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.5 · green blocks';
+const APP_VERSION = '5.9.6 · green blocks';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1233,7 +1246,8 @@ const head = (title, sub, eyebrow) => `<div class="lt-wrap">${eyebrow ? `<span c
 const stat = (l, n, m) => `<div class="stat"><span class="s-l">${l}</span><span class="s-n">${n}</span>${m}</div>`;
 
 function wxKind(code, day) { if (code >= 95) return 'storm'; if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'snow'; if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rain'; if (code === 45 || code === 48) return 'fog'; if (code === 3) return 'cloud'; if (code === 2) return day ? 'partly' : 'partlyn'; return day ? 'sun' : 'moon'; }
-function wxArt(kind) {
+function wxArt(kind, ph) {
+  const night = ph === 'night';
   const sun = `<g class="wa-sun"><circle cx="34" cy="30" r="12" fill="#F6B92B"/><g class="wa-rays" stroke="#F6B92B" stroke-width="3.2" stroke-linecap="round">${[0,45,90,135,180,225,270,315].map(a => `<line x1="34" y1="12" x2="34" y2="7" transform="rotate(${a} 34 30)"/>`).join('')}</g></g>`;
   const moon = `<path d="M40 16a14 14 0 1 0 10 22 11 11 0 0 1-10-22z" fill="#F4E6B0"/><circle cx="20" cy="16" r="1.2" fill="#fff"/><circle cx="56" cy="12" r="1" fill="#fff"/><circle cx="62" cy="30" r="1.2" fill="#fff"/>`;
   const cloud = (x, y, f) => `<g class="wa-cloud" transform="translate(${x} ${y})"><path d="M14 30h34a10 10 0 0 0 0-20 14 14 0 0 0-26-4A11 11 0 0 0 14 30z" fill="${f}"/></g>`;
@@ -1242,14 +1256,17 @@ function wxArt(kind) {
   const bolt = `<path class="wa-bolt" d="M40 42l-6 10h5l-3 9 9-12h-5l3-7z" fill="#F6C344"/>`;
   const fog = `<g stroke="#9AA8B2" stroke-width="3" stroke-linecap="round" class="wa-fog"><line x1="12" y1="40" x2="62" y2="40"/><line x1="18" y1="48" x2="68" y2="48"/><line x1="10" y1="56" x2="54" y2="56"/></g>`;
   const inner = { sun, moon, partly: sun + cloud(14, 14, '#FFFFFF'), partlyn: moon + cloud(14, 14, '#E8EEF0'), cloud: cloud(4, 6, '#B8C4CD') + cloud(16, 14, '#FFFFFF'), rain: cloud(10, 4, '#9FB0BF') + drops, snow: cloud(10, 4, '#B8C4CD') + flakes, storm: cloud(10, 2, '#8494A3') + bolt + drops, fog: cloud(10, 2, '#B8C4CD') + fog }[kind] || sun;
-  return `<svg class="wa wa-${kind}" viewBox="0 0 76 64" aria-hidden="true">${inner}</svg>`;
+  const nightSky = `<circle cx="10" cy="12" r="1" fill="#fff" opacity=".8"/><circle cx="66" cy="8" r="1.1" fill="#fff" opacity=".8"/><circle cx="70" cy="40" r=".9" fill="#fff" opacity=".7"/><circle cx="6" cy="44" r=".9" fill="#fff" opacity=".6"/><path d="M62 10a9 9 0 1 0 6 14 7 7 0 0 1-6-14z" fill="#F4E6B0" opacity=".95"/>`;
+  const art = night && /^(cloud|rain|snow|storm|fog)$/.test(kind) ? nightSky + inner.replace(/#(DCE4EA|9FB0BF|B8C4CD|8494A3|E3E9EC|FFFFFF)/g, m => ({ '#FFFFFF': '#C9D3DE', '#E3E9EC': '#8E9AAB', '#B8C4CD': '#7C899B', '#9FB0BF': '#6F7D90', '#8494A3': '#5C687A', '#DCE4EA': '#8E9AAB' })[m] || m) : inner;
+  return `<svg class="wa wa-${kind}" viewBox="0 0 76 64" aria-hidden="true">${art}</svg>`;
 }
 function profWeather() {
   if (!state.settings.weatherOn) return '';
   const W = state.weather && state.weather.data; const L = state.loc;
-  if (!L || !W || !W.current) return `<button class="pwx" type="button" data-act="${L ? 'wx-refresh' : 'wx-locate'}"><span class="pwx-t"><b>Weather</b><span>${L ? 'Tap to load' : 'Tap to add your location'}</span></span></button>`;
+  const ph = skyPhase();
+  if (!L || !W || !W.current) return `<button class="pwx pwx-ph-${ph}" type="button" data-act="${L ? 'wx-refresh' : 'wx-locate'}">${wxArt(ph === 'night' ? 'moon' : ph === 'day' ? 'sun' : 'partly', ph)}<span class="pwx-t"><b>Weather</b><span>${L ? 'Tap to load' : 'Tap to add your location'}</span></span></button>`;
   const c = W.current, d = W.daily || {}; const k = wxKind(c.weather_code, c.is_day); const [, txt] = wmo(c.weather_code, c.is_day);
-  return `<button class="pwx pwx-${k}" type="button" data-act="wx-sheet">${wxArt(k)}<span class="pwx-t"><b>${Math.round(c.temperature_2m)}°</b><span>${esc(txt)}${d.temperature_2m_max ? ' · ' + Math.round(d.temperature_2m_max[0]) + '° / ' + Math.round(d.temperature_2m_min[0]) + '°' : ''}</span><small>${esc(L.place || '')}</small></span></button>`;
+  return `<button class="pwx pwx-${k} pwx-ph-${ph}" type="button" data-act="wx-sheet">${wxArt(k, ph)}<span class="pwx-t"><b>${Math.round(c.temperature_2m)}°</b><span>${esc(txt)}${d.temperature_2m_max ? ' · ' + Math.round(d.temperature_2m_max[0]) + '° / ' + Math.round(d.temperature_2m_min[0]) + '°' : ''}</span><small>${esc(L.place || '')}</small></span></button>`;
 }
 /* Today banner: your own pictures (kept on this device, a different one each visit) or a drawn landscape that follows the time of day */
 let heroPics = [], heroIdx = 0, heroLoaded = false;
