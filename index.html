@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Desk">
-<meta name="theme-color" content="#F1EDE3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1E2622" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -923,13 +923,43 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 .hab-ed{gap:6px!important;flex-wrap:wrap}.hab-ed input{min-width:0}.hab-ed input[name^=e]{width:44px;text-align:center}.hab-ed input[type=number]{width:52px}
 .hab-x{font-size:12px;color:#93404B;display:flex;align-items:center;gap:4px}
 
-/* softer surfaces: warm ivory cards instead of bright white, a touch deeper oat background (v5.9.1) */
-:root{--card-soft:#FBF8F1;--surface:#FBF8F1;--bg:#F1EDE3;--surface-2:#EEE9DE;--line:#E3DDD0;--bar:rgba(241,237,227,.88)}
+/* blocks in soft green (v5.9.2): page background unchanged; cards/tiles take a gentle sage in light mode and deep green in dark mode */
+:root{--card-soft:#FBF8F1;--blk:#E3EDE1;--blk-2:#D6E4D3;--bg:#F6F3EC;--surface:#E3EDE1;--surface-2:#D6E4D3;--line:#CFDDCB;--bar:rgba(246,243,236,.86)}
 body{background:var(--bg)}
-@media (prefers-color-scheme:dark){:root{--card-soft:#E8E3D8;--surface:#E8E3D8;--surface-2:#DCD6C9;--line:#CFC8BA}}
-.hm-days i,.hm-bar .track{background:#E6E0D3}
+.card,.gt,.ht,.stats .stat,.stats .stat:nth-child(n),.group,.bk,.bite{background:var(--blk)!important}
+.hero{background:#CFE3CF!important}
+.readc{background:var(--t-peach)!important}
+.ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:var(--blk)!important}
+.prof{background:var(--blk)!important}
+.drawer .prof.tinted{background:var(--blk)!important}
+.drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(227,237,225,0) 50%,rgba(227,237,225,.95))!important}
+.drawer .prof.tinted .prof-l{background:#D6E4D3!important}
+.hab-e{background:#D6E4D3}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1E2622;--blk:#1D3D35;--blk-2:#24493F;--surface:#1D3D35;--surface-2:#24493F;--line:#2F5A4E;--bar:rgba(30,38,34,.88)}
+  .navbar{background:rgba(30,38,34,.88)!important}
+  .strip button,.seg button{background:#24493F!important;color:#DAF1DE!important}
+  .strip button[aria-pressed="true"],.seg button[aria-pressed="true"]{background:#8EB69B!important;color:#0B2B26!important}
+  .card,.gt,.ht,.stats .stat,.stats .stat:nth-child(n),.group,.bk,.bite{background:var(--blk)!important;color:#E4EFE6!important;box-shadow:0 8px 22px -14px rgba(0,0,0,.7)!important}
+  .card *:not(.pill):not(.mplay):not(svg):not(path),.gt *,.group *:not(.pill),.stats .stat *,.bite *{color:inherit}
+  .card .c-lab,.card .c-m,.gt .gt-l,.group .r-s,.stats .s-l,.bite small,.card .c-s,.card small{color:#A9C8B3!important}
+  .card .c-big,.card .c-t,.gt .gt-v,.group .r-t,.stats .s-n,.bite b,.card b{color:#F1F7F2!important}
+  .hero{background:#24493F!important}.hero .c-lab,.hero .c-m{color:#8EB69B!important}
+  .readc{background:#3A3128!important}
+  .gt-i,.hab-e{background:#24493F!important;color:#E4EFE6}
+  .hab.on .hab-e{background:#8EB69B!important;color:#0B2B26!important}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#1D3D35!important;color:#F1F7F2!important}
+  .prof,.drawer .prof.tinted{background:#1D3D35!important}
+  .drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(29,61,53,0) 45%,rgba(29,61,53,.96))!important}
+  .drawer .prof.tinted .prof-top b,.drawer .prof.tinted .prof-top>div>b{color:#F1F7F2!important}
+  .drawer .prof.tinted .prof-top span,.drawer .prof.tinted .prof-top>div>span{color:#A9C8B3!important}
+  .drawer .prof.tinted .prof-l{background:#24493F!important}.drawer .prof.tinted .pl,.drawer .prof.tinted .pl span{color:#E4EFE6!important}
+  .drawer .prof.tinted .btn.ghost{background:#24493F!important;color:#DAF1DE!important}
+  .ring circle:first-child{stroke:rgba(218,241,222,.18)}
+}
 .sheet,#sheet{background:var(--card-soft)!important}
 .sheet .sheet-head{background:var(--card-soft)!important}
+.sheet .group,.sheet .card{background:#F1EDE3!important;color:#1F2A24!important}
 </style>
 </head>
 <body data-sec="today">
@@ -954,7 +984,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.1 · soft';
+const APP_VERSION = '5.9.2 · green blocks';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
