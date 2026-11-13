@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-13",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -263,6 +263,136 @@
    "procedure": "Embolization",
    "unit": "RADIVR",
    "status": "Pending"
+  },
+  {
+   "id": "2026-11-14-01",
+   "date": "2026-11-14",
+   "order": 1,
+   "time": "06:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Arthroscopic rotator cuff repair (complex/anchor)",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-02",
+   "date": "2026-11-14",
+   "order": 2,
+   "time": "09:30",
+   "ot": "KHSB-OR1",
+   "procedure": "Arthroscopic rotator cuff repair (complex/anchor)",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-03",
+   "date": "2026-11-14",
+   "order": 3,
+   "time": "13:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Open reduction of fracture",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-04",
+   "date": "2026-11-14",
+   "order": 4,
+   "time": "11:00",
+   "ot": "KHSB-OR2",
+   "procedure": "Diagnostic arthroscopy",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-05",
+   "date": "2026-11-14",
+   "order": 5,
+   "time": "07:00",
+   "ot": "KHSB-OR3",
+   "procedure": "PCNL, simple unilateral (laser)",
+   "unit": "URO002",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-06",
+   "date": "2026-11-14",
+   "order": 6,
+   "time": "09:30",
+   "ot": "KHSB-OR3",
+   "procedure": "RIRS (simple)",
+   "unit": "URO002",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-07",
+   "date": "2026-11-14",
+   "order": 7,
+   "time": "11:00",
+   "ot": "KHSB-OR3",
+   "procedure": "TURP (medium)",
+   "unit": "URO002",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-14-08",
+   "date": "2026-11-14",
+   "order": 8,
+   "time": "13:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Laparoscopic cholecystectomy",
+   "unit": "SUR005",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-14-09",
+   "date": "2026-11-14",
+   "order": 9,
+   "time": "09:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Ureteric reimplantation (unilateral)",
+   "unit": "PDS003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-10",
+   "date": "2026-11-14",
+   "order": 10,
+   "time": "10:30",
+   "ot": "KHSB-OR4",
+   "procedure": "Appendicectomy",
+   "unit": "SUR005",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-14-11",
+   "date": "2026-11-14",
+   "order": 11,
+   "time": "09:00",
+   "ot": "KHSB Cath Lab",
+   "procedure": "Fistuloplasty (IVR)",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-12",
+   "date": "2026-11-14",
+   "order": 12,
+   "time": "10:00",
+   "ot": "KHSB GEC",
+   "procedure": "OGD (oesophagogastroduodenoscopy)",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-14-13",
+   "date": "2026-11-14",
+   "order": 13,
+   "time": "12:00",
+   "ot": "KHSB GEC",
+   "procedure": "Colonoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
   }
  ]
 }

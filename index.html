@@ -894,7 +894,7 @@ body,button,input,select,textarea,td,th,.r-t,.r-s,.c-t,.c-s,.c-big,.bk-t,.read-i
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.7.3 · banner';
+const APP_VERSION = '5.7.4 · banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music'];
 
@@ -1746,7 +1746,7 @@ const SL_DEPT = ['General Surgery', 'Gastro Intestinal Surgery', 'Orthopaedic Su
 const SL_LOC = ['OR1', 'OR2', 'OR3', 'OR4', 'OR5', 'OR6', 'OR7', 'OR8', 'OR9', 'OR10', 'OR11', 'OR12', 'Septic OT', 'OST-A', 'OST-B', 'OST-C', 'OST-D', 'OST-E', 'UPR-A', 'UPR-B', 'Laser', 'WC OR1', 'WC OR2', 'WC OR3', 'WCMIN', 'OEU OT', 'OEU SEPTIC OT', 'KHSB-OT1', 'KHSB-OT2', 'KHSB-OT3', 'KHSB-OT4'];
 const SL_MGMT = ['GA + ETT', 'GA + LMA/IGEL', 'GA + MASK HOLDING', 'GA + EPIDURAL', 'GA + NERVE BLOCK', 'SPINAL', 'SPINAL + NERVE BLOCK', 'EPIDURAL', 'GSE', 'NERVE BLOCK', 'MAC'];
 const SL_REMOTE = ['GEC', 'CT', 'MRI', 'Cobalt', 'Radio Cath', 'Cath Lab', 'Pedo', 'MARC', 'MECT'];
-const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', SUO: 'Surgical Oncology', PLS: 'Plastic Surgery' };
+const DEPT_BY_UNIT = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedic Surgery', URO: 'Urology', NEU: 'Neuro Surgery', NSU: 'Neuro Surgery', CTV: 'Cardiac Surgery', CVT: 'Cardiac Surgery', CAR: 'Cardiac Surgery', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PDS: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Opthalmology', EYE: 'Opthalmology', DEN: 'Maxillofacial Surgery', OMF: 'Maxillofacial Surgery', MFS: 'Maxillofacial Surgery', SGE: 'Gastro Intestinal Surgery', GIS: 'Gastro Intestinal Surgery', GAS: 'Gastro Intestinal Surgery', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', SUO: 'Surgical Oncology', PLS: 'Plastic Surgery' };
 const deptFor = unit => { const m = /^([A-Za-z]+)/.exec(unit || ''); if (!m) return ''; const k = m[1].toUpperCase(); return DEPT_BY_UNIT[k] || DEPT_BY_UNIT[k.slice(0, 3)] || ''; };
 const isGI = p => /\b(OGD|EUS|ERCP|UGI|endoscop|endosonograph|colonoscop|sigmoidoscop|gastroscop|enteroscop|oesophago|esophago|scopy)\b/i.test(p || '');
 const FACULTY = () => (state.private && state.private.faculty) || [];
