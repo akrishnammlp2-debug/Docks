@@ -1,0 +1,69 @@
+{
+ "updated": "2026-11-13",
+ "note": "Bite-size notes from Apoorva's academic questions, written in plain words by Claude. One entry per topic; repeated questions update the same entry.",
+ "cats": [
+  "Drugs",
+  "Ventilation",
+  "Physiology",
+  "Airway",
+  "Regional",
+  "Obstetric",
+  "Paediatric",
+  "Cardiac",
+  "Neuro",
+  "ICU",
+  "Monitoring & equipment",
+  "Preop & scoring",
+  "New papers",
+  "Other"
+ ],
+ "items": [
+  {
+   "id": "asa-ps",
+   "cat": "Preop & scoring",
+   "title": "ASA physical status",
+   "aliases": [
+    "asa grading",
+    "asa classification",
+    "asa-ps"
+   ],
+   "points": [
+    "Grades the patient's overall health before anaesthesia: I healthy, II mild disease, III severe disease with limitation, IV constant threat to life, V moribund, VI brain-dead donor; add E for emergency.",
+    "Current version amended Dec 2020: definitions unchanged, adult/paediatric/obstetric examples added.",
+    "Handy cut-offs: BMI 30–40 = II, ≥40 = III; MI/stroke/stent <3 months = IV, >3 months = III; normal pregnancy = II.",
+    "Describes the patient, not the surgery; inter-rater agreement only fair–moderate, II vs III most disputed."
+   ],
+   "pearl": "Grade = clinical judgement; the examples are guides, not rules.",
+   "refs": [
+    {
+     "title": "ASA Physical Status Classification System",
+     "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
+    }
+   ],
+   "created": "2026-11-12",
+   "updated": "2026-11-12",
+   "seen": 1
+  },
+  {
+   "id": "psv",
+   "cat": "Ventilation",
+   "title": "Pressure support ventilation (PSV)",
+   "aliases": [
+    "pressure support",
+    "psv",
+    "spontaneous mode"
+   ],
+   "points": [
+    "Patient-triggered, pressure-limited, flow-cycled: every breath is started by the patient and the machine adds a set pressure above PEEP.",
+    "Breath ends when inspiratory flow falls to a set % of peak (cycle-off, often 25%); raise it in COPD to shorten inspiration.",
+    "Tidal volume depends on support level, compliance, resistance and patient effort, so it varies breath to breath.",
+    "No guaranteed minute ventilation: set apnoea back-up; watch for over-assist (low RR, big VT) and under-assist (fast shallow breathing)."
+   ],
+   "pearl": "Used for weaning and SBT (e.g. PS 5–8 cmH2O + PEEP 5).",
+   "refs": [],
+   "created": "2026-11-13",
+   "updated": "2026-11-13",
+   "seen": 1
+  }
+ ]
+}
