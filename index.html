@@ -1020,7 +1020,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.4 · green blocks';
+const APP_VERSION = '5.9.5 · green blocks';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1831,7 +1831,11 @@ function render() {
   $('nb-title').textContent = SECS[tab];
   $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar' || tab === 'reminders') ? 'visible' : 'hidden';
   $('nb-av').innerHTML = avatarHTML(profile());
-  $('page').innerHTML = PAGES[tab]();
+  const keepY = render.lastTab === tab ? (window.scrollY || document.documentElement.scrollTop || 0) : null; const pg = $('page'); const keepPg = render.lastTab === tab ? pg.scrollTop : 0;
+  const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
+  pg.innerHTML = PAGES[tab]();
+  if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
+  render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
