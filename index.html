@@ -960,6 +960,22 @@ body{background:var(--bg)}
 .sheet,#sheet{background:var(--card-soft)!important}
 .sheet .sheet-head{background:var(--card-soft)!important}
 .sheet .group,.sheet .card{background:#F1EDE3!important;color:#1F2A24!important}
+
+/* sheets stay light in dark mode: keep their text dark and bars visible (v5.9.3) */
+@media (prefers-color-scheme:dark){
+  #sheet .card,#sheet .group,#sheet .card *,#sheet .group *{color:#1F2A24!important}
+  #sheet .card,#sheet .group{background:#F1EDE3!important;box-shadow:none!important}
+  #sheet .c-lab{color:#3E7B5E!important}
+  #sheet .readc{background:#FBE9DD!important}#sheet .readc .c-lab{color:#9A5A33!important}
+  #sheet .read-i{background:#FFFDF8!important}#sheet .read-i b{color:#1F2A24!important}#sheet .read-i small{color:#9A5A33!important}#sheet .read-i span{color:#4A5650!important}
+  #sheet .track,#sheet .hm-bar .track{background:#E6E0D3!important}#sheet .fill,#sheet .hm-bar .fill{background:#3E7B5E!important}
+  #sheet .hm-days i{background:#E6E0D3!important}#sheet .hm-days i.on{background:#3E7B5E!important}#sheet .hm-days i.fut{background:transparent!important}
+  #sheet .r-l,#sheet .r-s,#sheet small{color:#6F7A74!important}
+  #sheet .ring circle:first-child{stroke:#ECE8DF}
+  #sheet .pill.good{color:#2F6B4F!important}#sheet .pill.tosync{color:#8A4B08!important}
+}
+#sheet .hm-bar .track{background:#E6E0D3!important}
+.sheet{transition:transform .25s ease}
 </style>
 </head>
 <body data-sec="today">
@@ -984,7 +1000,7 @@ body{background:var(--bg)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.9.2 · green blocks';
+const APP_VERSION = '5.9.3 · green blocks';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1274,7 +1290,7 @@ function habitMonthSheet(ym) {
   const prev = new Date(y, m - 2, 1), next = new Date(y, m, 1); const fmt = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
   const grid = H.map(h => `<div class="hm-row"><span class="hm-n">${esc(h.emoji)} ${esc(h.name)}</span><div class="hm-days">${Array.from({ length: st.days }, (_, i) => { const k = ym + '-' + String(i + 1).padStart(2, '0') + '|' + h.id; const fut = i + 1 > st.last; return `<i class="${state.habitDone[k] ? 'on' : fut ? 'fut' : ''}"></i>`; }).join('')}</div></div>`).join('');
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="hab-m" data-ym="${fmt(prev)}">‹ ${MONTHS[prev.getMonth()].slice(0, 3)}</button><h2>${MONTHS[m - 1]} ${y}</h2>${fmt(next) <= today().slice(0, 7) ? `<button type="button" class="link" data-act="hab-m" data-ym="${fmt(next)}">${MONTHS[next.getMonth()].slice(0, 3)} ›</button>` : '<span></span>'}</div>
-    <div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + st.span + ' days)' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
+    <div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + plural(st.span, 'day') + ')' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
     <div class="hm-list">${st.per.map(x => `<div class="hm-bar"><span>${esc(x.h.emoji)} ${esc(x.h.name)}</span><b>${x.c}/${st.span}</b><div class="track"><div class="fill" style="width:${st.span ? Math.round(100 * x.c / st.span) : 0}%"></div></div></div>`).join('')}</div>
     <h3 class="sh">Day by day</h3><div class="hm-grid">${grid}</div>
     <button class="btn ghost" type="button" data-act="hab-edit">Edit habits</button></div>`);
@@ -1844,6 +1860,16 @@ function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').class
 function openSheet(html) { $('sheet-body').innerHTML = html; $('sheet').scrollTop = 0; $('sheet').classList.add('open'); $('scrim').classList.add('open'); document.body.classList.add('locked'); }
 function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); document.body.classList.remove('locked'); }
 const sheetOpen = () => $('sheet').classList.contains('open');
+/* swipe the sheet down to close it (from the handle, or anywhere when the sheet is scrolled to the top) */
+(() => { let y0 = null, dy = 0, t0 = 0; const sh = () => $('sheet');
+  document.addEventListener('touchstart', e => { const el = sh(); if (!el || !el.classList.contains('open') || !el.contains(e.target) || e.touches.length !== 1) return;
+    if (e.target.closest('input,textarea,select,.strip,.hab-row,.hero-chips')) return; if (el.scrollTop > 0 && !e.target.closest('.grab,.sheet-head')) return;
+    y0 = e.touches[0].clientY; dy = 0; t0 = Date.now(); }, { passive: true });
+  document.addEventListener('touchmove', e => { if (y0 === null) return; dy = e.touches[0].clientY - y0; const el = sh();
+    if (dy <= 0) { el.style.transform = ''; return; } if (el.scrollTop > 0 && dy < 12) return; el.style.transition = 'none'; el.style.transform = 'translateY(' + dy + 'px)'; }, { passive: true });
+  document.addEventListener('touchend', () => { if (y0 === null) return; const el = sh(); el.style.transition = ''; const fast = dy > 60 && Date.now() - t0 < 250;
+    if (dy > 130 || fast) { el.style.transform = ''; closeSheet(); } else el.style.transform = ''; y0 = null; dy = 0; }, { passive: true });
+})();
 const kv = (l, v) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${v}</span></div>`;
 const sheetHead = (title, left) => `<div class="sheet-head">${left || '<span></span>'}<h2>${esc(title)}</h2><button class="link strong" type="button" data-act="close">Done</button></div>`;
 function focusFirst() { setTimeout(() => { const f = $('sheet').querySelector('[data-autofocus]'); if (f) f.focus(); }, 60); }
