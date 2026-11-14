@@ -1204,22 +1204,6 @@ body::before{will-change:transform;transform:translateZ(0)}
 #drawer .ditem .demo.dline svg,#drawer .ditem[data-tab] .demo.dline svg,#drawer .ditem[aria-current="page"] .demo.dline svg{width:21px!important;height:21px!important;padding:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important;stroke:currentColor!important;stroke-width:1.5!important;fill:none!important}
 #drawer .ditem .demo.dline,#drawer .ditem[data-tab] .demo.dline{background:transparent!important;color:var(--fg-3)!important}
 #drawer .ditem[aria-current="page"] .demo.dline{background:rgba(62,123,94,.12)!important;color:var(--accent-t)!important;border-radius:10px}
-
-/* cat food v5.18 */
-.cat-tile .lv-tx{gap:3px}
-.cat-ln{font-size:14px;line-height:1.35;color:var(--fg-2)!important}
-.cat-ln.due{color:var(--fg)!important;font-weight:700}
-.cat-due{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px!important;border:1.5px solid rgba(181,120,40,.45)!important}
-.cat-due-i{font-size:26px;line-height:1}
-.cat-due b{font-size:15.5px;color:var(--fg)!important}.cat-due span{font-size:13.5px;color:var(--fg-2)!important}
-.cat-card{display:flex;flex-direction:column;gap:8px;padding:14px!important;margin-bottom:10px}
-.cat-meter{height:8px;border-radius:999px;background:rgba(28,38,33,.12);overflow:hidden}
-.cat-meter span{display:block;height:100%;border-radius:999px;background:#3E7B5E}
-.cat-hist{display:flex;flex-direction:column;gap:3px;border-top:1px solid rgba(28,38,33,.12);padding-top:8px}
-.cat-hist span{font-size:13px;color:var(--fg-2)!important}
-#sheet .cat-hist span{color:#36433C!important}
-.cat-amz{display:block;text-align:center;margin-top:6px;text-decoration:none}
-#sheet .cat-card .btn.small:not(.ghost){background:#2B6448!important;color:#FFFFFF!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1245,7 +1229,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.18 · cat food';
+const APP_VERSION = '5.18.1 · tidy';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -1579,7 +1563,6 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
-  h += catTodayCard();
   h += habitCard();
   h += timerCard();
   // minimal glance tiles
@@ -2079,67 +2062,8 @@ function pageOthers() {
   let h = head('Off duty', 'Life outside the hospital');
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(pick.image.url)}" alt="" decoding="async" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
-  h += catTile();
   h += artTile();
   return h; }
-/* ---------- Off duty: cat food tracker ---------- */
-/* foods: state.catFoods {id:{name, kind:'dry'|'wet', pack, unit:'g'|'pouch', perDay, lead, setAt?, setLeft?}}
-   purchases: state.catLog {id:{food, date, packs, src:'app'|'amazon', ref?}} ; Amazon orders arrive locked in state.private.catOrders */
-const CAT_DEFAULT = { dry: { name: 'Dry food', kind: 'dry', pack: 1200, unit: 'g', perDay: 50, lead: 5 }, wet: { name: 'Wet food', kind: 'wet', pack: 1, unit: 'pouch', perDay: 2, lead: 5 } };
-const catFoods = () => { const f = state.catFoods || {}; return Object.keys(f).length ? Object.entries(f).filter(([, v]) => v && !v.deleted).map(([id, v]) => ({ id, ...v })) : []; };
-const dDiff = (a, b) => Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / 864e5);
-function catAmazonFor(food) { const o = (state.private && state.private.catOrders) || {}; const seen = state.catSeen || {};
-  return Object.entries(o).filter(([id, x]) => x && !(seen[id] && seen[id].skip) && (x.food === food.id || (!x.food && x.kind === food.kind && (catFoods().filter(f => f.kind === food.kind)[0] || {}).id === food.id))).map(([id, x]) => ({ id, date: x.delivered || x.date, packs: +x.packs || 1, src: 'amazon', title: x.title, status: x.status, size: x.size })); }
-function catPurchases(food) { const L = state.catLog || {}; const mine = Object.entries(L).filter(([, x]) => x && x.food === food.id).map(([id, x]) => ({ id, ...x }));
-  const refs = new Set(mine.map(x => x.ref).filter(Boolean)); return mine.concat(catAmazonFor(food).filter(x => !refs.has(x.id) && x.status !== 'cancelled')).sort((a, b) => (a.date || '').localeCompare(b.date || '')); }
-function catStatus(food) { const t = today(); const P = catPurchases(food).filter(x => x.date && x.date <= t); const per = +food.perDay || 0, pack = +food.pack || 0;
-  let from = food.setAt || (P[0] && P[0].date); if (!from || !per) return { known: false, P };
-  let left = food.setAt ? (+food.setLeft || 0) : 0;
-  P.forEach(x => { if (x.date >= from && !(food.setAt && x.date === food.setAt && x.src === 'app' && x.atSet)) left += (+x.packs || 1) * pack; });
-  left -= per * Math.max(0, dDiff(from, t)); left = Math.max(0, left);
-  const days = Math.floor(left / per); const out = addDays(t, days); const by = addDays(out, -(+food.lead || 5));
-  const coming = catPurchases(food).filter(x => x.date > t);
-  return { known: true, left, days, out, by, due: days <= (+food.lead || 5), P, coming }; }
-const catAmt = (f, n) => f.unit === 'pouch' ? plural(Math.round(n), 'pouch').replace('pouchs', 'pouches') : (n >= 1000 ? (n / 1000).toFixed(n % 1000 ? 1 : 0) + ' kg' : Math.round(n) + ' g');
-function catLine(f) { const st = catStatus(f); if (!st.known) return 'Tap to set up'; if (st.coming && st.coming.length) return `About ${plural(st.days, 'day')} left · order on its way`; if (st.days <= 0) return 'Probably finished, time to reorder'; return `About ${plural(st.days, 'day')} left${st.due ? ', reorder now' : ' · reorder by ' + fmtShort(st.by)}`; }
-function catTile() { const F = catFoods();
-  const sub = F.length ? F.map(f => `<span class="cat-ln${catStatus(f).due ? ' due' : ''}">${f.kind === 'wet' ? '🥫' : '🥣'} ${esc(f.name)}: ${esc(catLine(f))}</span>`).join('') : '<span class="cat-ln">Track dry and wet food, get a nudge before it runs out</span>';
-  return `<div class="sec"><button type="button" class="card lv-tile cat-tile" data-act="cat-open"><span class="lv-ic" aria-hidden="true">🐈</span><span class="lv-tx"><span class="lv-eb">Cat food</span>${sub}</span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
-function catTodayCard() { if ((state.settings || {}).catOn === false) return ''; const due = catFoods().map(f => [f, catStatus(f)]).filter(([, st]) => st.known && st.due && !(st.coming && st.coming.length));
-  if (!due.length) return '';
-  return `<div class="sec"><button type="button" class="card cat-due" data-act="cat-open"><span class="cat-due-i" aria-hidden="true">🐈</span><span class="lv-tx"><b>Time to reorder cat food</b>${due.map(([f, st]) => `<span>${esc(f.name)}: ${st.days <= 0 ? 'may have run out' : 'about ' + plural(st.days, 'day') + ' left'}</span>`).join('')}</span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
-function catSheet() { const F = catFoods();
-  const foodCard = f => { const st = catStatus(f); const P = catPurchases(f).slice(-6).reverse();
-    return `<div class="card cat-card"><div class="lv-top"><span class="lv-chip">${f.kind === 'wet' ? '🥫 Wet' : '🥣 Dry'}</span><button type="button" class="link" data-act="cat-edit" data-id="${esc(f.id)}">Edit</button></div>
-      <b class="lv-t">${esc(f.name)}</b>
-      ${st.known ? `<div class="cat-meter"><span style="width:${Math.min(100, Math.round(st.days / Math.max(1, (+f.pack / (+f.perDay || 1))) * 100))}%"></span></div>
-        <p class="lv-x">${st.days <= 0 ? 'Probably finished.' : `About <b>${catAmt(f, st.left)}</b> left, enough for <b>${plural(st.days, 'day')}</b> (until ${fmtShort(st.out)}).`} ${st.coming && st.coming.length ? 'An order is on its way.' : st.due ? '<b>Reorder now</b> so it arrives in time.' : `Reorder by <b>${fmtShort(st.by)}</b>.`}</p>`
-        : `<p class="lv-x">Tell Docks roughly how much is left and it starts counting down.</p>`}
-      <div class="btns"><button type="button" class="btn small" data-act="cat-bought" data-id="${esc(f.id)}">＋ Bought a pack</button><button type="button" class="btn small ghost" data-act="cat-left" data-id="${esc(f.id)}">Set what's left</button></div>
-      ${P.length ? `<div class="cat-hist">${P.map(x => `<span>${esc(fmtShort(x.date))} · ${x.packs > 1 ? x.packs + ' × ' : ''}${esc(x.title ? x.title.slice(0, 48) : f.name)}${x.src === 'amazon' ? ' · Amazon' : ''}${x.date > today() ? ' · arriving' : ''}</span>`).join('')}</div>` : ''}</div>`; };
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🐈 Cat food</h2><button type="button" class="link" data-act="cat-edit" data-id="">Add</button></div>
-    ${F.length ? F.map(foodCard).join('') : `<div class="card"><span class="c-s">Add the foods you buy. Start with your dry and wet food.</span><div class="btns" style="margin-top:10px"><button type="button" class="btn small" data-act="cat-quick">Add dry + wet food</button></div></div>`}
-    <a class="btn ghost cat-amz" href="https://www.amazon.in/gp/buyagain" target="_blank" rel="noopener">Reorder on Amazon (Buy Again) ↗</a>
-    <p class="foot">Docks estimates what's left from each pack and how much your cat eats a day. Orders forwarded from Amazon are added automatically every morning. The reminder appears on Today when it's time to reorder.</p></div>`); }
-function catEditSheet(id) { const f = id ? (state.catFoods || {})[id] : { ...CAT_DEFAULT.dry, name: '' };
-  openSheet(`<form data-form="catfood" data-id="${esc(id || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="cat-open">Back</button><h2>${id ? 'Edit food' : 'Add food'}</h2><button type="submit" class="link strong">Save</button></div>
-    <div class="group">
-      <label class="row field"><span class="r-l">Name</span><input name="name" value="${esc(f.name || '')}" placeholder="e.g. Whiskas Ocean Fish dry" required></label>
-      <label class="row field"><span class="r-l">Type</span><select name="kind"><option value="dry"${f.kind === 'dry' ? ' selected' : ''}>Dry</option><option value="wet"${f.kind === 'wet' ? ' selected' : ''}>Wet</option></select></label>
-      <label class="row field"><span class="r-l">Counted in</span><select name="unit"><option value="g"${f.unit === 'g' ? ' selected' : ''}>Grams</option><option value="pouch"${f.unit === 'pouch' ? ' selected' : ''}>Pouches / cans</option></select></label>
-      <label class="row field"><span class="r-l">One pack has</span><input name="pack" type="number" min="1" step="any" value="${esc(f.pack)}"></label>
-      <label class="row field"><span class="r-l">Cat eats per day</span><input name="perDay" type="number" min="0.1" step="any" value="${esc(f.perDay)}"></label>
-      <label class="row field"><span class="r-l">Remind me (days before)</span><input name="lead" type="number" min="1" max="30" value="${esc(f.lead || 5)}"></label>
-    </div>
-    <p class="foot">Grams for dry food (e.g. a 1.2 kg bag = 1200). Pouches for wet food (a pack of 12 = 12). The bag usually says how much to feed per day for your cat's weight.</p>
-    ${id ? `<button type="button" class="btn danger" data-act="cat-del" data-id="${esc(id)}">Remove this food</button>` : ''}</form>`); }
-function catLeftSheet(id) { const f = (state.catFoods || {})[id]; if (!f) return; const st = catStatus({ id, ...f });
-  openSheet(`<form data-form="catleft" data-id="${esc(id)}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="cat-open">Back</button><h2>What's left?</h2><button type="submit" class="link strong">Save</button></div>
-    <p class="foot" style="margin-top:0">A rough guess is fine. Docks counts down from here.</p>
-    <div class="group"><label class="row field"><span class="r-l">${esc(f.name)} left (${f.unit === 'pouch' ? 'pouches' : 'grams'})</span><input name="left" type="number" min="0" step="any" value="${st.known ? Math.round(st.left) : esc(f.pack)}"></label></div>
-    <div class="btns"><button type="button" class="btn small ghost" data-act="cat-left-q" data-id="${esc(id)}" data-v="${esc(f.pack)}">A full pack</button><button type="button" class="btn small ghost" data-act="cat-left-q" data-id="${esc(id)}" data-v="${esc(f.pack / 2)}">Half a pack</button><button type="button" class="btn small ghost" data-act="cat-left-q" data-id="${esc(id)}" data-v="0">Nothing</button></div></form>`); }
-function catSetLeft(id, v) { const f = state.catFoods[id]; state.catFoods = { ...state.catFoods, [id]: { ...f, setAt: today(), setLeft: Math.max(0, +v || 0) } }; commit('Got it ✓'); catSheet(); }
-
 /* ---------- Off duty: painting of the day ---------- */
 const ART = () => D.art || {};
 function artTile() { const a = ART().today;
@@ -2559,13 +2483,6 @@ document.addEventListener('click', e => {
     case 'mc-open': mcSheet(id); break;
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
-    case 'cat-open': catSheet(); break;
-    case 'cat-edit': catEditSheet(id); break;
-    case 'cat-quick': { state.catFoods = { ...(state.catFoods || {}), ['cf-' + uid()]: { ...CAT_DEFAULT.dry }, ['cf-' + uid()]: { ...CAT_DEFAULT.wet } }; commit(); catSheet(); break; }
-    case 'cat-bought': { state.catLog = { ...(state.catLog || {}), ['cl-' + uid()]: { food: id, date: today(), packs: 1, src: 'app' } }; commit('Pack added ✓'); catSheet(); break; }
-    case 'cat-left': catLeftSheet(id); break;
-    case 'cat-left-q': catSetLeft(id, b.dataset.v); break;
-    case 'cat-del': { if (state.catFoods && state.catFoods[id]) { state.catFoods = { ...state.catFoods, [id]: { ...state.catFoods[id], deleted: true } }; commit('Removed'); catSheet(); } break; }
     case 'art-open': artSheet(0); break;
     case 'art-past': artSheet(+b.dataset.i); break;
     case 'love-topic': loveHistSheet(id); break;
@@ -2673,9 +2590,6 @@ document.addEventListener('submit', e => {
     case 'pdfmeta': {
       const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
       pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
-    case 'catfood': { const cid = id || 'cf-' + uid(); const old = (state.catFoods || {})[cid] || {};
-      state.catFoods = { ...(state.catFoods || {}), [cid]: { ...old, name: (fd.get('name') || '').trim() || 'Cat food', kind: fd.get('kind') === 'wet' ? 'wet' : 'dry', unit: fd.get('unit') === 'pouch' ? 'pouch' : 'g', pack: Math.max(1, +fd.get('pack') || 1), perDay: Math.max(0.1, +fd.get('perDay') || 1), lead: Math.max(1, Math.min(30, +fd.get('lead') || 5)) } }; commit('Saved ✓'); catSheet(); break; }
-    case 'catleft': catSetLeft(id, fd.get('left')); break;
     case 'love': { const nm = (fd.get('n') || '').trim().slice(0, 60); if (!nm) break; state.loveMine = state.loveMine || {}; state.loveMine['lv-' + uid()] = { name: nm, emoji: (fd.get('e') || '✨').trim() || '✨' }; closeSheet(); commit('Added ✓'); break; }
     case 'habits': {
       const n = +fd.get('count'); const out = []; const old = HABITS();
@@ -2742,7 +2656,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catFoods', 'catLog', 'catSeen'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -2845,12 +2759,11 @@ async function deviceSync(manual) {
     // outbox for Claude: my cases not yet in the logbook (plain JSON, private repository only)
     const pending = MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
     const loves = state.loveMine || {};
-    const cat = catFoods().map(f => { const st = catStatus(f); return { id: f.id, name: f.name, kind: f.kind, pack: f.pack, unit: f.unit, perDay: f.perDay, lead: f.lead, known: st.known, daysLeft: st.known ? st.days : null, runOut: st.known ? st.out : null, reorderBy: st.known ? st.by : null, onTheWay: !!(st.coming && st.coming.length) }; });
-    const osig = fnv(JSON.stringify([pending, loves, cat, today()]));
+    const osig = fnv(JSON.stringify([pending, loves]));
     if (osig !== S.lastOutbox) {
       const op = '/contents/outbox/' + device.kid + '.json';
       const oc = await gh(cfg, op); const osha = oc.ok ? (await oc.json()).sha : undefined;
-      const body = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), note: 'Cases Apoorva logged in Docks for Claude to add to the logbook sheet and SLCM. Private. loves = topics she added (name) or removed (hide) in Off duty.', cases: pending, loves, cat };
+      const body = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), note: 'Cases Apoorva logged in Docks for Claude to add to the logbook sheet and SLCM. Private. loves = topics she added (name) or removed (hide) in Off duty.', cases: pending, loves };
       const or2 = await gh(cfg, op, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'outbox ' + pending.length, content: utf8b64(JSON.stringify(body, null, 1)), sha: osha }) });
       if (or2.ok) { S.lastOutbox = osig; save(); }
     }
@@ -2924,7 +2837,6 @@ function mergePrivate(prev, data) {
   if (data.cases) next.cases = { ...(cur.cases || {}), ...data.cases };
   if (data.reminders) next.reminders = data.reminders;
   if (data.faculty) next.faculty = data.faculty;
-  if (data.catOrders) next.catOrders = { ...(cur.catOrders || {}), ...data.catOrders };
   if (data.ot) {
     const keepFrom = addDays(today(), -7); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
