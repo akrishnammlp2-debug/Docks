@@ -1177,6 +1177,18 @@ body::before{will-change:transform;transform:translateZ(0)}
 .art-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left}
 .art-row b{font-size:14.5px}
 .art-miss{display:block;padding:22px 16px;border-radius:14px;text-align:center;font-weight:600;background:rgba(255,255,255,.55);color:#1E4A34!important;text-decoration:none}
+
+/* painting banner: the painting fills the banner v5.15 */
+.art-hero{position:relative;display:block;width:100%;height:168px;border-radius:20px;overflow:hidden;background:#1C2621;text-align:left;padding:0;box-shadow:0 10px 26px -14px rgba(0,0,0,.55);-webkit-tap-highlight-color:transparent}
+.art-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.art-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,12,0) 25%,rgba(10,14,12,.55) 58%,rgba(10,14,12,.9) 100%)}
+.art-cap{position:absolute;left:14px;right:40px;bottom:12px;display:flex;flex-direction:column;gap:2px;color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.art-cap *{color:#fff!important}
+.art-eb{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.92;align-self:flex-start;background:rgba(10,14,12,.5);padding:3px 8px;border-radius:999px;margin-bottom:4px;text-shadow:none}
+.art-cap b{font-size:17px;line-height:1.25}
+.art-cap>span:last-child{font-size:13.5px;color:#E8EFEA!important}
+.art-go{position:absolute;right:12px;bottom:16px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:20px;line-height:1;color:#fff!important;background:rgba(255,255,255,.18)}
+.art-hero:active{transform:scale(.985)}
 </style>
 </head>
 <body data-sec="today">
@@ -1202,7 +1214,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.14.1 · paintings';
+const APP_VERSION = '5.15 · painting banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -2032,7 +2044,8 @@ function pageOthers() {
 /* ---------- Off duty: painting of the day ---------- */
 const ART = () => D.art || {};
 function artTile() { const a = ART().today;
-  return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic art-th" aria-hidden="true">${a && a.image ? `<img src="${esc(a.image.thumb || a.image.url)}" alt="" loading="lazy" decoding="async" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist + (a.year ? ' · ' + a.year : '')) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
+  if (!a || !a.image) return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic" aria-hidden="true">🖼️</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`;
+  return `<div class="sec"><button type="button" class="art-hero" data-act="art-open" aria-label="Painting of the day: ${esc(a.title)} by ${esc(a.artist)}"><img class="art-bg" src="${esc(a.image.url)}" alt="" decoding="async" style="object-position:${esc(a.image.focus || 'center 45%')}" onerror="this.remove()"><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">🖼️ Painting of the day</span><b>${esc(a.title)}</b><span>${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
 function artBody(a) { if (!a) return '';
   const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
   return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr">${esc(a.image.credit || '')}</span>` : ''}
