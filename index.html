@@ -1148,6 +1148,16 @@ body::before{will-change:transform;transform:translateZ(0)}
 #sheet .lv-chip,#sheet .lv-tp{background:rgba(255,255,255,.6)!important;color:#1C2621!important;border-color:rgba(28,38,33,.18)!important}
 #sheet .lv-add{background:transparent!important;color:#1E4A34!important;border-color:#1E4A34!important}
 #sheet .lv-src{color:#1E4A34!important}
+
+.lv-more{padding:12px 14px!important;margin-top:12px}
+.lv-more summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
+.lv-more summary::-webkit-details-marker{display:none}
+.lv-ems{font-size:16px;letter-spacing:1px;white-space:nowrap;overflow:hidden}
+.lv-mt{flex:1;font-size:14.5px;font-weight:600;color:var(--fg)!important}
+#sheet .lv-mt{color:#1C2621!important}
+.lv-more[open] .lv-chev{transform:rotate(90deg)}
+.lv-more .lv-chev{transition:transform .2s}
+#sheet .lv-more .lv-chev{color:#36433C!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1173,7 +1183,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.13.1 · off duty';
+const APP_VERSION = '5.13.2 · off duty';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves'];
 
@@ -2003,8 +2013,9 @@ function loveSheet() {
   const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Things I love</h2><span></span></div>
     ${pick ? lovePickCard(pick, true) : '<div class="card"><span class="c-s">Your first fact arrives tomorrow morning.</span></div>'}
-    <h3 class="sh">My topics</h3><div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div>
-    <p class="foot">A new fact or article from one of these appears every morning. Tap a topic to see its past picks or remove it.</p>
+    <details class="card lv-more"><summary><span class="lv-ems" aria-hidden="true">${T.slice(0, 6).map(t => esc(t.emoji || '✨')).join('')}</span><span class="lv-mt">My topics · ${T.length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>
+      <div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div>
+      <p class="foot">One is picked at random each morning. Tap a topic to see its past picks or remove it.</p></details>
     ${hist.length ? `<h3 class="sh">Earlier</h3>${hist.map(x => lovePickCard(x, true)).join('')}` : ''}</div>`); }
 function fmtShort(d) { try { return new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); } catch (_) { return d; } }
 function loveHistSheet(id) { const L = LOVES(); const all = [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, a) => a.findIndex(y => y.date === x.date) === i).filter(x => !id || x.topic === id);

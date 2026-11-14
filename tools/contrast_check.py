@@ -39,7 +39,7 @@ async def main():
       for t in TABS:
         await pg.evaluate(f"goTab('{t}')"); await pg.wait_for_timeout(350)
         report[f'{sc}:{t}']=await pg.evaluate(JS)
-      for name,js in [('sheet:item',"goTab('today');itemSheet(REG[0]||{title:'x',date:today()})"),('sheet:bite',"biteSheet('psv')"),('sheet:habits',"habitMonthSheet()"),('sheet:book',"bookSheet('chambers-physiology')"),('sheet:search',"searchSheet();document.querySelector('[data-search]').value='a';renderSearch('a')"),('sheet:mycase',"mcPick()"),('sheet:loves',"loveSheet()"),('drawer',"closeSheet();openDrawer()")]:
+      for name,js in [('sheet:item',"goTab('today');itemSheet(REG[0]||{title:'x',date:today()})"),('sheet:bite',"biteSheet('psv')"),('sheet:habits',"habitMonthSheet()"),('sheet:book',"bookSheet('chambers-physiology')"),('sheet:search',"searchSheet();document.querySelector('[data-search]').value='a';renderSearch('a')"),('sheet:mycase',"mcPick()"),('sheet:loves',"loveSheet();document.querySelector('.lv-more').open=true"),('drawer',"closeSheet();openDrawer()")]:
         try:
           await pg.evaluate(js); await pg.wait_for_timeout(350); report[f'{sc}:{name}']=await pg.evaluate(JS)
         except Exception as e: report[f'{sc}:{name}']=[{'error':str(e)[:80]}]
