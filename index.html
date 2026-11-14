@@ -1221,7 +1221,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.16 · fact banner';
+const APP_VERSION = '5.16.1 · fact banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -2040,8 +2040,14 @@ const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
   const seen = new Set(pub.map(t => t.name.toLowerCase())); const add = Object.entries(mine).filter(([, v]) => v && !v.hide && v.name && !seen.has(v.name.toLowerCase())).map(([id, v]) => ({ id, name: v.name, emoji: v.emoji || '✨', mine: true }));
   return pub.concat(add); }
+/* fills in a Wikimedia photo's author + licence when the daily task couldn't */
+function commonsCredit(page, el) { const m = /File:([^?#]+)/.exec(page || ''); if (!m || !el) return; const key = 'studydesk.cc.' + m[1];
+  try { const c = localStorage.getItem(key); if (c) { el.textContent = c; return; } } catch (_) {}
+  fetch('https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&format=json&origin=*&titles=File:' + m[1]).then(r => r.json()).then(j => { const md = Object.values(j.query.pages)[0].imageinfo[0].extmetadata; const who = ((md.Artist || {}).value || '').replace(/<[^>]+>/g, '').trim(); const lic = (md.LicenseShortName || {}).value || '';
+    const t = ['Image: ' + (who || 'Wikimedia Commons'), lic, 'Wikimedia Commons'].filter((v, i, a) => v && a.indexOf(v) === i).join(', '); el.textContent = t; try { localStorage.setItem(key, t); } catch (_) {} }).catch(() => {}); }
+function fillCredits() { document.querySelectorAll('[data-cc]').forEach(el => commonsCredit(el.dataset.cc, el)); }
 function lovePickCard(x, big) { if (!x) return ''; const t = (LOVES().topics || []).find(t => t.id === x.topic) || {}; const src = x.source && x.source.url ? `<a class="lv-src" href="${esc(x.source.url)}" target="_blank" rel="noopener">${x.kind === 'article' ? 'Read the article' : 'Read more'} · ${esc(x.source.title || 'source')} ↗</a>` : '';
-  const img = big && x.image ? `<a class="art-img lv-img" href="${esc(x.image.page || x.image.url)}" target="_blank" rel="noopener"><img src="${esc(x.image.url)}" alt="" decoding="async" loading="lazy" onerror="this.parentNode.remove()"></a>${x.image.credit ? `<span class="art-cr">${esc(x.image.credit)}</span>` : ''}` : '';
+  const img = big && x.image ? `<a class="art-img lv-img" href="${esc(x.image.page || x.image.url)}" target="_blank" rel="noopener"><img src="${esc(x.image.url)}" alt="" decoding="async" loading="lazy" onerror="this.parentNode.remove()"></a><span class="art-cr"${x.image.credit ? '' : ` data-cc="${esc(x.image.page || '')}"`}>${esc(x.image.credit || 'Image: Wikimedia Commons')}</span>` : '';
   return `<div class="card lv-card${big ? ' lv-big' : ''}">${img}<div class="lv-top"><span class="lv-chip">${esc(t.emoji || '✨')} ${esc(t.name || x.topicName || '')}</span><span class="lv-kind">${x.kind === 'article' ? 'Read today' : 'Fact of the day'}${big && x.date !== today() ? ' · ' + esc(fmtShort(x.date)) : ''}</span></div><b class="lv-t">${esc(x.title || '')}</b><p class="lv-x">${esc(x.text || '')}</p>${src}</div>`; }
 function pageOthers() {
   const L = LOVES(); const pick = L.today; const T = loveTopics();
@@ -2057,7 +2063,7 @@ function artTile() { const a = ART().today;
   return `<div class="sec"><button type="button" class="art-hero" data-act="art-open" aria-label="Painting of the day: ${esc(a.title)} by ${esc(a.artist)}"><img class="art-bg" src="${esc(a.image.url)}" alt="" decoding="async" style="object-position:${esc(a.image.focus || 'center 45%')}" onerror="this.remove()"><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">🖼️ Painting of the day</span><b>${esc(a.title)}</b><span>${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
 function artBody(a) { if (!a) return '';
   const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
-  return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr">${esc(a.image.credit || '')}</span>` : ''}
+  return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr"${a.image.credit ? '' : ` data-cc="${esc(a.image.page || '')}"`}>${esc(a.image.credit || 'Image: Wikimedia Commons')}</span>` : ''}
     <h3 class="art-t">${esc(a.title)}</h3><span class="art-by">${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span>
     <div class="group art-kv">${kv.map(([l, v]) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${esc(v)}</span></div>`).join('')}</div>
     ${(a.sections || []).map(sc => `<div class="art-sec"><h4>${esc(sc.h)}</h4><p>${esc(sc.p)}</p></div>`).join('')}
@@ -2155,7 +2161,7 @@ function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); rend
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
 /* ---------- sheets ---------- */
-function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; sh.scrollTop = 0; if (was) return;
+function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; sh.scrollTop = 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
   document.body.classList.add('locked'); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
 function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); document.body.classList.remove('locked'); }
 const sheetOpen = () => $('sheet').classList.contains('open') || document.body.classList.contains('locked');
