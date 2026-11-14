@@ -1196,6 +1196,14 @@ body::before{will-change:transform;transform:translateZ(0)}
 .lv-hero.lv-noimg .lv-bigem{display:block;position:absolute;right:18px;top:10px;font-size:76px;line-height:1;opacity:.9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35));text-shadow:none}
 .lv-img{margin:-4px 0 4px}
 .lv-img img{max-height:230px;object-fit:cover}
+
+/* side menu: thin, quiet line icons v5.17 */
+.ditem .demo.dline{background:transparent!important;box-shadow:none!important;width:30px;height:30px;color:var(--fg-3)}
+.ditem .demo.dline svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ditem[aria-current="page"] .demo.dline{color:var(--accent-t);background:rgba(62,123,94,.10)!important;border-radius:10px}
+#drawer .ditem .demo.dline svg,#drawer .ditem[data-tab] .demo.dline svg,#drawer .ditem[aria-current="page"] .demo.dline svg{width:21px!important;height:21px!important;padding:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important;stroke:currentColor!important;stroke-width:1.5!important;fill:none!important}
+#drawer .ditem .demo.dline,#drawer .ditem[data-tab] .demo.dline{background:transparent!important;color:var(--fg-3)!important}
+#drawer .ditem[aria-current="page"] .demo.dline{background:rgba(62,123,94,.12)!important;color:var(--accent-t)!important;border-radius:10px}
 </style>
 </head>
 <body data-sec="today">
@@ -1221,7 +1229,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.16.1 · fact banner';
+const APP_VERSION = '5.17 · quiet menu';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -2119,11 +2127,26 @@ function renderTabbar() {
     `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON.today}</svg></button>` +
     b('calendar', 'Calendar') + b('others', 'Off duty');
 }
+const MENU_LINE = {
+  today: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+  reminders: '<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 004 0"/>',
+  study: '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>',
+  todos: '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.2l2.4 2.3 4.6-5"/>',
+  calendar: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  advances: '<path d="M5 4h11l3 3v13H5z"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4.5"/>',
+  ot: '<path d="M4.5 12h3l2-5 4 10 2-5h4"/>',
+  roster: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  cases: '<path d="M9 4h6v2H9z"/><path d="M8 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-2"/><path d="M9 11h6M9 15h4"/>',
+  music: '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
+  nba: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
+  backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
+  others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
+};
 const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
-  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
+  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_LINE[k] ? `<span class="demo dline" aria-hidden="true"><svg viewBox="0 0 24 24">${MENU_LINE[k]}</svg></span>` : MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
   const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
   const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
   const lines = [
