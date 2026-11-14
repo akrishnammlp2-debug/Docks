@@ -1167,7 +1167,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 .art-img{display:block;border-radius:14px;overflow:hidden;background:#1C2621;box-shadow:0 8px 22px -12px rgba(0,0,0,.5)}
 .art-img img{width:100%;height:auto;display:block}
 .art-cr{font-size:11.5px;color:var(--fg-3)!important;margin-top:-4px}
-#sheet .art-cr{color:#4A564F!important}
+#sheet .art-cr{color:#3A453F!important}
 .art-t{margin:4px 0 0;font-size:21px;line-height:1.25;color:var(--fg)!important}
 .art-by{font-size:14.5px;font-weight:600;color:var(--fg-2)!important;margin-top:-6px}
 #sheet .art-t{color:#1C2621!important}#sheet .art-by{color:#36433C!important}
@@ -1189,6 +1189,13 @@ body::before{will-change:transform;transform:translateZ(0)}
 .art-cap>span:last-child{font-size:13.5px;color:#E8EFEA!important}
 .art-go{position:absolute;right:12px;bottom:16px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:20px;line-height:1;color:#fff!important;background:rgba(255,255,255,.18)}
 .art-hero:active{transform:scale(.985)}
+
+/* fact banner with a picture v5.16 */
+.lv-hero .lv-bigem{display:none}
+.lv-hero.lv-noimg{background:linear-gradient(135deg,hsl(var(--lvh) 35% 30%),hsl(calc(var(--lvh) + 40) 40% 18%))}
+.lv-hero.lv-noimg .lv-bigem{display:block;position:absolute;right:18px;top:10px;font-size:76px;line-height:1;opacity:.9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35));text-shadow:none}
+.lv-img{margin:-4px 0 4px}
+.lv-img img{max-height:230px;object-fit:cover}
 </style>
 </head>
 <body data-sec="today">
@@ -1214,7 +1221,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.15 · painting banner';
+const APP_VERSION = '5.16 · fact banner';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -2034,11 +2041,13 @@ function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().
   const seen = new Set(pub.map(t => t.name.toLowerCase())); const add = Object.entries(mine).filter(([, v]) => v && !v.hide && v.name && !seen.has(v.name.toLowerCase())).map(([id, v]) => ({ id, name: v.name, emoji: v.emoji || '✨', mine: true }));
   return pub.concat(add); }
 function lovePickCard(x, big) { if (!x) return ''; const t = (LOVES().topics || []).find(t => t.id === x.topic) || {}; const src = x.source && x.source.url ? `<a class="lv-src" href="${esc(x.source.url)}" target="_blank" rel="noopener">${x.kind === 'article' ? 'Read the article' : 'Read more'} · ${esc(x.source.title || 'source')} ↗</a>` : '';
-  return `<div class="card lv-card${big ? ' lv-big' : ''}"><div class="lv-top"><span class="lv-chip">${esc(t.emoji || '✨')} ${esc(t.name || x.topicName || '')}</span><span class="lv-kind">${x.kind === 'article' ? 'Read today' : 'Fact of the day'}${big && x.date !== today() ? ' · ' + esc(fmtShort(x.date)) : ''}</span></div><b class="lv-t">${esc(x.title || '')}</b><p class="lv-x">${esc(x.text || '')}</p>${src}</div>`; }
+  const img = big && x.image ? `<a class="art-img lv-img" href="${esc(x.image.page || x.image.url)}" target="_blank" rel="noopener"><img src="${esc(x.image.url)}" alt="" decoding="async" loading="lazy" onerror="this.parentNode.remove()"></a>${x.image.credit ? `<span class="art-cr">${esc(x.image.credit)}</span>` : ''}` : '';
+  return `<div class="card lv-card${big ? ' lv-big' : ''}">${img}<div class="lv-top"><span class="lv-chip">${esc(t.emoji || '✨')} ${esc(t.name || x.topicName || '')}</span><span class="lv-kind">${x.kind === 'article' ? 'Read today' : 'Fact of the day'}${big && x.date !== today() ? ' · ' + esc(fmtShort(x.date)) : ''}</span></div><b class="lv-t">${esc(x.title || '')}</b><p class="lv-x">${esc(x.text || '')}</p>${src}</div>`; }
 function pageOthers() {
   const L = LOVES(); const pick = L.today; const T = loveTopics();
   let h = head('Off duty', 'Life outside the hospital');
-  h += `<div class="sec"><button type="button" class="card lv-tile" data-act="love-open"><span class="lv-ic" aria-hidden="true">${esc(pick ? (((L.topics || []).find(t => t.id === pick.topic) || {}).emoji || '✨') : '💛')}</span><span class="lv-tx"><span class="lv-eb">Things I love${pick ? ' · ' + esc(pick.topicName || '') : ''}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span class="lv-sub">${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') : plural(T.length, 'topic')}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`;
+  { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
+    h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(pick.image.url)}" alt="" decoding="async" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
   return h; }
 /* ---------- Off duty: painting of the day ---------- */
