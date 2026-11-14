@@ -1204,6 +1204,24 @@ body::before{will-change:transform;transform:translateZ(0)}
 #drawer .ditem .demo.dline svg,#drawer .ditem[data-tab] .demo.dline svg,#drawer .ditem[aria-current="page"] .demo.dline svg{width:21px!important;height:21px!important;padding:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important;stroke:currentColor!important;stroke-width:1.5!important;fill:none!important}
 #drawer .ditem .demo.dline,#drawer .ditem[data-tab] .demo.dline{background:transparent!important;color:var(--fg-3)!important}
 #drawer .ditem[aria-current="page"] .demo.dline{background:rgba(62,123,94,.12)!important;color:var(--accent-t)!important;border-radius:10px}
+
+/* cat food v5.19 */
+.cat-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:left}
+.cat-tx b{font-size:15.5px;color:var(--fg)!important}.cat-tx span{font-size:13.5px;color:var(--fg-2)!important}
+.cat-due{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;width:100%;padding:12px 14px!important;border:1.5px solid #B5782A!important}
+.cat-due-i{font-size:26px;line-height:1}
+.cat-row{display:flex;align-items:center;gap:10px;width:100%}
+.cat-badge{flex:none;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--blk-2,#D6E4D3);color:var(--fg)!important}
+.cat-row.soon .cat-badge{background:#8A4B10;color:#FFFFFF!important}
+.cat-card{display:flex;flex-direction:column;gap:8px;padding:14px!important;margin-bottom:10px}
+.cat-prod{font-size:13px;color:var(--fg-2)!important}
+#sheet .cat-prod{color:#36433C!important}
+.cat-hist{display:flex;flex-direction:column;gap:3px;border-top:1px solid rgba(28,38,33,.14);padding-top:8px}
+.cat-hist span{font-size:13px;color:var(--fg-2)!important}
+#sheet .cat-hist span{color:#36433C!important}
+.cat-hist .cat-hh{font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:11.5px}
+#sheet .cat-btn{background:#2B6448!important;color:#FFFFFF!important}
+.cat-amz{display:block;text-align:center;margin-top:6px;text-decoration:none}
 </style>
 </head>
 <body data-sec="today">
@@ -1229,7 +1247,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.18.1 · tidy';
+const APP_VERSION = '5.19 · cat food';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -1563,6 +1581,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += catTodayCard();
   h += habitCard();
   h += timerCard();
   // minimal glance tiles
@@ -1721,9 +1740,35 @@ function remRow(r, size, compact) {
   return `<div class="rowwrap rem">${remRing(st, size)}<button type="button" class="r-main" style="text-align:left" data-act="rem-edit" data-id="${r.id}"><span class="r-t" style="font-weight:600">${esc(r.title)}</span>${compact ? '' : `<span class="r-s">${esc(remRule(r))}</span>`}${remLine(r, st)}</button>${open && !st.doneFor ? `<button class="btn small ghost" type="button" data-act="rem-done" data-id="${r.id}" data-k="${st.p.key}">Done</button>` : ''}</div>`;
 }
 const remAttention = () => state.reminders.map(r => ({ r, st: remStatus(r) })).filter(x => x.st.s !== 'soon' || (!x.st.doneFor && x.st.days <= 3));
+/* ---------- Cat food (orders scanned from Amazon, kept locked) ---------- */
+const CAT_WARN = 6; // remind when fewer than this many days are left
+const catFoods = () => ((state.private && state.private.cat && state.private.cat.foods) || []);
+function catAddMonths(d, m) { const x = new Date(d + 'T12:00'); const day = x.getDate(); x.setMonth(x.getMonth() + m); if (x.getDate() < day) x.setDate(0); return x.toISOString().slice(0, 10); }
+function catInfo(f) { const mine = (state.catOrdered || {})[f.id]; const all = [...(f.orders || []), ...(mine ? [mine] : [])].sort(); const last = all[all.length - 1];
+  if (!last) return null; const next = f.everyMonths ? catAddMonths(last, f.everyMonths) : addDays(last, f.everyDays || 30);
+  const days = Math.round((new Date(next + 'T12:00') - new Date(today() + 'T12:00')) / 864e5);
+  return { last, next, days, soon: days < CAT_WARN, all: all.slice().reverse(), every: f.everyMonths ? `every ${f.everyMonths} months` : `every ${f.everyDays} days` }; }
+const catDate = d => new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+const catWhen = i => i.days < 0 ? `${plural(-i.days, 'day')} overdue` : i.days === 0 ? 'due today' : `in ${plural(i.days, 'day')}`;
+function catTodayCard() { const due = catFoods().map(f => [f, catInfo(f)]).filter(([, i]) => i && i.soon); if (!due.length) return '';
+  return `<div class="sec"><button type="button" class="card cat-due" data-act="cat-open"><span class="cat-due-i" aria-hidden="true">🐈</span><span class="cat-tx"><b>Time to buy cat food</b>${due.map(([f, i]) => `<span>${esc(f.name)}: reorder ${catWhen(i)}</span>`).join('')}</span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
+function catRemSection() { const F = catFoods(); if (!F.length) return '';
+  return `<div class="sec"><h2 class="sh">🐈 Cat food</h2><div class="group">${F.map(f => { const i = catInfo(f); if (!i) return '';
+    return `<button type="button" class="row cat-row${i.soon ? ' soon' : ''}" data-act="cat-open"><span class="cat-tx"><b>${esc(f.name)}</b><span>Last ordered ${catDate(i.last)} · ${i.every}</span></span><span class="cat-badge">${i.soon ? 'Buy ' + catWhen(i).replace('in ', 'in ') : catDate(i.next)}</span></button>`; }).join('')}</div></div>`; }
+function catSheet() { const F = catFoods();
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🐈 Cat food</h2><span></span></div>
+    ${F.map(f => { const i = catInfo(f); if (!i) return '';
+      return `<div class="card cat-card"><div class="lv-top"><span class="lv-chip">${f.kind === 'wet' ? '🥫 Wet' : '🥣 Dry'}</span><span class="lv-kind">${esc(i.every)}</span></div>
+        <b class="lv-t">${esc(f.name)}</b><span class="cat-prod">${esc(f.product || '')}</span>
+        <p class="lv-x">${i.soon ? `<b>Reorder ${catWhen(i)}</b> (${catDate(i.next)}).` : `Next order around <b>${catDate(i.next)}</b>, ${catWhen(i)}.`}</p>
+        <div class="btns"><button type="button" class="btn small cat-btn" data-act="cat-ordered" data-id="${esc(f.id)}">I ordered it today</button></div>
+        <div class="cat-hist"><span class="cat-hh">Orders</span>${i.all.slice(0, 8).map(d => `<span>${catDate(d)} ${d.slice(0, 4)}${d === (state.catOrdered || {})[f.id] ? ' · marked in Docks' : ''}</span>`).join('')}</div></div>`; }).join('')}
+    <a class="btn ghost cat-amz" href="https://www.amazon.in/gp/buyagain" target="_blank" rel="noopener">Reorder on Amazon (Buy Again) ↗</a>
+    <p class="foot">Orders come from the Amazon account (scanned ${esc(catDate(((state.private || {}).cat || {}).scanned || today()))}). Docks reminds you on Today when fewer than ${CAT_WARN} days are left. Say "check cat food" to Claude to re-scan Amazon.</p></div>`); }
 function pageReminders() {
   const att = remAttention().length;
   let h = head('Reminders', state.reminders.length ? (att ? plural(att, 'reminder') + ' need attention' : 'All on track') : '', 'Daily');
+  h += catRemSection();
   if (!state.reminders.length) return h + `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No reminders yet</span><span class="c-s">Add monthly or weekly reminders. Each one shows a countdown and comes back by itself.</span><button class="btn" type="button" data-act="rem-add" style="margin-top:8px">Add a reminder</button></div>`;
   const sorted = state.reminders.map(r => ({ r, st: remStatus(r) })).sort((a, b) => (a.st.s === 'late' ? -1e3 - a.st.days : a.st.s === 'today' ? -500 : a.st.days) - (b.st.s === 'late' ? -1e3 - b.st.days : b.st.s === 'today' ? -500 : b.st.days));
   h += `<div class="group">${sorted.map(x => remRow(x.r, 60)).join('')}</div>`;
@@ -2483,6 +2528,8 @@ document.addEventListener('click', e => {
     case 'mc-open': mcSheet(id); break;
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
+    case 'cat-open': catSheet(); break;
+    case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
     case 'art-open': artSheet(0); break;
     case 'art-past': artSheet(+b.dataset.i); break;
     case 'love-topic': loveHistSheet(id); break;
@@ -2656,7 +2703,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -2837,6 +2884,7 @@ function mergePrivate(prev, data) {
   if (data.cases) next.cases = { ...(cur.cases || {}), ...data.cases };
   if (data.reminders) next.reminders = data.reminders;
   if (data.faculty) next.faculty = data.faculty;
+  if (data.cat) next.cat = data.cat;
   if (data.ot) {
     const keepFrom = addDays(today(), -7); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
