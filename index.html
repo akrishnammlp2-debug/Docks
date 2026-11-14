@@ -1100,6 +1100,26 @@ body.locked .tabbar{transform:translate(-50%,170%);opacity:0}
 .tb-empty-i{font-size:30px;line-height:1}
 @media (min-width:900px){.tabbar{left:calc(50% + var(--side) / 2)}}
 @media print{.tabbar{display:none}}
+
+/* ==========================================================================
+   Smoothness v5.12: lighter repaints, instant taps
+   ========================================================================== */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%}
+button,a,label,select,summary,[data-act]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+/* the frosted top bar re-blurred the page on every scroll frame; a solid bar looks the same and costs nothing */
+.navbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--bg)!important}
+.ditem[aria-current="page"]{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* long words still wrap, but without forcing the whole page to be measured letter by letter */
+body,button,input,select,textarea,.c-t,.c-s,.c-big,.bk-t,.read-i b,.note-row span,.note-ul li{overflow-wrap:break-word!important}
+.otbl td,.otbl th,.r-t,.r-s,.s-m,.cell span,.pl span,.kv .r-v{overflow-wrap:anywhere!important}
+.card,.row,.sec>*{min-width:0}
+/* sliding pieces get their own layer so they glide instead of repainting */
+.sheet,.drawer,.tabbar{will-change:transform;backface-visibility:hidden}
+.scrim{will-change:opacity}
+.sheet{contain:layout paint}
+.tb-i,.tb-home,.btn,.card[data-act],.ditem{transition:transform .12s ease,background-color .15s ease}
+.tb-i:active,.btn:active,.card[data-act]:active{transform:scale(.97)}
+body::before{will-change:transform;transform:translateZ(0)}
 </style>
 </head>
 <body data-sec="today">
@@ -1125,7 +1145,7 @@ body.locked .tabbar{transform:translate(-50%,170%);opacity:0}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.11 · tab bar';
+const APP_VERSION = '5.12 · smoother';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1362,6 +1382,11 @@ function profWeather() {
 }
 /* Today banner: your own pictures (kept on this device, a different one each visit) or a drawn landscape that follows the time of day */
 let heroPics = [], heroIdx = 0, heroLoaded = false;
+/* smoothness: big pictures are kept as data: text; turn each into a short blob: link once so redraws don't re-parse/re-decode it */
+const PIC_CACHE = new Map();
+function picUrl(u) { if (!u || typeof u !== 'string' || !u.startsWith('data:')) return u || ''; let v = PIC_CACHE.get(u); if (v) return v;
+  try { const i = u.indexOf(','); const mime = (u.slice(5, i).split(';')[0]) || 'image/jpeg'; const bin = atob(u.slice(i + 1)); const a = new Uint8Array(bin.length); for (let j = 0; j < bin.length; j++) a[j] = bin.charCodeAt(j); v = URL.createObjectURL(new Blob([a], { type: mime })); } catch (_) { v = u; }
+  if (PIC_CACHE.size > 40) PIC_CACHE.clear(); PIC_CACHE.set(u, v); return v; }
 async function heroLoad() { heroLoaded = true; try { const v = await pdfTx('blobs', 'readonly', st => st.get('hero-pics')); heroPics = Array.isArray(v) ? v : []; } catch (_) { heroPics = []; } heroIdx = heroPics.length ? Math.floor(Math.random() * heroPics.length) : 0; if (tab === 'today') render(); }
 function shrinkImage(f, max) { return new Promise((res, rej) => { const url = URL.createObjectURL(f); const im = new Image(); im.onload = () => { const k = Math.min(1, max / Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.82)); }; im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('unreadable')); }; im.src = url; }); }
 async function heroAdd(files) {
@@ -1375,7 +1400,7 @@ async function heroRemove(i) { heroPics.splice(i, 1); try { await pdfTx('blobs',
 function heroSheet() {
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Banner pictures</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <p class="foot" style="margin:0">Your pictures show at the top of Today, a different one each time you open it. Kept on this device only. Up to 12.</p>
-    ${heroPics.length ? `<div class="hero-grid">${heroPics.map((u, i) => `<div class="hg"><img src="${u}" alt=""><button type="button" data-act="hero-del" data-i="${i}" aria-label="Remove picture">×</button></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No pictures yet, so a drawn landscape shows (it changes with the time of day).</span></div>'}
+    ${heroPics.length ? `<div class="hero-grid">${heroPics.map((u, i) => `<div class="hg"><img src="${picUrl(u)}" alt="" decoding="async"><button type="button" data-act="hero-del" data-i="${i}" aria-label="Remove picture">×</button></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No pictures yet, so a drawn landscape shows (it changes with the time of day).</span></div>'}
     <button class="btn" type="button" data-act="hero-add">Add pictures</button></div>`);
 }
 function skyPhase() { const h = new Date().getHours(); return h < 5 || h >= 20 ? 'night' : h < 7 ? 'dawn' : h < 17 ? 'day' : 'dusk'; }
@@ -1447,7 +1472,7 @@ function pageToday() {
   if (!heroLoaded) heroLoad();
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
-  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${pic}" alt="">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -1940,7 +1965,7 @@ function render() {
   document.body.dataset.sec = tab;
   $('nb-title').textContent = SECS[tab];
   $('nb-add').style.visibility = (tab === 'today' || tab === 'calendar' || tab === 'reminders') ? 'visible' : 'hidden';
-  $('nb-av').innerHTML = avatarHTML(profile());
+  { const av = avatarHTML(profile()); if (render.av !== av) { $('nb-av').innerHTML = av; render.av = av; } }
   const keepY = render.lastTab === tab ? (window.scrollY || document.documentElement.scrollTop || 0) : null; const pg = $('page'); const keepPg = render.lastTab === tab ? pg.scrollTop : 0;
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
   pg.innerHTML = PAGES[tab]();
@@ -1948,7 +1973,7 @@ function render() {
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
   renderTabbar();
-  renderDrawer();
+  if (drawerShown()) renderDrawer(); else render.drawerStale = true;
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
 const TB_ICON = {
@@ -1959,6 +1984,7 @@ const TB_ICON = {
   today: '<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/>'
 };
 function renderTabbar() {
+  if (renderTabbar.t === tab) return; renderTabbar.t = tab;
   const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON[k]}</svg><span>${label}</span></button>`;
   $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
     `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON.today}</svg></button>` +
@@ -1978,7 +2004,7 @@ function renderDrawer() {
     P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
     ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
   ].filter(Boolean);
-  $('drawer').innerHTML = `<div class="prof${P.photo ? ' tinted' : ' tinted none'}">${P.photo ? `<div class="prof-bg" style="background-image:url('${esc(P.photo)}')"></div>` : '<div class="prof-bg"></div>'}<div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
+  $('drawer').innerHTML = `<div class="prof${P.photo ? ' tinted' : ' tinted none'}">${P.photo ? `<div class="prof-bg" style="background-image:url('${esc(picUrl(P.photo))}')"></div>` : '<div class="prof-bg"></div>'}<div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
     ${profWeather()}
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
@@ -2001,20 +2027,22 @@ function toast(msg, undo) {
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
 function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1) heroIdx = (heroIdx + 1) % heroPics.length; if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
-function openDrawer() { $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
+const drawerShown = () => $('drawer').classList.contains('open') || matchMedia('(min-width:900px)').matches;
+function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
 /* ---------- sheets ---------- */
-function openSheet(html) { $('sheet-body').innerHTML = html; $('sheet').scrollTop = 0; $('sheet').classList.add('open'); $('scrim').classList.add('open'); document.body.classList.add('locked'); }
+function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; sh.scrollTop = 0; if (was) return;
+  document.body.classList.add('locked'); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
 function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); document.body.classList.remove('locked'); }
-const sheetOpen = () => $('sheet').classList.contains('open');
+const sheetOpen = () => $('sheet').classList.contains('open') || document.body.classList.contains('locked');
 /* swipe the sheet down to close it (from the handle, or anywhere when the sheet is scrolled to the top) */
-(() => { let y0 = null, dy = 0, t0 = 0; const sh = () => $('sheet');
+(() => { let y0 = null, dy = 0, t0 = 0, raf = 0; const sh = () => $('sheet');
   document.addEventListener('touchstart', e => { const el = sh(); if (!el || !el.classList.contains('open') || !el.contains(e.target) || e.touches.length !== 1) return;
     if (e.target.closest('input,textarea,select,.strip,.hab-row,.hero-chips')) return; if (el.scrollTop > 0 && !e.target.closest('.grab,.sheet-head')) return;
     y0 = e.touches[0].clientY; dy = 0; t0 = Date.now(); }, { passive: true });
   document.addEventListener('touchmove', e => { if (y0 === null) return; dy = e.touches[0].clientY - y0; const el = sh();
-    if (dy <= 0) { el.style.transform = ''; return; } if (el.scrollTop > 0 && dy < 12) return; el.style.transition = 'none'; el.style.transform = 'translateY(' + dy + 'px)'; }, { passive: true });
+    if (dy <= 0) { el.style.transform = ''; return; } if (el.scrollTop > 0 && dy < 12) return; el.style.transition = 'none'; if (!raf) raf = requestAnimationFrame(() => { raf = 0; if (y0 !== null) el.style.transform = 'translateY(' + Math.max(0, dy) + 'px)'; }); }, { passive: true });
   document.addEventListener('touchend', () => { if (y0 === null) return; const el = sh(); el.style.transition = ''; const fast = dy > 60 && Date.now() - t0 < 250;
     if (dy > 130 || fast) { el.style.transform = ''; closeSheet(); } else el.style.transform = ''; y0 = null; dy = 0; }, { passive: true });
 })();
@@ -2804,7 +2832,7 @@ async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((r
 let device = null; let deviceChecked = false;
 /* Profile: what arrives in the private file, overridden by anything edited on this phone. Never on the website in readable form. */
 function profile() { return { ...((state.private && state.private.profile) || {}), ...(state.profile || {}) }; }
-const avatarHTML = P => P.photo ? `<img src="${esc(P.photo)}" alt="">` : esc(((P.name || 'S').trim()[0] || 'S').toUpperCase());
+const avatarHTML = P => P.photo ? `<img src="${esc(picUrl(P.photo))}" alt="" decoding="async">` : esc(((P.name || 'S').trim()[0] || 'S').toUpperCase());
 function helloLine() { const h = new Date().getHours(); return h < 5 ? 'Late one — be gentle with yourself.' : h < 12 ? 'Here’s your day at a glance.' : h < 17 ? 'Here’s how the day looks.' : 'Here’s what’s still on today.'; }
 function greeting() { const h = new Date().getHours(); return h < 5 ? 'Good night' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; }
 let syncState = { status: 'off' };
