@@ -1176,6 +1176,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 #sheet .art-sec h4{color:#1E4A34!important}#sheet .art-sec p{color:#2A352F!important}
 .art-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left}
 .art-row b{font-size:14.5px}
+.art-miss{display:block;padding:22px 16px;border-radius:14px;text-align:center;font-weight:600;background:rgba(255,255,255,.55);color:#1E4A34!important;text-decoration:none}
 </style>
 </head>
 <body data-sec="today">
@@ -1201,7 +1202,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.14 · paintings';
+const APP_VERSION = '5.14.1 · paintings';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -2031,10 +2032,10 @@ function pageOthers() {
 /* ---------- Off duty: painting of the day ---------- */
 const ART = () => D.art || {};
 function artTile() { const a = ART().today;
-  return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic art-th" aria-hidden="true">${a && a.image ? `<img src="${esc(a.image.url)}" alt="" loading="lazy" decoding="async">` : '🖼️'}</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist + (a.year ? ' · ' + a.year : '')) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
+  return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic art-th" aria-hidden="true">${a && a.image ? `<img src="${esc(a.image.thumb || a.image.url)}" alt="" loading="lazy" decoding="async" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist + (a.year ? ' · ' + a.year : '')) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
 function artBody(a) { if (!a) return '';
   const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
-  return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.url.replace('/full/843,/', '/full/1686,/'))}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async"></a><span class="art-cr">${esc(a.image.credit || '')}</span>` : ''}
+  return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr">${esc(a.image.credit || '')}</span>` : ''}
     <h3 class="art-t">${esc(a.title)}</h3><span class="art-by">${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span>
     <div class="group art-kv">${kv.map(([l, v]) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${esc(v)}</span></div>`).join('')}</div>
     ${(a.sections || []).map(sc => `<div class="art-sec"><h4>${esc(sc.h)}</h4><p>${esc(sc.p)}</p></div>`).join('')}
@@ -2042,7 +2043,7 @@ function artBody(a) { if (!a) return '';
 function artSheet(i) { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean).filter((x, j, arr) => arr.findIndex(y => y.date === x.date) === j); const a = all[i || 0];
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${i ? esc(fmtShort(a.date)) : 'Painting of the day'}</h2><span></span></div>
     ${a ? artBody(a) : '<div class="card"><span class="c-s">Your first painting arrives tomorrow morning.</span></div>'}
-    ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.url)}" alt="" loading="lazy">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`); }
+    ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.thumb || x.image.url)}" alt="" loading="lazy" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`); }
 function loveSheet() {
   const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Things I love</h2><span></span></div>
