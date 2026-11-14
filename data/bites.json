@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13",
+ "updated": "2026-11-14",
  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
  "cats": [
   "Drugs",
@@ -228,6 +228,88 @@
      "items": [
       "Many anaesthesia machines offer pressure support with an apnoea backup, for example PSVPro on GE machines. If the patient stops breathing for the set backup time, a mandatory mode takes over. This is useful during emergence and LMA cases.",
       "Names, ranges and defaults differ between machines, so check the manual of the machine you are using."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "paediatric-spinal-dose",
+   "cat": "Paediatric",
+   "title": "Paediatric spinal anaesthesia: dose",
+   "aliases": [
+    "pediatric spinal dose",
+    "paediatric spinal",
+    "spinal in children",
+    "infant spinal",
+    "subarachnoid block in children",
+    "paediatric SAB dose"
+   ],
+   "pearl": "Smaller child = more mg/kg (more CSF per kg) but a shorter block.",
+   "refs": [
+    {
+     "title": "Gupta A, Saha U. Spinal anesthesia in children: a review. J Anaesthesiol Clin Pharmacol 2014;30:10–18",
+     "url": "https://doi.org/10.4103/0970-9185.125687"
+    },
+    {
+     "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019;19:126–34",
+     "url": "https://doi.org/10.1016/j.bjae.2018.12.003"
+    },
+    {
+     "title": "Spinal anesthesia in infants and children: a one year prospective audit. Anesth Essays Res 2014;8:324–9",
+     "url": "https://doi.org/10.4103/0259-1162.143124"
+    }
+   ],
+   "created": "2026-11-14",
+   "updated": "2026-11-14",
+   "seen": 1,
+   "summary": "The spinal dose in children is chosen by body weight, and the mg/kg dose rises as the child gets smaller. Infants have more CSF per kg, more of it in the spinal canal, and faster drug removal, so they need a larger weight-based dose and still get a shorter block than adults.",
+   "sections": [
+    {
+     "h": "0.5% hyperbaric bupivacaine by weight",
+     "rows": [
+      [
+       "Under 5 kg",
+       "0.5 mg/kg (0.1 mL/kg) in some schemes; up to 1 mg/kg (0.2 mL/kg) in others, especially for awake neonatal and infant spinals."
+      ],
+      [
+       "5–15 kg",
+       "0.4 mg/kg (0.08 mL/kg)."
+      ],
+      [
+       "Over 15 kg",
+       "0.3 mg/kg (0.06 mL/kg)."
+      ],
+      [
+       "Adolescents",
+       "Dose moves towards adult dosing; never give more than the adult dose."
+      ]
+     ]
+    },
+    {
+     "h": "Why smaller children need more per kg",
+     "items": [
+      "CSF volume per kg is higher: about 10 mL/kg in neonates and 4 mL/kg in infants and toddlers, against 2 mL/kg in adults.",
+      "About half of the CSF lies in the spinal canal in children, against roughly a third in adults, so the drug is diluted more.",
+      "A very vascular pia and a high cardiac output clear the drug quickly, so the block is short: about 45–90 minutes in neonates and infants."
+     ]
+    },
+    {
+     "h": "What changes the dose",
+     "items": [
+      "The surgery: its expected length and the level of block needed.",
+      "Adjuvants to lengthen the block: clonidine 1 microgram/kg, fentanyl 0.2 microgram/kg (higher doses are also described), adrenaline 2–4 micrograms/kg.",
+      "Intrathecal morphine has been used, but only with monitored postoperative care.",
+      "Ex-premature infants (under 60 weeks postconceptional age): avoid sedatives and opioids where possible because of postoperative apnoea."
+     ]
+    },
+    {
+     "h": "Practical points",
+     "items": [
+      "Volumes are tiny: draw up in a 1 mL syringe and allow for the dead space of the needle.",
+      "Puncture at L4–5 or L5–S1. At birth the cord ends near L3 and the dural sac at S3–S4; adult levels are reached by about 1–2 years.",
+      "Do not lift the legs after injection (for example to place the cautery pad): it can cause a high spinal.",
+      "Blood pressure usually stays stable in younger children (under about 5 years), so fluid preloading is not needed.",
+      "Dosing schemes differ slightly between texts: follow the department protocol."
      ]
     }
    ]
