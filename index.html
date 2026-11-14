@@ -1244,6 +1244,17 @@ body::before{will-change:transform;transform:translateZ(0)}
 .shop-n em{font-style:normal;color:#4A564F!important;font-size:12.5px;white-space:nowrap}
 .shop-p{flex:none;font-size:13.5px;font-weight:600;color:#2A352F!important}
 .shop-no{display:block;margin-top:8px;font-size:12px;color:#4A564F!important}
+
+/* my orders page v5.21 */
+.shop-page .shop-tabs button{background:var(--blk,#E3EDE1);color:var(--fg)!important;border-color:var(--line)}
+.shop-page .shop-tabs button.on{background:#2B6448;color:#FFFFFF!important;border-color:#2B6448}
+.shop-page .shop-stats div{background:var(--blk,#E3EDE1)}
+.shop-page .shop-stats b{color:var(--fg)!important}.shop-page .shop-stats span{color:var(--fg-3)!important}
+.shop-page .shop-again span{color:var(--fg-2)!important}.shop-page .shop-again .cat-hh{color:var(--fg-3)!important}
+.shop-page .shop-order .cat-tx b{color:var(--fg)!important}.shop-page .shop-order .cat-tx span{color:var(--fg-2)!important}
+.shop-page .shop-n{color:var(--fg)!important}.shop-page .shop-n em{color:var(--fg-3)!important}
+.shop-page .shop-p{color:var(--fg-2)!important}.shop-page .shop-no{color:var(--fg-3)!important}
+.shop-page .shop-items,.shop-page .shop-it{border-color:var(--line)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1269,7 +1280,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.20 · my orders';
+const APP_VERSION = '5.21 · orders in menu';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
@@ -1292,7 +1303,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -2109,7 +2120,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup, others: pageOthers };
+const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -2129,7 +2140,6 @@ function pageOthers() {
   let h = head('Off duty', 'Life outside the hospital');
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(pick.image.url)}" alt="" decoding="async" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
-  h += shopTile();
   h += artTile();
   return h; }
 /* ---------- Off duty: things I've ordered this year (locked) ---------- */
@@ -2139,18 +2149,21 @@ function shopYear(st) { const y = today().slice(0, 4); return (st.orders || []).
 function shopTile() { const S = SHOP().stores || {}; const keys = Object.keys(S); if (!keys.length) return '';
   let orders = 0, items = 0; keys.forEach(k => shopYear(S[k]).forEach(o => { orders++; o.items.forEach(i => items += i.q || 1); }));
   return `<div class="sec"><button type="button" class="card lv-tile" data-act="shop-open" data-id="${esc(keys[0])}"><span class="lv-ic" aria-hidden="true">🛍️</span><span class="lv-tx"><span class="lv-eb">Things I've ordered in ${today().slice(0, 4)}</span><b>${plural(orders, 'order')} · ${plural(items, 'item')}</b><span class="lv-sub">${keys.map(k => esc(S[k].name)).join(' · ')}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
-function shopSheet(key) { const S = SHOP().stores || {}; const keys = Object.keys(S); const k = S[key] ? key : keys[0]; const st = S[k] || {}; const O = shopYear(st);
+function shopBody(key) { const S = SHOP().stores || {}; const keys = Object.keys(S); const k = S[key] ? key : keys[0]; const st = S[k] || {}; const O = shopYear(st);
   const units = O.reduce((n, o) => n + o.items.reduce((m, i) => m + (i.q || 1), 0), 0); const spent = O.reduce((n, o) => n + (+o.total || 0), 0);
   const cnt = {}; O.forEach(o => o.items.forEach(i => { if (!i.p) return; const nm = i.n.replace(/\s*\(free\)/i, ''); cnt[nm] = (cnt[nm] || 0) + 1; }));
   const again = Object.entries(cnt).filter(([, c]) => c > 1).sort((a, b) => b[1] - a[1]);
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Ordered in ${today().slice(0, 4)}</h2><span></span></div>
-    <div class="shop-tabs">${keys.map(x => `<button type="button" data-act="shop-open" data-id="${esc(x)}"${x === k ? ' aria-pressed="true" class="on"' : ''}>${esc(S[x].name)}</button>`).join('')}</div>
+  if (!keys.length) return `<div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🛍️</span><span class="c-t">No orders yet</span><span class="c-s">Your Nykaa orders appear here once they're synced to this device.</span></div>`;
+  return `<div class="shop-tabs">${keys.map(x => `<button type="button" data-act="shop-open" data-id="${esc(x)}"${x === k ? ' aria-pressed="true" class="on"' : ''}>${esc(S[x].name)}</button>`).join('')}</div>
     <div class="shop-stats"><div><b>${O.length}</b><span>orders</span></div><div><b>${units}</b><span>items</span></div><div><b>${inr(spent)}</b><span>spent</span></div></div>
     ${again.length ? `<div class="card shop-again"><span class="cat-hh">Bought more than once</span>${again.map(([n, c]) => `<span>${esc(n)} <b>×${c}</b></span>`).join('')}</div>` : ''}
     ${O.map((o, j) => `<details class="card shop-order"${j === 0 ? ' open' : ''}><summary><span class="cat-tx"><b>${catDate(o.date)}</b><span>${plural(o.items.reduce((m, i) => m + (i.q || 1), 0), 'item')} · ${inr(o.total)}${o.delivered ? ' · delivered ' + catDate(o.delivered) : ''}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary>
       <div class="shop-items">${o.items.map(i => `<div class="shop-it"><span class="shop-n">${esc(i.n)}${i.s ? ` <em>${esc(i.s)}</em>` : ''}</span><span class="shop-p">${i.q > 1 ? i.q + ' × ' : ''}${i.p ? inr(i.p) : 'Free'}</span></div>`).join('')}</div>
       <span class="shop-no">Order ${esc(o.no)}</span></details>`).join('')}
-    <p class="foot">From your ${esc(st.name || '')} order emails (scanned ${esc(catDate(SHOP().scanned || today()))}). Kept locked, only your paired devices can open it. Say "update my orders" to Claude to refresh.</p></div>`); }
+    <p class="foot">From your ${esc(st.name || '')} order emails (scanned ${esc(catDate(SHOP().scanned || today()))}). Kept locked, only your paired devices can open it. Refreshed every Sunday evening.</p>`; }
+let shopKey = null;
+function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0, 4), 'Personal') + `<div class="sec shop-page">${shopBody(shopKey)}</div>`; }
+
 
 /* ---------- Off duty: painting of the day ---------- */
 const ART = () => D.art || {};
@@ -2228,6 +2241,7 @@ const MENU_LINE = {
   music: '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
   nba: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
   backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
+  orders: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 016 0"/>',
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
 };
 const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
@@ -2250,7 +2264,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -2464,6 +2478,7 @@ function renderSearch(q) {
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
+  { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -2572,7 +2587,7 @@ document.addEventListener('click', e => {
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
     case 'cat-open': catSheet(); break;
-    case 'shop-open': shopSheet(id); break;
+    case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
     case 'art-open': artSheet(0); break;
     case 'art-past': artSheet(+b.dataset.i); break;
