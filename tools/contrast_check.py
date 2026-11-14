@@ -3,7 +3,7 @@
 # Contrast check: every visible text element on every tab (+ key sheets), light and dark. Flags WCAG ratio < 4.5 (normal) / < 3 (large >= 18.66px bold or 24px).
 import sys,asyncio,json
 from playwright.async_api import async_playwright
-S=sys.argv[1]; TABS=['today','reminders','study','todos','calendar','advances','ot','roster','cases','music','nba','backup']
+S=sys.argv[1]; TABS=['today','reminders','study','todos','calendar','advances','ot','roster','cases','music','nba','backup','others']
 JS=r"""()=>{
 const parse=c=>{const m=c.match(/rgba?\(([^)]+)\)/);if(!m)return null;const p=m[1].split(',').map(x=>parseFloat(x));return {r:p[0],g:p[1],b:p[2],a:p.length>3?p[3]:1};};
 const lum=c=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(c.r)+.7152*f(c.g)+.0722*f(c.b);};
@@ -18,7 +18,7 @@ document.querySelectorAll('body *').forEach(el=>{ if(!el.offsetParent&&getComput
  const r=el.getBoundingClientRect(); if(r.width<2||r.height<2||r.bottom<0||r.top>innerHeight*3)return;
  const cs=getComputedStyle(el); if(cs.visibility==='hidden'||+cs.opacity<.2)return;
  if(el.closest('.tban,.pwx,.hero-top,.mplay,.ldot,[aria-hidden=true]'))return; // text over pictures handled by overlays
- let op=1,e=el;while(e){op*=+getComputedStyle(e).opacity;e=e.parentElement;}
+ let op=1,e=el;while(e){op*=+getComputedStyle(e).opacity;e=e.parentElement;} if(op<.2)return;
  const fg=parse(cs.color); const bg=bgOf(el); if(!fg||!bg)return;
  const f=blend({...fg,a:fg.a*op},bg); const L1=lum(f),L2=lum(bg); const ratio=(Math.max(L1,L2)+.05)/(Math.min(L1,L2)+.05);
  const size=parseFloat(cs.fontSize),bold=+cs.fontWeight>=700; const need=(size>=24||(size>=18.66&&bold))?3:4.5;

@@ -1078,6 +1078,28 @@ mark{background:#F3DD8C;color:#1C2621}
 @media (prefers-color-scheme:dark){#page .hero .c-lab,#page .hero .c-m{color:#C2E2CC!important}#page .n{color:#FFFFFF!important}}
 
 .badge,#page .badge{background:hsl(var(--h) 70% 86%)!important;color:#0E1512!important;border-color:hsl(var(--h) 45% 55%)!important}
+
+/* ==========================================================================
+   Bottom tab bar v5.11: floating pill, centre home button
+   ========================================================================== */
+.tabbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);z-index:30;transform:translateX(-50%);width:min(520px,calc(100vw - 24px));display:grid;grid-template-columns:1fr 1fr 64px 1fr 1fr;align-items:center;gap:2px;padding:6px;border-radius:999px;background:linear-gradient(180deg,#2C4A41,#1D3530);box-shadow:0 12px 30px -10px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12),0 0 0 1px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .2s}
+body.locked .tabbar{transform:translate(-50%,170%);opacity:0}
+.tb-i{height:56px;min-width:0;border-radius:999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#E4EFE7!important;font-family:var(--font-body,inherit);font-size:11.5px;font-weight:600;letter-spacing:.01em;-webkit-tap-highlight-color:transparent}
+.tb-i span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;color:#E4EFE7!important}
+.tb-i svg,.tb-home svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tb-i[aria-current="page"]{background:#12241F;box-shadow:inset 0 1px 2px rgba(0,0,0,.35)}
+.tb-i[aria-current="page"],.tb-i[aria-current="page"] span{color:#FFFFFF!important}
+.tb-i:active{transform:scale(.95)}
+.tb-home{justify-self:center;width:58px;height:58px;margin-top:-22px;border-radius:50%;display:grid;place-items:center;background:#F3EEE4;color:#1D3530!important;box-shadow:0 8px 18px -6px rgba(0,0,0,.5),0 0 0 4px #1D3530;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.tb-home svg{width:27px;height:27px;stroke-width:2.1}
+.tb-home[aria-current="page"]{background:#CFE3CF;color:#12241F!important}
+.tb-home:active{transform:scale(.93)}
+.page,#page{padding-bottom:calc(120px + env(safe-area-inset-bottom))!important}
+#toast{bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.tb-empty{align-items:center;text-align:center;padding:34px 18px!important;gap:6px}
+.tb-empty-i{font-size:30px;line-height:1}
+@media (min-width:900px){.tabbar{left:calc(50% + var(--side) / 2)}}
+@media print{.tabbar{display:none}}
 </style>
 </head>
 <body data-sec="today">
@@ -1089,6 +1111,7 @@ mark{background:#F3DD8C;color:#1C2621}
 <div id="banner"></div>
 <main class="page" id="page"></main>
 <nav class="dock" id="dock" aria-label="Main sections"></nav>
+<nav class="tabbar" id="tabbar" aria-label="Quick sections"></nav>
 <aside class="drawer" id="drawer" aria-label="Sections"></aside>
 <div class="scrim" id="dscrim" data-act="drawerclose"></div>
 <div class="scrim" id="scrim" data-act="close"></div>
@@ -1102,7 +1125,7 @@ mark{background:#F3DD8C;color:#1C2621}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.10 · readable';
+const APP_VERSION = '5.11 · tab bar';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
 
@@ -1124,8 +1147,8 @@ const IC = {
 const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
-  today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Academics', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings'
+  today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Others'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -1526,7 +1549,7 @@ function pageTodos() {
 
 function pageCalendar() {
   const { y, m } = view; const t = today();
-  let h = head('Academics', '', 'Calendar');
+  let h = head('Calendar', '', 'Classes, cases & duties');
   const offset = (new Date(y, m, 1).getDay() + 6) % 7; const last = new Date(y, m + 1, 0).getDate();
   let g = ['M','T','W','T','F','S','S'].map(d => `<div class="dw">${d}</div>`).join('');
   for (let i = 0; i < offset; i++) g += '<div></div>';
@@ -1910,7 +1933,8 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup };
+const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup, others: pageOthers };
+function pageOthers() { return head('Others', 'Saved for later') + `<div class="sec"><div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🐾</span><span class="c-t">Nothing here yet</span><span class="c-s">This space is kept free. Tell Claude what you'd like it to hold.</span></div></div>`; }
 function render() {
   REG = [];
   document.body.dataset.sec = tab;
@@ -1923,8 +1947,22 @@ function render() {
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
+  renderTabbar();
   renderDrawer();
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
+}
+const TB_ICON = {
+  ot: '<path d="M9 4h6v2H9z"/><path d="M8 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-2"/><path d="M9 11h6M9 15h4"/>',
+  study: '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>',
+  calendar: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>',
+  today: '<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/>'
+};
+function renderTabbar() {
+  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON[k]}</svg><span>${label}</span></button>`;
+  $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
+    `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON.today}</svg></button>` +
+    b('calendar', 'Calendar') + b('others', 'Others');
 }
 const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
 function renderDrawer() {
