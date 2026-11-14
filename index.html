@@ -1120,6 +1120,20 @@ body,button,input,select,textarea,.c-t,.c-s,.c-big,.bk-t,.read-i b,.note-row spa
 .tb-i,.tb-home,.btn,.card[data-act],.ditem{transition:transform .12s ease,background-color .15s ease}
 .tb-i:active,.btn:active,.card[data-act]:active{transform:scale(.97)}
 body::before{will-change:transform;transform:translateZ(0)}
+
+/* Off duty: things I love v5.13 */
+.lv-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.lv-h .sh{margin-bottom:8px}
+.lv-card{display:flex;flex-direction:column;gap:8px;padding:16px!important}
+.lv-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.lv-chip{font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--blk-2,#D6E4D3);color:var(--fg)!important}
+.lv-kind{font-size:12px;color:var(--fg-3)!important;font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.lv-t{font-size:18px;line-height:1.3;color:var(--fg)!important}
+.lv-x{margin:0;font-size:15px;line-height:1.55;color:var(--fg-2)!important}
+.lv-src{font-size:14px;font-weight:600;color:var(--accent-t)!important;text-decoration:none}
+#sheet .lv-card{margin-bottom:10px}
+.lv-topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.lv-tp{padding:8px 13px;border-radius:999px;background:var(--blk,#E3EDE1);color:var(--fg)!important;font-size:14px;font-weight:500;border:1px solid var(--line)}
+.lv-add{background:transparent;border-style:dashed;color:var(--accent-t)!important;font-weight:600}
 </style>
 </head>
 <body data-sec="today">
@@ -1145,9 +1159,9 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.12 · smoother';
+const APP_VERSION = '5.13 · off duty';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1168,7 +1182,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Others'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -1959,7 +1973,30 @@ function pageBackup() {
 
 /* ---------- render ---------- */
 const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup, others: pageOthers };
-function pageOthers() { return head('Others', 'Saved for later') + `<div class="sec"><div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🐾</span><span class="c-t">Nothing here yet</span><span class="c-s">This space is kept free. Tell Claude what you'd like it to hold.</span></div></div>`; }
+/* ---------- Off duty: things I love (daily fact) ---------- */
+const LOVES = () => D.loves || {};
+function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
+  const seen = new Set(pub.map(t => t.name.toLowerCase())); const add = Object.entries(mine).filter(([, v]) => v && !v.hide && v.name && !seen.has(v.name.toLowerCase())).map(([id, v]) => ({ id, name: v.name, emoji: v.emoji || '✨', mine: true }));
+  return pub.concat(add); }
+function lovePickCard(x, big) { if (!x) return ''; const t = (LOVES().topics || []).find(t => t.id === x.topic) || {}; const src = x.source && x.source.url ? `<a class="lv-src" href="${esc(x.source.url)}" target="_blank" rel="noopener">${x.kind === 'article' ? 'Read the article' : 'Read more'} · ${esc(x.source.title || 'source')} ↗</a>` : '';
+  return `<div class="card lv-card${big ? ' lv-big' : ''}"><div class="lv-top"><span class="lv-chip">${esc(t.emoji || '✨')} ${esc(t.name || x.topicName || '')}</span><span class="lv-kind">${x.kind === 'article' ? 'Read today' : 'Fact of the day'}${big && x.date !== today() ? ' · ' + esc(fmtShort(x.date)) : ''}</span></div><b class="lv-t">${esc(x.title || '')}</b><p class="lv-x">${esc(x.text || '')}</p>${src}</div>`; }
+function pageOthers() {
+  const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
+  let h = head('Off duty', 'Life outside the hospital');
+  h += `<div class="sec"><div class="lv-h"><h2 class="sh">Things I love</h2>${hist.length ? `<button class="link" type="button" data-act="love-hist">Earlier</button>` : ''}</div>`;
+  h += pick ? lovePickCard(pick, true) : `<div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🐾</span><span class="c-t">Your first fact arrives tomorrow morning</span><span class="c-s">One topic, picked at random, every day around 7 AM.</span></div>`;
+  h += `<div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div>`;
+  h += `<p class="foot">A new fact or article from one of these appears every morning. Tap a topic to see its past picks or remove it.</p></div>`;
+  return h; }
+function fmtShort(d) { try { return new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); } catch (_) { return d; } }
+function loveHistSheet(id) { const L = LOVES(); const all = [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, a) => a.findIndex(y => y.date === x.date) === i).filter(x => !id || x.topic === id);
+  const t = id && loveTopics().find(x => x.id === id);
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t ? esc(t.emoji + ' ' + t.name) : 'Earlier picks'}</h2><span></span></div>
+    ${all.length ? all.map(x => lovePickCard(x, true)).join('') : '<div class="card"><span class="c-s">No picks from this topic yet. It will come up soon.</span></div>'}
+    ${t ? `<button type="button" class="btn danger" data-act="love-rm" data-id="${esc(t.id)}" style="margin-top:14px">Remove “${esc(t.name)}” from my list</button>` : ''}</div>`); }
+function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Something I love</h2><button type="submit" class="link strong">Add</button></div>
+  <div class="group"><div class="row field hab-ed"><input name="e" placeholder="✨" maxlength="4" aria-label="Emoji"><input class="left" name="n" placeholder="e.g. Studio Ghibli, space, F1" aria-label="Topic" required></div></div>
+  <p class="foot">The more specific, the better the facts. It joins the daily draw once your devices sync.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=n]'); if (i) i.focus(); }, 350); }
 function render() {
   REG = [];
   document.body.dataset.sec = tab;
@@ -1988,7 +2025,7 @@ function renderTabbar() {
   const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON[k]}</svg><span>${label}</span></button>`;
   $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
     `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON.today}</svg></button>` +
-    b('calendar', 'Calendar') + b('others', 'Others');
+    b('calendar', 'Calendar') + b('others', 'Off duty');
 }
 const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
 function renderDrawer() {
@@ -2223,6 +2260,7 @@ function renderSearch(q) {
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
+  { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
   const chap = []; BOOKS().forEach(b => b.chapters.forEach(c => { if (hit(c.title, c.part, b.title)) chap.push(row(`data-act="book-open" data-id="${esc(b.id)}"`, c.n + '. ' + c.title, [b.title, state.bookDone[b.id + '|' + c.n] ? 'Done ✓' : ''].filter(Boolean).join(' · '))); }));
@@ -2327,6 +2365,10 @@ document.addEventListener('click', e => {
     case 'mc-pickday': mcPick(b.dataset.d); break;
     case 'mc-blank': mcSheet('', ''); break;
     case 'mc-open': mcSheet(id); break;
+    case 'love-hist': loveHistSheet(''); break;
+    case 'love-topic': loveHistSheet(id); break;
+    case 'love-add': loveAddSheet(); break;
+    case 'love-rm': { const t = loveTopics().find(x => x.id === id); if (t) { state.loveMine = state.loveMine || {}; if (t.mine) delete state.loveMine[id]; else state.loveMine[id] = { hide: true }; closeSheet(); commit('Removed from your list'); } break; }
     case 'mc-del': if (state.myCases[id]) { delete state.myCases[id]; closeSheet(); commit('Case removed'); } break;
     case 'wx-sheet': openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Weather</h2><button type="button" class="link strong" data-act="close">Done</button></div>${weatherCard()}</div>`); break;
     case 'book-tick': {
@@ -2429,6 +2471,7 @@ document.addEventListener('submit', e => {
     case 'pdfmeta': {
       const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
       pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
+    case 'love': { const nm = (fd.get('n') || '').trim().slice(0, 60); if (!nm) break; state.loveMine = state.loveMine || {}; state.loveMine['lv-' + uid()] = { name: nm, emoji: (fd.get('e') || '✨').trim() || '✨' }; closeSheet(); commit('Added ✓'); break; }
     case 'habits': {
       const n = +fd.get('count'); const out = []; const old = HABITS();
       for (let i = 0; i < n; i++) { const nm = (fd.get('n' + i) || '').trim(); const id = fd.get('id' + i); if (!nm || fd.get('x' + i)) { const o = old.find(x => x.id === id); if (o) out.push({ ...o, deleted: true }); continue; }
@@ -2494,7 +2537,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -2596,11 +2639,12 @@ async function deviceSync(manual) {
     }
     // outbox for Claude: my cases not yet in the logbook (plain JSON, private repository only)
     const pending = MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
-    const osig = fnv(JSON.stringify(pending));
+    const loves = state.loveMine || {};
+    const osig = fnv(JSON.stringify([pending, loves]));
     if (osig !== S.lastOutbox) {
       const op = '/contents/outbox/' + device.kid + '.json';
       const oc = await gh(cfg, op); const osha = oc.ok ? (await oc.json()).sha : undefined;
-      const body = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), note: 'Cases Apoorva logged in Docks for Claude to add to the logbook sheet and SLCM. Private.', cases: pending };
+      const body = { v: 1, device: device.kid, name: me ? me.name : 'device', at: nowISO(), note: 'Cases Apoorva logged in Docks for Claude to add to the logbook sheet and SLCM. Private. loves = topics she added (name) or removed (hide) in Off duty.', cases: pending, loves };
       const or2 = await gh(cfg, op, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'outbox ' + pending.length, content: utf8b64(JSON.stringify(body, null, 1)), sha: osha }) });
       if (or2.ok) { S.lastOutbox = osig; save(); }
     }

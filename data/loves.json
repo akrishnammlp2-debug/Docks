@@ -1,0 +1,22 @@
+{
+ "updated": "2026-11-14",
+ "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
+ "topics": [
+  {"id": "cats", "name": "Cats", "emoji": "🐈"},
+  {"id": "dota2", "name": "Dota 2", "emoji": "🎮"},
+  {"id": "houseplants", "name": "Houseplants", "emoji": "🪴"},
+  {"id": "cooking", "name": "Cooking & nutrition", "emoji": "🍳"},
+  {"id": "finance", "name": "Personal finance", "emoji": "💰"},
+  {"id": "nba", "name": "NBA", "emoji": "🏀"}
+ ],
+ "today": {
+  "date": "2026-11-14",
+  "topic": "cats",
+  "topicName": "Cats",
+  "kind": "fact",
+  "title": "A cat's larynx can purr on its own",
+  "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20–30 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
+  "source": {"title": "Current Biology study, via HealthDay", "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"}
+ },
+ "history": []
+}
