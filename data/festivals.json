@@ -1,0 +1,233 @@
+{
+ "updated": "2026-11-14",
+ "note": "Festivals and Karnataka public holidays. holiday=true means a Karnataka general/regional holiday. theme = festive look key.",
+ "items": [
+  {
+   "date": "2026-11-24",
+   "name": "Guru Nanak Jayanti",
+   "emoji": "🪔",
+   "holiday": true
+  },
+  {
+   "date": "2026-11-26",
+   "name": "Huttari (Kodagu harvest festival)",
+   "emoji": "🌾",
+   "holiday": true
+  },
+  {
+   "date": "2026-11-27",
+   "name": "Kanakadasa Jayanti",
+   "emoji": "📿",
+   "holiday": true
+  },
+  {
+   "date": "2026-12-24",
+   "name": "Christmas Eve",
+   "emoji": "🎄",
+   "holiday": true
+  },
+  {
+   "date": "2026-12-25",
+   "name": "Christmas",
+   "emoji": "🎄",
+   "holiday": true,
+   "theme": "christmas"
+  },
+  {
+   "date": "2026-12-31",
+   "name": "New Year's Eve",
+   "emoji": "🎆",
+   "theme": "newyear"
+  },
+  {
+   "date": "2027-01-01",
+   "name": "New Year's Day",
+   "emoji": "🎆",
+   "theme": "newyear"
+  },
+  {
+   "date": "2027-01-15",
+   "name": "Makara Sankranti",
+   "emoji": "🪁",
+   "holiday": true,
+   "theme": "sankranti"
+  },
+  {
+   "date": "2027-01-26",
+   "name": "Republic Day",
+   "emoji": "🇮🇳",
+   "holiday": true,
+   "theme": "india"
+  },
+  {
+   "date": "2027-03-06",
+   "name": "Maha Shivaratri",
+   "emoji": "🔱",
+   "holiday": true
+  },
+  {
+   "date": "2027-03-09",
+   "name": "Khutub-E-Ramzan (Eid al-Fitr)",
+   "emoji": "🌙",
+   "holiday": true,
+   "theme": "eid"
+  },
+  {
+   "date": "2027-03-22",
+   "name": "Holi",
+   "emoji": "🎨",
+   "theme": "holi"
+  },
+  {
+   "date": "2027-03-26",
+   "name": "Good Friday",
+   "emoji": "✝️",
+   "holiday": true
+  },
+  {
+   "date": "2027-04-07",
+   "name": "Ugadi",
+   "emoji": "🌿",
+   "holiday": true,
+   "theme": "ugadi"
+  },
+  {
+   "date": "2027-04-14",
+   "name": "Dr. B. R. Ambedkar Jayanti",
+   "emoji": "📘",
+   "holiday": true
+  },
+  {
+   "date": "2027-04-15",
+   "name": "Ram Navami",
+   "emoji": "🏹"
+  },
+  {
+   "date": "2027-04-18",
+   "name": "Mahavir Jayanti",
+   "emoji": "🕊️",
+   "holiday": true
+  },
+  {
+   "date": "2027-05-01",
+   "name": "Labour Day",
+   "emoji": "🛠️",
+   "holiday": true
+  },
+  {
+   "date": "2027-05-09",
+   "name": "Basava Jayanti",
+   "emoji": "📜",
+   "holiday": true
+  },
+  {
+   "date": "2027-05-17",
+   "name": "Bakrid (Eid al-Adha)",
+   "emoji": "🌙",
+   "holiday": true,
+   "theme": "eid"
+  },
+  {
+   "date": "2027-06-16",
+   "name": "Muharram",
+   "emoji": "🌙",
+   "holiday": true
+  },
+  {
+   "date": "2027-08-15",
+   "name": "Independence Day",
+   "emoji": "🇮🇳",
+   "holiday": true,
+   "theme": "india"
+  },
+  {
+   "date": "2027-08-15",
+   "name": "Eid-e-Milad",
+   "emoji": "🌙",
+   "holiday": true
+  },
+  {
+   "date": "2027-08-17",
+   "name": "Raksha Bandhan",
+   "emoji": "🧵"
+  },
+  {
+   "date": "2027-08-25",
+   "name": "Krishna Janmashtami",
+   "emoji": "🪈",
+   "theme": "janmashtami"
+  },
+  {
+   "date": "2027-09-04",
+   "name": "Ganesh Chaturthi",
+   "emoji": "🐘",
+   "holiday": true,
+   "theme": "ganesha"
+  },
+  {
+   "date": "2027-09-27",
+   "name": "Mahalaya Amavasya",
+   "emoji": "🪔",
+   "holiday": true
+  },
+  {
+   "date": "2027-10-01",
+   "name": "Navaratri begins",
+   "emoji": "🪷",
+   "theme": "dasara"
+  },
+  {
+   "date": "2027-10-02",
+   "name": "Gandhi Jayanti",
+   "emoji": "🕊️",
+   "holiday": true
+  },
+  {
+   "date": "2027-10-09",
+   "name": "Ayudha Puja & Vijayadashami (Dasara)",
+   "emoji": "🪷",
+   "holiday": true,
+   "theme": "dasara"
+  },
+  {
+   "date": "2027-10-15",
+   "name": "Valmiki Jayanti",
+   "emoji": "📜",
+   "holiday": true
+  },
+  {
+   "date": "2027-10-28",
+   "name": "Naraka Chaturdashi",
+   "emoji": "🪔",
+   "holiday": true,
+   "theme": "diwali"
+  },
+  {
+   "date": "2027-10-29",
+   "name": "Deepavali",
+   "emoji": "🪔",
+   "holiday": true,
+   "theme": "diwali"
+  },
+  {
+   "date": "2027-11-01",
+   "name": "Kannada Rajyotsava",
+   "emoji": "💛",
+   "holiday": true,
+   "theme": "rajyotsava"
+  },
+  {
+   "date": "2027-11-16",
+   "name": "Kanakadasa Jayanti",
+   "emoji": "📿",
+   "holiday": true
+  },
+  {
+   "date": "2027-12-25",
+   "name": "Christmas",
+   "emoji": "🎄",
+   "holiday": true,
+   "theme": "christmas"
+  }
+ ]
+}

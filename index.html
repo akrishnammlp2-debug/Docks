@@ -1255,6 +1255,28 @@ body::before{will-change:transform;transform:translateZ(0)}
 .shop-page .shop-n{color:var(--fg)!important}.shop-page .shop-n em{color:var(--fg-3)!important}
 .shop-page .shop-p{color:var(--fg-2)!important}.shop-page .shop-no{color:var(--fg-3)!important}
 .shop-page .shop-items,.shop-page .shop-it{border-color:var(--line)!important}
+
+/* personal calendar + festive look v5.22 */
+.cal-mode{margin-bottom:4px}
+.pc-row{display:flex;align-items:center;gap:10px}
+.pc-e{flex:none;width:30px;font-size:21px;text-align:center;line-height:1}
+.pc-when{flex:none;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--blk-2,#D6E4D3);color:var(--fg)!important}
+.pc-past .pc-when{background:transparent;border:1px solid var(--line)}
+.pc-row .cat-tx span+span{font-size:12.5px;color:var(--fg-2)!important}
+.pc-month{padding:12px 14px!important;margin-bottom:8px}
+.pc-month summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
+.pc-month summary::-webkit-details-marker{display:none}
+.pc-month summary b{flex:1;font-size:15.5px;color:var(--fg)!important}
+.pc-month[open] .lv-chev{transform:rotate(90deg)}
+.pc-n{font-size:12.5px;font-weight:700;color:var(--fg-3)!important}
+.pc-f{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.pc-hol{flex:none;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:#7A2E1B;color:#FFFFFF!important}
+.fest-deco{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.fest-lights{position:absolute;left:0;right:0;top:0;width:100%;height:34px;filter:drop-shadow(0 0 4px rgba(255,220,150,.55))}
+.fest-snow{position:absolute;inset:0;width:100%;height:100%}
+.fest-diyas{position:absolute;left:0;right:0;bottom:0;width:100%;height:30px;opacity:.95}
+.fest-row{position:absolute;z-index:3;left:14px;top:50px;display:flex}
+.fest-chip{white-space:nowrap;font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:999px;background:rgba(10,14,24,.55);color:#FFFFFF!important;backdrop-filter:none}
 </style>
 </head>
 <body data-sec="today">
@@ -1280,9 +1302,9 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.21 · orders in menu';
+const APP_VERSION = '5.22 · personal calendar';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1607,7 +1629,7 @@ function pageToday() {
   if (!heroLoaded) heroLoad();
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
-  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>${festDeco()}<div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div>${festChip() ? `<div class="fest-row">${festChip()}</div>` : ''}<div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -1708,9 +1730,12 @@ function pageTodos() {
   return h;
 }
 
+let calMode = (() => { try { return localStorage.getItem('studydesk.calMode') || 'academic'; } catch (_) { return 'academic'; } })();
 function pageCalendar() {
   const { y, m } = view; const t = today();
-  let h = head('Calendar', '', 'Classes, cases & duties');
+  let h = head('Calendar', '', calMode === 'personal' ? 'Travel, deliveries & festivals' : 'Classes, cases & duties');
+  h += `<div class="sec cal-mode"><div class="seg"><button type="button" data-act="cal-mode" data-m="academic" aria-pressed="${calMode !== 'personal'}">Academic</button><button type="button" data-act="cal-mode" data-m="personal" aria-pressed="${calMode === 'personal'}">Personal</button></div></div>`;
+  if (calMode === 'personal') return h + personalCal();
   const offset = (new Date(y, m, 1).getDay() + 6) % 7; const last = new Date(y, m + 1, 0).getDate();
   let g = ['M','T','W','T','F','S','S'].map(d => `<div class="dw">${d}</div>`).join('');
   for (let i = 0; i < offset; i++) g += '<div></div>';
@@ -1773,6 +1798,50 @@ function remRow(r, size, compact) {
   return `<div class="rowwrap rem">${remRing(st, size)}<button type="button" class="r-main" style="text-align:left" data-act="rem-edit" data-id="${r.id}"><span class="r-t" style="font-weight:600">${esc(r.title)}</span>${compact ? '' : `<span class="r-s">${esc(remRule(r))}</span>`}${remLine(r, st)}</button>${open && !st.doneFor ? `<button class="btn small ghost" type="button" data-act="rem-done" data-id="${r.id}" data-k="${st.p.key}">Done</button>` : ''}</div>`;
 }
 const remAttention = () => state.reminders.map(r => ({ r, st: remStatus(r) })).filter(x => x.st.s !== 'soon' || (!x.st.doneFor && x.st.days <= 3));
+/* ---------- Personal calendar: travel, deliveries, festivals & holidays ---------- */
+const FESTS = () => ((D.festivals && D.festivals.items) || []);
+const PERS = () => ((state.private && state.private.personal) || {});
+const dIn = d => Math.round((new Date(d + 'T12:00') - new Date(today() + 'T12:00')) / 864e5);
+const inWords = n => n === 0 ? 'today' : n === 1 ? 'tomorrow' : n < 0 ? plural(-n, 'day') + ' ago' : 'in ' + plural(n, 'day');
+const pDate = d => new Date(d + 'T12:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+const MODE_EMO = { bus: '🚌', train: '🚆', flight: '✈️', cab: '🚕', stay: '🏨' };
+function personalCal() { const t = today(); const P = PERS(); const tr = P.travel || [], dv = P.deliveries || [];
+  const soon = [];
+  FESTS().filter(f => dIn(f.date) >= 0 && dIn(f.date) <= 60).forEach(f => soon.push({ d: f.date, e: f.emoji || '🎉', t: f.name, s: f.holiday ? 'Holiday' : 'Festival', k: 'fest' }));
+  tr.filter(x => dIn(x.date) >= 0 && dIn(x.date) <= 60).forEach(x => soon.push({ d: x.date, e: MODE_EMO[x.mode] || '🧳', t: `${x.from} → ${x.to}`, s: x.detail || '', k: 'trip' }));
+  dv.filter(x => x.status !== 'delivered').forEach(x => soon.push({ d: x.date || t, e: '📦', t: x.what || 'Delivery', s: (x.store || '') + (x.status ? ' · ' + x.status : ''), k: 'parcel' }));
+  catFoods().forEach(f => { const i = catInfo(f); if (i && i.days <= 60 && i.days >= -7) soon.push({ d: i.next, e: '🐈', t: 'Reorder ' + f.name, s: 'Cat food', k: 'cat' }); });
+  soon.sort((a, b) => a.d.localeCompare(b.d));
+  const row = x => `<div class="row pc-row pc-${x.k}"><span class="pc-e" aria-hidden="true">${esc(x.e)}</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${esc(pDate(x.d))}${x.s ? ' · ' + esc(x.s) : ''}</span></span><span class="pc-when">${esc(inWords(dIn(x.d)))}</span></div>`;
+  let h = `<div class="sec"><h2 class="sh">Coming up</h2>${soon.length ? `<div class="group">${soon.map(row).join('')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>'}</div>`;
+  h += `<div class="sec"><h2 class="sh">📦 On the way</h2>${dv.filter(x => x.status !== 'delivered').length ? `<div class="group">${dv.filter(x => x.status !== 'delivered').map(x => `<div class="row pc-row"><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.date ? ' · expected ' + esc(pDate(x.date)) : ''}${x.status ? ' · ' + esc(x.status) : ''}</span></span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">Nothing on its way right now. Shipments from your email show up here.</span></div>'}</div>`;
+  const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
+  h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
+  const months = {}; FESTS().filter(f => dIn(f.date) >= 0).forEach(f => { const k = f.date.slice(0, 7); (months[k] = months[k] || []).push(f); });
+  h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}
+    <p class="foot">Karnataka public holidays and major festivals. Travel and deliveries come from your email (checked ${esc(catDate(P.scanned || t))}) and are kept locked.</p></div>`;
+  return h; }
+
+/* ---------- Festive look: follows the next festival automatically ---------- */
+const FEST_LOOK = {
+  christmas: { lead: 45, after: 1, label: 'Christmas', chip: '🎄' }, newyear: { lead: 5, after: 1, label: 'New Year', chip: '🎆' },
+  sankranti: { lead: 10, after: 1, label: 'Sankranti', chip: '🪁' }, india: { lead: 4, after: 0, label: '', chip: '🇮🇳' },
+  eid: { lead: 5, after: 1, label: 'Eid', chip: '🌙' }, holi: { lead: 10, after: 0, label: 'Holi', chip: '🎨' },
+  ugadi: { lead: 7, after: 0, label: 'Ugadi', chip: '🌿' }, janmashtami: { lead: 10, after: 0, label: 'Janmashtami', chip: '🪈' },
+  ganesha: { lead: 10, after: 2, label: 'Ganesh Chaturthi', chip: '🐘' }, dasara: { lead: 12, after: 0, label: 'Dasara', chip: '🪷' },
+  diwali: { lead: 14, after: 2, label: 'Deepavali', chip: '🪔' }, rajyotsava: { lead: 4, after: 0, label: 'Rajyotsava', chip: '💛' }
+};
+function festNow() { if ((state.settings || {}).festOn === false) return null;
+  const c = FESTS().filter(f => f.theme && FEST_LOOK[f.theme]).map(f => ({ f, L: FEST_LOOK[f.theme], n: dIn(f.date) })).filter(x => x.n <= x.L.lead && x.n >= -x.L.after).sort((a, b) => a.n - b.n);
+  return c.length ? { key: c[0].f.theme, name: c[0].L.label || c[0].f.name, chip: c[0].L.chip, n: c[0].n, date: c[0].f.date } : null; }
+function festChip() { const F = festNow(); if (!F) return ''; return `<span class="fest-chip">${F.chip} ${esc(F.name)} ${F.n === 0 ? 'today' : F.n < 0 ? '' : 'in ' + plural(F.n, 'day')}</span>`; }
+function festDeco() { const F = festNow(); if (!F) return '';
+  const lights = (cols) => `<svg class="fest-lights" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q50 30 100 8 T200 8 T300 8 T400 6" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>${[20, 60, 100, 140, 180, 220, 260, 300, 340, 380].map((x, i) => `<circle cx="${x}" cy="${[16, 22, 9, 20, 13, 19, 9, 21, 14, 12][i]}" r="4.2" fill="${cols[i % cols.length]}"/>`).join('')}</svg>`;
+  const flakes = `<svg class="fest-snow" viewBox="0 0 400 200" aria-hidden="true">${[[30, 60, 3], [90, 120, 2], [150, 40, 2.5], [210, 150, 2], [270, 70, 3], [330, 130, 2], [370, 50, 2.5], [60, 170, 2]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity=".75"/>`).join('')}</svg>`;
+  const diyas = `<svg class="fest-diyas" viewBox="0 0 400 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true">${[40, 120, 200, 280, 360].map(x => `<g transform="translate(${x} 30)"><path d="M-14 0 Q0 12 14 0 Z" fill="#C9772B"/><path d="M0 -14 Q6 -6 0 -2 Q-6 -6 0 -14Z" fill="#FFD36B"/></g>`).join('')}</svg>`;
+  const map = { christmas: lights(['#E25555', '#F2C14E', '#5FBF77', '#FFFFFF']) + flakes, newyear: lights(['#F2C14E', '#FFFFFF', '#9FC5FF']), diwali: diyas + lights(['#FFD36B', '#F2A541']), dasara: lights(['#F2A541', '#E25555', '#FFD36B']), ganesha: lights(['#F2A541', '#FFD36B']), sankranti: lights(['#F2C14E', '#5FBF77', '#E25555']), holi: lights(['#FF6FB5', '#6FD3FF', '#FFD36B', '#7CE38B']), india: lights(['#FF9933', '#FFFFFF', '#138808']), rajyotsava: lights(['#FFD400', '#E2231A']), eid: lights(['#F2C14E', '#FFFFFF']), ugadi: lights(['#7CE38B', '#FFD36B']), janmashtami: lights(['#6FA8FF', '#FFD36B']) };
+  return `<div class="fest-deco fest-${F.key}">${map[F.key] || ''}</div>`; }
+
 /* ---------- Cat food (orders scanned from Amazon, kept locked) ---------- */
 const CAT_WARN = 6; // remind when fewer than this many days are left
 const catFoods = () => ((state.private && state.private.cat && state.private.cat.foods) || []);
@@ -2106,6 +2175,7 @@ function pageBackup() {
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
@@ -2575,6 +2645,7 @@ document.addEventListener('click', e => {
     case 'day': sel = b.dataset.k; render(); break;
     case 'month': view.m += +b.dataset.d; if (view.m < 0) { view.m = 11; view.y--; } if (view.m > 11) { view.m = 0; view.y++; } render(); break;
     case 'rmode': rmode = b.dataset.m; render(); break;
+    case 'cal-mode': calMode = b.dataset.m; try { localStorage.setItem('studydesk.calMode', calMode); } catch (_) {} render(); break;
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
@@ -2944,6 +3015,7 @@ function mergePrivate(prev, data) {
   if (data.reminders) next.reminders = data.reminders;
   if (data.faculty) next.faculty = data.faculty;
   if (data.cat) next.cat = data.cat;
+  if (data.personal) next.personal = data.personal;
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
   if (data.ot) {
     const keepFrom = addDays(today(), -7); const ot = { ...(cur.ot || {}), ...data.ot };
