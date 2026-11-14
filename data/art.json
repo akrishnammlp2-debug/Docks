@@ -1,0 +1,29 @@
+{
+ "updated": "2026-11-14",
+ "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
+ "today": {
+  "date": "2026-11-14",
+  "title": "Paris Street; Rainy Day",
+  "artist": "Gustave Caillebotte",
+  "artistLife": "French, 1848–1894",
+  "year": "1877",
+  "medium": "Oil on canvas",
+  "size": "212 × 276 cm (the people are nearly life-size)",
+  "where": "Art Institute of Chicago",
+  "movement": "Impressionism, with a Realist finish",
+  "fame": "famous",
+  "image": {
+   "url": "https://www.artic.edu/iiif/2/f8fd76e9-c396-5678-36ed-6a348c904d27/full/843,/0/default.jpg",
+   "credit": "Art Institute of Chicago, public domain"
+  },
+  "sections": [
+   {"h": "The painting", "p": "A damp afternoon at a big crossroads near the Gare Saint-Lazare in Paris. Well-dressed couples stroll under near-identical umbrellas on the wet, shiny cobbles while a tall green lamppost splits the canvas down the middle. It was Caillebotte's largest and most ambitious work."},
+   {"h": "The artist", "p": "Caillebotte trained as an engineer and lawyer before turning to painting. He was rich, and used that money to rent exhibition halls and buy paintings from struggling friends like Monet, Renoir and Pissarro. When he died at 45 he left his collection to France, and after a long row the state accepted much of it. That gift became the heart of the Impressionist rooms at the Musée d'Orsay."},
+   {"h": "The time", "p": "In the 1850s and 60s, Baron Haussmann tore down much of medieval Paris and built wide boulevards, uniform cream-stone buildings and gas lamps. This painting shows that brand-new city only a few years old, and a new middle class learning to stroll in it. It hung at the third Impressionist exhibition in 1877, which Caillebotte helped organise and pay for."},
+   {"h": "What's special", "p": "Unlike his friends' quick, broken brushwork, Caillebotte painted smooth, almost photographic surfaces. He crops figures at the edges as if a camera had snapped them, and the man on the right is cut in half. The streets rush away in steep perspective, and nobody looks at anyone else, a quiet comment on how lonely the modern city could feel."},
+   {"h": "Look for", "p": "The lamppost and its shadow form a cross that divides the scene into four parts. The rain is only in the shine of the stones and the umbrellas. Then count how many umbrellas are almost exactly the same."}
+  ],
+  "source": {"title": "Art Institute of Chicago", "url": "https://www.artic.edu/artworks/20684/paris-street-rainy-day"}
+ },
+ "history": []
+}

@@ -1158,6 +1158,24 @@ body::before{will-change:transform;transform:translateZ(0)}
 .lv-more[open] .lv-chev{transform:rotate(90deg)}
 .lv-more .lv-chev{transition:transform .2s}
 #sheet .lv-more .lv-chev{color:#36433C!important}
+
+/* Off duty: painting of the day v5.14 */
+.art-th{overflow:hidden;padding:0!important}
+.art-th img{width:100%;height:100%;object-fit:cover;display:block}
+.art-th.sm{flex:none;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--blk-2,#D6E4D3)}
+.art-wrap{display:flex;flex-direction:column;gap:10px}
+.art-img{display:block;border-radius:14px;overflow:hidden;background:#1C2621;box-shadow:0 8px 22px -12px rgba(0,0,0,.5)}
+.art-img img{width:100%;height:auto;display:block}
+.art-cr{font-size:11.5px;color:var(--fg-3)!important;margin-top:-4px}
+#sheet .art-cr{color:#4A564F!important}
+.art-t{margin:4px 0 0;font-size:21px;line-height:1.25;color:var(--fg)!important}
+.art-by{font-size:14.5px;font-weight:600;color:var(--fg-2)!important;margin-top:-6px}
+#sheet .art-t{color:#1C2621!important}#sheet .art-by{color:#36433C!important}
+.art-sec h4{margin:6px 0 4px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-t)!important}
+.art-sec p{margin:0;font-size:15px;line-height:1.6;color:var(--fg-2)!important}
+#sheet .art-sec h4{color:#1E4A34!important}#sheet .art-sec p{color:#2A352F!important}
+.art-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left}
+.art-row b{font-size:14.5px}
 </style>
 </head>
 <body data-sec="today">
@@ -1183,9 +1201,9 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.13.2 · off duty';
+const APP_VERSION = '5.14 · paintings';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2008,7 +2026,23 @@ function pageOthers() {
   const L = LOVES(); const pick = L.today; const T = loveTopics();
   let h = head('Off duty', 'Life outside the hospital');
   h += `<div class="sec"><button type="button" class="card lv-tile" data-act="love-open"><span class="lv-ic" aria-hidden="true">${esc(pick ? (((L.topics || []).find(t => t.id === pick.topic) || {}).emoji || '✨') : '💛')}</span><span class="lv-tx"><span class="lv-eb">Things I love${pick ? ' · ' + esc(pick.topicName || '') : ''}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span class="lv-sub">${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') : plural(T.length, 'topic')}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`;
+  h += artTile();
   return h; }
+/* ---------- Off duty: painting of the day ---------- */
+const ART = () => D.art || {};
+function artTile() { const a = ART().today;
+  return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic art-th" aria-hidden="true">${a && a.image ? `<img src="${esc(a.image.url)}" alt="" loading="lazy" decoding="async">` : '🖼️'}</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist + (a.year ? ' · ' + a.year : '')) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
+function artBody(a) { if (!a) return '';
+  const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
+  return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.url.replace('/full/843,/', '/full/1686,/'))}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async"></a><span class="art-cr">${esc(a.image.credit || '')}</span>` : ''}
+    <h3 class="art-t">${esc(a.title)}</h3><span class="art-by">${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span>
+    <div class="group art-kv">${kv.map(([l, v]) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${esc(v)}</span></div>`).join('')}</div>
+    ${(a.sections || []).map(sc => `<div class="art-sec"><h4>${esc(sc.h)}</h4><p>${esc(sc.p)}</p></div>`).join('')}
+    ${a.source && a.source.url ? `<a class="lv-src" href="${esc(a.source.url)}" target="_blank" rel="noopener">More at ${esc(a.source.title || 'the museum')} ↗</a>` : ''}</div>`; }
+function artSheet(i) { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean).filter((x, j, arr) => arr.findIndex(y => y.date === x.date) === j); const a = all[i || 0];
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${i ? esc(fmtShort(a.date)) : 'Painting of the day'}</h2><span></span></div>
+    ${a ? artBody(a) : '<div class="card"><span class="c-s">Your first painting arrives tomorrow morning.</span></div>'}
+    ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.url)}" alt="" loading="lazy">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`); }
 function loveSheet() {
   const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Things I love</h2><span></span></div>
@@ -2289,6 +2323,7 @@ function renderSearch(q) {
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
+  { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -2396,6 +2431,8 @@ document.addEventListener('click', e => {
     case 'mc-open': mcSheet(id); break;
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
+    case 'art-open': artSheet(0); break;
+    case 'art-past': artSheet(+b.dataset.i); break;
     case 'love-topic': loveHistSheet(id); break;
     case 'love-add': loveAddSheet(); break;
     case 'love-rm': { const t = loveTopics().find(x => x.id === id); if (t) { state.loveMine = state.loveMine || {}; if (t.mine) delete state.loveMine[id]; else state.loveMine[id] = { hide: true }; closeSheet(); commit('Removed from your list'); } break; }
