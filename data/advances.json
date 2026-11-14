@@ -1,7 +1,40 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43019874",
+      "doi": "10.1016/j.jclinane.2026.112375",
+      "added": "2026-11-14",
+      "date": "2026-11-12",
+      "title": "Inhaled anesthetics and severe neurologic complications in individuals with Venezuelan maternal ancestry carrying the mitochondrial MT-ND4 m.11232 T > C variant: a systematic review.",
+      "journal": "J Clin Anesth",
+      "type": "Systematic review",
+      "area": "Anaesthesia",
+      "tags": [
+        "Pharmacology",
+        "Neuro",
+        "Paediatric"
+      ],
+      "summary": "This review pulled together case reports and lab work since 2021 on previously well children and adults of Venezuelan maternal descent who failed to wake up, developed basal ganglia damage and often died after routine general anaesthesia, mostly with sevoflurane. A mitochondrial complex I variant (MT-ND4 m.11232T>C) is the leading suspect, and in patient cells sevoflurane, but not propofol, sharply impaired complex I function. How common the variant is and how risky each agent truly is remain unknown, so the authors favour avoiding volatiles in at-risk patients.",
+      "why": "A new pharmacogenetic anaesthesia hazard worth knowing alongside malignant hyperthermia: a good reminder to ask about unexplained anaesthetic deaths in maternal relatives and to have a TIVA plan ready."
+    },
+    {
+      "pmid": "43018426",
+      "doi": "10.1097/CCM.0000000000007447",
+      "added": "2026-11-14",
+      "date": "2026-11-12",
+      "title": "National Early Warning Score 2-Guided Sepsis Hour-1 Bundle Care for Adults With Suspected Sepsis in the Emergency Department: A Hybrid Type 1 Effectiveness-Implementation Stepped-Wedge Randomized Controlled Trial Pilot Study (NEWS-1 TRIPS).",
+      "journal": "Crit Care Med",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis",
+        "Resuscitation"
+      ],
+      "summary": "In four Hong Kong emergency departments, about 200 adults with infection and a NEWS-2 score of 5 or more were enrolled in a stepped-wedge pilot where a high score automatically triggered the Surviving Sepsis Hour-1 Bundle. Lactate, blood cultures and early antibiotics were done more often, but full bundle completion reached only 56%, and 30-day mortality did not differ significantly (3.9% usual care vs 9.2% with the new pathway; the trial was far too small to judge). The authors conclude a full-scale trial is feasible but needs many more patients.",
+      "why": "Shows that a simple, free bedside score can push teams towards faster sepsis basics, but also that the Hour-1 Bundle is hard to deliver in a busy casualty, a familiar problem in Indian emergency departments and ICUs."
+    },
     {
       "pmid": "43014822",
       "doi": "10.1136/bmj-2026-101087",
