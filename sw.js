@@ -1,6 +1,8 @@
 // Study Desk offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v100';
+const CACHE = 'study-desk-v101';
+const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
+const PIC_DAYS = 3, PIC_MAX = 24;
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -10,22 +12,38 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== PICS).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 
+const isPic = url => /(^|\.)wikimedia\.org$/.test(url.hostname) && (url.pathname.includes('/Special:FilePath/') || url.hostname === 'upload.wikimedia.org');
+
+async function picture(req) {
+  const c = await caches.open(PICS);
+  const hit = await c.match(req.url);
+  if (hit) { const at = +(hit.headers.get('x-sd-at') || 0); if (!at || Date.now() - at < PIC_DAYS * 864e5 || hit.type === 'opaque') return hit; }
+  try {
+    const res = await fetch(req);
+    if (res.ok || res.type === 'opaque') {
+      c.put(req.url, res.clone()).then(async () => { const keys = await c.keys(); for (let i = 0; i < keys.length - PIC_MAX; i++) c.delete(keys[i]); });
+    }
+    return res;
+  } catch (err) { if (hit) return hit; throw err; }
+}
+
 self.addEventListener('fetch', e => {
   const req = e.request;
+  if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (req.method !== 'GET' || url.origin !== location.origin) return;
+  if (isPic(url)) { e.respondWith(picture(req)); return; }
+  if (url.origin !== location.origin) return;
   if (url.pathname.includes('/data/')) return; // always straight to the network
   if (req.mode === 'navigate') {
-    e.respondWith(
-      fetch(req, { cache: 'no-store' }) // always ask GitHub for the newest page, never a stale copy
-        .then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return res; })
-        .catch(() => caches.match('./index.html'))
-    );
+    // newest page from GitHub, but don't keep you waiting on weak Wi-Fi: after 3 s use the saved copy
+    const net = fetch(req, { cache: 'no-store' }).then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return res; });
+    net.catch(() => {});
+    e.respondWith(Promise.race([net, new Promise(r => setTimeout(r, 3000)).then(() => caches.match('./index.html')).then(h => h || net)]).catch(() => caches.match('./index.html')));
     return;
   }
   e.respondWith(caches.match(req).then(hit => hit || fetch(req)));

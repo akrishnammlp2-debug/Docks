@@ -12,8 +12,8 @@
 <meta name="theme-color" content="#1E2622" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 <style>
 /* Look carried over from EverythingEverywhere: each section wears an anaesthesia syringe-label colour.
    Today = induction yellow, Study = antiemetic salmon, To-do = local-anaesthetic grey, Academics = opioid blue,
@@ -1364,6 +1364,8 @@ body[data-fest="sankranti"] #fest-fx .fx1,body[data-fest="ugadi"] #fest-fx .fx1,
 /* tiny seasonal touch on the home button */
 body[data-fest="christmas"] .tb-home::before{content:'';position:absolute;top:-3px;left:50%;width:34px;height:9px;transform:translateX(-50%);border-radius:10px 10px 6px 6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.15)}
 body[data-fest="christmas"] .tb-home{position:relative}
+/* skip drawing off-screen advance cards until you scroll to them v5.29 */
+.card.adv{content-visibility:auto;contain-intrinsic-size:auto 260px}
 </style>
 </head>
 <body data-sec="today">
@@ -1389,7 +1391,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.28 · gentle festive';
+const APP_VERSION = '5.29 · faster';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1498,7 +1500,7 @@ async function loadData(manual) {
       try { localStorage.setItem('studydesk.data.' + f, JSON.stringify({ at: nowISO(), data: j })); } catch (_) {}
     } catch (e) { failed++; if (dataStatus[f].from === 'network') dataStatus[f].from = 'saved'; }
   }));
-  render();
+  render(); (window.requestIdleCallback || setTimeout)(warmPictures, 1500);
   if (manual) toast(failed ? "Couldn't reach GitHub. Showing the last saved copy." : 'Up to date ✓');
 }
 const CASES = () => (D.cases && D.cases.items) || [];
@@ -1971,6 +1973,9 @@ function festNow() { if ((state.settings || {}).festOn === false) return null;
 function festFx() { const F = festNow(); const key = F ? F.key : ''; if (document.body.dataset.fest === key) return; document.body.dataset.fest = key;
   let fx = document.getElementById('fest-fx'); if (!key) { if (fx) fx.remove(); return; }
   if (!fx) { fx = document.createElement('div'); fx.id = 'fest-fx'; fx.setAttribute('aria-hidden', 'true'); fx.innerHTML = '<i class="fx1"></i><i class="fx2"></i>'; document.body.prepend(fx); } }
+const bannerSrc = u => (u || '').replace(/([?&]width=)\d+/, '$1800');
+/* warm the picture cache early so Off duty opens with today's pictures ready */
+function warmPictures() { try { const A = (D.art || {}).today, L = (D.loves || {}).today; [A && A.image && bannerSrc(A.image.url), A && A.image && A.image.url, L && L.image && bannerSrc(L.image.url)].filter(Boolean).forEach(u => { const i = new Image(); i.decoding = 'async'; i.src = u; }); } catch (_) {} }
 function festChip() { const F = festNow(); if (!F) return ''; return `<span class="fest-chip">${F.chip} ${esc(F.name)} ${F.n === 0 ? 'today' : F.n < 0 ? '' : 'in ' + plural(F.n, 'day')}</span>`; }
 function festDeco() { const F = festNow(); if (!F) return '';
   const lights = (cols) => `<svg class="fest-lights" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q50 30 100 8 T200 8 T300 8 T400 6" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>${[20, 60, 100, 140, 180, 220, 260, 300, 340, 380].map((x, i) => `<circle cx="${x}" cy="${[16, 22, 9, 20, 13, 19, 9, 21, 14, 12][i]}" r="4.2" fill="${cols[i % cols.length]}"/>`).join('')}</svg>`;
@@ -2350,7 +2355,7 @@ function pageOthers() {
   const L = LOVES(); const pick = L.today; const T = loveTopics();
   let h = head('Off duty', 'Life outside the hospital');
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
-    h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(pick.image.url)}" alt="" decoding="async" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
+    h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(bannerSrc(pick.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
   return h; }
 /* ---------- Off duty: things I've ordered this year (locked) ---------- */
@@ -2380,7 +2385,7 @@ function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0
 const ART = () => D.art || {};
 function artTile() { const a = ART().today;
   if (!a || !a.image) return `<div class="sec"><button type="button" class="card lv-tile" data-act="art-open"><span class="lv-ic" aria-hidden="true">🖼️</span><span class="lv-tx"><span class="lv-eb">Painting of the day</span><b>${esc(a ? a.title : 'Your first painting arrives tomorrow')}</b><span class="lv-sub">${a ? esc(a.artist) : 'Famous and hidden gems from around the world'}</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`;
-  return `<div class="sec"><button type="button" class="art-hero" data-act="art-open" aria-label="Painting of the day: ${esc(a.title)} by ${esc(a.artist)}"><img class="art-bg" src="${esc(a.image.url)}" alt="" decoding="async" style="object-position:${esc(a.image.focus || 'center 45%')}" onerror="this.remove()"><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">🖼️ Painting of the day</span><b>${esc(a.title)}</b><span>${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
+  return `<div class="sec"><button type="button" class="art-hero" data-act="art-open" aria-label="Painting of the day: ${esc(a.title)} by ${esc(a.artist)}"><img class="art-bg" src="${esc(bannerSrc(a.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(a.image.focus || 'center 45%')}" onerror="this.remove()"><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">🖼️ Painting of the day</span><b>${esc(a.title)}</b><span>${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
 function artBody(a) { if (!a) return '';
   const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
   return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr"${a.image.credit ? '' : ` data-cc="${esc(a.image.page || '')}"`}>${esc(a.image.credit || 'Image: Wikimedia Commons')}</span>` : ''}
