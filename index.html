@@ -1305,6 +1305,15 @@ body::before{will-change:transform;transform:translateZ(0)}
 .rpast[open] summary .lv-chev{transform:rotate(90deg)}
 .rpast > .rlist{margin-top:12px}
 #page .rpast summary .cat-tx b{color:var(--fg)!important}#page .rpast summary .cat-tx span{color:var(--fg-2)!important}
+
+/* morning routine v5.26 */
+.hab.late{outline:2px dashed #B5782A;outline-offset:-2px}
+.hab-n small{display:block;font-size:10.5px;font-weight:600;color:var(--fg-2)!important;margin-top:2px}
+.hab-row{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:12px 6px;overflow:visible!important;margin:0!important}
+.hab{width:auto!important;min-width:0}
+.hab-n{white-space:normal!important;overflow-wrap:break-word!important;max-width:100%;display:block}
+.hab-nudge{display:flex;flex-direction:column;gap:6px;padding:12px 14px!important;border:1.5px solid #B5782A!important}
+.hab-nudge span{font-size:14px;line-height:1.4;color:var(--fg)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1330,7 +1339,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.25 · roster upcoming first';
+const APP_VERSION = '5.26 · morning routine';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1604,25 +1613,49 @@ function tbanArt(ph) {
 const HABIT_DEFAULTS = [
   { id: 'h-brush', name: 'Brush', emoji: '🪥', from: 21, to: 3 }, { id: 'h-floss', name: 'Floss', emoji: '🧵', from: 21, to: 3 },
   { id: 'h-supp', name: 'Supplements', emoji: '💊', from: 21, to: 3 }, { id: 'h-moist', name: 'Moisturise', emoji: '🧴', from: 21, to: 3 },
-  { id: 'h-water', name: 'Water', emoji: '💧', from: 21, to: 3 }];
-const HABITS = () => (Array.isArray(state.habits) ? state.habits : HABIT_DEFAULTS).filter(h => !h.deleted);
+  { id: 'h-water', name: 'Water', emoji: '💧', from: 21, to: 3 },
+  /* morning routine 6 AM–3 PM */
+  { id: 'm-sun', name: 'Sunscreen', emoji: '☀️', from: 6, to: 15 }, { id: 'm-face', name: 'Wash face', emoji: '🫧', from: 6, to: 15 },
+  { id: 'm-balcony', name: 'Balcony plants', emoji: '🪴', from: 6, to: 15, nudge: 2, verb: 'watered the balcony plants' },
+  { id: 'm-living', name: 'Living room plants', emoji: '🌿', from: 6, to: 15, every: 5, verb: 'watered the living room plants' },
+  { id: 'm-creatine', name: 'Creatine', emoji: '💪', from: 6, to: 15, late: 21 }];
+/* saved habits keep their order; new built-in ones (like the morning routine) are added once */
+const HABITS = () => { const saved = Array.isArray(state.habits) ? state.habits : []; const ids = new Set(saved.map(h => h.id));
+  return (saved.length ? saved.concat(HABIT_DEFAULTS.filter(h => !ids.has(h.id))) : HABIT_DEFAULTS).filter(h => !h.deleted); };
+const lastDone = h => { let best = ''; for (const k in state.habitDone) if (state.habitDone[k] && k.endsWith('|' + h.id)) { const d = k.slice(0, 10); if (d > best) best = d; } return best; };
+const daysSince = d => d ? Math.round((new Date(today() + 'T12:00') - new Date(d + 'T12:00')) / 864e5) : null;
+/* an every-N-days habit is due once N days have passed since it was last done (or if never done) */
+const habitDue = h => { if (!(h.every > 1)) return true; const ds = daysSince(lastDone(h)); return ds === null || ds >= h.every || ds === 0; };
+const lateNow = (h, hr) => h.late && !inWin(h, hr) && (hr >= h.late || hr < 3);
 const inWin = (h, hr) => h.from <= h.to ? hr >= h.from && hr < h.to : hr >= h.from || hr < h.to;
 function habitDay(h) { const n = new Date(); const hr = n.getHours(); if (h.from > h.to && hr < h.to) return addDays(today(), -1); return today(); }
 const habitKey = (h, day) => day + '|' + h.id;
 function habitCard() {
   if (state.settings.habitsOn === false) return '';
-  const hr = new Date().getHours(); const now = HABITS().filter(h => inWin(h, hr)); if (!now.length) return '';
-  const done = now.filter(h => state.habitDone[habitKey(h, habitDay(h))]).length;
-  const label = hr >= 17 || hr < 4 ? 'Night routine' : hr < 12 ? 'Morning routine' : 'Today';
-  if (done === now.length) return `<button class="hab-done" type="button" data-act="hab-month">🐾 ${label} done · ${now.length}/${now.length}</button>`;
+  const hr = new Date().getHours(); const lateDay = hr < 3 ? addDays(today(), -1) : today();
+  const late = HABITS().filter(h => lateNow(h, hr) && !state.habitDone[habitKey(h, lateDay)] && habitDue(h)).map(h => ({ ...h, _late: true, _day: lateDay }));
+  const now = HABITS().filter(h => inWin(h, hr) && habitDue(h)).concat(late); if (!now.length) return habitNudges();
+  const dayOf = h => h._day || habitDay(h);
+  const done = now.filter(h => state.habitDone[habitKey(h, dayOf(h))]).length;
+  const label = hr >= 17 || hr < 4 ? 'Night routine' : hr >= 6 && hr < 15 ? 'Morning routine' : 'Today';
+  if (done === now.length) return `<button class="hab-done" type="button" data-act="hab-month">🐾 ${label} done · ${now.length}/${now.length}</button>` + habitNudges();
   return `<div class="card habc"><div class="c-top"><span class="c-lab">${label} · ${done}/${now.length}</span><button type="button" class="link" data-act="hab-month">This month</button></div>
-    <div class="hab-row">${now.map(h => { const on = !!state.habitDone[habitKey(h, habitDay(h))]; return `<button type="button" class="hab${on ? ' on' : ''}" data-act="hab-tick" data-id="${esc(h.id)}" aria-pressed="${on}"><span class="hab-e">${on ? '✓' : esc(h.emoji)}</span><span class="hab-n">${esc(h.name)}</span></button>`; }).join('')}</div></div>`;
+    <div class="hab-row">${now.map(h => { const on = !!state.habitDone[habitKey(h, dayOf(h))]; return `<button type="button" class="hab${on ? ' on' : ''}${h._late ? ' late' : ''}" data-act="hab-tick" data-id="${esc(h.id)}"${h._late ? ` data-day="${h._day}"` : ''} aria-pressed="${on}"><span class="hab-e">${on ? '✓' : esc(h.emoji)}</span><span class="hab-n">${esc(h.name)}${h._late ? '<small>missed this morning</small>' : ''}</span></button>`; }).join('')}</div></div>` + habitNudges();
+}
+/* gentle catch-up notes: plants skipped too long, every-N habits overdue */
+function habitNudges() {
+  const out = [];
+  HABITS().forEach(h => { const ld = lastDone(h); if (!ld) return; const ds = daysSince(ld);
+    const what = esc(h.verb || 'done ' + h.name.toLowerCase());
+    if (h.nudge && ds - 1 >= h.nudge) out.push(`${esc(h.emoji)} You haven't <b>${what}</b> in ${plural(ds - 1, 'day')}.`);
+    else if (h.every > 1 && ds > h.every) out.push(`${esc(h.emoji)} You last <b>${what}</b> ${plural(ds, 'day')} ago. They're due every ${h.every} days.`); });
+  return out.length ? `<div class="card hab-nudge" role="status">${out.map(x => `<span>${x}</span>`).join('')}</div>` : '';
 }
 function monthStats(ym) {
   const [y, m] = ym.split('-').map(Number); const days = new Date(y, m, 0).getDate(); const last = ym === today().slice(0, 7) ? +today().slice(8) : days;
   const H = HABITS(); let first = 1; for (let d = 1; d <= last; d++) { const pre = ym + '-' + String(d).padStart(2, '0') + '|'; if (Object.keys(state.habitDone).some(k => k.startsWith(pre))) { first = d; break; } if (d === last) first = last; }
   const per = H.map(h => { let c = 0; for (let d = first; d <= last; d++) if (state.habitDone[ym + '-' + String(d).padStart(2, '0') + '|' + h.id]) c++; return { h, c }; });
-  const span = last - first + 1; const total = per.reduce((a, x) => a + x.c, 0), possible = H.length * span; return { days, last, first, span, per, pct: possible ? Math.round(100 * total / possible) : 0 };
+  const span = last - first + 1; per.forEach(x => { x.of = x.h.every > 1 ? Math.max(1, Math.ceil(span / x.h.every)) : span; }); const total = per.reduce((a, x) => a + Math.min(x.c, x.of), 0), possible = per.reduce((a, x) => a + x.of, 0); return { days, last, first, span, per, pct: possible ? Math.round(100 * total / possible) : 0 };
 }
 function habitMonthSheet(ym) {
   ym = ym || today().slice(0, 7); const [y, m] = ym.split('-').map(Number); const st = monthStats(ym); const H = HABITS();
@@ -1630,14 +1663,14 @@ function habitMonthSheet(ym) {
   const grid = H.map(h => `<div class="hm-row"><span class="hm-n">${esc(h.emoji)} ${esc(h.name)}</span><div class="hm-days">${Array.from({ length: st.days }, (_, i) => { const k = ym + '-' + String(i + 1).padStart(2, '0') + '|' + h.id; const fut = i + 1 > st.last; return `<i class="${state.habitDone[k] ? 'on' : fut ? 'fut' : ''}"></i>`; }).join('')}</div></div>`).join('');
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="hab-m" data-ym="${fmt(prev)}">‹ ${MONTHS[prev.getMonth()].slice(0, 3)}</button><h2>${MONTHS[m - 1]} ${y}</h2>${fmt(next) <= today().slice(0, 7) ? `<button type="button" class="link" data-act="hab-m" data-ym="${fmt(next)}">${MONTHS[next.getMonth()].slice(0, 3)} ›</button>` : '<span></span>'}</div>
     <div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + plural(st.span, 'day') + ')' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
-    <div class="hm-list">${st.per.map(x => `<div class="hm-bar"><span>${esc(x.h.emoji)} ${esc(x.h.name)}</span><b>${x.c}/${st.span}</b><div class="track"><div class="fill" style="width:${st.span ? Math.round(100 * x.c / st.span) : 0}%"></div></div></div>`).join('')}</div>
+    <div class="hm-list">${st.per.map(x => `<div class="hm-bar"><span>${esc(x.h.emoji)} ${esc(x.h.name)}</span><b>${x.c}/${x.of}</b><div class="track"><div class="fill" style="width:${x.of ? Math.min(100, Math.round(100 * x.c / x.of)) : 0}%"></div></div></div>`).join('')}</div>
     <h3 class="sh">Day by day</h3><div class="hm-grid">${grid}</div>
     <button class="btn ghost" type="button" data-act="hab-edit">Edit habits</button></div>`);
 }
 function habitEditSheet() {
   const H = HABITS();
   openSheet(`<form data-form="habits" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Habits</h2><button type="submit" class="link strong">Save</button></div>
-    <p class="foot" style="margin:0">Each habit shows on Today only between its hours. 21 to 3 means 9 PM to 3 AM (counted for the evening's date).</p>
+    <p class="foot" style="margin:0">Each habit shows on Today only between its hours: 6 to 15 is the morning routine (6 AM–3 PM), 21 to 3 is the night routine (9 PM–3 AM, counted for the evening's date). Living room plants come up every 5 days; balcony plants nudge you after 2 skipped days; creatine moves to the night routine if missed.</p>
     <div class="group">${H.map((h, i) => `<div class="row field hab-ed"><input name="e${i}" value="${esc(h.emoji)}" maxlength="4" aria-label="Emoji"><input class="left" name="n${i}" value="${esc(h.name)}" aria-label="Name"><input name="f${i}" type="number" min="0" max="23" value="${h.from}" aria-label="From hour"><input name="t${i}" type="number" min="0" max="24" value="${h.to}" aria-label="To hour"><input type="hidden" name="id${i}" value="${esc(h.id)}"><label class="hab-x"><input type="checkbox" name="x${i}"> remove</label></div>`).join('')}
       <div class="row field hab-ed"><input name="eN" placeholder="🙂" maxlength="4"><input class="left" name="nN" placeholder="New habit (e.g. Stretch)"><input name="fN" type="number" min="0" max="23" value="21"><input name="tN" type="number" min="0" max="24" value="3"></div></div>
     <input type="hidden" name="count" value="${H.length}"></form>`);
@@ -2647,7 +2680,7 @@ document.addEventListener('click', e => {
     case 'hero-add': $('heroFile').click(); break;
     case 'hero-del': heroRemove(+b.dataset.i); break;
     case 'pdf-read': pdfRead(id); break;
-    case 'hab-tick': { const h = HABITS().find(x => x.id === id); if (h) { const k = habitKey(h, habitDay(h)); if (state.habitDone[k]) delete state.habitDone[k]; else state.habitDone[k] = nowISO(); const hr = new Date().getHours(); const now = HABITS().filter(x => inWin(x, hr)); const all = now.every(x => state.habitDone[habitKey(x, habitDay(x))]); commit(all ? 'All done for tonight 🐾' : null); } break; }
+    case 'hab-tick': { const h = HABITS().find(x => x.id === id); if (h) { const day = b.dataset.day || habitDay(h); const k = habitKey(h, day); if (state.habitDone[k]) delete state.habitDone[k]; else state.habitDone[k] = nowISO(); const hr = new Date().getHours(); const now = HABITS().filter(x => inWin(x, hr) && habitDue(x)); const all = now.every(x => state.habitDone[habitKey(x, habitDay(x))]); commit(all && now.length ? (hr >= 17 || hr < 4 ? 'All done for tonight 🐾' : 'Morning routine done 🐾') : null); } break; }
     case 'hab-month': habitMonthSheet(); break;
     case 'hab-m': habitMonthSheet(b.dataset.ym); break;
     case 'hab-edit': habitEditSheet(); break;
@@ -2819,9 +2852,9 @@ document.addEventListener('submit', e => {
     case 'habits': {
       const n = +fd.get('count'); const out = []; const old = HABITS();
       for (let i = 0; i < n; i++) { const nm = (fd.get('n' + i) || '').trim(); const id = fd.get('id' + i); if (!nm || fd.get('x' + i)) { const o = old.find(x => x.id === id); if (o) out.push({ ...o, deleted: true }); continue; }
-        out.push({ id, name: nm, emoji: (fd.get('e' + i) || '•').trim() || '•', from: Math.max(0, Math.min(23, +fd.get('f' + i) || 0)), to: Math.max(0, Math.min(24, +fd.get('t' + i) || 0)) }); }
+        out.push({ ...(old.find(x => x.id === id) || {}), id, name: nm, emoji: (fd.get('e' + i) || '•').trim() || '•', from: Math.max(0, Math.min(23, +fd.get('f' + i) || 0)), to: Math.max(0, Math.min(24, +fd.get('t' + i) || 0)) }); }
       const nn = (fd.get('nN') || '').trim(); if (nn) out.push({ id: 'h-' + uid(), name: nn, emoji: (fd.get('eN') || '🙂').trim() || '🙂', from: +fd.get('fN') || 21, to: +fd.get('tN') || 3 });
-      state.habits = out; closeSheet(); commit('Habits saved'); break; }
+      HABIT_DEFAULTS.forEach(d => { if (!out.some(x => x.id === d.id)) out.push({ ...d, deleted: true }); }); state.habits = out; closeSheet(); commit('Habits saved'); break; }
     case 'profile': {
       state.profile = { ...state.profile }; ['name', 'job', 'place', 'email'].forEach(k => { state.profile[k] = (fd.get(k) || '').trim(); });
       closeSheet(); commit('Profile saved'); break; }
