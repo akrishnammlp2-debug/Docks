@@ -1297,6 +1297,14 @@ body::before{will-change:transform;transform:translateZ(0)}
 #page .dcard .dc-h .dd b,#page .dcard .dc-h .cov{color:var(--fg)!important}
 #page .dcard.hit .dc-h .dd b{color:var(--accent-t)!important}
 #page .dcard .cell small{color:var(--fg-2)!important}
+
+/* roster: upcoming first, earlier days folded v5.25 */
+.rpast{padding:12px 14px!important;margin-top:12px}
+.rpast summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
+.rpast summary::-webkit-details-marker{display:none}
+.rpast[open] summary .lv-chev{transform:rotate(90deg)}
+.rpast > .rlist{margin-top:12px}
+#page .rpast summary .cat-tx b{color:var(--fg)!important}#page .rpast summary .cat-tx span{color:var(--fg-2)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1322,7 +1330,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.24 · roster names';
+const APP_VERSION = '5.25 · roster upcoming first';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -2069,9 +2077,13 @@ function pageRoster() {
   let list = rows, note = '';
   if (rmode === 'mine') { if (!my) { list = []; note = 'Choose your name above to see only your duty days.'; } else { list = mine; if (!list.length) note = 'No duty days for ' + my + ' in ' + MONTHS[view.m] + '.'; } }
   if (!rows.length) note = 'No duty roster for ' + MONTHS[view.m] + ' yet.';
-  h += note && !list.length ? `<div class="group"><div class="row empty">${esc(note)}</div></div>` : `<div class="rlist">${list.map(r => {
+  const card = r => {
     const isT = r.date === t;
-    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT && r.date !== searchHitDate ? ' past' : ''}${r.date === searchHitDate ? ' today hit' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}${r.date === searchHitDate && searchHitName && c.toLowerCase().includes(searchHitName) ? ' found' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; }).join('')}</div>`;
+    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT && r.date !== searchHitDate ? ' past' : ''}${r.date === searchHitDate ? ' today hit' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}${r.date === searchHitDate && searchHitName && c.toLowerCase().includes(searchHitName) ? ' found' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; };
+  const upcoming = list.filter(r => r.date >= t), earlier = list.filter(r => r.date < t);
+  const openPast = !upcoming.length || (searchHitDate && earlier.some(r => r.date === searchHitDate));
+  h += note && !list.length ? `<div class="group"><div class="row empty">${esc(note)}</div></div>`
+    : `${upcoming.length ? `<div class="rlist">${upcoming.map(card).join('')}</div>` : ''}${earlier.length ? `<details class="card rpast"${openPast ? ' open' : ''}><summary><span class="cat-tx"><b>Previous days</b><span>${plural(earlier.length, 'day')} earlier in ${MONTHS[view.m]}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="rlist">${earlier.map(card).join('')}</div></details>` : ''}`;
   if (state.private.roster.note) h += `<p class="foot">${esc(state.private.roster.note)}</p>`;
   return h;
 }

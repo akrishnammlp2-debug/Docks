@@ -69,6 +69,9 @@ async function lock(plainPath, name) {
     recipients.push({ kid: d.kid, epk: b64u.enc(await subtle.exportKey('raw', eph.publicKey)), iv: b64u.enc(wiv), wk: b64u.enc(wk) });
   }
   const file = name + '.enc.json';
+  // a new month's duty roster replaces the older ones (they are not kept)
+  const rm = name.match(/^roster-(\d{4}-\d{2})$/);
+  if (rm) { const idx0 = readJson(INDEX, { files: [] }); idx0.files = idx0.files.filter(f => { const m = f.match(/^roster-(\d{4}-\d{2})\.enc\.json$/); if (m && m[1] < rm[1]) { const p = join(PRIV, f); if (existsSync(p)) unlinkSync(p); console.log('removed old roster', f); return false; } return true; }); writeJson(INDEX, idx0); }
   writeJson(join(PRIV, file), { v: 1, alg: 'ECDH-P256+SHA256+A256GCM', created: new Date().toISOString(), recipients, iv: b64u.enc(iv), ct: b64u.enc(ct) });
   const idx = readJson(INDEX, { files: [] });
   if (!idx.files.includes(file)) idx.files.push(file);
