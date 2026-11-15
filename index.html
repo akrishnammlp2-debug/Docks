@@ -1318,6 +1318,65 @@ body::before{will-change:transform;transform:translateZ(0)}
 /* hand-drawn icons v5.33 */
 body.sketchy svg[viewBox="0 0 24 24"]>*{filter:url(#rough)}
 body.sketchy svg[viewBox="0 0 24 24"]{stroke-linecap:round;stroke-linejoin:round}
+/* cover flow v5.35 */
+.cf-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.cf-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px -2px 8px;padding:2px}
+.cf-tabs::-webkit-scrollbar{display:none}
+.cf-tabs button{flex:none;border:1px solid var(--sep);background:var(--surface);color:var(--fg);border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;font-weight:600}
+#page .cf-tabs button b{font-weight:700;margin-left:2px;color:inherit!important}
+#sheet .md-tx h3,#sheet .md-tx .md-a{color:#16201B!important}
+#sheet .md-tx p{color:#36433C!important}
+#page .cf-tabs button.on{background:#2B6448!important;border-color:#2B6448!important;color:#fff!important}
+@media (prefers-color-scheme:dark){#page .cf-tabs button.on{background:#9FD0B2!important;border-color:#9FD0B2!important;color:#0E1F17!important}}
+.cf-wrap{position:relative;margin:0 -16px;overflow:hidden;padding:6px 0 0}
+.cf{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px calc(50% - 64px) 62px;-webkit-overflow-scrolling:touch}
+.cf::-webkit-scrollbar{display:none}
+.cf-i{flex:none;position:relative;width:128px;height:190px;margin-right:-30px;scroll-snap-align:center;border:0;padding:0;background:none;transform-style:preserve-3d;transition:transform .08s linear;-webkit-tap-highlight-color:transparent;cursor:pointer}
+.cf-i:last-child{margin-right:0}
+.cf-face{position:absolute;inset:0;border-radius:6px;overflow:hidden;background:hsl(var(--ch) 32% 30%);box-shadow:0 14px 24px -12px rgba(0,0,0,.6);-webkit-box-reflect:below 3px linear-gradient(transparent 62%,rgba(255,255,255,.28))}
+.cf-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#111}
+.cf-ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px;text-align:left;background:linear-gradient(150deg,hsl(var(--ch) 40% 40%),hsl(calc(var(--ch) + 40) 35% 22%))}
+.cf-ph-e{font-size:26px}
+.cf-ph-t{color:#fff;font-weight:700;font-size:15px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.cf-now{position:absolute;left:8px;top:8px;z-index:2;background:rgba(14,31,23,.82);color:#fff;font-size:11px;font-weight:700;letter-spacing:.02em;padding:3px 7px;border-radius:999px}
+.cf-i:not(.mid) .cf-now{opacity:0}
+.cf-cap{text-align:center;min-height:44px;margin-top:-6px;padding:0 20px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.cf-cap b{font-size:16.5px;line-height:1.25;color:var(--fg)}
+.cf-cap span{font-size:13.5px;color:var(--fg-2)}
+.cf-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:20px 18px}
+.cf-empty-e{font-size:30px}
+.md-top{display:flex;gap:16px;align-items:flex-start;margin:4px 0 14px}
+.md-cov{position:relative;flex:none;width:104px;height:154px}
+#sheet .md-cov .cf-face{-webkit-box-reflect:below 0 linear-gradient(transparent,transparent)}
+#sheet [data-media] .group .row>span:first-child{flex:1}
+#sheet [data-media] a.row{text-decoration:none;color:inherit}
+.md-tx h3{margin:0 0 4px;font-size:19px;line-height:1.25}
+.md-tx p{margin:0 0 4px;font-size:14px;color:var(--fg-2)}
+.md-tx .md-a{color:var(--fg);font-weight:600}
+.md-btns{display:flex;gap:8px}.md-btns .btn{flex:1}
+.md-types{display:flex;gap:6px;margin-left:auto}
+.md-types .dump-fc{padding:5px 9px;font-size:17px}
+#sheet .md-del span{color:#B3261E}
+@media (prefers-color-scheme:dark){#sheet .md-del span{color:#F2B8B5}}
+@media (prefers-reduced-motion:reduce){.cf-i{transition:none}}
+.cf-sub{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);margin:14px 4px 6px}
+.cf-none{font-size:14px;color:var(--fg-2);margin:0 4px 6px}
+.up-l{padding:4px 0;display:flex;flex-direction:column}
+.up-r{display:flex;align-items:center;gap:6px;padding:0 10px 0 0;position:relative}
+.up-r+.up-r::before,.up-l .set-more .up-r::before{content:"";position:absolute;top:0;left:78px;right:0;height:.5px;background:var(--sep)}
+.up-main{flex:1;display:flex;align-items:center;gap:12px;padding:10px 0 10px 12px;background:none;border:0;text-align:left;font:inherit;color:inherit;min-width:0}
+.up-cov{position:relative;flex:none;width:50px;height:74px;border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;background:linear-gradient(150deg,hsl(var(--ch) 40% 42%),hsl(calc(var(--ch) + 40) 35% 24%));box-shadow:0 6px 12px -8px rgba(0,0,0,.5)}
+.up-cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.up-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.up-tx b{font-size:15.5px;line-height:1.25;color:var(--fg)}
+.up-tx span{font-size:13.5px;color:var(--fg)}
+.up-tx em{font-style:normal;font-size:13px;color:var(--fg-2)}
+.up-bell{flex:none;min-width:64px;height:34px;padding:0 10px;border-radius:999px;border:1px solid var(--sep);background:var(--surface);color:var(--fg);font:inherit;font-size:13px;font-weight:700}
+#page .up-bell.on{background:#2B6448!important;border-color:#2B6448!important;color:#fff!important}
+@media (prefers-color-scheme:dark){#page .up-bell.on{background:#9FD0B2!important;border-color:#9FD0B2!important;color:#0E1F17!important}}
+.up-blurb{font-size:15px;line-height:1.45;margin:0 0 12px}
+#sheet .up-blurb{color:#16201B}
+.up-l .set-more>summary{padding-left:12px}
 /* icon packs v5.34 */
 .ip-list{display:flex;flex-direction:column;gap:10px}
 .ip-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:left;padding:14px 16px;border-radius:18px;border:1.5px solid var(--sep);background:var(--surface);color:var(--fg);font:inherit;cursor:pointer}
@@ -1420,9 +1479,9 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.34 · icon styles';
+const APP_VERSION = '5.35 · my year in stories + upcoming';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1475,7 +1534,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {}, attDone: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -1484,7 +1543,7 @@ function normalise(s) {
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -1530,7 +1589,7 @@ async function loadData(manual) {
       try { localStorage.setItem('studydesk.data.' + f, JSON.stringify({ at: nowISO(), data: j })); } catch (_) {}
     } catch (e) { failed++; if (dataStatus[f].from === 'network') dataStatus[f].from = 'saved'; }
   }));
-  render(); if (window.requestIdleCallback) requestIdleCallback(warmPictures, { timeout: 3000 }); else setTimeout(warmPictures, 1500);
+  render(); setTimeout(mediaScanDumps, 1200); setTimeout(mediaRetry, 2500); if (window.requestIdleCallback) requestIdleCallback(warmPictures, { timeout: 3000 }); else setTimeout(warmPictures, 1500);
   if (manual) toast(failed ? "Couldn't reach GitHub. Showing the last saved copy." : 'Up to date ✓');
 }
 const CASES = () => (D.cases && D.cases.items) || [];
@@ -1695,7 +1754,7 @@ function tbanArt(ph) {
    This device writes push/<device>.json to the private sync repository: its push subscription plus the next 3 days
    of reminders. A GitHub job there sends each one when it's due (checked every 30 minutes). */
 const VAPID_PUB = 'BPJZfLn1uUvBEClxeSbI1x_ZL4Yf9EvL6DkDfPEP2Qepc43Ny8nmmCix5VKTx2FqnkBI1FH4cB6PrTKTdD0RIkQ';
-const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
+const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nReleases', 'Release day for things you asked to be reminded about (9:30 AM)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
 const nOn = k => { const S = state.settings, d = NOTIF_TYPES.find(x => x[0] === k); return S[k] === undefined ? d[2] : !!S[k]; };
 const pushSub = () => { try { return JSON.parse(localStorage.getItem('studydesk.pushSub') || 'null'); } catch (_) { return null; } };
 const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
@@ -1753,6 +1812,8 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     if (nOn('nReminders')) state.reminders.forEach(r => { try { const st = remStatus(r); const p = st.p; if (!p) return; if ((p.due === day) || (i === 0 && st.s === 'late')) push('rem|' + r.id + '|' + p.key, day, 9, '🔔 Reminder', r.title + (st.s === 'late' && i === 0 ? ' (overdue)' : ''), 'reminders'); } catch (_) {} });
     // hospital attendance, 9 AM and 10 AM until ticked
     if (nOn('nAttend') && state.settings.attOn !== false && !(state.attDone || {})[day]) { push('att|' + day, day, 9, '🏥 Hospital attendance', 'Log in your attendance for today', 'today'); push('att2|' + day, day, 10, '🏥 Attendance still to do', 'Quick reminder to log in your hospital attendance', 'today'); }
+    // releases she asked to be reminded about
+    if (nOn('nReleases')) ((D.upcoming && D.upcoming.items) || []).filter(u => (state.upWatch || {})[u.id] && u.date === day).forEach(u => push('up|' + u.id, day, 9, MT(u.type)[1] + ' Out today', u.title + (u.where ? ' · ' + u.where : ''), 'others', 30));
     // parcels arriving
     if (nOn('nDelivery')) ((PERS().deliveries) || []).filter(x => x.date === day && x.status !== 'delivered').forEach((x, j) => push('del|' + day + '|' + j, day, 9, '📦 Arriving today', (x.what || 'A parcel') + (x.store ? ' · ' + x.store : ''), 'calendar', 15));
   }
@@ -1760,7 +1821,7 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
   return out.sort((a, b) => a.at.localeCompare(b.at)); }
 
 /* ---------- Brain dump: jot anything now, sort it later ---------- */
-const DUMP_CATS = [['academics', '📚', 'Academics'], ['holidays', '🏖️', 'Holidays'], ['buy', '🛒', 'To buy'], ['other', '✨', 'Other']];
+const DUMP_CATS = [['academics', '📚', 'Academics'], ['holidays', '🏖️', 'Holidays'], ['buy', '🛒', 'To buy'], ['media', '🎬', 'Watch & read'], ['other', '✨', 'Other']];
 const DUMPS = () => (state.dumps || []).filter(d => !d.deleted).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
 const dumpAgo = iso => { const m = Math.round((Date.now() - new Date(iso)) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
 let dumpFilter = 'all';
@@ -2420,7 +2481,8 @@ function pageBackup() {
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
-    ${fold('settings', 'More settings', `
+    ${fold('settings', 'More settings', `<label class="row toggle"><span>Send books, films, series & games from Brain dump to Off duty</span><input type="checkbox" data-setting="mediaOn" ${S.mediaOn !== false ? 'checked' : ''}></label>
+    
     <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
@@ -2428,7 +2490,7 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
-    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 7)}
+    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
   </div></div>`;
   { const before = h; h = '';
   h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
@@ -2465,7 +2527,151 @@ function pageOthers() {
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(bannerSrc(pick.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
+  h += mediaShelf();
   return h; }
+/* ---------- Off duty: my year in stories (books, movies, series, games) ---------- */
+const MEDIA_TYPES = [['book', '📚', 'Books', 'Reading', 'Read'], ['movie', '🎬', 'Movies', 'Watching', 'Watched'], ['series', '📺', 'Series', 'Watching', 'Watched'], ['game', '🎮', 'Games', 'Playing', 'Played']];
+const MT = k => MEDIA_TYPES.find(t => t[0] === k) || MEDIA_TYPES[1];
+const MEDIA = () => (state.media || []).slice().sort((a, b) => (b.added || '').localeCompare(a.added || ''));
+const mediaYear = y => MEDIA().filter(m => (m.added || '').startsWith(y) || (m.done || '').startsWith(y));
+const isAcad = t => ACADEMIC_RX.test(t.replace(/\s+by\s+.+$/i, ''));
+const ACADEMIC_RX = /\b(chapter|ch\.?\s*\d|miller|morgan|stoelting|barash|chambers|ganong|guyton|harrison|notes?|pdf|topic|article|paper|journal|guideline|lecture|slides|revision|pg\b|exam)\b/i;
+function cleanTitle(t) {
+  t = t.replace(/^[“"'‘]+|[”"'’]+$/g, '').replace(/\s+(today|tonight|last night|yesterday|this weekend|again|finally|on (netflix|prime|hotstar|jiohotstar|disney\+?|apple tv\+?|steam|ps5|switch|kindle|youtube))\b.*$/i, '');
+  t = t.replace(/^(the\s+)?(movie|film|book|novel|series|show|tv show|game|video game)\s+/i, '').replace(/\s+(movie|film|book|novel|series|tv show|show|game|video game)$/i, '');
+  return t.replace(/[.!,;]+$/, '').replace(/^[“"'‘]+|[”"'’]+$/g, '').trim();
+}
+function parseMedia(text) {
+  const s = text.trim().replace(/\s+/g, ' '); let m;
+  const pre = [[/^(?:book|novel|📚|📖)\s*[:\-–]\s*(.+)$/i, 'book'], [/^(?:movie|film|🎬|🍿)\s*[:\-–]\s*(.+)$/i, 'movie'], [/^(?:series|show|tv|📺)\s*[:\-–]\s*(.+)$/i, 'series'], [/^(?:game|🎮)\s*[:\-–]\s*(.+)$/i, 'game']];
+  for (const [rx, type] of pre) if ((m = s.match(rx))) return mediaOut(type, 'done', m[1]);
+  const seriesWords = /\b(season|s\d{1,2}\b|episode|ep\s?\d|series|tv show|show|k-?drama|anime)\b/i;
+  if ((m = s.match(/^(?:i\s+)?(?:am\s+|'m\s+|’m\s+)?(?:currently\s+|now\s+|still\s+)?(?:started\s+|starting\s+|start\s+|began\s+)?(reading)\s+(.+)$/i))) return isAcad(m[2]) ? null : mediaOut('book', 'now', m[2]);
+  if ((m = s.match(/^(?:i\s+)?(?:have\s+|just\s+)?(?:finished|completed|done)\s+reading\s+(.+)$/i)) || (m = s.match(/^(?:i\s+)?(?:have\s+|just\s+)?read\s+(?:the\s+)?(?:book|novel)\s+(.+)$/i))) return isAcad(m[1]) ? null : mediaOut('book', 'done', m[1]);
+  if ((m = s.match(/^(?:i\s+)?(?:am\s+|'m\s+|’m\s+)?(?:currently\s+|now\s+|still\s+)?(?:started\s+|starting\s+|start\s+)?(watching|binging|binge-?watching|bingeing)\s+(.+)$/i))) return mediaOut(/\b(movie|film)\b/i.test(m[2]) ? 'movie' : 'series', 'now', m[2]);
+  if ((m = s.match(/^(?:i\s+)?(?:have\s+|just\s+)?(?:watched|saw|finished watching|binged|binge-?watched|finished)\s+(.+)$/i))) {
+    const rest = m[1]; if (/^(playing|reading)\b/i.test(rest)) return parseMedia(rest.replace(/^playing/i, 'played').replace(/^reading/i, 'finished reading'));
+    if (/^finished\b/i.test(s) && !/\b(movie|film|season|series|show|watching)\b/i.test(rest)) return null;
+    return mediaOut(seriesWords.test(rest) || /binge/i.test(s) ? 'series' : 'movie', 'done', rest);
+  }
+  if ((m = s.match(/^(?:i\s+)?(?:am\s+|'m\s+|’m\s+)?(?:currently\s+|now\s+|still\s+)?(?:started\s+|starting\s+|start\s+)?playing\s+(.+)$/i))) return mediaOut('game', 'now', m[1]);
+  if ((m = s.match(/^(?:i\s+)?(?:have\s+|just\s+)?(?:played|beat|finished playing|completed the game)\s+(.+)$/i))) return mediaOut('game', 'done', m[1]);
+  return null;
+}
+function mediaOut(type, status, raw) {
+  let r = raw.replace(/\s*[\(\[]?\b(season|s)\s?\d+.*$/i, '').replace(/\s*\b(ep(isode)?\s?\d+).*$/i, '');
+  let author = ''; const by = r.match(/^(.+?)\s+by\s+(.+)$/i); if (by && type === 'book') { r = by[1]; author = cleanTitle(by[2]); }
+  const title = cleanTitle(r); if (!title || title.length < 2 || title.length > 90) return null;
+  if (type === 'game' && /^(with|in|at|for|the piano|guitar|badminton|football|cricket|tennis)\b/i.test(title)) return null;
+  return { type, status, title, author };
+}
+const normT = t => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+function addMedia(p, from) {
+  const arr = state.media || (state.media = []); const ex = arr.find(x => x.type === p.type && normT(x.title) === normT(p.title));
+  if (ex) { if (p.status === 'done' && ex.status !== 'done') { ex.status = 'done'; ex.done = today(); ex.updated = nowISO(); } return ex; }
+  const it = { id: uid(), type: p.type, title: p.title, author: p.author || '', status: p.status, added: today(), done: p.status === 'done' ? today() : '', from: from || 'dump', updated: nowISO() };
+  arr.push(it); setTimeout(() => mediaCover(it.id), 50); return it;
+}
+/* covers from open sources: Open Library (books), TVmaze (series), Wikipedia (everything) */
+async function jget(u) { const r = await fetch(u, { cache: 'no-store' }); if (!r.ok) throw new Error(r.status); return r.json(); }
+async function wikiFind(q) {
+  const j = await jget('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&generator=search&gsrlimit=4&gsrsearch=' + encodeURIComponent(q) + '&prop=pageimages|description&piprop=thumbnail&pithumbsize=600');
+  return Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index).filter(p => p.thumbnail).map(p => ({ cover: p.thumbnail.source, info: p.description || '', src: 'https://en.wikipedia.org/wiki/' + encodeURIComponent(p.title.replace(/ /g, '_')), name: p.title.replace(/\s*\(.*\)$/, '') }));
+}
+async function coverCandidates(it) {
+  const out = []; const T = it.title;
+  try {
+    if (it.type === 'book') { const j = await jget('https://openlibrary.org/search.json?limit=3&fields=title,author_name,first_publish_year,cover_i,key&q=' + encodeURIComponent(T + (it.author ? ' ' + it.author : '')));
+      (j.docs || []).filter(d => d.cover_i).forEach(d => out.push({ cover: 'https://covers.openlibrary.org/b/id/' + d.cover_i + '-L.jpg', info: [(d.author_name || [])[0], d.first_publish_year].filter(Boolean).join(' · '), src: 'https://openlibrary.org' + d.key, name: d.title, author: (d.author_name || [])[0] || '' })); }
+    if (it.type === 'series') { const j = await jget('https://api.tvmaze.com/search/shows?q=' + encodeURIComponent(T));
+      (j || []).slice(0, 3).filter(x => x.show && x.show.image).forEach(x => out.push({ cover: x.show.image.original || x.show.image.medium, info: [x.show.premiered ? x.show.premiered.slice(0, 4) : '', x.show.network ? x.show.network.name : x.show.webChannel ? x.show.webChannel.name : ''].filter(Boolean).join(' · '), src: x.show.url, name: x.show.name })); }
+  } catch (_) {}
+  try { const hint = { book: 'novel', movie: 'film', series: 'TV series', game: 'video game' }[it.type]; (await wikiFind(T + ' ' + hint)).forEach(c => out.push(c)); } catch (_) {}
+  return out;
+}
+function mediaScanDumps() { if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
+  (state.dumps || []).filter(d => !d.deleted && !d.cat).forEach(d => { const p = parseMedia(d.text); if (p) { const it = addMedia(p, 'dump'); it.added = (d.created || nowISO()).slice(0, 10); d.cat = 'media'; d.media = it.id; n++; } });
+  state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your brain dump for Off duty`); } }
+const mediaBusy = new Set();
+async function mediaCover(id, next) {
+  const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine) return; mediaBusy.add(id);
+  try { const C = await coverCandidates(it); it.coverTried = nowISO();
+    if (C.length) { const k = next ? ((it.coverPick || 0) + 1) % C.length : 0; const c = C[k]; it.coverPick = k; it.cover = c.cover; it.info = c.info; it.src = c.src; if (!it.author && c.author) it.author = c.author; }
+    it.updated = nowISO(); save(); syncSoon && syncSoon();
+    if (tab === 'others' && !sheetOpen()) render(); else if (sheetOpen() && $('sheet-body').querySelector('[data-media="' + id + '"]')) mediaSheet(id);
+    if (next) toast(C.length > 1 ? 'Cover changed' : 'No other covers found');
+  } finally { mediaBusy.delete(id); } }
+function mediaRetry() { const day = 864e5; (state.media || []).filter(m => !m.cover && (!m.coverTried || Date.now() - new Date(m.coverTried) > day)).slice(0, 4).forEach((m, i) => setTimeout(() => mediaCover(m.id), 800 + i * 700)); }
+/* cover flow */
+let mediaKind = (() => { try { return localStorage.getItem('studydesk.mediaKind') || 'book'; } catch (_) { return 'book'; } })();
+const coverArt = (m, cls) => m.cover ? `<img class="${cls}" src="${esc(m.cover)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
+function coverFace(m) { const t = MT(m.type); const hue = normT(m.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360;
+  return `<span class="cf-face" style="--ch:${hue}"><span class="cf-ph"><span class="cf-ph-e" aria-hidden="true">${t[1]}</span><span class="cf-ph-t">${esc(m.title)}</span></span>${coverArt(m, 'cf-img')}</span>`; }
+/* upcoming: picked weekly from the things she loves (data/upcoming.json) */
+const UPC = () => ((D.upcoming && D.upcoming.items) || []).filter(u => !u.date || u.date.length < 10 || u.date >= today()).sort((a, b) => (a.date || '9').padEnd(10, '9').localeCompare((b.date || '9').padEnd(10, '9')));
+const upWhen = d => !d ? 'Date to be announced' : d.length === 4 ? 'Sometime in ' + d : d.length === 7 ? MONTHS[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4) : (() => { const n = daysUntil(d); return dShort(d) + (d.slice(0, 4) !== today().slice(0, 4) ? ' ' + d.slice(0, 4) : '') + (n === 0 ? ' · out today' : n === 1 ? ' · tomorrow' : n <= 30 ? ' · in ' + n + ' days' : ''); })();
+let upCovers = (() => { try { return JSON.parse(localStorage.getItem('studydesk.upCovers') || '{}'); } catch (_) { return {}; } })();
+const upBusy = new Set();
+async function upCover(u) { if (upCovers[u.id] !== undefined || upBusy.has(u.id) || !navigator.onLine) return; upBusy.add(u.id);
+  try { const C = await coverCandidates({ type: u.type, title: u.search || u.title }); upCovers[u.id] = C.length ? C[0].cover : ''; try { localStorage.setItem('studydesk.upCovers', JSON.stringify(upCovers)); } catch (_) {}
+    const el = document.querySelector('[data-upc="' + u.id + '"]'); if (el && upCovers[u.id]) el.innerHTML = `<img src="${esc(upCovers[u.id])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`; } catch (_) {} finally { upBusy.delete(u.id); } }
+function upList(kind) { const L = UPC().filter(u => u.type === kind); const t = MT(kind);
+  let h = `<h3 class="cf-sub">Upcoming</h3>`;
+  if (!L.length) return h + `<p class="cf-none">Nothing coming up on this shelf yet. New ${t[2].toLowerCase()} matching what you love are added every week.</p>`;
+  const row = u => { const on = (state.upWatch || {})[u.id]; setTimeout(() => upCover(u), 300);
+    return `<div class="up-r"><button type="button" class="up-main" data-act="up-open" data-id="${esc(u.id)}"><span class="up-cov" data-upc="${esc(u.id)}" style="--ch:${normT(u.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${upCovers[u.id] ? `<img src="${esc(upCovers[u.id])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span aria-hidden="true">${t[1]}</span>`}</span><span class="up-tx"><b>${esc(u.title)}</b><span>${esc(upWhen(u.date))}</span><em>${esc([u.why, u.where].filter(Boolean).join(' · '))}</em></span></button><button type="button" class="up-bell${on ? ' on' : ''}" data-act="up-watch" data-id="${esc(u.id)}" aria-pressed="${!!on}" aria-label="${on ? 'Stop reminding me about' : 'Remind me about'} ${esc(u.title)}">${on ? '🔔 On' : 'Remind'}</button></div>`; };
+  h += `<div class="card up-l">${L.slice(0, 4).map(row).join('')}${L.length > 4 ? fold('up-' + kind, 'Show all', L.slice(4).map(row).join(''), L.length - 4) : ''}</div>`;
+  return h; }
+function upSheet(id) { const u = ((D.upcoming && D.upcoming.items) || []).find(x => x.id === id); if (!u) return; const t = MT(u.type); const on = (state.upWatch || {})[u.id];
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t[1]} Upcoming</h2><span></span></div>
+    <div class="md-top"><div class="md-cov"><span class="cf-face" style="--ch:${normT(u.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}"><span class="cf-ph"><span class="cf-ph-e" aria-hidden="true">${t[1]}</span><span class="cf-ph-t">${esc(u.title)}</span></span>${upCovers[u.id] ? `<img class="cf-img" src="${esc(upCovers[u.id])}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}</span></div>
+      <div class="md-tx"><h3>${esc(u.title)}</h3><p class="md-a">${esc(upWhen(u.date))}</p>${u.where ? `<p class="md-i">${esc(u.where)}</p>` : ''}${u.why ? `<p class="md-d">Because you love ${esc(u.why)}</p>` : ''}</div></div>
+    ${u.blurb ? `<p class="up-blurb">${esc(u.blurb)}</p>` : ''}
+    <div class="md-btns"><button type="button" class="btn${on ? '' : ' ghost'}" data-act="up-watch" data-id="${esc(u.id)}">${on ? '🔔 I’ll remind you' : 'Remind me when it’s out'}</button></div>
+    <p class="foot">${u.date && u.date.length === 10 ? 'With reminders on, you get a notification at 9:30 AM on release day.' : 'Once a release date is announced, the weekly refresh adds it here.'}</p></div>`); }
+function mediaShelf() {
+  const y = today().slice(0, 4); const L = mediaYear(y); const counts = Object.fromEntries(MEDIA_TYPES.map(t => [t[0], L.filter(m => m.type === t[0]).length]));
+  if (!counts[mediaKind] && L.length) mediaKind = (MEDIA_TYPES.find(t => counts[t[0]]) || MEDIA_TYPES[0])[0];
+  const items = L.filter(m => m.type === mediaKind);
+  let h = `<div class="sec"><div class="cf-head"><h2 class="sh">My ${y} in stories</h2><button type="button" class="link" data-act="media-add">＋ Add</button></div>
+    <div class="cf-tabs" role="tablist">${MEDIA_TYPES.map(t => `<button type="button" role="tab" data-act="media-kind" data-id="${t[0]}" class="${t[0] === mediaKind ? 'on' : ''}" aria-selected="${t[0] === mediaKind}">${t[1]} ${t[2]}${counts[t[0]] ? ` <b>${counts[t[0]]}</b>` : ''}</button>`).join('')}</div>`;
+  h += `<h3 class="cf-sub">${MT(mediaKind)[4]}${mediaKind === 'book' ? ' & reading' : mediaKind === 'game' ? ' & playing' : ' & watching'}</h3>`;
+  if (!items.length) return h + `<div class="card cf-empty"><span class="cf-empty-e" aria-hidden="true">${MT(mediaKind)[1]}</span><span class="c-t">No ${MT(mediaKind)[2].toLowerCase()} yet this year</span><span class="c-s">Type it in Brain dump, like “${{ book: 'reading Circe', movie: 'watched Dune Part Two', series: 'watching Severance', game: 'playing Hades' }[mediaKind]}”, and it lands here with its cover.</span></div>` + upList(mediaKind) + `</div>`;
+  h += `<div class="cf-wrap"><div class="cf" id="cf" data-kind="${mediaKind}">${items.map((m, i) => `<button type="button" class="cf-i" data-act="media-tap" data-id="${m.id}" data-i="${i}" aria-label="${esc(m.title)}">${coverFace(m)}${m.status === 'now' ? `<span class="cf-now">${MT(m.type)[3]}</span>` : ''}</button>`).join('')}</div></div>
+    <div class="cf-cap" id="cf-cap" aria-live="polite"></div>` + upList(mediaKind) + `</div>`;
+  return h; }
+function cfCaption(m) { const t = MT(m.type); return `<b>${esc(m.title)}</b><span>${[m.author && m.type === 'book' ? esc(m.author) : '', m.status === 'now' ? t[3] + ' now' : t[4] + (m.done ? ' · ' + dShort(m.done) : '')].filter(Boolean).join(' · ')}</span>`; }
+function cfLayout() { const cf = $('cf'); if (!cf) return; const items = cf.children; if (!items.length) return;
+  const mid = cf.scrollLeft + cf.clientWidth / 2; const step = items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : 1; let best = 0, bd = 1e9;
+  for (let i = 0; i < items.length; i++) { const el = items[i]; const c = el.offsetLeft + el.offsetWidth / 2; const d = (c - mid) / step; const a = Math.abs(d);
+    if (a < bd) { bd = a; best = i; }
+    const cl = Math.max(-1, Math.min(1, d)); const extra = a > 1 ? (d - Math.sign(d)) * -0.42 * step : 0;
+    el.style.transform = `perspective(620px) translateX(${extra}px) translateZ(${-Math.min(a, 1) * 120}px) rotateY(${-cl * 58}deg)`;
+    el.style.zIndex = String(1000 - Math.round(a * 10)); el.classList.toggle('mid', a < .5); }
+  if (cf.dataset.best !== String(best)) { cf.dataset.best = best; const m = (state.media || []).find(x => x.id === items[best].dataset.id); const cap = $('cf-cap'); if (m && cap) cap.innerHTML = cfCaption(m); } }
+function cfInit() { const cf = $('cf'); if (!cf || cf.dataset.ready) return; cf.dataset.ready = '1'; let raf = 0;
+  cf.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; cfLayout(); }); }, { passive: true });
+  const key = 'studydesk.cf.' + cf.dataset.kind; let pos = 0; try { pos = +sessionStorage.getItem(key) || 0; } catch (_) {}
+  const it = cf.children[Math.min(pos, cf.children.length - 1)]; if (it) cf.scrollLeft = it.offsetLeft + it.offsetWidth / 2 - cf.clientWidth / 2;
+  cfLayout(); cf.addEventListener('scroll', () => { try { sessionStorage.setItem(key, cf.dataset.best || 0); } catch (_) {} }, { passive: true }); }
+function mediaSheet(id) { const m = (state.media || []).find(x => x.id === id); if (!m) return closeSheet(); const t = MT(m.type);
+  openSheet(`<div class="sheet-in" data-media="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t[1]} ${t[2].replace(/s$/, '')}</h2><span></span></div>
+    <div class="md-top"><div class="md-cov">${coverFace(m)}</div><div class="md-tx"><h3>${esc(m.title)}</h3>${m.author ? `<p class="md-a">${esc(m.author)}</p>` : ''}${m.info ? `<p class="md-i">${esc(m.info)}</p>` : ''}
+      <p class="md-d">Added ${dShort(m.added)}${m.done ? ' · ' + t[4] + ' ' + dShort(m.done) : ''}</p></div></div>
+    <div class="md-btns"><button type="button" class="btn${m.status === 'now' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="now">${t[3]}</button><button type="button" class="btn${m.status === 'done' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="done">${t[4]} ✓</button></div>
+    <div class="group" style="margin-top:12px">
+      <div class="row"><span>Shelf</span><span class="md-types">${MEDIA_TYPES.map(x => `<button type="button" class="dump-fc${x[0] === m.type ? ' on' : ''}" data-act="media-type" data-id="${m.id}" data-v="${x[0]}" aria-label="${x[2]}">${x[1]}</button>`).join('')}</span></div>
+      <button type="button" class="row" data-act="media-cover" data-id="${m.id}"><span>${m.cover ? 'Try a different cover' : 'Look for a cover'}</span>${CHEV}</button>
+      ${m.src ? `<a class="row" href="${esc(m.src)}" target="_blank" rel="noopener"><span>About it (${/openlibrary/.test(m.src) ? 'Open Library' : /tvmaze/.test(m.src) ? 'TVmaze' : 'Wikipedia'})</span>${CHEV}</a>` : ''}
+      <button type="button" class="row" data-act="media-rename" data-id="${m.id}"><span>Edit name</span>${CHEV}</button>
+      <button type="button" class="row md-del" data-act="media-del" data-id="${m.id}"><span>Remove from my shelf</span></button>
+    </div><p class="foot">Covers come from Open Library, TVmaze and Wikipedia.</p></div>`); }
+function mediaAddSheet() { openSheet(`<form data-form="media" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Add to my shelf</h2><button type="submit" class="link strong">Add</button></div>
+  <div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="title" required maxlength="90" placeholder="e.g. Circe"></label>
+  <label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" placeholder="books only, optional"></label>
+  <label class="row field"><span class="f-l">Shelf</span><select name="type">${MEDIA_TYPES.map(t => `<option value="${t[0]}"${t[0] === mediaKind ? ' selected' : ''}>${t[1]} ${t[2]}</option>`).join('')}</select></label>
+  <label class="row field"><span class="f-l">Status</span><select name="status"><option value="done">Finished</option><option value="now">Still on it</option></select></label></div>
+  <p class="foot">Quicker: type “watched …”, “reading …”, “watching …” or “playing …” in Brain dump.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=title]'); if (i) i.focus(); }, 350); }
 /* ---------- Off duty: things I've ordered this year (locked) ---------- */
 const SHOP = () => ((state.private && state.private.shop) || {});
 const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
@@ -2532,6 +2738,7 @@ function render() {
   const keepY = render.lastTab === tab ? (window.scrollY || document.documentElement.scrollTop || 0) : null; const pg = $('page'); const keepPg = render.lastTab === tab ? pg.scrollTop : 0;
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
   pg.innerHTML = PAGES[tab]();
+  if (tab === 'others') cfInit();
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
@@ -2945,6 +3152,18 @@ document.addEventListener('click', e => {
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'icon-sheet': openSheet(iconSheet()); break;
     case 'icon-pack': state.settings.iconPack = b.dataset.id; if (b.dataset.id === 'classic') state.settings.sketchOn = false; commit('Icon style changed'); openSheet(iconSheet()); break;
+    case 'media-kind': mediaKind = b.dataset.id; try { localStorage.setItem('studydesk.mediaKind', mediaKind); } catch (_) {} render(); break;
+    case 'media-tap': { const cf = $('cf'); const i = +b.dataset.i; if (cf && String(i) !== cf.dataset.best) { cf.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - cf.clientWidth / 2, behavior: 'smooth' }); } else mediaSheet(b.dataset.id); break; }
+    case 'media-add': mediaAddSheet(); break;
+    case 'up-open': upSheet(b.dataset.id); break;
+    case 'up-watch': { const id = b.dataset.id; state.upWatch = { ...(state.upWatch || {}) }; const on = !state.upWatch[id]; if (on) state.upWatch[id] = nowISO(); else delete state.upWatch[id]; const inSheet = sheetOpen(); commit(on ? '🔔 I’ll remind you on release day' : 'Reminder off'); if (inSheet) upSheet(id); break; }
+    case 'media-status': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m) { m.status = b.dataset.v; m.done = m.status === 'done' ? (m.done || today()) : ''; m.updated = nowISO(); commit(m.status === 'done' ? 'Marked finished ✓' : 'On it now'); mediaSheet(m.id); } break; }
+    case 'media-type': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m && m.type !== b.dataset.v) { m.type = b.dataset.v; m.cover = ''; m.info = ''; m.src = ''; m.coverPick = 0; m.updated = nowISO(); mediaKind = m.type; commit('Moved to ' + MT(m.type)[2]); mediaSheet(m.id); mediaCover(m.id); } break; }
+    case 'media-cover': mediaCover(b.dataset.id, true); break;
+    case 'media-rename': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; openSheet(`<form data-form="media-rename" class="sheet-in" autocomplete="off"><input type="hidden" name="id" value="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="media-back" data-id="${m.id}">Cancel</button><h2>Edit</h2><button type="submit" class="link strong">Save</button></div>
+      <div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="title" required maxlength="90" value="${esc(m.title)}"></label><label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" value="${esc(m.author || '')}" placeholder="books only"></label></div></form>`); break; }
+    case 'media-back': mediaSheet(b.dataset.id); break;
+    case 'media-del': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; state.media = state.media.filter(x => x.id !== m.id); closeSheet(); commit('Removed “' + m.title + '”'); break; }
     case 'att-done': state.attDone = { ...(state.attDone || {}), [today()]: nowISO() }; commit('Attendance done ✓'); break;
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
     case 'art-open': artSheet(0); break;
@@ -3070,6 +3289,8 @@ document.addEventListener('submit', e => {
     case 'pdfmeta': {
       const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
       pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
+    case 'media': { const title = cleanTitle((fd.get('title') || '').trim()); if (!title) break; const it = addMedia({ type: fd.get('type'), status: fd.get('status'), title, author: (fd.get('author') || '').trim() }, 'manual'); mediaKind = it.type; closeSheet(); commit(MT(it.type)[1] + ' Added to your shelf'); break; }
+    case 'media-rename': { const m = (state.media || []).find(x => x.id === fd.get('id')); const t = (fd.get('title') || '').trim(); if (!m || !t) break; const changed = t !== m.title || (fd.get('author') || '').trim() !== (m.author || ''); m.title = t; m.author = (fd.get('author') || '').trim(); if (changed) { m.cover = ''; m.coverPick = 0; } m.updated = nowISO(); commit('Saved'); mediaSheet(m.id); if (changed) mediaCover(m.id); break; }
     case 'love': { const nm = (fd.get('n') || '').trim().slice(0, 60); if (!nm) break; state.loveMine = state.loveMine || {}; state.loveMine['lv-' + uid()] = { name: nm, emoji: (fd.get('e') || '✨').trim() || '✨' }; closeSheet(); commit('Added ✓'); break; }
     case 'habits': {
       const n = +fd.get('count'); const out = []; const old = HABITS();
@@ -3111,7 +3332,7 @@ document.addEventListener('submit', e => {
     case 'logany': {
       const tid = logTopicFor(fd.get('topic') || 'new', fd); if (!tid) { toast('Type what you read'); return; } const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
       state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
-    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: '', created: nowISO() }]); const inSheet = sheetOpen(); commit('Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
+    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; const mp = state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump'); state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: mp ? 'media' : '', created: nowISO(), media: mit ? mit.id : undefined }]); const inSheet = sheetOpen(); commit(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : 'Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
@@ -3137,7 +3358,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};

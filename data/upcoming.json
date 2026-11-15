@@ -1,0 +1,14 @@
+{
+  "updated": "2026-11-15",
+  "note": "Picked from the things you love. Refreshed every week.",
+  "items": [
+    {"id": "avengers-doomsday", "type": "movie", "title": "Avengers: Doomsday", "date": "2026-12-18", "why": "Marvel", "where": "In cinemas", "blurb": "The Avengers, X-Men and Fantastic Four face Doctor Doom.", "search": "Avengers: Doomsday film"},
+    {"id": "batman-part-ii", "type": "movie", "title": "The Batman Part II", "date": "2027-10-01", "why": "DC", "where": "In cinemas", "blurb": "Robert Pattinson returns as Batman in Matt Reeves's sequel.", "search": "The Batman Part II film"},
+    {"id": "avengers-secret-wars", "type": "movie", "title": "Avengers: Secret Wars", "date": "2027-12-17", "why": "Marvel", "where": "In cinemas", "blurb": "The finale of Marvel's multiverse saga.", "search": "Avengers: Secret Wars film"},
+    {"id": "daredevil-ba-s3", "type": "series", "title": "Daredevil: Born Again · Season 3", "date": "2027", "why": "Marvel", "where": "Disney+ / JioHotstar", "blurb": "The final season of Marvel's Daredevil revival.", "search": "Daredevil: Born Again"},
+    {"id": "gta-6", "type": "game", "title": "Grand Theft Auto VI", "date": "2026-11-19", "why": "Big release", "where": "PS5, Xbox", "blurb": "Rockstar's long-awaited return to Vice City.", "search": "Grand Theft Auto VI video game"},
+    {"id": "dawn-of-war-4", "type": "game", "title": "Warhammer 40,000: Dawn of War IV", "date": "2026-12-03", "why": "Strategy, for a Dota player", "where": "PC", "blurb": "The real-time strategy series comes back.", "search": "Warhammer 40,000: Dawn of War IV"},
+    {"id": "layton-steam", "type": "game", "title": "Professor Layton and the New World of Steam", "date": "2026-12-10", "why": "Cosy puzzles", "where": "Switch 2", "blurb": "A new puzzle mystery with Professor Layton.", "search": "Professor Layton and the New World of Steam"},
+    {"id": "poe2-1", "type": "game", "title": "Path of Exile 2 · full launch", "date": "2026-12-11", "why": "Action RPG", "where": "PC, PS5, Xbox", "blurb": "The 1.0 release of the free action RPG.", "search": "Path of Exile 2 video game"}
+  ]
+}
