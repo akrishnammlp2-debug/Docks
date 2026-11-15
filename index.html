@@ -1318,6 +1318,17 @@ body::before{will-change:transform;transform:translateZ(0)}
 /* hand-drawn icons v5.33 */
 body.sketchy svg[viewBox="0 0 24 24"]>*{filter:url(#rough)}
 body.sketchy svg[viewBox="0 0 24 24"]{stroke-linecap:round;stroke-linejoin:round}
+/* icon packs v5.34 */
+.ip-list{display:flex;flex-direction:column;gap:10px}
+.ip-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:left;padding:14px 16px;border-radius:18px;border:1.5px solid var(--sep);background:var(--surface);color:var(--fg);font:inherit;cursor:pointer}
+.ip-opt.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 25%,transparent)}
+.ip-row{display:flex;gap:16px;margin-bottom:6px;color:var(--accent)}
+.ip-row svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
+.ip-opt.sk .ip-row svg>*{filter:url(#rough)}
+.ip-n{font-weight:700;font-size:16px}
+.ip-d{font-size:13.5px;color:var(--fg-2)}
+#sheet .ip-opt{background:var(--surface);color:var(--fg)}
 /* settings folds v5.32 */
 .set-more{display:block}
 .set-more>summary{list-style:none;position:relative;display:flex;align-items:center;gap:8px;min-height:44px;padding:11px 14px;font-size:15px;font-weight:600;color:var(--accent)!important;cursor:pointer;-webkit-user-select:none;user-select:none}
@@ -1409,9 +1420,9 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.33 · hand-drawn icons';
+const APP_VERSION = '5.34 · icon styles';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2407,8 +2418,9 @@ function pageBackup() {
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
+    <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
-    ${fold('settings', 'More settings', `<label class="row toggle"><span>Hand-drawn icons</span><input type="checkbox" data-setting="sketchOn" ${S.sketchOn !== false ? 'checked' : ''}></label>
+    ${fold('settings', 'More settings', `
     <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
@@ -2416,7 +2428,7 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
-    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
+    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 7)}
   </div></div>`;
   { const before = h; h = '';
   h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
@@ -2511,7 +2523,7 @@ function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" aut
   <div class="group"><div class="row field hab-ed"><input name="e" placeholder="✨" maxlength="4" aria-label="Emoji"><input class="left" name="n" placeholder="e.g. Studio Ghibli, space, F1" aria-label="Topic" required></div></div>
   <p class="foot">The more specific, the better the facts. It joins the daily draw once your devices sync.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=n]'); if (i) i.focus(); }, 350); }
 function render() {
-  document.body.classList.toggle('sketchy', state.settings.sketchOn !== false);
+  document.body.classList.toggle('sketchy', sketchNow());
   REG = [];
   document.body.dataset.sec = tab;
   $('nb-title').textContent = SECS[tab];
@@ -2534,11 +2546,31 @@ const TB_ICON = {
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>',
   today: '<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/>'
 };
+const TB_MAP = { ot: 'clip', study: 'book', calendar: 'calendar', others: 'off', today: 'house' };
+const MENU_MAP = { today: 'sun', reminders: 'bell', study: 'book', todos: 'todo', calendar: 'calendar', advances: 'news', ot: 'pulse', roster: 'clock', cases: 'clip', music: 'music', nba: 'nba', backup: 'backup', orders: 'orders', others: 'off' };
+const iconPackId = () => state.settings.iconPack || 'classic';
+const packIcon = c => { const p = iconPackId(); if (p === 'classic') return ''; const P = D.icons && D.icons[p]; return (P && P.i && P.i[c]) || ''; };
+const tbIco = k => packIcon(TB_MAP[k]) || TB_ICON[k];
+const menuIco = k => packIcon(MENU_MAP[k]) || MENU_LINE[k];
+const sketchNow = () => { const p = iconPackId(); return p === 'classic' ? state.settings.sketchOn !== false : !!(D.icons && D.icons[p] && D.icons[p].sketch); };
+function iconSheet() {
+  const cur = iconPackId(); const show = ['house', 'book', 'calendar', 'bell', 'off'];
+  const prev = (id, name, note) => { const icons = id === 'classic' ? [TB_ICON.today, TB_ICON.study, TB_ICON.calendar, MENU_LINE.reminders, TB_ICON.others] : show.map(c => D.icons[id].i[c]);
+    const sk = id === 'classic' ? false : !!D.icons[id].sketch;
+    return `<button type="button" class="ip-opt${cur === id ? ' on' : ''}${sk ? ' sk' : ''}" data-act="icon-pack" data-id="${id}" aria-pressed="${cur === id}"><span class="ip-row">${icons.map(d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`).join('')}</span><span class="ip-n">${name}${cur === id ? ' ✓' : ''}</span><span class="ip-d">${note}</span></button>`; };
+  const NOTES = { sketch: 'Pencil-drawn and a little rough, like notebook doodles', duo: 'Soft tinted shapes with a clear outline. Friendly and calm', fine: 'Thin, elegant lines, like a fountain-pen journal', round: 'Smooth, rounded and minimal', solid: 'Filled shapes. Bold and easy to spot' };
+  let h = `<h2 class="sh-t">Icon style</h2><p class="sub" style="margin:0 0 12px">Changes the icons in the bottom bar and side menu. The Off duty tab gets a little cat in most styles.</p><div class="ip-list">`;
+  h += prev('classic', 'Original', 'The simple line icons Docks started with');
+  if (D.icons) Object.keys(D.icons).forEach(id => { h += prev(id, D.icons[id].name, NOTES[id] || ''); });
+  else h += `<p class="sub">The icon styles haven't downloaded yet. Open this again once you're online.</p>`;
+  return h + '</div>';
+}
 function renderTabbar() {
-  if (renderTabbar.t === tab) return; renderTabbar.t = tab;
-  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON[k]}</svg><span>${label}</span></button>`;
+  const tk = tab + '|' + iconPackId() + '|' + !!D.icons;
+  if (renderTabbar.t === tk) return; renderTabbar.t = tk;
+  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco(k)}</svg><span>${label}</span></button>`;
   $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
-    `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${TB_ICON.today}</svg></button>` +
+    `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco('today')}</svg></button>` +
     b('calendar', 'Calendar') + b('others', 'Off duty');
 }
 const MENU_LINE = {
@@ -2561,7 +2593,7 @@ const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
-  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_LINE[k] ? `<span class="demo dline" aria-hidden="true"><svg viewBox="0 0 24 24">${MENU_LINE[k]}</svg></span>` : MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
+  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_LINE[k] ? `<span class="demo dline" aria-hidden="true"><svg viewBox="0 0 24 24">${menuIco(k)}</svg></span>` : MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
   const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
   const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
   const lines = [
@@ -2911,6 +2943,8 @@ document.addEventListener('click', e => {
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpSheet(); } break; }
     case 'cat-open': catSheet(); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
+    case 'icon-sheet': openSheet(iconSheet()); break;
+    case 'icon-pack': state.settings.iconPack = b.dataset.id; if (b.dataset.id === 'classic') state.settings.sketchOn = false; commit('Icon style changed'); openSheet(iconSheet()); break;
     case 'att-done': state.attDone = { ...(state.attDone || {}), [today()]: nowISO() }; commit('Attendance done ✓'); break;
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
     case 'art-open': artSheet(0); break;
