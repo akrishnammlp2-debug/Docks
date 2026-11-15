@@ -1391,7 +1391,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.29 · faster';
+const APP_VERSION = '5.30 · notifications';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1500,7 +1500,7 @@ async function loadData(manual) {
       try { localStorage.setItem('studydesk.data.' + f, JSON.stringify({ at: nowISO(), data: j })); } catch (_) {}
     } catch (e) { failed++; if (dataStatus[f].from === 'network') dataStatus[f].from = 'saved'; }
   }));
-  render(); (window.requestIdleCallback || setTimeout)(warmPictures, 1500);
+  render(); if (window.requestIdleCallback) requestIdleCallback(warmPictures, { timeout: 3000 }); else setTimeout(warmPictures, 1500);
   if (manual) toast(failed ? "Couldn't reach GitHub. Showing the last saved copy." : 'Up to date ✓');
 }
 const CASES = () => (D.cases && D.cases.items) || [];
@@ -1661,6 +1661,69 @@ function tbanArt(ph) {
     <path d="M0 128 Q90 108 180 124 T360 120 V170 H0z" fill="${hill[1]}"/>
     <path d="M0 146 Q100 136 190 146 T360 142 V170 H0z" fill="${hill[2]}"/></svg>`;
 }
+/* ---------- Phone notifications (Web Push) ----------
+   This device writes push/<device>.json to the private sync repository: its push subscription plus the next 3 days
+   of reminders. A GitHub job there sends each one when it's due (checked every 30 minutes). */
+const VAPID_PUB = 'BPJZfLn1uUvBEClxeSbI1x_ZL4Yf9EvL6DkDfPEP2Qepc43Ny8nmmCix5VKTx2FqnkBI1FH4cB6PrTKTdD0RIkQ';
+const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
+const nOn = k => { const S = state.settings, d = NOTIF_TYPES.find(x => x[0] === k); return S[k] === undefined ? d[2] : !!S[k]; };
+const pushSub = () => { try { return JSON.parse(localStorage.getItem('studydesk.pushSub') || 'null'); } catch (_) { return null; } };
+const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+const b64uBytes = s => { const p = '='.repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+function notifCard() { const sub = pushSub(); const can = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  const cfg = syncCfg();
+  let top;
+  if (!can || !isStandalone()) top = `<span class="c-s">To get notifications on an iPhone, open Docks from its Home Screen icon (Safari → Share → Add to Home Screen), then come back here.</span>`;
+  else if (!cfg.token) top = `<span class="c-s">Connect iPhone ↔ iPad sync above first. Notifications are sent through the same private space.</span>`;
+  else if (sub && Notification.permission === 'granted') top = `<div class="c-top"><span class="c-lab">On for this device</span><span class="pill acc">On</span></div><span class="c-m">Docks plans the next 3 days of reminders whenever it syncs, and each one arrives within about 30 minutes of its time.</span>
+    <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="push-test">Test on this phone</button><button class="btn danger" type="button" data-act="push-off">Turn off</button></div>`;
+  else top = `<span class="c-s">${Notification.permission === 'denied' ? 'Notifications are blocked for Docks. Turn them on in iPhone Settings → Notifications → Docks, then tap the button.' : 'Get your Docks reminders as real phone notifications.'}</span><div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="push-on">Turn on notifications</button></div>`;
+  return `<div class="card">${top}</div><div class="group" style="margin-top:10px">${NOTIF_TYPES.map(([k, l]) => `<label class="row toggle"><span>${l}</span><input type="checkbox" data-setting="${k}" ${nOn(k) ? 'checked' : ''}></label>`).join('')}</div>`; }
+async function pushOn() {
+  try { const perm = await Notification.requestPermission(); if (perm !== 'granted') { toast('Notifications were not allowed'); render(); return; }
+    const reg = await navigator.serviceWorker.ready; let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64uBytes(VAPID_PUB) });
+    localStorage.setItem('studydesk.pushSub', JSON.stringify(sub.toJSON())); devSyncPushSig = ''; 
+    toast('Notifications on ✓'); render(); deviceSync(true);
+  } catch (e) { toast("Couldn't turn on notifications: " + (e.message || e)); } }
+async function pushOff() {
+  try { const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); if (sub) await sub.unsubscribe(); } catch (_) {}
+  localStorage.removeItem('studydesk.pushSub'); devSyncPushSig = ''; toast('Notifications off'); render(); deviceSync(true); }
+async function pushTest() { try { const reg = await navigator.serviceWorker.ready; await reg.showNotification('Docks 🐾', { body: 'Notifications are working on this phone.', tag: 'docks-test', icon: 'icon-180.png', badge: 'icon-180.png', data: { tab: 'backup' } }); } catch (e) { toast("Couldn't show a test: " + (e.message || e)); } }
+let devSyncPushSig = '';
+/* the next 3 days of notifications, worked out from what's on this device right now */
+function notifSchedule() { const out = []; const t = today(); const nowMs = Date.now();
+  const at = (day, hh, mm = 0) => { const d = new Date(day + 'T00:00:00'); d.setHours(hh, mm, 0, 0); return d; };
+  const push = (id, day, hh, title, body, tab, mm) => { const d = at(day, hh, mm); if (d.getTime() > nowMs - 5 * 60e3) out.push({ id, at: d.toISOString(), title, body: body.slice(0, 180), tab }); };
+  const H = HABITS();
+  for (let i = 0; i < 3; i++) { const day = addDays(t, i);
+    const done = h => !!state.habitDone[habitKey(h, day)];
+    // morning 8 AM
+    if (nOn('nRoutines') || nOn('nPlants')) {
+      const morn = H.filter(h => h.from === 6 && h.to === 15).filter(h => (/plant/i.test(h.name) ? nOn('nPlants') : nOn('nRoutines')) && (h.every > 1 ? (() => { const ld = lastDone(h); const ds = ld ? Math.round((new Date(day + 'T12:00') - new Date(ld + 'T12:00')) / 864e5) : null; return ds === null || ds >= h.every; })() : true)).filter(h => !(i === 0 && done(h)));
+      const bal = H.find(h => h.nudge); let extra = '';
+      if (bal && nOn('nPlants')) { const ld = lastDone(bal); if (ld) { const miss = Math.round((new Date(day + 'T12:00') - new Date(ld + 'T12:00')) / 864e5) - 1; if (miss >= bal.nudge) extra = ` · ${bal.emoji} not watered in ${plural(miss, 'day')}`; } }
+      if (morn.length) push('morning|' + day, day, 8, '☀️ Morning routine', morn.map(h => h.name).join(' · ') + extra, 'today');
+    }
+    // night 9 PM (+ creatine if missed)
+    const night = nOn('nRoutines') ? H.filter(h => h.from === 21).filter(h => !(i === 0 && done(h))) : [];
+    const cre = nOn('nCreatine') ? H.find(h => h.late) : null; const creMissed = cre && !done(cre);
+    if (night.length || creMissed) push('night|' + day, day, 21, '🌙 Night routine', (creMissed ? '💪 Creatine (missed this morning)' + (night.length ? ' · ' : '') : '') + night.map(h => h.name).join(' · '), 'today');
+    // cat food 10 AM
+    if (nOn('nCat')) { const due = catFoods().map(f => [f, catInfo(f)]).filter(([, x]) => x && Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5) < CAT_WARN && !((state.catOrdered || {})[x && f.id] >= addDays(day, -1)));
+      if (due.length) push('cat|' + day, day, 10, '🐈 Time to buy cat food', due.map(([f, x]) => { const n = Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5); return f.name + (n <= 0 ? ': reorder now' : ': reorder in ' + plural(n, 'day')); }).join(' · '), 'reminders'); }
+    // classes & duty tomorrow, 8 PM
+    const tm = addDays(day, 1);
+    if (nOn('nClasses')) { const S = SCHED().filter(x => x.date === tm); if (S.length) push('class|' + tm, day, 20, '📚 Tomorrow' + (SESSION_TIME() ? ' · ' + SESSION_TIME() : ''), S.map(x => x.session + (x.topic ? ': ' + x.topic : '')).join(' · '), 'calendar'); }
+    if (nOn('nDuty')) { const roles = dutiesFor(tm); if (roles.length) push('duty|' + tm, day, 20, '🩺 Emergency duty tomorrow', roles.join(', ') + ' · ' + dDow(tm) + ' ' + dShort(tm), 'roster', 5); }
+    // my reminders, 9 AM on the due day
+    if (nOn('nReminders')) state.reminders.forEach(r => { try { const st = remStatus(r); const p = st.p; if (!p) return; if ((p.due === day) || (i === 0 && st.s === 'late')) push('rem|' + r.id + '|' + p.key, day, 9, '🔔 Reminder', r.title + (st.s === 'late' && i === 0 ? ' (overdue)' : ''), 'reminders'); } catch (_) {} });
+    // parcels arriving
+    if (nOn('nDelivery')) ((PERS().deliveries) || []).filter(x => x.date === day && x.status !== 'delivered').forEach((x, j) => push('del|' + day + '|' + j, day, 9, '📦 Arriving today', (x.what || 'A parcel') + (x.store ? ' · ' + x.store : ''), 'calendar', 15));
+  }
+  if (nOn('nDaily')) { const L = (D.loves || {}).today, A = (D.art || {}).today; if ((L && L.date === t) || (A && A.date === t)) push('daily|' + t, t, 7, '🐾 Off duty today', [L && L.date === t ? L.title : '', A && A.date === t ? '🖼️ ' + A.title + ' · ' + A.artist : ''].filter(Boolean).join(' · '), 'others'); }
+  return out.sort((a, b) => a.at.localeCompare(b.at)); }
+
 /* ---------- Brain dump: jot anything now, sort it later ---------- */
 const DUMP_CATS = [['academics', '📚', 'Academics'], ['holidays', '🏖️', 'Holidays'], ['buy', '🛒', 'To buy'], ['other', '✨', 'Other']];
 const DUMPS = () => (state.dumps || []).filter(d => !d.deleted).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
@@ -2319,6 +2382,7 @@ function pageBackup() {
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
     return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
+  h += `<div class="sec"><h2 class="sh">Phone notifications</h2>${notifCard()}</div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
     <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
@@ -2804,6 +2868,9 @@ document.addEventListener('click', e => {
     case 'mc-open': mcSheet(id); break;
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
+    case 'push-on': pushOn(); break;
+    case 'push-off': pushOff(); break;
+    case 'push-test': pushTest(); break;
     case 'dump-all': dumpSheet(); break;
     case 'dump-filter': dumpFilter = id; dumpSheet(); break;
     case 'dump-cat': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: d.cat === b.dataset.c ? '' : b.dataset.c }); commit(); dumpSheet(); } break; }
@@ -3102,6 +3169,13 @@ async function deviceSync(manual) {
       if (!pr.ok) throw new Error(pr.status === 403 || pr.status === 404 ? "the access key can't write to " + cfg.repo + ' (check Contents: Read and write)' : 'GitHub answered ' + pr.status + ' while saving');
       S.lastPush = sig; save();
     }
+    // phone notifications: subscription + next 3 days (plain JSON, private repository only)
+    { const sub = pushSub(); const pp = '/contents/push/' + device.kid + '.json'; const sched = sub ? notifSchedule() : [];
+      const psig = fnv(JSON.stringify([sub && sub.endpoint, sched]));
+      if (psig !== devSyncPushSig) { const pc = await gh(cfg, pp); const psha = pc.ok ? (await pc.json()).sha : undefined;
+        if (sub) { const pr3 = await gh(cfg, pp, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'push schedule', content: utf8b64(JSON.stringify({ v: 1, device: device.kid, at: nowISO(), sub, schedule: sched }, null, 1)), sha: psha }) }); if (pr3.ok) devSyncPushSig = psig; }
+        else if (psha) { const dr3 = await gh(cfg, pp, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'notifications off', sha: psha }) }); if (dr3.ok) devSyncPushSig = psig; }
+        else devSyncPushSig = psig; } }
     // outbox for Claude: my cases not yet in the logbook (plain JSON, private repository only)
     const pending = MC_LIST().filter(c => !CASES().some(x => x.ref === c.id));
     const loves = state.loveMine || {};
