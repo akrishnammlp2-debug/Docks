@@ -1,49 +1,96 @@
 {
- "updated": "2026-11-14",
- "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
- "today": {
-  "date": "2026-11-14",
-  "title": "Paris Street; Rainy Day",
-  "artist": "Gustave Caillebotte",
-  "artistLife": "French, 1848–1894",
-  "year": "1877",
-  "medium": "Oil on canvas",
-  "size": "212 × 276 cm (the people are nearly life-size)",
-  "where": "Art Institute of Chicago",
-  "movement": "Impressionism, with a Realist finish",
-  "fame": "famous",
-  "image": {
-   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=1200",
-   "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=300",
-   "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=2400",
-   "credit": "Art Institute of Chicago, public domain (image: Wikimedia Commons)"
+  "updated": "2026-11-15T06:53:09+05:30",
+  "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
+  "today": {
+    "date": "2026-11-15",
+    "title": "Old Plum",
+    "artist": "Kano Sansetsu",
+    "artistLife": "Japanese, 1590–1651",
+    "year": "1646",
+    "medium": "Ink, colour, gold and gold leaf on paper, painted across four sliding doors (fusuma)",
+    "size": "174.6 × 485.5 cm (almost five metres wide: once a whole wall of a room)",
+    "where": "The Metropolitan Museum of Art, New York",
+    "movement": "Kano school, early Edo period (Japan)",
+    "fame": "hidden gem",
+    "image": {
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:老梅図襖-Old_Plum_MET_DT229.jpg",
+      "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+      "focus": "center 60%"
+    },
+    "sections": [
+      {
+        "h": "The painting",
+        "p": "One ancient plum tree sprawls across four sliding doors. Its huge, mossy black trunk heaves in from the lower right and snakes left over a field of shimmering gold, while thin twigs carry small white blossoms that look almost frozen in the cold. It is the very start of spring: the old tree is flowering again."
+      },
+      {
+        "h": "The artist",
+        "p": "Kano Sansetsu was born in Kyushu, trained under the painter Kano Sanraku, married his daughter and was adopted as his heir. He went on to lead the Kyoto branch of the Kano family, Japan's most powerful dynasty of painters. Writers describe him as a bit of an eccentric, a bookish collector who liked strange, twisting forms, and later rebels such as Ito Jakuchu are sometimes seen as his artistic grandchildren."
+      },
+      {
+        "h": "The time",
+        "p": "In the early 1600s the Tokugawa shoguns took over Japan and moved power to Edo (today's Tokyo). The family's star painters followed them there and developed a cooler, more delicate style, but Sanraku had been close to the defeated Toyotomi clan, so his branch stayed behind in Kyoto and kept the bold, oversized look of the previous generation. This wall was commissioned by a young lord, Matsudaira Tadahiro, for Tensho-in, a small Zen temple he founded in Kyoto in memory of his father, a grandson of the first Tokugawa shogun."
+      },
+      {
+        "h": "What's special",
+        "p": "Gold leaf was not just showing off: in dim temple rooms lit by paper screens and lamps, it caught every bit of light and made the room glow. Because the painting is on doors, it was meant to be lived in, so you would see the tree grow and change as you walked past or slid the panels open. The temple burned in the 1880s and only these four panels survived; they were trimmed down, separated from their back side (now in Minneapolis), and the Met later built a traditional Japanese room just to show them."
+      },
+      {
+        "h": "Look for",
+        "p": "Green lichen crusting the old trunk, next to tall, pillar-like rocks and low bamboo grass at the lower right. Just behind the rock, a branch from a second tree sneaks in with pink blossoms instead of white. At the far left edge, azalea leaves hint that the story once carried on into summer on the missing doors."
+      }
+    ],
+    "source": {
+      "title": "The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/art/collection/search/44858"
+    }
   },
-  "sections": [
-   {
-    "h": "The painting",
-    "p": "A damp afternoon at a big crossroads near the Gare Saint-Lazare in Paris. Well-dressed couples stroll under near-identical umbrellas on the wet, shiny cobbles while a tall green lamppost splits the canvas down the middle. It was Caillebotte's largest and most ambitious work."
-   },
-   {
-    "h": "The artist",
-    "p": "Caillebotte trained as an engineer and lawyer before turning to painting. He was rich, and used that money to rent exhibition halls and buy paintings from struggling friends like Monet, Renoir and Pissarro. When he died at 45 he left his collection to France, and after a long row the state accepted much of it. That gift became the heart of the Impressionist rooms at the Musée d'Orsay."
-   },
-   {
-    "h": "The time",
-    "p": "In the 1850s and 60s, Baron Haussmann tore down much of medieval Paris and built wide boulevards, uniform cream-stone buildings and gas lamps. This painting shows that brand-new city only a few years old, and a new middle class learning to stroll in it. It hung at the third Impressionist exhibition in 1877, which Caillebotte helped organise and pay for."
-   },
-   {
-    "h": "What's special",
-    "p": "Unlike his friends' quick, broken brushwork, Caillebotte painted smooth, almost photographic surfaces. He crops figures at the edges as if a camera had snapped them, and the man on the right is cut in half. The streets rush away in steep perspective, and nobody looks at anyone else, a quiet comment on how lonely the modern city could feel."
-   },
-   {
-    "h": "Look for",
-    "p": "The lamppost and its shadow form a cross that divides the scene into four parts. The rain is only in the shine of the stones and the umbrellas. Then count how many umbrellas are almost exactly the same."
-   }
-  ],
-  "source": {
-   "title": "Art Institute of Chicago",
-   "url": "https://www.artic.edu/artworks/20684/paris-street-rainy-day"
-  }
- },
- "history": []
+  "history": [
+    {
+      "date": "2026-11-14",
+      "title": "Paris Street; Rainy Day",
+      "artist": "Gustave Caillebotte",
+      "artistLife": "French, 1848–1894",
+      "year": "1877",
+      "medium": "Oil on canvas",
+      "size": "212 × 276 cm (the people are nearly life-size)",
+      "where": "Art Institute of Chicago",
+      "movement": "Impressionism, with a Realist finish",
+      "fame": "famous",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=2400",
+        "credit": "Art Institute of Chicago, public domain (image: Wikimedia Commons)"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A damp afternoon at a big crossroads near the Gare Saint-Lazare in Paris. Well-dressed couples stroll under near-identical umbrellas on the wet, shiny cobbles while a tall green lamppost splits the canvas down the middle. It was Caillebotte's largest and most ambitious work."
+        },
+        {
+          "h": "The artist",
+          "p": "Caillebotte trained as an engineer and lawyer before turning to painting. He was rich, and used that money to rent exhibition halls and buy paintings from struggling friends like Monet, Renoir and Pissarro. When he died at 45 he left his collection to France, and after a long row the state accepted much of it. That gift became the heart of the Impressionist rooms at the Musée d'Orsay."
+        },
+        {
+          "h": "The time",
+          "p": "In the 1850s and 60s, Baron Haussmann tore down much of medieval Paris and built wide boulevards, uniform cream-stone buildings and gas lamps. This painting shows that brand-new city only a few years old, and a new middle class learning to stroll in it. It hung at the third Impressionist exhibition in 1877, which Caillebotte helped organise and pay for."
+        },
+        {
+          "h": "What's special",
+          "p": "Unlike his friends' quick, broken brushwork, Caillebotte painted smooth, almost photographic surfaces. He crops figures at the edges as if a camera had snapped them, and the man on the right is cut in half. The streets rush away in steep perspective, and nobody looks at anyone else, a quiet comment on how lonely the modern city could feel."
+        },
+        {
+          "h": "Look for",
+          "p": "The lamppost and its shadow form a cross that divides the scene into four parts. The rain is only in the shine of the stones and the umbrellas. Then count how many umbrellas are almost exactly the same."
+        }
+      ],
+      "source": {
+        "title": "Art Institute of Chicago",
+        "url": "https://www.artic.edu/artworks/20684/paris-street-rainy-day"
+      }
+    }
+  ]
 }
