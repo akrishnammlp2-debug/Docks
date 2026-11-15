@@ -1376,6 +1376,10 @@ body.sketchy svg[viewBox="0 0 24 24"]{stroke-linecap:round;stroke-linejoin:round
 .up-blurb{font-size:15px;line-height:1.45;margin:0 0 12px}
 #sheet .up-blurb{color:#16201B}
 .up-l .set-more>summary{padding-left:12px}
+.otp{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.otp .btn{align-self:stretch}
+#page .otp-warn{color:#8A4B0F}
+@media (prefers-color-scheme:dark){#page .otp-warn{color:#F0C08A}}
 /* icon packs v5.34 */
 .ip-list{display:flex;flex-direction:column;gap:10px}
 .ip-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:left;padding:14px 16px;border-radius:18px;border:1.5px solid var(--sep);background:var(--surface);color:var(--fg);font:inherit;cursor:pointer}
@@ -1476,10 +1480,11 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <input type="file" id="pdfFile" accept="application/pdf,.pdf" multiple hidden>
 <input type="file" id="heroFile" accept="image/*" multiple hidden>
 <input type="file" id="coverFile" accept="image/*" hidden>
+<input type="file" id="otFile" accept="image/*" multiple hidden>
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.38 · brain dump tidies itself';
+const APP_VERSION = '5.39 · add OT list photo';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2328,14 +2333,26 @@ function otTable(rows) {
     return `<tr class="${on ? 'done' : ''}"><td class="c-tick"><button class="check${on ? ' on' : ''}" type="button" data-act="ot-tick" data-id="${esc(r.id)}" aria-label="${on ? 'Untick' : 'Tick'} ${esc(r.procedure)}"></button></td><td class="c-proc"><button type="button" data-act="ot-tick" data-id="${esc(r.id)}">${esc(r.procedure)}</button></td>${cols.map(c => `<td class="${wide.has(c[0]) ? 'c-wrap' : ''}${c[0] === 'uhid' || c[0] === 'time' ? ' c-mono' : ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
   }).join('')}</tbody></table></div>`;
 }
+/* OT list photo → private inbox; the hourly task reads it and adds the list */
+let otSent = (() => { try { return JSON.parse(localStorage.getItem('studydesk.otSent') || '[]'); } catch (_) { return []; } })();
+function otSentSave() { try { localStorage.setItem('studydesk.otSent', JSON.stringify(otSent.slice(-10))); } catch (_) {} }
+function otPhotoCard() { const cfg = syncCfg(); const recent = otSent.filter(x => Date.now() - x.at < 36e5 * 6);
+  return `<div class="card otp"><button type="button" class="btn" data-act="ot-photo">📷 Add OT list photo</button>${recent.length ? `<span class="c-s">${recent.length === 1 ? 'Photo sent' : recent.length + ' photos sent'} ${new Date(recent[recent.length - 1].at).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}. The list shows up here within about an hour.</span>` : `<span class="c-s">Take or pick a photo of the OT list. It goes to your private sync space and the list appears here within about an hour.</span>`}${cfg.token ? '' : `<span class="c-s otp-warn">Needs Private sync on this device (Backup & settings).</span>`}</div>`; }
+async function otUpload(files) { const cfg = syncCfg(); if (!cfg.token) { toast('Set up Private sync first (Backup & settings)'); return; }
+  if (!deviceChecked) await loadDevice(); const kid = device ? device.kid : 'dev'; let ok = 0;
+  for (const f of files) { try { toast('Sending photo…'); const url = await shrinkImage(f, 2200); const b64 = url.split(',')[1]; const ts = new Date(); const stamp = today() + '-' + String(ts.getHours()).padStart(2, '0') + String(ts.getMinutes()).padStart(2, '0') + String(ts.getSeconds()).padStart(2, '0');
+      const res = await gh(cfg, '/contents/inbox/ot/' + stamp + '-' + kid + '-' + ok + '.jpg', { method: 'PUT', body: JSON.stringify({ message: 'OT list photo', content: b64 }) });
+      if (!res.ok) throw new Error(res.status); ok++; otSent.push({ at: Date.now() }); } catch (e) { toast('Could not send the photo (' + (e.message || 'no connection') + '). Try again.'); } }
+  otSentSave(); if (ok) { toast(ok === 1 ? '📷 Sent. The list appears within about an hour' : '📷 ' + ok + ' photos sent'); render(); } }
 function pageOt() {
   const ds = otDates(); if (!otDay || !ds.includes(otDay)) otDay = otDefaultDay();
   let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics');
-  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list (photo or text). It's added to Docks and shows up here.</span></div>`;
+  if (!otDay) return h + otPhotoCard();
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(rows)}</div>`;
+  h += `<div class="sec">${otPhotoCard()}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
   return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient details are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient details here. On the website they only exist locked.'}</p>`;
 }
@@ -3175,6 +3192,7 @@ document.addEventListener('click', e => {
     case 'media-status': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m) { m.status = b.dataset.v; m.done = m.status === 'done' ? (m.done || today()) : ''; m.updated = nowISO(); commit(m.status === 'done' ? 'Marked finished ✓' : 'On it now'); mediaSheet(m.id); } break; }
     case 'media-type': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m && m.type !== b.dataset.v) { m.type = b.dataset.v; m.cover = ''; m.info = ''; m.src = ''; m.coverPick = 0; m.updated = nowISO(); mediaKind = m.type; commit('Moved to ' + MT(m.type)[2]); mediaSheet(m.id); mediaCover(m.id); } break; }
     case 'media-cover': mediaCover(b.dataset.id, true); break;
+    case 'ot-photo': $('otFile').click(); break;
     case 'media-photo': coverFor = b.dataset.id; $('coverFile').click(); break;
     case 'media-link': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; openSheet(`<form data-form="media-link" class="sheet-in" autocomplete="off"><input type="hidden" name="id" value="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="media-back" data-id="${m.id}">Cancel</button><h2>Picture link</h2><button type="submit" class="link strong">Use</button></div>
       <div class="group"><label class="row field"><span class="f-l">Link</span><input class="left" name="url" type="url" required inputmode="url" placeholder="https://…"></label></div>
@@ -3554,6 +3572,7 @@ $('importFile').addEventListener('change', async e => {
 $('heroFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) heroAdd(fs); });
 $('pdfFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) pdfAdd(fs); });
 let coverFor = '';
+$('otFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) otUpload(fs); });
 $('coverFile').addEventListener('change', async e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; const m = (state.media || []).find(x => x.id === coverFor); if (!f || !m) return;
   try { m.coverImg = await shrinkImage(f, 520); m.coverOwn = true; m.updated = nowISO(); commit('Cover set'); mediaSheet(m.id); } catch (_) { toast('Could not read that picture'); } });
 $('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
