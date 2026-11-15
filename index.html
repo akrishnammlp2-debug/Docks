@@ -1283,6 +1283,20 @@ body::before{will-change:transform;transform:translateZ(0)}
 .log-pick{flex-wrap:wrap;gap:6px}
 .log-pick select{flex:1 1 100%}
 #sheet .row.field.log-pick select{direction:ltr!important;text-align:left!important;text-align-last:left!important;width:100%!important;background-color:#FFFFFF!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232B6448' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 12px center!important;background-size:16px!important;padding:9px 36px 9px 12px!important;border:1px solid rgba(28,38,33,.25)!important;color:#1C2621!important}
+
+/* roster: highlighted names always readable v5.24 */
+#page .dcard .cell.mine,#page .dcard .cell.found{background:#2B6448!important;box-shadow:none}
+#page .dcard .cell.mine small,#page .dcard .cell.mine span,#page .dcard .cell.found small,#page .dcard .cell.found span{color:#FFFFFF!important;font-weight:700}
+#page .dcard .cell.found{outline:2px solid #F2C14E;outline-offset:1px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #page .dcard .cell.mine,:root:not([data-theme="light"]) #page .dcard .cell.found{background:#9FD0B2!important}
+:root:not([data-theme="light"]) #page .dcard .cell.mine small,:root:not([data-theme="light"]) #page .dcard .cell.mine span,:root:not([data-theme="light"]) #page .dcard .cell.found small,:root:not([data-theme="light"]) #page .dcard .cell.found span{color:#0E1F17!important}}
+:root[data-theme="dark"] #page .dcard .cell.mine,:root[data-theme="dark"] #page .dcard .cell.found{background:#9FD0B2!important}
+:root[data-theme="dark"] #page .dcard .cell.mine small,:root[data-theme="dark"] #page .dcard .cell.mine span,:root[data-theme="dark"] #page .dcard .cell.found small,:root[data-theme="dark"] #page .dcard .cell.found span{color:#0E1F17!important}
+#page .dcard.past{opacity:1!important;filter:none}
+#page .dcard.past .dc-h .dd::after{content:' · past';font-weight:500;font-size:.8em;color:var(--fg-2)}
+#page .dcard .dc-h .dd b,#page .dcard .dc-h .cov{color:var(--fg)!important}
+#page .dcard.hit .dc-h .dd b{color:var(--accent-t)!important}
+#page .dcard .cell small{color:var(--fg-2)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1308,7 +1322,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.23 · log any reading';
+const APP_VERSION = '5.24 · roster names';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1512,7 +1526,7 @@ let tab = SECS[location.hash.slice(1)] ? location.hash.slice(1) : 'today';
 const now0 = new Date();
 let view = { y: now0.getFullYear(), m: now0.getMonth() };
 let sel = today();
-let searchHitDate = null;
+let searchHitDate = null, searchHitName = '';
 let rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
 
@@ -2057,7 +2071,7 @@ function pageRoster() {
   if (!rows.length) note = 'No duty roster for ' + MONTHS[view.m] + ' yet.';
   h += note && !list.length ? `<div class="group"><div class="row empty">${esc(note)}</div></div>` : `<div class="rlist">${list.map(r => {
     const isT = r.date === t;
-    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT && r.date !== searchHitDate ? ' past' : ''}${r.date === searchHitDate ? ' today hit' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; }).join('')}</div>`;
+    return `<div class="dcard${isT ? ' today' : ''}${r.date < t && !isT && r.date !== searchHitDate ? ' past' : ''}${r.date === searchHitDate ? ' today hit' : ''}"><div class="dc-h"><span class="dd"><b>${dDow(r.date)}</b>${dShort(r.date)}</span>${isT ? '<span class="pill acc">Today</span>' : ''}<span class="cov">${r.cover ? 'Cover: ' + esc(r.cover) : 'No cover listed'}</span></div><div class="dc-g">${r.p.map((c, i) => `<div class="cell${n && cellHas(c, n) ? ' mine' : ''}${r.date === searchHitDate && searchHitName && c.toLowerCase().includes(searchHitName) ? ' found' : ''}"><small>${esc(RCOLS()[i] || '')}</small><span>${esc(c)}</span></div>`).join('')}</div></div>`; }).join('')}</div>`;
   if (state.private.roster.note) h += `<p class="foot">${esc(state.private.roster.note)}</p>`;
   return h;
 }
@@ -2643,7 +2657,7 @@ document.addEventListener('click', e => {
     case 'search': searchSheet(); break;
     case 'sres-topic': closeSheet(); goTab('study'); topicSheet(id); break;
     case 'sres-ot': otDay = b.dataset.d; closeSheet(); goTab('ot'); break;
-    case 'sres-roster': { const d = b.dataset.d; view = { y: +d.slice(0, 4), m: +d.slice(5, 7) - 1 }; rmode = 'all'; closeSheet(); goTab('roster'); setTimeout(() => { const el = document.querySelector('.dcard.hit'); if (el) el.scrollIntoView({ block: 'center' }); }, 50); searchHitDate = d; render(); break; }
+    case 'sres-roster': { const d = b.dataset.d; searchHitName = (($('sheet').querySelector('input') || {}).value || '').trim().toLowerCase(); view = { y: +d.slice(0, 4), m: +d.slice(5, 7) - 1 }; rmode = 'all'; closeSheet(); goTab('roster'); setTimeout(() => { const el = document.querySelector('.dcard.hit'); if (el) el.scrollIntoView({ block: 'center' }); }, 50); searchHitDate = d; render(); break; }
     case 'sres-nba': nbaSub = 'standings'; closeSheet(); goTab('nba'); break;
     case 'akind': addKind = b.dataset.k; b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); break;
     case 'item': itemSheet(REG[+id]); break;
