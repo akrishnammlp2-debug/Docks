@@ -1,6 +1,6 @@
 // Study Desk offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v108';
+const CACHE = 'study-desk-v109';
 const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
 const PIC_DAYS = 3, PIC_MAX = 80;
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
@@ -17,7 +17,7 @@ self.addEventListener('activate', e => {
   );
 });
 
-const isPic = url => (/(^|\.)wikimedia\.org$/.test(url.hostname) && (url.pathname.includes('/Special:FilePath/') || url.hostname === 'upload.wikimedia.org')) || url.hostname === 'covers.openlibrary.org' || url.hostname === 'static.tvmaze.com';
+const isPic = url => (/(^|\.)wikimedia\.org$/.test(url.hostname) && (url.pathname.includes('/Special:FilePath/') || url.hostname === 'upload.wikimedia.org')) || url.hostname === 'covers.openlibrary.org' || url.hostname === 'static.tvmaze.com' || /\.mzstatic\.com$/.test(url.hostname);
 
 async function picture(req) {
   const c = await caches.open(PICS);

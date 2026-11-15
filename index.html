@@ -1307,7 +1307,6 @@ body::before{will-change:transform;transform:translateZ(0)}
 #page .rpast summary .cat-tx b{color:var(--fg)!important}#page .rpast summary .cat-tx span{color:var(--fg-2)!important}
 
 /* morning routine v5.26 */
-.hab.late{outline:2px dashed #B5782A;outline-offset:-2px}
 .hab-n small{display:block;font-size:10.5px;font-weight:600;color:var(--fg-2)!important;margin-top:2px}
 .hab-row{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:12px 6px;overflow:visible!important;margin:0!important}
 .hab{width:auto!important;min-width:0}
@@ -1476,10 +1475,11 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <input type="file" id="photoFile" accept="image/*" hidden>
 <input type="file" id="pdfFile" accept="application/pdf,.pdf" multiple hidden>
 <input type="file" id="heroFile" accept="image/*" multiple hidden>
+<input type="file" id="coverFile" accept="image/*" hidden>
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.36 · shelf fixes';
+const APP_VERSION = '5.37 · official covers + your own';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2578,15 +2578,24 @@ async function wikiFind(q) {
   const j = await jget('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&generator=search&gsrlimit=4&gsrsearch=' + encodeURIComponent(q) + '&prop=pageimages|description&piprop=thumbnail&pithumbsize=600&pilicense=any');
   return Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index).filter(p => p.thumbnail).map(p => ({ cover: p.thumbnail.source, info: p.description || '', src: 'https://en.wikipedia.org/wiki/' + encodeURIComponent(p.title.replace(/ /g, '_')), name: p.title.replace(/\s*\(.*\)$/, '') }));
 }
+function jsonp(u) { return new Promise((res, rej) => { const cb = 'sdcb' + Math.random().toString(36).slice(2); const sc = document.createElement('script'); const t = setTimeout(() => { done(); rej(new Error('timeout')); }, 9000);
+  function done() { clearTimeout(t); try { delete window[cb]; } catch (_) { window[cb] = undefined; } sc.remove(); }
+  window[cb] = d => { done(); res(d); }; sc.onerror = () => { done(); rej(new Error('blocked')); }; sc.src = u + '&callback=' + cb; document.head.appendChild(sc); }); }
+async function itunes(T, media, entity) { const j = await jsonp('https://itunes.apple.com/search?country=in&limit=4&media=' + media + '&entity=' + entity + '&term=' + encodeURIComponent(T));
+  return (j.results || []).filter(x => x.artworkUrl100).map(x => ({ cover: x.artworkUrl100.replace(/\/\d+x\d+bb\./, '/600x900bb.'), info: [(x.releaseDate || '').slice(0, 4), x.primaryGenreName, entity === 'ebook' ? x.artistName : ''].filter(Boolean).join(' · '), src: x.trackViewUrl || x.collectionViewUrl || '', name: x.trackName || x.collectionName || '', author: entity === 'ebook' ? x.artistName || '' : '' })); }
 async function coverCandidates(it) {
-  const out = []; const T = it.title;
-  try {
-    if (it.type === 'book') { const j = await jget('https://openlibrary.org/search.json?limit=3&fields=title,author_name,first_publish_year,cover_i,key&q=' + encodeURIComponent(T + (it.author ? ' ' + it.author : '')));
-      (j.docs || []).filter(d => d.cover_i).forEach(d => out.push({ cover: 'https://covers.openlibrary.org/b/id/' + d.cover_i + '-L.jpg', info: [(d.author_name || [])[0], d.first_publish_year].filter(Boolean).join(' · '), src: 'https://openlibrary.org' + d.key, name: d.title, author: (d.author_name || [])[0] || '' })); }
-    if (it.type === 'series') { const j = await jget('https://api.tvmaze.com/search/shows?q=' + encodeURIComponent(T));
-      (j || []).slice(0, 3).filter(x => x.show && x.show.image).forEach(x => out.push({ cover: x.show.image.original || x.show.image.medium, info: [x.show.premiered ? x.show.premiered.slice(0, 4) : '', x.show.network ? x.show.network.name : x.show.webChannel ? x.show.webChannel.name : ''].filter(Boolean).join(' · '), src: x.show.url, name: x.show.name })); }
-  } catch (_) {}
-  try { const hint = { book: 'novel', movie: 'film', series: 'TV series', game: 'video game' }[it.type]; (await wikiFind(T + ' ' + hint)).forEach(c => out.push(c)); } catch (_) {}
+  const out = []; const T = it.title; const log = [];
+  const tryS = async (name, fn) => { try { const c = await fn(); c.forEach(x => out.push(x)); log.push(name + ' ' + c.length); } catch (e) { log.push(name + ' ✕'); } };
+  if (it.type === 'movie') await tryS('Apple', () => itunes(T, 'movie', 'movie'));
+  if (it.type === 'series') { await tryS('Apple', () => itunes(T, 'tvShow', 'tvSeason')); await tryS('TVmaze', async () => { const j = await jget('https://api.tvmaze.com/search/shows?q=' + encodeURIComponent(T));
+      return (j || []).slice(0, 3).filter(x => x.show && x.show.image).map(x => ({ cover: x.show.image.original || x.show.image.medium, info: [x.show.premiered ? x.show.premiered.slice(0, 4) : '', x.show.network ? x.show.network.name : x.show.webChannel ? x.show.webChannel.name : ''].filter(Boolean).join(' · '), src: x.show.url, name: x.show.name })); }); }
+  if (it.type === 'book') { await tryS('Open Library', async () => { const j = await jget('https://openlibrary.org/search.json?limit=3&fields=title,author_name,first_publish_year,cover_i,key&q=' + encodeURIComponent(T + (it.author ? ' ' + it.author : '')));
+      return (j.docs || []).filter(d => d.cover_i).map(d => ({ cover: 'https://covers.openlibrary.org/b/id/' + d.cover_i + '-L.jpg', info: [(d.author_name || [])[0], d.first_publish_year].filter(Boolean).join(' · '), src: 'https://openlibrary.org' + d.key, name: d.title, author: (d.author_name || [])[0] || '' })); });
+    await tryS('Apple Books', () => itunes(T + (it.author ? ' ' + it.author : ''), 'ebook', 'ebook')); }
+  const hint = { book: 'novel', movie: 'film', series: 'TV series', game: 'video game' }[it.type];
+  await tryS('Wikipedia', () => wikiFind(T + ' ' + hint));
+  if (it.type === 'game' && !out.length) await tryS('Wikipedia', () => wikiFind(T));
+  it.coverLog = log.join(' · ');
   return out;
 }
 function mediaScanDumps() { if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
@@ -2594,28 +2603,29 @@ function mediaScanDumps() { if (state.meta.mediaScan || state.settings.mediaOn =
   state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your brain dump for Off duty`); } }
 const mediaBusy = new Set();
 async function mediaCover(id, next) {
-  const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine) return; mediaBusy.add(id);
+  const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine || (!next && (it.coverOwn || it.coverImg))) return; mediaBusy.add(id);
   try { const C = await coverCandidates(it); it.coverTried = nowISO(); it.coverV = COVER_V;
-    if (C.length) { const k = next ? ((it.coverPick || 0) + 1) % C.length : 0; const c = C[k]; it.coverPick = k; it.cover = c.cover; it.info = c.info; it.src = c.src; if (!it.author && c.author) it.author = c.author; }
+    if (C.length) { const k = next ? ((it.coverPick || 0) + 1) % C.length : 0; const c = C[k]; it.coverPick = k; it.cover = c.cover; it.coverImg = ''; it.coverOwn = false; it.info = c.info; it.src = c.src; if (!it.author && c.author) it.author = c.author; }
     it.updated = nowISO(); save(); syncSoon && syncSoon();
     if (tab === 'others' && !sheetOpen()) render(); else if (sheetOpen() && $('sheet-body').querySelector('[data-media="' + id + '"]')) mediaSheet(id);
     if (next) toast(C.length > 1 ? 'Cover changed' : 'No other covers found');
   } finally { mediaBusy.delete(id); } }
-const COVER_V = 2;
-function mediaRetry() { const day = 864e5; (state.media || []).filter(m => !m.cover && (m.coverV !== COVER_V || !m.coverTried || Date.now() - new Date(m.coverTried) > day)).slice(0, 8).forEach((m, i) => setTimeout(() => mediaCover(m.id), 800 + i * 600)); }
+const COVER_V = 3;
+function mediaRetry() { const day = 864e5; (state.media || []).filter(m => !m.cover && !m.coverImg && (m.coverV !== COVER_V || !m.coverTried || Date.now() - new Date(m.coverTried) > day)).slice(0, 8).forEach((m, i) => setTimeout(() => mediaCover(m.id), 800 + i * 600)); }
 /* cover flow */
 let mediaKindTouched = false;
 let mediaKind = (() => { try { return localStorage.getItem('studydesk.mediaKind') || 'book'; } catch (_) { return 'book'; } })();
-const coverArt = (m, cls) => m.cover ? `<img class="${cls}" src="${esc(m.cover)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
+const coverSrc = m => m.coverImg ? picUrl(m.coverImg) : m.cover;
+const coverArt = (m, cls) => coverSrc(m) ? `<img class="${cls}" src="${esc(coverSrc(m))}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
 function coverFace(m) { const t = MT(m.type); const hue = normT(m.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360;
   return `<span class="cf-face" style="--ch:${hue}"><span class="cf-ph"><span class="cf-ph-e" aria-hidden="true">${t[1]}</span><span class="cf-ph-t">${esc(m.title)}</span></span>${coverArt(m, 'cf-img')}</span>`; }
 /* upcoming: picked weekly from the things she loves (data/upcoming.json) */
 const UPC = () => ((D.upcoming && D.upcoming.items) || []).filter(u => !u.date || u.date.length < 10 || u.date >= today()).sort((a, b) => (a.date || '9').padEnd(10, '9').localeCompare((b.date || '9').padEnd(10, '9')));
 const upWhen = d => !d ? 'Date to be announced' : d.length === 4 ? 'Sometime in ' + d : d.length === 7 ? MONTHS[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4) : (() => { const n = daysUntil(d); return dShort(d) + (d.slice(0, 4) !== today().slice(0, 4) ? ' ' + d.slice(0, 4) : '') + (n === 0 ? ' · out today' : n === 1 ? ' · tomorrow' : n <= 30 ? ' · in ' + n + ' days' : ''); })();
-let upCovers = (() => { try { return JSON.parse(localStorage.getItem('studydesk.upCovers2') || '{}'); } catch (_) { return {}; } })();
+let upCovers = (() => { try { return JSON.parse(localStorage.getItem('studydesk.upCovers3') || '{}'); } catch (_) { return {}; } })();
 const upBusy = new Set();
 async function upCover(u) { if (upCovers[u.id] !== undefined || upBusy.has(u.id) || !navigator.onLine) return; upBusy.add(u.id);
-  try { const C = await coverCandidates({ type: u.type, title: u.search || u.title }); upCovers[u.id] = C.length ? C[0].cover : ''; try { localStorage.setItem('studydesk.upCovers2', JSON.stringify(upCovers)); } catch (_) {}
+  try { const C = await coverCandidates({ type: u.type, title: u.title.replace(/ · .*$/, '') }); upCovers[u.id] = C.length ? C[0].cover : ''; try { localStorage.setItem('studydesk.upCovers3', JSON.stringify(upCovers)); } catch (_) {}
     const el = document.querySelector('[data-upc="' + u.id + '"]'); if (el && upCovers[u.id]) el.innerHTML = `<img src="${esc(upCovers[u.id])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`; } catch (_) {} finally { upBusy.delete(u.id); } }
 function upList(kind) { const L = UPC().filter(u => u.type === kind); const t = MT(kind);
   let h = `<h3 class="cf-sub">Upcoming</h3>`;
@@ -2663,11 +2673,13 @@ function mediaSheet(id) { const m = (state.media || []).find(x => x.id === id); 
     <div class="md-btns"><button type="button" class="btn${m.status === 'now' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="now">${t[3]}</button><button type="button" class="btn${m.status === 'done' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="done">${t[4]} ✓</button></div>
     <div class="group" style="margin-top:12px">
       <div class="row"><span>Shelf</span><span class="md-types">${MEDIA_TYPES.map(x => `<button type="button" class="dump-fc${x[0] === m.type ? ' on' : ''}" data-act="media-type" data-id="${m.id}" data-v="${x[0]}" aria-label="${x[2]}">${x[1]}</button>`).join('')}</span></div>
-      <button type="button" class="row" data-act="media-cover" data-id="${m.id}"><span>${m.cover ? 'Try a different cover' : 'Look for a cover'}</span>${CHEV}</button>
-      ${m.src ? `<a class="row" href="${esc(m.src)}" target="_blank" rel="noopener"><span>About it (${/openlibrary/.test(m.src) ? 'Open Library' : /tvmaze/.test(m.src) ? 'TVmaze' : 'Wikipedia'})</span>${CHEV}</a>` : ''}
+      <button type="button" class="row" data-act="media-cover" data-id="${m.id}"><span>${m.cover || m.coverImg ? 'Try a different cover' : 'Look for a cover'}</span>${CHEV}</button>
+      <button type="button" class="row" data-act="media-photo" data-id="${m.id}"><span>Use my own picture</span>${CHEV}</button>
+      <button type="button" class="row" data-act="media-link" data-id="${m.id}"><span>Paste a picture link</span>${CHEV}</button>
+      ${m.src ? `<a class="row" href="${esc(m.src)}" target="_blank" rel="noopener"><span>About it (${/openlibrary/.test(m.src) ? 'Open Library' : /tvmaze/.test(m.src) ? 'TVmaze' : /apple\.com/.test(m.src) ? 'Apple' : 'Wikipedia'})</span>${CHEV}</a>` : ''}
       <button type="button" class="row" data-act="media-rename" data-id="${m.id}"><span>Edit name</span>${CHEV}</button>
       <button type="button" class="row md-del" data-act="media-del" data-id="${m.id}"><span>Remove from my shelf</span></button>
-    </div><p class="foot">Covers come from Open Library, TVmaze and Wikipedia.</p></div>`); }
+    </div><p class="foot">${m.coverImg || m.coverOwn ? 'Your own cover. It stays until you change it.' : 'Covers come from Apple, Open Library, TVmaze and Wikipedia.'}${m.coverLog && !m.coverImg && !m.coverOwn ? `<br>Last search: ${esc(m.coverLog)}` : ''}</p></div>`); }
 function mediaAddSheet() { openSheet(`<form data-form="media" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Add to my shelf</h2><button type="submit" class="link strong">Add</button></div>
   <div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="title" required maxlength="90" placeholder="e.g. Circe"></label>
   <label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" placeholder="books only, optional"></label>
@@ -3162,6 +3174,10 @@ document.addEventListener('click', e => {
     case 'media-status': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m) { m.status = b.dataset.v; m.done = m.status === 'done' ? (m.done || today()) : ''; m.updated = nowISO(); commit(m.status === 'done' ? 'Marked finished ✓' : 'On it now'); mediaSheet(m.id); } break; }
     case 'media-type': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (m && m.type !== b.dataset.v) { m.type = b.dataset.v; m.cover = ''; m.info = ''; m.src = ''; m.coverPick = 0; m.updated = nowISO(); mediaKind = m.type; commit('Moved to ' + MT(m.type)[2]); mediaSheet(m.id); mediaCover(m.id); } break; }
     case 'media-cover': mediaCover(b.dataset.id, true); break;
+    case 'media-photo': coverFor = b.dataset.id; $('coverFile').click(); break;
+    case 'media-link': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; openSheet(`<form data-form="media-link" class="sheet-in" autocomplete="off"><input type="hidden" name="id" value="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="media-back" data-id="${m.id}">Cancel</button><h2>Picture link</h2><button type="submit" class="link strong">Use</button></div>
+      <div class="group"><label class="row field"><span class="f-l">Link</span><input class="left" name="url" type="url" required inputmode="url" placeholder="https://…"></label></div>
+      <p class="foot">On Pinterest or Google Images, open the picture, press and hold it, choose <b>Copy</b> or <b>Copy image address</b>, then paste it here. If the link doesn't show a picture, save the image to Photos instead and use <b>Use my own picture</b>.</p></form>`); break; }
     case 'media-rename': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; openSheet(`<form data-form="media-rename" class="sheet-in" autocomplete="off"><input type="hidden" name="id" value="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="media-back" data-id="${m.id}">Cancel</button><h2>Edit</h2><button type="submit" class="link strong">Save</button></div>
       <div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="title" required maxlength="90" value="${esc(m.title)}"></label><label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" value="${esc(m.author || '')}" placeholder="books only"></label></div></form>`); break; }
     case 'media-back': mediaSheet(b.dataset.id); break;
@@ -3292,6 +3308,7 @@ document.addEventListener('submit', e => {
       const m = (pdfList || []).find(x => x.id === id); if (!m) return; m.name = (fd.get('name') || '').trim() || m.name; m.topic = (fd.get('topic') || '').trim();
       pdfSaveMeta(m).then(() => { closeSheet(); toast('Saved'); pdfLoad(); }); break; }
     case 'media': { const title = cleanTitle((fd.get('title') || '').trim()); if (!title) break; const it = addMedia({ type: fd.get('type'), status: fd.get('status'), title, author: (fd.get('author') || '').trim() }, 'manual'); mediaKind = it.type; closeSheet(); commit(MT(it.type)[1] + ' Added to your shelf'); break; }
+    case 'media-link': { const m = (state.media || []).find(x => x.id === fd.get('id')); let u = (fd.get('url') || '').trim(); if (!m || !/^https:\/\//i.test(u)) { toast('Please paste a link starting with https://'); break; } m.cover = u; m.coverImg = ''; m.coverOwn = true; m.updated = nowISO(); commit('Cover set'); mediaSheet(m.id); break; }
     case 'media-rename': { const m = (state.media || []).find(x => x.id === fd.get('id')); const t = (fd.get('title') || '').trim(); if (!m || !t) break; const changed = t !== m.title || (fd.get('author') || '').trim() !== (m.author || ''); m.title = t; m.author = (fd.get('author') || '').trim(); if (changed) { m.cover = ''; m.coverPick = 0; } m.updated = nowISO(); commit('Saved'); mediaSheet(m.id); if (changed) mediaCover(m.id); break; }
     case 'love': { const nm = (fd.get('n') || '').trim().slice(0, 60); if (!nm) break; state.loveMine = state.loveMine || {}; state.loveMine['lv-' + uid()] = { name: nm, emoji: (fd.get('e') || '✨').trim() || '✨' }; closeSheet(); commit('Added ✓'); break; }
     case 'habits': {
@@ -3535,6 +3552,9 @@ $('importFile').addEventListener('change', async e => {
 });
 $('heroFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) heroAdd(fs); });
 $('pdfFile').addEventListener('change', e => { const fs = [...(e.target.files || [])]; e.target.value = ''; if (fs.length) pdfAdd(fs); });
+let coverFor = '';
+$('coverFile').addEventListener('change', async e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; const m = (state.media || []).find(x => x.id === coverFor); if (!f || !m) return;
+  try { m.coverImg = await shrinkImage(f, 520); m.coverOwn = true; m.updated = nowISO(); commit('Cover set'); mediaSheet(m.id); } catch (_) { toast('Could not read that picture'); } });
 $('photoFile').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) pickPhoto(f); });
 $('privateFile').addEventListener('change', async e => { const data = await readJsonFile(e.target); if (data) applyPrivate(data); });
 /* A private file can carry any of: profile, roster, presenters, ot (patient names by OT case id), cases (hospital IDs by case number).
