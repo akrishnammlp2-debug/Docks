@@ -1,79 +1,96 @@
 {
- "updated": "2026-11-14",
- "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
- "topics": [
-  {
-   "id": "cats",
-   "name": "Cats",
-   "emoji": "🐈"
+  "updated": "2026-11-15T01:14:44Z",
+  "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
+  "topics": [
+    {
+      "id": "cats",
+      "name": "Cats",
+      "emoji": "🐈"
+    },
+    {
+      "id": "dota2",
+      "name": "Dota 2",
+      "emoji": "🎮"
+    },
+    {
+      "id": "houseplants",
+      "name": "Houseplants",
+      "emoji": "🪴"
+    },
+    {
+      "id": "cooking",
+      "name": "Cooking & nutrition",
+      "emoji": "🍳"
+    },
+    {
+      "id": "finance",
+      "name": "Personal finance",
+      "emoji": "💰"
+    },
+    {
+      "id": "nba",
+      "name": "NBA",
+      "emoji": "🏀"
+    },
+    {
+      "id": "fountain-pens",
+      "name": "Fountain pens",
+      "emoji": "🖋️"
+    },
+    {
+      "id": "history",
+      "name": "History",
+      "emoji": "📜"
+    },
+    {
+      "id": "superheroes",
+      "name": "Superheroes (DC & Marvel)",
+      "emoji": "🦸"
+    },
+    {
+      "id": "nature",
+      "name": "Nature",
+      "emoji": "🌿"
+    },
+    {
+      "id": "nasa",
+      "name": "NASA & space",
+      "emoji": "🚀"
+    }
+  ],
+  "today": {
+    "date": "2026-11-15",
+    "topic": "nba",
+    "topicName": "NBA",
+    "kind": "article",
+    "title": "The NBA turned 80, and its first game was in Canada",
+    "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68–66 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
+    "source": {
+      "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
+      "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
+    },
+    "image": {
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maple_Leaf_Gardens_Postcard_1931.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_Gardens_Postcard_1931.jpg"
+    }
   },
-  {
-   "id": "dota2",
-   "name": "Dota 2",
-   "emoji": "🎮"
-  },
-  {
-   "id": "houseplants",
-   "name": "Houseplants",
-   "emoji": "🪴"
-  },
-  {
-   "id": "cooking",
-   "name": "Cooking & nutrition",
-   "emoji": "🍳"
-  },
-  {
-   "id": "finance",
-   "name": "Personal finance",
-   "emoji": "💰"
-  },
-  {
-   "id": "nba",
-   "name": "NBA",
-   "emoji": "🏀"
-  },
-  {
-   "id": "fountain-pens",
-   "name": "Fountain pens",
-   "emoji": "🖋️"
-  },
-  {
-   "id": "history",
-   "name": "History",
-   "emoji": "📜"
-  },
-  {
-   "id": "superheroes",
-   "name": "Superheroes (DC & Marvel)",
-   "emoji": "🦸"
-  },
-  {
-   "id": "nature",
-   "name": "Nature",
-   "emoji": "🌿"
-  },
-  {
-   "id": "nasa",
-   "name": "NASA & space",
-   "emoji": "🚀"
-  }
- ],
- "today": {
-  "date": "2026-11-14",
-  "topic": "cats",
-  "topicName": "Cats",
-  "kind": "fact",
-  "title": "A cat's larynx can purr on its own",
-  "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20–30 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
-  "source": {
-   "title": "Current Biology study, via HealthDay",
-   "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"
-  },
-  "image": {
-   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felis_catus-cat_on_snow.jpg?width=1200",
-   "credit": "Photo: Von.grzanka, CC BY-SA 3.0, Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg"
-  }
- },
- "history": []
+  "history": [
+    {
+      "date": "2026-11-14",
+      "topic": "cats",
+      "topicName": "Cats",
+      "kind": "fact",
+      "title": "A cat's larynx can purr on its own",
+      "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20–30 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
+      "source": {
+        "title": "Current Biology study, via HealthDay",
+        "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felis_catus-cat_on_snow.jpg?width=1200",
+        "credit": "Photo: Von.grzanka, CC BY-SA 3.0, Wikimedia Commons",
+        "page": "https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg"
+      }
+    }
+  ]
 }
