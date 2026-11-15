@@ -1315,6 +1315,20 @@ body::before{will-change:transform;transform:translateZ(0)}
 .hab-nudge{display:flex;flex-direction:column;gap:6px;padding:12px 14px!important;border:1.5px solid #B5782A!important}
 .hab-nudge span{font-size:14px;line-height:1.4;color:var(--fg)!important}
 
+/* settings folds v5.32 */
+.set-more{display:block}
+.set-more>summary{list-style:none;position:relative;display:flex;align-items:center;gap:8px;min-height:44px;padding:11px 14px;font-size:15px;font-weight:600;color:var(--accent)!important;cursor:pointer;-webkit-user-select:none;user-select:none}
+.set-more>summary::-webkit-details-marker{display:none}
+#page .set-more>summary,#page .set-more>summary span{color:#2B6448!important}
+@media (prefers-color-scheme:dark){#page .set-more>summary,#page .set-more>summary span{color:#9FD0B2!important}}
+.set-more>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.set-more[open]>summary::after{transform:rotate(-135deg) translateY(-2px)}
+.set-more[open]>summary .sm-c,.set-more:not([open])>summary .sm-o{display:none}
+.group>*+.set-more>summary::before,.set-more>.row::before,.set-more>.rowwrap::before{content:"";position:absolute;top:0;right:0;left:14px;height:.5px;background:var(--sep)}
+.set-more>.row{display:flex}
+.sec-fold{margin-top:4px}
+.sec-fold>summary{background:var(--surface);border-radius:22px;box-shadow:var(--tile-shadow)}
+.sec-fold[open]>summary{margin-bottom:6px}
 /* brain dump v5.27 */
 .dumpc{display:flex;flex-direction:column;gap:10px}
 .dump-f{display:flex;gap:8px}
@@ -1391,7 +1405,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.31 · brain dump saves';
+const APP_VERSION = '5.32 · attendance reminder';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1446,8 +1460,8 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {},
-    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {}, attDone: {},
+    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
 function normalise(s) {
@@ -1455,7 +1469,7 @@ function normalise(s) {
   return { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
 }
 function load() {
@@ -1666,11 +1680,14 @@ function tbanArt(ph) {
    This device writes push/<device>.json to the private sync repository: its push subscription plus the next 3 days
    of reminders. A GitHub job there sends each one when it's due (checked every 30 minutes). */
 const VAPID_PUB = 'BPJZfLn1uUvBEClxeSbI1x_ZL4Yf9EvL6DkDfPEP2Qepc43Ny8nmmCix5VKTx2FqnkBI1FH4cB6PrTKTdD0RIkQ';
-const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
+const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
 const nOn = k => { const S = state.settings, d = NOTIF_TYPES.find(x => x[0] === k); return S[k] === undefined ? d[2] : !!S[k]; };
 const pushSub = () => { try { return JSON.parse(localStorage.getItem('studydesk.pushSub') || 'null'); } catch (_) { return null; } };
 const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
 const b64uBytes = s => { const p = '='.repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+const foldOpen = new Set();
+function fold(key, label, inner, n) { return `<details class="set-more" data-fold="${key}"${foldOpen.has(key) ? ' open' : ''}><summary><span class="sm-c">${label}${n ? ' (' + n + ')' : ''}</span><span class="sm-o">Show less</span></summary>${inner}</details>`; }
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.fold) { d.open ? foldOpen.add(d.dataset.fold) : foldOpen.delete(d.dataset.fold); } }, true);
 function notifCard() { const sub = pushSub(); const can = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
   const cfg = syncCfg();
   let top;
@@ -1679,7 +1696,7 @@ function notifCard() { const sub = pushSub(); const can = 'serviceWorker' in nav
   else if (sub && Notification.permission === 'granted') top = `<div class="c-top"><span class="c-lab">On for this device</span><span class="pill acc">On</span></div><span class="c-m">Docks plans the next 3 days of reminders whenever it syncs, and each one arrives within about 30 minutes of its time.</span>
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="push-test">Test on this phone</button><button class="btn danger" type="button" data-act="push-off">Turn off</button></div>`;
   else top = `<span class="c-s">${Notification.permission === 'denied' ? 'Notifications are blocked for Docks. Turn them on in iPhone Settings → Notifications → Docks, then tap the button.' : 'Get your Docks reminders as real phone notifications.'}</span><div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="push-on">Turn on notifications</button></div>`;
-  return `<div class="card">${top}</div><div class="group" style="margin-top:10px">${NOTIF_TYPES.map(([k, l]) => `<label class="row toggle"><span>${l}</span><input type="checkbox" data-setting="${k}" ${nOn(k) ? 'checked' : ''}></label>`).join('')}</div>`; }
+  return `<div class="card">${top}</div><div class="group" style="margin-top:10px">${(() => { const row = ([k, l]) => `<label class="row toggle"><span>${l}</span><input type="checkbox" data-setting="${k}" ${nOn(k) ? 'checked' : ''}></label>`; const first = ['nRoutines', 'nAttend', 'nReminders']; const A = first.map(k => NOTIF_TYPES.find(x => x[0] === k)), B = NOTIF_TYPES.filter(x => !first.includes(x[0])); return A.map(row).join('') + fold('notif', 'More notification types', B.map(row).join(''), B.length); })()}</div>`; }
 async function pushOn() {
   try { const perm = await Notification.requestPermission(); if (perm !== 'granted') { toast('Notifications were not allowed'); render(); return; }
     const reg = await navigator.serviceWorker.ready; let sub = await reg.pushManager.getSubscription();
@@ -1719,6 +1736,8 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     if (nOn('nDuty')) { const roles = dutiesFor(tm); if (roles.length) push('duty|' + tm, day, 20, '🩺 Emergency duty tomorrow', roles.join(', ') + ' · ' + dDow(tm) + ' ' + dShort(tm), 'roster', 5); }
     // my reminders, 9 AM on the due day
     if (nOn('nReminders')) state.reminders.forEach(r => { try { const st = remStatus(r); const p = st.p; if (!p) return; if ((p.due === day) || (i === 0 && st.s === 'late')) push('rem|' + r.id + '|' + p.key, day, 9, '🔔 Reminder', r.title + (st.s === 'late' && i === 0 ? ' (overdue)' : ''), 'reminders'); } catch (_) {} });
+    // hospital attendance, 9 AM and 10 AM until ticked
+    if (nOn('nAttend') && state.settings.attOn !== false && !(state.attDone || {})[day]) { push('att|' + day, day, 9, '🏥 Hospital attendance', 'Log in your attendance for today', 'today'); push('att2|' + day, day, 10, '🏥 Attendance still to do', 'Quick reminder to log in your hospital attendance', 'today'); }
     // parcels arriving
     if (nOn('nDelivery')) ((PERS().deliveries) || []).filter(x => x.date === day && x.status !== 'delivered').forEach((x, j) => push('del|' + day + '|' + j, day, 9, '📦 Arriving today', (x.what || 'A parcel') + (x.store ? ' · ' + x.store : ''), 'calendar', 15));
   }
@@ -1834,6 +1853,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += attCard();
   h += dumpCard();
   h += catTodayCard();
   h += habitCard();
@@ -2058,6 +2078,9 @@ function catInfo(f) { const mine = (state.catOrdered || {})[f.id]; const all = [
   return { last, next, days, soon: days < CAT_WARN, all: all.slice().reverse(), every: f.everyMonths ? `every ${f.everyMonths} months` : `every ${f.everyDays} days` }; }
 const catDate = d => new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 const catWhen = i => i.days < 0 ? `${plural(-i.days, 'day')} overdue` : i.days === 0 ? 'due today' : `in ${plural(i.days, 'day')}`;
+const ATT_FROM = 9;
+function attCard() { if (state.settings.attOn === false || (state.attDone || {})[today()] || new Date().getHours() < ATT_FROM) return '';
+  return `<div class="sec"><div class="card cat-due att-due"><span class="cat-due-i" aria-hidden="true">🏥</span><span class="cat-tx"><b>Log in your hospital attendance</b><span>Tick it off once it's done</span></span><button type="button" class="btn small" data-act="att-done">Done</button></div></div>`; }
 function catTodayCard() { const due = catFoods().map(f => [f, catInfo(f)]).filter(([, i]) => i && i.soon); if (!due.length) return '';
   return `<div class="sec"><button type="button" class="card cat-due" data-act="cat-open"><span class="cat-due-i" aria-hidden="true">🐈</span><span class="cat-tx"><b>Time to buy cat food</b>${due.map(([f, i]) => `<span>${esc(f.name)}: reorder ${catWhen(i)}</span>`).join('')}</span><span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
 function catRemSection() { const F = catFoods(); if (!F.length) return '';
@@ -2375,28 +2398,31 @@ function pageBackup() {
   let h = head('Backup', 'Your data, the website data, and settings', 'App');
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
   h += `<div class="sec"><h2 class="sh">iPhone ↔ iPad sync</h2><div class="card">${devSyncCard()}</div></div>`;
-  h += `<div class="sec"><h2 class="sh">Private file (manual)</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
-    <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
-    const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
-    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
-    <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Phone notifications</h2>${notifCard()}</div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
-    <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
+    ${fold('settings', 'More settings', `<label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
-    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>
-  </div><p class="foot">No notifications are ever sent. Every section stays quiet until you open it.</p></div>`;
+    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 7)}
+  </div></div>`;
+  { const before = h; h = '';
+  h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Private file (manual)</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
+    <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
+  h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
+    const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
+    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
+    <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Storage</h2><div class="card"><span class="c-s" id="persistInfo">${esc(persistText)}</span>${standalone ? '' : '<span class="c-s">You\'re viewing this in Safari. Add it to your Home Screen and open it from there so the phone keeps your data.</span>'}<span class="c-m">Study Desk ${APP_VERSION} · ${plural(state.topics.length, 'topic')} · ${plural(state.log.length, 'session')} logged · ${plural(state.todos.length, 'task')}</span></div></div>`;
+  const inner = h; h = before + `<div class="sec"><details class="set-more sec-fold" data-fold="secs"${foldOpen.has('secs') ? ' open' : ''}><summary><span class="sm-c">Private sync, website data & storage</span><span class="sm-o">Hide sync, website data & storage</span></summary>${inner}</details></div>`; }
   return h;
 }
 
@@ -2879,6 +2905,7 @@ document.addEventListener('click', e => {
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpSheet(); } break; }
     case 'cat-open': catSheet(); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
+    case 'att-done': state.attDone = { ...(state.attDone || {}), [today()]: nowISO() }; commit('Attendance done ✓'); break;
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
     case 'art-open': artSheet(0); break;
     case 'art-past': artSheet(+b.dataset.i); break;
@@ -3070,7 +3097,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -3198,7 +3225,7 @@ async function deviceSync(manual) {
 }
 function devSyncCard() {
   const cfg = syncCfg();
-  if (!device) return '<span class="c-s">Set up private sync (above) on this device first. Then you can connect device sync.</span>';
+  if (!device) return '<span class="c-s">Set up Private sync on this device first (under “Private sync, website data &amp; storage” at the bottom). Then you can connect device sync.</span>';
   if (!cfg.token) return `<span class="c-s">Keep topics, study sessions, to-dos, reminders, ticks and settings the same on your iPhone and iPad.</span>
     <span class="c-m">Needs a private GitHub repository and an access key that can only use that repository. Type the key here yourself on each device; it stays on this device.</span>
     <form data-form="synccfg" class="sheet-in" style="gap:8px" autocomplete="off">
@@ -3528,6 +3555,7 @@ renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() 
     if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
 })();
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.active && activeMins() >= 1 && !sheetOpen()) setTimeout(finishSheet, 600); });
+let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) render(); } }, 60e3);
 setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
