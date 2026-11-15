@@ -1479,7 +1479,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.37 · official covers + your own';
+const APP_VERSION = '5.38 · brain dump tidies itself';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2598,8 +2598,9 @@ async function coverCandidates(it) {
   it.coverLog = log.join(' · ');
   return out;
 }
-function mediaScanDumps() { if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
-  (state.dumps || []).filter(d => !d.deleted && !d.cat).forEach(d => { const p = parseMedia(d.text); if (p) { const it = addMedia(p, 'dump'); it.added = (d.created || nowISO()).slice(0, 10); d.cat = 'media'; d.media = it.id; n++; } });
+function mediaScanDumps() { if (!state.meta.mediaClean) { (state.dumps || []).forEach(d => { if (d.cat === 'media' && !d.deleted) { d.deleted = true; d.updated = nowISO(); } }); state.meta.mediaClean = nowISO(); save(); render(); }
+  if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
+  (state.dumps || []).filter(d => !d.deleted && !d.cat).forEach(d => { const p = parseMedia(d.text); if (p) { const it = addMedia(p, 'dump'); it.added = (d.created || nowISO()).slice(0, 10); d.cat = 'media'; d.media = it.id; d.deleted = true; d.updated = nowISO(); n++; } });
   state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your brain dump for Off duty`); } }
 const mediaBusy = new Set();
 async function mediaCover(id, next) {
@@ -3351,7 +3352,7 @@ document.addEventListener('submit', e => {
     case 'logany': {
       const tid = logTopicFor(fd.get('topic') || 'new', fd); if (!tid) { toast('Type what you read'); return; } const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
       state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
-    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; const mp = state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump'); state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: mp ? 'media' : '', created: nowISO(), media: mit ? mit.id : undefined }]); const inSheet = sheetOpen(); commit(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : 'Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
+    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; const mp = state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump'); if (!mit) state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: '', created: nowISO() }]); const inSheet = sheetOpen(); commit(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : 'Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
