@@ -1484,7 +1484,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.39 · add OT list photo';
+const APP_VERSION = '5.40 · OT list from chat';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2347,12 +2347,11 @@ async function otUpload(files) { const cfg = syncCfg(); if (!cfg.token) { toast(
 function pageOt() {
   const ds = otDates(); if (!otDay || !ds.includes(otDay)) otDay = otDefaultDay();
   let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics');
-  if (!otDay) return h + otPhotoCard();
+  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Docks and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(rows)}</div>`;
-  h += `<div class="sec">${otPhotoCard()}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
   return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient details are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient details here. On the website they only exist locked.'}</p>`;
 }
