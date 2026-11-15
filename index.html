@@ -1479,7 +1479,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.35 · my year in stories + upcoming';
+const APP_VERSION = '5.36 · shelf fixes';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2575,7 +2575,7 @@ function addMedia(p, from) {
 /* covers from open sources: Open Library (books), TVmaze (series), Wikipedia (everything) */
 async function jget(u) { const r = await fetch(u, { cache: 'no-store' }); if (!r.ok) throw new Error(r.status); return r.json(); }
 async function wikiFind(q) {
-  const j = await jget('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&generator=search&gsrlimit=4&gsrsearch=' + encodeURIComponent(q) + '&prop=pageimages|description&piprop=thumbnail&pithumbsize=600');
+  const j = await jget('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&generator=search&gsrlimit=4&gsrsearch=' + encodeURIComponent(q) + '&prop=pageimages|description&piprop=thumbnail&pithumbsize=600&pilicense=any');
   return Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index).filter(p => p.thumbnail).map(p => ({ cover: p.thumbnail.source, info: p.description || '', src: 'https://en.wikipedia.org/wiki/' + encodeURIComponent(p.title.replace(/ /g, '_')), name: p.title.replace(/\s*\(.*\)$/, '') }));
 }
 async function coverCandidates(it) {
@@ -2595,14 +2595,16 @@ function mediaScanDumps() { if (state.meta.mediaScan || state.settings.mediaOn =
 const mediaBusy = new Set();
 async function mediaCover(id, next) {
   const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine) return; mediaBusy.add(id);
-  try { const C = await coverCandidates(it); it.coverTried = nowISO();
+  try { const C = await coverCandidates(it); it.coverTried = nowISO(); it.coverV = COVER_V;
     if (C.length) { const k = next ? ((it.coverPick || 0) + 1) % C.length : 0; const c = C[k]; it.coverPick = k; it.cover = c.cover; it.info = c.info; it.src = c.src; if (!it.author && c.author) it.author = c.author; }
     it.updated = nowISO(); save(); syncSoon && syncSoon();
     if (tab === 'others' && !sheetOpen()) render(); else if (sheetOpen() && $('sheet-body').querySelector('[data-media="' + id + '"]')) mediaSheet(id);
     if (next) toast(C.length > 1 ? 'Cover changed' : 'No other covers found');
   } finally { mediaBusy.delete(id); } }
-function mediaRetry() { const day = 864e5; (state.media || []).filter(m => !m.cover && (!m.coverTried || Date.now() - new Date(m.coverTried) > day)).slice(0, 4).forEach((m, i) => setTimeout(() => mediaCover(m.id), 800 + i * 700)); }
+const COVER_V = 2;
+function mediaRetry() { const day = 864e5; (state.media || []).filter(m => !m.cover && (m.coverV !== COVER_V || !m.coverTried || Date.now() - new Date(m.coverTried) > day)).slice(0, 8).forEach((m, i) => setTimeout(() => mediaCover(m.id), 800 + i * 600)); }
 /* cover flow */
+let mediaKindTouched = false;
 let mediaKind = (() => { try { return localStorage.getItem('studydesk.mediaKind') || 'book'; } catch (_) { return 'book'; } })();
 const coverArt = (m, cls) => m.cover ? `<img class="${cls}" src="${esc(m.cover)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
 function coverFace(m) { const t = MT(m.type); const hue = normT(m.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360;
@@ -2610,10 +2612,10 @@ function coverFace(m) { const t = MT(m.type); const hue = normT(m.title).split('
 /* upcoming: picked weekly from the things she loves (data/upcoming.json) */
 const UPC = () => ((D.upcoming && D.upcoming.items) || []).filter(u => !u.date || u.date.length < 10 || u.date >= today()).sort((a, b) => (a.date || '9').padEnd(10, '9').localeCompare((b.date || '9').padEnd(10, '9')));
 const upWhen = d => !d ? 'Date to be announced' : d.length === 4 ? 'Sometime in ' + d : d.length === 7 ? MONTHS[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4) : (() => { const n = daysUntil(d); return dShort(d) + (d.slice(0, 4) !== today().slice(0, 4) ? ' ' + d.slice(0, 4) : '') + (n === 0 ? ' · out today' : n === 1 ? ' · tomorrow' : n <= 30 ? ' · in ' + n + ' days' : ''); })();
-let upCovers = (() => { try { return JSON.parse(localStorage.getItem('studydesk.upCovers') || '{}'); } catch (_) { return {}; } })();
+let upCovers = (() => { try { return JSON.parse(localStorage.getItem('studydesk.upCovers2') || '{}'); } catch (_) { return {}; } })();
 const upBusy = new Set();
 async function upCover(u) { if (upCovers[u.id] !== undefined || upBusy.has(u.id) || !navigator.onLine) return; upBusy.add(u.id);
-  try { const C = await coverCandidates({ type: u.type, title: u.search || u.title }); upCovers[u.id] = C.length ? C[0].cover : ''; try { localStorage.setItem('studydesk.upCovers', JSON.stringify(upCovers)); } catch (_) {}
+  try { const C = await coverCandidates({ type: u.type, title: u.search || u.title }); upCovers[u.id] = C.length ? C[0].cover : ''; try { localStorage.setItem('studydesk.upCovers2', JSON.stringify(upCovers)); } catch (_) {}
     const el = document.querySelector('[data-upc="' + u.id + '"]'); if (el && upCovers[u.id]) el.innerHTML = `<img src="${esc(upCovers[u.id])}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`; } catch (_) {} finally { upBusy.delete(u.id); } }
 function upList(kind) { const L = UPC().filter(u => u.type === kind); const t = MT(kind);
   let h = `<h3 class="cf-sub">Upcoming</h3>`;
@@ -2631,7 +2633,7 @@ function upSheet(id) { const u = ((D.upcoming && D.upcoming.items) || []).find(x
     <p class="foot">${u.date && u.date.length === 10 ? 'With reminders on, you get a notification at 9:30 AM on release day.' : 'Once a release date is announced, the weekly refresh adds it here.'}</p></div>`); }
 function mediaShelf() {
   const y = today().slice(0, 4); const L = mediaYear(y); const counts = Object.fromEntries(MEDIA_TYPES.map(t => [t[0], L.filter(m => m.type === t[0]).length]));
-  if (!counts[mediaKind] && L.length) mediaKind = (MEDIA_TYPES.find(t => counts[t[0]]) || MEDIA_TYPES[0])[0];
+  if (!mediaKindTouched && !counts[mediaKind] && L.length) mediaKind = (MEDIA_TYPES.find(t => counts[t[0]]) || MEDIA_TYPES[0])[0];
   const items = L.filter(m => m.type === mediaKind);
   let h = `<div class="sec"><div class="cf-head"><h2 class="sh">My ${y} in stories</h2><button type="button" class="link" data-act="media-add">＋ Add</button></div>
     <div class="cf-tabs" role="tablist">${MEDIA_TYPES.map(t => `<button type="button" role="tab" data-act="media-kind" data-id="${t[0]}" class="${t[0] === mediaKind ? 'on' : ''}" aria-selected="${t[0] === mediaKind}">${t[1]} ${t[2]}${counts[t[0]] ? ` <b>${counts[t[0]]}</b>` : ''}</button>`).join('')}</div>`;
@@ -3152,7 +3154,7 @@ document.addEventListener('click', e => {
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'icon-sheet': openSheet(iconSheet()); break;
     case 'icon-pack': state.settings.iconPack = b.dataset.id; if (b.dataset.id === 'classic') state.settings.sketchOn = false; commit('Icon style changed'); openSheet(iconSheet()); break;
-    case 'media-kind': mediaKind = b.dataset.id; try { localStorage.setItem('studydesk.mediaKind', mediaKind); } catch (_) {} render(); break;
+    case 'media-kind': mediaKindTouched = true; mediaKind = b.dataset.id; try { localStorage.setItem('studydesk.mediaKind', mediaKind); } catch (_) {} render(); break;
     case 'media-tap': { const cf = $('cf'); const i = +b.dataset.i; if (cf && String(i) !== cf.dataset.best) { cf.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - cf.clientWidth / 2, behavior: 'smooth' }); } else mediaSheet(b.dataset.id); break; }
     case 'media-add': mediaAddSheet(); break;
     case 'up-open': upSheet(b.dataset.id); break;
