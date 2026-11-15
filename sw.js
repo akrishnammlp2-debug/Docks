@@ -1,6 +1,6 @@
 // Study Desk offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v104';
+const CACHE = 'study-desk-v105';
 const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
 const PIC_DAYS = 3, PIC_MAX = 24;
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];

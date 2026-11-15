@@ -1315,6 +1315,9 @@ body::before{will-change:transform;transform:translateZ(0)}
 .hab-nudge{display:flex;flex-direction:column;gap:6px;padding:12px 14px!important;border:1.5px solid #B5782A!important}
 .hab-nudge span{font-size:14px;line-height:1.4;color:var(--fg)!important}
 
+/* hand-drawn icons v5.33 */
+body.sketchy svg[viewBox="0 0 24 24"]>*{filter:url(#rough)}
+body.sketchy svg[viewBox="0 0 24 24"]{stroke-linecap:round;stroke-linejoin:round}
 /* settings folds v5.32 */
 .set-more{display:block}
 .set-more>summary{list-style:none;position:relative;display:flex;align-items:center;gap:8px;min-height:44px;padding:11px 14px;font-size:15px;font-weight:600;color:var(--accent)!important;cursor:pointer;-webkit-user-select:none;user-select:none}
@@ -1383,6 +1386,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 </style>
 </head>
 <body data-sec="today">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-4" y="-4" width="32" height="32"><feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" result="a"/><feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="1" seed="31" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="2.6" xChannelSelector="G" yChannelSelector="R" result="b0"/><feComponentTransfer in="b0" result="b"><feFuncA type="linear" slope="0.45"/></feComponentTransfer><feMerge><feMergeNode in="b"/><feMergeNode in="a"/></feMerge></filter></defs></svg>
 <header class="navbar"><div class="nb-in">
   <button class="avbtn" id="nb-av" type="button" data-act="drawer" aria-label="Open menu">S</button>
   <span class="nb-t" id="nb-title">Today</span>
@@ -1405,7 +1409,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.32 · attendance reminder';
+const APP_VERSION = '5.33 · hand-drawn icons';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -2404,14 +2408,15 @@ function pageBackup() {
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
-    ${fold('settings', 'More settings', `<label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
+    ${fold('settings', 'More settings', `<label class="row toggle"><span>Hand-drawn icons</span><input type="checkbox" data-setting="sketchOn" ${S.sketchOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
-    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 7)}
+    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
   </div></div>`;
   { const before = h; h = '';
   h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
@@ -2506,6 +2511,7 @@ function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" aut
   <div class="group"><div class="row field hab-ed"><input name="e" placeholder="✨" maxlength="4" aria-label="Emoji"><input class="left" name="n" placeholder="e.g. Studio Ghibli, space, F1" aria-label="Topic" required></div></div>
   <p class="foot">The more specific, the better the facts. It joins the daily draw once your devices sync.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=n]'); if (i) i.focus(); }, 350); }
 function render() {
+  document.body.classList.toggle('sketchy', state.settings.sketchOn !== false);
   REG = [];
   document.body.dataset.sec = tab;
   $('nb-title').textContent = SECS[tab];
