@@ -1341,6 +1341,29 @@ body::before{will-change:transform;transform:translateZ(0)}
 #sheet .dump-cat.on,#sheet .dump-fc.on,#sheet button.dump-cat.on{background:#2B6448!important;color:#FFFFFF!important;border-color:#2B6448!important}
 #sheet .dump-cat:not(.on),#sheet .dump-fc:not(.on){background:rgba(255,255,255,.6)!important;color:#1C2621!important}
 #sheet .dump-f input{background:#FFFFFF;color:#1C2621!important;border-color:rgba(28,38,33,.25)}
+
+/* festive look v5.28: subtle, behind the content, nothing on the banner */
+.fest-line{margin:8px 4px 2px;font-size:13px;font-weight:600;color:var(--fg-2)!important;text-align:center;letter-spacing:.01em}
+#fest-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#fest-fx i{position:absolute;left:0;right:0;top:-100%;height:200%;background-repeat:repeat;will-change:transform}
+#fest-fx .fx1{background-size:220px 260px;animation:festfall 38s linear infinite}
+#fest-fx .fx2{background-size:330px 300px;animation:festfall 60s linear infinite;opacity:.7}
+@keyframes festfall{from{transform:translate3d(0,0,0)}to{transform:translate3d(-20px,50%,0)}}
+@media (prefers-reduced-motion:reduce){#fest-fx i{animation:none}}
+/* Christmas / New Year: soft snow (pale grey-blue in light mode, white in dark) */
+body[data-fest="christmas"] #fest-fx .fx1,body[data-fest="newyear"] #fest-fx .fx1{background-image:radial-gradient(circle at 30px 40px,var(--snow) 0 2.2px,transparent 3px),radial-gradient(circle at 150px 120px,var(--snow) 0 1.6px,transparent 2.4px),radial-gradient(circle at 90px 210px,var(--snow) 0 2.6px,transparent 3.4px),radial-gradient(circle at 190px 30px,var(--snow) 0 1.4px,transparent 2px)}
+body[data-fest="christmas"] #fest-fx .fx2,body[data-fest="newyear"] #fest-fx .fx2{background-image:radial-gradient(circle at 60px 80px,var(--snow) 0 1.4px,transparent 2.2px),radial-gradient(circle at 250px 190px,var(--snow) 0 2px,transparent 2.8px),radial-gradient(circle at 170px 260px,var(--snow) 0 1.2px,transparent 1.8px)}
+body{--snow:rgba(120,150,175,.42)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{--snow:rgba(255,255,255,.38)}}
+:root[data-theme="dark"] body{--snow:rgba(255,255,255,.38)}
+body[data-fest="newyear"]{--snow:rgba(212,170,60,.45)}
+/* other festivals: a few warm glints in their colours */
+body[data-fest="diwali"] #fest-fx .fx1,body[data-fest="dasara"] #fest-fx .fx1,body[data-fest="ganesha"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(242,165,65,.45) 0 2px,transparent 3px),radial-gradient(circle at 170px 180px,rgba(255,211,107,.45) 0 1.6px,transparent 2.4px)}
+body[data-fest="holi"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(255,111,181,.4) 0 2.4px,transparent 3.2px),radial-gradient(circle at 170px 180px,rgba(111,211,255,.4) 0 2px,transparent 2.8px),radial-gradient(circle at 110px 230px,rgba(255,211,107,.45) 0 2px,transparent 2.8px)}
+body[data-fest="sankranti"] #fest-fx .fx1,body[data-fest="ugadi"] #fest-fx .fx1,body[data-fest="janmashtami"] #fest-fx .fx1,body[data-fest="eid"] #fest-fx .fx1,body[data-fest="india"] #fest-fx .fx1,body[data-fest="rajyotsava"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(242,193,78,.4) 0 1.8px,transparent 2.6px),radial-gradient(circle at 170px 180px,rgba(124,227,139,.35) 0 1.6px,transparent 2.4px)}
+/* tiny seasonal touch on the home button */
+body[data-fest="christmas"] .tb-home::before{content:'';position:absolute;top:-3px;left:50%;width:34px;height:9px;transform:translateX(-50%);border-radius:10px 10px 6px 6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+body[data-fest="christmas"] .tb-home{position:relative}
 </style>
 </head>
 <body data-sec="today">
@@ -1366,7 +1389,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.27 · brain dump';
+const APP_VERSION = '5.28 · gentle festive';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1737,7 +1760,8 @@ function pageToday() {
   if (!heroLoaded) heroLoad();
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
-  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>${festDeco()}<div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div>${festChip() ? `<div class="fest-row">${festChip()}</div>` : ''}<div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  { const F = festNow(); if (F) h += `<p class="fest-line">${F.chip} ${esc(F.name)}${F.n === 0 ? ' is today' : F.n < 0 ? '' : ' in ' + plural(F.n, 'day')}</p>`; }
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -1943,6 +1967,10 @@ const FEST_LOOK = {
 function festNow() { if ((state.settings || {}).festOn === false) return null;
   const c = FESTS().filter(f => f.theme && FEST_LOOK[f.theme]).map(f => ({ f, L: FEST_LOOK[f.theme], n: dIn(f.date) })).filter(x => x.n <= x.L.lead && x.n >= -x.L.after).sort((a, b) => a.n - b.n);
   return c.length ? { key: c[0].f.theme, name: c[0].L.label || c[0].f.name, chip: c[0].L.chip, n: c[0].n, date: c[0].f.date } : null; }
+/* very light background effect for the season: drifts behind the cards, never over the banner or text */
+function festFx() { const F = festNow(); const key = F ? F.key : ''; if (document.body.dataset.fest === key) return; document.body.dataset.fest = key;
+  let fx = document.getElementById('fest-fx'); if (!key) { if (fx) fx.remove(); return; }
+  if (!fx) { fx = document.createElement('div'); fx.id = 'fest-fx'; fx.setAttribute('aria-hidden', 'true'); fx.innerHTML = '<i class="fx1"></i><i class="fx2"></i>'; document.body.prepend(fx); } }
 function festChip() { const F = festNow(); if (!F) return ''; return `<span class="fest-chip">${F.chip} ${esc(F.name)} ${F.n === 0 ? 'today' : F.n < 0 ? '' : 'in ' + plural(F.n, 'day')}</span>`; }
 function festDeco() { const F = festNow(); if (!F) return '';
   const lights = (cols) => `<svg class="fest-lights" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q50 30 100 8 T200 8 T300 8 T400 6" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>${[20, 60, 100, 140, 180, 220, 260, 300, 340, 380].map((x, i) => `<circle cx="${x}" cy="${[16, 22, 9, 20, 13, 19, 9, 21, 14, 12][i]}" r="4.2" fill="${cols[i % cols.length]}"/>`).join('')}</svg>`;
@@ -2393,7 +2421,7 @@ function render() {
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
-  renderTabbar();
+  renderTabbar(); festFx();
   if (drawerShown()) renderDrawer(); else render.drawerStale = true;
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
