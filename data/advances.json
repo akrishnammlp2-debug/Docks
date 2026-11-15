@@ -1,7 +1,23 @@
 {
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43023815",
+      "doi": "10.1097/CCM.0000000000007450",
+      "added": "2026-11-15",
+      "date": "2026-11-13",
+      "title": "Language Concordance in Critical Care: A Systematic Review.",
+      "journal": "Crit Care Med",
+      "type": "Systematic review",
+      "area": "Critical care",
+      "tags": [
+        "Communication",
+        "Delirium"
+      ],
+      "summary": "This review gathered 11 observational studies (about 128,000 adult ICU and post-ICU patients) that looked at whether the care team spoke the patient's own preferred language. Outcomes such as changes in resuscitation status, family meetings, delirium, ventilation, length of stay and death were reported so differently that the results could not be combined. The authors conclude that sharing a language with patients and families may shape key ICU decisions, but trials are needed before firm advice can be given.",
+      "why": "In a multilingual country where ICU teams often treat patients and families from other states, this is a reminder that goals-of-care talks, consent and delirium screening go better in the family's own language, using an interpreter or colleague when needed."
+    },
     {
       "pmid": "43019874",
       "doi": "10.1016/j.jclinane.2026.112375",
