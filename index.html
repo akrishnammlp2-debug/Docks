@@ -1314,6 +1314,33 @@ body::before{will-change:transform;transform:translateZ(0)}
 .hab-n{white-space:normal!important;overflow-wrap:break-word!important;max-width:100%;display:block}
 .hab-nudge{display:flex;flex-direction:column;gap:6px;padding:12px 14px!important;border:1.5px solid #B5782A!important}
 .hab-nudge span{font-size:14px;line-height:1.4;color:var(--fg)!important}
+
+/* brain dump v5.27 */
+.dumpc{display:flex;flex-direction:column;gap:10px}
+.dump-f{display:flex;gap:8px}
+.dump-f input{flex:1;min-width:0;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface,#fff);color:var(--fg)!important}
+.dump-f .btn{flex:none}
+.dump-l{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.dump-i{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--line);text-align:left;width:100%}
+.dump-i:last-child{border-bottom:0}
+.dump-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#B5782A}
+.dump-tag{flex:none;font-size:15px}
+.dump-t{flex:1;min-width:0;font-size:15px;line-height:1.35;color:var(--fg)!important;overflow-wrap:break-word}
+.dump-i .dump-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dump-ago{flex:none;font-size:12px;color:var(--fg-2)!important}
+.dump-fcs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.dump-fc,.dump-cat{padding:6px 11px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(255,255,255,.6);color:#1C2621!important;border:1px solid rgba(28,38,33,.18)}
+.dump-fc b{font-weight:700;margin-left:2px;color:#36433C!important}
+.dump-fc.on,.dump-cat.on{background:#2B6448;color:#FFFFFF!important;border-color:#2B6448}
+.dump-fc.on b{color:#FFFFFF!important}
+.dump-card{display:flex;flex-direction:column;gap:8px;padding:12px 14px!important;margin-bottom:8px}
+.dump-top{display:flex;gap:10px;align-items:flex-start}
+#sheet .dump-t{color:#1C2621!important}#sheet .dump-ago{color:#36433C!important}
+.dump-x{flex:none;width:28px;height:28px;border-radius:50%;color:#5A3A2A!important;background:rgba(255,255,255,.5)}
+.dump-cats{display:flex;flex-wrap:wrap;gap:6px}
+#sheet .dump-cat.on,#sheet .dump-fc.on,#sheet button.dump-cat.on{background:#2B6448!important;color:#FFFFFF!important;border-color:#2B6448!important}
+#sheet .dump-cat:not(.on),#sheet .dump-fc:not(.on){background:rgba(255,255,255,.6)!important;color:#1C2621!important}
+#sheet .dump-f input{background:#FFFFFF;color:#1C2621!important;border-color:rgba(28,38,33,.25)}
 </style>
 </head>
 <body data-sec="today">
@@ -1339,7 +1366,7 @@ body::before{will-change:transform;transform:translateZ(0)}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.26 · morning routine';
+const APP_VERSION = '5.27 · brain dump';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals'];
 
@@ -1609,6 +1636,26 @@ function tbanArt(ph) {
     <path d="M0 128 Q90 108 180 124 T360 120 V170 H0z" fill="${hill[1]}"/>
     <path d="M0 146 Q100 136 190 146 T360 142 V170 H0z" fill="${hill[2]}"/></svg>`;
 }
+/* ---------- Brain dump: jot anything now, sort it later ---------- */
+const DUMP_CATS = [['academics', '📚', 'Academics'], ['holidays', '🏖️', 'Holidays'], ['buy', '🛒', 'To buy'], ['other', '✨', 'Other']];
+const DUMPS = () => (state.dumps || []).filter(d => !d.deleted).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+const dumpAgo = iso => { const m = Math.round((Date.now() - new Date(iso)) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
+let dumpFilter = 'all';
+function dumpCard() { const D = DUMPS(); const uns = D.filter(d => !d.cat).length;
+  return `<div class="card dumpc"><div class="c-top"><span class="c-lab">🧠 Brain dump${D.length ? ' · ' + D.length : ''}</span>${D.length ? `<button type="button" class="link" data-act="dump-all">${uns ? uns + ' to sort' : 'All notes'}</button>` : ''}</div>
+    <form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="What's on your mind?" aria-label="Add to brain dump" enterkeyhint="done"><button type="submit" class="btn small" aria-label="Add">Add</button></form>
+    ${D.length ? `<div class="dump-l">${D.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all">${d.cat ? `<span class="dump-tag">${DUMP_CATS.find(c => c[0] === d.cat)?.[1] || ''}</span>` : '<span class="dump-dot" aria-hidden="true"></span>'}<span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('')}</div>` : ''}</div>`; }
+function dumpSheet() { const D = DUMPS(); const L = dumpFilter === 'all' ? D : dumpFilter === 'none' ? D.filter(d => !d.cat) : D.filter(d => d.cat === dumpFilter);
+  const count = k => k === 'all' ? D.length : k === 'none' ? D.filter(d => !d.cat).length : D.filter(d => d.cat === k).length;
+  const chips = [['all', '', 'All'], ['none', '', 'To sort'], ...DUMP_CATS].map(([k, e, n]) => `<button type="button" class="dump-fc${dumpFilter === k ? ' on' : ''}" data-act="dump-filter" data-id="${k}">${e ? e + ' ' : ''}${n} <b>${count(k)}</b></button>`).join('');
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
+    <form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="What's on your mind?" aria-label="Add to brain dump"><button type="submit" class="btn small">Add</button></form>
+    <div class="dump-fcs">${chips}</div>
+    ${L.length ? L.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
+      <div class="dump-cats">${DUMP_CATS.map(([k, e, n]) => `<button type="button" class="dump-cat${d.cat === k ? ' on' : ''}" data-act="dump-cat" data-id="${d.id}" data-c="${k}" aria-pressed="${d.cat === k}">${e} ${n}</button>`).join('')}<button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button></div>
+      <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('') : `<div class="card"><span class="c-s">${D.length ? 'Nothing here.' : 'Type anything above. Sort it into Academics, Holidays, To buy or Other whenever you like.'}</span></div>`}</div>`); }
+const dumpSet = (id, patch) => { state.dumps = (state.dumps || []).map(d => d.id === id ? { ...d, ...patch, updated: nowISO() } : d); };
+
 /* ---------- gentle habits: shown on Today only in their time window; monthly tracker ---------- */
 const HABIT_DEFAULTS = [
   { id: 'h-brush', name: 'Brush', emoji: '🪥', from: 21, to: 3 }, { id: 'h-floss', name: 'Floss', emoji: '🧵', from: 21, to: 3 },
@@ -1697,6 +1744,7 @@ function pageToday() {
     h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
   const S = state.settings;
+  h += dumpCard();
   h += catTodayCard();
   h += habitCard();
   h += timerCard();
@@ -2614,6 +2662,7 @@ function renderSearch(q) {
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
+  add('Brain dump', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row('data-act="dump-all"', d.text, 'Brain dump' + (d.cat ? ' · ' + (DUMP_CATS.find(c => c[0] === d.cat) || [])[2] : ''))));
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -2722,6 +2771,11 @@ document.addEventListener('click', e => {
     case 'mc-open': mcSheet(id); break;
     case 'love-hist': loveHistSheet(''); break;
     case 'love-open': loveSheet(); break;
+    case 'dump-all': dumpSheet(); break;
+    case 'dump-filter': dumpFilter = id; dumpSheet(); break;
+    case 'dump-cat': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: d.cat === b.dataset.c ? '' : b.dataset.c }); commit(); dumpSheet(); } break; }
+    case 'dump-del': dumpSet(id, { deleted: true }); commit('Removed'); dumpSheet(); break;
+    case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpSheet(); } break; }
     case 'cat-open': catSheet(); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(); break; }
@@ -2889,6 +2943,7 @@ document.addEventListener('submit', e => {
     case 'logany': {
       const tid = logTopicFor(fd.get('topic') || 'new', fd); if (!tid) { toast('Type what you read'); return; } const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
       state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
+    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: '', created: nowISO() }]); const inSheet = sheetOpen(); commit('Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
@@ -2914,7 +2969,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
