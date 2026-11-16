@@ -52,7 +52,7 @@
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
 body{background:var(--bg);color:var(--fg);font:16.5px/1.38 var(--font-body);-webkit-font-smoothing:antialiased;padding-left:var(--side)}
-body.locked{overflow:hidden}
+body.locked{overflow:hidden;position:fixed;left:0;right:0;width:100%}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0;padding:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -1405,6 +1405,12 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .sec-fold{margin-top:4px}
 .sec-fold>summary{background:var(--surface);border-radius:22px;box-shadow:var(--tile-shadow)}
 .sec-fold[open]>summary{margin-bottom:6px}
+/* notes & to buy v5.28 */
+.buy-h{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:4px;font-size:13px;font-weight:700;color:var(--fg-2)!important;text-align:left}
+.buy-h span:first-child{color:var(--fg-2)!important}
+.buy-n{padding:2px 9px;border-radius:999px;background:#2B6448;color:#FFFFFF!important;font-size:12px;font-weight:700}
+.buy-tick{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid #2B6448;background:#FFFFFF}
+.buy-row .dump-top{align-items:center}
 /* brain dump v5.27 */
 .dumpc{display:flex;flex-direction:column;gap:10px}
 .dump-f{display:flex;gap:8px}
@@ -1838,24 +1844,36 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
   if (nOn('nDaily')) { const L = (D.loves || {}).today, A = (D.art || {}).today; if ((L && L.date === t) || (A && A.date === t)) push('daily|' + t, t, 7, '🐾 Off duty today', [L && L.date === t ? L.title : '', A && A.date === t ? '🖼️ ' + A.title + ' · ' + A.artist : ''].filter(Boolean).join(' · '), 'others'); }
   return out.sort((a, b) => a.at.localeCompare(b.at)); }
 
-/* ---------- Brain dump: jot anything now, sort it later ---------- */
-const DUMP_CATS = [['academics', '📚', 'Academics'], ['holidays', '🏖️', 'Holidays'], ['buy', '🛒', 'To buy'], ['media', '🎬', 'Watch & read'], ['other', '✨', 'Other']];
-const DUMPS = () => (state.dumps || []).filter(d => !d.deleted).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+/* ---------- Notes & To buy (was Brain dump): jot anything; "buy …" lands in To buy ---------- */
+const DUMPS = () => (state.dumps || []).filter(d => !d.deleted && !d.bought).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+const JOTS = () => DUMPS().filter(d => d.cat !== 'buy');
+const BUYS = () => DUMPS().filter(d => d.cat === 'buy');
 const dumpAgo = iso => { const m = Math.round((Date.now() - new Date(iso)) / 6e4); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
-let dumpFilter = 'all';
-function dumpCard() { const D = DUMPS(); const uns = D.filter(d => !d.cat).length;
-  return `<div class="card dumpc"><div class="c-top"><span class="c-lab">🧠 Brain dump${D.length ? ' · ' + D.length : ''}</span>${D.length ? `<button type="button" class="link" data-act="dump-all">${uns ? uns + ' to sort' : 'All notes'}</button>` : ''}</div>
-    <form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="What's on your mind?" aria-label="Add to brain dump" enterkeyhint="done"><button type="submit" class="btn small" aria-label="Add">Add</button></form>
-    ${D.length ? `<div class="dump-l">${D.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all">${d.cat ? `<span class="dump-tag">${DUMP_CATS.find(c => c[0] === d.cat)?.[1] || ''}</span>` : '<span class="dump-dot" aria-hidden="true"></span>'}<span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('')}</div>` : ''}</div>`; }
-function dumpSheet() { const D = DUMPS(); const L = dumpFilter === 'all' ? D : dumpFilter === 'none' ? D.filter(d => !d.cat) : D.filter(d => d.cat === dumpFilter);
-  const count = k => k === 'all' ? D.length : k === 'none' ? D.filter(d => !d.cat).length : D.filter(d => d.cat === k).length;
-  const chips = [['all', '', 'All'], ['none', '', 'To sort'], ...DUMP_CATS].map(([k, e, n]) => `<button type="button" class="dump-fc${dumpFilter === k ? ' on' : ''}" data-act="dump-filter" data-id="${k}">${e ? e + ' ' : ''}${n} <b>${count(k)}</b></button>`).join('');
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
-    <form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="What's on your mind?" aria-label="Add to brain dump"><button type="submit" class="btn small">Add</button></form>
-    <div class="dump-fcs">${chips}</div>
-    ${L.length ? L.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
-      <div class="dump-cats">${DUMP_CATS.map(([k, e, n]) => `<button type="button" class="dump-cat${d.cat === k ? ' on' : ''}" data-act="dump-cat" data-id="${d.id}" data-c="${k}" aria-pressed="${d.cat === k}">${e} ${n}</button>`).join('')}<button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button></div>
-      <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('') : `<div class="card"><span class="c-s">${D.length ? 'Nothing here.' : 'Type anything above. Sort it into Academics, Holidays, To buy or Other whenever you like.'}</span></div>`}</div>`); }
+const buyAge = iso => { const t0 = new Date(iso); t0.setHours(0, 0, 0, 0); const t1 = new Date(); t1.setHours(0, 0, 0, 0); const n = Math.round((t1 - t0) / 864e5);
+  return n <= 0 ? 'today' : n === 1 ? '1 day' : n < 14 ? n + ' days' : n < 60 ? Math.round(n / 7) + ' weeks' : Math.round(n / 30) + ' months'; };
+const parseBuy = text => { const m = String(text).match(/^\s*(?:to[\s-]?buy|buy)\b[\s:,\-]*(.+)$/i); if (!m || !m[1].trim()) return null; const t = m[1].trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
+const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Jot a note, or “buy …”" aria-label="Add a note" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="btn small" aria-label="Add">Add</button></form>`;
+function dumpLive() { const N = JOTS(), B = BUYS();
+  let h = N.length ? `<div class="dump-l">${N.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all"><span class="dump-dot" aria-hidden="true"></span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('')}</div>` : '';
+  if (B.length) h += `<button type="button" class="buy-h" data-act="dump-all" data-id="buy"><span>🛒 To buy</span><span class="buy-n" aria-label="${Math.min(3, B.length)} of ${B.length} shown">${Math.min(3, B.length)}/${B.length}</span></button>
+    <div class="dump-l">${B.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all" data-id="buy"><span class="dump-tag" aria-hidden="true">🛒</span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span></button>`).join('')}</div>`;
+  return h; }
+function dumpCard() { const n = JOTS().length;
+  return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">📝 Notes${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
+    ${dumpForm()}<div id="dump-live">${dumpLive()}</div></div>`; }
+function dumpSheetLive() { const N = JOTS(), B = BUYS();
+  const buys = B.length ? B.map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
+    : `<div class="card"><span class="c-s">Nothing to buy. Type “buy shampoo” and it lands here.</span></div>`;
+  const notes = N.length ? N.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
+      <div class="dump-cats"><button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button><button type="button" class="dump-cat" data-act="dump-tobuy" data-id="${d.id}">🛒 To buy</button></div>
+      <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('')
+    : `<div class="card"><span class="c-s">No notes yet. Type anything above.</span></div>`;
+  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length}</span></h3>${buys}<h3 class="sh"><span>📝 Notes</span><span>${N.length}</span></h3>${notes}`; }
+function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>📝 Notes</h2><span></span></div>
+    ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
+  if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
+/* update the notes in place, so the box you're typing in is never rebuilt (no lost text, keyboard stays up) */
+function dumpRefresh() { const l = $('dump-live'); if (l) l.innerHTML = dumpLive(); const lab = $('dump-lab'); if (lab) { const n = JOTS().length; lab.textContent = '📝 Notes' + (n ? ' · ' + n : ''); } const sl = $('dump-sheet-live'); if (sl) sl.innerHTML = dumpSheetLive(); }
 const dumpSet = (id, patch) => { state.dumps = (state.dumps || []).map(d => d.id === id ? { ...d, ...patch, updated: nowISO() } : d); };
 
 /* ---------- gentle habits: shown on Today only in their time window; monthly tracker ---------- */
@@ -2510,7 +2528,7 @@ function pageBackup() {
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
-    ${fold('settings', 'More settings', `<label class="row toggle"><span>Send books, films, series & games from Brain dump to Off duty</span><input type="checkbox" data-setting="mediaOn" ${S.mediaOn !== false ? 'checked' : ''}></label>
+    ${fold('settings', 'More settings', `<label class="row toggle"><span>Send books, films, series & games from Notes to Off duty</span><input type="checkbox" data-setting="mediaOn" ${S.mediaOn !== false ? 'checked' : ''}></label>
     
     <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
@@ -2630,7 +2648,7 @@ async function coverCandidates(it) {
 function mediaScanDumps() { if (!state.meta.mediaClean) { (state.dumps || []).forEach(d => { if (d.cat === 'media' && !d.deleted) { d.deleted = true; d.updated = nowISO(); } }); state.meta.mediaClean = nowISO(); save(); render(); }
   if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
   (state.dumps || []).filter(d => !d.deleted && !d.cat).forEach(d => { const p = parseMedia(d.text); if (p) { const it = addMedia(p, 'dump'); it.added = (d.created || nowISO()).slice(0, 10); d.cat = 'media'; d.media = it.id; d.deleted = true; d.updated = nowISO(); n++; } });
-  state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your brain dump for Off duty`); } }
+  state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your notes for Off duty`); } }
 const mediaBusy = new Set();
 async function mediaCover(id, next) {
   const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine || (!next && (it.coverOwn || it.coverImg))) return; mediaBusy.add(id);
@@ -2678,7 +2696,7 @@ function mediaShelf() {
   let h = `<div class="sec"><div class="cf-head"><h2 class="sh">My ${y} in stories</h2><button type="button" class="link" data-act="media-add">＋ Add</button></div>
     <div class="cf-tabs" role="tablist">${MEDIA_TYPES.map(t => `<button type="button" role="tab" data-act="media-kind" data-id="${t[0]}" class="${t[0] === mediaKind ? 'on' : ''}" aria-selected="${t[0] === mediaKind}">${t[1]} ${t[2]}${counts[t[0]] ? ` <b>${counts[t[0]]}</b>` : ''}</button>`).join('')}</div>`;
   h += `<h3 class="cf-sub">${MT(mediaKind)[4]}${mediaKind === 'book' ? ' & reading' : mediaKind === 'game' ? ' & playing' : ' & watching'}</h3>`;
-  if (!items.length) return h + `<div class="card cf-empty"><span class="cf-empty-e" aria-hidden="true">${MT(mediaKind)[1]}</span><span class="c-t">No ${MT(mediaKind)[2].toLowerCase()} yet this year</span><span class="c-s">Type it in Brain dump, like “${{ book: 'reading Circe', movie: 'watched Dune Part Two', series: 'watching Severance', game: 'playing Hades' }[mediaKind]}”, and it lands here with its cover.</span></div>` + upList(mediaKind) + `</div>`;
+  if (!items.length) return h + `<div class="card cf-empty"><span class="cf-empty-e" aria-hidden="true">${MT(mediaKind)[1]}</span><span class="c-t">No ${MT(mediaKind)[2].toLowerCase()} yet this year</span><span class="c-s">Type it in Notes, like “${{ book: 'reading Circe', movie: 'watched Dune Part Two', series: 'watching Severance', game: 'playing Hades' }[mediaKind]}”, and it lands here with its cover.</span></div>` + upList(mediaKind) + `</div>`;
   h += `<div class="cf-wrap"><div class="cf" id="cf" data-kind="${mediaKind}">${items.map((m, i) => `<button type="button" class="cf-i" data-act="media-tap" data-id="${m.id}" data-i="${i}" aria-label="${esc(m.title)}">${coverFace(m)}${m.status === 'now' ? `<span class="cf-now">${MT(m.type)[3]}</span>` : ''}</button>`).join('')}</div></div>
     <div class="cf-cap" id="cf-cap" aria-live="polite"></div>` + upList(mediaKind) + `</div>`;
   return h; }
@@ -2715,7 +2733,7 @@ function mediaAddSheet() { openSheet(`<form data-form="media" class="sheet-in" a
   <label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" placeholder="books only, optional"></label>
   <label class="row field"><span class="f-l">Shelf</span><select name="type">${MEDIA_TYPES.map(t => `<option value="${t[0]}"${t[0] === mediaKind ? ' selected' : ''}>${t[1]} ${t[2]}</option>`).join('')}</select></label>
   <label class="row field"><span class="f-l">Status</span><select name="status"><option value="done">Finished</option><option value="now">Still on it</option></select></label></div>
-  <p class="foot">Quicker: type “watched …”, “reading …”, “watching …” or “playing …” in Brain dump.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=title]'); if (i) i.focus(); }, 350); }
+  <p class="foot">Quicker: type “watched …”, “reading …”, “watching …” or “playing …” in Notes.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=title]'); if (i) i.focus(); }, 350); }
 /* ---------- Off duty: things I've ordered this year (locked) ---------- */
 const SHOP = () => ((state.private && state.private.shop) || {});
 const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
@@ -2773,6 +2791,7 @@ function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" aut
   <div class="group"><div class="row field hab-ed"><input name="e" placeholder="✨" maxlength="4" aria-label="Emoji"><input class="left" name="n" placeholder="e.g. Studio Ghibli, space, F1" aria-label="Topic" required></div></div>
   <p class="foot">The more specific, the better the facts. It joins the daily draw once your devices sync.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=n]'); if (i) i.focus(); }, 350); }
 function render() {
+  { const ae = document.activeElement; if (render.lastTab === tab && ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae)) { render.pending = true; return; } render.pending = false; }
   document.body.classList.toggle('sketchy', sketchNow());
   REG = [];
   document.body.dataset.sec = tab;
@@ -2882,9 +2901,11 @@ function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); rend
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
 /* ---------- sheets ---------- */
+function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; lockBody.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -lockBody.y + 'px'; B.classList.add('locked'); }
+function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); B.style.top = ''; window.scrollTo(0, lockBody.y || 0); }
 function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; sh.scrollTop = 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
-  document.body.classList.add('locked'); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
-function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); document.body.classList.remove('locked'); }
+  lockBody(); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
+function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); unlockBody(); }
 const sheetOpen = () => $('sheet').classList.contains('open') || document.body.classList.contains('locked');
 /* swipe the sheet down to close it (from the handle, or anywhere when the sheet is scrolled to the top) */
 (() => { let y0 = null, dy = 0, t0 = 0, raf = 0; const sh = () => $('sheet');
@@ -3075,7 +3096,7 @@ function renderSearch(q) {
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
-  add('Brain dump', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row('data-act="dump-all"', d.text, 'Brain dump' + (d.cat ? ' · ' + (DUMP_CATS.find(c => c[0] === d.cat) || [])[2] : ''))));
+  add('Notes', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row(`data-act="dump-all"${d.cat === 'buy' ? ' data-id="buy"' : ''}`, d.text, d.cat === 'buy' ? 'To buy · ' + buyAge(d.created) : 'Notes')));
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -3103,6 +3124,7 @@ function renderSearch(q) {
     : `<p class="foot">Nothing found for “${esc(q)}”.</p>`;
 }
 document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); });
+document.addEventListener('focusout', () => { if (render.pending) setTimeout(() => { const a = document.activeElement; if (render.pending && !(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && $('page').contains(a))) render(); }, 120); });
 (() => { let y0 = null, pulled = 0;
   document.addEventListener('touchstart', e => { y0 = tab === 'nba' && !sheetOpen() && (window.scrollY || document.documentElement.scrollTop) <= 0 ? e.touches[0].clientY : null; pulled = 0; }, { passive: true });
   document.addEventListener('touchmove', e => { if (y0 === null) return; pulled = e.touches[0].clientY - y0; const p = $('ptr'); if (p) { p.style.height = Math.min(70, Math.max(0, pulled / 2.2)) + 34 + 'px'; p.classList.toggle('ready', pulled > 110); if (pulled > 110) p.textContent = 'Let go to refresh'; } }, { passive: true });
@@ -3113,6 +3135,7 @@ document.addEventListener('keydown', e => { if (e.key === '/' && !sheetOpen() &&
 /* ---------- actions ---------- */
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
+  { const ae = document.activeElement; if (ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae) && !(ae.form && ae.form.contains(b))) ae.blur(); render.pending && render(); }
   const id = b.dataset.id;
   switch (b.dataset.act) {
     case 'tab': case 'goto': closeSheet(); goTab(b.dataset.tab); break;
@@ -3187,11 +3210,11 @@ document.addEventListener('click', e => {
     case 'push-on': pushOn(); break;
     case 'push-off': pushOff(); break;
     case 'push-test': pushTest(); break;
-    case 'dump-all': dumpSheet(); break;
-    case 'dump-filter': dumpFilter = id; dumpSheet(); break;
-    case 'dump-cat': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: d.cat === b.dataset.c ? '' : b.dataset.c }); commit(); dumpSheet(); } break; }
-    case 'dump-del': dumpSet(id, { deleted: true }); commit('Removed'); dumpSheet(); break;
-    case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpSheet(); } break; }
+    case 'dump-all': dumpSheet(id); break;
+    case 'dump-del': { const d = (state.dumps || []).find(x => x.id === id); dumpSet(id, { deleted: true }); commit('Removed', () => { dumpSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
+    case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
+    case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
+    case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
     case 'cat-open': catSheet(); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'icon-sheet': openSheet(iconSheet()); break;
@@ -3382,7 +3405,9 @@ document.addEventListener('submit', e => {
     case 'logany': {
       const tid = logTopicFor(fd.get('topic') || 'new', fd); if (!tid) { toast('Type what you read'); return; } const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
       state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
-    case 'dump': { const text = (fd.get('text') || '').trim(); if (!text) return; const mp = state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump'); if (!mit) state.dumps = (state.dumps || []).concat([{ id: uid(), text, cat: '', created: nowISO() }]); const inSheet = sheetOpen(); commit(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : 'Noted 🧠'); if (inSheet) dumpSheet(); else { const inp = document.querySelector('form[data-form="dump"] input'); if (inp) inp.focus(); } break; }
+    case 'dump': { const inp = f.querySelector('input[name=text]'); const text = (fd.get('text') || '').trim(); if (!text) return; const buy = parseBuy(text); const mp = !buy && state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump');
+      if (!mit) state.dumps = (state.dumps || []).concat([{ id: uid(), text: buy || text, cat: buy ? 'buy' : '', created: nowISO(), updated: nowISO() }]);
+      if (inp) inp.value = ''; const ok = save(); if (ok) syncSoon(); dumpRefresh(); if (ok) toast(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : buy ? 'Added to To buy 🛒' : 'Noted 📝'); break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
@@ -3706,7 +3731,7 @@ function loadPdfJs() {
 }
 async function pdfRead(id) {
   const m = (pdfList || []).find(x => x.id === id); if (!m) return;
-  const R = $('reader'); R.hidden = false; document.body.classList.add('locked');
+  const R = $('reader'); R.hidden = false; lockBody();
   R.innerHTML = `<div class="rd-bar"><button type="button" class="link" data-act="rd-close">Done</button><b>${esc(m.name)}</b><span id="rd-pg"></span></div><div class="rd-pages" id="rd-pages"><div class="rd-msg">Opening…</div></div><div class="rd-zoom"><button type="button" data-act="rd-zoom" data-z="-1" aria-label="Smaller">−</button><button type="button" data-act="rd-zoom" data-z="1" aria-label="Bigger">+</button></div>`;
   try {
     const [lib, blob] = await Promise.all([loadPdfJs(), pdfTx('blobs', 'readonly', st => st.get(id))]);
@@ -3755,7 +3780,7 @@ async function rdDraw(el, n, w) {
     d0 = 0; if (inner) inner.style.transform = ''; if (Math.abs(live - 1) < 0.03 || !rd) return;
     rd.zoom = Math.max(0.6, Math.min(4, z0 * live)); rdLayout(false).then(() => { box.scrollLeft = Math.max(0, fx * box.scrollWidth - vx); box.scrollTop = Math.max(0, fy * box.scrollHeight - vy); }); }, { passive: true });
 })();
-function rdClose() { if (rd) { rd.m.page = rd.cur; pdfSaveMeta(rd.m); if (rd.obs) rd.obs.disconnect(); if (rd.doc) rd.doc.destroy(); } rd = null; const R = $('reader'); R.hidden = true; R.innerHTML = ''; document.body.classList.remove('locked'); pdfLoad(); }
+function rdClose() { if (rd) { rd.m.page = rd.cur; pdfSaveMeta(rd.m); if (rd.obs) rd.obs.disconnect(); if (rd.doc) rd.doc.destroy(); } rd = null; const R = $('reader'); R.hidden = true; R.innerHTML = ''; if (!$('sheet').classList.contains('open')) unlockBody(); pdfLoad(); }
 function keyDb() { return new Promise((res, rej) => { const r = indexedDB.open('studydesk-keys', 1); r.onupgradeneeded = () => r.result.createObjectStore('keys'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function keyOp(mode, fn) { const db = await keyDb(); return new Promise((res, rej) => { const tx = db.transaction('keys', mode); const out = fn(tx.objectStore('keys')); tx.oncomplete = () => res(out && out.result); tx.onerror = () => rej(tx.error); }); }
 let device = null; let deviceChecked = false;
