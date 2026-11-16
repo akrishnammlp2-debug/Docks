@@ -1569,7 +1569,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.45 · days off the gram';
+const APP_VERSION = '5.46 · the cat dresses up';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -2315,7 +2315,10 @@ function festNow() { if ((state.settings || {}).festOn === false) return null;
   const c = FESTS().filter(f => f.theme && FEST_LOOK[f.theme]).map(f => ({ f, L: FEST_LOOK[f.theme], n: dIn(f.date) })).filter(x => x.n <= x.L.lead && x.n >= -x.L.after).sort((a, b) => a.n - b.n);
   return c.length ? { key: c[0].f.theme, name: c[0].L.label || c[0].f.name, chip: c[0].L.chip, n: c[0].n, date: c[0].f.date } : null; }
 /* very light background effect for the season: drifts behind the cards, never over the banner or text */
-function festFx() { const F = festNow(); const key = F ? F.key : ''; if (document.body.dataset.fest === key) return; document.body.dataset.fest = key;
+/* the home-screen icon follows the festival too (iOS reads it at the moment the app is added to the Home Screen) */
+const FEST_ICONS = ['christmas', 'newyear', 'sankranti', 'india', 'rajyotsava', 'eid', 'holi', 'ugadi', 'dasara', 'janmashtami', 'ganesha', 'diwali'];
+function festIcon(key) { const l = document.querySelector('link[rel="apple-touch-icon"]'); if (!l) return; const want = FEST_ICONS.includes(key) ? 'icons/' + key + '-180.png' : 'icon-180.png'; if (l.getAttribute('href') !== want) l.setAttribute('href', want); }
+function festFx() { const F = festNow(); const key = F ? F.key : ''; festIcon(key); if (document.body.dataset.fest === key) return; document.body.dataset.fest = key;
   let fx = document.getElementById('fest-fx'); if (!key) { if (fx) fx.remove(); return; }
   if (!fx) { fx = document.createElement('div'); fx.id = 'fest-fx'; fx.setAttribute('aria-hidden', 'true'); fx.innerHTML = '<i class="fx1"></i><i class="fx2"></i>'; document.body.prepend(fx); } }
 const bannerSrc = u => (u || '').replace(/([?&]width=)\d+/, '$1800');
@@ -2674,6 +2677,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('ot', '🩺 OT list & cases', ['The OT list is sorted by time. Ticks stay on this phone. Patient details open on this phone only, through private sync.', 'Cases on the website are a de-identified copy: no patient names or hospital IDs.']),
     it('leis', '🎵 Music, NBA & stories', ['Tap a song to open it in Spotify.', 'NBA standings: orange bar is top 6 (direct playoff places), grey bar is 7 to 10 (play-in).', 'Fact of the day: one topic is picked at random each morning. Tap a topic to see its past picks or remove it.']),
     it('ig', '🌱 Off Instagram', ['The small line under the Today banner counts the days since you left. Tap it for your badges; tap a badge you have earned to replay it.', 'A new badge unlocks on days 1, 3, 7, 15, 30, 45, 60, 90, 120, 180, 270 and 365, then every year. It pops up once on the day.', 'To change the start date or hide it, use More settings.']),
+    it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Docks to the Home Screen, so the icon already on your phone stays as it is until you add Docks again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
