@@ -1405,6 +1405,23 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .sec-fold{margin-top:4px}
 .sec-fold>summary{background:var(--surface);border-radius:22px;box-shadow:var(--tile-shadow)}
 .sec-fold[open]>summary{margin-bottom:6px}
+/* device battery v5.29 */
+.battc{display:flex;flex-direction:column;gap:8px;text-align:left;width:100%}
+.batt-setup .link{align-self:flex-start}
+.batt-r{display:flex;align-items:center;gap:10px}
+.batt-e{flex:none;font-size:16px}
+.batt-n{flex:none;width:52px;font-size:15px;font-weight:600;color:var(--fg)!important}
+.batt-bar{flex:1;height:8px;border-radius:4px;background:rgba(128,140,134,.28);overflow:hidden}
+.batt-bar i{display:block;height:100%;border-radius:4px;background:#3E8A62}
+.batt-bar i.low{background:#C9772E}
+.batt-v{flex:none;width:42px;text-align:right;font-size:15px;color:var(--fg)!important}
+.batt-a{flex:none;width:78px;text-align:right;font-size:12px;color:var(--fg-2)!important}
+.batt-nudge{font-size:14px;font-weight:600;color:var(--fg)!important}
+.batt-step{display:flex;gap:12px;align-items:flex-start;padding:10px 12px!important;margin-bottom:6px}
+.batt-step div{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
+#sheet .batt-step{display:flex!important;flex-direction:row!important;align-items:flex-start}
+#sheet .batt-step b{color:#1C2621!important}#sheet .batt-sn,#sheet span.batt-sn{color:#FFFFFF!important;background:#2B6448!important}
+.batt-sn{flex:none;width:24px;height:24px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;display:grid;place-items:center;font-size:13px;font-weight:700}
 /* notes & to buy v5.28 */
 .buy-h{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:4px;font-size:13px;font-weight:700;color:var(--fg-2)!important;text-align:left}
 .buy-h span:first-child{color:var(--fg-2)!important}
@@ -1844,6 +1861,41 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
   if (nOn('nDaily')) { const L = (D.loves || {}).today, A = (D.art || {}).today; if ((L && L.date === t) || (A && A.date === t)) push('daily|' + t, t, 7, '🐾 Off duty today', [L && L.date === t ? L.title : '', A && A.date === t ? '🖼️ ' + A.title + ' · ' + A.artist : ''].filter(Boolean).join(' · '), 'others'); }
   return out.sort((a, b) => a.at.localeCompare(b.at)); }
 
+/* ---------- Devices: battery levels that an iPhone/iPad Shortcut writes to battery/<iPad|iPhone>.json in the private sync repository ---------- */
+const BATT_KEY = 'studydesk.battery', BATT_DEV = [['iPhone', '📱'], ['iPad', '📲']], BATT_LOW = 30;
+let batt = (() => { try { return JSON.parse(localStorage.getItem(BATT_KEY) || '{}') || {}; } catch (_) { return {}; } })();
+const battLevel = r => { let v = parseFloat(String(r.level).replace(',', '.')); if (!isFinite(v)) return null; if (v > 0 && v < 1) v *= 100; return Math.max(0, Math.min(100, Math.round(v))); };
+const battCharging = r => /^(yes|true|1|charging|full)$/i.test(String(r.charging || '').trim());
+const battAgo = iso => { const t = Date.parse(iso); if (!t) return ''; const m = Math.round((Date.now() - t) / 6e4); return m < 2 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + (m < 2880 ? ' day ago' : ' days ago'); };
+async function batteryPull() { const cfg = syncCfg(); if (!cfg.token || state.settings.battOn === false) return; let ch = false;
+  for (const [d] of BATT_DEV) { try { const r = await gh(cfg, '/contents/battery/' + d + '.json'); if (!r.ok) continue; const j = JSON.parse(b64utf8((await r.json()).content || '')); if (j && j.at && (!batt[d] || batt[d].at !== j.at || batt[d].level !== j.level)) { batt[d] = j; ch = true; } } catch (_) {} }
+  if (ch) { try { localStorage.setItem(BATT_KEY, JSON.stringify(batt)); } catch (_) {} if (tab === 'today') render(); } }
+function battCard() { if (state.settings.battOn === false || !syncCfg().token) return '';
+  const have = BATT_DEV.filter(([d]) => batt[d] && battLevel(batt[d]) !== null && batt[d].at !== 'setup');
+  if (!have.length) return `<button type="button" class="card battc batt-setup" data-act="batt-help"><span class="c-lab">🔋 Devices</span><span class="c-s">Show your iPad and iPhone battery here, with a nudge when the iPad needs charging.</span><span class="link">Set it up</span></button>`;
+  const rows = have.map(([d, e]) => { const r = batt[d], v = battLevel(r), chg = battCharging(r), low = v < BATT_LOW && !chg;
+    return `<div class="batt-r"><span class="batt-e" aria-hidden="true">${e}</span><span class="batt-n">${d}</span><span class="batt-bar" aria-hidden="true"><i style="width:${v}%" class="${low ? 'low' : ''}"></i></span><b class="batt-v">${v}%</b><span class="batt-a">${chg ? '⚡ charging' : esc(battAgo(r.at))}</span></div>`; }).join('');
+  const ipad = batt.iPad && battLevel(batt.iPad), nudge = ipad !== null && ipad !== undefined && ipad < BATT_LOW && !battCharging(batt.iPad);
+  return `<div class="card battc"><div class="c-top"><span class="c-lab">🔋 Devices</span><button type="button" class="link" data-act="batt-help">How it works</button></div>${rows}
+    ${nudge ? `<span class="batt-nudge">🔌 Your iPad is at ${ipad}%. Plug it in when you get a moment.</span>` : ''}</div>`; }
+function battSheet() { const url = 'https://api.github.com/repos/' + (syncCfg().repo || 'akrishnammlp2-debug/docks-sync') + '/contents/battery/';
+  const st = (n, t, x) => `<div class="card batt-step"><span class="batt-sn">${n}</span><div><b>${t}</b>${x ? `<span class="c-s">${x}</span>` : ''}</div></div>`;
+  openSheet(`<div class="sheet-in">${sheetHead('🔋 Device battery')}
+    <p class="c-s">A small Shortcut on your iPhone and iPad sends the battery level here. Docks can't read batteries by itself; earphones only show in Apple's Batteries widget.</p>
+    <div class="btns"><button class="btn" type="button" data-act="batt-copy" data-v="key">Copy access key</button><button class="btn ghost" type="button" data-act="batt-copy" data-v="url">Copy address</button></div>
+    <p class="c-s">The key is the same one you typed into Device sync. Paste it only into the Shortcut, nowhere else.</p>
+    <h3 class="sh"><span>Shortcut steps (in order)</span></h3>
+    ${st(1, 'Get Battery Level')}
+    ${st(2, 'Is Connected to Charger', 'Skip it if your phone doesn’t have it.')}
+    ${st(3, 'Get Device Details → Device Model')}
+    ${st(4, 'Format Date', 'Current Date · ISO 8601 · include time')}
+    ${st(5, 'Text', '{"level":"[Battery Level]","charging":"[Is Connected]","at":"[Formatted Date]"}')}
+    ${st(6, 'Base64 Encode', 'Line Breaks: None')}
+    ${st(7, 'Get Contents of URL (GET)', 'Address + [Device Model] + .json · Header Authorization = the key you copied')}
+    ${st(8, 'Get Dictionary Value', 'Key: sha')}
+    ${st(9, 'Get Contents of URL (PUT)', 'Same address and header · JSON body: message, content = Base64, sha = Dictionary Value')}
+    <p class="foot">Then add automations on each device: charger connected, charger disconnected, battery falls below 30%, and twice a day. Run Immediately, notify off.</p>
+    <label class="row toggle"><span>Show device batteries on Today</span><input type="checkbox" data-setting="battOn" ${state.settings.battOn !== false ? 'checked' : ''}></label></div>`); }
 /* ---------- Notes & To buy (was Brain dump): jot anything; "buy …" lands in To buy ---------- */
 const DUMPS = () => (state.dumps || []).filter(d => !d.deleted && !d.bought).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
 const JOTS = () => DUMPS().filter(d => d.cat !== 'buy');
@@ -1967,6 +2019,7 @@ function pageToday() {
   const S = state.settings;
   h += attCard();
   h += dumpCard();
+  h += battCard();
   h += catTodayCard();
   h += habitCard();
   h += timerCard();
@@ -3211,6 +3264,9 @@ document.addEventListener('click', e => {
     case 'push-off': pushOff(); break;
     case 'push-test': pushTest(); break;
     case 'dump-all': dumpSheet(id); break;
+    case 'batt-help': battSheet(); break;
+    case 'batt-copy': { const cfg = syncCfg(); const v = b.dataset.v === 'key' ? 'Bearer ' + cfg.token : 'https://api.github.com/repos/' + (cfg.repo || 'akrishnammlp2-debug/docks-sync') + '/contents/battery/';
+      navigator.clipboard.writeText(v).then(() => toast(b.dataset.v === 'key' ? 'Key copied ✓ Paste it into the Shortcut' : 'Address copied ✓'), () => toast("Couldn't copy. Long-press to copy instead.")); break; }
     case 'dump-del': { const d = (state.dumps || []).find(x => x.id === id); dumpSet(id, { deleted: true }); commit('Removed', () => { dumpSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
@@ -3886,7 +3942,7 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); }); if (state.settings.weatherOn) fetchWeather(false);
+renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); batteryPull(); }); if (state.settings.weatherOn) fetchWeather(false);
 (() => {
   let x0 = null, y0 = null, from = null;
   document.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
@@ -3898,7 +3954,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) render(); } }, 60e3);
 setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); if (state.settings.weatherOn) fetchWeather(false); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); batteryPull(); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>
