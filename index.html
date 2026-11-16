@@ -452,7 +452,7 @@ mark{background:#F1D0C8;color:inherit}
 .ditem[data-tab="reminders"],.ditem[data-tab="ot"]{--tf:var(--t2);--ti:var(--t2i)}
 .ditem[data-tab="study"],.ditem[data-tab="roster"]{--tf:var(--t3);--ti:var(--t3i)}
 .ditem[data-tab="todos"],.ditem[data-tab="cases"]{--tf:var(--t4);--ti:var(--t4i)}
-.ditem[data-tab="calendar"],.ditem[data-tab="nba"]{--tf:var(--t5);--ti:var(--t5i)}
+.ditem[data-tab="calendar"],.ditem[data-tab="nba"],.ditem[data-tab="dota"]{--tf:var(--t5);--ti:var(--t5i)}
 .ditem[data-tab="today"] svg,.ditem[data-tab="advances"] svg,.ditem[data-tab="backup"] svg{background:rgba(28,30,58,.12)!important}
 @media (hover:hover){.ditem:hover{transform:translateY(-1px)}}
 .ditem[aria-current="page"]{background:var(--tf)!important;transform:scale(1.02);transform-origin:left center;font-weight:800!important;
@@ -1556,6 +1556,15 @@ body[data-fest="diwali"]{--fb-l:url("data:image/svg+xml,<svg xmlns='http://www.w
 @keyframes igfall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(260px) rotate(540deg);opacity:0}}
 @keyframes igpop{0%{transform:scale(.3) rotate(-20deg);opacity:0}70%{transform:scale(1.15) rotate(5deg);opacity:1}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){.ig-conf{display:none}.ig-big{animation:none}}
+
+/* Dota 2 */
+.dota-g{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.dota-t{font-size:12.5px;color:var(--fg-3)}
+a.dota-n,a.dota-n *{text-decoration:none!important}
+a.dota-n .r-main{gap:3px}
+.dota-e .link{align-self:flex-start;font-size:14px}
+.dota-p{background:var(--surface-2);color:var(--fg)}
+.dota-p.live{background:#C93A46;color:#fff}
 </style>
 </head>
 <body data-sec="today">
@@ -1584,9 +1593,9 @@ body[data-fest="diwali"]{--fb-l:url("data:image/svg+xml,<svg xmlns='http://www.w
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.50 · frosted, scattered festive emblems';
+const APP_VERSION = '5.51 · Dota 2, tier 1 only';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1598,6 +1607,7 @@ const IC = {
   roster: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M6.5 9.5h8v3h-8zM6.5 15h4"/>',
   cases: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M7.5 14h2l1.5-3 2 5 1.5-2h2"/>',
   music: '<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  dota: '<path d="M5 4l5.500 5.500M4 9l5 5M9 4l-5 5"/><path d="M10.500 9.500L20 19v1h-1L9.500 10.500"/><path d="M19 4l-4 4M20 9l-5-5"/>',
   nba: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 3 3 9.8 0 12.8M18.4 5.6c-3 3-3 9.8 0 12.8"/>',
   advances: '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>',
   reminders: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
@@ -1607,7 +1617,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -1691,6 +1701,7 @@ function trimData(f, j) {
     if (!j || typeof j !== 'object') return j;
     if (f === 'ot' && Array.isArray(j.items)) { const from = addDays(today(), -(KEEP_DAYS.ot - 1)); return { ...j, items: j.items.filter(r => !r.date || r.date >= from) }; }
     if (f === 'nba' && Array.isArray(j.games) && j.games.length) { const ds = j.games.map(g => nbaIso(g[0])).filter(Boolean).sort(); const from = addDays(ds[ds.length - 1], -(KEEP_DAYS.nba - 1)); return { ...j, games: j.games.filter(g => { const x = nbaIso(g[0]); return !x || x >= from; }) }; }
+    if (f === 'dota') { const t = today(), day = m => m.start ? m.start.slice(0, 10) : (m.date || ''); return { ...j, matches: (j.matches || []).filter(m => m.as == null || day(m) >= addDays(t, -6)), news: (j.news || []).filter(n => !n.date || n.date >= addDays(t, -30).slice(0, n.date.length)), events: (j.events || []).filter(e => e.status !== 'done' || !e.end || e.end >= addDays(t, -30)) }; }
     if ((f === 'art' || f === 'loves') && Array.isArray(j.history)) { const from = addDays(today(), -(KEEP_DAYS[f] - 1)); return { ...j, history: j.history.filter(h => !h.date || h.date >= from) }; }
   } catch (_) {}
   return j;
@@ -1806,7 +1817,7 @@ const now0 = new Date();
 let view = { y: now0.getFullYear(), m: now0.getMonth() };
 let sel = today();
 let searchHitDate = null, searchHitName = '';
-let rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
+let dotaSub = 'matches', rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
 
 /* ---------- pages ---------- */
@@ -2642,6 +2653,39 @@ function nbaGames() {
   return base.filter(g => !liveDays.has(g.day)).concat(nbaLive.games.map(g => ({ ...g, label: g.state === 'post' ? (g.ot ? 'Final · OT' : 'Final') : g.state === 'in' ? g.label : (g.label || 'Today') })));
 }
 function nbaLatestDay() { const N = D.nba; if (!N) return null; const ds = [...new Set(N.games.map(g => g[0]))]; const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); return ds.includes(k) ? k : ds[ds.length - 1]; }
+/* ---------- Dota 2: tier 1 tournaments only (data/dota.json, refreshed daily) ---------- */
+const dotaDate = s => !s ? '' : /^\d{4}-\d\d$/.test(s) ? MON[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4) : dShort(s);
+const dotaState = m => m.as != null && m.bs != null && !m.live ? 'post' : m.live ? 'in' : 'pre';
+const dotaLive = () => ((D.dota || {}).matches || []).filter(m => dotaState(m) === 'in');
+const dotaWhen = m => m.start ? new Date(m.start) : new Date((m.date || today()) + 'T12:00');
+function dotaEvStatus(e) { const t = today(); return e.end && e.end < t ? 'done' : e.start && e.start > t ? 'upcoming' : e.status === 'done' ? 'done' : e.start ? 'live' : (e.status || 'upcoming'); }
+function pageDota() {
+  const N = D.dota; let h = head('Dota 2', N ? esc(N.asOf || '') : '', 'Esports');
+  if (!N) return h + '<div class="card"><span class="c-s">No Dota 2 data yet.</span></div>';
+  h += `<div class="seg">${[['matches', 'Matches'], ['events', 'Events'], ['news', 'Patch & news']].map(([k, l]) => `<button type="button" data-act="dsub" data-s="${k}" aria-pressed="${dotaSub === k}">${l}</button>`).join('')}</div>`;
+  const EV = (N.events || []).map(e => ({ ...e, st: dotaEvStatus(e) })), ev = id => EV.find(e => e.id === id) || {};
+  const tag = n => (N.tags || {})[n] || (n.split(/\s+/).length > 1 ? n.split(/\s+/).map(w => w[0]).join('') : n).slice(0, 4).toUpperCase();
+  const span = e => e.start ? dotaDate(e.start) + (e.end && e.end !== e.start ? ' to ' + dotaDate(e.end) : '') : '';
+  if (dotaSub === 'matches') {
+    const M = (N.matches || []).map(m => ({ ...m, st: dotaState(m), at: dotaWhen(m) }));
+    const row = (n, sc, win) => `<div class="nrow${win ? ' win' : ''}" style="--h:${hue(n)}"><span class="badge">${esc(tag(n))}</span><span class="tn"><em>${esc(n)}</em></span><b>${sc == null ? '' : sc}</b></div>`;
+    const game = m => `<div class="ngame${m.st === 'in' ? ' live' : ''}"><div class="nhead">${m.st === 'in' ? '<span class="ldot"></span>Live · ' : ''}${esc([ev(m.event).short || ev(m.event).name || '', m.stage, m.bo ? 'Bo' + m.bo : ''].filter(Boolean).join(' · '))}</div>${row(m.a, m.st === 'pre' ? null : m.as, m.st === 'post' && m.as > m.bs)}${row(m.b, m.st === 'pre' ? null : m.bs, m.st === 'post' && m.bs > m.as)}<span class="dota-t">${esc(m.start ? m.at.toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) + (m.st === 'pre' ? ' your time' : '') : dotaDate(m.date))}</span></div>`;
+    const sec = (t, list) => list.length ? `<div class="sec"><h2 class="sh">${t}</h2><div class="ngrid dota-g">${list.map(game).join('')}</div></div>` : '';
+    const live = M.filter(m => m.st === 'in'), pre = M.filter(m => m.st === 'pre').sort((a, b) => a.at - b.at), post = M.filter(m => m.st === 'post').sort((a, b) => b.at - a.at);
+    h += sec('Live now', live) + sec('Coming up', pre.slice(0, 12)) + sec('Results', post);
+    if (!live.length && !pre.length) { const nx = EV.filter(e => e.st !== 'done').sort((a, b) => (a.start || '').localeCompare(b.start || ''))[0];
+      h += `<div class="card"><span class="c-s">${nx ? (nx.st === 'live' ? esc(nx.name) + ' is under way. Its next series have not been announced yet.' : esc(nx.name) + ' starts ' + (daysUntil(nx.start) === 1 ? 'tomorrow' : 'in ' + plural(daysUntil(nx.start), 'day')) + ', on ' + dotaDate(nx.start) + '.') : 'No tier 1 matches are scheduled right now.'}</span></div>`; }
+    if (!post.length) h += '<p class="foot">No tier 1 results in the last 7 days.</p>';
+  } else if (dotaSub === 'events') {
+    const ord = { live: 0, upcoming: 1, done: 2 }; const L = EV.slice().sort((a, b) => ord[a.st] - ord[b.st] || (a.st === 'done' ? (b.end || '').localeCompare(a.end || '') : (a.start || '').localeCompare(b.start || '')));
+    h += L.map(e => `<div class="card dota-e"><span class="pill dota-p ${e.st}">${e.st === 'live' ? 'Live now' : e.st === 'done' ? 'Finished' : e.start ? (daysUntil(e.start) === 1 ? 'Starts tomorrow' : 'Starts in ' + plural(daysUntil(e.start), 'day')) : 'Upcoming'}</span><b class="c-t">${esc(e.name)}</b><span class="c-s">${esc([span(e), e.where, e.prize, e.teams ? e.teams + ' teams' : ''].filter(Boolean).join(' · '))}</span>${e.winner ? `<span class="c-s">🏆 <b>${esc(e.winner)}</b>${e.runnerUp ? ' beat ' + esc(e.runnerUp) + (e.final ? ' ' + esc(e.final) : '') + ' in the final' : ''}</span>` : ''}${e.format ? `<span class="c-s">${esc(e.format)}</span>` : ''}${(e.field || []).length ? `<span class="c-s">Teams include ${esc(e.field.join(', '))}.</span>` : ''}${e.source ? `<a class="link" href="${esc(e.source)}" target="_blank" rel="noopener">Schedule and details</a>` : ''}</div>`).join('') || '<div class="card"><span class="c-s">No tier 1 events listed right now.</span></div>';
+  } else {
+    const P = N.patch; if (P) h += `<div class="card"><span class="eyebrow">Live gameplay patch</span><b class="c-t">${esc(P.version)}</b><span class="c-s">Since ${esc(dotaDate(P.date))}${P.date && P.date.length === 10 ? ' ' + P.date.slice(0, 4) : ''}. ${esc(P.note || '')}</span>${P.next ? `<span class="c-s">${esc(P.next)}</span>` : ''}</div>`;
+    const NW = (N.news || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    h += NW.length ? `<div class="sec"><h2 class="sh">Latest</h2><div class="group">${NW.map(n => `<a class="row dota-n" href="${esc(n.url || '#')}" target="_blank" rel="noopener"><span class="r-main"><span class="r-s">${esc([dotaDate(n.date), n.kind].filter(Boolean).join(' · '))}</span><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.text || '')}${n.source ? ' (' + esc(n.source) + ')' : ''}</span></span></a>`).join('')}</div></div>` : '';
+  }
+  return h;
+}
 function pageNba() {
   const N = D.nba;
   let h = head('NBA', N ? esc(N.asOf || '') : '', 'Sports');
@@ -2696,6 +2740,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('leis', '🎵 Music, NBA & stories', ['Tap a song to open it in Spotify.', 'NBA standings: orange bar is top 6 (direct playoff places), grey bar is 7 to 10 (play-in).', 'Fact of the day: one topic is picked at random each morning. Tap a topic to see its past picks or remove it.']),
     it('ig', '🌱 Off Instagram', ['The small line under the Today banner counts the days since you left. Tap it for your badges; tap a badge you have earned to replay it.', 'A new badge unlocks on days 1, 3, 7, 15, 30, 45, 60, 90, 120, 180, 270 and 365, then every year. It pops up once on the day.', 'To change the start date or hide it, use More settings.']),
     it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Docks to the Home Screen, so the icon already on your phone stays as it is until you add Docks again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
+    it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Everything is refreshed once a day.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
@@ -2731,7 +2776,7 @@ function pageBackup() {
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="import-private">${P ? 'Load a newer private file' : 'Load private file'}</button>${P ? '<button class="btn danger" type="button" data-act="remove-private">Remove from this phone</button>' : ''}</div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Website data</h2><div class="group">${DATA_FILES.map(f => { const s = dataStatus[f];
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
-    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f]}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
+    return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f] || f[0].toUpperCase() + f.slice(1)}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
   h += `<div class="sec"><h2 class="sh">Storage</h2><div class="card"><span class="c-s" id="persistInfo">${esc(persistText)}</span>${standalone ? '' : '<span class="c-s">You\'re viewing this in Safari. Add it to your Home Screen and open it from there so the phone keeps your data.</span>'}<span class="c-m">Study Desk ${APP_VERSION} · ${plural(state.topics.length, 'topic')} · ${plural(state.log.length, 'session')} logged · ${plural(state.todos.length, 'task')}</span></div></div>`;
   const inner = h; h = before + `<div class="sec"><details class="set-more sec-fold" data-fold="secs"${foldOpen.has('secs') ? ' open' : ''}><summary><span class="sm-c">Private sync, website data & storage</span><span class="sm-o">Hide sync, website data & storage</span></summary>${inner}</details></div>`; }
@@ -2739,7 +2784,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
+const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -3017,7 +3062,7 @@ const TB_ICON = {
   today: '<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/>'
 };
 const TB_MAP = { ot: 'clip', study: 'book', calendar: 'calendar', others: 'off', today: 'house' };
-const MENU_MAP = { today: 'sun', reminders: 'bell', study: 'book', todos: 'todo', calendar: 'calendar', advances: 'news', ot: 'pulse', roster: 'clock', cases: 'clip', music: 'music', nba: 'nba', backup: 'backup', orders: 'orders', others: 'off' };
+const MENU_MAP = { today: 'sun', reminders: 'bell', study: 'book', todos: 'todo', calendar: 'calendar', advances: 'news', ot: 'pulse', roster: 'clock', cases: 'clip', music: 'music', nba: 'nba', dota: 'dota', backup: 'backup', orders: 'orders', others: 'off' };
 const iconPackId = () => state.settings.iconPack || 'classic';
 const packIcon = c => { const p = iconPackId(); if (p === 'classic') return ''; const P = D.icons && D.icons[p]; return (P && P.i && P.i[c]) || ''; };
 const tbIco = k => packIcon(TB_MAP[k]) || TB_ICON[k];
@@ -3054,12 +3099,13 @@ const MENU_LINE = {
   roster: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
   cases: '<path d="M9 4h6v2H9z"/><path d="M8 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-2"/><path d="M9 11h6M9 15h4"/>',
   music: '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
+  dota: '<path d="M5 4l5.500 5.500M4 9l5 5M9 4l-5 5"/><path d="M10.500 9.500L20 19v1h-1L9.500 10.500"/><path d="M19 4l-4 4M20 9l-5-5"/>',
   nba: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
   backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
   orders: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 016 0"/>',
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
 };
-const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', backup: '☁️' };
+const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', dota: '⚔️', backup: '☁️' };
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
@@ -3079,7 +3125,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}${item('dota', dotaLive().length ? 'live' : '')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -3398,6 +3444,7 @@ document.addEventListener('click', e => {
     case 'cal-mode': calMode = b.dataset.m; try { localStorage.setItem('studydesk.calMode', calMode); } catch (_) {} render(); break;
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
+    case 'dsub': dotaSub = b.dataset.s; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
     case 'book-open': bookOpen = id; bookSheet(id); break;
     case 'mc-ot': mcSheet('', id); break;

@@ -1,0 +1,47 @@
+{
+ "updated": "2026-11-16",
+ "asOf": "Tier 1 only · checked 16 Nov 2026",
+ "tags": {
+  "Natus Vincere": "NAVI", "OG": "OG", "Team Spirit": "TS", "Team Yandex": "YDX", "Team Liquid": "TL", "GamerLegion": "GL",
+  "Xtreme Gaming": "XG", "Aurora Gaming": "AUR", "LGD Gaming": "LGD", "PlayTime": "PT", "PARIVISION": "PV", "Team Nemesis": "NEM",
+  "Dawn Bulls": "DB", "1win": "1W", "Astra Invicta": "AI", "Pipsqueak+4": "P+4"
+ },
+ "patch": {
+  "version": "7.41f",
+  "date": "2026-09-15",
+  "note": "7.41f is the live gameplay patch. The big 7.41 update (24 Mar 2026) removed Facets and added the hero Largo.",
+  "next": "7.42 has not been released and Valve has given no date."
+ },
+ "events": [
+  {
+   "id": "blast-slam-9", "name": "BLAST Slam IX", "short": "BLAST Slam IX", "status": "upcoming",
+   "start": "2026-11-20", "end": "2026-11-29", "where": "Online, Europe", "prize": "$750,000", "teams": 16,
+   "format": "Four GSL groups of four (Bo3, 20 to 23 Nov). Group winners play seeding matches, runners-up go to a last-chance stage, the rest are out. Double-elimination playoffs, Bo3, with a Bo5 grand final.",
+   "field": ["Team Yandex", "Team Spirit", "Team Liquid", "Natus Vincere", "OG", "GamerLegion", "Xtreme Gaming", "Aurora Gaming", "LGD Gaming", "PlayTime", "Team Nemesis", "Dawn Bulls", "1win", "Astra Invicta", "Pipsqueak+4"],
+   "source": "https://blast.tv/dota/tournaments/blast-slam-ix"
+  },
+  {
+   "id": "dreamleague-30", "name": "DreamLeague Season 30", "short": "DreamLeague S30", "status": "upcoming",
+   "start": "2026-12-02", "end": "2026-12-13", "where": "", "prize": "$1,000,000", "teams": 0,
+   "format": "", "field": [],
+   "source": "https://rdy.gg/en/dota2/news/esl-pro-tour-dota2-2026-2027"
+  },
+  {
+   "id": "pari-universe-2026", "name": "PARI Universe", "short": "PARI Universe", "status": "done",
+   "start": "2026-10-22", "end": "2026-11-01", "where": "Online, Europe", "prize": "$250,000", "teams": 10,
+   "format": "Two round-robin groups of five, then double-elimination playoffs (Bo3, Bo5 grand final).",
+   "field": [], "winner": "Team Spirit", "runnerUp": "Team Yandex", "final": "3-0",
+   "source": "https://dotesports.com/dota-2/news/pari-universe-schedule-results-teams"
+  }
+ ],
+ "matches": [
+  { "event": "blast-slam-9", "stage": "Group stage", "bo": 3, "start": "2026-11-20T14:00:00Z", "a": "Natus Vincere", "b": "OG", "as": null, "bs": null }
+ ],
+ "news": [
+  { "date": "2026-11-13", "kind": "Update", "title": "Small client update adds a \"Bot\" report reason", "text": "A mini-patch on 13 Nov refreshed localisation files and added \"Bot\" as a reason when reporting a player. No gameplay changes.", "source": "hawk.live", "url": "https://hawk.live/posts/valve-released-another-update-dota-2-amid-anticipation-major-patch" },
+  { "date": "2026-11", "kind": "Update", "title": "November update: Monkey King, Ability Draft and the end of 32-bit", "text": "Monkey King gets more things to transform into, Ability Draft now hands out scepter and shard abilities along with the base ones, lobbies can shuffle player slots, and Dota no longer runs on 32-bit systems.", "source": "AgataSmurf", "url": "https://agatasmurf.com/dota-2-monkey-king-ability-draft-patch/" },
+  { "date": "2026-11-03", "kind": "Patch", "title": "Still no date for 7.42", "text": "7.41f (15 Sep) remains the live patch. 7.41 itself arrived on 24 Mar, which makes this one of the longest waits for a numbered patch.", "source": "Timesaver", "url": "https://timesaver.gg/news/dota-2-next-patch-742-silent-update-september-29" },
+  { "date": "2026-11-03", "kind": "Meta", "title": "Dark Willow is the most-picked hero in pro games", "text": "A pro meta report on 7.41f counted 38 picks for Dark Willow, more than any other hero.", "source": "Dota2News", "url": "https://dota2news.com/" },
+  { "date": "2026-11-01", "kind": "Result", "title": "Team Spirit sweep Team Yandex to win PARI Universe", "text": "Spirit dropped to the lower bracket, came back through it and won the best-of-five grand final 3-0.", "source": "GosuGamers", "url": "https://www.gosugamers.net/dota2/news/79461-team-spirit-sweep-team-yandex-to-win-pari-universe" }
+ ]
+}
