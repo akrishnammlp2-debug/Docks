@@ -4,7 +4,7 @@
 //
 //   node tools/lock.mjs add-device "SD1-..." "Apoorva's iPhone"   pair a device (its public code only)
 //   node tools/lock.mjs lock <plain.json> <name>                    write data/private/<name>.enc.json + update index
-//   node tools/lock.mjs prune                                        drop ot-YYYY-MM-DD files older than 7 days
+//   node tools/lock.mjs prune                                        drop ot-YYYY-MM-DD files older than 5 days (tools/tidy.mjs does this too)
 //   node tools/lock.mjs list                                         show paired devices and locked files
 //
 // <plain.json> uses the private-file format: { "app": "study-desk-private", "updated": "...",
@@ -84,7 +84,7 @@ async function lock(plainPath, name) {
 const order = f => (f.startsWith('ot-') ? 1 : 0);
 
 function prune() {
-  const keep = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+  const keep = new Date(Date.now() - 4 * 864e5).toISOString().slice(0, 10);
   const idx = readJson(INDEX, { files: [] });
   idx.files = idx.files.filter(f => {
     const m = f.match(/^ot-(\d{4}-\d{2}-\d{2})\.enc\.json$/);

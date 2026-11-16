@@ -1579,8 +1579,21 @@ function commit(msg, undo) { const ok = save(); render(); if (ok && msg) toast(m
 
 /* ---------- shared data (from the data folder on GitHub) ---------- */
 const D = {}; const dataStatus = {};
+/* Keep things uncluttered (Apoorva, 16 Nov 2026): OT lists and NBA games for 5 days, painting of the day and
+   "Things I love" facts for 15 days. Cases, SLCM and all academic data are never trimmed. tools/tidy.mjs does the same to the repo. */
+const KEEP_DAYS = { ot: 5, nba: 5, art: 15, loves: 15 };
+function nbaIso(k) { const [m, d] = String(k).split(' '); const mi = MON.indexOf(m); if (mi < 0) return ''; return (mi >= 6 ? '2003' : '2004') + '-' + String(mi + 1).padStart(2, '0') + '-' + String(+d).padStart(2, '0'); }
+function trimData(f, j) {
+  try {
+    if (!j || typeof j !== 'object') return j;
+    if (f === 'ot' && Array.isArray(j.items)) { const from = addDays(today(), -(KEEP_DAYS.ot - 1)); return { ...j, items: j.items.filter(r => !r.date || r.date >= from) }; }
+    if (f === 'nba' && Array.isArray(j.games) && j.games.length) { const ds = j.games.map(g => nbaIso(g[0])).filter(Boolean).sort(); const from = addDays(ds[ds.length - 1], -(KEEP_DAYS.nba - 1)); return { ...j, games: j.games.filter(g => { const x = nbaIso(g[0]); return !x || x >= from; }) }; }
+    if ((f === 'art' || f === 'loves') && Array.isArray(j.history)) { const from = addDays(today(), -(KEEP_DAYS[f] - 1)); return { ...j, history: j.history.filter(h => !h.date || h.date >= from) }; }
+  } catch (_) {}
+  return j;
+}
 DATA_FILES.forEach(f => {
-  try { const c = JSON.parse(localStorage.getItem('studydesk.data.' + f) || 'null'); if (c) { D[f] = c.data; dataStatus[f] = { from: 'saved', at: c.at }; } } catch (_) {}
+  try { const c = JSON.parse(localStorage.getItem('studydesk.data.' + f) || 'null'); if (c) { D[f] = trimData(f, c.data); dataStatus[f] = { from: 'saved', at: c.at }; } } catch (_) {}
   if (!dataStatus[f]) dataStatus[f] = { from: 'none' };
 });
 async function loadData(manual) {
@@ -1590,7 +1603,7 @@ async function loadData(manual) {
       const r = await fetch('data/' + f + '.json?t=' + Date.now(), { cache: 'no-store' });
       if (!r.ok) throw new Error(r.status);
       const j = await r.json();
-      D[f] = j; dataStatus[f] = { from: 'network', at: nowISO() };
+      D[f] = trimData(f, j); dataStatus[f] = { from: 'network', at: nowISO() };
       try { localStorage.setItem('studydesk.data.' + f, JSON.stringify({ at: nowISO(), data: j })); } catch (_) {}
     } catch (e) { failed++; if (dataStatus[f].from === 'network') dataStatus[f].from = 'saved'; }
   }));
@@ -3591,7 +3604,7 @@ function mergePrivate(prev, data) {
   if (data.personal) next.personal = data.personal;
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
   if (data.ot) {
-    const keepFrom = addDays(today(), -7); const ot = { ...(cur.ot || {}), ...data.ot };
+    const keepFrom = addDays(today(), -(KEEP_DAYS.ot - 1)); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
     next.ot = ot;
   }
