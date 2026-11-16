@@ -375,6 +375,8 @@ mark{background:#F1D0C8;color:inherit}
 .ditem{font-family:var(--menu-font);text-transform:none;letter-spacing:0;font-size:16px;font-weight:500;color:var(--fg-2);min-height:46px;padding:6px 10px;border:1px solid transparent;position:relative;transition:background .2s,box-shadow .2s,color .2s}
 .ditem svg{width:34px;height:34px;padding:7px;border-radius:11px;background:var(--tile)!important;color:var(--tile-ink)!important;stroke-width:1.9}
 .ditem small{font-family:var(--menu-font);font-size:11.5px;font-weight:700;color:var(--fg-3);background:var(--tile);padding:2px 8px;border-radius:999px}
+.ditem .d-dot{margin-left:auto;flex:none;width:9px;height:9px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 22%,transparent)}
+.ditem .d-dot.warn{background:#D98A2B;box-shadow:0 0 0 3px rgba(217,138,43,.22)}
 @media (hover:hover){.ditem:hover{background:var(--glass)}}
 .ditem[aria-current="page"]{font-weight:800;color:var(--fg);
   background:linear-gradient(135deg,var(--glass),rgba(255,255,255,.06))!important;
@@ -1328,10 +1330,13 @@ body.sketchy svg[viewBox="0 0 24 24"]{stroke-linecap:round;stroke-linejoin:round
 #page .cf-tabs button.on{background:#2B6448!important;border-color:#2B6448!important;color:#fff!important}
 @media (prefers-color-scheme:dark){#page .cf-tabs button.on{background:#9FD0B2!important;border-color:#9FD0B2!important;color:#0E1F17!important}}
 .cf-wrap{position:relative;margin:0 -16px;overflow:hidden;padding:6px 0 0}
-.cf{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px calc(50% - 64px) 62px;-webkit-overflow-scrolling:touch}
+.cf{display:flex;overflow-x:auto;overflow-y:hidden;touch-action:pan-x pan-y;outline:none;scrollbar-width:none;padding:14px calc(50% - 64px) 62px;-webkit-overflow-scrolling:touch}
 .cf::-webkit-scrollbar{display:none}
 .cf-i{flex:none;position:relative;width:128px;height:190px;margin-right:-30px;scroll-snap-align:center;border:0;padding:0;background:none;transform-style:preserve-3d;transition:transform .08s linear;-webkit-tap-highlight-color:transparent;cursor:pointer}
 .cf-i:last-child{margin-right:0}
+.cf-arr{position:absolute;top:84px;z-index:1100;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:24px;line-height:1;padding-bottom:3px;background:var(--surface);color:var(--fg)!important;border:1px solid var(--sep);box-shadow:0 4px 10px -4px rgba(0,0,0,.35);opacity:.92}
+.cf-arr.l{left:12px}.cf-arr.r{right:12px}
+@media (max-width:520px) and (hover:none){.cf-arr{display:none}}
 .cf-face{position:absolute;inset:0;border-radius:6px;overflow:hidden;background:hsl(var(--ch) 32% 30%);box-shadow:0 14px 24px -12px rgba(0,0,0,.6);-webkit-box-reflect:below 3px linear-gradient(transparent 62%,rgba(255,255,255,.28))}
 .cf-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#111}
 .cf-ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px;text-align:left;background:linear-gradient(150deg,hsl(var(--ch) 40% 40%),hsl(calc(var(--ch) + 40) 35% 22%))}
@@ -1439,6 +1444,7 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .buy-go .dump-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .buy-tick.sm{width:18px;height:18px;border-width:1.5px;background:transparent;border-color:var(--fg-2)}
 .in-how{margin-top:2px}
+.how-c{gap:12px}.how-c .in-how+.in-how{border-top:1px solid var(--sep);padding-top:12px}
 .in-how>summary{list-style:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--fg-2)!important;display:flex;align-items:center;gap:6px}
 .in-how>summary::-webkit-details-marker{display:none}
 .in-how>summary::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
@@ -1489,18 +1495,19 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 @keyframes festfall{from{transform:translate3d(0,0,0)}to{transform:translate3d(-20px,50%,0)}}
 @media (prefers-reduced-motion:reduce){#fest-fx i{animation:none}}
 /* Christmas / New Year: soft snow (pale grey-blue in light mode, white in dark) */
-body[data-fest="christmas"] #fest-fx .fx1,body[data-fest="newyear"] #fest-fx .fx1{background-image:radial-gradient(circle at 30px 40px,var(--snow) 0 2.2px,transparent 3px),radial-gradient(circle at 150px 120px,var(--snow) 0 1.6px,transparent 2.4px),radial-gradient(circle at 90px 210px,var(--snow) 0 2.6px,transparent 3.4px),radial-gradient(circle at 190px 30px,var(--snow) 0 1.4px,transparent 2px)}
-body[data-fest="christmas"] #fest-fx .fx2,body[data-fest="newyear"] #fest-fx .fx2{background-image:radial-gradient(circle at 60px 80px,var(--snow) 0 1.4px,transparent 2.2px),radial-gradient(circle at 250px 190px,var(--snow) 0 2px,transparent 2.8px),radial-gradient(circle at 170px 260px,var(--snow) 0 1.2px,transparent 1.8px)}
-body{--snow:rgba(120,150,175,.42)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{--snow:rgba(255,255,255,.38)}}
-:root[data-theme="dark"] body{--snow:rgba(255,255,255,.38)}
+body[data-fest="christmas"] #fest-fx .fx1,body[data-fest="newyear"] #fest-fx .fx1,body[data-fest="christmas"] #fest-fx .fx2,body[data-fest="newyear"] #fest-fx .fx2{background-color:var(--snow);-webkit-mask-repeat:repeat;mask-repeat:repeat}
+body[data-fest="christmas"] #fest-fx .fx1,body[data-fest="newyear"] #fest-fx .fx1{-webkit-mask-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='260' viewBox='0 0 220 260'><g fill='none' stroke='black' stroke-linecap='round'><path d='M30.0 40.0L38.9 41.6M34.9 40.9L37.7 38.9M34.9 40.9L36.8 43.7M37.1 41.3L38.9 40.0M37.1 41.3L38.3 43.0M30.0 40.0L33.1 48.5M31.7 44.7L34.8 46.1M31.7 44.7L30.2 47.8M32.5 46.8L34.4 47.7M32.5 46.8L31.5 48.7M30.0 40.0L24.2 46.9M26.8 43.8L27.1 47.2M26.8 43.8L23.4 44.1M25.4 45.5L25.6 47.7M25.4 45.5L23.2 45.7M30.0 40.0L21.1 38.4M25.1 39.1L22.3 41.1M25.1 39.1L23.2 36.3M22.9 38.7L21.1 40.0M22.9 38.7L21.7 37.0M30.0 40.0L26.9 31.5M28.3 35.3L25.2 33.9M28.3 35.3L29.8 32.2M27.5 33.2L25.6 32.3M27.5 33.2L28.5 31.3M30.0 40.0L35.8 33.1M33.2 36.2L32.9 32.8M33.2 36.2L36.6 35.9M34.6 34.5L34.4 32.3M34.6 34.5L36.8 34.3' stroke-width='1.4'/><path d='M150.0 120.0L155.4 122.5M153.0 121.4L155.1 120.6M153.0 121.4L153.8 123.5M154.4 122.0L155.7 121.5M154.4 122.0L154.8 123.4M150.0 120.0L150.5 126.0M150.3 123.3L152.0 124.8M150.3 123.3L148.8 125.0M150.4 124.8L151.5 125.7M150.4 124.8L149.5 125.9M150.0 120.0L145.1 123.4M147.3 121.9L146.9 124.1M147.3 121.9L145.1 121.5M146.1 122.8L145.8 124.2M146.1 122.8L144.6 122.5M150.0 120.0L144.6 117.5M147.0 118.6L144.9 119.4M147.0 118.6L146.2 116.5M145.6 118.0L144.3 118.5M145.6 118.0L145.2 116.6M150.0 120.0L149.5 114.0M149.7 116.7L148.0 115.2M149.7 116.7L151.2 115.0M149.6 115.2L148.5 114.3M149.6 115.2L150.5 114.1M150.0 120.0L154.9 116.6M152.7 118.1L153.1 115.9M152.7 118.1L154.9 118.5M153.9 117.2L154.2 115.8M153.9 117.2L155.4 117.5' stroke-width='1.1'/><path d='M90.0 210.0L101.0 210.0M96.0 210.0L99.0 207.0M96.0 210.0L99.0 213.0M98.8 210.0L100.7 208.1M98.8 210.0L100.7 211.9M90.0 210.0L95.5 219.5M93.0 215.2L97.1 216.3M93.0 215.2L91.9 219.3M94.4 217.6L97.0 218.3M94.4 217.6L93.7 220.2M90.0 210.0L84.5 219.5M87.0 215.2L88.1 219.3M87.0 215.2L82.9 216.3M85.6 217.6L86.3 220.2M85.6 217.6L83.0 218.3M90.0 210.0L79.0 210.0M84.0 210.0L81.0 213.0M84.0 210.0L81.0 207.0M81.2 210.0L79.3 211.9M81.2 210.0L79.3 208.1M90.0 210.0L84.5 200.5M87.0 204.8L82.9 203.7M87.0 204.8L88.1 200.7M85.6 202.4L83.0 201.7M85.6 202.4L86.3 199.8M90.0 210.0L95.5 200.5M93.0 204.8L91.9 200.7M93.0 204.8L97.1 203.7M94.4 202.4L93.7 199.8M94.4 202.4L97.0 201.7' stroke-width='1.7'/><path d='M190.0 30.0L194.8 31.3M192.7 30.7L194.3 29.8M192.7 30.7L193.6 32.4M193.9 31.0L194.9 30.4M193.9 31.0L194.5 32.1M190.0 30.0L191.3 34.8M190.7 32.7L192.4 33.6M190.7 32.7L189.8 34.3M191.0 33.9L192.1 34.5M191.0 33.9L190.4 34.9M190.0 30.0L186.5 33.5M188.1 31.9L188.1 33.8M188.1 31.9L186.2 31.9M187.2 32.8L187.2 34.0M187.2 32.8L186.0 32.8M190.0 30.0L185.2 28.7M187.3 29.3L185.7 30.2M187.3 29.3L186.4 27.6M186.1 29.0L185.1 29.6M186.1 29.0L185.5 27.9M190.0 30.0L188.7 25.2M189.3 27.3L187.6 26.4M189.3 27.3L190.2 25.7M189.0 26.1L187.9 25.5M189.0 26.1L189.6 25.1M190.0 30.0L193.5 26.5M191.9 28.1L191.9 26.2M191.9 28.1L193.8 28.1M192.8 27.2L192.8 26.0M192.8 27.2L194.0 27.2' stroke-width='1.1'/></g></svg>");mask-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='260' viewBox='0 0 220 260'><g fill='none' stroke='black' stroke-linecap='round'><path d='M30.0 40.0L38.9 41.6M34.9 40.9L37.7 38.9M34.9 40.9L36.8 43.7M37.1 41.3L38.9 40.0M37.1 41.3L38.3 43.0M30.0 40.0L33.1 48.5M31.7 44.7L34.8 46.1M31.7 44.7L30.2 47.8M32.5 46.8L34.4 47.7M32.5 46.8L31.5 48.7M30.0 40.0L24.2 46.9M26.8 43.8L27.1 47.2M26.8 43.8L23.4 44.1M25.4 45.5L25.6 47.7M25.4 45.5L23.2 45.7M30.0 40.0L21.1 38.4M25.1 39.1L22.3 41.1M25.1 39.1L23.2 36.3M22.9 38.7L21.1 40.0M22.9 38.7L21.7 37.0M30.0 40.0L26.9 31.5M28.3 35.3L25.2 33.9M28.3 35.3L29.8 32.2M27.5 33.2L25.6 32.3M27.5 33.2L28.5 31.3M30.0 40.0L35.8 33.1M33.2 36.2L32.9 32.8M33.2 36.2L36.6 35.9M34.6 34.5L34.4 32.3M34.6 34.5L36.8 34.3' stroke-width='1.4'/><path d='M150.0 120.0L155.4 122.5M153.0 121.4L155.1 120.6M153.0 121.4L153.8 123.5M154.4 122.0L155.7 121.5M154.4 122.0L154.8 123.4M150.0 120.0L150.5 126.0M150.3 123.3L152.0 124.8M150.3 123.3L148.8 125.0M150.4 124.8L151.5 125.7M150.4 124.8L149.5 125.9M150.0 120.0L145.1 123.4M147.3 121.9L146.9 124.1M147.3 121.9L145.1 121.5M146.1 122.8L145.8 124.2M146.1 122.8L144.6 122.5M150.0 120.0L144.6 117.5M147.0 118.6L144.9 119.4M147.0 118.6L146.2 116.5M145.6 118.0L144.3 118.5M145.6 118.0L145.2 116.6M150.0 120.0L149.5 114.0M149.7 116.7L148.0 115.2M149.7 116.7L151.2 115.0M149.6 115.2L148.5 114.3M149.6 115.2L150.5 114.1M150.0 120.0L154.9 116.6M152.7 118.1L153.1 115.9M152.7 118.1L154.9 118.5M153.9 117.2L154.2 115.8M153.9 117.2L155.4 117.5' stroke-width='1.1'/><path d='M90.0 210.0L101.0 210.0M96.0 210.0L99.0 207.0M96.0 210.0L99.0 213.0M98.8 210.0L100.7 208.1M98.8 210.0L100.7 211.9M90.0 210.0L95.5 219.5M93.0 215.2L97.1 216.3M93.0 215.2L91.9 219.3M94.4 217.6L97.0 218.3M94.4 217.6L93.7 220.2M90.0 210.0L84.5 219.5M87.0 215.2L88.1 219.3M87.0 215.2L82.9 216.3M85.6 217.6L86.3 220.2M85.6 217.6L83.0 218.3M90.0 210.0L79.0 210.0M84.0 210.0L81.0 213.0M84.0 210.0L81.0 207.0M81.2 210.0L79.3 211.9M81.2 210.0L79.3 208.1M90.0 210.0L84.5 200.5M87.0 204.8L82.9 203.7M87.0 204.8L88.1 200.7M85.6 202.4L83.0 201.7M85.6 202.4L86.3 199.8M90.0 210.0L95.5 200.5M93.0 204.8L91.9 200.7M93.0 204.8L97.1 203.7M94.4 202.4L93.7 199.8M94.4 202.4L97.0 201.7' stroke-width='1.7'/><path d='M190.0 30.0L194.8 31.3M192.7 30.7L194.3 29.8M192.7 30.7L193.6 32.4M193.9 31.0L194.9 30.4M193.9 31.0L194.5 32.1M190.0 30.0L191.3 34.8M190.7 32.7L192.4 33.6M190.7 32.7L189.8 34.3M191.0 33.9L192.1 34.5M191.0 33.9L190.4 34.9M190.0 30.0L186.5 33.5M188.1 31.9L188.1 33.8M188.1 31.9L186.2 31.9M187.2 32.8L187.2 34.0M187.2 32.8L186.0 32.8M190.0 30.0L185.2 28.7M187.3 29.3L185.7 30.2M187.3 29.3L186.4 27.6M186.1 29.0L185.1 29.6M186.1 29.0L185.5 27.9M190.0 30.0L188.7 25.2M189.3 27.3L187.6 26.4M189.3 27.3L190.2 25.7M189.0 26.1L187.9 25.5M189.0 26.1L189.6 25.1M190.0 30.0L193.5 26.5M191.9 28.1L191.9 26.2M191.9 28.1L193.8 28.1M192.8 27.2L192.8 26.0M192.8 27.2L194.0 27.2' stroke-width='1.1'/></g></svg>");-webkit-mask-size:220px 260px;mask-size:220px 260px}
+body[data-fest="christmas"] #fest-fx .fx2,body[data-fest="newyear"] #fest-fx .fx2{-webkit-mask-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='330' height='300' viewBox='0 0 330 300'><g fill='none' stroke='black' stroke-linecap='round'><path d='M60.0 80.0L66.0 80.5M63.3 80.3L65.0 78.8M63.3 80.3L64.8 82.0M64.8 80.4L65.9 79.5M64.8 80.4L65.7 81.5M60.0 80.0L62.5 85.4M61.4 83.0L63.5 83.8M61.4 83.0L60.6 85.1M62.0 84.4L63.4 84.8M62.0 84.4L61.5 85.7M60.0 80.0L56.6 84.9M58.1 82.7L58.5 84.9M58.1 82.7L55.9 83.1M57.2 83.9L57.5 85.4M57.2 83.9L55.8 84.2M60.0 80.0L54.0 79.5M56.7 79.7L55.0 81.2M56.7 79.7L55.2 78.0M55.2 79.6L54.1 80.5M55.2 79.6L54.3 78.5M60.0 80.0L57.5 74.6M58.6 77.0L56.5 76.2M58.6 77.0L59.4 74.9M58.0 75.6L56.6 75.2M58.0 75.6L58.5 74.3M60.0 80.0L63.4 75.1M61.9 77.3L61.5 75.1M61.9 77.3L64.1 76.9M62.8 76.1L62.5 74.6M62.8 76.1L64.2 75.8' stroke-width='1.1'/><path d='M250.0 190.0L256.9 194.0M253.8 192.2L256.7 191.4M253.8 192.2L254.6 195.1M255.5 193.2L257.4 192.7M255.5 193.2L256.0 195.1M250.0 190.0L250.0 198.0M250.0 194.4L252.1 196.5M250.0 194.4L247.9 196.5M250.0 196.4L251.4 197.8M250.0 196.4L248.6 197.8M250.0 190.0L243.1 194.0M246.2 192.2L245.4 195.1M246.2 192.2L243.3 191.4M244.5 193.2L244.0 195.1M244.5 193.2L242.6 192.7M250.0 190.0L243.1 186.0M246.2 187.8L243.3 188.6M246.2 187.8L245.4 184.9M244.5 186.8L242.6 187.3M244.5 186.8L244.0 184.9M250.0 190.0L250.0 182.0M250.0 185.6L247.9 183.5M250.0 185.6L252.1 183.5M250.0 183.6L248.6 182.2M250.0 183.6L251.4 182.2M250.0 190.0L256.9 186.0M253.8 187.8L254.6 184.9M253.8 187.8L256.7 188.6M255.5 186.8L256.0 184.9M255.5 186.8L257.4 187.3' stroke-width='1.2'/><path d='M170.0 260.0L174.9 261.0M172.7 260.6L174.3 259.5M172.7 260.6L173.7 262.2M173.9 260.8L174.9 260.2M173.9 260.8L174.6 261.8M170.0 260.0L171.5 264.8M170.8 262.6L172.5 263.5M170.8 262.6L170.0 264.3M171.2 263.8L172.3 264.3M171.2 263.8L170.7 264.9M170.0 260.0L166.7 263.7M168.2 262.0L168.3 263.9M168.2 262.0L166.3 262.1M167.3 263.0L167.4 264.2M167.3 263.0L166.1 263.0M170.0 260.0L165.1 259.0M167.3 259.4L165.7 260.5M167.3 259.4L166.3 257.8M166.1 259.2L165.1 259.8M166.1 259.2L165.4 258.2M170.0 260.0L168.5 255.2M169.2 257.4L167.5 256.5M169.2 257.4L170.0 255.7M168.8 256.2L167.7 255.7M168.8 256.2L169.3 255.1M170.0 260.0L173.3 256.3M171.8 258.0L171.7 256.1M171.8 258.0L173.7 257.9M172.7 257.0L172.6 255.8M172.7 257.0L173.9 257.0' stroke-width='1.1'/></g></svg>");mask-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='330' height='300' viewBox='0 0 330 300'><g fill='none' stroke='black' stroke-linecap='round'><path d='M60.0 80.0L66.0 80.5M63.3 80.3L65.0 78.8M63.3 80.3L64.8 82.0M64.8 80.4L65.9 79.5M64.8 80.4L65.7 81.5M60.0 80.0L62.5 85.4M61.4 83.0L63.5 83.8M61.4 83.0L60.6 85.1M62.0 84.4L63.4 84.8M62.0 84.4L61.5 85.7M60.0 80.0L56.6 84.9M58.1 82.7L58.5 84.9M58.1 82.7L55.9 83.1M57.2 83.9L57.5 85.4M57.2 83.9L55.8 84.2M60.0 80.0L54.0 79.5M56.7 79.7L55.0 81.2M56.7 79.7L55.2 78.0M55.2 79.6L54.1 80.5M55.2 79.6L54.3 78.5M60.0 80.0L57.5 74.6M58.6 77.0L56.5 76.2M58.6 77.0L59.4 74.9M58.0 75.6L56.6 75.2M58.0 75.6L58.5 74.3M60.0 80.0L63.4 75.1M61.9 77.3L61.5 75.1M61.9 77.3L64.1 76.9M62.8 76.1L62.5 74.6M62.8 76.1L64.2 75.8' stroke-width='1.1'/><path d='M250.0 190.0L256.9 194.0M253.8 192.2L256.7 191.4M253.8 192.2L254.6 195.1M255.5 193.2L257.4 192.7M255.5 193.2L256.0 195.1M250.0 190.0L250.0 198.0M250.0 194.4L252.1 196.5M250.0 194.4L247.9 196.5M250.0 196.4L251.4 197.8M250.0 196.4L248.6 197.8M250.0 190.0L243.1 194.0M246.2 192.2L245.4 195.1M246.2 192.2L243.3 191.4M244.5 193.2L244.0 195.1M244.5 193.2L242.6 192.7M250.0 190.0L243.1 186.0M246.2 187.8L243.3 188.6M246.2 187.8L245.4 184.9M244.5 186.8L242.6 187.3M244.5 186.8L244.0 184.9M250.0 190.0L250.0 182.0M250.0 185.6L247.9 183.5M250.0 185.6L252.1 183.5M250.0 183.6L248.6 182.2M250.0 183.6L251.4 182.2M250.0 190.0L256.9 186.0M253.8 187.8L254.6 184.9M253.8 187.8L256.7 188.6M255.5 186.8L256.0 184.9M255.5 186.8L257.4 187.3' stroke-width='1.2'/><path d='M170.0 260.0L174.9 261.0M172.7 260.6L174.3 259.5M172.7 260.6L173.7 262.2M173.9 260.8L174.9 260.2M173.9 260.8L174.6 261.8M170.0 260.0L171.5 264.8M170.8 262.6L172.5 263.5M170.8 262.6L170.0 264.3M171.2 263.8L172.3 264.3M171.2 263.8L170.7 264.9M170.0 260.0L166.7 263.7M168.2 262.0L168.3 263.9M168.2 262.0L166.3 262.1M167.3 263.0L167.4 264.2M167.3 263.0L166.1 263.0M170.0 260.0L165.1 259.0M167.3 259.4L165.7 260.5M167.3 259.4L166.3 257.8M166.1 259.2L165.1 259.8M166.1 259.2L165.4 258.2M170.0 260.0L168.5 255.2M169.2 257.4L167.5 256.5M169.2 257.4L170.0 255.7M168.8 256.2L167.7 255.7M168.8 256.2L169.3 255.1M170.0 260.0L173.3 256.3M171.8 258.0L171.7 256.1M171.8 258.0L173.7 257.9M172.7 257.0L172.6 255.8M172.7 257.0L173.9 257.0' stroke-width='1.1'/></g></svg>");-webkit-mask-size:330px 300px;mask-size:330px 300px}
+body{--snow:rgba(110,140,170,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{--snow:rgba(255,255,255,.45)}}
+:root[data-theme="dark"] body{--snow:rgba(255,255,255,.45)}
 body[data-fest="newyear"]{--snow:rgba(212,170,60,.45)}
 /* other festivals: a few warm glints in their colours */
 body[data-fest="diwali"] #fest-fx .fx1,body[data-fest="dasara"] #fest-fx .fx1,body[data-fest="ganesha"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(242,165,65,.45) 0 2px,transparent 3px),radial-gradient(circle at 170px 180px,rgba(255,211,107,.45) 0 1.6px,transparent 2.4px)}
 body[data-fest="holi"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(255,111,181,.4) 0 2.4px,transparent 3.2px),radial-gradient(circle at 170px 180px,rgba(111,211,255,.4) 0 2px,transparent 2.8px),radial-gradient(circle at 110px 230px,rgba(255,211,107,.45) 0 2px,transparent 2.8px)}
 body[data-fest="sankranti"] #fest-fx .fx1,body[data-fest="ugadi"] #fest-fx .fx1,body[data-fest="janmashtami"] #fest-fx .fx1,body[data-fest="eid"] #fest-fx .fx1,body[data-fest="india"] #fest-fx .fx1,body[data-fest="rajyotsava"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(242,193,78,.4) 0 1.8px,transparent 2.6px),radial-gradient(circle at 170px 180px,rgba(124,227,139,.35) 0 1.6px,transparent 2.4px)}
 /* tiny seasonal touch on the home button */
-body[data-fest="christmas"] .tb-home::before{content:'';position:absolute;top:-3px;left:50%;width:34px;height:9px;transform:translateX(-50%);border-radius:10px 10px 6px 6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+body[data-fest="christmas"] .tb-home::before{content:"";position:absolute;top:-19px;left:50%;width:40px;height:34px;transform:translateX(-38%) rotate(-14deg);background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'><path d='M5 25 C8 13 16 5 27 4 C33 4 36 8 35 13 C33 10 30 9 28 11 C26 16 27 21 29 25 Z' fill='%23D62B35' stroke='%237A1219' stroke-width='1.2' stroke-linejoin='round'/><path d='M9 9 C14 6 20 5 25 6' fill='none' stroke='%23FF6B70' stroke-width='1.4' stroke-linecap='round' opacity='.7'/><rect x='2' y='23' width='30' height='8' rx='4' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/><circle cx='35' cy='14' r='4.2' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/></svg>") center/contain no-repeat;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));pointer-events:none;z-index:2}
 body[data-fest="christmas"] .tb-home{position:relative}
 /* skip drawing off-screen advance cards until you scroll to them v5.29 */
 .card.adv{content-visibility:auto;contain-intrinsic-size:auto 260px}
@@ -1532,7 +1539,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.41 · calmer Today';
+const APP_VERSION = '5.42 · brain dump & snow';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -1896,7 +1903,7 @@ async function batteryPull() { const cfg = syncCfg(); if (!cfg.token || state.se
   for (const [d] of BATT_DEV) { try { const r = await gh(cfg, '/contents/battery/' + d + '.json'); if (!r.ok) continue; const raw = b64utf8((await r.json()).content || ''), m = raw.match(/\{[^{}]*\}/); const j = JSON.parse(m ? m[0] : raw); if (j && j.at && (!batt[d] || batt[d].at !== j.at || batt[d].level !== j.level)) { batt[d] = j; ch = true; } } catch (_) {} }
   if (ch) { try { localStorage.setItem(BATT_KEY, JSON.stringify(batt)); } catch (_) {} if (tab === 'today') render(); } }
 function battHow() { const st = (n, t, x) => `<div class="batt-step"><span class="batt-sn">${n}</span><div><b>${t}</b>${x ? `<span class="c-s">${x}</span>` : ''}</div></div>`;
-  return `<details class="in-how"><summary>How it works</summary><div class="in-how-b">
+  return `<details class="in-how" data-how="batt"><summary>🔋 Devices</summary><div class="in-how-b">
     <p class="c-s">A small Shortcut on your iPhone and iPad sends the battery level here. Docks can't read batteries by itself. The time next to each device is when its Shortcut last ran, and it keeps counting up while Docks is open.</p>
     <div class="btns row2"><button class="btn small" type="button" data-act="batt-copy" data-v="key">Copy access key</button><button class="btn small ghost" type="button" data-act="batt-copy" data-v="url">Copy address</button></div>
     <p class="c-s">The key is the one you typed into Device sync. Paste it only into the Shortcut.</p>
@@ -1908,16 +1915,16 @@ function battHow() { const st = (n, t, x) => `<div class="batt-step"><span class
     <label class="row toggle"><span>Show device batteries on Today</span><input type="checkbox" data-setting="battOn" ${state.settings.battOn !== false ? 'checked' : ''}></label></div></details>`; }
 function battCard() { if (state.settings.battOn === false || !syncCfg().token) return '';
   const have = BATT_DEV.filter(([d]) => batt[d] && battLevel(batt[d]) !== null && batt[d].at !== 'setup');
-  if (!have.length) return `<div class="card battc"><span class="c-lab">🔋 Devices</span><span class="c-s">Show your iPad and iPhone battery here, with a nudge when the iPad needs charging.</span>${battHow()}</div>`;
+  if (!have.length) return `<div class="card battc"><span class="c-lab">🔋 Devices</span><span class="c-s">No readings yet. Set it up in Backup & settings › How things work.</span></div>`;
   const rows = have.map(([d, e]) => { const r = batt[d], v = battLevel(r), chg = battCharging(r), low = v < BATT_LOW && !chg;
     return `<div class="batt-r"><span class="batt-n">${e} ${d}</span><span class="batt-bar" aria-hidden="true"><i style="width:${v}%" class="${low ? 'low' : ''}"></i></span><b class="batt-v">${v}%</b><span class="batt-a"${chg ? '' : ` data-at="${esc(r.at)}"`}>${chg ? '⚡ charging' : esc(battAgo(r.at))}</span></div>`; }).join('');
   const ipad = batt.iPad && battLevel(batt.iPad), nudge = ipad !== null && ipad !== undefined && ipad < BATT_LOW && !battCharging(batt.iPad);
   return `<div class="card battc"><span class="c-lab">🔋 Devices</span>${rows}
-    ${nudge ? `<span class="batt-nudge">🔌 Your iPad is at ${ipad}%. Plug it in when you get a moment.</span>` : ''}${battHow()}</div>`; }
+    ${nudge ? `<span class="batt-nudge">🔌 Your iPad is at ${ipad}%. Plug it in when you get a moment.</span>` : ''}</div>`; }
 /* keep "x min ago" honest while Docks stays open, and fetch fresh levels every 5 minutes */
 setInterval(() => { document.querySelectorAll('.batt-a[data-at]').forEach(el => { el.textContent = battAgo(el.dataset.at); }); }, 30e3);
 setInterval(() => { if (document.visibilityState === 'visible' && tab === 'today') batteryPull(); }, 5 * 60e3);
-/* ---------- Notes & To buy (was Brain dump): jot anything; "buy …" lands in To buy ---------- */
+/* ---------- Brain dump & To buy: jot anything; "buy …" lands in To buy ---------- */
 const DUMPS = () => (state.dumps || []).filter(d => !d.deleted && !d.bought).sort((a, b) => (b.created || '').localeCompare(a.created || ''));
 const JOTS = () => DUMPS().filter(d => d.cat !== 'buy');
 const BUYS = () => DUMPS().filter(d => d.cat === 'buy');
@@ -1925,13 +1932,13 @@ const dumpAgo = iso => { const m = Math.round((Date.now() - new Date(iso)) / 6e4
 const buyAge = iso => { const t0 = new Date(iso); t0.setHours(0, 0, 0, 0); const t1 = new Date(); t1.setHours(0, 0, 0, 0); const n = Math.round((t1 - t0) / 864e5);
   return n <= 0 ? 'today' : n === 1 ? '1 day' : n < 14 ? n + ' days' : n < 60 ? Math.round(n / 7) + ' weeks' : Math.round(n / 30) + ' months'; };
 const parseBuy = text => { const m = String(text).match(/^\s*(?:to[\s-]?buy|buy)\b[\s:,\-]*(.+)$/i); if (!m || !m[1].trim()) return null; const t = m[1].trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
-const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Jot a note, or “buy …”" aria-label="Add a note" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
+const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Dump an idea, or “buy …”" aria-label="Add to brain dump" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
 function dumpLive() { const N = JOTS(), B = BUYS(); if (!N.length && !B.length) return '';
   const nr = N.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all"><span class="dump-dot" aria-hidden="true"></span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('');
   const br = B.slice(0, 3).map(d => `<div class="dump-i buy-i"><button type="button" class="buy-tick sm" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span></button></div>`).join('');
   return `<div class="dump-l">${nr}${B.length ? `<button type="button" class="buy-cap" data-act="dump-all" data-id="buy">To buy <span>${Math.min(3, B.length)}/${B.length}</span></button>${br}` : ''}</div>`; }
 function dumpCard() { const n = JOTS().length;
-  return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">📝 Notes${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
+  return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">🧠 Brain dump${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
     ${dumpForm()}<div id="dump-live">${dumpLive()}</div></div>`; }
 function dumpSheetLive() { const N = JOTS(), B = BUYS();
   const buys = B.length ? B.map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
@@ -1939,13 +1946,13 @@ function dumpSheetLive() { const N = JOTS(), B = BUYS();
   const notes = N.length ? N.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
       <div class="dump-cats"><button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button><button type="button" class="dump-cat" data-act="dump-tobuy" data-id="${d.id}">🛒 To buy</button></div>
       <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('')
-    : `<div class="card"><span class="c-s">No notes yet. Type anything above.</span></div>`;
-  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length}</span></h3>${buys}<h3 class="sh"><span>📝 Notes</span><span>${N.length}</span></h3>${notes}`; }
-function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>📝 Notes</h2><span></span></div>
+    : `<div class="card"><span class="c-s">Nothing here yet. Dump any idea above.</span></div>`;
+  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length}</span></h3>${buys}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}`; }
+function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
     ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
   if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
 /* update the notes in place, so the box you're typing in is never rebuilt (no lost text, keyboard stays up) */
-function dumpRefresh() { const l = $('dump-live'); if (l) l.innerHTML = dumpLive(); const lab = $('dump-lab'); if (lab) { const n = JOTS().length; lab.textContent = '📝 Notes' + (n ? ' · ' + n : ''); } const sl = $('dump-sheet-live'); if (sl) sl.innerHTML = dumpSheetLive(); }
+function dumpRefresh() { const l = $('dump-live'); if (l) l.innerHTML = dumpLive(); const lab = $('dump-lab'); if (lab) { const n = JOTS().length; lab.textContent = '🧠 Brain dump' + (n ? ' · ' + n : ''); } const sl = $('dump-sheet-live'); if (sl) sl.innerHTML = dumpSheetLive(); }
 const dumpSet = (id, patch) => { state.dumps = (state.dumps || []).map(d => d.id === id ? { ...d, ...patch, updated: nowISO() } : d); };
 
 /* ---------- gentle habits: shown on Today only in their time window; monthly tracker ---------- */
@@ -2091,13 +2098,13 @@ function pageStudy() {
     h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
       <div class="stats wk3" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Time', fmtMins(W.reduce((a, l) => a + (+l.mins || 0), 0)), '')}${stat('Sessions', W.length, '')}${stat('Topics', new Set(W.map(l => l.topicId)).size, '')}</div>
       ${state.subjects.length ? `<div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">${state.subjects.map(sb => { const x = subjectStats(sb.id);
-        return `<div class="prow"><span>${esc(sb.name)}</span><div class="track"><div class="fill" style="width:${x.pct || 0}%"></div></div><span class="v">${x.pct === null ? fmtMins(x.mins) : x.pct + '%'}</span></div>`; }).join('')}</div><p class="foot" style="padding:0;margin-top:2px">Bars show pages read out of total pages, where you've entered page counts.</p>` : ''}</div>`;
+        return `<div class="prow"><span>${esc(sb.name)}</span><div class="track"><div class="fill" style="width:${x.pct || 0}%"></div></div><span class="v">${x.pct === null ? fmtMins(x.mins) : x.pct + '%'}</span></div>`; }).join('')}</div>` : ''}</div>`;
   }
   if (due.length) {
     h += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${due.map(({ t, st }) => {
       const s = byId(state.subjects, t.subjectId);
       return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(s ? s.name : '')} · revision ${st.step} of ${state.settings.intervals.length} · last studied ${ago(st.last + 'T12:00:00')}</span></span></button><button class="btn small ghost" style="margin-right:12px" type="button" data-act="study-now" data-id="${t.id}">▶ Study</button></div>`;
-    }).join('')}</div><p class="foot">Each topic comes back after ${state.settings.intervals.join(', ')} days. Change this in Backup & settings.</p></div>`;
+    }).join('')}</div></div>`;
   }
   if (!state.subjects.length) {
     h += `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No subjects yet</span><span class="c-s">Start with one, for example “Cardiac” or “Regional”.</span><button class="btn" type="button" data-act="add-subject" style="margin-top:8px">Add a subject</button></div>`;
@@ -2115,7 +2122,7 @@ function pageStudy() {
     h += `</div>`;
   }
   h += `<button class="btn ghost wide" type="button" data-act="add-subject">+ Add subject</button></div>`;
-  return h + `<p class="foot">▶ starts a timer and opens the topic's notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.</p>`;
+  return h;
 }
 function miniRing(pct) {
   const C = 2 * Math.PI * 15;
@@ -2153,8 +2160,7 @@ function pageCalendar() {
   const its = itemsFor(sel);
   h += `<div class="sec"><h2 class="sh">${sel === t ? 'Today · ' : ''}${esc(dLong(sel))}</h2><div class="group">${its.length ? its.map(i => rowHTML(i)).join('') : '<button class="row empty" type="button" data-act="add">Nothing on this day. Tap to add an entry.</button>'}</div></div>`;
   const all = []; for (let d = 1; d <= last; d++) itemsFor(`${y}-${pad(m + 1)}-${pad(d)}`).forEach(i => all.push(i));
-  h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? all.map(i => rowHTML(i, true)).join('') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div>
-    <p class="foot">Sessions come from the department's program${SESSION_TIME() ? ' (' + esc(SESSION_TIME()) + ')' : ''}. Entries you add stay on this phone.${state.private && state.private.presenters ? '' : ' Presenter names come from your private file.'}</p></div>`;
+  h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? all.map(i => rowHTML(i, true)).join('') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`;
   return h;
 }
 
@@ -2222,8 +2228,7 @@ function personalCal() { const t = today(); const P = PERS(); const tr = P.trave
   const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
   const months = {}; FESTS().filter(f => dIn(f.date) >= 0).forEach(f => { const k = f.date.slice(0, 7); (months[k] = months[k] || []).push(f); });
-  h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}
-    <p class="foot">Karnataka public holidays and major festivals. Travel and deliveries come from your email (checked ${esc(catDate(P.scanned || t))}) and are kept locked.</p></div>`;
+  h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}</div>`;
   return h; }
 
 /* ---------- Festive look: follows the next festival automatically ---------- */
@@ -2289,7 +2294,7 @@ function pageReminders() {
   const sorted = state.reminders.map(r => ({ r, st: remStatus(r) })).sort((a, b) => (a.st.s === 'late' ? -1e3 - a.st.days : a.st.s === 'today' ? -500 : a.st.days) - (b.st.s === 'late' ? -1e3 - b.st.days : b.st.s === 'today' ? -500 : b.st.days));
   h += `<div class="group">${sorted.map(x => remRow(x.r, 60)).join('')}</div>`;
   h += `<button class="btn ghost wide" type="button" data-act="rem-add">+ Add reminder</button>`;
-  return h + `<p class="foot">Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.</p>`;
+  return h;
 }
 function profileSheet() {
   const P = profile();
@@ -2413,7 +2418,7 @@ function pageAdvances() {
       ${a.why ? `<div class="why"><b>Why it matters:</b> ${esc(a.why)}</div>` : ''}
       <div class="acts"><a class="btn small ghost" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">Read on PubMed</a><button class="btn small ghost" type="button" data-act="adv-save" data-id="${esc(a.pmid)}">${state.advSaved[a.pmid] ? '★ Saved' : '☆ Save'}</button><button class="btn small ghost" type="button" data-act="adv-study" data-id="${esc(a.pmid)}">+ Add to Study</button></div></article>`;
   }).join('') || '<p class="foot">Nothing here for this filter.</p>';
-  return h + `<p class="foot">Summaries are short plain-language digests written from the PubMed abstracts. Always read the original before changing practice. Data from PubMed (NCBI).</p>`;
+  return h + `<p class="foot">Data from PubMed (NCBI).</p>`;
 }
 
 let otJustDone = null;
@@ -2457,7 +2462,7 @@ function pageOt() {
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(rows)}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
-  return h + `<p class="foot">Sorted by time. Ticks stay on this phone. ${named ? 'Patient details are opened on this phone only.' : 'Set up private sync (Backup & settings) to see patient details here. On the website they only exist locked.'}</p>`;
+  return h;
 }
 
 function pageRoster() {
@@ -2490,8 +2495,7 @@ function pageCases() {
   let h = head('SLCM cases', '', 'Logbook');
   h += myCasesSection(0);
   h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'tosync' : 'good'}">${unsynced ? 'Not on SLCM' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
-  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div>
-    <p class="foot">De-identified copy: no patient names or hospital IDs. Your full logbook stays in your spreadsheet.</p></div>`;
+  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div></div>`;
   const total = C.length || 1;
   h += `<div class="sec"><h2 class="sh">Case mix</h2><div class="card" style="gap:10px">${[['Anaesthesia', 'type'], ['Specialty', 'specialty'], ['ASA grade', 'asa']].map(([name, key]) => {
     const counts = {}; C.forEach(c => { const k = c[key] || 'Not recorded'; counts[k] = (counts[k] || 0) + 1; });
@@ -2509,7 +2513,7 @@ function pageMusic() {
   const L = M.lists.find(x => x.id === musicSub) || M.lists[0];
   h += `<div class="seg">${M.lists.map(x => `<button type="button" data-act="msub" data-s="${x.id}" aria-pressed="${x.id === L.id}">${esc(x.label)}</button>`).join('')}</div>`;
   h += `<p class="foot" style="margin:2px 4px 0">${esc(L.sub || '')}</p><div class="group mlist">${L.songs.map((x, i) => `<a class="row msong" href="${esc(spotifyUrl(x))}" target="_blank" rel="noopener"><span class="mrank">${x.era ? esc(x.era.replace(/0s$/, '0s')) : i + 1}</span><span class="r-main"><span class="r-t">${esc(x.t)}</span><span class="r-s">${esc(x.a)}</span></span><span class="mplay" aria-label="Play on Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></a>`).join('')}</div>`;
-  return h + `<p class="foot">Tap a song to open it in Spotify.${L.source ? ` Chart: <a href="${esc(L.source)}" target="_blank" rel="noopener">source</a>.` : ''}</p>`;
+  return h + `<p class="foot">${L.source ? `Chart: <a href="${esc(L.source)}" target="_blank" rel="noopener">source</a>.` : ''}</p>`;
 }
 /* live NBA scores: pull down on the NBA tab -> ESPN's public scoreboard (no key, read-only) */
 const ESPN_AB = { GS: 'GSW', NY: 'NYK', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS', BKN: 'BKN', PHX: 'PHX' };
@@ -2565,7 +2569,7 @@ function pageNba() {
         return `<div class="ngame${g.state === 'in' ? ' live' : ''}"><div class="nhead">${g.state === 'in' ? '<span class="ldot"></span>' : ''}${esc(pre && g.start ? new Date(g.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' your time' : g.label)}</div>${row(g.away, pre ? '' : g.as, done && aw)}${row(g.home, pre ? '' : g.hs, done && !aw)}</div>`; }).join('')}</div>`;
   } else if (nbaSub === 'standings') {
     const conf = (rows, title) => `<div class="sec"><h2 class="sh">${title}</h2><div class="group">${rows.map((r, i) => `<div class="row" style="gap:10px"><span class="st-z" style="--c:${i < 6 ? 'var(--f-nba)' : i < 10 ? 'var(--fg-3)' : 'transparent'}"></span><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[0])}">${esc(r[0])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(nm(r[0]))}</span></span><span class="st-wl">${r[1]}-${r[2]}</span><span class="st-p">${(r[1] / (r[1] + r[2] || 1)).toFixed(3).replace(/^0/, '')}</span></div>`).join('')}</div></div>`;
-    h += conf(N.west, 'Western Conference') + conf(N.east, 'Eastern Conference') + '<p class="foot">Orange bar: top 6, direct playoff places. Grey bar: 7 to 10, play-in.</p>';
+    h += conf(N.west, 'Western Conference') + conf(N.east, 'Eastern Conference');
   } else {
     h += Object.keys(N.leaders).map(k => `<div class="sec"><h2 class="sh">${esc(k)} per game</h2><div class="group">${N.leaders[k].map((r, i) => `<div class="row" style="gap:10px"><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[1])}">${esc(r[1])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(r[0])}</span><span class="r-s">${esc(nm(r[1]))} · ${r[2]} GP</span></span><span class="ld-v">${(+r[3]).toFixed(1)}</span></div>`).join('')}</div></div>`).join('');
   }
@@ -2588,6 +2592,18 @@ function syncCard() {
     <span class="c-m">This code can only lock things for this phone, not open them, so it's safe to paste in chat.</span>
     <div class="btns" style="margin-top:6px"><button class="btn" type="button" data-act="sync-copy">Copy code</button><button class="btn ghost" type="button" data-act="sync-now">Sync now</button><button class="btn danger" type="button" data-act="sync-off">Turn off on this phone</button></div>`;
 }
+/* every panel's "how it works" lives here, under Settings, so the panels stay clean */
+function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
+  const body = [battHow(),
+    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Start with “buy …” and it goes to To buy, showing how long ago you added it.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
+    it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
+    it('rem', '🔔 Reminders', ['Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.']),
+    it('cal', '📅 Calendar', [`Sessions come from the department's program${SESSION_TIME() ? ' (' + esc(SESSION_TIME()) + ')' : ''}. Entries you add stay on this phone.${P.presenters ? '' : ' Presenter names come from your private file.'}`, 'Karnataka public holidays and major festivals are shown. Travel and deliveries come from your email and are kept locked.']),
+    it('adv', '📰 New advances', ['Summaries are short plain-language digests written from the PubMed abstracts. Always read the original before changing practice.']),
+    it('ot', '🩺 OT list & cases', ['The OT list is sorted by time. Ticks stay on this phone. Patient details open on this phone only, through private sync.', 'Cases on the website are a de-identified copy: no patient names or hospital IDs.']),
+    it('leis', '🎵 Music, NBA & stories', ['Tap a song to open it in Spotify.', 'NBA standings: orange bar is top 6 (direct playoff places), grey bar is 7 to 10 (play-in).', 'Fact of the day: one topic is picked at random each morning. Tap a topic to see its past picks or remove it.']),
+    it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
+  return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
   const S = state.settings; const le = state.meta.lastExport; const P = state.private;
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
@@ -2601,7 +2617,7 @@ function pageBackup() {
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
-    ${fold('settings', 'More settings', `<label class="row toggle"><span>Send books, films, series & games from Notes to Off duty</span><input type="checkbox" data-setting="mediaOn" ${S.mediaOn !== false ? 'checked' : ''}></label>
+    ${fold('settings', 'More settings', `<label class="row toggle"><span>Send books, films, series & games from Brain dump to Off duty</span><input type="checkbox" data-setting="mediaOn" ${S.mediaOn !== false ? 'checked' : ''}></label>
     
     <label class="row toggle"><span>Festive look for upcoming festivals</span><input type="checkbox" data-setting="festOn" ${S.festOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Suggested reading before classes</span><input type="checkbox" data-setting="readOn" ${S.readOn !== false ? 'checked' : ''}></label>
@@ -2610,8 +2626,9 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
-    <label class="row toggle"><span>Show last backup date in the menu</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
+    <label class="row toggle"><span>Backup dot in the menu (orange = no backup this week)</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
   </div></div>`;
+  h += howSection();
   { const before = h; h = '';
   h += `<div class="sec"><h2 class="sh">Private sync</h2><div class="card">${syncCard()}</div></div>`;
   h += `<div class="sec"><h2 class="sh">Private file (manual)</h2><div class="card"><span class="c-s">${P ? 'Loaded (last file ' + esc(P.updated || '?') + '): ' + plural(ROSTER().length, 'roster day') + ', presenters for ' + plural(Object.keys(P.presenters || {}).length, 'session') + ', ' + plural(Object.keys(P.ot || {}).length, 'OT patient name') + ', ' + plural(Object.keys(P.cases || {}).length, 'hospital ID') + '.' : 'Not loaded.'}</span><span class="c-m">Patient names, hospital IDs and colleagues' names never go on the website. They come in private files I send you, which you load here. Each new file adds to what's already loaded. OT names older than 2 weeks are cleared automatically.</span>
@@ -2721,7 +2738,7 @@ async function coverCandidates(it) {
 function mediaScanDumps() { if (!state.meta.mediaClean) { (state.dumps || []).forEach(d => { if (d.cat === 'media' && !d.deleted) { d.deleted = true; d.updated = nowISO(); } }); state.meta.mediaClean = nowISO(); save(); render(); }
   if (state.meta.mediaScan || state.settings.mediaOn === false) return; let n = 0;
   (state.dumps || []).filter(d => !d.deleted && !d.cat).forEach(d => { const p = parseMedia(d.text); if (p) { const it = addMedia(p, 'dump'); it.added = (d.created || nowISO()).slice(0, 10); d.cat = 'media'; d.media = it.id; d.deleted = true; d.updated = nowISO(); n++; } });
-  state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your notes for Off duty`); } }
+  state.meta.mediaScan = nowISO(); save(); if (n) { render(); toast(`Found ${n} in your brain dump for Off duty`); } }
 const mediaBusy = new Set();
 async function mediaCover(id, next) {
   const it = (state.media || []).find(x => x.id === id); if (!it || mediaBusy.has(id) || !navigator.onLine || (!next && (it.coverOwn || it.coverImg))) return; mediaBusy.add(id);
@@ -2769,8 +2786,8 @@ function mediaShelf() {
   let h = `<div class="sec"><div class="cf-head"><h2 class="sh">My ${y} in stories</h2><button type="button" class="link" data-act="media-add">＋ Add</button></div>
     <div class="cf-tabs" role="tablist">${MEDIA_TYPES.map(t => `<button type="button" role="tab" data-act="media-kind" data-id="${t[0]}" class="${t[0] === mediaKind ? 'on' : ''}" aria-selected="${t[0] === mediaKind}">${t[1]} ${t[2]}${counts[t[0]] ? ` <b>${counts[t[0]]}</b>` : ''}</button>`).join('')}</div>`;
   h += `<h3 class="cf-sub">${MT(mediaKind)[4]}${mediaKind === 'book' ? ' & reading' : mediaKind === 'game' ? ' & playing' : ' & watching'}</h3>`;
-  if (!items.length) return h + `<div class="card cf-empty"><span class="cf-empty-e" aria-hidden="true">${MT(mediaKind)[1]}</span><span class="c-t">No ${MT(mediaKind)[2].toLowerCase()} yet this year</span><span class="c-s">Type it in Notes, like “${{ book: 'reading Circe', movie: 'watched Dune Part Two', series: 'watching Severance', game: 'playing Hades' }[mediaKind]}”, and it lands here with its cover.</span></div>` + upList(mediaKind) + `</div>`;
-  h += `<div class="cf-wrap"><div class="cf" id="cf" data-kind="${mediaKind}">${items.map((m, i) => `<button type="button" class="cf-i" data-act="media-tap" data-id="${m.id}" data-i="${i}" aria-label="${esc(m.title)}">${coverFace(m)}${m.status === 'now' ? `<span class="cf-now">${MT(m.type)[3]}</span>` : ''}</button>`).join('')}</div></div>
+  if (!items.length) return h + `<div class="card cf-empty"><span class="cf-empty-e" aria-hidden="true">${MT(mediaKind)[1]}</span><span class="c-t">No ${MT(mediaKind)[2].toLowerCase()} yet this year</span><span class="c-s">Type it in Brain dump, like “${{ book: 'reading Circe', movie: 'watched Dune Part Two', series: 'watching Severance', game: 'playing Hades' }[mediaKind]}”, and it lands here with its cover.</span></div>` + upList(mediaKind) + `</div>`;
+  h += `<div class="cf-wrap">${items.length > 1 ? `<button type="button" class="cf-arr l" data-act="cf-step" data-v="-1" aria-label="Previous">‹</button><button type="button" class="cf-arr r" data-act="cf-step" data-v="1" aria-label="Next">›</button>` : ''}<div class="cf" id="cf" tabindex="0" data-kind="${mediaKind}">${items.map((m, i) => `<button type="button" class="cf-i" data-act="media-tap" data-id="${m.id}" data-i="${i}" aria-label="${esc(m.title)}">${coverFace(m)}${m.status === 'now' ? `<span class="cf-now">${MT(m.type)[3]}</span>` : ''}</button>`).join('')}</div></div>
     <div class="cf-cap" id="cf-cap" aria-live="polite"></div>` + upList(mediaKind) + `</div>`;
   return h; }
 function cfCaption(m) { const t = MT(m.type); return `<b>${esc(m.title)}</b><span>${[m.author && m.type === 'book' ? esc(m.author) : '', m.status === 'now' ? t[3] + ' now' : t[4] + (m.done ? ' · ' + dShort(m.done) : '')].filter(Boolean).join(' · ')}</span>`; }
@@ -2782,11 +2799,27 @@ function cfLayout() { const cf = $('cf'); if (!cf) return; const items = cf.chil
     el.style.transform = `perspective(620px) translateX(${extra}px) translateZ(${-Math.min(a, 1) * 120}px) rotateY(${-cl * 58}deg)`;
     el.style.zIndex = String(1000 - Math.round(a * 10)); el.classList.toggle('mid', a < .5); }
   if (cf.dataset.best !== String(best)) { cf.dataset.best = best; const m = (state.media || []).find(x => x.id === items[best].dataset.id); const cap = $('cf-cap'); if (m && cap) cap.innerHTML = cfCaption(m); } }
-function cfInit() { const cf = $('cf'); if (!cf || cf.dataset.ready) return; cf.dataset.ready = '1'; let raf = 0;
-  cf.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; cfLayout(); }); }, { passive: true });
-  const key = 'studydesk.cf.' + cf.dataset.kind; let pos = 0; try { pos = +sessionStorage.getItem(key) || 0; } catch (_) {}
-  const it = cf.children[Math.min(pos, cf.children.length - 1)]; if (it) cf.scrollLeft = it.offsetLeft + it.offsetWidth / 2 - cf.clientWidth / 2;
-  cfLayout(); cf.addEventListener('scroll', () => { try { sessionStorage.setItem(key, cf.dataset.best || 0); } catch (_) {} }, { passive: true }); }
+function cfGo(i, smooth) { const cf = $('cf'); if (!cf || !cf.children.length) return; i = Math.max(0, Math.min(cf.children.length - 1, i)); const el = cf.children[i];
+  cf.scrollTo({ left: el.offsetLeft + el.offsetWidth / 2 - cf.clientWidth / 2, behavior: smooth === false ? 'auto' : 'smooth' }); }
+/* the shelf scrolls and settles by itself (JS, not CSS snap), and also answers mouse, trackpad, Pencil, keyboard and the ‹ › buttons, so it works the same on iPad and iPhone */
+function cfInit() { const cf = $('cf'); if (!cf || cf.dataset.ready) return; cf.dataset.ready = '1'; let raf = 0, settle = 0, touching = false, drag = null, moved = false;
+  const key = 'studydesk.cf.' + cf.dataset.kind;
+  const snapSoon = () => { clearTimeout(settle); settle = setTimeout(() => { if (touching || drag) return; const b = +cf.dataset.best || 0, el = cf.children[b]; if (!el) return;
+    const want = el.offsetLeft + el.offsetWidth / 2 - cf.clientWidth / 2; if (Math.abs(cf.scrollLeft - want) > 2) cfGo(b); }, 140); };
+  cf.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; cfLayout(); try { sessionStorage.setItem(key, cf.dataset.best || 0); } catch (_) {} }); snapSoon(); }, { passive: true });
+  cf.addEventListener('touchstart', () => { touching = true; clearTimeout(settle); }, { passive: true });
+  cf.addEventListener('touchend', () => { touching = false; snapSoon(); }, { passive: true });
+  cf.addEventListener('touchcancel', () => { touching = false; snapSoon(); }, { passive: true });
+  cf.addEventListener('pointerdown', e => { if (e.pointerType === 'touch' || e.button > 0) return; drag = { x: e.clientX, l: cf.scrollLeft, id: e.pointerId }; moved = false; clearTimeout(settle); });
+  cf.addEventListener('pointermove', e => { if (!drag || e.pointerId !== drag.id) return; const dx = e.clientX - drag.x; if (Math.abs(dx) > 5 && !moved) { moved = true; try { cf.setPointerCapture(e.pointerId); } catch (_) {} } if (moved) { cf.scrollLeft = drag.l - dx; e.preventDefault(); } });
+  const up = e => { if (!drag || (e && e.pointerId !== drag.id)) return; drag = null; snapSoon(); };
+  cf.addEventListener('pointerup', up); cf.addEventListener('pointercancel', up);
+  cf.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  cf.addEventListener('wheel', e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); cf.scrollLeft += e.deltaY; } }, { passive: false });
+  cf.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); cfGo((+cf.dataset.best || 0) + (e.key === 'ArrowRight' ? 1 : -1)); } });
+  let pos = 0; try { pos = +sessionStorage.getItem(key) || 0; } catch (_) {}
+  cfGo(Math.min(pos, cf.children.length - 1), false); cfLayout();
+  if (window.ResizeObserver) { let w = cf.clientWidth; new ResizeObserver(() => { if (cf.clientWidth !== w) { w = cf.clientWidth; cfGo(+cf.dataset.best || 0, false); cfLayout(); } }).observe(cf); } }
 function mediaSheet(id) { const m = (state.media || []).find(x => x.id === id); if (!m) return closeSheet(); const t = MT(m.type);
   openSheet(`<div class="sheet-in" data-media="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t[1]} ${t[2].replace(/s$/, '')}</h2><span></span></div>
     <div class="md-top"><div class="md-cov">${coverFace(m)}</div><div class="md-tx"><h3>${esc(m.title)}</h3>${m.author ? `<p class="md-a">${esc(m.author)}</p>` : ''}${m.info ? `<p class="md-i">${esc(m.info)}</p>` : ''}
@@ -2806,7 +2839,7 @@ function mediaAddSheet() { openSheet(`<form data-form="media" class="sheet-in" a
   <label class="row field"><span class="f-l">Author</span><input class="left" name="author" maxlength="80" placeholder="books only, optional"></label>
   <label class="row field"><span class="f-l">Shelf</span><select name="type">${MEDIA_TYPES.map(t => `<option value="${t[0]}"${t[0] === mediaKind ? ' selected' : ''}>${t[1]} ${t[2]}</option>`).join('')}</select></label>
   <label class="row field"><span class="f-l">Status</span><select name="status"><option value="done">Finished</option><option value="now">Still on it</option></select></label></div>
-  <p class="foot">Quicker: type “watched …”, “reading …”, “watching …” or “playing …” in Notes.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=title]'); if (i) i.focus(); }, 350); }
+  <p class="foot">Quicker: type “watched …”, “reading …”, “watching …” or “playing …” in Brain dump.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=title]'); if (i) i.focus(); }, 350); }
 /* ---------- Off duty: things I've ordered this year (locked) ---------- */
 const SHOP = () => ((state.private && state.private.shop) || {});
 const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
@@ -2824,8 +2857,7 @@ function shopBody(key) { const S = SHOP().stores || {}; const keys = Object.keys
     ${again.length ? `<div class="card shop-again"><span class="cat-hh">Bought more than once</span>${again.map(([n, c]) => `<span>${esc(n)} <b>×${c}</b></span>`).join('')}</div>` : ''}
     ${O.map((o, j) => `<details class="card shop-order"${j === 0 ? ' open' : ''}><summary><span class="cat-tx"><b>${catDate(o.date)}</b><span>${plural(o.items.reduce((m, i) => m + (i.q || 1), 0), 'item')} · ${inr(o.total)}${o.delivered ? ' · delivered ' + catDate(o.delivered) : ''}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary>
       <div class="shop-items">${o.items.map(i => `<div class="shop-it"><span class="shop-n">${esc(i.n)}${i.s ? ` <em>${esc(i.s)}</em>` : ''}</span><span class="shop-p">${i.q > 1 ? i.q + ' × ' : ''}${i.p ? inr(i.p) : 'Free'}</span></div>`).join('')}</div>
-      <span class="shop-no">Order ${esc(o.no)}</span></details>`).join('')}
-    <p class="foot">From your ${esc(st.name || '')} order emails (scanned ${esc(catDate(SHOP().scanned || today()))}). Kept locked, only your paired devices can open it. Refreshed every Sunday evening.</p>`; }
+      <span class="shop-no">Order ${esc(o.no)}</span></details>`).join('')}`; }
 let shopKey = null;
 function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0, 4), 'Personal') + `<div class="sec shop-page">${shopBody(shopKey)}</div>`; }
 
@@ -2851,8 +2883,7 @@ function loveSheet() {
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Things I love</h2><span></span></div>
     ${pick ? lovePickCard(pick, true) : '<div class="card"><span class="c-s">Your first fact arrives tomorrow morning.</span></div>'}
     <details class="card lv-more"><summary><span class="lv-ems" aria-hidden="true">${T.slice(0, 6).map(t => esc(t.emoji || '✨')).join('')}</span><span class="lv-mt">My topics · ${T.length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>
-      <div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div>
-      <p class="foot">One is picked at random each morning. Tap a topic to see its past picks or remove it.</p></details>
+      <div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div></details>
     ${hist.length ? `<h3 class="sh">Earlier</h3>${hist.map(x => lovePickCard(x, true)).join('')}` : ''}</div>`); }
 function fmtShort(d) { try { return new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); } catch (_) { return d; } }
 function loveHistSheet(id) { const L = LOVES(); const all = [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, a) => a.findIndex(y => y.date === x.date) === i).filter(x => !id || x.topic === id);
@@ -2936,7 +2967,7 @@ const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
-  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_LINE[k] ? `<span class="demo dline" aria-hidden="true"><svg viewBox="0 0 24 24">${menuIco(k)}</svg></span>` : MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small ? `<small>${small}</small>` : ''}</button>`;
+  const item = (k, small) => `<button type="button" class="ditem" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})"${k === tab ? ' aria-current="page"' : ''}>${MENU_LINE[k] ? `<span class="demo dline" aria-hidden="true"><svg viewBox="0 0 24 24">${menuIco(k)}</svg></span>` : MENU_EMOJI[k] ? `<span class="demo" aria-hidden="true">${MENU_EMOJI[k]}</span>` : svg(k)}${SECS[k]}${small && small.dot ? `<span class="d-dot ${small.dot}" role="img" aria-label="${esc(small.label)}" title="${esc(small.label)}"></span>` : small ? `<small>${small}</small>` : ''}</button>`;
   const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
   const ex = state.settings.examDate && daysUntil(state.settings.examDate) >= 0 ? daysUntil(state.settings.examDate) : null;
   const lines = [
@@ -2952,7 +2983,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? (le ? 'backup ' + ago(le) : 'no backup yet') : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -3169,7 +3200,7 @@ function renderSearch(q) {
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
-  add('Notes', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row(`data-act="dump-all"${d.cat === 'buy' ? ' data-id="buy"' : ''}`, d.text, d.cat === 'buy' ? 'To buy · ' + buyAge(d.created) : 'Notes')));
+  add('Brain dump', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row(`data-act="dump-all"${d.cat === 'buy' ? ' data-id="buy"' : ''}`, d.text, d.cat === 'buy' ? 'To buy · ' + buyAge(d.created) : 'Notes')));
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -3284,7 +3315,7 @@ document.addEventListener('click', e => {
     case 'push-off': pushOff(); break;
     case 'push-test': pushTest(); break;
     case 'dump-all': dumpSheet(id); break;
-    case 'batt-help': { render(); setTimeout(() => { const d = document.querySelector('.battc .in-how'); if (d) { d.open = true; d.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }, 60); break; }
+    case 'batt-help': { tab = 'backup'; foldOpen.add('how'); render(); window.scrollTo(0, 0); setTimeout(() => { const d = document.querySelector('[data-how="batt"]'); if (d) { d.open = true; d.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }, 60); break; }
     case 'batt-copy': { const cfg = syncCfg(); const v = b.dataset.v === 'key' ? 'Bearer ' + cfg.token : 'https://api.github.com/repos/' + (cfg.repo || 'akrishnammlp2-debug/docks-sync') + '/contents/battery/';
       navigator.clipboard.writeText(v).then(() => toast(b.dataset.v === 'key' ? 'Key copied ✓ Paste it into the Shortcut' : 'Address copied ✓'), () => toast("Couldn't copy. Long-press to copy instead.")); break; }
     case 'dump-del': { const d = (state.dumps || []).find(x => x.id === id); dumpSet(id, { deleted: true }); commit('Removed', () => { dumpSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
@@ -3296,6 +3327,7 @@ document.addEventListener('click', e => {
     case 'icon-sheet': openSheet(iconSheet()); break;
     case 'icon-pack': state.settings.iconPack = b.dataset.id; if (b.dataset.id === 'classic') state.settings.sketchOn = false; commit('Icon style changed'); openSheet(iconSheet()); break;
     case 'media-kind': mediaKindTouched = true; mediaKind = b.dataset.id; try { localStorage.setItem('studydesk.mediaKind', mediaKind); } catch (_) {} render(); break;
+    case 'cf-step': { const cf = $('cf'); if (cf) cfGo((+cf.dataset.best || 0) + +b.dataset.v); break; }
     case 'media-tap': { const cf = $('cf'); const i = +b.dataset.i; if (cf && String(i) !== cf.dataset.best) { cf.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - cf.clientWidth / 2, behavior: 'smooth' }); } else mediaSheet(b.dataset.id); break; }
     case 'media-add': mediaAddSheet(); break;
     case 'up-open': upSheet(b.dataset.id); break;
@@ -3787,7 +3819,7 @@ function pdfSection() {
   const groups = {}; pdfList.slice().sort((a, b) => (b.opened || b.added).localeCompare(a.opened || a.added)).forEach(m => { (groups[m.topic || 'Other'] = groups[m.topic || 'Other'] || []).push(m); });
   const keys = Object.keys(groups).sort((a, b) => a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
   h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${groups[k].map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}">${m.pages ? ring(pdfRead_(m), m.pages, 44, 'pdf-' + m.id) : '<span class="pdf-ico" aria-hidden="true">PDF</span>'}<span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? pdfRead_(m) + ' of ' + m.pages + ' pages read' + (pdfRead_(m) && m.page ? ' · last on p. ' + m.page : '') : 'Counting pages…'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}</div>`).join('');
-  return h + `<p class="foot">Kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.</p></div>`;
+  return h + `</div>`;
 }
 function pdfEditSheet(id) {
   const m = (pdfList || []).find(x => x.id === id); if (!m) return;
