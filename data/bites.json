@@ -1,318 +1,443 @@
 {
- "updated": "2026-11-14",
- "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
- "cats": [
-  "Drugs",
-  "Ventilation",
-  "Physiology",
-  "Airway",
-  "Regional",
-  "Obstetric",
-  "Paediatric",
-  "Cardiac",
-  "Neuro",
-  "ICU",
-  "Monitoring & equipment",
-  "Preop & scoring",
-  "New papers",
-  "Other"
- ],
- "items": [
-  {
-   "id": "asa-ps",
-   "cat": "Preop & scoring",
-   "title": "ASA physical status",
-   "aliases": [
-    "asa grading",
-    "asa classification",
-    "asa-ps"
-   ],
-   "pearl": "Grade = clinical judgement; the examples are guides, not rules.",
-   "refs": [
+  "updated": "2026-11-16",
+  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
+  "cats": [
+    "Drugs",
+    "Ventilation",
+    "Physiology",
+    "Airway",
+    "Regional",
+    "Obstetric",
+    "Paediatric",
+    "Cardiac",
+    "Neuro",
+    "ICU",
+    "Monitoring & equipment",
+    "Preop & scoring",
+    "New papers",
+    "Other"
+  ],
+  "items": [
     {
-     "title": "ASA Physical Status Classification System (ASA; last amended 13 Dec 2020, first approved 15 Oct 2014)",
-     "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
-    },
-    {
-     "title": "Günaydın B. ASA Physical Status Classification System. Turk J Anaesthesiol Reanim 2021;49:192–3",
-     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8098734"
-    },
-    {
-     "title": "Parenti N et al. Reliability of ASA physical status classification. Indian J Anaesth 2016;60:208–14",
-     "url": "https://doi.org/10.4103/0019-5049.177875"
-    },
-    {
-     "title": "Riley R et al. Inter-rater reliability of the ASA physical status classification. Anaesth Intensive Care 2014;42:614–8",
-     "url": "https://doi.org/10.1177/0310057X1404200511"
-    },
-    {
-     "title": "SPA: Updated ASA physical status classification with paediatric examples",
-     "url": "https://pedsanesthesia.org/updated-asa-physical-status-classification-system-with-pediatric-examples"
-    }
-   ],
-   "created": "2026-11-12",
-   "updated": "2026-11-12",
-   "seen": 1,
-   "summary": "The ASA Physical Status (ASA-PS) classification grades a patient's overall health before anaesthesia. Current version: amended by the ASA House of Delegates on 13 Dec 2020 (first approved in this form on 15 Oct 2014). The class definitions did not change in 2020; the update added adult, paediatric and obstetric examples.",
-   "sections": [
-    {
-     "h": "The classes",
-     "rows": [
-      [
-       "ASA I",
-       "Normal healthy patient: no systemic disease, non-smoker, little or no alcohol."
+      "id": "asa-ps",
+      "cat": "Preop & scoring",
+      "title": "ASA physical status",
+      "aliases": [
+        "asa grading",
+        "asa classification",
+        "asa-ps"
       ],
-      [
-       "ASA II",
-       "Mild systemic disease without real functional limitation, e.g. current smoker, social drinker, normal pregnancy, BMI 30–40, well-controlled diabetes or hypertension, mild lung disease."
+      "pearl": "Grade = clinical judgement; the examples are guides, not rules.",
+      "refs": [
+        {
+          "title": "ASA Physical Status Classification System (ASA; last amended 13 Dec 2020, first approved 15 Oct 2014)",
+          "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
+        },
+        {
+          "title": "Günaydın B. ASA Physical Status Classification System. Turk J Anaesthesiol Reanim 2021;49:192–3",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8098734"
+        },
+        {
+          "title": "Parenti N et al. Reliability of ASA physical status classification. Indian J Anaesth 2016;60:208–14",
+          "url": "https://doi.org/10.4103/0019-5049.177875"
+        },
+        {
+          "title": "Riley R et al. Inter-rater reliability of the ASA physical status classification. Anaesth Intensive Care 2014;42:614–8",
+          "url": "https://doi.org/10.1177/0310057X1404200511"
+        },
+        {
+          "title": "SPA: Updated ASA physical status classification with paediatric examples",
+          "url": "https://pedsanesthesia.org/updated-asa-physical-status-classification-system-with-pediatric-examples"
+        }
       ],
-      [
-       "ASA III",
-       "Severe systemic disease with functional limitation, e.g. poorly controlled diabetes or hypertension, COPD, BMI 40 or more, active hepatitis, alcohol dependence, implanted pacemaker, moderately reduced ejection fraction, end-stage renal disease on regular dialysis, MI/stroke/TIA/coronary stent more than 3 months ago."
-      ],
-      [
-       "ASA IV",
-       "Severe systemic disease that is a constant threat to life, e.g. MI/stroke/TIA/coronary stent within the last 3 months, ongoing cardiac ischaemia or severe valve disease, severely reduced ejection fraction, sepsis, DIC, ARDS, end-stage renal disease not on regular dialysis."
-      ],
-      [
-       "ASA V",
-       "Moribund: not expected to survive without the operation, e.g. ruptured abdominal or thoracic aneurysm, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multiple organ failure."
-      ],
-      [
-       "ASA VI",
-       "Declared brain-dead patient whose organs are being removed for donation."
-      ],
-      [
-       "E",
-       "Added to the class for an emergency operation: one where delay would significantly increase the threat to life or to a body part (e.g. ASA IIIE). Not used with ASA VI."
+      "created": "2026-11-12",
+      "updated": "2026-11-12",
+      "seen": 1,
+      "summary": "The ASA Physical Status (ASA-PS) classification grades a patient's overall health before anaesthesia. Current version: amended by the ASA House of Delegates on 13 Dec 2020 (first approved in this form on 15 Oct 2014). The class definitions did not change in 2020; the update added adult, paediatric and obstetric examples.",
+      "sections": [
+        {
+          "h": "The classes",
+          "rows": [
+            [
+              "ASA I",
+              "Normal healthy patient: no systemic disease, non-smoker, little or no alcohol."
+            ],
+            [
+              "ASA II",
+              "Mild systemic disease without real functional limitation, e.g. current smoker, social drinker, normal pregnancy, BMI 30–40, well-controlled diabetes or hypertension, mild lung disease."
+            ],
+            [
+              "ASA III",
+              "Severe systemic disease with functional limitation, e.g. poorly controlled diabetes or hypertension, COPD, BMI 40 or more, active hepatitis, alcohol dependence, implanted pacemaker, moderately reduced ejection fraction, end-stage renal disease on regular dialysis, MI/stroke/TIA/coronary stent more than 3 months ago."
+            ],
+            [
+              "ASA IV",
+              "Severe systemic disease that is a constant threat to life, e.g. MI/stroke/TIA/coronary stent within the last 3 months, ongoing cardiac ischaemia or severe valve disease, severely reduced ejection fraction, sepsis, DIC, ARDS, end-stage renal disease not on regular dialysis."
+            ],
+            [
+              "ASA V",
+              "Moribund: not expected to survive without the operation, e.g. ruptured abdominal or thoracic aneurysm, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multiple organ failure."
+            ],
+            [
+              "ASA VI",
+              "Declared brain-dead patient whose organs are being removed for donation."
+            ],
+            [
+              "E",
+              "Added to the class for an emergency operation: one where delay would significantly increase the threat to life or to a body part (e.g. ASA IIIE). Not used with ASA VI."
+            ]
+          ]
+        },
+        {
+          "h": "Obstetric examples (2020)",
+          "items": [
+            "Normal pregnancy is ASA II (not ASA I).",
+            "Moves up a class as pregnancy complications become severe: e.g. pre-eclampsia with severe features is ASA III, and the same with HELLP or decompensated heart disease is ASA IV.",
+            "Uterine rupture is given as an ASA V example.",
+            "Add E when the case is an emergency (e.g. category 1 caesarean: ASA IIE or higher)."
+          ]
+        },
+        {
+          "h": "Paediatric examples (2020)",
+          "items": [
+            "The 2020 update added a separate column of children's examples, which improved agreement between paediatric anaesthetists.",
+            "Typical pattern: well-controlled chronic conditions (asthma without exacerbation, controlled epilepsy) are ASA II; poorly controlled disease, ex-premature infants under 60 weeks postconceptional age and difficult airway are ASA III; symptomatic heart disease, sepsis or ventilator dependence are ASA IV.",
+            "See the ASA page (reference 1) for the full table of children's examples."
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "The examples are illustrative, not exhaustive; the ASA gives no further rules, so the final grade is the anaesthetist's clinical judgement.",
+            "ASA-PS describes the patient's health, not the risk of the operation itself: it does not include the type of surgery, age alone, or airway difficulty in adults.",
+            "Inter-rater agreement is only fair to moderate (kappa about 0.4 to 0.6 in most studies); ASA II and III are the classes most often disputed. Using the official examples improves agreement.",
+            "Despite this, higher ASA class is consistently linked with more postoperative complications and mortality, and ASA-PS is built into many risk scores (e.g. POSSUM-type models, NSQIP calculator).",
+            "In India, SLCM and most hospital PAC forms record ASA with the E suffix for emergencies."
+          ]
+        }
       ]
-     ]
     },
     {
-     "h": "Obstetric examples (2020)",
-     "items": [
-      "Normal pregnancy is ASA II (not ASA I).",
-      "Moves up a class as pregnancy complications become severe: e.g. pre-eclampsia with severe features is ASA III, and the same with HELLP or decompensated heart disease is ASA IV.",
-      "Uterine rupture is given as an ASA V example.",
-      "Add E when the case is an emergency (e.g. category 1 caesarean: ASA IIE or higher)."
-     ]
-    },
-    {
-     "h": "Paediatric examples (2020)",
-     "items": [
-      "The 2020 update added a separate column of children's examples, which improved agreement between paediatric anaesthetists.",
-      "Typical pattern: well-controlled chronic conditions (asthma without exacerbation, controlled epilepsy) are ASA II; poorly controlled disease, ex-premature infants under 60 weeks postconceptional age and difficult airway are ASA III; symptomatic heart disease, sepsis or ventilator dependence are ASA IV.",
-      "See the ASA page (reference 1) for the full table of children's examples."
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "The examples are illustrative, not exhaustive; the ASA gives no further rules, so the final grade is the anaesthetist's clinical judgement.",
-      "ASA-PS describes the patient's health, not the risk of the operation itself: it does not include the type of surgery, age alone, or airway difficulty in adults.",
-      "Inter-rater agreement is only fair to moderate (kappa about 0.4 to 0.6 in most studies); ASA II and III are the classes most often disputed. Using the official examples improves agreement.",
-      "Despite this, higher ASA class is consistently linked with more postoperative complications and mortality, and ASA-PS is built into many risk scores (e.g. POSSUM-type models, NSQIP calculator).",
-      "In India, SLCM and most hospital PAC forms record ASA with the E suffix for emergencies."
-     ]
-    }
-   ]
-  },
-  {
-   "id": "psv",
-   "cat": "Ventilation",
-   "title": "Pressure support ventilation (PSV)",
-   "aliases": [
-    "pressure support",
-    "psv",
-    "spontaneous mode"
-   ],
-   "pearl": "Used for weaning and SBT (e.g. PS 5–8 cmH2O + PEEP 5).",
-   "refs": [
-    {
-     "title": "Abramovitz A, Sung S. Pressure Support Ventilation (PSV). StatPearls. Treasure Island (FL): StatPearls Publishing; 2023 (archived)",
-     "url": "https://pubmed.ncbi.nlm.nih.gov/31536312/"
-    },
-    {
-     "title": "Liberation from mechanical ventilation in critically ill adults: an official American College of Chest Physicians / American Thoracic Society clinical practice guideline. Chest 2017 (suggests the first spontaneous breathing trial uses 5–8 cmH₂O of pressure support)",
-     "url": "https://seek.chestnet.org/AssetListing/CHEST-Guidelines-14139/Liberation-From-Mechanical-Ventilation-in-Critically-Ill-Adults-An-Official-American-College-of-Chest-Physicians-or-American-Thoracic-Society-Clinical-Practice-Guideline-76906"
-    },
-    {
-     "title": "GE Aisys CS2 User's Reference Manual: ventilation modes, factory default settings (ManualsLib)",
-     "url": "https://www.manualslib.com/manual/1210542/Ge-Auisys-Cs2.html?page=211"
-    }
-   ],
-   "created": "2026-11-13",
-   "updated": "2026-11-13",
-   "seen": 1,
-   "summary": "Pressure support ventilation is a purely spontaneous mode: every breath is triggered by the patient, pressure-limited (the ventilator holds PEEP + PS) and flow-cycled (it stops when flow falls to a set percentage of peak flow). There is no set rate, so the patient needs an intact respiratory drive, and minute ventilation is not guaranteed.",
-   "sections": [
-    {
-     "h": "How a breath works",
-     "items": [
-      "Trigger: the patient's effort is sensed as a small fall in airway pressure or a change in flow.",
-      "The ventilator raises airway pressure to PEEP + PS and holds it there for the rest of inspiration.",
-      "Flow is highest at the start, then falls as the lungs fill.",
-      "Cycle: when flow falls to the set percentage of peak flow (commonly 25%), the ventilator stops and expiration begins.",
-      "The patient decides the rate and the inspiratory time. Tidal volume depends on the PS level, the patient's effort, compliance and resistance."
-     ]
-    },
-    {
-     "h": "Settings",
-     "rows": [
-      [
-       "Pressure support (PS)",
-       "Pressure added above PEEP. Usually 5–20 cmH₂O (the GE Aisys CS2 manual lists a range of 2–40). Titrate to a tidal volume of about 6–8 mL/kg predicted body weight, a rate under 25–30 and no accessory muscle use. A level of 5–8 cmH₂O roughly offsets the resistance of the tube and circuit, and is the level suggested for a spontaneous breathing trial."
+      "id": "psv",
+      "cat": "Ventilation",
+      "title": "Pressure support ventilation (PSV)",
+      "aliases": [
+        "pressure support",
+        "psv",
+        "spontaneous mode"
       ],
-      [
-       "PEEP",
-       "Typically 5 cmH₂O. In COPD with intrinsic PEEP, external PEEP set below the intrinsic level reduces the effort needed to trigger a breath."
+      "pearl": "Used for weaning and SBT (e.g. PS 5–8 cmH2O + PEEP 5).",
+      "refs": [
+        {
+          "title": "Abramovitz A, Sung S. Pressure Support Ventilation (PSV). StatPearls. Treasure Island (FL): StatPearls Publishing; 2023 (archived)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31536312/"
+        },
+        {
+          "title": "Liberation from mechanical ventilation in critically ill adults: an official American College of Chest Physicians / American Thoracic Society clinical practice guideline. Chest 2017 (suggests the first spontaneous breathing trial uses 5–8 cmH₂O of pressure support)",
+          "url": "https://seek.chestnet.org/AssetListing/CHEST-Guidelines-14139/Liberation-From-Mechanical-Ventilation-in-Critically-Ill-Adults-An-Official-American-College-of-Chest-Physicians-or-American-Thoracic-Society-Clinical-Practice-Guideline-76906"
+        },
+        {
+          "title": "GE Aisys CS2 User's Reference Manual: ventilation modes, factory default settings (ManualsLib)",
+          "url": "https://www.manualslib.com/manual/1210542/Ge-Auisys-Cs2.html?page=211"
+        }
       ],
-      [
-       "FiO₂",
-       "Set to reach the target SpO₂."
-      ],
-      [
-       "Trigger sensitivity",
-       "Flow trigger about 1–3 L/min, or pressure trigger about −0.5 to −2 cmH₂O. Too sensitive causes auto-triggering (leaks, cardiac oscillations, water in the circuit). Too insensitive causes missed efforts and extra work."
-      ],
-      [
-       "Rise time (ramp, slope)",
-       "How fast the airway pressure reaches the target. Shown in seconds, as a percentage or on a 1–10 scale, depending on the ventilator. Use a faster rise for a patient with high drive. Too fast gives pressure overshoot and early cycling; too slow starves the patient of flow."
-      ],
-      [
-       "Expiratory trigger (Esens, cycle-off, End of breath)",
-       "The percentage of peak flow at which inspiration ends. Commonly 25% by default; the GE Aisys CS2 lists 5–75%. Raise it to about 40–50% in COPD to shorten inspiration and limit air trapping. Lower it to about 10–15% in stiff (restrictive) lungs to avoid cycling too early and double triggering."
-      ],
-      [
-       "Maximum inspiratory time",
-       "A backup time limit on the breath, which matters with leaks and NIV. The value and name vary with the ventilator. Many ventilators also end the breath if pressure rises above the target (the patient breathing out against the breath)."
-      ],
-      [
-       "Apnoea backup",
-       "If the patient does not breathe for the set apnoea time, a mandatory backup mode with a set rate takes over. The time varies by machine (the GE Aisys CS2 manual lists 10–30 s)."
-      ],
-      [
-       "Alarms",
-       "High and low respiratory rate, low and high minute volume and tidal volume, high airway pressure."
-      ],
-      [
-       "Tube compensation",
-       "Optional on some ventilators. Adds extra pressure to offset the resistance of the tube."
+      "created": "2026-11-13",
+      "updated": "2026-11-13",
+      "seen": 1,
+      "summary": "Pressure support ventilation is a purely spontaneous mode: every breath is triggered by the patient, pressure-limited (the ventilator holds PEEP + PS) and flow-cycled (it stops when flow falls to a set percentage of peak flow). There is no set rate, so the patient needs an intact respiratory drive, and minute ventilation is not guaranteed.",
+      "sections": [
+        {
+          "h": "How a breath works",
+          "items": [
+            "Trigger: the patient's effort is sensed as a small fall in airway pressure or a change in flow.",
+            "The ventilator raises airway pressure to PEEP + PS and holds it there for the rest of inspiration.",
+            "Flow is highest at the start, then falls as the lungs fill.",
+            "Cycle: when flow falls to the set percentage of peak flow (commonly 25%), the ventilator stops and expiration begins.",
+            "The patient decides the rate and the inspiratory time. Tidal volume depends on the PS level, the patient's effort, compliance and resistance."
+          ]
+        },
+        {
+          "h": "Settings",
+          "rows": [
+            [
+              "Pressure support (PS)",
+              "Pressure added above PEEP. Usually 5–20 cmH₂O (the GE Aisys CS2 manual lists a range of 2–40). Titrate to a tidal volume of about 6–8 mL/kg predicted body weight, a rate under 25–30 and no accessory muscle use. A level of 5–8 cmH₂O roughly offsets the resistance of the tube and circuit, and is the level suggested for a spontaneous breathing trial."
+            ],
+            [
+              "PEEP",
+              "Typically 5 cmH₂O. In COPD with intrinsic PEEP, external PEEP set below the intrinsic level reduces the effort needed to trigger a breath."
+            ],
+            [
+              "FiO₂",
+              "Set to reach the target SpO₂."
+            ],
+            [
+              "Trigger sensitivity",
+              "Flow trigger about 1–3 L/min, or pressure trigger about −0.5 to −2 cmH₂O. Too sensitive causes auto-triggering (leaks, cardiac oscillations, water in the circuit). Too insensitive causes missed efforts and extra work."
+            ],
+            [
+              "Rise time (ramp, slope)",
+              "How fast the airway pressure reaches the target. Shown in seconds, as a percentage or on a 1–10 scale, depending on the ventilator. Use a faster rise for a patient with high drive. Too fast gives pressure overshoot and early cycling; too slow starves the patient of flow."
+            ],
+            [
+              "Expiratory trigger (Esens, cycle-off, End of breath)",
+              "The percentage of peak flow at which inspiration ends. Commonly 25% by default; the GE Aisys CS2 lists 5–75%. Raise it to about 40–50% in COPD to shorten inspiration and limit air trapping. Lower it to about 10–15% in stiff (restrictive) lungs to avoid cycling too early and double triggering."
+            ],
+            [
+              "Maximum inspiratory time",
+              "A backup time limit on the breath, which matters with leaks and NIV. The value and name vary with the ventilator. Many ventilators also end the breath if pressure rises above the target (the patient breathing out against the breath)."
+            ],
+            [
+              "Apnoea backup",
+              "If the patient does not breathe for the set apnoea time, a mandatory backup mode with a set rate takes over. The time varies by machine (the GE Aisys CS2 manual lists 10–30 s)."
+            ],
+            [
+              "Alarms",
+              "High and low respiratory rate, low and high minute volume and tidal volume, high airway pressure."
+            ],
+            [
+              "Tube compensation",
+              "Optional on some ventilators. Adds extra pressure to offset the resistance of the tube."
+            ]
+          ]
+        },
+        {
+          "h": "Pressure and flow in one breath",
+          "svg": "<svg viewBox=\"0 0 380 360\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><defs><marker id=\"nfarr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" class=\"nf-m\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></marker></defs><text class=\"nf-t nf-h\" x=\"40\" y=\"34\">Pressure</text><line x1=\"40\" y1=\"130\" x2=\"340\" y2=\"130\" class=\"nf-l\"/><path d=\"M40,130 L80,130 L90,139 L96,132 C104,100 116,72 130,70 L250,70 L256,130 L340,130\" class=\"nf-p\"/><text class=\"nf-t\" x=\"190\" y=\"58\" text-anchor=\"middle\">PEEP + PS</text><line x1=\"256\" y1=\"70\" x2=\"290\" y2=\"70\" class=\"nf-l\"/><line x1=\"290\" y1=\"130\" x2=\"290\" y2=\"72\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"298\" y=\"104\">PS</text><text class=\"nf-t\" x=\"340\" y=\"146\" text-anchor=\"end\">PEEP</text><text class=\"nf-t\" x=\"40\" y=\"94\">Rise time</text><line x1=\"88\" y1=\"90\" x2=\"109\" y2=\"90\" class=\"nf-l\"/><line x1=\"90\" y1=\"151\" x2=\"90\" y2=\"142\" class=\"nf-l\"/><text class=\"nf-t\" x=\"90\" y=\"164\" text-anchor=\"middle\">Trigger</text><text class=\"nf-t nf-h\" x=\"40\" y=\"182\">Flow</text><line x1=\"40\" y1=\"250\" x2=\"340\" y2=\"250\" class=\"nf-l\"/><path d=\"M40,250 L96,250 C98,215 102,190 108,190 C130,205 180,225 250,235 L252,250 C256,290 266,292 280,285 C300,272 315,255 325,250 L340,250\" class=\"nf-f\"/><text class=\"nf-t\" x=\"126\" y=\"184\">Peak flow</text><circle cx=\"252\" cy=\"235\" r=\"3\" class=\"nf-dot\"/><line x1=\"252\" y1=\"231\" x2=\"252\" y2=\"219\" class=\"nf-l\"/><text class=\"nf-t\" x=\"340\" y=\"212\" text-anchor=\"end\">Cycles off at ~25% of peak</text><text class=\"nf-t\" x=\"340\" y=\"306\" text-anchor=\"end\">Passive expiration</text><line x1=\"96\" y1=\"316\" x2=\"96\" y2=\"328\" class=\"nf-l\"/><line x1=\"252\" y1=\"316\" x2=\"252\" y2=\"328\" class=\"nf-l\"/><line x1=\"98\" y1=\"322\" x2=\"250\" y2=\"322\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"174\" y=\"344\" text-anchor=\"middle\">Inspiratory time</text></svg>",
+          "alt": "Airway pressure and flow over one pressure support breath, marking the trigger, rise time, PEEP, PS, peak flow, the point where flow falls to about 25% of peak and the breath cycles off, and the inspiratory time.",
+          "items": [
+            "Trigger: the small dip below PEEP, with the matching flow change, is the patient's effort being sensed.",
+            "Rise time: the slope from PEEP up to the plateau.",
+            "PS: the height of the plateau above PEEP. It is the main determinant of tidal volume.",
+            "Expiratory trigger: the flow tails off, and the breath ends when flow falls to the set percentage of peak. A higher setting ends the breath earlier; a lower setting ends it later.",
+            "Inspiratory time: the width of the plateau. It is not set. It comes from the patient's effort, the lung mechanics and the cycle-off point (plus the maximum inspiratory time backup).",
+            "Bedside check: if the flow curve ends abruptly instead of tapering, the breath cycled too early or too late, so adjust the expiratory trigger or the rise time."
+          ]
+        },
+        {
+          "h": "Problems to watch",
+          "items": [
+            "Tidal volume is not fixed: it falls if compliance falls or resistance rises.",
+            "Too much support causes large volumes, hyperinflation, missed triggers and central apnoeas in sleep.",
+            "Too little support causes rapid shallow breathing and fatigue.",
+            "Sedation, opioids or residual neuromuscular block can cause hypoventilation. Because no mandatory breaths are given, minute ventilation is not guaranteed, which is why the apnoea backup matters."
+          ]
+        },
+        {
+          "h": "On anaesthesia machines",
+          "items": [
+            "Many anaesthesia machines offer pressure support with an apnoea backup, for example PSVPro on GE machines. If the patient stops breathing for the set backup time, a mandatory mode takes over. This is useful during emergence and LMA cases.",
+            "Names, ranges and defaults differ between machines, so check the manual of the machine you are using."
+          ]
+        }
       ]
-     ]
     },
     {
-     "h": "Pressure and flow in one breath",
-     "svg": "<svg viewBox=\"0 0 380 360\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><defs><marker id=\"nfarr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" class=\"nf-m\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></marker></defs><text class=\"nf-t nf-h\" x=\"40\" y=\"34\">Pressure</text><line x1=\"40\" y1=\"130\" x2=\"340\" y2=\"130\" class=\"nf-l\"/><path d=\"M40,130 L80,130 L90,139 L96,132 C104,100 116,72 130,70 L250,70 L256,130 L340,130\" class=\"nf-p\"/><text class=\"nf-t\" x=\"190\" y=\"58\" text-anchor=\"middle\">PEEP + PS</text><line x1=\"256\" y1=\"70\" x2=\"290\" y2=\"70\" class=\"nf-l\"/><line x1=\"290\" y1=\"130\" x2=\"290\" y2=\"72\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"298\" y=\"104\">PS</text><text class=\"nf-t\" x=\"340\" y=\"146\" text-anchor=\"end\">PEEP</text><text class=\"nf-t\" x=\"40\" y=\"94\">Rise time</text><line x1=\"88\" y1=\"90\" x2=\"109\" y2=\"90\" class=\"nf-l\"/><line x1=\"90\" y1=\"151\" x2=\"90\" y2=\"142\" class=\"nf-l\"/><text class=\"nf-t\" x=\"90\" y=\"164\" text-anchor=\"middle\">Trigger</text><text class=\"nf-t nf-h\" x=\"40\" y=\"182\">Flow</text><line x1=\"40\" y1=\"250\" x2=\"340\" y2=\"250\" class=\"nf-l\"/><path d=\"M40,250 L96,250 C98,215 102,190 108,190 C130,205 180,225 250,235 L252,250 C256,290 266,292 280,285 C300,272 315,255 325,250 L340,250\" class=\"nf-f\"/><text class=\"nf-t\" x=\"126\" y=\"184\">Peak flow</text><circle cx=\"252\" cy=\"235\" r=\"3\" class=\"nf-dot\"/><line x1=\"252\" y1=\"231\" x2=\"252\" y2=\"219\" class=\"nf-l\"/><text class=\"nf-t\" x=\"340\" y=\"212\" text-anchor=\"end\">Cycles off at ~25% of peak</text><text class=\"nf-t\" x=\"340\" y=\"306\" text-anchor=\"end\">Passive expiration</text><line x1=\"96\" y1=\"316\" x2=\"96\" y2=\"328\" class=\"nf-l\"/><line x1=\"252\" y1=\"316\" x2=\"252\" y2=\"328\" class=\"nf-l\"/><line x1=\"98\" y1=\"322\" x2=\"250\" y2=\"322\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"174\" y=\"344\" text-anchor=\"middle\">Inspiratory time</text></svg>",
-     "alt": "Airway pressure and flow over one pressure support breath, marking the trigger, rise time, PEEP, PS, peak flow, the point where flow falls to about 25% of peak and the breath cycles off, and the inspiratory time.",
-     "items": [
-      "Trigger: the small dip below PEEP, with the matching flow change, is the patient's effort being sensed.",
-      "Rise time: the slope from PEEP up to the plateau.",
-      "PS: the height of the plateau above PEEP. It is the main determinant of tidal volume.",
-      "Expiratory trigger: the flow tails off, and the breath ends when flow falls to the set percentage of peak. A higher setting ends the breath earlier; a lower setting ends it later.",
-      "Inspiratory time: the width of the plateau. It is not set. It comes from the patient's effort, the lung mechanics and the cycle-off point (plus the maximum inspiratory time backup).",
-      "Bedside check: if the flow curve ends abruptly instead of tapering, the breath cycled too early or too late, so adjust the expiratory trigger or the rise time."
-     ]
-    },
-    {
-     "h": "Problems to watch",
-     "items": [
-      "Tidal volume is not fixed: it falls if compliance falls or resistance rises.",
-      "Too much support causes large volumes, hyperinflation, missed triggers and central apnoeas in sleep.",
-      "Too little support causes rapid shallow breathing and fatigue.",
-      "Sedation, opioids or residual neuromuscular block can cause hypoventilation. Because no mandatory breaths are given, minute ventilation is not guaranteed, which is why the apnoea backup matters."
-     ]
-    },
-    {
-     "h": "On anaesthesia machines",
-     "items": [
-      "Many anaesthesia machines offer pressure support with an apnoea backup, for example PSVPro on GE machines. If the patient stops breathing for the set backup time, a mandatory mode takes over. This is useful during emergence and LMA cases.",
-      "Names, ranges and defaults differ between machines, so check the manual of the machine you are using."
-     ]
-    }
-   ]
-  },
-  {
-   "id": "paediatric-spinal-dose",
-   "cat": "Paediatric",
-   "title": "Paediatric spinal anaesthesia: dose",
-   "aliases": [
-    "pediatric spinal dose",
-    "paediatric spinal",
-    "spinal in children",
-    "infant spinal",
-    "subarachnoid block in children",
-    "paediatric SAB dose"
-   ],
-   "pearl": "Smaller child = more mg/kg (more CSF per kg) but a shorter block.",
-   "refs": [
-    {
-     "title": "Gupta A, Saha U. Spinal anesthesia in children: a review. J Anaesthesiol Clin Pharmacol 2014;30:10–18",
-     "url": "https://doi.org/10.4103/0970-9185.125687"
-    },
-    {
-     "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019;19:126–34",
-     "url": "https://doi.org/10.1016/j.bjae.2018.12.003"
-    },
-    {
-     "title": "Spinal anesthesia in infants and children: a one year prospective audit. Anesth Essays Res 2014;8:324–9",
-     "url": "https://doi.org/10.4103/0259-1162.143124"
-    }
-   ],
-   "created": "2026-11-14",
-   "updated": "2026-11-14",
-   "seen": 1,
-   "summary": "The spinal dose in children is chosen by body weight, and the mg/kg dose rises as the child gets smaller. Infants have more CSF per kg, more of it in the spinal canal, and faster drug removal, so they need a larger weight-based dose and still get a shorter block than adults.",
-   "sections": [
-    {
-     "h": "0.5% hyperbaric bupivacaine by weight",
-     "rows": [
-      [
-       "Under 5 kg",
-       "0.5 mg/kg (0.1 mL/kg) in some schemes; up to 1 mg/kg (0.2 mL/kg) in others, especially for awake neonatal and infant spinals."
+      "id": "paediatric-spinal-dose",
+      "cat": "Paediatric",
+      "title": "Paediatric spinal anaesthesia: dose",
+      "aliases": [
+        "pediatric spinal dose",
+        "paediatric spinal",
+        "spinal in children",
+        "infant spinal",
+        "subarachnoid block in children",
+        "paediatric SAB dose"
       ],
-      [
-       "5–15 kg",
-       "0.4 mg/kg (0.08 mL/kg)."
+      "pearl": "Smaller child = more mg/kg (more CSF per kg) but a shorter block.",
+      "refs": [
+        {
+          "title": "Gupta A, Saha U. Spinal anesthesia in children: a review. J Anaesthesiol Clin Pharmacol 2014;30:10–18",
+          "url": "https://doi.org/10.4103/0970-9185.125687"
+        },
+        {
+          "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019;19:126–34",
+          "url": "https://doi.org/10.1016/j.bjae.2018.12.003"
+        },
+        {
+          "title": "Spinal anesthesia in infants and children: a one year prospective audit. Anesth Essays Res 2014;8:324–9",
+          "url": "https://doi.org/10.4103/0259-1162.143124"
+        }
       ],
-      [
-       "Over 15 kg",
-       "0.3 mg/kg (0.06 mL/kg)."
-      ],
-      [
-       "Adolescents",
-       "Dose moves towards adult dosing; never give more than the adult dose."
+      "created": "2026-11-14",
+      "updated": "2026-11-14",
+      "seen": 1,
+      "summary": "The spinal dose in children is chosen by body weight, and the mg/kg dose rises as the child gets smaller. Infants have more CSF per kg, more of it in the spinal canal, and faster drug removal, so they need a larger weight-based dose and still get a shorter block than adults.",
+      "sections": [
+        {
+          "h": "0.5% hyperbaric bupivacaine by weight",
+          "rows": [
+            [
+              "Under 5 kg",
+              "0.5 mg/kg (0.1 mL/kg) in some schemes; up to 1 mg/kg (0.2 mL/kg) in others, especially for awake neonatal and infant spinals."
+            ],
+            [
+              "5–15 kg",
+              "0.4 mg/kg (0.08 mL/kg)."
+            ],
+            [
+              "Over 15 kg",
+              "0.3 mg/kg (0.06 mL/kg)."
+            ],
+            [
+              "Adolescents",
+              "Dose moves towards adult dosing; never give more than the adult dose."
+            ]
+          ]
+        },
+        {
+          "h": "Why smaller children need more per kg",
+          "items": [
+            "CSF volume per kg is higher: about 10 mL/kg in neonates and 4 mL/kg in infants and toddlers, against 2 mL/kg in adults.",
+            "About half of the CSF lies in the spinal canal in children, against roughly a third in adults, so the drug is diluted more.",
+            "A very vascular pia and a high cardiac output clear the drug quickly, so the block is short: about 45–90 minutes in neonates and infants."
+          ]
+        },
+        {
+          "h": "What changes the dose",
+          "items": [
+            "The surgery: its expected length and the level of block needed.",
+            "Adjuvants to lengthen the block: clonidine 1 microgram/kg, fentanyl 0.2 microgram/kg (higher doses are also described), adrenaline 2–4 micrograms/kg.",
+            "Intrathecal morphine has been used, but only with monitored postoperative care.",
+            "Ex-premature infants (under 60 weeks postconceptional age): avoid sedatives and opioids where possible because of postoperative apnoea."
+          ]
+        },
+        {
+          "h": "Practical points",
+          "items": [
+            "Volumes are tiny: draw up in a 1 mL syringe and allow for the dead space of the needle.",
+            "Puncture at L4–5 or L5–S1. At birth the cord ends near L3 and the dural sac at S3–S4; adult levels are reached by about 1–2 years.",
+            "Do not lift the legs after injection (for example to place the cautery pad): it can cause a high spinal.",
+            "Blood pressure usually stays stable in younger children (under about 5 years), so fluid preloading is not needed.",
+            "Dosing schemes differ slightly between texts: follow the department protocol."
+          ]
+        }
       ]
-     ]
     },
     {
-     "h": "Why smaller children need more per kg",
-     "items": [
-      "CSF volume per kg is higher: about 10 mL/kg in neonates and 4 mL/kg in infants and toddlers, against 2 mL/kg in adults.",
-      "About half of the CSF lies in the spinal canal in children, against roughly a third in adults, so the drug is diluted more.",
-      "A very vascular pia and a high cardiac output clear the drug quickly, so the block is short: about 45–90 minutes in neonates and infants."
-     ]
-    },
-    {
-     "h": "What changes the dose",
-     "items": [
-      "The surgery: its expected length and the level of block needed.",
-      "Adjuvants to lengthen the block: clonidine 1 microgram/kg, fentanyl 0.2 microgram/kg (higher doses are also described), adrenaline 2–4 micrograms/kg.",
-      "Intrathecal morphine has been used, but only with monitored postoperative care.",
-      "Ex-premature infants (under 60 weeks postconceptional age): avoid sedatives and opioids where possible because of postoperative apnoea."
-     ]
-    },
-    {
-     "h": "Practical points",
-     "items": [
-      "Volumes are tiny: draw up in a 1 mL syringe and allow for the dead space of the needle.",
-      "Puncture at L4–5 or L5–S1. At birth the cord ends near L3 and the dural sac at S3–S4; adult levels are reached by about 1–2 years.",
-      "Do not lift the legs after injection (for example to place the cautery pad): it can cause a high spinal.",
-      "Blood pressure usually stays stable in younger children (under about 5 years), so fluid preloading is not needed.",
-      "Dosing schemes differ slightly between texts: follow the department protocol."
-     ]
+      "id": "achalasia-cardia",
+      "cat": "Airway",
+      "title": "Achalasia cardia",
+      "aliases": [
+        "achalasia",
+        "cardiospasm",
+        "POEM anaesthesia",
+        "Heller myotomy anaesthesia",
+        "megaoesophagus"
+      ],
+      "summary": "Achalasia is a motility disorder in which the lower oesophageal sphincter (LES) fails to relax on swallowing and the oesophageal body loses peristalsis, because the inhibitory nerves of the myenteric plexus degenerate. Food and fluid pool in a dilated oesophagus above a closed sphincter. For the anaesthetist the key issue is a large, retained oesophageal reservoir that can be regurgitated and aspirated at induction, regardless of fasting time.",
+      "sections": [
+        {
+          "h": "What goes wrong",
+          "items": [
+            "Loss of inhibitory neurons (nitric oxide / VIP) in the myenteric plexus",
+            "LES has high resting tone and does not relax with swallowing",
+            "Absent peristalsis in the oesophageal body, so emptying depends on gravity",
+            "Mostly idiopathic; secondary form in Chagas disease (Trypanosoma cruzi) and pseudoachalasia from tumour at the cardia"
+          ]
+        },
+        {
+          "h": "Clinical picture and diagnosis",
+          "items": [
+            "Dysphagia to both solids and liquids from the start (unlike stricture or cancer, which begin with solids)",
+            "Regurgitation of undigested food, often at night; chest pain; weight loss",
+            "Nocturnal cough or recurrent chest infections from silent aspiration",
+            "Barium swallow: dilated oesophagus tapering to a smooth 'bird's beak'",
+            "High-resolution manometry is the gold standard; endoscopy to exclude malignancy"
+          ]
+        },
+        {
+          "h": "Chicago classification (manometry types)",
+          "rows": [
+            [
+              "Type I",
+              "Classic: no pressurisation, minimal contractility; dilated oesophagus"
+            ],
+            [
+              "Type II",
+              "Pan-oesophageal pressurisation; best response to treatment"
+            ],
+            [
+              "Type III",
+              "Spastic, premature contractions; responds best to POEM (long myotomy)"
+            ]
+          ]
+        },
+        {
+          "h": "Treatment",
+          "rows": [
+            [
+              "Drugs",
+              "Nifedipine or nitrates before meals; weak, short-lived effect"
+            ],
+            [
+              "Botulinum toxin",
+              "Endoscopic LES injection; for frail patients, lasts months"
+            ],
+            [
+              "Pneumatic dilatation",
+              "Balloon stretch of LES; small perforation risk"
+            ],
+            [
+              "Heller myotomy",
+              "Laparoscopic myotomy plus partial fundoplication (Dor/Toupet)"
+            ],
+            [
+              "POEM",
+              "Per-oral endoscopic myotomy through a submucosal tunnel under GA"
+            ]
+          ]
+        },
+        {
+          "h": "Anaesthetic concerns and plan",
+          "items": [
+            "Treat as full stomach whatever the fasting time: the oesophagus holds retained food and fluid",
+            "Pre-op: liquid diet 24-48 h before, then clear fluids; ask about regurgitation and lying flat",
+            "Assess for aspiration lung disease, malnutrition, dehydration and electrolyte upset",
+            "Consider emptying the oesophagus before induction (wide-bore NG suction, or endoscopic clearance)",
+            "Head-up position; rapid sequence induction with cricoid pressure (its value is debated with a dilated oesophagus)",
+            "Some centres prefer awake or head-up induction for a massively dilated oesophagus",
+            "Extubate fully awake with reflexes back, head-up",
+            "Antacid/H2 blocker premedication does little for oesophageal contents, which are not acidic stomach juice"
+          ]
+        },
+        {
+          "h": "POEM specific issues",
+          "items": [
+            "GA with ETT and controlled ventilation; CO2 insufflation is used",
+            "CO2 can track out: subcutaneous emphysema, pneumomediastinum, capnoperitoneum, capnothorax",
+            "Watch for rising EtCO2 and peak airway pressure, falling SpO2, abdominal distension",
+            "Decompress capnoperitoneum with a Veress needle; tension capnothorax needs a chest drain",
+            "Increase minute ventilation to clear the CO2 load; check for subcutaneous crepitus at end of case",
+            "Mucosal perforation and bleeding are surgical risks; plan for post-op nil by mouth and antiemetics"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Achalasia = failed LES relaxation + aperistalsis; dysphagia to solids and liquids together",
+            "Bird's beak on barium; manometry confirms; Chicago types I-III",
+            "Main danger is aspiration of the oesophageal reservoir at induction, even after fasting",
+            "Empty the oesophagus, head-up, RSI, awake extubation",
+            "POEM: think CO2 complications (capnothorax, pneumoperitoneum, surgical emphysema)",
+            "Long-standing achalasia increases risk of squamous cell carcinoma of oesophagus"
+          ]
+        }
+      ],
+      "pearl": "Fasting does not empty an achalasia oesophagus: suction it, sit them up, and do an RSI.",
+      "refs": [
+        {
+          "title": "Yadlapati R et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil 2021",
+          "url": "https://doi.org/10.1111/nmo.14058"
+        },
+        {
+          "title": "Vaezi MF et al. ACG Clinical Guidelines: Diagnosis and Management of Achalasia. Am J Gastroenterol 2020",
+          "url": "https://doi.org/10.14309/ajg.0000000000000731"
+        }
+      ],
+      "created": "2026-11-16",
+      "updated": "2026-11-16",
+      "seen": 1
     }
-   ]
-  }
- ]
+  ]
 }
