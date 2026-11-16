@@ -1511,6 +1511,36 @@ body[data-fest="christmas"] .tb-home::before{content:"";position:absolute;top:2p
 body[data-fest="christmas"] .tb-home{position:relative}
 /* skip drawing off-screen advance cards until you scroll to them v5.29 */
 .card.adv{content-visibility:auto;contain-intrinsic-size:auto 260px}
+
+/* Off Instagram: quiet pill on Today + badge sheet */
+.igp-w{display:flex;justify-content:center;margin:8px 0 0}
+.igp{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:4px 12px;border-radius:999px;border:0;font:inherit;font-size:12.5px;font-weight:500;letter-spacing:.01em;background:#E3EFE6!important;color:#2F6B4F!important}
+.igp b{font-weight:700;color:inherit!important}
+.igp.hit{background:#FBF2D4!important;color:#6B560F!important}
+@media (prefers-color-scheme:dark){.igp{background:#24493F!important;color:#E4EFE6!important}.igp.hit{background:#5A4A12!important;color:#FBF2D4!important}}
+#sheet .ig-top{display:flex;flex-direction:row;align-items:center;gap:14px}
+.ig-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+#sheet .ig-n{font-family:var(--f-head,inherit);font-size:26px;line-height:1.1;color:#1C2621!important}
+#sheet .ig-s{font-size:14px;line-height:1.35;color:#36433C!important}
+#sheet .ig-nx{margin:0;padding:0 4px;font-size:14px;color:#36433C!important}
+.ig-shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#sheet .ig-b{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;min-height:104px;padding:12px 6px;border-radius:18px;border:0;font:inherit;text-align:center;background:var(--sh-blk)!important}
+#sheet .ig-b.on{background:#FBF2D4!important}
+.ig-e{font-size:28px;line-height:1.15}
+.ig-b.off .ig-e{font-size:20px;filter:grayscale(1);margin:5px 0}
+#sheet .ig-b b{font-size:12.5px;line-height:1.25;font-weight:600;color:#1C2621!important}
+#sheet .ig-b small{font-size:11.5px;color:#45514A!important}
+#sheet .ig-b.on small{color:#5E4C0C!important}
+#sheet .ig-party{position:relative;overflow:hidden;align-items:center;text-align:center;gap:4px;padding:22px 16px;background:#FBF2D4!important}
+.ig-big{font-size:64px;line-height:1.1;animation:igpop .7s cubic-bezier(.2,.9,.25,1) both}
+#sheet .ig-k{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4C0C!important}
+#sheet .ig-name{font-family:var(--f-head,inherit);font-size:22px;line-height:1.2;color:#1C2621!important}
+#sheet .ig-line{margin:2px 0 0;font-size:15px;line-height:1.5;color:#36433C!important}
+.ig-conf{position:absolute;inset:0;pointer-events:none}
+.ig-conf i{position:absolute;top:-14px;width:7px;height:12px;border-radius:2px;opacity:0;animation:igfall 1.8s ease-in 2 both}
+@keyframes igfall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(260px) rotate(540deg);opacity:0}}
+@keyframes igpop{0%{transform:scale(.3) rotate(-20deg);opacity:0}70%{transform:scale(1.15) rotate(5deg);opacity:1}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.ig-conf{display:none}.ig-big{animation:none}}
 </style>
 </head>
 <body data-sec="today">
@@ -1539,7 +1569,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.44 · cap on the button';
+const APP_VERSION = '5.45 · days off the gram';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
@@ -1595,7 +1625,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 const banners = { save: null, info: null };
 function blank() {
   return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {},
-    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
+    settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-13', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
 function normalise(s) {
@@ -1827,7 +1857,7 @@ function tbanArt(ph) {
    This device writes push/<device>.json to the private sync repository: its push subscription plus the next 3 days
    of reminders. A GitHub job there sends each one when it's due (checked every 30 minutes). */
 const VAPID_PUB = 'BPJZfLn1uUvBEClxeSbI1x_ZL4Yf9EvL6DkDfPEP2Qepc43Ny8nmmCix5VKTx2FqnkBI1FH4cB6PrTKTdD0RIkQ';
-const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nReleases', 'Release day for things you asked to be reminded about (9:30 AM)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
+const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nReleases', 'Release day for things you asked to be reminded about (9:30 AM)', true], ['nStreak', 'Off-Instagram badge unlocked (9 AM on the day)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
 const nOn = k => { const S = state.settings, d = NOTIF_TYPES.find(x => x[0] === k); return S[k] === undefined ? d[2] : !!S[k]; };
 const pushSub = () => { try { return JSON.parse(localStorage.getItem('studydesk.pushSub') || 'null'); } catch (_) { return null; } };
 const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
@@ -1887,6 +1917,8 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     if (nOn('nAttend') && state.settings.attOn !== false && !(state.attDone || {})[day]) { push('att|' + day, day, 9, '🏥 Hospital attendance', 'Log in your attendance for today', 'today'); push('att2|' + day, day, 10, '🏥 Attendance still to do', 'Quick reminder to log in your hospital attendance', 'today'); }
     // releases she asked to be reminded about
     if (nOn('nReleases')) ((D.upcoming && D.upcoming.items) || []).filter(u => (state.upWatch || {})[u.id] && u.date === day).forEach(u => push('up|' + u.id, day, 9, MT(u.type)[1] + ' Out today', u.title + (u.where ? ' · ' + u.where : ''), 'others', 30));
+    // off-Instagram badge days
+    if (nOn('nStreak')) { const dd = igDaysOn(day); const b = dd > 0 && igMiles(dd).find(x => x[0] === dd); if (b) push('ig|' + dd, day, 9, b[1] + ' Badge unlocked: ' + b[2], plural(dd, 'day') + ' off Instagram. Open Docks to collect it.', 'today'); }
     // parcels arriving
     if (nOn('nDelivery')) ((PERS().deliveries) || []).filter(x => x.date === day && x.status !== 'delivered').forEach((x, j) => push('del|' + day + '|' + j, day, 9, '📦 Arriving today', (x.what || 'A parcel') + (x.store ? ' · ' + x.store : ''), 'calendar', 15));
   }
@@ -2021,6 +2053,44 @@ function habitEditSheet() {
       <div class="row field hab-ed"><input name="eN" placeholder="🙂" maxlength="4"><input class="left" name="nN" placeholder="New habit (e.g. Stretch)"><input name="fN" type="number" min="0" max="23" value="21"><input name="tN" type="number" min="0" max="24" value="3"></div></div>
     <input type="hidden" name="count" value="${H.length}"></form>`);
 }
+/* ---------- Off Instagram: a quiet day count on Today, with badges at milestone days ---------- */
+const IG_MILES = [
+  [1, '🌱', 'Sprout', 'One day down. The algorithm has noticed you left and is coping badly.'],
+  [3, '🧘', 'Thumb at Rest', 'Three days. Your scrolling thumb has put in for early retirement.'],
+  [7, '🏅', 'One Week Wonder', 'A whole week. Seven evenings that belonged to you and nobody’s stories.'],
+  [15, '🥉', 'Bronze Unscroller', 'Fifteen days. Officially a habit in the making, unofficially a very big deal.'],
+  [30, '🥈', 'Silver Month', 'A month. Thousands of reels came and went, and you missed every single one. Magnificent.'],
+  [45, '🎖️', 'The Forty-Five Club', 'A very exclusive club. Current membership: you.'],
+  [60, '🥇', 'Gold, Obviously', 'Sixty days. By now Instagram should be the one missing you.'],
+  [90, '🏆', 'Quarter-Year Trophy', 'Ninety days. This trophy is imaginary and it is still heavier than your phone.'],
+  [120, '💎', 'Diamond Attention Span', 'One hundred and twenty days. Formed under pressure, cannot be scrolled.'],
+  [180, '👑', 'Half-Year Royalty', 'Half a year. Please accept this crown and wear it on rounds.'],
+  [270, '🚀', 'Escape Velocity', 'Nine months. You have left the feed’s gravity for good.'],
+  [365, '🦄', 'Mythical Creature', 'One full year. People will say you are not real. Let them.']];
+const igSince = () => { const S = state.settings; return S.igOn !== false && /^\d{4}-\d\d-\d\d$/.test(S.igSince || '') ? S.igSince : ''; };
+const igDaysOn = day => { const s = igSince(); return s ? Math.round((new Date(day + 'T12:00') - new Date(s + 'T12:00')) / 864e5) : -1; };
+const igDays = () => igDaysOn(today());
+function igMiles(d) { const M = IG_MILES.slice(); for (let y = 2; 365 * (y - 1) <= d; y++) M.push([365 * y, '🌟', y + ' Years Unbothered', y + ' years. At this point the badge is just showing off on your behalf.']); return M; }
+const igRank = d => igMiles(d).filter(x => x[0] <= d).pop() || null;
+const igNext = d => igMiles(d).find(x => x[0] > d);
+function igPill() { const d = igDays(); if (d < 0) return ''; const r = igRank(d), hit = r && r[0] === d;
+  return `<div class="igp-w"><button class="igp${hit ? ' hit' : ''}" type="button" data-act="ig-open"><span aria-hidden="true">${hit ? r[1] : '🌱'}</span>${d === 0 ? 'Day zero off Instagram' : `<b>${d}</b> ${d === 1 ? 'day' : 'days'} off Instagram`}${hit ? '<span aria-hidden="true">✨</span>' : ''}</button></div>`; }
+const igSeenKey = r => state.settings.igSince + '|' + r[0];
+function igMarkSeen(d) { const r = igRank(d); if (r && state.settings.igSeen !== igSeenKey(r)) { state.settings.igSeen = igSeenKey(r); if (save()) syncSoon(); } }
+function igSheet(partyDay) { const d = igDays(); if (d < 0) return; const M = igMiles(d), r = igRank(d), nx = igNext(d), prev = r ? r[0] : 0;
+  const pb = partyDay ? M.find(x => x[0] === partyDay && x[0] <= d) : null; igMarkSeen(d);
+  const CONF = ['#E8A87C', '#7FB69A', '#C9B6E4', '#F2D06B', '#E89AA6', '#8DB8DE'];
+  const party = pb ? `<div class="card ig-party"><div class="ig-conf" aria-hidden="true">${Array.from({ length: 18 }, (_, i) => `<i style="left:${4 + (i * 53) % 92}%;background:${CONF[i % 6]};animation-delay:${(i % 6) * 0.12}s;animation-duration:${1.5 + (i % 5) * 0.22}s"></i>`).join('')}</div>
+      <span class="ig-big" aria-hidden="true">${pb[1]}</span><span class="ig-k">Achievement unlocked · day ${pb[0]}</span><b class="ig-name">${esc(pb[2])}</b><p class="ig-line">${esc(pb[3])}</p></div>` : '';
+  openSheet(`<div class="sheet-in">${sheetHead('Off Instagram')}${party}
+    <div class="card ig-top">${ring(d - prev, nx[0] - prev, 64, 'ig')}<div class="ig-tx"><b class="ig-n">${d === 0 ? 'Day zero' : plural(d, 'day')}</b><span class="ig-s">off Instagram since ${catDate(igSince())}</span><span class="ig-s">${r ? 'Your title: ' + r[1] + ' ' + esc(r[2]) : 'Your first badge arrives tomorrow'}</span></div></div>
+    <p class="ig-nx">Next badge on day ${nx[0]}, ${nx[0] - d === 1 ? 'tomorrow' : 'in ' + plural(nx[0] - d, 'day')}.</p>
+    <div class="ig-shelf">${M.map(x => x[0] <= d
+      ? `<button type="button" class="ig-b on" data-act="ig-badge" data-id="${x[0]}"><span class="ig-e" aria-hidden="true">${x[1]}</span><b>${esc(x[2])}</b><small>Day ${x[0]} ✓</small></button>`
+      : `<div class="ig-b off"><span class="ig-e" aria-hidden="true">🔒</span><b>Day ${x[0]}</b><small>in ${plural(x[0] - d, 'day')}</small></div>`).join('')}</div></div>`); }
+/* a new badge day: show it once, when Today is open and nothing else is on screen */
+function igCheck() { const d = igDays(); if (d < 1 || tab !== 'today') return; const r = igRank(d); if (!r || state.settings.igSeen === igSeenKey(r)) return;
+  setTimeout(() => { if (tab === 'today' && !sheetOpen() && !drawerShown() && igDays() === d) igSheet(r[0]); }, 900); }
 function wxChip() {
   if (!state.settings.weatherOn) return '';
   const L = state.loc; const W = state.weather && state.weather.data;
@@ -2037,6 +2107,7 @@ function pageToday() {
   const t = today(); const P = profile(); const gi = { 'Good morning': '☀️', 'Good afternoon': '🌤️', 'Good evening': '🌇', 'Good night': '🌙' }[greeting()] || '';
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
   let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
+  h += igPill();
   { const F = festNow(); if (F) h += `<p class="fest-line">${F.chip} ${esc(F.name)}${F.n === 0 ? ' is today' : F.n < 0 ? '' : ' in ' + plural(F.n, 'day')}</p>`; }
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
@@ -2602,6 +2673,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('adv', '📰 New advances', ['Summaries are short plain-language digests written from the PubMed abstracts. Always read the original before changing practice.']),
     it('ot', '🩺 OT list & cases', ['The OT list is sorted by time. Ticks stay on this phone. Patient details open on this phone only, through private sync.', 'Cases on the website are a de-identified copy: no patient names or hospital IDs.']),
     it('leis', '🎵 Music, NBA & stories', ['Tap a song to open it in Spotify.', 'NBA standings: orange bar is top 6 (direct playoff places), grey bar is 7 to 10 (play-in).', 'Fact of the day: one topic is picked at random each morning. Tap a topic to see its past picks or remove it.']),
+    it('ig', '🌱 Off Instagram', ['The small line under the Today banner counts the days since you left. Tap it for your badges; tap a badge you have earned to replay it.', 'A new badge unlocks on days 1, 3, 7, 15, 30, 45, 60, 90, 120, 180, 270 and 365, then every year. It pops up once on the day.', 'To change the start date or hide it, use More settings.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
@@ -2624,6 +2696,8 @@ function pageBackup() {
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
+    <label class="row toggle"><span>Days off Instagram on Today</span><input type="checkbox" data-setting="igOn" ${S.igOn !== false ? 'checked' : ''}></label>
+    <label class="row field"><span class="f-l">Off Instagram since</span><input type="date" data-setting="igSince" max="${today()}" value="${esc(S.igSince || '')}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
     <label class="row toggle"><span>Backup dot in the menu (orange = no backup this week)</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
@@ -3323,6 +3397,8 @@ document.addEventListener('click', e => {
     case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
     case 'cat-open': catSheet(); break;
+    case 'ig-open': igSheet(); break;
+    case 'ig-badge': igSheet(+id); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
     case 'icon-sheet': openSheet(iconSheet()); break;
     case 'icon-pack': state.settings.iconPack = b.dataset.id; if (b.dataset.id === 'classic') state.settings.sketchOn = false; commit('Icon style changed'); openSheet(iconSheet()); break;
@@ -3994,7 +4070,7 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); batteryPull(); }); if (state.settings.weatherOn) fetchWeather(false);
+renderBanner(); render(); igCheck(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); batteryPull(); }); if (state.settings.weatherOn) fetchWeather(false);
 (() => {
   let x0 = null, y0 = null, from = null;
   document.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
@@ -4003,10 +4079,10 @@ renderBanner(); render(); checkPersist(); loadData(false); loadDevice().then(() 
     if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
 })();
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.active && activeMins() >= 1 && !sheetOpen()) setTimeout(finishSheet, 600); });
-let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) render(); } }, 60e3);
+let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) { render(); igCheck(); } } }, 60e3);
 setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { loadData(false); privateSync(false); deviceSync(false); batteryPull(); if (state.settings.weatherOn) fetchWeather(false); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (tab === 'today' && !sheetOpen()) render(); igCheck(); loadData(false); privateSync(false); deviceSync(false); batteryPull(); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>
