@@ -1,80 +1,48 @@
 {
-  "updated": "2026-11-15T01:14:44Z",
+  "updated": "2026-11-16T03:00:00Z",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
-    {
-      "id": "cats",
-      "name": "Cats",
-      "emoji": "🐈"
-    },
-    {
-      "id": "dota2",
-      "name": "Dota 2",
-      "emoji": "🎮"
-    },
-    {
-      "id": "houseplants",
-      "name": "Houseplants",
-      "emoji": "🪴"
-    },
-    {
-      "id": "cooking",
-      "name": "Cooking & nutrition",
-      "emoji": "🍳"
-    },
-    {
-      "id": "finance",
-      "name": "Personal finance",
-      "emoji": "💰"
-    },
-    {
-      "id": "nba",
-      "name": "NBA",
-      "emoji": "🏀"
-    },
-    {
-      "id": "fountain-pens",
-      "name": "Fountain pens",
-      "emoji": "🖋️"
-    },
-    {
-      "id": "history",
-      "name": "History",
-      "emoji": "📜"
-    },
-    {
-      "id": "superheroes",
-      "name": "Superheroes (DC & Marvel)",
-      "emoji": "🦸"
-    },
-    {
-      "id": "nature",
-      "name": "Nature",
-      "emoji": "🌿"
-    },
-    {
-      "id": "nasa",
-      "name": "NASA & space",
-      "emoji": "🚀"
-    }
+    {"id": "cats", "name": "Cats", "emoji": "🐈"},
+    {"id": "dota2", "name": "Dota 2", "emoji": "🎮"},
+    {"id": "houseplants", "name": "Houseplants", "emoji": "🪴"},
+    {"id": "cooking", "name": "Cooking & nutrition", "emoji": "🍳"},
+    {"id": "finance", "name": "Personal finance", "emoji": "💰"},
+    {"id": "nba", "name": "NBA", "emoji": "🏀"},
+    {"id": "fountain-pens", "name": "Fountain pens", "emoji": "🖋️"},
+    {"id": "history", "name": "History", "emoji": "📜"},
+    {"id": "superheroes", "name": "Superheroes (DC & Marvel)", "emoji": "🦸"},
+    {"id": "nature", "name": "Nature", "emoji": "🌿"},
+    {"id": "nasa", "name": "NASA & space", "emoji": "🚀"}
   ],
   "today": {
-    "date": "2026-11-15",
-    "topic": "nba",
-    "topicName": "NBA",
-    "kind": "article",
-    "title": "The NBA turned 80, and its first game was in Canada",
-    "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68–66 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
+    "date": "2026-11-16",
+    "topic": "history",
+    "topicName": "History",
+    "kind": "fact",
+    "title": "The US capital that lasted exactly one day: Lancaster, 1777",
+    "text": "After the Battle of Brandywine in September 1777, Congress fled Philadelphia ahead of the British army and zigzagged through Trenton, Easton, Bethlehem and Reading. On 27 September, about fourteen delegates, John Hancock and Samuel Adams among them, met in Lancaster's courthouse on Centre Square for a single session. Every item of business that day was military. By evening they had voted to cross the Susquehanna River and meet in York, which then served as the capital until mid-1778.",
     "source": {
-      "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
-      "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
-    },
-    "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maple_Leaf_Gardens_Postcard_1931.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_Gardens_Postcard_1931.jpg"
+      "title": "Uncharted Lancaster: The day Lancaster was the nation's capital",
+      "url": "https://unchartedlancaster.com/2019/09/27/lancaster-was-the-nations-capital-for-one-day/"
     }
   },
   "history": [
+    {
+      "date": "2026-11-15",
+      "topic": "nba",
+      "topicName": "NBA",
+      "kind": "article",
+      "title": "The NBA turned 80, and its first game was in Canada",
+      "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68–66 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
+      "source": {
+        "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
+        "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maple_Leaf_Gardens_Postcard_1931.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_Gardens_Postcard_1931.jpg"
+      }
+    },
     {
       "date": "2026-11-14",
       "topic": "cats",
