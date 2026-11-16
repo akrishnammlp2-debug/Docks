@@ -49,17 +49,21 @@ T={
 'diwali':(diya,rangoli,"radial-gradient(60% 110% at 50% 125%,rgba(255,170,60,.5),transparent 70%),linear-gradient(180deg,#33304A,#1E1B33)",ring('#FFC14E')),
 }
 Q='body[data-fest]:not([data-fest=""])'
-css=f"""/* festive tab bar: each festival has its own bar (own colours or edge trim), two small emblems in the gaps between buttons, and its own ring on Home */
+# v5.50: emblems are frosted (milky, see-through, slightly soft) and scattered: eight small pieces at mixed sizes, tilts and heights,
+# all kept above the label line and beside the icons so every tab name stays crisp.
+tilt=lambda g,a: E(f"<g transform='rotate({a} 12 12) translate(2 2) scale(.833)'>{g}</g>")
+# (which emblem, x%, y px from top, size px)
+SC=[('l',20.5,8,19),('r2',3.5,24,12),('r',38,7,11),('l2',24,26,10),('r',78.5,13,18),('l2',62.5,24,12),('l',95.5,10,11),('r2',74.5,5,9)]
+layer=",".join(f"var(--fb-{k}) {x}% {y}px/{z}px {z}px no-repeat" for k,x,y,z in SC)
+css=f"""/* festive tab bar: each festival has its own bar (own colours or edge trim), frosted emblems scattered behind the buttons, and its own ring on Home */
 {Q} .tabbar>button{{position:relative;z-index:1}}
 {Q} .tabbar{{background:var(--fb-bar);background-clip:padding-box}}
-{Q} .tabbar::before,{Q} .tabbar::after{{content:"";position:absolute;top:11px;width:21px;height:21px;margin-left:-10.500px;background:center/contain no-repeat;opacity:.92;pointer-events:none;z-index:0}}
-{Q} .tabbar::before{{left:calc(7px + (100% - 84px) / 4);background-image:var(--fb-l)}}
-{Q} .tabbar::after{{left:calc(100% - 7px - (100% - 84px) / 4);background-image:var(--fb-r)}}
+{Q} .tabbar::before{{content:"";position:absolute;inset:0;border-radius:inherit;background:{layer};opacity:.56;filter:contrast(.62) brightness(1.5) saturate(.8) blur(.45px) drop-shadow(0 0 2.5px rgba(255,255,255,.55));-webkit-filter:contrast(.62) brightness(1.5) saturate(.8) blur(.45px) drop-shadow(0 0 2.5px rgba(255,255,255,.55));pointer-events:none;z-index:0}}
 {Q} .tb-home{{box-shadow:var(--fb-ring)}}
-"""+"".join(f"body[data-fest=\"{k}\"]{{--fb-l:{E(l)};--fb-r:{E(r)};--fb-bar:{bar};--fb-ring:{rg}}}\n" for k,(l,r,bar,rg) in T.items())
+"""+"".join(f"body[data-fest=\"{k}\"]{{--fb-l:{tilt(l,-12)};--fb-l2:{tilt(l,24)};--fb-r:{tilt(r,10)};--fb-r2:{tilt(r,-20)};--fb-bar:{bar};--fb-ring:{rg}}}\n" for k,(l,r,bar,rg) in T.items())
 p='index.html'; L=open(p,encoding='utf-8').read().split('\n')
 a=[k for k,l in enumerate(L) if l.startswith('/* festive tab bar:')][0]
 b=max(k for k,l in enumerate(L) if l.startswith('body[data-fest="') and '--fb-' in l)
 L[a:b+1]=css.rstrip('\n').split('\n'); s='\n'.join(L)
-import re; s=re.sub(r"const APP_VERSION = '5\.4[89][^']*';","const APP_VERSION = '5.49 · a bar for every festival';",s)
+import re; s=re.sub(r"const APP_VERSION = '5\.(49|50)[^']*';","const APP_VERSION = '5.50 · frosted, scattered festive emblems';",s)
 open(p,'w',encoding='utf-8').write(s)
