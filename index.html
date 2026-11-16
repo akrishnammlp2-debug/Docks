@@ -1893,7 +1893,7 @@ const battLevel = r => { let v = parseFloat(String(r.level).replace(',', '.')); 
 const battCharging = r => /^(yes|true|1|charging|full)$/i.test(String(r.charging || '').trim());
 const battAgo = iso => { const t = Date.parse(iso); if (!t) return ''; const m = Math.round((Date.now() - t) / 6e4); return m < 2 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + (m < 2880 ? ' day ago' : ' days ago'); };
 async function batteryPull() { const cfg = syncCfg(); if (!cfg.token || state.settings.battOn === false) return; let ch = false;
-  for (const [d] of BATT_DEV) { try { const r = await gh(cfg, '/contents/battery/' + d + '.json'); if (!r.ok) continue; const j = JSON.parse(b64utf8((await r.json()).content || '')); if (j && j.at && (!batt[d] || batt[d].at !== j.at || batt[d].level !== j.level)) { batt[d] = j; ch = true; } } catch (_) {} }
+  for (const [d] of BATT_DEV) { try { const r = await gh(cfg, '/contents/battery/' + d + '.json'); if (!r.ok) continue; const raw = b64utf8((await r.json()).content || ''), m = raw.match(/\{[^{}]*\}/); const j = JSON.parse(m ? m[0] : raw); if (j && j.at && (!batt[d] || batt[d].at !== j.at || batt[d].level !== j.level)) { batt[d] = j; ch = true; } } catch (_) {} }
   if (ch) { try { localStorage.setItem(BATT_KEY, JSON.stringify(batt)); } catch (_) {} if (tab === 'today') render(); } }
 function battHow() { const st = (n, t, x) => `<div class="batt-step"><span class="batt-sn">${n}</span><div><b>${t}</b>${x ? `<span class="c-s">${x}</span>` : ''}</div></div>`;
   return `<details class="in-how"><summary>How it works</summary><div class="in-how-b">
