@@ -1507,7 +1507,7 @@ body[data-fest="diwali"] #fest-fx .fx1,body[data-fest="dasara"] #fest-fx .fx1,bo
 body[data-fest="holi"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(255,111,181,.4) 0 2.4px,transparent 3.2px),radial-gradient(circle at 170px 180px,rgba(111,211,255,.4) 0 2px,transparent 2.8px),radial-gradient(circle at 110px 230px,rgba(255,211,107,.45) 0 2px,transparent 2.8px)}
 body[data-fest="sankranti"] #fest-fx .fx1,body[data-fest="ugadi"] #fest-fx .fx1,body[data-fest="janmashtami"] #fest-fx .fx1,body[data-fest="eid"] #fest-fx .fx1,body[data-fest="india"] #fest-fx .fx1,body[data-fest="rajyotsava"] #fest-fx .fx1{background-image:radial-gradient(circle at 40px 60px,rgba(242,193,78,.4) 0 1.8px,transparent 2.6px),radial-gradient(circle at 170px 180px,rgba(124,227,139,.35) 0 1.6px,transparent 2.4px)}
 /* tiny seasonal touch on the home button */
-body[data-fest="christmas"] .tb-home::before{content:"";position:absolute;top:-9px;left:50%;width:24px;height:20px;transform:translateX(-10%) rotate(-10deg);background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'><path d='M5 25 C8 13 16 5 27 4 C33 4 36 8 35 13 C33 10 30 9 28 11 C26 16 27 21 29 25 Z' fill='%23B8545A' stroke='%238A4448' stroke-width='1.2' stroke-linejoin='round'/><path d='M9 9 C14 6 20 5 25 6' fill='none' stroke='%23FF6B70' stroke-width='1.4' stroke-linecap='round' opacity='.7'/><rect x='2' y='23' width='30' height='8' rx='4' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/><circle cx='35' cy='14' r='4.2' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/></svg>") center/contain no-repeat;opacity:.7;filter:saturate(.55);pointer-events:none;z-index:2}
+body[data-fest="christmas"] .tb-home::before{content:"";position:absolute;top:2px;left:50%;width:26px;height:22px;transform:translateX(-50%) rotate(-6deg);background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'><path d='M5 25 C8 13 16 5 27 4 C33 4 36 8 35 13 C33 10 30 9 28 11 C26 16 27 21 29 25 Z' fill='%23B8545A' stroke='%238A4448' stroke-width='1.2' stroke-linejoin='round'/><path d='M9 9 C14 6 20 5 25 6' fill='none' stroke='%23FF6B70' stroke-width='1.4' stroke-linecap='round' opacity='.7'/><rect x='2' y='23' width='30' height='8' rx='4' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/><circle cx='35' cy='14' r='4.2' fill='%23FFFFFF' stroke='%23B9C2C8' stroke-width='1'/></svg>") center/contain no-repeat;opacity:.7;filter:saturate(.55);pointer-events:none;z-index:2}
 body[data-fest="christmas"] .tb-home{position:relative}
 /* skip drawing off-screen advance cards until you scroll to them v5.29 */
 .card.adv{content-visibility:auto;contain-intrinsic-size:auto 260px}
@@ -1539,7 +1539,7 @@ body[data-fest="christmas"] .tb-home{position:relative}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.43 · quieter cap';
+const APP_VERSION = '5.44 · cap on the button';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming'];
 
