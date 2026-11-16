@@ -1,53 +1,99 @@
 {
- "updated": "2026-11-15",
+ "updated": "2026-11-16",
  "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
  "today": {
-  "date": "2026-11-15",
-  "title": "Old Plum",
-  "artist": "Kano Sansetsu",
-  "artistLife": "Japanese, 1590–1651",
-  "year": "1646",
-  "medium": "Ink, colour, gold and gold leaf on paper, painted across four sliding doors (fusuma)",
-  "size": "174.6 × 485.5 cm (almost five metres wide: once a whole wall of a room)",
+  "date": "2026-11-16",
+  "title": "The Heart of the Andes",
+  "artist": "Frederic Edwin Church",
+  "artistLife": "American, 1826–1900",
+  "year": "1859",
+  "medium": "Oil on canvas",
+  "size": "168 × 303 cm (about three metres wide, like a cinema screen for its day)",
   "where": "The Metropolitan Museum of Art, New York",
-  "movement": "Kano school, early Edo period (Japan)",
-  "fame": "hidden gem",
+  "movement": "Hudson River School, American landscape painting",
+  "fame": "famous",
   "image": {
-   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=1200",
-   "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=300",
-   "full": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=2400",
-   "page": "https://commons.wikimedia.org/wiki/File:老梅図襖-Old_Plum_MET_DT229.jpg",
+   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=1200",
+   "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=300",
+   "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=2400",
+   "page": "https://commons.wikimedia.org/wiki/File:Church_Heart_of_the_Andes.jpg",
    "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
-   "focus": "center 60%"
+   "focus": "center 45%"
   },
   "sections": [
    {
     "h": "The painting",
-    "p": "One ancient plum tree sprawls across four sliding doors. Its huge, mossy black trunk heaves in from the lower right and snakes left over a field of shimmering gold, while thin twigs carry small white blossoms that look almost frozen in the cold. It is the very start of spring: the old tree is flowering again."
+    "p": "A whole South American world squeezed into one huge canvas. Snowy volcanic peaks glow far away, a waterfall tumbles into a bright pool at the right, and in the foreground there are palms, flowers, birds and butterflies. Two tiny figures kneel by a wooden cross at the left, so small that you almost miss them."
    },
    {
     "h": "The artist",
-    "p": "Kano Sansetsu was born in Kyushu, trained under the painter Kano Sanraku, married his daughter and was adopted as his heir. He went on to lead the Kyoto branch of the Kano family, Japan's most powerful dynasty of painters. Writers describe him as a bit of an eccentric, a bookish collector who liked strange, twisting forms, and later rebels such as Ito Jakuchu are sometimes seen as his artistic grandchildren."
+    "p": "Frederic Church grew up in Connecticut and studied under Thomas Cole, the founder of the Hudson River School. He became the most famous American landscape painter of his generation. He travelled to Colombia and Ecuador in 1853 and 1857, filling sketchbooks with plants, rocks, clouds and mountains."
    },
    {
     "h": "The time",
-    "p": "In the early 1600s the Tokugawa shoguns took over Japan and moved power to Edo (today's Tokyo). The family's star painters followed them there and developed a cooler, more delicate style, but Sanraku had been close to the defeated Toyotomi clan, so his branch stayed behind in Kyoto and kept the bold, oversized look of the previous generation. This wall was commissioned by a young lord, Matsudaira Tadahiro, for Tensho-in, a small Zen temple he founded in Kyoto in memory of his father, a grandson of the first Tokugawa shogun."
+    "p": "In the 1850s, the German naturalist Alexander von Humboldt was a hero to many readers. He had described how one mountain could hold every climate, from steamy jungle at the bottom to ice at the top, and Church set out to follow his footsteps. The painting is not one real view but a made-up mix of places he had seen. When it was shown in New York in 1859, thousands of people paid 25 cents to see it, and it helped make Church the leading American landscape painter. He later sold it for $10,000, a record for a living American artist then."
    },
    {
     "h": "What's special",
-    "p": "Gold leaf was not just showing off: in dim temple rooms lit by paper screens and lamps, it caught every bit of light and made the room glow. Because the painting is on doors, it was meant to be lived in, so you would see the tree grow and change as you walked past or slid the panels open. The temple burned in the 1880s and only these four panels survived; they were trimmed down, separated from their back side (now in Minneapolis), and the Met later built a traditional Japanese room just to show them."
+    "p": "Church mixed scientific accuracy with theatre. Every plant and rock is painted with a botanist's care, yet the scene is arranged like a stage set, with warm light on the left and cool distance on the right. It was shown alone in a darkened room with a window-like frame, and visitors were given opera glasses to look at the details. It was meant to feel less like looking at a picture and more like looking out of a window."
    },
    {
     "h": "Look for",
-    "p": "Green lichen crusting the old trunk, next to tall, pillar-like rocks and low bamboo grass at the lower right. Just behind the rock, a branch from a second tree sneaks in with pink blossoms instead of white. At the far left edge, azalea leaves hint that the story once carried on into summer on the missing doors."
+    "p": "Find the two small figures and the cross at the far left, then follow the stream into the middle of the picture and up the waterfall. Bring your eyes right up close to the leaves and flowers in the foreground: every one is painted individually."
    }
   ],
   "source": {
    "title": "The Metropolitan Museum of Art",
-   "url": "https://www.metmuseum.org/art/collection/search/44858"
+   "url": "https://www.metmuseum.org/art/collection/search/10481"
   }
  },
  "history": [
+  {
+   "date": "2026-11-15",
+   "title": "Old Plum",
+   "artist": "Kano Sansetsu",
+   "artistLife": "Japanese, 1590–1651",
+   "year": "1646",
+   "medium": "Ink, colour, gold and gold leaf on paper, painted across four sliding doors (fusuma)",
+   "size": "174.6 × 485.5 cm (almost five metres wide: once a whole wall of a room)",
+   "where": "The Metropolitan Museum of Art, New York",
+   "movement": "Kano school, early Edo period (Japan)",
+   "fame": "hidden gem",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:老梅図襖-Old_Plum_MET_DT229.jpg",
+    "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+    "focus": "center 60%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "One ancient plum tree sprawls across four sliding doors. Its huge, mossy black trunk heaves in from the lower right and snakes left over a field of shimmering gold, while thin twigs carry small white blossoms that look almost frozen in the cold. It is the very start of spring: the old tree is flowering again."
+    },
+    {
+     "h": "The artist",
+     "p": "Kano Sansetsu was born in Kyushu, trained under the painter Kano Sanraku, married his daughter and was adopted as his heir. He went on to lead the Kyoto branch of the Kano family, Japan's most powerful dynasty of painters. Writers describe him as a bit of an eccentric, a bookish collector who liked strange, twisting forms, and later rebels such as Ito Jakuchu are sometimes seen as his artistic grandchildren."
+    },
+    {
+     "h": "The time",
+     "p": "In the early 1600s the Tokugawa shoguns took over Japan and moved power to Edo (today's Tokyo). The family's star painters followed them there and developed a cooler, more delicate style, but Sanraku had been close to the defeated Toyotomi clan, so his branch stayed behind in Kyoto and kept the bold, oversized look of the previous generation. This wall was commissioned by a young lord, Matsudaira Tadahiro, for Tensho-in, a small Zen temple he founded in Kyoto in memory of his father, a grandson of the first Tokugawa shogun."
+    },
+    {
+     "h": "What's special",
+     "p": "Gold leaf was not just showing off: in dim temple rooms lit by paper screens and lamps, it caught every bit of light and made the room glow. Because the painting is on doors, it was meant to be lived in, so you would see the tree grow and change as you walked past or slid the panels open. The temple burned in the 1880s and only these four panels survived; they were trimmed down, separated from their back side (now in Minneapolis), and the Met later built a traditional Japanese room just to show them."
+    },
+    {
+     "h": "Look for",
+     "p": "Green lichen crusting the old trunk, next to tall, pillar-like rocks and low bamboo grass at the lower right. Just behind the rock, a branch from a second tree sneaks in with pink blossoms instead of white. At the far left edge, azalea leaves hint that the story once carried on into summer on the missing doors."
+    }
+   ],
+   "source": {
+    "title": "The Metropolitan Museum of Art",
+    "url": "https://www.metmuseum.org/art/collection/search/44858"
+   }
+  },
   {
    "date": "2026-11-14",
    "title": "Paris Street; Rainy Day",
