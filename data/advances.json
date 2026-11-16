@@ -1,7 +1,55 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43034248",
+      "doi": "10.1007/s12630-026-03214-3",
+      "added": "2026-11-16",
+      "date": "2026-11-14",
+      "title": "Risk factors associated with the development of a catheter-related thrombosis in patients with critical illness: a systematic review and meta-analysis.",
+      "journal": "Can J Anaesth",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Haemodynamics",
+        "Perioperative medicine"
+      ],
+      "summary": "The authors pooled 32 studies of about 11,900 critically ill adults to find what predicts clot formation around central lines. Internal jugular insertion (adjusted odds ratio about 3.8), surgical admission (about 2.5) and older age raised the risk, and roughly 1 in 8 patients developed a catheter-related thrombosis, though rates varied widely between studies.",
+      "why": "It supports thinking twice about internal jugular lines that are left in for long, and about tailoring thromboprophylaxis in older and post-surgical ICU patients, which is useful for both ICU rounds and viva discussions on central line complications."
+    },
+    {
+      "pmid": "43033537",
+      "doi": "10.1016/j.jclinane.2026.112370",
+      "added": "2026-11-16",
+      "date": "2026-11-14",
+      "title": "Perioperative management of patients with recent concussion undergoing noncardiac extracranial surgery: A modified Delphi consensus study.",
+      "journal": "J Clin Anesth",
+      "type": "Consensus",
+      "area": "Anaesthesia",
+      "tags": [
+        "Neuro",
+        "Perioperative medicine"
+      ],
+      "summary": "Thirty-five experts from 17 countries, nearly all anaesthesiologists, rated statements over two rounds on managing adults who had a recent concussion and need non-cardiac surgery away from the head. They agreed on screening for symptoms and red flags before surgery, avoiding low oxygen, abnormal CO2 and prolonged low or very high blood pressure, and usually postponing elective surgery until symptoms settle. No agreement was reached on choice of anaesthetic technique, EEG depth monitoring or neuraxial opioids, and the authors stress this is expert opinion, not a guideline.",
+      "why": "Recent head injury is a common pre-anaesthetic question in trauma-heavy settings, and this gives a practical, if low-grade, framework for deciding timing and for protecting the brain intraoperatively."
+    },
+    {
+      "pmid": "43032658",
+      "doi": "10.1016/j.aicoj.2026.100194",
+      "added": "2026-11-16",
+      "date": "2026-10-28",
+      "title": "Outcomes of extracorporeal membrane oxygenation in critically ill patients with sickle cell disease: a systematic review and meta-analysis.",
+      "journal": "Ann Intensive Care",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Ventilation",
+        "Cardiac"
+      ],
+      "summary": "Seven retrospective studies covering 252 patients with sickle cell disease who received ECMO, mostly for acute chest syndrome, were pooled. The combined death rate was about 65% with wide uncertainty and large differences between studies, and complications such as haemolysis were poorly reported. The data are too weak for firm conclusions and the authors call for dedicated registries.",
+      "why": "Sickle cell disease is common in parts of India, so this is a sobering reference point when discussing rescue options for acute chest syndrome, though ECMO itself is rarely available outside a few centres."
+    },
     {
       "pmid": "43023815",
       "doi": "10.1097/CCM.0000000000007450",
