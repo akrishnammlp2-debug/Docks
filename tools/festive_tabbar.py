@@ -48,22 +48,39 @@ T={
 'ganesha':(modak,hibiscus,dotline+",linear-gradient(180deg,#4A3A2C,#2E2A22)",ring('#F2A541')),
 'diwali':(diya,rangoli,"radial-gradient(60% 110% at 50% 125%,rgba(255,170,60,.5),transparent 70%),linear-gradient(180deg,#33304A,#1E1B33)",ring('#FFC14E')),
 }
-Q='body[data-fest]:not([data-fest=""])'
+
+# ordinary days (v5.52): a quiet look for the season, used when no festival is within 10 days
+flake="".join(f"<path d='M12 3 V21' transform='rotate({a} 12 12)' stroke='#DCEBFA' stroke-width='1.600' stroke-linecap='round'/><path d='M9.600 5 L12 7.200 L14.400 5 M9.600 19 L12 16.800 L14.400 19' transform='rotate({a} 12 12)' fill='none' stroke='#DCEBFA' stroke-width='1.300' stroke-linecap='round' stroke-linejoin='round'/>" for a in (0,60,120))
+mist="<path d='M3 9 H15 M6 13 H21 M3 17 H13' stroke='#C9DCEB' stroke-width='1.800' stroke-linecap='round'/><circle cx='18.500' cy='9' r='1.300' fill='#C9DCEB'/><circle cx='16.500' cy='17' r='1.300' fill='#C9DCEB'/>"
+blossom=petals(5,4.8,3.9,'#F6B3C8')+"<circle cx='12' cy='12' r='2.300' fill='#F7D774'/>"
+bud="<path d='M12 22 V11' stroke='#7CCB8F' stroke-width='1.500' stroke-linecap='round'/><path d='M12 15 C8 15 5.500 12.500 5.500 9 C9 9 12 11.500 12 15Z' fill='#7CCB8F'/><path d='M12 11 C9.500 9 9.500 4.500 12 2.500 C14.500 4.500 14.500 9 12 11Z' fill='#F6B3C8'/>"
+melon="<path d='M2.500 9 A9.500 9.500 0 0 0 21.500 9 Z' fill='#6CC487'/><path d='M4.300 9 A7.700 7.700 0 0 0 19.700 9 Z' fill='#F26D6D'/><circle cx='9' cy='12' r='.8' fill='#2A2A2A'/><circle cx='12' cy='14' r='.8' fill='#2A2A2A'/><circle cx='15' cy='12' r='.8' fill='#2A2A2A'/>"
+drop="<path d='M12 3 C16.500 9 17.500 12.500 17.500 15 A5.500 5.500 0 0 1 6.500 15 C6.500 12.500 7.500 9 12 3Z' fill='#9CCFF0'/><path d='M9.500 15 A2.500 2.500 0 0 0 12 17.500' fill='none' stroke='#E6F4FD' stroke-width='1.300' stroke-linecap='round'/>"
+cloud="<path d='M7 15 A4 4 0 0 1 7.500 7 A5 5 0 0 1 17 8 A3.600 3.600 0 0 1 17.500 15 Z' fill='#C7D7E2'/><path d='M8 18 L7 21 M12 18 L11 21 M16 18 L15 21' stroke='#9CCFF0' stroke-width='1.600' stroke-linecap='round'/>"
+leaf="<path d='M5 19 C4 11 9 4 20 4 C20 14 13 20 5 19Z' fill='#E8913F'/><path d='M5 19 C9 15 13 11 17 7' fill='none' stroke='#B85F22' stroke-width='1.200' stroke-linecap='round'/>"
+leaf2="<path d='M12 2.500 L13.800 7 L18 5.500 L16.800 9.800 L21 11 L17.500 13.800 L19 17.500 L14.500 16.500 L12 21.500 L9.500 16.500 L5 17.500 L6.500 13.800 L3 11 L7.200 9.800 L6 5.500 L10.200 7 Z' fill='#D9583B'/><path d='M12 21.500 V9' stroke='#9E3B24' stroke-width='1.100' stroke-linecap='round'/>"
+SEASONS={
+'winter':(flake,mist,"linear-gradient(180deg,#2D4553,#1C2F3B)",ring('#BFD9EA')),
+'spring':(blossom,bud,"linear-gradient(180deg,#2F4E45,#1F3830)",ring('#F6B3C8')),
+'summer':(sun,melon,"linear-gradient(180deg,#22505A,#16383F)",ring('#F2C14E')),
+'monsoon':(drop,cloud,"linear-gradient(180deg,#2B4049,#1A2B33)",ring('#9CCFF0')),
+'autumn':(leaf,leaf2,"linear-gradient(180deg,#3F3B2A,#2A281C)",ring('#E8913F')),
+}
+Q=':is(body[data-fest]:not([data-fest=""]),body[data-season]:not([data-season=""]))'
 # v5.50: emblems are frosted (milky, see-through, slightly soft) and scattered: eight small pieces at mixed sizes, tilts and heights,
 # all kept above the label line and beside the icons so every tab name stays crisp.
 tilt=lambda g,a: E(f"<g transform='rotate({a} 12 12) translate(2 2) scale(.833)'>{g}</g>")
 # (which emblem, x%, y px from top, size px)
 SC=[('l',20.5,8,19),('r2',3.5,24,12),('r',38,7,11),('l2',24,26,10),('r',78.5,13,18),('l2',62.5,24,12),('l',95.5,10,11),('r2',74.5,5,9)]
 layer=",".join(f"var(--fb-{k}) {x}% {y}px/{z}px {z}px no-repeat" for k,x,y,z in SC)
-css=f"""/* festive tab bar: each festival has its own bar (own colours or edge trim), frosted emblems scattered behind the buttons, and its own ring on Home */
+css=f"""/* festive tab bar (and the season's quieter look on ordinary days): each festival has its own bar (own colours or edge trim), frosted emblems scattered behind the buttons, and its own ring on Home */
 {Q} .tabbar>button{{position:relative;z-index:1}}
 {Q} .tabbar{{background:var(--fb-bar);background-clip:padding-box}}
 {Q} .tabbar::before{{content:"";position:absolute;inset:0;border-radius:inherit;background:{layer};opacity:.56;filter:contrast(.62) brightness(1.5) saturate(.8) blur(.45px) drop-shadow(0 0 2.5px rgba(255,255,255,.55));-webkit-filter:contrast(.62) brightness(1.5) saturate(.8) blur(.45px) drop-shadow(0 0 2.5px rgba(255,255,255,.55));pointer-events:none;z-index:0}}
 {Q} .tb-home{{box-shadow:var(--fb-ring)}}
-"""+"".join(f"body[data-fest=\"{k}\"]{{--fb-l:{tilt(l,-12)};--fb-l2:{tilt(l,24)};--fb-r:{tilt(r,10)};--fb-r2:{tilt(r,-20)};--fb-bar:{bar};--fb-ring:{rg}}}\n" for k,(l,r,bar,rg) in T.items())
+"""+"".join(f"body[data-fest=\"{k}\"]{{--fb-l:{tilt(l,-12)};--fb-l2:{tilt(l,24)};--fb-r:{tilt(r,10)};--fb-r2:{tilt(r,-20)};--fb-bar:{bar};--fb-ring:{rg}}}\n" for k,(l,r,bar,rg) in T.items())+"".join(f"body[data-season=\"{k}\"]{{--fb-l:{tilt(l,-12)};--fb-l2:{tilt(l,24)};--fb-r:{tilt(r,10)};--fb-r2:{tilt(r,-20)};--fb-bar:{bar};--fb-ring:{rg}}}\n" for k,(l,r,bar,rg) in SEASONS.items())
 p='index.html'; L=open(p,encoding='utf-8').read().split('\n')
 a=[k for k,l in enumerate(L) if l.startswith('/* festive tab bar:')][0]
-b=max(k for k,l in enumerate(L) if l.startswith('body[data-fest="') and '--fb-' in l)
+b=max(k for k,l in enumerate(L) if (l.startswith('body[data-fest="') or l.startswith('body[data-season="')) and '--fb-' in l)
 L[a:b+1]=css.rstrip('\n').split('\n'); s='\n'.join(L)
-import re; s=re.sub(r"const APP_VERSION = '5\.(49|50)[^']*';","const APP_VERSION = '5.50 · frosted, scattered festive emblems';",s)
 open(p,'w',encoding='utf-8').write(s)
