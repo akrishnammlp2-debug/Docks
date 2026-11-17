@@ -628,6 +628,185 @@
    "created": "2026-11-17",
    "updated": "2026-11-17",
    "seen": 1
+  },
+  {
+   "id": "body-weight-scalars-drug-dosing",
+   "cat": "Drugs",
+   "title": "Body weight scalars & drug dosing (TBW vs IBW vs LBW vs ABW)",
+   "aliases": [
+    "actual body weight",
+    "ideal body weight",
+    "adjusted body weight",
+    "lean body weight",
+    "TBW",
+    "IBW",
+    "ABW",
+    "LBW",
+    "obese drug dosing",
+    "dosing weight",
+    "predicted body weight"
+   ],
+   "summary": "In obesity, fat adds weight but adds little to cardiac output, blood volume or drug-clearing organs. So dosing everything by actual weight overdoses many drugs, while dosing by ideal weight underdoses some. Which weight to use depends on whether the drug spreads into fat (lipophilic), how it is cleared, and whether you are giving a single bolus or a maintenance infusion.",
+   "sections": [
+    {
+     "h": "The weights and formulas",
+     "rows": [
+      [
+       "Total (actual) body weight, TBW",
+       "What the scale says. Includes fat and lean tissue."
+      ],
+      [
+       "Ideal body weight, IBW (Devine/Broca)",
+       "Male 50 + 0.91 x (height cm − 152.4); female 45.5 + 0.91 x (height cm − 152.4). Quick bedside: height cm − 100 (M) or − 105 (F)."
+      ],
+      [
+       "Predicted body weight, PBW",
+       "Same as Devine IBW (ARDSnet). Used for tidal volume."
+      ],
+      [
+       "Lean body weight, LBW (Janmahasatian)",
+       "M: 9270 x TBW / (6680 + 216 x BMI); F: 9270 x TBW / (8780 + 244 x BMI). Plateaus around 100 kg (M) / 70 kg (F) however heavy the patient."
+      ],
+      [
+       "Adjusted body weight, ABW",
+       "IBW + 0.4 x (TBW − IBW). Middle ground for drugs that partly distribute into fat."
+      ]
+     ]
+    },
+    {
+     "h": "Why it matters (principles)",
+     "items": [
+      "Cardiac output and early drug distribution track lean mass, so induction bolus doses follow LBW.",
+      "Highly lipophilic drugs have a bigger volume of distribution in obesity, so repeated doses / infusions accumulate and need a larger weight (TBW or ABW) for maintenance.",
+      "Hydrophilic drugs (e.g. NMBAs) stay in lean tissue and ECF, so dose on IBW/LBW.",
+      "Clearance correlates best with LBW for most drugs.",
+      "Always titrate to effect; weight scalar is only the starting point."
+     ]
+    },
+    {
+     "h": "Induction agents & sedatives",
+     "rows": [
+      [
+       "Propofol",
+       "Induction: LBW. Maintenance infusion: TBW (or ABW); use BIS/pEEG."
+      ],
+      [
+       "Thiopentone",
+       "Induction: LBW."
+      ],
+      [
+       "Etomidate",
+       "LBW."
+      ],
+      [
+       "Ketamine",
+       "LBW (IBW)."
+      ],
+      [
+       "Midazolam",
+       "Single bolus: TBW (big Vd); infusion: IBW (clearance not increased)."
+      ],
+      [
+       "Dexmedetomidine",
+       "ABW/LBW; watch bradycardia and hypotension."
+      ]
+     ]
+    },
+    {
+     "h": "Opioids, NMBAs & reversal",
+     "rows": [
+      [
+       "Fentanyl, morphine, remifentanil",
+       "LBW (remifentanil infusion on TBW gives overdose and hypotension)."
+      ],
+      [
+       "Suxamethonium",
+       "TBW, 1 to 1.5 mg/kg (plasma cholinesterase and ECF both increase)."
+      ],
+      [
+       "Rocuronium, vecuronium",
+       "IBW (LBW). Using TBW prolongs block. For RSI some give 1.2 mg/kg on LBW/ABW for faster onset."
+      ],
+      [
+       "Atracurium, cisatracurium",
+       "IBW/LBW."
+      ],
+      [
+       "Neostigmine",
+       "TBW, 0.04 to 0.05 mg/kg, max 5 mg."
+      ],
+      [
+       "Sugammadex",
+       "Label: actual body weight (2 or 4 mg/kg; 16 mg/kg immediate). Studies suggest IBW + 40% is enough for moderate block."
+      ]
+     ]
+    },
+    {
+     "h": "Other drugs & settings",
+     "rows": [
+      [
+       "Local anaesthetic maximum dose",
+       "LBW/IBW (not TBW) — LAST risk."
+      ],
+      [
+       "Paracetamol",
+       "LBW (or fixed 1 g)."
+      ],
+      [
+       "Enoxaparin",
+       "TBW-based; prophylaxis often 40 mg BD if BMI > 40; treatment dose TBW, check anti-Xa if > 150 kg."
+      ],
+      [
+       "Unfractionated heparin infusion",
+       "ABW; monitor aPTT/ACT."
+      ],
+      [
+       "Cefazolin prophylaxis",
+       "2 g; 3 g if ≥ 120 kg."
+      ],
+      [
+       "Vancomycin",
+       "Loading on TBW; then levels."
+      ],
+      [
+       "Aminoglycosides",
+       "ABW (dosing weight)."
+      ],
+      [
+       "Tidal volume",
+       "6 to 8 ml/kg PBW (IBW), never TBW."
+      ],
+      [
+       "Maintenance fluids",
+       "IBW/ABW, goal-directed."
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Classic rule: induction on LBW, maintenance on TBW (propofol); NMBAs on IBW; sux on TBW.",
+      "LBW is non-linear and plateaus; IBW ignores the extra lean mass that obese people do carry.",
+      "ABW correction factor is 0.4 (some sources use 0.3 or 0.5 for specific drugs).",
+      "PBW for ventilation — a favourite viva question in obese ARDS.",
+      "Mention monitoring: BIS/pEEG for TIVA, quantitative TOF for NMBAs, levels for antibiotics/heparin."
+     ]
+    }
+   ],
+   "pearl": "Bolus on lean, infuse on total; paralyse on ideal (except sux = total); ventilate on predicted.",
+   "refs": [
+    {
+     "title": "Ingrande J, Lemmens HJM. Dose adjustment of anaesthetics in the morbidly obese. Br J Anaesth 2010;105(S1):i16–23",
+     "url": "https://doi.org/10.1093/bja/aeq312"
+    },
+    {
+     "title": "AAGBI. Peri-operative management of the obese surgical patient 2015. Anaesthesia 2015;70:859–76",
+     "url": "https://doi.org/10.1111/anae.13101"
+    }
+   ],
+   "created": "2026-11-17",
+   "updated": "2026-11-17",
+   "seen": 1
   }
  ]
 }
