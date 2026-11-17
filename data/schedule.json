@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-11",
+ "updated": "2026-11-17",
  "sessionTime": "7:45 to 8:45 AM",
- "source": "Department of Anaesthesiology academic program, November 2026",
+ "source": "Department of Anaesthesiology academic program, November and December 2026",
  "items": [
   {
    "date": "2026-11-03",
@@ -173,6 +173,104 @@
   },
   {
    "date": "2026-11-30",
+   "kind": "exam",
+   "short": "OSCE",
+   "session": "OSCE test / quiz",
+   "topic": ""
+  },
+  {
+   "date": "2026-12-02",
+   "kind": "acad",
+   "short": "Guest lecture",
+   "session": "Guest Lecture",
+   "topic": "Perioperative management of a patient with a pacemaker and ICD"
+  },
+  {
+   "date": "2026-12-04",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "65-year-old chronic smoker with persistent cough, known COPD, for laparoscopic cholecystectomy"
+  },
+  {
+   "date": "2026-12-07",
+   "kind": "acad",
+   "short": "Group disc.",
+   "session": "Group Discussion",
+   "topic": "Paediatric crisis management: stridor, perioperative anaphylaxis, local anaesthetic systemic toxicity"
+  },
+  {
+   "date": "2026-12-08",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "70-year-old with CKD on twice-weekly dialysis and bowel obstruction for emergency laparotomy"
+  },
+  {
+   "date": "2026-12-10",
+   "kind": "acad",
+   "short": "Seminar",
+   "session": "Postgraduate Seminar",
+   "topic": "Scavenging systems"
+  },
+  {
+   "date": "2026-12-11",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "45-year-old man with 40% thermal burns for tangential excision"
+  },
+  {
+   "date": "2026-12-15",
+   "kind": "acad",
+   "short": "Regional",
+   "session": "Regional Anaesthesia",
+   "topic": "Regional innervation and analgesia strategies for shoulder surgery"
+  },
+  {
+   "date": "2026-12-17",
+   "kind": "acad",
+   "short": "Faculty lecture",
+   "session": "Faculty Lecture",
+   "topic": "Anaesthesia for organ donors"
+  },
+  {
+   "date": "2026-12-18",
+   "kind": "acad",
+   "short": "Seminar",
+   "session": "Postgraduate Seminar",
+   "topic": "Management of a patient with an intercostal drain"
+  },
+  {
+   "date": "2026-12-21",
+   "kind": "acad",
+   "short": "Clancon",
+   "session": "Clancon",
+   "topic": ""
+  },
+  {
+   "date": "2026-12-22",
+   "kind": "acad",
+   "short": "Journal club",
+   "session": "Journal Club",
+   "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
+  },
+  {
+   "date": "2026-12-23",
+   "kind": "acad",
+   "short": "Case",
+   "session": "Case Presentation",
+   "topic": "37-year-old primigravida with pregnancy-induced hypertension"
+  },
+  {
+   "date": "2026-12-29",
+   "kind": "acad",
+   "short": "Regional",
+   "session": "Regional Anaesthesia",
+   "topic": "Regional innervation and analgesia strategies for total hip and knee replacement"
+  },
+  {
+   "date": "2026-12-30",
    "kind": "exam",
    "short": "OSCE",
    "session": "OSCE test / quiz",
