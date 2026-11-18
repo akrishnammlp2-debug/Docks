@@ -1603,7 +1603,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.53 · season in the top bar';
+const APP_VERSION = '5.54 · More for long topic lists';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
@@ -1829,6 +1829,8 @@ let sel = today();
 let searchHitDate = null, searchHitName = '';
 let dotaSub = 'matches', rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
+let caseLogAll = false; /* case log shows 5 recent until expanded (v5.54) */
+const moreTopics = new Set(); /* subjects showing all topics (v5.54) */
 
 /* ---------- pages ---------- */
 const head = (title, sub, eyebrow) => `<div class="lt-wrap">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ''}<h1 class="lt">${esc(title)}</h1>${sub ? `<span class="lt-sub">${sub}</span>` : ''}</div>`;
@@ -2224,8 +2226,10 @@ function pageStudy() {
     const ts = state.topics.filter(t => t.subjectId === sb.id); const open = !collapsed.has(sb.id); const x = subjectStats(sb.id);
     h += `<div class="group" style="margin-bottom:10px"><div class="rowwrap"><button class="row" type="button" data-act="toggle-subject" data-id="${sb.id}">${x.pct !== null ? miniRing(x.pct) : `<span class="spec">${esc(sb.name.slice(0, 2))}</span>`}<span class="r-main"><span class="r-t" style="font-weight:600">${esc(sb.name)}</span><span class="r-s">${plural(ts.length, 'topic')}${x.mins ? ' · ' + fmtMins(x.mins) : ''}${x.tot ? ' · ' + x.done + '/' + x.tot + ' pages' : ''}</span></span><span class="muted">${open ? '▾' : '▸'}</span></button><button class="xbtn" type="button" data-act="edit-subject" data-id="${sb.id}" aria-label="Edit subject">⋯</button></div>`;
     if (open) {
-      h += ts.map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
+      const showAll = ts.length <= 3 || moreTopics.has(sb.id);
+      h += (showAll ? ts : ts.slice(0, 3)).map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
         return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}">${q.pct !== null ? miniRing(q.pct) : ''}<span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${[q.total ? q.page + '/' + q.total + ' pages' : '', q.mins ? fmtMins(q.mins) : '', st].filter(Boolean).map(esc).join(' · ')}</span></span></button><button class="btn small ghost" style="margin-right:10px" type="button" data-act="study-now" data-id="${t.id}" aria-label="Study ${esc(t.name)} now">▶</button></div>`; }).join('');
+      if (ts.length > 3) h += `<button class="row" type="button" data-act="more-topics" data-id="${sb.id}" style="color:var(--accent)">${showAll ? 'Show less ▴' : 'More · ' + plural(ts.length - 3, 'topic') + ' ▾'}</button>`;
       h += `<button class="row" type="button" data-act="add-topic" data-id="${sb.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
     }
     h += `</div>`;
@@ -2615,7 +2619,8 @@ function pageCases() {
   let h = head('SLCM cases', '', 'Logbook');
   h += myCasesSection(0);
   h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'tosync' : 'good'}">${unsynced ? 'Not on SLCM' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
-  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}</div></div>`;
+  const CS = C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n); const CLIM = 5;
+  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${(caseLogAll ? CS : CS.slice(0, CLIM)).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}${CS.length > CLIM ? `<button class="row" type="button" data-act="caselog-more" style="color:var(--accent)">${caseLogAll ? 'Show less ▴' : 'More · ' + plural(CS.length - CLIM, 'older case') + ' ▾'}</button>` : ''}</div></div>`;
   const total = C.length || 1;
   h += `<div class="sec"><h2 class="sh">Case mix</h2><div class="card" style="gap:10px">${[['Anaesthesia', 'type'], ['Specialty', 'specialty'], ['ASA grade', 'asa']].map(([name, key]) => {
     const counts = {}; C.forEach(c => { const k = c[key] || 'Not recorded'; counts[k] = (counts[k] || 0) + 1; });
@@ -3535,6 +3540,8 @@ document.addEventListener('click', e => {
       closeSheet(); commit('Entry deleted', () => { state.events.splice(idx, 0, rm); commit(); }); break; }
     case 'add-subject': subjectSheet(null); break;
     case 'edit-subject': subjectSheet(id); break;
+    case 'caselog-more': caseLogAll = !caseLogAll; render(); break;
+    case 'more-topics': moreTopics.has(id) ? moreTopics.delete(id) : moreTopics.add(id); render(); break;
     case 'toggle-subject': collapsed.has(id) ? collapsed.delete(id) : collapsed.add(id); render(); break;
     case 'delete-subject': {
       const s = byId(state.subjects, id); const tids = state.topics.filter(t => t.subjectId === id).map(t => t.id);
