@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17",
+ "updated": "2026-11-18",
  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
  "cats": [
   "Drugs",
@@ -806,6 +806,170 @@
    ],
    "created": "2026-11-17",
    "updated": "2026-11-17",
+   "seen": 1
+  },
+  {
+   "id": "capnography-waveforms",
+   "cat": "Monitoring & equipment",
+   "title": "Capnography waveforms (abnormal capnograms)",
+   "aliases": [
+    "capnogram",
+    "capnography",
+    "etco2 waveform",
+    "abnormal capnogram",
+    "capnograph patterns",
+    "co2 waveform"
+   ],
+   "summary": "A capnogram plots exhaled CO₂ against time for each breath. The shape tells you more than the EtCO₂ number: where the tube is, whether the airway is narrowed, whether the circuit is leaking or letting you rebreathe, and whether the heart is pumping blood through the lungs. Read it in order: baseline, upstroke, plateau, downstroke, then the trend over many breaths.",
+   "sections": [
+    {
+     "h": "The normal capnogram",
+     "svg": "<svg viewBox=\"0 0 380 210\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><text class=\"nf-t nf-h\" x=\"30\" y=\"22\">CO₂ (mmHg)</text><line x1=\"30\" y1=\"170\" x2=\"360\" y2=\"170\" class=\"nf-l\"/><line x1=\"30\" y1=\"30\" x2=\"30\" y2=\"170\" class=\"nf-l\"/><path d=\"M30,168 L95,168 C108,168 112,72 128,64 L250,52 C258,52 262,60 266,110 C270,150 274,168 285,168 L360,168\" class=\"nf-p\"/><text class=\"nf-t\" x=\"60\" y=\"160\" text-anchor=\"middle\">I</text><text class=\"nf-t\" x=\"104\" y=\"120\">II</text><text class=\"nf-t\" x=\"185\" y=\"48\" text-anchor=\"middle\">III</text><text class=\"nf-t\" x=\"276\" y=\"104\">0</text><text class=\"nf-t\" x=\"252\" y=\"40\" text-anchor=\"middle\">EtCO₂</text><text class=\"nf-t\" x=\"128\" y=\"92\">α</text><text class=\"nf-t\" x=\"238\" y=\"74\">β</text><text class=\"nf-t\" x=\"95\" y=\"190\" text-anchor=\"middle\">expiration →</text><text class=\"nf-t\" x=\"320\" y=\"190\" text-anchor=\"middle\">inspiration</text></svg>",
+     "alt": "Normal capnogram with phases 0, I, II and III, alpha and beta angles",
+     "rows": [
+      [
+       "Phase I",
+       "Baseline: dead-space gas with no CO₂. Should sit at zero."
+      ],
+      [
+       "Phase II",
+       "Steep upstroke: mixing of dead-space and alveolar gas."
+      ],
+      [
+       "Phase III",
+       "Alveolar plateau, gently rising. EtCO₂ is read at its end."
+      ],
+      [
+       "Phase 0",
+       "Inspiratory downstroke back to zero (some texts call it phase IV)."
+      ],
+      [
+       "α angle",
+       "Between II and III, normally about 100–110°. Wider = airway obstruction."
+      ],
+      [
+       "β angle",
+       "Between III and 0, normally about 90°. Wider = rebreathing."
+      ],
+      [
+       "Normal EtCO₂",
+       "35–45 mmHg; usually 2–5 mmHg below PaCO₂ in healthy lungs."
+      ]
+     ]
+    },
+    {
+     "h": "Airway and breathing patterns",
+     "rows": [
+      [
+       "Bronchospasm / obstruction",
+       "Slow, sloping upstroke and steep phase III: the 'shark fin'. Wide α angle."
+      ],
+      [
+       "Curare cleft",
+       "A dip in the plateau: the patient is making small breaths against the ventilator as relaxant wears off. Surgeons leaning on the chest or abdomen can mimic it."
+      ],
+      [
+       "Spontaneous breathing",
+       "Small, rounded waves with a poorly defined plateau."
+      ],
+      [
+       "IMV / weaning",
+       "Tall mandatory breaths mixed with smaller spontaneous ones; comparing their heights shows how much the patient is doing."
+      ],
+      [
+       "Cardiogenic oscillations",
+       "Small ripples on the end of the plateau or downstroke during a long expiratory pause, from the heartbeat moving gas at the sensor. Harmless."
+      ]
+     ]
+    },
+    {
+     "h": "Circuit and equipment problems",
+     "rows": [
+      [
+       "Raised baseline (rebreathing)",
+       "Baseline does not return to zero: exhausted soda lime, faulty valves, or low fresh gas flow in a Mapleson circuit."
+      ],
+      [
+       "Expiratory valve fault",
+       "Exhaled gas is re-inhaled from the expiratory limb: raised baseline and a slurred inspiratory downstroke."
+      ],
+      [
+       "Inspiratory valve fault",
+       "Exhaled gas passes back into the inspiratory limb and is re-inhaled: slanted downstroke, baseline may not reach zero."
+      ],
+      [
+       "Mapleson D / Bain",
+       "Rebreathing dip and raised baseline are expected if fresh gas flow is too low for the minute ventilation."
+      ],
+      [
+       "Sensor contamination",
+       "Sudden step-up of baseline and EtCO₂ from secretions or water in the sampling line or sensor."
+      ],
+      [
+       "Sampling-port leak",
+       "Air dilutes the sample: low EtCO₂ and an odd double-peaked plateau (sidestream monitors)."
+      ]
+     ]
+    },
+    {
+     "h": "Tube position and circulation",
+     "rows": [
+      [
+       "Oesophageal intubation",
+       "A few small, shrinking waves (CO₂ washed out of the stomach) that fall to zero within about 6 breaths."
+      ],
+      [
+       "Sudden fall to zero",
+       "Disconnection, extubation, blocked tube or sampling line, or cardiac arrest. Check the patient first."
+      ],
+      [
+       "CPR",
+       "Waves appear with each compression. EtCO₂ <10 mmHg suggests poor compressions; a sudden rise to normal levels suggests return of circulation."
+      ],
+      [
+       "Sudden drop (not zero)",
+       "Fall in cardiac output or pulmonary blood flow: massive PE, air embolism, severe hypotension."
+      ]
+     ]
+    },
+    {
+     "h": "Special situations",
+     "rows": [
+      [
+       "Malignant hyperthermia",
+       "EtCO₂ climbs breath after breath with a normal zero baseline (soda lime still absorbing). Often the earliest sign."
+      ],
+      [
+       "Pregnancy (GA)",
+       "Normal phase II but steeper phase III; a normal variant. EtCO₂ can equal or exceed PaCO₂."
+      ],
+      [
+       "Single-lung transplant",
+       "Two peaks in phase III: the first from the new healthy lung, the second from the slow-emptying native lung."
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Six breaths of a sustained, regular capnogram is the gold standard for confirming tracheal intubation.",
+      "A capnogram can be present in an oesophageal intubation for the first few breaths (gastric CO₂ after bag-mask ventilation or carbonated drinks), then it fades.",
+      "Shark fin = obstruction (bronchospasm, kinked tube, COPD). Raised baseline = rebreathing.",
+      "Gradual rise in EtCO₂ with normal baseline: think MH, hypoventilation, fever, laparoscopic CO₂ absorption, tourniquet or clamp release.",
+      "Sudden fall: think circuit first (disconnection, leak), then circulation (arrest, embolism).",
+      "During CPR, EtCO₂ guides compression quality and is often the first sign of ROSC."
+     ]
+    }
+   ],
+   "pearl": "Read the shape before the number: zero baseline, square plateau, steady trend. A shark fin means obstruction, a lifted baseline means rebreathing.",
+   "refs": [
+    {
+     "title": "Kodali BS. Capnography outside the operating rooms. Anesthesiology 2013;118:192–201",
+     "url": "https://doi.org/10.1097/ALN.0b013e318278c8b6"
+    }
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
    "seen": 1
   }
  ]
