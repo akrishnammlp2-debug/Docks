@@ -1,7 +1,120 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-18",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43043609",
+      "doi": "10.1007/s12630-026-03226-z",
+      "added": "2026-11-18",
+      "date": "2026-11-17",
+      "title": "Effects of lowering inspired oxygen fraction during anesthesia emergence on immediate postoperative loss of lung aeration assessed by ultrasonography: a multicentre randomized controlled trial.",
+      "journal": "Can J Anaesth",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Airway",
+        "Ventilation"
+      ],
+      "summary": "102 adults having laparoscopic gastrectomy were given either 50% or 80% oxygen only during emergence from anaesthesia. Lung ultrasound scores in recovery were the same (median 3 in both arms), and atelectasis on day-2 chest X-ray (57% vs 49%) and desaturation events also did not differ.",
+      "why": "Suggests you need not fuss over dropping FiO2 at extubation purely to protect lung aeration, so keep a safe oxygen reserve for the airway in routine, low-risk cases."
+    },
+    {
+      "pmid": "43041112",
+      "doi": "10.1097/EJA.0000000000002537",
+      "added": "2026-11-18",
+      "date": "2026-11-17",
+      "title": "Postoperative pulmonary function after video-assisted thoracic surgery using epidural analgesia or oral morphine for pain management: A secondary analysis of the SEAVATS randomised trial.",
+      "journal": "Eur J Anaesthesiol",
+      "type": "Other",
+      "area": "Anaesthesia",
+      "tags": [
+        "Thoracic",
+        "Analgesia"
+      ],
+      "summary": "This is a secondary analysis of the SEAVATS randomised trial, looking at lung function after video-assisted thoracic surgery in patients given either epidural analgesia or oral morphine. PubMed has no abstract yet, so the results are not summarised here; read the paper for the findings.",
+      "why": "Relevant to choosing between epidural and simpler opioid-based analgesia after minimally invasive chest surgery, where an epidural is often unavailable or resource-heavy."
+    },
+    {
+      "pmid": "43039646",
+      "doi": "10.1136/rapm-2026-108247",
+      "added": "2026-11-18",
+      "date": "2026-11-16",
+      "title": "Evaluating the analgesic effectiveness of erector spinae plane block for patients undergoing cardiac surgery: a systematic review and meta-analysis of randomized trials.",
+      "journal": "Reg Anesth Pain Med",
+      "type": "Meta-analysis",
+      "area": "Anaesthesia",
+      "tags": [
+        "Regional",
+        "Cardiac",
+        "Analgesia"
+      ],
+      "summary": "A meta-analysis of randomised trials testing whether an erector spinae plane block gives useful pain relief after cardiac surgery. PubMed has no abstract yet, so the pooled results are not summarised here; read the paper for effect sizes.",
+      "why": "The ESP block is a popular, low-cost option in cardiac theatres, and a high-quality pooled analysis helps judge whether it deserves a place in your fast-track plan and in exam answers."
+    },
+    {
+      "pmid": "43038632",
+      "doi": "10.1016/j.ijoa.2026.105311",
+      "added": "2026-11-18",
+      "date": "2026-11-05",
+      "title": "Intraoperative active warming with or without active prewarming on maternal hypothermia in patients undergoing elective cesarean delivery with spinal anesthesia: A randomized controlled study.",
+      "journal": "Int J Obstet Anesth",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Obstetric",
+        "Regional"
+      ],
+      "summary": "78 women having elective caesarean under spinal received forced-air warming and warmed fluids, with half also getting 20 minutes of forced-air prewarming. Core temperature on reaching recovery was identical (36.6 C), hypothermia (5% vs 15%) and shivering (10% vs 28%) were not significantly different, but prewarmed women reported better thermal comfort.",
+      "why": "Done in Indian centres, it shows that intraoperative warming plus warm fluids is the essential part, while prewarming mainly adds comfort and may not justify extra equipment time."
+    },
+    {
+      "pmid": "43038343",
+      "doi": "10.1097/ALN.0000000000006404",
+      "added": "2026-11-18",
+      "date": "2026-11-16",
+      "title": "Tegileridine versus Sufentanil for Postoperative Nausea and Vomiting after Gynecological Laparoscopic Surgery: A Randomized, Double-Blind Superiority Trial.",
+      "journal": "Anesthesiology",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "PONV",
+        "Analgesia",
+        "Pharmacology"
+      ],
+      "summary": "A double-blind trial comparing tegileridine, a newer opioid, with sufentanil for postoperative nausea and vomiting after gynaecological laparoscopy. PubMed has no abstract yet, so the results are not summarised here; read the paper for the numbers.",
+      "why": "Shows the search for opioids with fewer side effects such as PONV, though tegileridine is not available in India, so treat it as background for pharmacology and PONV-prevention discussions."
+    },
+    {
+      "pmid": "43040557",
+      "doi": "10.1186/s13054-026-06275-4",
+      "added": "2026-11-18",
+      "date": "2026-08-20",
+      "title": "Switching from controlled to assisted ventilation based on oxygenation thresholds and PEEP: a target trial emulation.",
+      "journal": "Crit Care",
+      "type": "Trial emulation",
+      "area": "Critical care",
+      "tags": [
+        "Ventilation"
+      ],
+      "summary": "Using records of 1,635 ventilated adults in a US ICU database, the authors simulated switching from controlled to assisted modes at different PaO2/FiO2 cut-offs. Waiting until the ratio passed 250 meant longer time to successful extubation (about 19.6 vs 17.4 days lost) than switching at above 150 or 200, with no difference in death; patients on PEEP of 8 or more may do slightly better with a cut-off near 200.",
+      "why": "Supports moving patients to spontaneous modes earlier rather than waiting for near-normal oxygenation, a useful point for weaning discussions, though it is observational and needs prospective confirmation."
+    },
+    {
+      "pmid": "43040521",
+      "doi": "10.1186/s13054-026-06447-2",
+      "added": "2026-11-18",
+      "date": "2026-11-10",
+      "title": "Ventilator-circuit configurations for noninvasive ventilation in infants with acute respiratory failure: a randomized crossover trial.",
+      "journal": "Crit Care",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Ventilation",
+        "Paediatric"
+      ],
+      "summary": "Twelve infants with acute respiratory failure received non-invasive ventilation through three set-ups in random order, with oesophageal pressure used to count patient-ventilator asynchrony. Asynchrony was lowest with a single-limb turbine circuit (about 9%), higher with a dual-limb turbine (25%) and highest with a dual-limb PICU ventilator (46%), driven largely by auto-triggering, while effort fell similarly with all three.",
+      "why": "A small physiological study, but it reminds you that leak and trigger behaviour of the ventilator and circuit matter in infant NIV, relevant when choosing equipment in a paediatric ICU."
+    },
     {
       "pmid": "43034248",
       "doi": "10.1007/s12630-026-03214-3",
