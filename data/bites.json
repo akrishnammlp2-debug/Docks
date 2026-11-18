@@ -862,52 +862,64 @@
      "rows": [
       [
        "Bronchospasm / obstruction",
-       "Slow, sloping upstroke and steep phase III: the 'shark fin'. Wide α angle."
+       "Slow, sloping upstroke and steep phase III: the 'shark fin'. Wide α angle.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C26,68 30,48 38,38 C46,28 56,22 64,20 L68,68 M80,68 L94,68 C102,68 106,48 114,38 C122,28 132,22 140,20 L144,68 M156,68 L170,68 C178,68 182,48 190,38 C198,28 208,22 216,20 L220,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Curare cleft",
-       "A dip in the plateau: the patient is making small breaths against the ventilator as relaxant wears off. Surgeons leaning on the chest or abdomen can mimic it."
+       "A dip in the plateau: the patient is making small breaths against the ventilator as relaxant wears off. Surgeons leaning on the chest or abdomen can mimic it.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L50,20 C56,20 58,36 64,36 C70,36 72,20 78,20 L96,19 L101,68 L118,68 M118,68 L134,68 L140,20 L164,20 C170,20 172,36 178,36 C184,36 186,20 192,20 L210,19 L215,68 L232,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Spontaneous breathing",
-       "Small, rounded waves with a poorly defined plateau."
+       "Small, rounded waves with a poorly defined plateau.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C22,18 44,18 48,68 L62,68 M62,68 L76,68 C80,18 102,18 106,68 L120,68 M120,68 L134,68 C138,18 160,18 164,68 L178,68 M178,68 L192,68 C196,18 218,18 222,68 L236,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "IMV / weaning",
-       "Tall mandatory breaths mixed with smaller spontaneous ones; comparing their heights shows how much the patient is doing."
+       "Tall mandatory breaths mixed with smaller spontaneous ones; comparing their heights shows how much the patient is doing.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C17,24 34,24 37,68 L46,68 M46,68 L56,68 C59,24 76,24 79,68 L88,68 M88,68 L96,68 L101,16 L150,14 L155,68 L162,68 M162,68 L172,68 C175,24 192,24 195,68 L204,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Cardiogenic oscillations",
-       "Small ripples on the end of the plateau or downstroke during a long expiratory pause, from the heartbeat moving gas at the sensor. Harmless."
+       "Small ripples on the end of the plateau or downstroke during a long expiratory pause, from the heartbeat moving gas at the sensor. Harmless.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 L20,20 L110,18 C116,20 118,30 124,28 C130,26 132,42 138,40 C144,38 146,54 152,52 C158,50 160,64 166,62 C172,60 176,68 184,68 L236,68\" class=\"nf-p\"/></svg>"
       ]
-     ]
+     ],
+     "tip": "Tap a pattern to see its waveform."
     },
     {
      "h": "Circuit and equipment problems",
      "rows": [
       [
        "Raised baseline (rebreathing)",
-       "Baseline does not return to zero: exhausted soda lime, faulty valves, or low fresh gas flow in a Mapleson circuit."
+       "Baseline does not return to zero: exhausted soda lime, faulty valves, or low fresh gas flow in a Mapleson circuit.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 L26,54 L32,20 L76,17 L81,54 L81,54 L103,54 L109,20 L153,17 L158,54 L158,54 L180,54 L186,20 L230,17 L235,54 L236,54\" class=\"nf-p\"/></svg>"
       ],
       [
        "Expiratory valve fault",
-       "Exhaled gas is re-inhaled from the expiratory limb: raised baseline and a slurred inspiratory downstroke."
+       "Exhaled gas is re-inhaled from the expiratory limb: raised baseline and a slurred inspiratory downstroke.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,52 L22,52 L28,20 L66,20 C70,30 74,50 82,52 M80,52 L98,52 L104,20 L142,20 C146,30 150,50 158,52 M156,52 L174,52 L180,20 L218,20 C222,30 226,50 234,52\" class=\"nf-p\"/></svg>"
       ],
       [
        "Inspiratory valve fault",
-       "Exhaled gas passes back into the inspiratory limb and is re-inhaled: slanted downstroke, baseline may not reach zero."
+       "Exhaled gas passes back into the inspiratory limb and is re-inhaled: slanted downstroke, baseline may not reach zero.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,62 L16,62 L22,22 L52,22 L76,62 M80,62 L92,62 L98,22 L128,22 L152,62 M156,62 L168,62 L174,22 L204,22 L228,62\" class=\"nf-p\"/></svg>"
       ],
       [
        "Mapleson D / Bain",
-       "Rebreathing dip and raised baseline are expected if fresh gas flow is too low for the minute ventilation."
+       "Rebreathing dip and raised baseline are expected if fresh gas flow is too low for the minute ventilation.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 C10,64 14,68 20,68 C26,68 30,50 34,48 L38,32 L80,30 L84,54 C90,68 96,60 102,66 C108,70 112,62 118,58 M118,54 C124,64 128,68 134,68 C140,68 144,50 148,48 L152,32 L194,30 L198,54 C204,68 210,60 216,66 C222,70 226,62 232,58\" class=\"nf-p\"/></svg>"
       ],
       [
        "Sensor contamination",
-       "Sudden step-up of baseline and EtCO₂ from secretions or water in the sampling line or sensor."
+       "Sudden step-up of baseline and EtCO₂ from secretions or water in the sampling line or sensor.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,24 L71,68 L71,54 L87,54 L93,18 L133,18 L138,54 L138,54 L154,54 L160,14 L200,14 L205,54 L236,54\" class=\"nf-p\"/></svg>"
       ],
       [
        "Sampling-port leak",
-       "Air dilutes the sample: low EtCO₂ and an odd double-peaked plateau (sidestream monitors)."
+       "Air dilutes the sample: low EtCO₂ and an odd double-peaked plateau (sidestream monitors).",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L16,68 L21,26 C28,24 32,40 42,38 L60,28 L64,68 L80,68 M80,68 L92,68 L97,26 C104,24 108,40 118,38 L136,28 L140,68 L156,68 M156,68 L168,68 L173,26 C180,24 184,40 194,38 L212,28 L216,68 L232,68\" class=\"nf-p\"/></svg>"
       ]
      ]
     },
@@ -916,19 +928,23 @@
      "rows": [
       [
        "Oesophageal intubation",
-       "A few small, shrinking waves (CO₂ washed out of the stomach) that fall to zero within about 6 breaths."
+       "A few small, shrinking waves (CO₂ washed out of the stomach) that fall to zero within about 6 breaths.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C18,42 32,42 36,68 L46,68 M46,68 L56,68 C60,50 74,50 78,68 L88,68 M88,68 L98,68 C102,56 116,56 120,68 L130,68 M130,68 L140,68 C144,60 158,60 162,68 L172,68 M172,68 L182,68 C186,64 200,64 204,68 L214,68 M214,68 L236,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Sudden fall to zero",
-       "Disconnection, extubation, blocked tube or sampling line, or cardiac arrest. Check the patient first."
+       "Disconnection, extubation, blocked tube or sampling line, or cardiac arrest. Check the patient first.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,18 L71,68 L71,68 L87,68 L93,20 L133,18 L138,68 L236,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "CPR",
-       "Waves appear with each compression. EtCO₂ <10 mmHg suggests poor compressions; a sudden rise to normal levels suggests return of circulation."
+       "Waves appear with each compression. EtCO₂ <10 mmHg suggests poor compressions; a sudden rise to normal levels suggests return of circulation.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 C9,52 17,52 22,68 L25,68 C30,50 38,50 43,68 L46,68 C51,50 59,50 64,68 L67,68 C72,52 80,52 85,68 L88,68 C93,58 101,58 106,68 L109,68 C114,50 122,50 127,68 L130,68 C135,54 143,54 148,68 L151,68 C156,50 164,50 169,68 L172,68 C177,56 185,56 190,68 L193,68 C198,50 206,50 211,68 L214,68 C219,56 227,56 232,68 L235,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Sudden drop (not zero)",
-       "Fall in cardiac output or pulmonary blood flow: massive PE, air embolism, severe hypotension."
+       "Fall in cardiac output or pulmonary blood flow: massive PE, air embolism, severe hypotension.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L24,20 L58,18 L63,68 L63,68 L77,68 L83,20 L117,18 L122,68 L122,68 L136,68 L142,44 L176,44 L181,68 L181,68 L193,68 L199,46 L233,46 L238,68 L236,68\" class=\"nf-p\"/></svg>"
       ]
      ]
     },
@@ -937,15 +953,18 @@
      "rows": [
       [
        "Malignant hyperthermia",
-       "EtCO₂ climbs breath after breath with a normal zero baseline (soda lime still absorbing). Often the earliest sign."
+       "EtCO₂ climbs breath after breath with a normal zero baseline (soda lime still absorbing). Often the earliest sign.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L22,44 L48,43 L52,68 L52,68 L66,68 L70,38 L96,37 L100,68 L100,68 L114,68 L118,32 L144,31 L148,68 L148,68 L162,68 L166,26 L192,25 L196,68 L196,68 L210,68 L214,20 L240,19 L244,68 L236,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Pregnancy (GA)",
-       "Normal phase II but steeper phase III; a normal variant. EtCO₂ can equal or exceed PaCO₂."
+       "Normal phase II but steeper phase III; a normal variant. EtCO₂ can equal or exceed PaCO₂.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,38 L60,16 L65,68 L80,68 M80,68 L96,68 L102,38 L136,16 L141,68 L156,68 M156,68 L172,68 L178,38 L212,16 L217,68 L232,68\" class=\"nf-p\"/></svg>"
       ],
       [
        "Single-lung transplant",
-       "Two peaks in phase III: the first from the new healthy lung, the second from the slow-emptying native lung."
+       "Two peaks in phase III: the first from the new healthy lung, the second from the slow-emptying native lung.",
+       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,26 C34,22 40,42 54,40 C70,38 80,18 88,20 L94,68 L118,68 M118,68 L134,68 L140,26 C148,22 154,42 168,40 C184,38 194,18 202,20 L208,68 L232,68\" class=\"nf-p\"/></svg>"
       ]
      ]
     },

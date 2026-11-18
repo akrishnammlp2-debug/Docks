@@ -558,6 +558,9 @@ mark{background:#DAF1DE!important}
 .appver{margin:14px 0 6px;text-align:center;font-size:11.5px;color:var(--fg-3)!important;opacity:.8;font-family:var(--font-body,inherit)}
 .note-ico{background:var(--t-sage,#E3EFE6)!important;color:var(--t-sage-i,#2F6B4F)!important;font-size:10px!important}
 .note-sum{font-size:15px;line-height:1.5;color:#1F2A24;margin:0 2px}
+.note-x>summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:3px;width:100%}.note-x>summary::-webkit-details-marker{display:none}
+.note-x b{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}.nx-c{font-style:normal;font-size:13px;opacity:.75}.note-x[open] .nx-c{opacity:1}
+.note-x .note-fig{margin-top:10px;width:100%}
 .note-row{flex-direction:column!important;align-items:flex-start!important;gap:3px!important;padding:12px 14px!important}
 .note-row b{font-family:var(--f-head,inherit);font-weight:700;color:#3E7B5E!important}
 .note-row span{font-size:14.5px;line-height:1.45;color:#1F2A24!important}
@@ -1615,7 +1618,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.57 · long lists fold to a few + More';
+const APP_VERSION = '5.58 · tap a note row to see its picture';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
@@ -4005,7 +4008,7 @@ function noteRows() { const N = NOTES(); return N.length ? `<div class="group">$
 function noteBody(n) {
   return `
     ${n.summary ? `<p class="note-sum">${esc(n.summary)}</p>` : ''}
-    ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.rows ? `<div class="group">${sc.rows.map(r => `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.svg && /^<svg[ >]/.test(sc.svg) ? `<figure class="note-fig" role="img" aria-label="${esc(sc.alt || sc.h)}">${sc.svg}</figure>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
+    ${(n.sections || []).map(sc => `<h3 class="sh">${esc(sc.h)}</h3>${sc.tip ? `<p class="foot" style="margin:-4px 4px 6px">${esc(sc.tip)}</p>` : ''}${sc.rows ? `<div class="group">${sc.rows.map(r => r[2] && /^<svg[ >]/.test(r[2]) ? `<details class="row note-row note-x"><summary><b>${esc(r[0])}<i class="nx-c" aria-hidden="true">📈</i></b><span>${esc(r[1])}</span></summary><figure class="note-fig" role="img" aria-label="Waveform: ${esc(r[0])}">${r[2]}</figure></details>` : `<div class="row note-row"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}</div>` : ''}${sc.svg && /^<svg[ >]/.test(sc.svg) ? `<figure class="note-fig" role="img" aria-label="${esc(sc.alt || sc.h)}">${sc.svg}</figure>` : ''}${sc.items ? `<ul class="note-ul">${sc.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('')}
     ${n.refs && n.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${n.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}
 `;
 }
