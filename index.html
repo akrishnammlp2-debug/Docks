@@ -1429,10 +1429,12 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .batt-sn{flex:none;width:24px;height:24px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;display:grid;place-items:center;font-size:13px;font-weight:700}
 /* groceries v5.54 */
 .groc-d{margin-top:6px}
+.groc-h{display:flex;align-items:center;justify-content:flex-start;gap:10px}.groc-t{font-size:13px;font-weight:600;text-align:left}
+.groc-plus{flex:none;width:28px;height:28px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;font-size:19px;line-height:1;display:grid;place-items:center}
 .groc-f{display:flex;gap:6px;margin:10px 0 4px;flex-wrap:wrap}.groc-f input{flex:1 1 150px;min-width:0}.groc-f select{flex:0 0 auto;width:auto}
 .groc-r{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--sep)}
 .groc-n{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.groc-n b{font-weight:600;color:var(--fg)}
-#sheet .groc-n b,#sheet .groc-d>summary{color:#1C2621!important}#sheet .groc-n .dump-ago{color:#36433C!important}#sheet .groc-r{border-top-color:rgba(28,38,33,.14)}
+#sheet .groc-n b,#sheet .groc-t,#sheet .groc-t span{color:#1C2621!important}#sheet .groc-n .dump-ago{color:#36433C!important}#sheet .groc-r{border-top-color:rgba(28,38,33,.14)}
 .groc-e{flex:none;font:inherit;font-size:13px;color:var(--fg)!important;background:var(--surface-2);border:0;border-radius:8px;padding:5px 6px}
 /* notes & to buy v5.28 */
 .buy-h{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:4px;font-size:13px;font-weight:700;color:var(--fg-2)!important;text-align:left}
@@ -1610,7 +1612,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.55 · groceries';
+const APP_VERSION = '5.56 · + for grocery staples';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
@@ -2027,10 +2029,11 @@ const grocDue = day => GROC().filter(g => grocLeft(g, day) <= 0).sort((a, b) => 
 const grocSet = (id, patch) => { state.groceries = (state.groceries || []).map(g => g.id === id ? { ...g, ...patch, updated: nowISO() } : g); };
 const grocWhen = g => { const n = grocLeft(g); return n <= 0 ? (n === 0 ? 'due today' : 'due ' + plural(-n, 'day') + ' ago') : 'in ' + plural(n, 'day'); };
 function grocStaples() { const G = GROC().slice().sort((a, b) => grocLeft(a) - grocLeft(b));
-  return `<details class="in-how groc-d"${grocOpen ? ' open' : ''}><summary data-act="groc-fold">🥬 Grocery staples · ${G.length}</summary>
-    <form data-form="groc" class="groc-f" autocomplete="off"><input class="tin" name="name" maxlength="60" placeholder="Add a staple, e.g. Coconut oil" aria-label="Staple name"><select class="tin" name="every" aria-label="How often">${GROC_EVERY.map(n => `<option value="${n}"${n === 7 ? ' selected' : ''}>every ${plural(n, 'day')}</option>`).join('')}</select><button class="btn small" type="submit">Add</button></form>
+  return `<div class="groc-d"><div class="groc-h"><button type="button" class="groc-t" data-act="groc-fold" aria-expanded="${grocOpen}">🥬 Grocery staples · ${G.length} <span aria-hidden="true">${grocOpen ? '▴' : '▾'}</span></button><button type="button" class="groc-plus" data-act="groc-add" aria-label="Add a grocery staple">+</button></div>
+    ${grocOpen ? `    <form data-form="groc" class="groc-f" autocomplete="off"><input class="tin" name="name" maxlength="60" placeholder="Add a staple, e.g. Coconut oil" aria-label="Staple name"><select class="tin" name="every" aria-label="How often">${GROC_EVERY.map(n => `<option value="${n}"${n === 7 ? ' selected' : ''}>every ${plural(n, 'day')}</option>`).join('')}</select><button class="btn small" type="submit">Add</button></form>
     ${G.map(g => `<div class="groc-r"><span class="groc-n"><b>${esc(g.name)}</b><span class="dump-ago">${grocWhen(g)}</span></span><select class="groc-e" data-groc="${g.id}" aria-label="How often for ${esc(g.name)}">${GROC_EVERY.concat(GROC_EVERY.includes(g.every) ? [] : [g.every]).map(n => `<option value="${n}"${n === g.every ? ' selected' : ''}>every ${n}d</option>`).join('')}</select><button type="button" class="dump-x" data-act="groc-del" data-id="${g.id}" aria-label="Remove ${esc(g.name)}">✕</button></div>`).join('')}
-  </details>`; }
+` : ''}
+  </div>`; }
 let grocOpen = false;
 const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Dump an idea, or “buy …”" aria-label="Add to brain dump" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
 const grocRow = (g, sm) => `<div class="dump-i buy-i"><button type="button" class="buy-tick${sm ? ' sm' : ''}" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></button></div>`;
@@ -3518,7 +3521,8 @@ document.addEventListener('click', e => {
     case 'dump-del': { const d = (state.dumps || []).find(x => x.id === id); dumpSet(id, { deleted: true }); commit('Removed', () => { dumpSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'groc-bought': { const g = GROC().find(x => x.id === id); if (!g) break; const was = g.last; grocSet(id, { last: today() }); commit('Bought ✓ · back in ' + plural(g.every, 'day'), () => { grocSet(id, { last: was }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'groc-del': { const g = GROC().find(x => x.id === id); if (!g) break; grocSet(id, { deleted: true }); commit('Removed ' + g.name, () => { grocSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
-    case 'groc-fold': e.preventDefault(); grocOpen = !grocOpen; dumpRefresh(); break;
+    case 'groc-fold': grocOpen = !grocOpen; dumpRefresh(); break;
+    case 'groc-add': grocOpen = true; dumpRefresh(); setTimeout(() => { const i = document.querySelector('#sheet .groc-f input'); if (i) { i.focus(); i.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }, 40); break;
     case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
