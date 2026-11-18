@@ -1429,6 +1429,9 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .batt-sn{flex:none;width:24px;height:24px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;display:grid;place-items:center;font-size:13px;font-weight:700}
 /* groceries v5.54 */
 .groc-d{margin-top:6px}
+.more-row{color:var(--accent)!important;font-weight:600;font-size:15px}
+.more-card{width:100%;justify-content:center;text-align:center;padding:12px!important}
+#sheet .more-row{color:#2B6448!important}
 .groc-h{display:flex;align-items:center;justify-content:flex-start;gap:10px}.groc-t{font-size:13px;font-weight:600;text-align:left}
 .groc-plus{flex:none;width:28px;height:28px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;font-size:19px;line-height:1;display:grid;place-items:center}
 .groc-f{display:flex;gap:6px;margin:10px 0 4px;flex-wrap:wrap}.groc-f input{flex:1 1 150px;min-width:0}.groc-f select{flex:0 0 auto;width:auto}
@@ -1612,7 +1615,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.56 · + for grocery staples';
+const APP_VERSION = '5.57 · long lists fold to a few + More';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
@@ -1838,6 +1841,12 @@ let sel = today();
 let searchHitDate = null, searchHitName = '';
 let dotaSub = 'matches', rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
+/* v5.57 long lists: show the first few, then "More" (key → open) */
+const moreOpen = new Set();
+/* never hide just one item: a "More · 1" row takes the same space as the item itself */
+const moreCut = (key, arr, n) => arr.length > n + 1 && !moreOpen.has(key) ? arr.slice(0, n) : arr;
+const morePl = (k, w) => k + ' ' + (k === 1 ? w : /(ch|sh|s|x)$/.test(w) ? w + 'es' : w + 's');
+const moreBtn = (key, total, n, noun, cls) => total <= n + 1 ? '' : `<button class="${cls || 'row'} more-row" type="button" data-act="more" data-k="${esc(key)}">${moreOpen.has(key) ? 'Show less ▴' : 'More · ' + morePl(total - n, noun) + ' ▾'}</button>`;
 let caseLogAll = false; /* case log shows 5 recent until expanded (v5.54) */
 const moreTopics = new Set(); /* subjects showing all topics (v5.54) */
 
@@ -2046,15 +2055,15 @@ function dumpCard() { const n = JOTS().length;
   return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">🧠 Brain dump${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
     ${dumpForm()}<div id="dump-live">${dumpLive()}</div></div>`; }
 function dumpSheetLive() { const N = JOTS(), B = BUYS(), G = grocDue();
-  const buys = B.length ? B.map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
+  const buys = B.length ? moreCut('dumpbuy', B, 5).map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
     : '';
   const gbuys = G.map(g => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></div></div>`).join('');
   const empty = B.length || G.length ? '' : `<div class="card"><span class="c-s">Nothing to buy. Type “buy shampoo” and it lands here.</span></div>`;
-  const notes = N.length ? N.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
+  const notes = N.length ? moreCut('dumpnote', N, 5).map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
       <div class="dump-cats"><button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button><button type="button" class="dump-cat" data-act="dump-tobuy" data-id="${d.id}">🛒 To buy</button></div>
       <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('')
     : `<div class="card"><span class="c-s">Nothing here yet. Dump any idea above.</span></div>`;
-  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length + G.length}</span></h3>${gbuys}${buys}${empty}${grocStaples()}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}`; }
+  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length + G.length}</span></h3>${gbuys}${buys}${moreBtn('dumpbuy', B.length, 5, 'item', 'btn ghost wide')}${empty}${grocStaples()}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}${moreBtn('dumpnote', N.length, 5, 'note', 'btn ghost wide')}`; }
 function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
     ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
   if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
@@ -2208,7 +2217,7 @@ function pageToday() {
   const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', unsynced ? 'butter' : 'sage', '📋', unsynced, unsynced ? '<span class="tosync">cases to sync</span>' : 'cases all synced'));
   h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
-  if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${items.map(i => rowHTML(i)).join('')}</div></div>`;
+  if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`;
   return h + `<p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
@@ -2246,10 +2255,10 @@ function pageStudy() {
         return `<div class="prow"><span>${esc(sb.name)}</span><div class="track"><div class="fill" style="width:${x.pct || 0}%"></div></div><span class="v">${x.pct === null ? fmtMins(x.mins) : x.pct + '%'}</span></div>`; }).join('')}</div>` : ''}</div>`;
   }
   if (due.length) {
-    h += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${due.map(({ t, st }) => {
+    h += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${moreCut('revise', due, 3).map(({ t, st }) => {
       const s = byId(state.subjects, t.subjectId);
       return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(s ? s.name : '')} · revision ${st.step} of ${state.settings.intervals.length} · last studied ${ago(st.last + 'T12:00:00')}</span></span></button><button class="btn small ghost" style="margin-right:12px" type="button" data-act="study-now" data-id="${t.id}">▶ Study</button></div>`;
-    }).join('')}</div></div>`;
+    }).join('')}${moreBtn('revise', due.length, 3, 'topic')}</div></div>`;
   }
   if (!state.subjects.length) {
     h += `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No subjects yet</span><span class="c-s">Start with one, for example “Cardiac” or “Regional”.</span><button class="btn" type="button" data-act="add-subject" style="margin-top:8px">Add a subject</button></div>`;
@@ -2263,7 +2272,7 @@ function pageStudy() {
       const showAll = ts.length <= 3 || moreTopics.has(sb.id);
       h += (showAll ? ts : ts.slice(0, 3)).map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
         return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}">${q.pct !== null ? miniRing(q.pct) : ''}<span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${[q.total ? q.page + '/' + q.total + ' pages' : '', q.mins ? fmtMins(q.mins) : '', st].filter(Boolean).map(esc).join(' · ')}</span></span></button><button class="btn small ghost" style="margin-right:10px" type="button" data-act="study-now" data-id="${t.id}" aria-label="Study ${esc(t.name)} now">▶</button></div>`; }).join('');
-      if (ts.length > 3) h += `<button class="row" type="button" data-act="more-topics" data-id="${sb.id}" style="color:var(--accent)">${showAll ? 'Show less ▴' : 'More · ' + plural(ts.length - 3, 'topic') + ' ▾'}</button>`;
+      if (ts.length > 3) h += `<button class="row more-row" type="button" data-act="more-topics" data-id="${sb.id}">${showAll ? 'Show less ▴' : 'More · ' + plural(ts.length - 3, 'topic') + ' ▾'}</button>`;
       h += `<button class="row" type="button" data-act="add-topic" data-id="${sb.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
     }
     h += `</div>`;
@@ -2281,7 +2290,7 @@ function pageTodos() {
   let h = head('To-do', open.length ? plural(open.length, 'open task') : '');
   h += `<form data-form="todo" class="quick"><input class="tin" name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn" type="submit">Add</button></form>`;
   const row = t => `<div class="rowwrap${t.done ? ' done' : ''}"><button class="row" type="button" data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
-  h += open.length ? `<div class="group">${open.map(row).join('')}</div>` : `<p class="foot" style="text-align:center">${state.todos.length ? 'All clear.' : 'No tasks yet. Add one above.'}</p>`;
+  h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<p class="foot" style="text-align:center">${state.todos.length ? 'All clear.' : 'No tasks yet. Add one above.'}</p>`;
   if (done.length) {
     h += `<div class="sec"><h2 class="sh"><button type="button" data-act="toggle-done" style="color:var(--accent);font:inherit;text-transform:inherit;letter-spacing:inherit">${showDone ? 'Hide' : 'Show'} done (${done.length})</button>${showDone ? '<button type="button" data-act="clear-done" style="color:var(--danger);font:inherit;text-transform:inherit;letter-spacing:inherit">Clear done</button>' : ''}</h2>${showDone ? `<div class="group">${done.map(row).join('')}</div>` : ''}</div>`;
   }
@@ -2307,7 +2316,7 @@ function pageCalendar() {
   const its = itemsFor(sel);
   h += `<div class="sec"><h2 class="sh">${sel === t ? 'Today · ' : ''}${esc(dLong(sel))}</h2><div class="group">${its.length ? its.map(i => rowHTML(i)).join('') : '<button class="row empty" type="button" data-act="add">Nothing on this day. Tap to add an entry.</button>'}</div></div>`;
   const all = []; for (let d = 1; d <= last; d++) itemsFor(`${y}-${pad(m + 1)}-${pad(d)}`).forEach(i => all.push(i));
-  h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? all.map(i => rowHTML(i, true)).join('') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? moreCut('month|' + y + m, all, 5).map(i => rowHTML(i, true)).join('') + moreBtn('month|' + y + m, all.length, 5, 'item') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`;
   return h;
 }
 
@@ -2450,7 +2459,7 @@ function pageReminders() {
   h += catRemSection();
   if (!state.reminders.length) return h + `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No reminders yet</span><span class="c-s">Add monthly or weekly reminders. Each one shows a countdown and comes back by itself.</span><button class="btn" type="button" data-act="rem-add" style="margin-top:8px">Add a reminder</button></div>`;
   const sorted = state.reminders.map(r => ({ r, st: remStatus(r) })).sort((a, b) => (a.st.s === 'late' ? -1e3 - a.st.days : a.st.s === 'today' ? -500 : a.st.days) - (b.st.s === 'late' ? -1e3 - b.st.days : b.st.s === 'today' ? -500 : b.st.days));
-  h += `<div class="group">${sorted.map(x => remRow(x.r, 60)).join('')}</div>`;
+  h += `<div class="group">${moreCut('rems', sorted, 5).map(x => remRow(x.r, 60)).join('')}${moreBtn('rems', sorted.length, 5, 'reminder')}</div>`;
   h += `<button class="btn ghost wide" type="button" data-act="rem-add">+ Add reminder</button>`;
   return h;
 }
@@ -2564,8 +2573,8 @@ function pageAdvances() {
   h += `<div class="strip"><button type="button" data-act="adv-tag" data-t="" aria-pressed="${!advTag}">All topics</button>${tags.map(t => `<button type="button" data-act="adv-tag" data-t="${esc(t)}" aria-pressed="${advTag === t}">${esc(t)}</button>`).join('')}</div>`;
   const list = items.filter(a => (advArea === 'All' || (advArea === 'Saved' ? state.advSaved[a.pmid] : a.area === advArea)) && (!advTag || (a.tags || []).includes(advTag)))
     .sort((a, b) => (b.added || '').localeCompare(a.added || '') || (b.date || '').localeCompare(a.date || ''));
-  let lastDay = '';
-  h += list.map(a => {
+  let lastDay = ''; const listAll = list;
+  h += moreCut('adv|' + advArea + '|' + advTag, listAll, 5).map(a => {
     const isNew = !seen || a.added > seen; let sep = '';
     if (a.added !== lastDay) { lastDay = a.added; sep = `<h2 class="sh">${a.added === today() ? 'Today' : esc(dLong(a.added))}</h2>`; }
     const url = 'https://pubmed.ncbi.nlm.nih.gov/' + encodeURIComponent(a.pmid) + '/';
@@ -2576,6 +2585,7 @@ function pageAdvances() {
       ${a.why ? `<div class="why"><b>Why it matters:</b> ${esc(a.why)}</div>` : ''}
       <div class="acts"><a class="btn small ghost" href="${url}" target="_blank" rel="noopener" style="text-decoration:none">Read on PubMed</a><button class="btn small ghost" type="button" data-act="adv-save" data-id="${esc(a.pmid)}">${state.advSaved[a.pmid] ? '★ Saved' : '☆ Save'}</button><button class="btn small ghost" type="button" data-act="adv-study" data-id="${esc(a.pmid)}">+ Add to Study</button></div></article>`;
   }).join('') || '<p class="foot">Nothing here for this filter.</p>';
+  h += moreBtn('adv|' + advArea + '|' + advTag, listAll.length, 5, 'paper', 'btn ghost wide');
   return h + `<p class="foot">Data from PubMed (NCBI).</p>`;
 }
 
@@ -2618,7 +2628,7 @@ function pageOt() {
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(rows)}</div>`;
+  h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, rows, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
   return h;
 }
@@ -2643,7 +2653,7 @@ function pageRoster() {
   const upcoming = list.filter(r => r.date >= t), earlier = list.filter(r => r.date < t);
   const openPast = !upcoming.length || (searchHitDate && earlier.some(r => r.date === searchHitDate));
   h += note && !list.length ? `<div class="group"><div class="row empty">${esc(note)}</div></div>`
-    : `${upcoming.length ? `<div class="rlist">${upcoming.map(card).join('')}</div>` : ''}${earlier.length ? `<details class="card rpast"${openPast ? ' open' : ''}><summary><span class="cat-tx"><b>Previous days</b><span>${plural(earlier.length, 'day')} earlier in ${MONTHS[view.m]}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="rlist">${earlier.map(card).join('')}</div></details>` : ''}`;
+    : `${upcoming.length ? `<div class="rlist">${(searchHitDate && upcoming.findIndex(r => r.date === searchHitDate) >= 5 ? upcoming : moreCut('roster|' + rmode, upcoming, 5)).map(card).join('')}</div>${moreBtn('roster|' + rmode, upcoming.length, 5, 'day', 'btn ghost wide')}` : ''}${earlier.length ? `<details class="card rpast"${openPast ? ' open' : ''}><summary><span class="cat-tx"><b>Previous days</b><span>${plural(earlier.length, 'day')} earlier in ${MONTHS[view.m]}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="rlist">${earlier.map(card).join('')}</div></details>` : ''}`;
   if (state.private.roster.note) h += `<p class="foot">${esc(state.private.roster.note)}</p>`;
   return h;
 }
@@ -2651,10 +2661,10 @@ function pageRoster() {
 function pageCases() {
   const C = CASES(); const unsynced = toSyncCount();
   let h = head('SLCM cases', '', 'Logbook');
-  h += myCasesSection(0);
   h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'tosync' : 'good'}">${unsynced ? 'Not on SLCM' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
+  h += myCasesSection(0);
   const CS = C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n); const CLIM = 5;
-  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${(caseLogAll ? CS : CS.slice(0, CLIM)).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}${CS.length > CLIM ? `<button class="row" type="button" data-act="caselog-more" style="color:var(--accent)">${caseLogAll ? 'Show less ▴' : 'More · ' + plural(CS.length - CLIM, 'older case') + ' ▾'}</button>` : ''}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Case log</h2><div class="group">${(caseLogAll ? CS : CS.slice(0, CLIM)).map(c => `<button class="row${c.synced ? '' : ' row-tosync'}" type="button" data-act="case" data-n="${c.n}"><span class="spec">${esc((c.specialty || '?').slice(0, 2))}</span><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">#${c.n} · ${dShort(c.date)} · ${esc(c.specialty)}${c.asa ? ' · ASA ' + esc(c.asa) : ''}</span></span><span class="pill ${c.synced ? 'good' : 'tosync'}" style="align-self:center">${c.synced ? 'Synced' : 'To sync'}</span></button>`).join('') || '<div class="row empty">No cases logged yet.</div>'}${CS.length > CLIM ? `<button class="row more-row" type="button" data-act="caselog-more">${caseLogAll ? 'Show less ▴' : 'More · ' + plural(CS.length - CLIM, 'older case') + ' ▾'}</button>` : ''}</div></div>`;
   const total = C.length || 1;
   h += `<div class="sec"><h2 class="sh">Case mix</h2><div class="card" style="gap:10px">${[['Anaesthesia', 'type'], ['Specialty', 'specialty'], ['ASA grade', 'asa']].map(([name, key]) => {
     const counts = {}; C.forEach(c => { const k = c[key] || 'Not recorded'; counts[k] = (counts[k] || 0) + 1; });
@@ -2671,7 +2681,7 @@ function pageMusic() {
   if (!M || !M.lists) return h + '<div class="card"><span class="c-s">No music lists yet.</span></div>';
   const L = M.lists.find(x => x.id === musicSub) || M.lists[0];
   h += `<div class="seg">${M.lists.map(x => `<button type="button" data-act="msub" data-s="${x.id}" aria-pressed="${x.id === L.id}">${esc(x.label)}</button>`).join('')}</div>`;
-  h += `<p class="foot" style="margin:2px 4px 0">${esc(L.sub || '')}</p><div class="group mlist">${L.songs.map((x, i) => `<a class="row msong" href="${esc(spotifyUrl(x))}" target="_blank" rel="noopener"><span class="mrank">${x.era ? esc(x.era.replace(/0s$/, '0s')) : i + 1}</span><span class="r-main"><span class="r-t">${esc(x.t)}</span><span class="r-s">${esc(x.a)}</span></span><span class="mplay" aria-label="Play on Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></a>`).join('')}</div>`;
+  h += `<p class="foot" style="margin:2px 4px 0">${esc(L.sub || '')}</p><div class="group mlist">${moreCut('music|' + L.id, L.songs, 10).map((x, i) => `<a class="row msong" href="${esc(spotifyUrl(x))}" target="_blank" rel="noopener"><span class="mrank">${x.era ? esc(x.era.replace(/0s$/, '0s')) : i + 1}</span><span class="r-main"><span class="r-t">${esc(x.t)}</span><span class="r-s">${esc(x.a)}</span></span><span class="mplay" aria-label="Play on Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></a>`).join('')}${moreBtn('music|' + L.id, L.songs.length, 10, 'song')}</div>`;
   return h + `<p class="foot">${L.source ? `Chart: <a href="${esc(L.source)}" target="_blank" rel="noopener">source</a>.` : ''}</p>`;
 }
 /* live NBA scores: pull down on the NBA tab -> ESPN's public scoreboard (no key, read-only) */
@@ -2726,7 +2736,7 @@ function pageDota() {
     const M = (N.matches || []).map(m => ({ ...m, st: dotaState(m), at: dotaWhen(m) }));
     const row = (n, sc, win) => `<div class="nrow${win ? ' win' : ''}" style="--h:${hue(n)}"><span class="badge">${esc(tag(n))}</span><span class="tn"><em>${esc(n)}</em></span><b>${sc == null ? '' : sc}</b></div>`;
     const game = m => `<div class="ngame${m.st === 'in' ? ' live' : ''}"><div class="nhead">${m.st === 'in' ? '<span class="ldot"></span>Live · ' : ''}${esc([ev(m.event).short || ev(m.event).name || '', m.stage, m.bo ? 'Bo' + m.bo : ''].filter(Boolean).join(' · '))}</div>${row(m.a, m.st === 'pre' ? null : m.as, m.st === 'post' && m.as > m.bs)}${row(m.b, m.st === 'pre' ? null : m.bs, m.st === 'post' && m.bs > m.as)}<span class="dota-t">${esc(m.start ? m.at.toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) + (m.st === 'pre' ? ' your time' : '') : dotaDate(m.date))}</span></div>`;
-    const sec = (t, list) => list.length ? `<div class="sec"><h2 class="sh">${t}</h2><div class="ngrid dota-g">${list.map(game).join('')}</div></div>` : '';
+    const sec = (t, list) => list.length ? `<div class="sec"><h2 class="sh">${t}</h2><div class="ngrid dota-g">${moreCut('dota|' + t, list, 4).map(game).join('')}</div>${moreBtn('dota|' + t, list.length, 4, 'match', 'btn ghost wide')}</div>` : '';
     const live = M.filter(m => m.st === 'in'), pre = M.filter(m => m.st === 'pre').sort((a, b) => a.at - b.at), post = M.filter(m => m.st === 'post').sort((a, b) => b.at - a.at);
     h += sec('Live now', live) + sec('Coming up', pre.slice(0, 12)) + sec('Results', post);
     if (!live.length && !pre.length) { const nx = EV.filter(e => e.st !== 'done').sort((a, b) => (a.start || '').localeCompare(b.start || ''))[0];
@@ -2734,11 +2744,12 @@ function pageDota() {
     if (!post.length) h += '<p class="foot">No tier 1 results in the last 7 days.</p>';
   } else if (dotaSub === 'events') {
     const ord = { live: 0, upcoming: 1, done: 2 }; const L = EV.slice().sort((a, b) => ord[a.st] - ord[b.st] || (a.st === 'done' ? (b.end || '').localeCompare(a.end || '') : (a.start || '').localeCompare(b.start || '')));
-    h += L.map(e => `<div class="card dota-e"><span class="pill dota-p ${e.st}">${e.st === 'live' ? 'Live now' : e.st === 'done' ? 'Finished' : e.start ? (daysUntil(e.start) === 1 ? 'Starts tomorrow' : 'Starts in ' + plural(daysUntil(e.start), 'day')) : 'Upcoming'}</span><b class="c-t">${esc(e.name)}</b><span class="c-s">${esc([span(e), e.where, e.prize, e.teams ? e.teams + ' teams' : ''].filter(Boolean).join(' · '))}</span>${e.winner ? `<span class="c-s">🏆 <b>${esc(e.winner)}</b>${e.runnerUp ? ' beat ' + esc(e.runnerUp) + (e.final ? ' ' + esc(e.final) : '') + ' in the final' : ''}</span>` : ''}${e.format ? `<span class="c-s">${esc(e.format)}</span>` : ''}${(e.field || []).length ? `<span class="c-s">Teams include ${esc(e.field.join(', '))}.</span>` : ''}${e.source ? `<a class="link" href="${esc(e.source)}" target="_blank" rel="noopener">Schedule and details</a>` : ''}</div>`).join('') || '<div class="card"><span class="c-s">No tier 1 events listed right now.</span></div>';
+    h += moreCut('dotaev', L, 5).map(e => `<div class="card dota-e"><span class="pill dota-p ${e.st}">${e.st === 'live' ? 'Live now' : e.st === 'done' ? 'Finished' : e.start ? (daysUntil(e.start) === 1 ? 'Starts tomorrow' : 'Starts in ' + plural(daysUntil(e.start), 'day')) : 'Upcoming'}</span><b class="c-t">${esc(e.name)}</b><span class="c-s">${esc([span(e), e.where, e.prize, e.teams ? e.teams + ' teams' : ''].filter(Boolean).join(' · '))}</span>${e.winner ? `<span class="c-s">🏆 <b>${esc(e.winner)}</b>${e.runnerUp ? ' beat ' + esc(e.runnerUp) + (e.final ? ' ' + esc(e.final) : '') + ' in the final' : ''}</span>` : ''}${e.format ? `<span class="c-s">${esc(e.format)}</span>` : ''}${(e.field || []).length ? `<span class="c-s">Teams include ${esc(e.field.join(', '))}.</span>` : ''}${e.source ? `<a class="link" href="${esc(e.source)}" target="_blank" rel="noopener">Schedule and details</a>` : ''}</div>`).join('') || '<div class="card"><span class="c-s">No tier 1 events listed right now.</span></div>';
+    h += moreBtn('dotaev', L.length, 5, 'event', 'btn ghost wide');
   } else {
     const P = N.patch; if (P) h += `<div class="card"><span class="eyebrow">Live gameplay patch</span><b class="c-t">${esc(P.version)}</b><span class="c-s">Since ${esc(dotaDate(P.date))}${P.date && P.date.length === 10 ? ' ' + P.date.slice(0, 4) : ''}. ${esc(P.note || '')}</span>${P.next ? `<span class="c-s">${esc(P.next)}</span>` : ''}</div>`;
     const NW = (N.news || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    h += NW.length ? `<div class="sec"><h2 class="sh">Latest</h2><div class="group">${NW.map(n => `<a class="row dota-n" href="${esc(n.url || '#')}" target="_blank" rel="noopener"><span class="r-main"><span class="r-s">${esc([dotaDate(n.date), n.kind].filter(Boolean).join(' · '))}</span><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.text || '')}${n.source ? ' (' + esc(n.source) + ')' : ''}</span></span></a>`).join('')}</div></div>` : '';
+    h += NW.length ? `<div class="sec"><h2 class="sh">Latest</h2><div class="group">${moreCut('dotanews', NW, 5).map(n => `<a class="row dota-n" href="${esc(n.url || '#')}" target="_blank" rel="noopener"><span class="r-main"><span class="r-s">${esc([dotaDate(n.date), n.kind].filter(Boolean).join(' · '))}</span><span class="r-t">${esc(n.title)}</span><span class="r-s">${esc(n.text || '')}${n.source ? ' (' + esc(n.source) + ')' : ''}</span></span></a>`).join('')}${moreBtn('dotanews', NW.length, 5, 'update')}</div></div>` : '';
   }
   return h;
 }
@@ -2757,13 +2768,13 @@ function pageNba() {
     const list = G.filter(g => g.day === nbaDay).sort((a, b) => (a.state === 'in' ? -1 : 0) - (b.state === 'in' ? -1 : 0));
     const row = (ab, sc, win) => { const p = split(ab); return `<div class="nrow${win ? ' win' : ''}" style="--h:${hue(ab)}"><span class="badge">${esc(ab)}</span><span class="tn"><em>${esc(p[1])}</em><small>${esc(p[0])}</small></span><b>${sc}</b></div>`; };
     h += `<div class="strip" id="nba-strip">${ds.map(d => `<button type="button" data-act="nday" data-d="${esc(d)}" aria-pressed="${d === nbaDay}">${esc(d)}</button>`).join('')}</div>
-      <h2 class="sh">${esc(nbaDay)} · ${list.length} games</h2><div class="ngrid">${list.map(g => { const done = g.state === 'post'; const aw = g.as > g.hs; const pre = g.state === 'pre';
-        return `<div class="ngame${g.state === 'in' ? ' live' : ''}"><div class="nhead">${g.state === 'in' ? '<span class="ldot"></span>' : ''}${esc(pre && g.start ? new Date(g.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' your time' : g.label)}</div>${row(g.away, pre ? '' : g.as, done && aw)}${row(g.home, pre ? '' : g.hs, done && !aw)}</div>`; }).join('')}</div>`;
+      <h2 class="sh">${esc(nbaDay)} · ${list.length} games</h2><div class="ngrid">${moreCut('nba|' + nbaDay, list, 6).map(g => { const done = g.state === 'post'; const aw = g.as > g.hs; const pre = g.state === 'pre';
+        return `<div class="ngame${g.state === 'in' ? ' live' : ''}"><div class="nhead">${g.state === 'in' ? '<span class="ldot"></span>' : ''}${esc(pre && g.start ? new Date(g.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' your time' : g.label)}</div>${row(g.away, pre ? '' : g.as, done && aw)}${row(g.home, pre ? '' : g.hs, done && !aw)}</div>`; }).join('')}</div>${moreBtn('nba|' + nbaDay, list.length, 6, 'game', 'btn ghost wide')}`;
   } else if (nbaSub === 'standings') {
-    const conf = (rows, title) => `<div class="sec"><h2 class="sh">${title}</h2><div class="group">${rows.map((r, i) => `<div class="row" style="gap:10px"><span class="st-z" style="--c:${i < 6 ? 'var(--f-nba)' : i < 10 ? 'var(--fg-3)' : 'transparent'}"></span><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[0])}">${esc(r[0])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(nm(r[0]))}</span></span><span class="st-wl">${r[1]}-${r[2]}</span><span class="st-p">${(r[1] / (r[1] + r[2] || 1)).toFixed(3).replace(/^0/, '')}</span></div>`).join('')}</div></div>`;
+    const conf = (rows, title) => `<div class="sec"><h2 class="sh">${title}</h2><div class="group">${moreCut('st|' + title, rows, 8).map((r, i) => `<div class="row" style="gap:10px"><span class="st-z" style="--c:${i < 6 ? 'var(--f-nba)' : i < 10 ? 'var(--fg-3)' : 'transparent'}"></span><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[0])}">${esc(r[0])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(nm(r[0]))}</span></span><span class="st-wl">${r[1]}-${r[2]}</span><span class="st-p">${(r[1] / (r[1] + r[2] || 1)).toFixed(3).replace(/^0/, '')}</span></div>`).join('')}${moreBtn('st|' + title, rows.length, 8, 'team')}</div></div>`;
     h += conf(N.west, 'Western Conference') + conf(N.east, 'Eastern Conference');
   } else {
-    h += Object.keys(N.leaders).map(k => `<div class="sec"><h2 class="sh">${esc(k)} per game</h2><div class="group">${N.leaders[k].map((r, i) => `<div class="row" style="gap:10px"><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[1])}">${esc(r[1])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(r[0])}</span><span class="r-s">${esc(nm(r[1]))} · ${r[2]} GP</span></span><span class="ld-v">${(+r[3]).toFixed(1)}</span></div>`).join('')}</div></div>`).join('');
+    h += Object.keys(N.leaders).map(k => `<div class="sec"><h2 class="sh">${esc(k)} per game</h2><div class="group">${moreCut('ld|' + k, N.leaders[k], 5).map((r, i) => `<div class="row" style="gap:10px"><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[1])}">${esc(r[1])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(r[0])}</span><span class="r-s">${esc(nm(r[1]))} · ${r[2]} GP</span></span><span class="ld-v">${(+r[3]).toFixed(1)}</span></div>`).join('')}${moreBtn('ld|' + k, N.leaders[k].length, 5, 'player')}</div></div>`).join('');
   }
   return h;
 }
@@ -3314,8 +3325,8 @@ function myCasesSection(limit) {
   const L = MC_LIST(); const pend = L.filter(c => mcStatus(c).t !== 'On SLCM');
   let h = `<div class="sec"><h2 class="sh"><span>My cases</span><button type="button" data-act="mc-new" style="color:var(--accent);font:inherit">+ Log a case</button></h2>`;
   if (!L.length) return h + `<div class="card"><span class="c-s">Tap <b>+ Log a case</b>, pick your case from the OT list, and add the anaesthetic management and faculty. Claude puts it in your logbook and on SLCM, no PAC photo needed.</span></div></div>`;
-  const show = limit ? pend.slice(0, limit) : L;
-  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row${st.cls === 'tosync' ? ' row-tosync' : ''}" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}</div></div>`;
+  const all = limit ? pend.slice(0, limit) : L; const show = limit ? all : moreCut('mycases', all, 5);
+  return h + `<div class="group">${show.map(c => { const st = mcStatus(c); return `<button class="row${st.cls === 'tosync' ? ' row-tosync' : ''}" type="button" data-act="mc-open" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${esc(c.procedure)}</span><span class="r-s">${dShort(c.date)} · ${esc([c.mgmt, c.faculty || 'Faculty ?'].filter(Boolean).join(' · '))}</span></span><span class="pill ${st.cls}">${st.t}</span>${CHEV}</button>`; }).join('') || '<div class="row empty">Everything is on SLCM ✓</div>'}${limit ? '' : moreBtn('mycases', all.length, 5, 'case')}</div></div>`;
 }
 function caseSheet(n) {
   const c = CASES().find(x => x.n === n); if (!c) return;
@@ -3578,6 +3589,7 @@ document.addEventListener('click', e => {
       closeSheet(); commit('Entry deleted', () => { state.events.splice(idx, 0, rm); commit(); }); break; }
     case 'add-subject': subjectSheet(null); break;
     case 'edit-subject': subjectSheet(id); break;
+    case 'more': { const k = b.dataset.k; moreOpen.has(k) ? moreOpen.delete(k) : moreOpen.add(k); if (b.closest('#sheet') && k.startsWith('dump')) dumpRefresh(); else render(); break; }
     case 'caselog-more': caseLogAll = !caseLogAll; render(); break;
     case 'more-topics': moreTopics.has(id) ? moreTopics.delete(id) : moreTopics.add(id); render(); break;
     case 'toggle-subject': collapsed.has(id) ? collapsed.delete(id) : collapsed.add(id); render(); break;
@@ -4014,7 +4026,8 @@ function bitesSection() {
   if (!biteCat || !cats.includes(biteCat)) biteCat = 'All';
   h += `<div class="strip bcats"><button type="button" data-act="bcat" data-c="All" aria-pressed="${biteCat === 'All'}">All · ${B.length}</button>${cats.map(c => `<button type="button" data-act="bcat" data-c="${esc(c)}" aria-pressed="${biteCat === c}">${BCAT_ICON[c] || '•'} ${esc(c)} · ${B.filter(b => b.cat === c).length}</button>`).join('')}</div>`;
   const list = B.filter(b => biteCat === 'All' || b.cat === biteCat).sort((a, b) => (b.updated || '').localeCompare(a.updated || ''));
-  h += `<div class="bgrid">${list.map(b => `<button class="card bite" type="button" data-act="bite" data-id="${esc(b.id)}"><span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b>${esc(b.title)}</b><span class="bite-1">${esc(b.summary || (b.points || [])[0] || '')}</span><small>${b.updated && b.updated !== b.created ? 'Updated ' + esc(dShort(b.updated)) : 'Added ' + esc(dShort(b.created || b.updated || today()))}</small></button>`).join('')}</div>`;
+  const bk = 'bites|' + biteCat;
+  h += `<div class="bgrid">${moreCut(bk, list, 6).map(b => `<button class="card bite" type="button" data-act="bite" data-id="${esc(b.id)}"><span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b>${esc(b.title)}</b><span class="bite-1">${esc(b.summary || (b.points || [])[0] || '')}</span><small>${b.updated && b.updated !== b.created ? 'Updated ' + esc(dShort(b.updated)) : 'Added ' + esc(dShort(b.created || b.updated || today()))}</small></button>`).join('')}</div>${moreBtn(bk, list.length, 6, 'note', 'btn ghost wide')}`;
   return h + `</div>`;
 }
 function biteSheet(id) {
@@ -4031,7 +4044,7 @@ function pdfSection() {
   if (!pdfList.length) return h + `<div class="card"><span class="c-s">Add PDFs from Files (or Google Drive in Files) and read them here any time, even offline. They're kept on this device only.</span></div></div>`;
   const groups = {}; pdfList.slice().sort((a, b) => (b.opened || b.added).localeCompare(a.opened || a.added)).forEach(m => { (groups[m.topic || 'Other'] = groups[m.topic || 'Other'] || []).push(m); });
   const keys = Object.keys(groups).sort((a, b) => a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b));
-  h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${groups[k].map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}">${m.pages ? ring(pdfRead_(m), m.pages, 44, 'pdf-' + m.id) : '<span class="pdf-ico" aria-hidden="true">PDF</span>'}<span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? pdfRead_(m) + ' of ' + m.pages + ' pages read' + (pdfRead_(m) && m.page ? ' · last on p. ' + m.page : '') : 'Counting pages…'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}</div>`).join('');
+  h += keys.map(k => `${keys.length > 1 || k !== 'Other' ? `<div class="bk-part" style="padding-left:6px">${esc(k)}</div>` : ''}<div class="group">${moreCut('pdf|' + k, groups[k], 5).map(m => `<div class="row pdf-row"><button class="pdf-open" type="button" data-act="pdf-read" data-id="${m.id}">${m.pages ? ring(pdfRead_(m), m.pages, 44, 'pdf-' + m.id) : '<span class="pdf-ico" aria-hidden="true">PDF</span>'}<span class="r-main"><span class="r-t">${esc(m.name)}</span><span class="r-s">${m.pages ? pdfRead_(m) + ' of ' + m.pages + ' pages read' + (pdfRead_(m) && m.page ? ' · last on p. ' + m.page : '') : 'Counting pages…'} · ${(m.size / 1048576).toFixed(1)} MB</span></span></button><button class="pdf-more" type="button" data-act="pdf-edit" data-id="${m.id}" aria-label="Edit ${esc(m.name)}">⋯</button></div>`).join('')}${moreBtn('pdf|' + k, groups[k].length, 5, 'PDF')}</div>`).join('');
   return h + `</div>`;
 }
 function pdfEditSheet(id) {
