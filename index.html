@@ -1427,6 +1427,13 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 #sheet .batt-step{display:flex!important;flex-direction:row!important;align-items:flex-start}
 #sheet .batt-step b{color:#1C2621!important}#sheet .batt-sn,#sheet span.batt-sn{color:#FFFFFF!important;background:#2B6448!important}
 .batt-sn{flex:none;width:24px;height:24px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;display:grid;place-items:center;font-size:13px;font-weight:700}
+/* groceries v5.54 */
+.groc-d{margin-top:6px}
+.groc-f{display:flex;gap:6px;margin:10px 0 4px;flex-wrap:wrap}.groc-f input{flex:1 1 150px;min-width:0}.groc-f select{flex:0 0 auto;width:auto}
+.groc-r{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--sep)}
+.groc-n{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.groc-n b{font-weight:600;color:var(--fg)}
+#sheet .groc-n b,#sheet .groc-d>summary{color:#1C2621!important}#sheet .groc-n .dump-ago{color:#36433C!important}#sheet .groc-r{border-top-color:rgba(28,38,33,.14)}
+.groc-e{flex:none;font:inherit;font-size:13px;color:var(--fg)!important;background:var(--surface-2);border:0;border-radius:8px;padding:5px 6px}
 /* notes & to buy v5.28 */
 .buy-h{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:4px;font-size:13px;font-weight:700;color:var(--fg-2)!important;text-align:left}
 .buy-h span:first-child{color:var(--fg-2)!important}
@@ -1603,7 +1610,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.54 · More for long topic lists';
+const APP_VERSION = '5.55 · groceries';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
 
@@ -1659,7 +1666,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -1668,7 +1675,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
@@ -1898,7 +1905,7 @@ function tbanArt(ph) {
    This device writes push/<device>.json to the private sync repository: its push subscription plus the next 3 days
    of reminders. A GitHub job there sends each one when it's due (checked every 30 minutes). */
 const VAPID_PUB = 'BPJZfLn1uUvBEClxeSbI1x_ZL4Yf9EvL6DkDfPEP2Qepc43Ny8nmmCix5VKTx2FqnkBI1FH4cB6PrTKTdD0RIkQ';
-const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nReleases', 'Release day for things you asked to be reminded about (9:30 AM)', true], ['nStreak', 'Off-Instagram badge unlocked (9 AM on the day)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
+const NOTIF_TYPES = [['nRoutines', 'Morning & night routines (8 AM, 9 PM)', true], ['nCreatine', 'Creatine if missed (with the 9 PM routine)', true], ['nPlants', 'Plant watering (in the 8 AM note)', true], ['nCat', 'Cat food running low (10 AM)', true], ['nGroc', 'Groceries due (Saturday 9 AM, or any day 3+ staples are due, 6 PM)', true], ['nClasses', 'Class or presentation tomorrow (8 PM)', true], ['nDuty', 'Emergency duty tomorrow (8 PM)', true], ['nReminders', 'My reminders, on the day (9 AM)', true], ['nDelivery', 'Parcel arriving today (9 AM)', true], ['nAttend', 'Hospital attendance (9 AM, again at 10 if not done)', true], ['nReleases', 'Release day for things you asked to be reminded about (9:30 AM)', true], ['nStreak', 'Off-Instagram badge unlocked (9 AM on the day)', true], ['nDaily', 'Fact & painting of the day (7 AM)', false]];
 const nOn = k => { const S = state.settings, d = NOTIF_TYPES.find(x => x[0] === k); return S[k] === undefined ? d[2] : !!S[k]; };
 const pushSub = () => { try { return JSON.parse(localStorage.getItem('studydesk.pushSub') || 'null'); } catch (_) { return null; } };
 const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
@@ -1948,6 +1955,10 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     // cat food 10 AM
     if (nOn('nCat')) { const due = catFoods().map(f => [f, catInfo(f)]).filter(([, x]) => x && Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5) < CAT_WARN && !((state.catOrdered || {})[x && f.id] >= addDays(day, -1)));
       if (due.length) push('cat|' + day, day, 10, '🐈 Time to buy cat food', due.map(([f, x]) => { const n = Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5); return f.name + (n <= 0 ? ': reorder now' : ': reorder in ' + plural(n, 'day')); }).join(' · '), 'reminders'); }
+    // groceries: Saturday 9 AM if anything is due; any other day at 6 PM once 3+ staples are due
+    if (nOn('nGroc')) { const g = grocDue(day); const sat = new Date(day + 'T12:00').getDay() === 6;
+      if (g.length && sat) push('groc|' + day, day, 9, '🛒 Grocery run', g.map(x => x.name).join(' · '), 'today');
+      else if (g.length >= 3) push('groc|' + day, day, 18, '🛒 Groceries running low', plural(g.length, 'staple') + ' due: ' + g.map(x => x.name).join(' · '), 'today'); }
     // classes & duty tomorrow, 8 PM
     const tm = addDays(day, 1);
     if (nOn('nClasses')) { const S = SCHED().filter(x => x.date === tm); if (S.length) push('class|' + tm, day, 20, '📚 Tomorrow' + (SESSION_TIME() ? ' · ' + SESSION_TIME() : ''), S.map(x => x.session + (x.topic ? ': ' + x.topic : '')).join(' · '), 'calendar'); }
@@ -2005,22 +2016,42 @@ const dumpAgo = iso => { const m = Math.round((Date.now() - new Date(iso)) / 6e4
 const buyAge = iso => { const t0 = new Date(iso); t0.setHours(0, 0, 0, 0); const t1 = new Date(); t1.setHours(0, 0, 0, 0); const n = Math.round((t1 - t0) / 864e5);
   return n <= 0 ? 'today' : n === 1 ? '1 day' : n < 14 ? n + ' days' : n < 60 ? Math.round(n / 7) + ' weeks' : Math.round(n / 30) + ' months'; };
 const parseBuy = text => { const m = String(text).match(/^\s*(?:to[\s-]?buy|buy)\b[\s:,\-]*(.+)$/i); if (!m || !m[1].trim()) return null; const t = m[1].trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
+/* ---------- Groceries v5.54: staples that come back onto To buy every N days ---------- */
+const GROC_SEED = [['Milk', 2], ['Curd', 3], ['Bread', 4], ['Eggs', 7], ['Vegetables', 4], ['Fruits', 5], ['Tomatoes', 5], ['Onions', 10], ['Potatoes', 14], ['Paneer', 7], ['Rice', 30], ['Atta', 30], ['Toor dal', 30], ['Cooking oil', 30], ['Ghee', 30], ['Sugar', 30], ['Tea / coffee powder', 30], ['Salt', 60], ['Spices & masalas', 45], ['Dishwash liquid', 30], ['Laundry detergent', 30], ['Toilet cleaner', 45], ['Garbage bags', 30], ['Tissues / kitchen roll', 30]];
+const GROC_EVERY = [1, 2, 3, 4, 5, 7, 10, 14, 21, 30, 45, 60, 90];
+function grocSeed() { const t = today(); /* spread first due dates so they don't all land on one day */
+  return GROC_SEED.map(([name, every], i) => ({ id: 'g-' + name.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-+$/, ''), name, every, last: addDays(t, -Math.floor((every - 1) * ((i * 0.37) % 1))), updated: nowISO() })); }
+const GROC = () => { if (!Array.isArray(state.groceries)) { state.groceries = grocSeed(); setTimeout(() => { if (save()) syncSoon(); }, 0); } return state.groceries.filter(g => !g.deleted); };
+const grocLeft = (g, day) => g.every - Math.round((new Date((day || today()) + 'T12:00') - new Date((g.last || today()) + 'T12:00')) / 864e5);
+const grocDue = day => GROC().filter(g => grocLeft(g, day) <= 0).sort((a, b) => grocLeft(a, day) - grocLeft(b, day));
+const grocSet = (id, patch) => { state.groceries = (state.groceries || []).map(g => g.id === id ? { ...g, ...patch, updated: nowISO() } : g); };
+const grocWhen = g => { const n = grocLeft(g); return n <= 0 ? (n === 0 ? 'due today' : 'due ' + plural(-n, 'day') + ' ago') : 'in ' + plural(n, 'day'); };
+function grocStaples() { const G = GROC().slice().sort((a, b) => grocLeft(a) - grocLeft(b));
+  return `<details class="in-how groc-d"${grocOpen ? ' open' : ''}><summary data-act="groc-fold">🥬 Grocery staples · ${G.length}</summary>
+    <form data-form="groc" class="groc-f" autocomplete="off"><input class="tin" name="name" maxlength="60" placeholder="Add a staple, e.g. Coconut oil" aria-label="Staple name"><select class="tin" name="every" aria-label="How often">${GROC_EVERY.map(n => `<option value="${n}"${n === 7 ? ' selected' : ''}>every ${plural(n, 'day')}</option>`).join('')}</select><button class="btn small" type="submit">Add</button></form>
+    ${G.map(g => `<div class="groc-r"><span class="groc-n"><b>${esc(g.name)}</b><span class="dump-ago">${grocWhen(g)}</span></span><select class="groc-e" data-groc="${g.id}" aria-label="How often for ${esc(g.name)}">${GROC_EVERY.concat(GROC_EVERY.includes(g.every) ? [] : [g.every]).map(n => `<option value="${n}"${n === g.every ? ' selected' : ''}>every ${n}d</option>`).join('')}</select><button type="button" class="dump-x" data-act="groc-del" data-id="${g.id}" aria-label="Remove ${esc(g.name)}">✕</button></div>`).join('')}
+  </details>`; }
+let grocOpen = false;
 const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Dump an idea, or “buy …”" aria-label="Add to brain dump" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
-function dumpLive() { const N = JOTS(), B = BUYS(); if (!N.length && !B.length) return '';
+const grocRow = (g, sm) => `<div class="dump-i buy-i"><button type="button" class="buy-tick${sm ? ' sm' : ''}" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></button></div>`;
+function dumpLive() { const N = JOTS(), B = BUYS(), G = grocDue(); if (!N.length && !B.length && !G.length) return '';
   const nr = N.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all"><span class="dump-dot" aria-hidden="true"></span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('');
   const br = B.slice(0, 3).map(d => `<div class="dump-i buy-i"><button type="button" class="buy-tick sm" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span></button></div>`).join('');
-  return `<div class="dump-l">${nr}${B.length ? `<button type="button" class="buy-cap" data-act="dump-all" data-id="buy">To buy <span>${Math.min(3, B.length)}/${B.length}</span></button>${br}` : ''}</div>`; }
+  const tot = B.length + G.length; const gr = G.slice(0, Math.max(0, 3 - B.slice(0, 3).length)).map(g => grocRow(g, 1)).join('');
+  return `<div class="dump-l">${nr}${tot ? `<button type="button" class="buy-cap" data-act="dump-all" data-id="buy">To buy <span>${Math.min(3, tot)}/${tot}</span></button>${br}${gr}` : ''}</div>`; }
 function dumpCard() { const n = JOTS().length;
   return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">🧠 Brain dump${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
     ${dumpForm()}<div id="dump-live">${dumpLive()}</div></div>`; }
-function dumpSheetLive() { const N = JOTS(), B = BUYS();
+function dumpSheetLive() { const N = JOTS(), B = BUYS(), G = grocDue();
   const buys = B.length ? B.map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
-    : `<div class="card"><span class="c-s">Nothing to buy. Type “buy shampoo” and it lands here.</span></div>`;
+    : '';
+  const gbuys = G.map(g => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></div></div>`).join('');
+  const empty = B.length || G.length ? '' : `<div class="card"><span class="c-s">Nothing to buy. Type “buy shampoo” and it lands here.</span></div>`;
   const notes = N.length ? N.map(d => `<div class="card dump-card"><div class="dump-top"><span class="dump-t">${esc(d.text)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div>
       <div class="dump-cats"><button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button><button type="button" class="dump-cat" data-act="dump-tobuy" data-id="${d.id}">🛒 To buy</button></div>
       <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('')
     : `<div class="card"><span class="c-s">Nothing here yet. Dump any idea above.</span></div>`;
-  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length}</span></h3>${buys}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}`; }
+  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length + G.length}</span></h3>${gbuys}${buys}${empty}${grocStaples()}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}`; }
 function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
     ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
   if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
@@ -2753,7 +2784,7 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
-    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Start with “buy …” and it goes to To buy, showing how long ago you added it.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
+    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Start with “buy …” and it goes to To buy, showing how long ago you added it.', 'Groceries: staples you buy regularly (milk, rice, dal…) come back onto To buy by themselves when due, marked 🥬. Tick one when bought and its timer restarts. Open Brain dump › To buy › Grocery staples to add items, remove them or change how often. A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
     it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
     it('rem', '🔔 Reminders', ['Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.']),
     it('cal', '📅 Calendar', [`Sessions come from the department's program${SESSION_TIME() ? ' (' + esc(SESSION_TIME()) + ')' : ''}. Entries you add stay on this phone.${P.presenters ? '' : ' Presenter names come from your private file.'}`, 'Karnataka public holidays and major festivals are shown. Travel and deliveries come from your email and are kept locked.']),
@@ -3485,6 +3516,9 @@ document.addEventListener('click', e => {
     case 'batt-copy': { const cfg = syncCfg(); const v = b.dataset.v === 'key' ? 'Bearer ' + cfg.token : 'https://api.github.com/repos/' + (cfg.repo || 'akrishnammlp2-debug/docks-sync') + '/contents/battery/';
       navigator.clipboard.writeText(v).then(() => toast(b.dataset.v === 'key' ? 'Key copied ✓ Paste it into the Shortcut' : 'Address copied ✓'), () => toast("Couldn't copy. Long-press to copy instead.")); break; }
     case 'dump-del': { const d = (state.dumps || []).find(x => x.id === id); dumpSet(id, { deleted: true }); commit('Removed', () => { dumpSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
+    case 'groc-bought': { const g = GROC().find(x => x.id === id); if (!g) break; const was = g.last; grocSet(id, { last: today() }); commit('Bought ✓ · back in ' + plural(g.every, 'day'), () => { grocSet(id, { last: was }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
+    case 'groc-del': { const g = GROC().find(x => x.id === id); if (!g) break; grocSet(id, { deleted: true }); commit('Removed ' + g.name, () => { grocSet(id, { deleted: false }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
+    case 'groc-fold': e.preventDefault(); grocOpen = !grocOpen; dumpRefresh(); break;
     case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
@@ -3612,6 +3646,7 @@ document.addEventListener('click', e => {
       try { localStorage.removeItem(SYNC_TOKEN_KEY); } catch (_) {} devSync = { status: 'off' }; render(); toast('Device sync disconnected'); break;
   }
 });
+document.addEventListener('change', e => { const gs = e.target.closest && e.target.closest('select[data-groc]'); if (!gs) return; grocSet(gs.dataset.groc, { every: +gs.value }); if (save()) syncSoon(); dumpRefresh(); toast('Every ' + plural(+gs.value, 'day')); });
 document.addEventListener('change', e => { const sel = e.target.closest && e.target.closest('select[name=topic][data-act=log-pick]'); if (!sel) return; const box = document.querySelector('#sheet .log-new'); if (box) { box.hidden = sel.value !== 'new'; if (sel.value === 'new') { const i = box.querySelector('input'); if (i) i.focus(); } } });
 function logTopicFor(v, fd) { /* turn any choice into one of my topics, creating it once if needed */
   const ensureSub = name => { let sb = state.subjects.find(x => x.name === name); if (!sb) { sb = { id: uid(), name }; state.subjects.push(sb); } return sb.id; };
@@ -3686,6 +3721,10 @@ document.addEventListener('submit', e => {
     case 'dump': { const inp = f.querySelector('input[name=text]'); const text = (fd.get('text') || '').trim(); if (!text) return; const buy = parseBuy(text); const mp = !buy && state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump');
       if (!mit) state.dumps = (state.dumps || []).concat([{ id: uid(), text: buy || text, cat: buy ? 'buy' : '', created: nowISO(), updated: nowISO() }]);
       if (inp) inp.value = ''; const ok = save(); if (ok) syncSoon(); dumpRefresh(); if (ok) toast(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : buy ? 'Added to To buy 🛒' : 'Noted 📝'); break; }
+    case 'groc': { const name = (fd.get('name') || '').trim(); if (!name) return; const every = +fd.get('every') || 7;
+      const ex = (state.groceries || []).find(g => g.name.toLowerCase() === name.toLowerCase());
+      if (ex) grocSet(ex.id, { deleted: false, every }); else state.groceries = (state.groceries || []).concat([{ id: 'g-' + uid(), name: name.charAt(0).toUpperCase() + name.slice(1), every, last: today(), updated: nowISO() }]);
+      grocOpen = true; const ok = save(); if (ok) syncSoon(); dumpRefresh(); if (ok) toast('Added ' + name + ' · every ' + plural(every, 'day')); break; }
     case 'todo': {
       const text = (fd.get('text') || '').trim(); if (!text) return;
       state.todos.push({ id: uid(), text, done: false, created: nowISO(), doneAt: null }); commit();
@@ -3711,7 +3750,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
