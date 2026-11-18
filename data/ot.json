@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17",
+ "updated": "2026-11-18",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -411,6 +411,176 @@
    "procedure": "Stenting",
    "unit": "RADIVR",
    "status": "Pending"
+  },
+  {
+   "id": "2026-11-19-01",
+   "date": "2026-11-19",
+   "order": 1,
+   "time": "06:30",
+   "ot": "KHSB-OR1",
+   "procedure": "Arthroscopic spinoglenoid notch cyst decompression and labral repair",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-02",
+   "date": "2026-11-19",
+   "order": 2,
+   "time": "14:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Hernioplasty, inguinal/femoral (bilateral)",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-03",
+   "date": "2026-11-19",
+   "order": 3,
+   "time": "16:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Laparoscopic cholecystectomy",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-04",
+   "date": "2026-11-19",
+   "order": 4,
+   "time": "08:30",
+   "ot": "KHSB-OR2",
+   "procedure": "Laparoscopic hernia repair",
+   "unit": "SUR004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-05",
+   "date": "2026-11-19",
+   "order": 5,
+   "time": "14:00",
+   "ot": "KHSB-OR2",
+   "procedure": "Hernia repair, femoral/inguinal (unilateral)",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-06",
+   "date": "2026-11-19",
+   "order": 6,
+   "time": "06:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Laparoscopic cholecystectomy",
+   "unit": "GIS001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-07",
+   "date": "2026-11-19",
+   "order": 7,
+   "time": "08:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Stoma reversal",
+   "unit": "SUO001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-08",
+   "date": "2026-11-19",
+   "order": 8,
+   "time": "10:30",
+   "ot": "KHSB-OR4",
+   "procedure": "Ureteric reimplantation (unilateral)",
+   "unit": "PDS003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-09",
+   "date": "2026-11-19",
+   "order": 9,
+   "time": "13:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Diagnostic laparoscopy (paediatric surgery)",
+   "unit": "PDS003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-10",
+   "date": "2026-11-19",
+   "order": 10,
+   "time": "08:30",
+   "ot": "khsbcathLab",
+   "procedure": "USG-guided pigtail insertion (IVR)",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-11",
+   "date": "2026-11-19",
+   "order": 11,
+   "time": "09:30",
+   "ot": "khsbcathLab",
+   "procedure": "Angioplasty (interventional radiology)",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-12",
+   "date": "2026-11-19",
+   "order": 12,
+   "time": "11:30",
+   "ot": "khsbcathLab",
+   "procedure": "VenaSeal glue injection",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-13",
+   "date": "2026-11-19",
+   "order": 13,
+   "time": "13:00",
+   "ot": "khsbcathLab",
+   "procedure": "USG-guided sclerotherapy",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-14",
+   "date": "2026-11-19",
+   "order": 14,
+   "time": "14:00",
+   "ot": "khsbcathLab",
+   "procedure": "Embolization",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-15",
+   "date": "2026-11-19",
+   "order": 15,
+   "time": "12:00",
+   "ot": "KHSBGEC",
+   "procedure": "Colonoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-16",
+   "date": "2026-11-19",
+   "order": 16,
+   "time": "14:00",
+   "ot": "KHSBGEC",
+   "procedure": "Upper GI endoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-19-17",
+   "date": "2026-11-19",
+   "order": 17,
+   "time": "15:30",
+   "ot": "KHSBGEC",
+   "procedure": "Oesophagogastroduodenoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
   }
  ]
 }
