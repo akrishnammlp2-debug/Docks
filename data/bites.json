@@ -990,6 +990,119 @@
    "created": "2026-11-18",
    "updated": "2026-11-18",
    "seen": 1
+  },
+  {
+   "id": "ap-vs-pa-chest-xray",
+   "cat": "ICU",
+   "title": "AP vs PA chest X-ray",
+   "aliases": [
+    "AP vs PA view",
+    "PA chest x-ray",
+    "AP chest radiograph",
+    "portable chest x-ray",
+    "supine CXR",
+    "CXR projection"
+   ],
+   "summary": "The letters say which way the X-ray beam travels. In a PA film the beam goes from back to front with the chest pressed against the detector; in an AP film it goes front to back, usually on a portable machine with the patient sitting or supine in bed. PA is the standard because it shows the heart and mediastinum close to true size. Most ICU and post-op films are AP, so you must adjust how you read them.",
+   "sections": [
+    {
+     "h": "How each is taken",
+     "rows": [
+      [
+       "PA",
+       "Standing, front of chest against the detector, chin up, hands on hips and shoulders rolled forward. Tube about 180 cm (72 in) away. Full inspiration."
+      ],
+      [
+       "AP",
+       "Beam from the front, detector behind the back. Sitting or supine, often portable. Tube closer, about 100 cm (40 in). Inspiration often poorer."
+      ],
+      [
+       "Both",
+       "Viewed the same way: as if facing the patient, heart on the image's right side."
+      ]
+     ]
+    },
+    {
+     "h": "Why the heart looks bigger on AP",
+     "items": [
+      "The heart lies anteriorly, so on AP it is farther from the detector and gets magnified.",
+      "The shorter tube distance makes the beam more divergent, adding more magnification.",
+      "Poorer inspiration and the supine position make the heart and upper mediastinum look wider still.",
+      "Rule: CTR >0.5 means cardiomegaly only on a good PA film. Do not diagnose cardiomegaly from CTR on AP alone; a normal-looking heart on AP is reassuring."
+     ]
+    },
+    {
+     "h": "How to tell them apart on the film",
+     "rows": [
+      [
+       "Label",
+       "AP films are usually marked AP / portable / supine / erect. Check the label first."
+      ],
+      [
+       "Scapulae",
+       "PA: rotated off the lung fields. AP: overlie the upper lateral lungs."
+      ],
+      [
+       "Clavicles",
+       "AP: higher and more horizontal, projected over or above the apices. PA: lower, more V-shaped."
+      ],
+      [
+       "Heart & mediastinum",
+       "AP: heart and superior mediastinum look larger and wider."
+      ],
+      [
+       "Inspiration",
+       "PA usually shows more posterior ribs above the diaphragm; AP often fewer (poorer inflation)."
+      ],
+      [
+       "Gastric bubble",
+       "An air-fluid level in the stomach means the patient was upright (PA or erect AP)."
+      ]
+     ]
+    },
+    {
+     "h": "Supine AP: things that change",
+     "items": [
+      "Pleural fluid layers behind the lung: a diffuse haze over one side instead of a blunted costophrenic angle and meniscus.",
+      "Pneumothorax air collects anteriorly and at the bases: look for a deep, lucent costophrenic sulcus (deep sulcus sign) rather than an apical rim.",
+      "Upper lobe vessels look as large as lower lobe vessels when supine; this is normal, not upper lobe diversion.",
+      "Free air under the diaphragm and air-fluid levels need an erect (or decubitus) film.",
+      "Mediastinal widening may be just projection; compare with old films and the clinical picture."
+     ]
+    },
+    {
+     "h": "Where AP is used",
+     "items": [
+      "ICU and ward portable films, trauma bay, post-op recovery, anyone who cannot stand.",
+      "Checking ETT tip, central line, NG tube, chest drain position and pneumothorax after a line.",
+      "Comparing serial ICU films is best done on films taken the same way (same projection and position)."
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "PA is the standard view; AP is a compromise for sick or immobile patients.",
+      "Two reasons for AP magnification: heart far from detector and short tube distance with divergent beam.",
+      "CTR >0.5 = cardiomegaly only on PA.",
+      "Quick tells for AP: label, scapulae over lungs, high horizontal clavicles.",
+      "Supine film: effusion = haze, pneumothorax = deep sulcus sign, no fluid levels."
+     ]
+    }
+   ],
+   "pearl": "Never call cardiomegaly on an AP film: the heart is magnified because it is far from the detector and the tube is close.",
+   "refs": [
+    {
+     "title": "Radiology Masterclass – Chest X-ray quality: projection",
+     "url": "https://www.radiologymasterclass.co.uk/tutorials/chest/chest_quality/chest_xray_quality_projection"
+    },
+    {
+     "title": "Radiopaedia – AP chest X-ray",
+     "url": "https://radiopaedia.org/articles/ap-chest-x-ray"
+    }
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "seen": 1
   }
  ]
 }
