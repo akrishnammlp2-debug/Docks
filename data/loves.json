@@ -1,129 +1,141 @@
 {
-  "updated": "2026-11-17T03:00:00Z",
-  "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
-  "topics": [
-    {
-      "id": "cats",
-      "name": "Cats",
-      "emoji": "🐈"
-    },
-    {
-      "id": "dota2",
-      "name": "Dota 2",
-      "emoji": "🎮"
-    },
-    {
-      "id": "houseplants",
-      "name": "Houseplants",
-      "emoji": "🪴"
-    },
-    {
-      "id": "cooking",
-      "name": "Cooking & nutrition",
-      "emoji": "🍳"
-    },
-    {
-      "id": "finance",
-      "name": "Personal finance",
-      "emoji": "💰"
-    },
-    {
-      "id": "nba",
-      "name": "NBA",
-      "emoji": "🏀"
-    },
-    {
-      "id": "fountain-pens",
-      "name": "Fountain pens",
-      "emoji": "🖋️"
-    },
-    {
-      "id": "history",
-      "name": "History",
-      "emoji": "📜"
-    },
-    {
-      "id": "superheroes",
-      "name": "Superheroes (DC & Marvel)",
-      "emoji": "🦸"
-    },
-    {
-      "id": "nature",
-      "name": "Nature",
-      "emoji": "🌿"
-    },
-    {
-      "id": "nasa",
-      "name": "NASA & space",
-      "emoji": "🚀"
-    },
-    {
-      "id": "mythology",
-      "name": "Mythology",
-      "emoji": "✨"
-    }
-  ],
-  "today": {
-    "date": "2026-11-17",
-    "topic": "nature",
-    "topicName": "Nature",
-    "kind": "fact",
-    "title": "Crows decide about twice as fast as monkeys",
-    "text": "In a study in Science led by Andreas Nieder at the University of Tübingen, two carrion crows named Iggy and Lemmy watched dots on a screen and pecked toward the side where some of them drifted together, earning a mealworm for each correct choice. They answered in roughly 235 milliseconds on average, about twice as fast as primates on the same classic task, with similar accuracy of around 74 percent. Recordings from the nidopallium caudolaterale, the crow's counterpart of our prefrontal cortex, predicted their choices just 70 milliseconds after the dots appeared. Crows have no layered neocortex at all, and their packed-in neurons and short wiring may be part of the secret.",
-    "source": {
-      "title": "The Transmitter: Crows have brains in the fast lane",
-      "url": "https://www.thetransmitter.org/behavior/crows-have-brains-in-the-fast-lane/"
-    },
-    "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Carrion_crow_20090612.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Carrion_crow_20090612.jpg"
-    }
+ "updated": "2026-11-18T03:00:00Z",
+ "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
+ "topics": [
+  {
+   "id": "cats",
+   "name": "Cats",
+   "emoji": "\ud83d\udc08"
   },
-  "history": [
-    {
-      "date": "2026-11-16",
-      "topic": "history",
-      "topicName": "History",
-      "kind": "fact",
-      "title": "The US capital that lasted exactly one day: Lancaster, 1777",
-      "text": "After the Battle of Brandywine in September 1777, Congress fled Philadelphia ahead of the British army and zigzagged through Trenton, Easton, Bethlehem and Reading. On 27 September, about fourteen delegates, John Hancock and Samuel Adams among them, met in Lancaster's courthouse on Centre Square for a single session. Every item of business that day was military. By evening they had voted to cross the Susquehanna River and meet in York, which then served as the capital until mid-1778.",
-      "source": {
-        "title": "Uncharted Lancaster: The day Lancaster was the nation's capital",
-        "url": "https://unchartedlancaster.com/2019/09/27/lancaster-was-the-nations-capital-for-one-day/"
-      }
-    },
-    {
-      "date": "2026-11-15",
-      "topic": "nba",
-      "topicName": "NBA",
-      "kind": "article",
-      "title": "The NBA turned 80, and its first game was in Canada",
-      "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68–66 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
-      "source": {
-        "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
-        "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
-      },
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maple_Leaf_Gardens_Postcard_1931.jpg?width=1200",
-        "page": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_Gardens_Postcard_1931.jpg"
-      }
-    },
-    {
-      "date": "2026-11-14",
-      "topic": "cats",
-      "topicName": "Cats",
-      "kind": "fact",
-      "title": "A cat's larynx can purr on its own",
-      "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20–30 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
-      "source": {
-        "title": "Current Biology study, via HealthDay",
-        "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"
-      },
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felis_catus-cat_on_snow.jpg?width=1200",
-        "credit": "Photo: Von.grzanka, CC BY-SA 3.0, Wikimedia Commons",
-        "page": "https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg"
-      }
-    }
-  ]
+  {
+   "id": "dota2",
+   "name": "Dota 2",
+   "emoji": "\ud83c\udfae"
+  },
+  {
+   "id": "houseplants",
+   "name": "Houseplants",
+   "emoji": "\ud83e\udeb4"
+  },
+  {
+   "id": "cooking",
+   "name": "Cooking & nutrition",
+   "emoji": "\ud83c\udf73"
+  },
+  {
+   "id": "finance",
+   "name": "Personal finance",
+   "emoji": "\ud83d\udcb0"
+  },
+  {
+   "id": "nba",
+   "name": "NBA",
+   "emoji": "\ud83c\udfc0"
+  },
+  {
+   "id": "fountain-pens",
+   "name": "Fountain pens",
+   "emoji": "\ud83d\udd8b\ufe0f"
+  },
+  {
+   "id": "history",
+   "name": "History",
+   "emoji": "\ud83d\udcdc"
+  },
+  {
+   "id": "superheroes",
+   "name": "Superheroes (DC & Marvel)",
+   "emoji": "\ud83e\uddb8"
+  },
+  {
+   "id": "nature",
+   "name": "Nature",
+   "emoji": "\ud83c\udf3f"
+  },
+  {
+   "id": "nasa",
+   "name": "NASA & space",
+   "emoji": "\ud83d\ude80"
+  },
+  {
+   "id": "mythology",
+   "name": "Mythology",
+   "emoji": "\u2728"
+  }
+ ],
+ "today": {
+  "date": "2026-11-18",
+  "topic": "dota2",
+  "topicName": "Dota 2",
+  "kind": "fact",
+  "title": "Dota's prize pool grew 25x, paid by fans",
+  "text": "The first International in 2011 had a $1.6 million prize pool, with Natus Vincere taking $1 million. In 2013 Valve began selling the Compendium, a digital book where each purchase added a flat $2.50 to the pool, and that year's total reached about $2.87 million. By 2014 fan buying had pushed it to roughly $10.9 million, and in 2021 the pool hit a record $40,018,195, with Team Spirit collecting $18.2 million, the biggest single prize in esports history. From 2016 the Battle Pass took over, putting 25 percent of its proceeds into the pot.",
+  "source": {
+   "title": "One Esports: How the prize pools for The International became the biggest in esports",
+   "url": "https://www.oneesports.gg/dota2/dota-2-how-the-prize-pools-for-the-international-became-the-biggest-in-esports/"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-11-17",
+   "topic": "nature",
+   "topicName": "Nature",
+   "kind": "fact",
+   "title": "Crows decide about twice as fast as monkeys",
+   "text": "In a study in Science led by Andreas Nieder at the University of T\u00fcbingen, two carrion crows named Iggy and Lemmy watched dots on a screen and pecked toward the side where some of them drifted together, earning a mealworm for each correct choice. They answered in roughly 235 milliseconds on average, about twice as fast as primates on the same classic task, with similar accuracy of around 74 percent. Recordings from the nidopallium caudolaterale, the crow's counterpart of our prefrontal cortex, predicted their choices just 70 milliseconds after the dots appeared. Crows have no layered neocortex at all, and their packed-in neurons and short wiring may be part of the secret.",
+   "source": {
+    "title": "The Transmitter: Crows have brains in the fast lane",
+    "url": "https://www.thetransmitter.org/behavior/crows-have-brains-in-the-fast-lane/"
+   },
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Carrion_crow_20090612.jpg?width=1200",
+    "page": "https://commons.wikimedia.org/wiki/File:Carrion_crow_20090612.jpg"
+   }
+  },
+  {
+   "date": "2026-11-16",
+   "topic": "history",
+   "topicName": "History",
+   "kind": "fact",
+   "title": "The US capital that lasted exactly one day: Lancaster, 1777",
+   "text": "After the Battle of Brandywine in September 1777, Congress fled Philadelphia ahead of the British army and zigzagged through Trenton, Easton, Bethlehem and Reading. On 27 September, about fourteen delegates, John Hancock and Samuel Adams among them, met in Lancaster's courthouse on Centre Square for a single session. Every item of business that day was military. By evening they had voted to cross the Susquehanna River and meet in York, which then served as the capital until mid-1778.",
+   "source": {
+    "title": "Uncharted Lancaster: The day Lancaster was the nation's capital",
+    "url": "https://unchartedlancaster.com/2019/09/27/lancaster-was-the-nations-capital-for-one-day/"
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "topic": "nba",
+   "topicName": "NBA",
+   "kind": "article",
+   "title": "The NBA turned 80, and its first game was in Canada",
+   "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68\u201366 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
+   "source": {
+    "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
+    "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
+   },
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Maple_Leaf_Gardens_Postcard_1931.jpg?width=1200",
+    "page": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_Gardens_Postcard_1931.jpg"
+   }
+  },
+  {
+   "date": "2026-11-14",
+   "topic": "cats",
+   "topicName": "Cats",
+   "kind": "fact",
+   "title": "A cat's larynx can purr on its own",
+   "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20\u201330 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
+   "source": {
+    "title": "Current Biology study, via HealthDay",
+    "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"
+   },
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felis_catus-cat_on_snow.jpg?width=1200",
+    "credit": "Photo: Von.grzanka, CC BY-SA 3.0, Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Felis_catus-cat_on_snow.jpg"
+   }
+  }
+ ]
 }
