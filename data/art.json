@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-18",
-    "title": "Las Meninas (The Maids of Honour)",
-    "artist": "Diego Velázquez",
-    "artistLife": "Spanish, born 1599 – died 1660",
-    "year": "1656",
-    "medium": "Oil on canvas",
-    "size": "318 × 276 cm, taller than a doorway and nearly square, so the figures are about life-size",
-    "where": "Museo Nacional del Prado, Madrid",
-    "movement": "Spanish Baroque (Golden Age)",
-    "fame": "famous",
+    "date": "2026-11-19",
+    "title": "Early Autumn",
+    "artist": "Qian Xuan (attributed)",
+    "artistLife": "Chinese, born 1235 – died 1305",
+    "year": "late 13th–14th century",
+    "medium": "Handscroll, ink, watercolour and gold on paper",
+    "size": "Painting section 26.7 × 120.7 cm, about as tall as a school ruler is long and roughly a metre and a bit wide",
+    "where": "Detroit Institute of Arts, Detroit (not currently on view)",
+    "movement": "Song–Yuan transition, Chinese bird-and-flower / insect painting",
+    "fame": "hidden gem",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg",
-      "credit": "Museo Nacional del Prado, public domain (image: Wikimedia Commons)",
-      "focus": "center 45%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Qian_Xuan_-_Early_Autumn.jpg",
+      "credit": "Detroit Institute of Arts, public domain (image: Wikimedia Commons)",
+      "focus": "center 50%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "We are looking into a big room in the royal palace in Madrid. A little five-year-old princess, the Infanta Margarita Teresa, stands in the brightest light, with two young ladies-in-waiting fussing around her (they are the 'meninas' of the title). On the right, two court dwarfs and a sleepy mastiff share the corner, and on the left the painter himself stands at a giant canvas, brush in hand, looking straight out at us."
+        "p": "A quiet patch of marsh at the turn of the season. Reeds and wilting leaves bend over the ground, and tiny creatures are scattered through them: a dragonfly, a grasshopper, a frog waiting in the grass. The scene is small and calm, but if you look closely there is a little drama too, since some of these insects are hunting each other."
       },
       {
         "h": "The artist",
-        "p": "Diego Velázquez was born in Seville and trained there under the painter Francisco Pacheco, whose daughter he later married. In 1623 he was called to Madrid and soon became the favourite painter of King Philip IV, eventually holding important court jobs beyond painting. He travelled to Italy twice to study art and buy works for the king. He wanted very much to be accepted into the Order of Santiago, a noble knighthood, and finally was in 1659."
+        "p": "Qian Xuan lived from 1235 to 1305 in Huzhou, in what is now Zhejiang province, and he first trained to become a government official. When the Mongols took over southern China in 1276 and set up the Yuan dynasty, he gave up that path and turned to painting. His friend Zhao Mengfu took a post with the new rulers, but Qian declined to follow, so he is remembered as a loyalist to the fallen Song dynasty. The Detroit museum lists this scroll as 'attributed to' him, meaning experts are not completely certain it is his own hand."
       },
       {
         "h": "The time",
-        "p": "Spain in the 1650s was still a vast empire, but it was tired and short of money after decades of war in Europe. King Philip IV was a serious art lover, and he gave his court painter a spacious room in the palace to use as a studio. The painting was made for the king's private rooms rather than for the public, and was hung in the palace for generations. It was damaged in the 1734 fire that destroyed that palace, was repaired, and joined the Prado when the museum opened in 1819."
+        "p": "China was going through one of the biggest shake-ups in its history, as foreign Mongol rulers replaced the Song court that educated people had served for generations. Many scholars chose to stay away from public life and expressed their feelings through art instead. Small, humble subjects like insects, flowers and grass could carry quiet hidden meanings that were safer to hint at than to say out loud."
       },
       {
         "h": "What's special",
-        "p": "Velázquez paints with loose, quick strokes that look messy up close and snap into perfect fabric, light and air when you step back. The room feels so deep that visitors often feel the space continues into the gallery where they stand. The picture is also a clever puzzle: the king and queen appear only as tiny reflections in the back mirror, so we seem to be standing where they are. Many people read it as Velázquez arguing that painting is a noble art, not just a craft."
+        "p": "The delicate brushwork is wonderfully precise: every blade of grass, veined leaf and insect wing is drawn with a fine line and soft colour. Some viewers read the wilting leaves and the predators as a gentle sign that a season, and perhaps a whole age, is ending. The scroll is also much longer than the picture itself, because admirers added poems and seals over the centuries, so you read it like a book of reactions. The full roll is over ten metres long, mostly made up of these added writings."
       },
       {
         "h": "Look for",
-        "p": "Find the small mirror on the back wall with the faint faces of King Philip IV and Queen Mariana. Then spot the man standing in the bright doorway behind, who looks like he is about to leave or has just walked in. Finally, look at the red cross on the painter's chest: it was added after he died, as a tribute to the honour he longed for."
+        "p": "Find the dragonfly eating a smaller fly, and the frog sitting very still nearby as if waiting its turn. Then look at the leaves, where some are fresh and some are browned and curling, as if autumn is just beginning."
       }
     ],
     "source": {
-      "title": "Museo Nacional del Prado",
-      "url": "https://www.museodelprado.es/en/the-collection/art-work/las-meninas/9fdc7800-9ade-48b0-ab8b-edee94ea877f"
+      "title": "Detroit Institute of Arts",
+      "url": "https://dia.org/collection/early-autumn/57885"
     }
   },
   "history": [
+    {
+      "date": "2026-11-18",
+      "title": "Las Meninas (The Maids of Honour)",
+      "artist": "Diego Velázquez",
+      "artistLife": "Spanish, born 1599 – died 1660",
+      "year": "1656",
+      "medium": "Oil on canvas",
+      "size": "318 × 276 cm, taller than a doorway and nearly square, so the figures are about life-size",
+      "where": "Museo Nacional del Prado, Madrid",
+      "movement": "Spanish Baroque (Golden Age)",
+      "fame": "famous",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg",
+        "credit": "Museo Nacional del Prado, public domain (image: Wikimedia Commons)",
+        "focus": "center 45%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "We are looking into a big room in the royal palace in Madrid. A little five-year-old princess, the Infanta Margarita Teresa, stands in the brightest light, with two young ladies-in-waiting fussing around her (they are the 'meninas' of the title). On the right, two court dwarfs and a sleepy mastiff share the corner, and on the left the painter himself stands at a giant canvas, brush in hand, looking straight out at us."
+        },
+        {
+          "h": "The artist",
+          "p": "Diego Velázquez was born in Seville and trained there under the painter Francisco Pacheco, whose daughter he later married. In 1623 he was called to Madrid and soon became the favourite painter of King Philip IV, eventually holding important court jobs beyond painting. He travelled to Italy twice to study art and buy works for the king. He wanted very much to be accepted into the Order of Santiago, a noble knighthood, and finally was in 1659."
+        },
+        {
+          "h": "The time",
+          "p": "Spain in the 1650s was still a vast empire, but it was tired and short of money after decades of war in Europe. King Philip IV was a serious art lover, and he gave his court painter a spacious room in the palace to use as a studio. The painting was made for the king's private rooms rather than for the public, and was hung in the palace for generations. It was damaged in the 1734 fire that destroyed that palace, was repaired, and joined the Prado when the museum opened in 1819."
+        },
+        {
+          "h": "What's special",
+          "p": "Velázquez paints with loose, quick strokes that look messy up close and snap into perfect fabric, light and air when you step back. The room feels so deep that visitors often feel the space continues into the gallery where they stand. The picture is also a clever puzzle: the king and queen appear only as tiny reflections in the back mirror, so we seem to be standing where they are. Many people read it as Velázquez arguing that painting is a noble art, not just a craft."
+        },
+        {
+          "h": "Look for",
+          "p": "Find the small mirror on the back wall with the faint faces of King Philip IV and Queen Mariana. Then spot the man standing in the bright doorway behind, who looks like he is about to leave or has just walked in. Finally, look at the red cross on the painter's chest: it was added after he died, as a tribute to the honour he longed for."
+        }
+      ],
+      "source": {
+        "title": "Museo Nacional del Prado",
+        "url": "https://www.museodelprado.es/en/the-collection/art-work/las-meninas/9fdc7800-9ade-48b0-ab8b-edee94ea877f"
+      }
+    },
     {
       "date": "2026-11-17",
       "title": "Squirrels in a Plane Tree",
