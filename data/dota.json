@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-18",
- "asOf": "Tier 1 only · checked 18 Nov 2026",
+ "updated": "2026-11-19",
+ "asOf": "Tier 1 only · checked 19 Nov 2026",
  "tags": {
   "Natus Vincere": "NAVI",
   "OG": "OG",
@@ -67,9 +67,9 @@
    "start": "2026-12-02",
    "end": "2026-12-13",
    "where": "Online",
-   "prize": "$1,000,000",
-   "teams": 16,
-   "format": "Two round-robin groups of eight, top six from each advance. Double-elimination playoffs, all Bo3 except a Bo5 grand final.",
+   "prize": "",
+   "teams": 0,
+   "format": "Online event run by ESL, 2 to 13 Dec. Sources disagree on group format and field size, so details are left out until the organiser confirms.",
    "field": [],
    "source": "https://www.gosugamers.net/dota2/tournaments/63202-dreamleague-season-30"
   },
@@ -191,14 +191,6 @@
    "url": "https://navi.gg/en/publications/d2-blast-slam-ix-navi-group"
   },
   {
-   "date": "2026-11-10",
-   "kind": "Patch",
-   "title": "7.42 may land around DreamLeague S30, but it is only a rumour",
-   "text": "Community talk links the next big patch to DreamLeague (2 to 13 Dec). Valve has said nothing official; a short-lived 7.41g entry and a client-only build are the only hints.",
-   "source": "Metaratings",
-   "url": "https://cybersport.metaratings.ru/news/patch-7-42-v-dota-2-mogut-vypustit-k-dreamleague-season-30-669832/"
-  },
-  {
    "date": "2026-11-13",
    "kind": "Update",
    "title": "Small client update adds a \"Bot\" report reason",
@@ -207,12 +199,12 @@
    "url": "https://hawk.live/posts/valve-released-another-update-dota-2-amid-anticipation-major-patch"
   },
   {
-   "date": "2026-11",
-   "kind": "Update",
-   "title": "November update: Monkey King, Ability Draft and the end of 32-bit",
-   "text": "Monkey King gets more things to transform into, Ability Draft now hands out scepter and shard abilities along with the base ones, lobbies can shuffle player slots, and Dota no longer runs on 32-bit systems.",
-   "source": "AgataSmurf",
-   "url": "https://agatasmurf.com/dota-2-monkey-king-ability-draft-patch/"
+   "date": "2026-11-10",
+   "kind": "Patch",
+   "title": "7.42 may land around DreamLeague S30, but it is only a rumour",
+   "text": "Community talk links the next big patch to DreamLeague (2 to 13 Dec). Valve has said nothing official; a short-lived 7.41g entry and a client-only build are the only hints.",
+   "source": "Metaratings",
+   "url": "https://cybersport.metaratings.ru/news/patch-7-42-v-dota-2-mogut-vypustit-k-dreamleague-season-30-669832/"
   },
   {
    "date": "2026-11-03",
@@ -231,12 +223,28 @@
    "url": "https://dota2news.com/"
   },
   {
+   "date": "2026-11-02",
+   "kind": "Roster",
+   "title": "BetBoom Team pauses its Dota 2 roster; four players regroup as DO KONCA",
+   "text": "BetBoom moved its five-man lineup to inactive after weak results. Kiritych, Save, MieRo and Kataomi now play as DO KONCA, who are in BLAST Slam IX.",
+   "source": "GosuGamers",
+   "url": "https://www.gosugamers.net/dota2/news/79467-betboom-team-puts-its-dota-2-division-on-hiatus"
+  },
+  {
    "date": "2026-11-01",
    "kind": "Result",
    "title": "Team Spirit sweep Team Yandex to win PARI Universe",
    "text": "Spirit dropped to the lower bracket, came back through it and won the best-of-five grand final 3-0.",
    "source": "GosuGamers",
    "url": "https://www.gosugamers.net/dota2/news/79461-team-spirit-sweep-team-yandex-to-win-pari-universe"
+  },
+  {
+   "date": "2026-11",
+   "kind": "Update",
+   "title": "November update: Monkey King, Ability Draft and the end of 32-bit",
+   "text": "Monkey King gets more things to transform into, Ability Draft now hands out scepter and shard abilities along with the base ones, lobbies can shuffle player slots, and Dota no longer runs on 32-bit systems.",
+   "source": "AgataSmurf",
+   "url": "https://agatasmurf.com/dota-2-monkey-king-ability-draft-patch/"
   }
  ]
 }
