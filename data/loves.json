@@ -1,88 +1,104 @@
 {
- "updated": "2026-11-18T03:00:00Z",
+ "updated": "2026-11-19T03:00:00Z",
  "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
  "topics": [
   {
    "id": "cats",
    "name": "Cats",
-   "emoji": "\ud83d\udc08"
+   "emoji": "🐈"
   },
   {
    "id": "dota2",
    "name": "Dota 2",
-   "emoji": "\ud83c\udfae"
+   "emoji": "🎮"
   },
   {
    "id": "houseplants",
    "name": "Houseplants",
-   "emoji": "\ud83e\udeb4"
+   "emoji": "🪴"
   },
   {
    "id": "cooking",
    "name": "Cooking & nutrition",
-   "emoji": "\ud83c\udf73"
+   "emoji": "🍳"
   },
   {
    "id": "finance",
    "name": "Personal finance",
-   "emoji": "\ud83d\udcb0"
+   "emoji": "💰"
   },
   {
    "id": "nba",
    "name": "NBA",
-   "emoji": "\ud83c\udfc0"
+   "emoji": "🏀"
   },
   {
    "id": "fountain-pens",
    "name": "Fountain pens",
-   "emoji": "\ud83d\udd8b\ufe0f"
+   "emoji": "🖋️"
   },
   {
    "id": "history",
    "name": "History",
-   "emoji": "\ud83d\udcdc"
+   "emoji": "📜"
   },
   {
    "id": "superheroes",
    "name": "Superheroes (DC & Marvel)",
-   "emoji": "\ud83e\uddb8"
+   "emoji": "🦸"
   },
   {
    "id": "nature",
    "name": "Nature",
-   "emoji": "\ud83c\udf3f"
+   "emoji": "🌿"
   },
   {
    "id": "nasa",
    "name": "NASA & space",
-   "emoji": "\ud83d\ude80"
+   "emoji": "🚀"
   },
   {
    "id": "mythology",
    "name": "Mythology",
-   "emoji": "\u2728"
+   "emoji": "✨"
   }
  ],
  "today": {
-  "date": "2026-11-18",
-  "topic": "dota2",
-  "topicName": "Dota 2",
+  "date": "2026-11-19",
+  "topic": "nature",
+  "topicName": "Nature",
   "kind": "fact",
-  "title": "Dota's prize pool grew 25x, paid by fans",
-  "text": "The first International in 2011 had a $1.6 million prize pool, with Natus Vincere taking $1 million. In 2013 Valve began selling the Compendium, a digital book where each purchase added a flat $2.50 to the pool, and that year's total reached about $2.87 million. By 2014 fan buying had pushed it to roughly $10.9 million, and in 2021 the pool hit a record $40,018,195, with Team Spirit collecting $18.2 million, the biggest single prize in esports history. From 2016 the Battle Pass took over, putting 25 percent of its proceeds into the pot.",
+  "title": "Europe's 'wildwood' may never have been a solid forest",
+  "text": "We picture prehistoric Europe as an endless closed forest, but a new review from Aarhus University argues otherwise. A team led by PhD student Szymon Czyżewski and Professor Jens-Christian Svenning, with 21 co-authors, combined fossil pollen, ancient charcoal, tooth chemistry, fossil insects and ancient DNA from sediments going back about 23 million years. The picture that emerged is a patchwork of scattered trees, open woodland, grassland and flowering meadows, kept open by elephants, rhinos, aurochs and bison. Larks, jackdaws and even the European hamster may trace their roots to these open habitats, and the authors warn that blanket tree-planting could harm biodiversity.",
   "source": {
-   "title": "One Esports: How the prize pools for The International became the biggest in esports",
-   "url": "https://www.oneesports.gg/dota2/dota-2-how-the-prize-pools-for-the-international-became-the-biggest-in-esports/"
+   "title": "ScienceDaily: Scientists discover Europe's ancient forests were nothing like we imagined",
+   "url": "https://www.sciencedaily.com/releases/2026/11/261104012333.htm"
+  },
+  "image": {
+   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison_bonasus_bonasus.jpg?width=1200",
+   "page": "https://commons.wikimedia.org/wiki/File:Bison_bonasus_bonasus.jpg"
   }
  },
  "history": [
+  {
+   "date": "2026-11-18",
+   "topic": "dota2",
+   "topicName": "Dota 2",
+   "kind": "fact",
+   "title": "Dota's prize pool grew 25x, paid by fans",
+   "text": "The first International in 2011 had a $1.6 million prize pool, with Natus Vincere taking $1 million. In 2013 Valve began selling the Compendium, a digital book where each purchase added a flat $2.50 to the pool, and that year's total reached about $2.87 million. By 2014 fan buying had pushed it to roughly $10.9 million, and in 2021 the pool hit a record $40,018,195, with Team Spirit collecting $18.2 million, the biggest single prize in esports history. From 2016 the Battle Pass took over, putting 25 percent of its proceeds into the pot.",
+   "source": {
+    "title": "One Esports: How the prize pools for The International became the biggest in esports",
+    "url": "https://www.oneesports.gg/dota2/dota-2-how-the-prize-pools-for-the-international-became-the-biggest-in-esports/"
+   }
+  },
   {
    "date": "2026-11-17",
    "topic": "nature",
    "topicName": "Nature",
    "kind": "fact",
    "title": "Crows decide about twice as fast as monkeys",
-   "text": "In a study in Science led by Andreas Nieder at the University of T\u00fcbingen, two carrion crows named Iggy and Lemmy watched dots on a screen and pecked toward the side where some of them drifted together, earning a mealworm for each correct choice. They answered in roughly 235 milliseconds on average, about twice as fast as primates on the same classic task, with similar accuracy of around 74 percent. Recordings from the nidopallium caudolaterale, the crow's counterpart of our prefrontal cortex, predicted their choices just 70 milliseconds after the dots appeared. Crows have no layered neocortex at all, and their packed-in neurons and short wiring may be part of the secret.",
+   "text": "In a study in Science led by Andreas Nieder at the University of Tübingen, two carrion crows named Iggy and Lemmy watched dots on a screen and pecked toward the side where some of them drifted together, earning a mealworm for each correct choice. They answered in roughly 235 milliseconds on average, about twice as fast as primates on the same classic task, with similar accuracy of around 74 percent. Recordings from the nidopallium caudolaterale, the crow's counterpart of our prefrontal cortex, predicted their choices just 70 milliseconds after the dots appeared. Crows have no layered neocortex at all, and their packed-in neurons and short wiring may be part of the secret.",
    "source": {
     "title": "The Transmitter: Crows have brains in the fast lane",
     "url": "https://www.thetransmitter.org/behavior/crows-have-brains-in-the-fast-lane/"
@@ -110,7 +126,7 @@
    "topicName": "NBA",
    "kind": "article",
    "title": "The NBA turned 80, and its first game was in Canada",
-   "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68\u201366 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
+   "text": "On 1 November 1946 the New York Knicks beat the Toronto Huskies 68–66 at Maple Leaf Gardens, in what became the first game in NBA history (the league was then called the BAA). NBA.com marked the 80th anniversary with a profile of Ben Newman, the 26-year-old Canadian who lobbied league founders in New York for a Toronto team after his exhibition games sold out the Gardens. A steel executive by day, he had also coached the Merritton-Hayes Hellcats to national titles in 1944 and 1945 and built a feeder system for young players. The Huskies folded after that single season, but his grandson Jordon Williams is now pushing for Newman's induction into the Basketball Hall of Fame as a contributor.",
    "source": {
     "title": "NBA.com: On 80th anniversary of 1st game in NBA history, Canadian pioneer Ben Newman's legacy lives on",
     "url": "https://www.nba.com/news/on-80th-anniversary-of-1st-game-in-nba-history-canadian-pioneer-ben-newmans-legacy-lives-on"
@@ -126,7 +142,7 @@
    "topicName": "Cats",
    "kind": "fact",
    "title": "A cat's larynx can purr on its own",
-   "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20\u201330 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
+   "text": "Purring was long thought to need the brain firing the throat muscles about 25 times a second. In 2023, voice scientists in Vienna blew warm, humid air through cat larynges in the lab and they purred anyway, at 20–30 Hz, with no nerve signals at all. The trick is a small pad of tissue built into the vocal folds that makes them heavy enough to flutter that slowly, like the 'creaky voice' humans can make. That's lower than the deepest human bass, from an animal that weighs about 4 kg.",
    "source": {
     "title": "Current Biology study, via HealthDay",
     "url": "https://www.healthday.com/health-news/medical-specialties/cat-health-2665800649.html"
