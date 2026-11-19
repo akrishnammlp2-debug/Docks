@@ -1,1109 +1,1247 @@
 {
- "updated": "2026-11-18",
- "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
- "cats": [
-  "Drugs",
-  "Ventilation",
-  "Physiology",
-  "Airway",
-  "Regional",
-  "Obstetric",
-  "Paediatric",
-  "Cardiac",
-  "Neuro",
-  "ICU",
-  "Monitoring & equipment",
-  "Preop & scoring",
-  "New papers",
-  "Other"
- ],
- "items": [
-  {
-   "id": "asa-ps",
-   "cat": "Preop & scoring",
-   "title": "ASA physical status",
-   "aliases": [
-    "asa grading",
-    "asa classification",
-    "asa-ps"
-   ],
-   "pearl": "Grade = clinical judgement; the examples are guides, not rules.",
-   "refs": [
+  "updated": "2026-11-19",
+  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
+  "cats": [
+    "Drugs",
+    "Ventilation",
+    "Physiology",
+    "Airway",
+    "Regional",
+    "Obstetric",
+    "Paediatric",
+    "Cardiac",
+    "Neuro",
+    "ICU",
+    "Monitoring & equipment",
+    "Preop & scoring",
+    "New papers",
+    "Other"
+  ],
+  "items": [
     {
-     "title": "ASA Physical Status Classification System (ASA; last amended 13 Dec 2020, first approved 15 Oct 2014)",
-     "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
+      "id": "asa-ps",
+      "cat": "Preop & scoring",
+      "title": "ASA physical status",
+      "aliases": [
+        "asa grading",
+        "asa classification",
+        "asa-ps"
+      ],
+      "pearl": "Grade = clinical judgement; the examples are guides, not rules.",
+      "refs": [
+        {
+          "title": "ASA Physical Status Classification System (ASA; last amended 13 Dec 2020, first approved 15 Oct 2014)",
+          "url": "https://asahq.org/resources/clinical-information/asa-physical-status-classification-system"
+        },
+        {
+          "title": "Günaydın B. ASA Physical Status Classification System. Turk J Anaesthesiol Reanim 2021;49:192–3",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8098734"
+        },
+        {
+          "title": "Parenti N et al. Reliability of ASA physical status classification. Indian J Anaesth 2016;60:208–14",
+          "url": "https://doi.org/10.4103/0019-5049.177875"
+        },
+        {
+          "title": "Riley R et al. Inter-rater reliability of the ASA physical status classification. Anaesth Intensive Care 2014;42:614–8",
+          "url": "https://doi.org/10.1177/0310057X1404200511"
+        },
+        {
+          "title": "SPA: Updated ASA physical status classification with paediatric examples",
+          "url": "https://pedsanesthesia.org/updated-asa-physical-status-classification-system-with-pediatric-examples"
+        }
+      ],
+      "created": "2026-11-12",
+      "updated": "2026-11-12",
+      "seen": 1,
+      "summary": "The ASA Physical Status (ASA-PS) classification grades a patient's overall health before anaesthesia. Current version: amended by the ASA House of Delegates on 13 Dec 2020 (first approved in this form on 15 Oct 2014). The class definitions did not change in 2020; the update added adult, paediatric and obstetric examples.",
+      "sections": [
+        {
+          "h": "The classes",
+          "rows": [
+            [
+              "ASA I",
+              "Normal healthy patient: no systemic disease, non-smoker, little or no alcohol."
+            ],
+            [
+              "ASA II",
+              "Mild systemic disease without real functional limitation, e.g. current smoker, social drinker, normal pregnancy, BMI 30–40, well-controlled diabetes or hypertension, mild lung disease."
+            ],
+            [
+              "ASA III",
+              "Severe systemic disease with functional limitation, e.g. poorly controlled diabetes or hypertension, COPD, BMI 40 or more, active hepatitis, alcohol dependence, implanted pacemaker, moderately reduced ejection fraction, end-stage renal disease on regular dialysis, MI/stroke/TIA/coronary stent more than 3 months ago."
+            ],
+            [
+              "ASA IV",
+              "Severe systemic disease that is a constant threat to life, e.g. MI/stroke/TIA/coronary stent within the last 3 months, ongoing cardiac ischaemia or severe valve disease, severely reduced ejection fraction, sepsis, DIC, ARDS, end-stage renal disease not on regular dialysis."
+            ],
+            [
+              "ASA V",
+              "Moribund: not expected to survive without the operation, e.g. ruptured abdominal or thoracic aneurysm, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multiple organ failure."
+            ],
+            [
+              "ASA VI",
+              "Declared brain-dead patient whose organs are being removed for donation."
+            ],
+            [
+              "E",
+              "Added to the class for an emergency operation: one where delay would significantly increase the threat to life or to a body part (e.g. ASA IIIE). Not used with ASA VI."
+            ]
+          ]
+        },
+        {
+          "h": "Obstetric examples (2020)",
+          "items": [
+            "Normal pregnancy is ASA II (not ASA I).",
+            "Moves up a class as pregnancy complications become severe: e.g. pre-eclampsia with severe features is ASA III, and the same with HELLP or decompensated heart disease is ASA IV.",
+            "Uterine rupture is given as an ASA V example.",
+            "Add E when the case is an emergency (e.g. category 1 caesarean: ASA IIE or higher)."
+          ]
+        },
+        {
+          "h": "Paediatric examples (2020)",
+          "items": [
+            "The 2020 update added a separate column of children's examples, which improved agreement between paediatric anaesthetists.",
+            "Typical pattern: well-controlled chronic conditions (asthma without exacerbation, controlled epilepsy) are ASA II; poorly controlled disease, ex-premature infants under 60 weeks postconceptional age and difficult airway are ASA III; symptomatic heart disease, sepsis or ventilator dependence are ASA IV.",
+            "See the ASA page (reference 1) for the full table of children's examples."
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "The examples are illustrative, not exhaustive; the ASA gives no further rules, so the final grade is the anaesthetist's clinical judgement.",
+            "ASA-PS describes the patient's health, not the risk of the operation itself: it does not include the type of surgery, age alone, or airway difficulty in adults.",
+            "Inter-rater agreement is only fair to moderate (kappa about 0.4 to 0.6 in most studies); ASA II and III are the classes most often disputed. Using the official examples improves agreement.",
+            "Despite this, higher ASA class is consistently linked with more postoperative complications and mortality, and ASA-PS is built into many risk scores (e.g. POSSUM-type models, NSQIP calculator).",
+            "In India, SLCM and most hospital PAC forms record ASA with the E suffix for emergencies."
+          ]
+        }
+      ]
     },
     {
-     "title": "Günaydın B. ASA Physical Status Classification System. Turk J Anaesthesiol Reanim 2021;49:192–3",
-     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8098734"
+      "id": "psv",
+      "cat": "Ventilation",
+      "title": "Pressure support ventilation (PSV)",
+      "aliases": [
+        "pressure support",
+        "psv",
+        "spontaneous mode"
+      ],
+      "pearl": "Used for weaning and SBT (e.g. PS 5–8 cmH2O + PEEP 5).",
+      "refs": [
+        {
+          "title": "Abramovitz A, Sung S. Pressure Support Ventilation (PSV). StatPearls. Treasure Island (FL): StatPearls Publishing; 2023 (archived)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31536312/"
+        },
+        {
+          "title": "Liberation from mechanical ventilation in critically ill adults: an official American College of Chest Physicians / American Thoracic Society clinical practice guideline. Chest 2017 (suggests the first spontaneous breathing trial uses 5–8 cmH₂O of pressure support)",
+          "url": "https://seek.chestnet.org/AssetListing/CHEST-Guidelines-14139/Liberation-From-Mechanical-Ventilation-in-Critically-Ill-Adults-An-Official-American-College-of-Chest-Physicians-or-American-Thoracic-Society-Clinical-Practice-Guideline-76906"
+        },
+        {
+          "title": "GE Aisys CS2 User's Reference Manual: ventilation modes, factory default settings (ManualsLib)",
+          "url": "https://www.manualslib.com/manual/1210542/Ge-Auisys-Cs2.html?page=211"
+        }
+      ],
+      "created": "2026-11-13",
+      "updated": "2026-11-13",
+      "seen": 1,
+      "summary": "Pressure support ventilation is a purely spontaneous mode: every breath is triggered by the patient, pressure-limited (the ventilator holds PEEP + PS) and flow-cycled (it stops when flow falls to a set percentage of peak flow). There is no set rate, so the patient needs an intact respiratory drive, and minute ventilation is not guaranteed.",
+      "sections": [
+        {
+          "h": "How a breath works",
+          "items": [
+            "Trigger: the patient's effort is sensed as a small fall in airway pressure or a change in flow.",
+            "The ventilator raises airway pressure to PEEP + PS and holds it there for the rest of inspiration.",
+            "Flow is highest at the start, then falls as the lungs fill.",
+            "Cycle: when flow falls to the set percentage of peak flow (commonly 25%), the ventilator stops and expiration begins.",
+            "The patient decides the rate and the inspiratory time. Tidal volume depends on the PS level, the patient's effort, compliance and resistance."
+          ]
+        },
+        {
+          "h": "Settings",
+          "rows": [
+            [
+              "Pressure support (PS)",
+              "Pressure added above PEEP. Usually 5–20 cmH₂O (the GE Aisys CS2 manual lists a range of 2–40). Titrate to a tidal volume of about 6–8 mL/kg predicted body weight, a rate under 25–30 and no accessory muscle use. A level of 5–8 cmH₂O roughly offsets the resistance of the tube and circuit, and is the level suggested for a spontaneous breathing trial."
+            ],
+            [
+              "PEEP",
+              "Typically 5 cmH₂O. In COPD with intrinsic PEEP, external PEEP set below the intrinsic level reduces the effort needed to trigger a breath."
+            ],
+            [
+              "FiO₂",
+              "Set to reach the target SpO₂."
+            ],
+            [
+              "Trigger sensitivity",
+              "Flow trigger about 1–3 L/min, or pressure trigger about −0.5 to −2 cmH₂O. Too sensitive causes auto-triggering (leaks, cardiac oscillations, water in the circuit). Too insensitive causes missed efforts and extra work."
+            ],
+            [
+              "Rise time (ramp, slope)",
+              "How fast the airway pressure reaches the target. Shown in seconds, as a percentage or on a 1–10 scale, depending on the ventilator. Use a faster rise for a patient with high drive. Too fast gives pressure overshoot and early cycling; too slow starves the patient of flow."
+            ],
+            [
+              "Expiratory trigger (Esens, cycle-off, End of breath)",
+              "The percentage of peak flow at which inspiration ends. Commonly 25% by default; the GE Aisys CS2 lists 5–75%. Raise it to about 40–50% in COPD to shorten inspiration and limit air trapping. Lower it to about 10–15% in stiff (restrictive) lungs to avoid cycling too early and double triggering."
+            ],
+            [
+              "Maximum inspiratory time",
+              "A backup time limit on the breath, which matters with leaks and NIV. The value and name vary with the ventilator. Many ventilators also end the breath if pressure rises above the target (the patient breathing out against the breath)."
+            ],
+            [
+              "Apnoea backup",
+              "If the patient does not breathe for the set apnoea time, a mandatory backup mode with a set rate takes over. The time varies by machine (the GE Aisys CS2 manual lists 10–30 s)."
+            ],
+            [
+              "Alarms",
+              "High and low respiratory rate, low and high minute volume and tidal volume, high airway pressure."
+            ],
+            [
+              "Tube compensation",
+              "Optional on some ventilators. Adds extra pressure to offset the resistance of the tube."
+            ]
+          ]
+        },
+        {
+          "h": "Pressure and flow in one breath",
+          "svg": "<svg viewBox=\"0 0 380 360\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><defs><marker id=\"nfarr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" class=\"nf-m\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></marker></defs><text class=\"nf-t nf-h\" x=\"40\" y=\"34\">Pressure</text><line x1=\"40\" y1=\"130\" x2=\"340\" y2=\"130\" class=\"nf-l\"/><path d=\"M40,130 L80,130 L90,139 L96,132 C104,100 116,72 130,70 L250,70 L256,130 L340,130\" class=\"nf-p\"/><text class=\"nf-t\" x=\"190\" y=\"58\" text-anchor=\"middle\">PEEP + PS</text><line x1=\"256\" y1=\"70\" x2=\"290\" y2=\"70\" class=\"nf-l\"/><line x1=\"290\" y1=\"130\" x2=\"290\" y2=\"72\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"298\" y=\"104\">PS</text><text class=\"nf-t\" x=\"340\" y=\"146\" text-anchor=\"end\">PEEP</text><text class=\"nf-t\" x=\"40\" y=\"94\">Rise time</text><line x1=\"88\" y1=\"90\" x2=\"109\" y2=\"90\" class=\"nf-l\"/><line x1=\"90\" y1=\"151\" x2=\"90\" y2=\"142\" class=\"nf-l\"/><text class=\"nf-t\" x=\"90\" y=\"164\" text-anchor=\"middle\">Trigger</text><text class=\"nf-t nf-h\" x=\"40\" y=\"182\">Flow</text><line x1=\"40\" y1=\"250\" x2=\"340\" y2=\"250\" class=\"nf-l\"/><path d=\"M40,250 L96,250 C98,215 102,190 108,190 C130,205 180,225 250,235 L252,250 C256,290 266,292 280,285 C300,272 315,255 325,250 L340,250\" class=\"nf-f\"/><text class=\"nf-t\" x=\"126\" y=\"184\">Peak flow</text><circle cx=\"252\" cy=\"235\" r=\"3\" class=\"nf-dot\"/><line x1=\"252\" y1=\"231\" x2=\"252\" y2=\"219\" class=\"nf-l\"/><text class=\"nf-t\" x=\"340\" y=\"212\" text-anchor=\"end\">Cycles off at ~25% of peak</text><text class=\"nf-t\" x=\"340\" y=\"306\" text-anchor=\"end\">Passive expiration</text><line x1=\"96\" y1=\"316\" x2=\"96\" y2=\"328\" class=\"nf-l\"/><line x1=\"252\" y1=\"316\" x2=\"252\" y2=\"328\" class=\"nf-l\"/><line x1=\"98\" y1=\"322\" x2=\"250\" y2=\"322\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"174\" y=\"344\" text-anchor=\"middle\">Inspiratory time</text></svg>",
+          "alt": "Airway pressure and flow over one pressure support breath, marking the trigger, rise time, PEEP, PS, peak flow, the point where flow falls to about 25% of peak and the breath cycles off, and the inspiratory time.",
+          "items": [
+            "Trigger: the small dip below PEEP, with the matching flow change, is the patient's effort being sensed.",
+            "Rise time: the slope from PEEP up to the plateau.",
+            "PS: the height of the plateau above PEEP. It is the main determinant of tidal volume.",
+            "Expiratory trigger: the flow tails off, and the breath ends when flow falls to the set percentage of peak. A higher setting ends the breath earlier; a lower setting ends it later.",
+            "Inspiratory time: the width of the plateau. It is not set. It comes from the patient's effort, the lung mechanics and the cycle-off point (plus the maximum inspiratory time backup).",
+            "Bedside check: if the flow curve ends abruptly instead of tapering, the breath cycled too early or too late, so adjust the expiratory trigger or the rise time."
+          ]
+        },
+        {
+          "h": "Problems to watch",
+          "items": [
+            "Tidal volume is not fixed: it falls if compliance falls or resistance rises.",
+            "Too much support causes large volumes, hyperinflation, missed triggers and central apnoeas in sleep.",
+            "Too little support causes rapid shallow breathing and fatigue.",
+            "Sedation, opioids or residual neuromuscular block can cause hypoventilation. Because no mandatory breaths are given, minute ventilation is not guaranteed, which is why the apnoea backup matters."
+          ]
+        },
+        {
+          "h": "On anaesthesia machines",
+          "items": [
+            "Many anaesthesia machines offer pressure support with an apnoea backup, for example PSVPro on GE machines. If the patient stops breathing for the set backup time, a mandatory mode takes over. This is useful during emergence and LMA cases.",
+            "Names, ranges and defaults differ between machines, so check the manual of the machine you are using."
+          ]
+        }
+      ]
     },
     {
-     "title": "Parenti N et al. Reliability of ASA physical status classification. Indian J Anaesth 2016;60:208–14",
-     "url": "https://doi.org/10.4103/0019-5049.177875"
+      "id": "paediatric-spinal-dose",
+      "cat": "Paediatric",
+      "title": "Paediatric spinal anaesthesia: dose",
+      "aliases": [
+        "pediatric spinal dose",
+        "paediatric spinal",
+        "spinal in children",
+        "infant spinal",
+        "subarachnoid block in children",
+        "paediatric SAB dose"
+      ],
+      "pearl": "Smaller child = more mg/kg (more CSF per kg) but a shorter block.",
+      "refs": [
+        {
+          "title": "Gupta A, Saha U. Spinal anesthesia in children: a review. J Anaesthesiol Clin Pharmacol 2014;30:10–18",
+          "url": "https://doi.org/10.4103/0970-9185.125687"
+        },
+        {
+          "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019;19:126–34",
+          "url": "https://doi.org/10.1016/j.bjae.2018.12.003"
+        },
+        {
+          "title": "Spinal anesthesia in infants and children: a one year prospective audit. Anesth Essays Res 2014;8:324–9",
+          "url": "https://doi.org/10.4103/0259-1162.143124"
+        }
+      ],
+      "created": "2026-11-14",
+      "updated": "2026-11-14",
+      "seen": 1,
+      "summary": "The spinal dose in children is chosen by body weight, and the mg/kg dose rises as the child gets smaller. Infants have more CSF per kg, more of it in the spinal canal, and faster drug removal, so they need a larger weight-based dose and still get a shorter block than adults.",
+      "sections": [
+        {
+          "h": "0.5% hyperbaric bupivacaine by weight",
+          "rows": [
+            [
+              "Under 5 kg",
+              "0.5 mg/kg (0.1 mL/kg) in some schemes; up to 1 mg/kg (0.2 mL/kg) in others, especially for awake neonatal and infant spinals."
+            ],
+            [
+              "5–15 kg",
+              "0.4 mg/kg (0.08 mL/kg)."
+            ],
+            [
+              "Over 15 kg",
+              "0.3 mg/kg (0.06 mL/kg)."
+            ],
+            [
+              "Adolescents",
+              "Dose moves towards adult dosing; never give more than the adult dose."
+            ]
+          ]
+        },
+        {
+          "h": "Why smaller children need more per kg",
+          "items": [
+            "CSF volume per kg is higher: about 10 mL/kg in neonates and 4 mL/kg in infants and toddlers, against 2 mL/kg in adults.",
+            "About half of the CSF lies in the spinal canal in children, against roughly a third in adults, so the drug is diluted more.",
+            "A very vascular pia and a high cardiac output clear the drug quickly, so the block is short: about 45–90 minutes in neonates and infants."
+          ]
+        },
+        {
+          "h": "What changes the dose",
+          "items": [
+            "The surgery: its expected length and the level of block needed.",
+            "Adjuvants to lengthen the block: clonidine 1 microgram/kg, fentanyl 0.2 microgram/kg (higher doses are also described), adrenaline 2–4 micrograms/kg.",
+            "Intrathecal morphine has been used, but only with monitored postoperative care.",
+            "Ex-premature infants (under 60 weeks postconceptional age): avoid sedatives and opioids where possible because of postoperative apnoea."
+          ]
+        },
+        {
+          "h": "Practical points",
+          "items": [
+            "Volumes are tiny: draw up in a 1 mL syringe and allow for the dead space of the needle.",
+            "Puncture at L4–5 or L5–S1. At birth the cord ends near L3 and the dural sac at S3–S4; adult levels are reached by about 1–2 years.",
+            "Do not lift the legs after injection (for example to place the cautery pad): it can cause a high spinal.",
+            "Blood pressure usually stays stable in younger children (under about 5 years), so fluid preloading is not needed.",
+            "Dosing schemes differ slightly between texts: follow the department protocol."
+          ]
+        }
+      ]
     },
     {
-     "title": "Riley R et al. Inter-rater reliability of the ASA physical status classification. Anaesth Intensive Care 2014;42:614–8",
-     "url": "https://doi.org/10.1177/0310057X1404200511"
+      "id": "achalasia-cardia",
+      "cat": "Airway",
+      "title": "Achalasia cardia",
+      "aliases": [
+        "achalasia",
+        "cardiospasm",
+        "POEM anaesthesia",
+        "Heller myotomy anaesthesia",
+        "megaoesophagus"
+      ],
+      "summary": "Achalasia is a motility disorder in which the lower oesophageal sphincter (LES) fails to relax on swallowing and the oesophageal body loses peristalsis, because the inhibitory nerves of the myenteric plexus degenerate. Food and fluid pool in a dilated oesophagus above a closed sphincter. For the anaesthetist the key issue is a large, retained oesophageal reservoir that can be regurgitated and aspirated at induction, regardless of fasting time.",
+      "sections": [
+        {
+          "h": "What goes wrong",
+          "items": [
+            "Loss of inhibitory neurons (nitric oxide / VIP) in the myenteric plexus",
+            "LES has high resting tone and does not relax with swallowing",
+            "Absent peristalsis in the oesophageal body, so emptying depends on gravity",
+            "Mostly idiopathic; secondary form in Chagas disease (Trypanosoma cruzi) and pseudoachalasia from tumour at the cardia"
+          ]
+        },
+        {
+          "h": "Clinical picture and diagnosis",
+          "items": [
+            "Dysphagia to both solids and liquids from the start (unlike stricture or cancer, which begin with solids)",
+            "Regurgitation of undigested food, often at night; chest pain; weight loss",
+            "Nocturnal cough or recurrent chest infections from silent aspiration",
+            "Barium swallow: dilated oesophagus tapering to a smooth 'bird's beak'",
+            "High-resolution manometry is the gold standard; endoscopy to exclude malignancy"
+          ]
+        },
+        {
+          "h": "Chicago classification (manometry types)",
+          "rows": [
+            [
+              "Type I",
+              "Classic: no pressurisation, minimal contractility; dilated oesophagus"
+            ],
+            [
+              "Type II",
+              "Pan-oesophageal pressurisation; best response to treatment"
+            ],
+            [
+              "Type III",
+              "Spastic, premature contractions; responds best to POEM (long myotomy)"
+            ]
+          ]
+        },
+        {
+          "h": "Treatment",
+          "rows": [
+            [
+              "Drugs",
+              "Nifedipine or nitrates before meals; weak, short-lived effect"
+            ],
+            [
+              "Botulinum toxin",
+              "Endoscopic LES injection; for frail patients, lasts months"
+            ],
+            [
+              "Pneumatic dilatation",
+              "Balloon stretch of LES; small perforation risk"
+            ],
+            [
+              "Heller myotomy",
+              "Laparoscopic myotomy plus partial fundoplication (Dor/Toupet)"
+            ],
+            [
+              "POEM",
+              "Per-oral endoscopic myotomy through a submucosal tunnel under GA"
+            ]
+          ]
+        },
+        {
+          "h": "Anaesthetic concerns and plan",
+          "items": [
+            "Treat as full stomach whatever the fasting time: the oesophagus holds retained food and fluid",
+            "Pre-op: liquid diet 24-48 h before, then clear fluids; ask about regurgitation and lying flat",
+            "Assess for aspiration lung disease, malnutrition, dehydration and electrolyte upset",
+            "Consider emptying the oesophagus before induction (wide-bore NG suction, or endoscopic clearance)",
+            "Head-up position; rapid sequence induction with cricoid pressure (its value is debated with a dilated oesophagus)",
+            "Some centres prefer awake or head-up induction for a massively dilated oesophagus",
+            "Extubate fully awake with reflexes back, head-up",
+            "Antacid/H2 blocker premedication does little for oesophageal contents, which are not acidic stomach juice"
+          ]
+        },
+        {
+          "h": "POEM specific issues",
+          "items": [
+            "GA with ETT and controlled ventilation; CO2 insufflation is used",
+            "CO2 can track out: subcutaneous emphysema, pneumomediastinum, capnoperitoneum, capnothorax",
+            "Watch for rising EtCO2 and peak airway pressure, falling SpO2, abdominal distension",
+            "Decompress capnoperitoneum with a Veress needle; tension capnothorax needs a chest drain",
+            "Increase minute ventilation to clear the CO2 load; check for subcutaneous crepitus at end of case",
+            "Mucosal perforation and bleeding are surgical risks; plan for post-op nil by mouth and antiemetics"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Achalasia = failed LES relaxation + aperistalsis; dysphagia to solids and liquids together",
+            "Bird's beak on barium; manometry confirms; Chicago types I-III",
+            "Main danger is aspiration of the oesophageal reservoir at induction, even after fasting",
+            "Empty the oesophagus, head-up, RSI, awake extubation",
+            "POEM: think CO2 complications (capnothorax, pneumoperitoneum, surgical emphysema)",
+            "Long-standing achalasia increases risk of squamous cell carcinoma of oesophagus"
+          ]
+        }
+      ],
+      "pearl": "Fasting does not empty an achalasia oesophagus: suction it, sit them up, and do an RSI.",
+      "refs": [
+        {
+          "title": "Yadlapati R et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil 2021",
+          "url": "https://doi.org/10.1111/nmo.14058"
+        },
+        {
+          "title": "Vaezi MF et al. ACG Clinical Guidelines: Diagnosis and Management of Achalasia. Am J Gastroenterol 2020",
+          "url": "https://doi.org/10.14309/ajg.0000000000000731"
+        }
+      ],
+      "created": "2026-11-16",
+      "updated": "2026-11-16",
+      "seen": 1
     },
     {
-     "title": "SPA: Updated ASA physical status classification with paediatric examples",
-     "url": "https://pedsanesthesia.org/updated-asa-physical-status-classification-system-with-pediatric-examples"
+      "id": "ckd-classification",
+      "cat": "Preop & scoring",
+      "title": "CKD classification (KDIGO)",
+      "aliases": [
+        "CKD staging",
+        "KDIGO",
+        "chronic kidney disease",
+        "CGA staging",
+        "GFR categories",
+        "albuminuria categories",
+        "CKD stages"
+      ],
+      "summary": "Chronic kidney disease means kidney structure or function has been abnormal for more than 3 months, with consequences for health. KDIGO stages it by Cause, GFR category (G1 to G5) and Albuminuria category (A1 to A3), which is why it is called CGA staging. Risk of progression, cardiovascular events and death rises along both the GFR and the albuminuria axes. For the anaesthetist the stage guides drug choice, fluid and potassium management, and cardiac risk.",
+      "sections": [
+        {
+          "h": "Definition",
+          "items": [
+            "Abnormal kidney structure or function for >3 months",
+            "Marker 1: eGFR <60 mL/min/1.73m² on its own is enough",
+            "Marker 2 (if eGFR is ≥60): albuminuria (ACR ≥30 mg/g), urine sediment abnormality, electrolyte/tubular disorder, histology or imaging abnormality, or a kidney transplant",
+            "G1 and G2 count as CKD only if one of these other markers is present"
+          ]
+        },
+        {
+          "h": "GFR categories (mL/min/1.73m²)",
+          "rows": [
+            [
+              "G1",
+              "≥90: normal or high"
+            ],
+            [
+              "G2",
+              "60–89: mildly decreased"
+            ],
+            [
+              "G3a",
+              "45–59: mild to moderately decreased"
+            ],
+            [
+              "G3b",
+              "30–44: moderate to severely decreased"
+            ],
+            [
+              "G4",
+              "15–29: severely decreased"
+            ],
+            [
+              "G5",
+              "<15: kidney failure (G5D if on dialysis, G5T if transplant)"
+            ]
+          ]
+        },
+        {
+          "h": "Albuminuria categories (ACR)",
+          "rows": [
+            [
+              "A1",
+              "<30 mg/g (<3 mg/mmol): normal to mildly increased"
+            ],
+            [
+              "A2",
+              "30–300 mg/g (3–30 mg/mmol): moderately increased"
+            ],
+            [
+              "A3",
+              ">300 mg/g (>30 mg/mmol): severely increased"
+            ]
+          ]
+        },
+        {
+          "h": "Reading the stage",
+          "items": [
+            "Written as e.g. 'diabetic nephropathy, G3b A2'",
+            "Heat map: green (low risk), yellow, orange, red (very high risk)",
+            "A G2 patient with A3 can be at higher risk than a G3a patient with A1",
+            "Referral to a nephrologist usually from G4, or A3, or rapid fall in eGFR"
+          ]
+        },
+        {
+          "h": "Anaesthetic relevance",
+          "items": [
+            "RCRI: creatinine >2 mg/dL (177 µmol/L) is one risk factor",
+            "Muscle relaxant: cisatracurium or atracurium (Hofmann elimination)",
+            "Check K⁺ before suxamethonium (rises by ~0.5 mmol/L)",
+            "Morphine metabolites (M6G) build up; prefer fentanyl; avoid pethidine (norpethidine)",
+            "Sugammadex not recommended when CrCl <30",
+            "Dialysis patients: dialyse within 24 h before surgery, check post-dialysis weight and K⁺, protect the fistula arm",
+            "Avoid NSAIDs and nephrotoxins; keep perfusion pressure up"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Name the three axes: Cause, GFR, Albuminuria",
+            "Know the G3a/G3b split at 45",
+            "Know ACR cut-offs 30 and 300 mg/g (3 and 30 mg/mmol)",
+            "Uraemia: platelet dysfunction (consider desmopressin), anaemia, acidosis, delayed gastric emptying"
+          ]
+        }
+      ],
+      "pearl": "Stage CKD on two axes: G by eGFR (90/60/45/30/15) and A by ACR (30/300).",
+      "refs": [
+        {
+          "title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD",
+          "url": "https://doi.org/10.1016/j.kint.2023.10.018"
+        }
+      ],
+      "created": "2026-11-17",
+      "updated": "2026-11-17",
+      "seen": 1
+    },
+    {
+      "id": "mets-functional-capacity",
+      "cat": "Preop & scoring",
+      "title": "METs (functional capacity)",
+      "aliases": [
+        "METs",
+        "metabolic equivalents",
+        "functional capacity",
+        "DASI",
+        "effort tolerance",
+        "exercise tolerance"
+      ],
+      "summary": "A MET (metabolic equivalent) is the oxygen a person uses at rest, about 3.5 mL O₂/kg/min. Activities are rated in multiples of this to estimate functional capacity before surgery. Being able to do 4 METs or more (for example climbing a flight or two of stairs) usually means the patient can go ahead without further cardiac testing. Because clinicians' estimates are unreliable, structured tools such as DASI are now preferred.",
+      "sections": [
+        {
+          "h": "Definition",
+          "items": [
+            "1 MET = resting O₂ consumption ≈ 3.5 mL O₂/kg/min (based on a 70 kg, 40-year-old man)",
+            "An activity of 4 METs uses about 4 times resting O₂"
+          ]
+        },
+        {
+          "h": "Classification and examples",
+          "rows": [
+            [
+              "<4 METs: poor",
+              "Self-care, eating, dressing, walking indoors, slow walking on level ground, light housework"
+            ],
+            [
+              "≈4 METs: threshold",
+              "Climbing 1–2 flights of stairs, walking up a hill, brisk walking (~6 km/h), heavy housework like scrubbing floors"
+            ],
+            [
+              "4–10 METs: moderate to good",
+              "Golf, doubles tennis, dancing, cycling"
+            ],
+            [
+              ">10 METs: excellent",
+              "Swimming, singles tennis, football, running"
+            ]
+          ]
+        },
+        {
+          "h": "Use in preop assessment",
+          "items": [
+            "ACC/AHA: patient with elevated risk but ≥4 METs can usually proceed without stress testing",
+            "<4 METs or unknown, with elevated risk: consider further testing only if it would change management",
+            "ESC 2022: inability to climb 2 flights of stairs suggests poor capacity; DASI or NT-proBNP can refine risk"
+          ]
+        },
+        {
+          "h": "DASI (Duke Activity Status Index)",
+          "items": [
+            "12-item questionnaire, score 0 to 58.2",
+            "Estimated VO₂peak = 0.43 × DASI + 9.6 (mL/kg/min); divide by 3.5 for METs",
+            "DASI >34 corresponds roughly to 4 METs and lower risk"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "METS study (Wijeysundera, Lancet 2018): subjective estimate of METs predicted outcomes poorly; DASI and NT-proBNP did better",
+            "CPET gold standard: anaerobic threshold <11 mL/kg/min and VO₂peak <15 suggest high risk for major surgery",
+            "Capacity may be limited by non-cardiac causes (arthritis, claudication), so it is then 'unknown'"
+          ]
+        }
+      ],
+      "pearl": "Can climb two flights of stairs? That is about 4 METs, so usually no further cardiac testing.",
+      "refs": [
+        {
+          "title": "Wijeysundera DN et al. Assessment of functional capacity before major non-cardiac surgery (METS study). Lancet 2018",
+          "url": "https://doi.org/10.1016/S0140-6736(18)31131-0"
+        }
+      ],
+      "created": "2026-11-17",
+      "updated": "2026-11-17",
+      "seen": 1
+    },
+    {
+      "id": "body-weight-scalars-drug-dosing",
+      "cat": "Drugs",
+      "title": "Body weight scalars & drug dosing (TBW vs IBW vs LBW vs ABW)",
+      "aliases": [
+        "actual body weight",
+        "ideal body weight",
+        "adjusted body weight",
+        "lean body weight",
+        "TBW",
+        "IBW",
+        "ABW",
+        "LBW",
+        "obese drug dosing",
+        "dosing weight",
+        "predicted body weight"
+      ],
+      "summary": "In obesity, fat adds weight but adds little to cardiac output, blood volume or drug-clearing organs. So dosing everything by actual weight overdoses many drugs, while dosing by ideal weight underdoses some. Which weight to use depends on whether the drug spreads into fat (lipophilic), how it is cleared, and whether you are giving a single bolus or a maintenance infusion.",
+      "sections": [
+        {
+          "h": "The weights and formulas",
+          "rows": [
+            [
+              "Total (actual) body weight, TBW",
+              "What the scale says. Includes fat and lean tissue."
+            ],
+            [
+              "Ideal body weight, IBW (Devine/Broca)",
+              "Male 50 + 0.91 x (height cm − 152.4); female 45.5 + 0.91 x (height cm − 152.4). Quick bedside: height cm − 100 (M) or − 105 (F)."
+            ],
+            [
+              "Predicted body weight, PBW",
+              "Same as Devine IBW (ARDSnet). Used for tidal volume."
+            ],
+            [
+              "Lean body weight, LBW (Janmahasatian)",
+              "M: 9270 x TBW / (6680 + 216 x BMI); F: 9270 x TBW / (8780 + 244 x BMI). Plateaus around 100 kg (M) / 70 kg (F) however heavy the patient."
+            ],
+            [
+              "Adjusted body weight, ABW",
+              "IBW + 0.4 x (TBW − IBW). Middle ground for drugs that partly distribute into fat."
+            ]
+          ]
+        },
+        {
+          "h": "Why it matters (principles)",
+          "items": [
+            "Cardiac output and early drug distribution track lean mass, so induction bolus doses follow LBW.",
+            "Highly lipophilic drugs have a bigger volume of distribution in obesity, so repeated doses / infusions accumulate and need a larger weight (TBW or ABW) for maintenance.",
+            "Hydrophilic drugs (e.g. NMBAs) stay in lean tissue and ECF, so dose on IBW/LBW.",
+            "Clearance correlates best with LBW for most drugs.",
+            "Always titrate to effect; weight scalar is only the starting point."
+          ]
+        },
+        {
+          "h": "Induction agents & sedatives",
+          "rows": [
+            [
+              "Propofol",
+              "Induction: LBW. Maintenance infusion: TBW (or ABW); use BIS/pEEG."
+            ],
+            [
+              "Thiopentone",
+              "Induction: LBW."
+            ],
+            [
+              "Etomidate",
+              "LBW."
+            ],
+            [
+              "Ketamine",
+              "LBW (IBW)."
+            ],
+            [
+              "Midazolam",
+              "Single bolus: TBW (big Vd); infusion: IBW (clearance not increased)."
+            ],
+            [
+              "Dexmedetomidine",
+              "ABW/LBW; watch bradycardia and hypotension."
+            ]
+          ]
+        },
+        {
+          "h": "Opioids, NMBAs & reversal",
+          "rows": [
+            [
+              "Fentanyl, morphine, remifentanil",
+              "LBW (remifentanil infusion on TBW gives overdose and hypotension)."
+            ],
+            [
+              "Suxamethonium",
+              "TBW, 1 to 1.5 mg/kg (plasma cholinesterase and ECF both increase)."
+            ],
+            [
+              "Rocuronium, vecuronium",
+              "IBW (LBW). Using TBW prolongs block. For RSI some give 1.2 mg/kg on LBW/ABW for faster onset."
+            ],
+            [
+              "Atracurium, cisatracurium",
+              "IBW/LBW."
+            ],
+            [
+              "Neostigmine",
+              "TBW, 0.04 to 0.05 mg/kg, max 5 mg."
+            ],
+            [
+              "Sugammadex",
+              "Label: actual body weight (2 or 4 mg/kg; 16 mg/kg immediate). Studies suggest IBW + 40% is enough for moderate block."
+            ]
+          ]
+        },
+        {
+          "h": "Other drugs & settings",
+          "rows": [
+            [
+              "Local anaesthetic maximum dose",
+              "LBW/IBW (not TBW) — LAST risk."
+            ],
+            [
+              "Paracetamol",
+              "LBW (or fixed 1 g)."
+            ],
+            [
+              "Enoxaparin",
+              "TBW-based; prophylaxis often 40 mg BD if BMI > 40; treatment dose TBW, check anti-Xa if > 150 kg."
+            ],
+            [
+              "Unfractionated heparin infusion",
+              "ABW; monitor aPTT/ACT."
+            ],
+            [
+              "Cefazolin prophylaxis",
+              "2 g; 3 g if ≥ 120 kg."
+            ],
+            [
+              "Vancomycin",
+              "Loading on TBW; then levels."
+            ],
+            [
+              "Aminoglycosides",
+              "ABW (dosing weight)."
+            ],
+            [
+              "Tidal volume",
+              "6 to 8 ml/kg PBW (IBW), never TBW."
+            ],
+            [
+              "Maintenance fluids",
+              "IBW/ABW, goal-directed."
+            ]
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Classic rule: induction on LBW, maintenance on TBW (propofol); NMBAs on IBW; sux on TBW.",
+            "LBW is non-linear and plateaus; IBW ignores the extra lean mass that obese people do carry.",
+            "ABW correction factor is 0.4 (some sources use 0.3 or 0.5 for specific drugs).",
+            "PBW for ventilation — a favourite viva question in obese ARDS.",
+            "Mention monitoring: BIS/pEEG for TIVA, quantitative TOF for NMBAs, levels for antibiotics/heparin."
+          ]
+        }
+      ],
+      "pearl": "Bolus on lean, infuse on total; paralyse on ideal (except sux = total); ventilate on predicted.",
+      "refs": [
+        {
+          "title": "Ingrande J, Lemmens HJM. Dose adjustment of anaesthetics in the morbidly obese. Br J Anaesth 2010;105(S1):i16–23",
+          "url": "https://doi.org/10.1093/bja/aeq312"
+        },
+        {
+          "title": "AAGBI. Peri-operative management of the obese surgical patient 2015. Anaesthesia 2015;70:859–76",
+          "url": "https://doi.org/10.1111/anae.13101"
+        }
+      ],
+      "created": "2026-11-17",
+      "updated": "2026-11-17",
+      "seen": 1
+    },
+    {
+      "id": "capnography-waveforms",
+      "cat": "Monitoring & equipment",
+      "title": "Capnography waveforms (abnormal capnograms)",
+      "aliases": [
+        "capnogram",
+        "capnography",
+        "etco2 waveform",
+        "abnormal capnogram",
+        "capnograph patterns",
+        "co2 waveform"
+      ],
+      "summary": "A capnogram plots exhaled CO₂ against time for each breath. The shape tells you more than the EtCO₂ number: where the tube is, whether the airway is narrowed, whether the circuit is leaking or letting you rebreathe, and whether the heart is pumping blood through the lungs. Read it in order: baseline, upstroke, plateau, downstroke, then the trend over many breaths.",
+      "sections": [
+        {
+          "h": "The normal capnogram",
+          "svg": "<svg viewBox=\"0 0 380 210\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><text class=\"nf-t nf-h\" x=\"30\" y=\"22\">CO₂ (mmHg)</text><line x1=\"30\" y1=\"170\" x2=\"360\" y2=\"170\" class=\"nf-l\"/><line x1=\"30\" y1=\"30\" x2=\"30\" y2=\"170\" class=\"nf-l\"/><path d=\"M30,168 L95,168 C108,168 112,72 128,64 L250,52 C258,52 262,60 266,110 C270,150 274,168 285,168 L360,168\" class=\"nf-p\"/><text class=\"nf-t\" x=\"60\" y=\"160\" text-anchor=\"middle\">I</text><text class=\"nf-t\" x=\"104\" y=\"120\">II</text><text class=\"nf-t\" x=\"185\" y=\"48\" text-anchor=\"middle\">III</text><text class=\"nf-t\" x=\"276\" y=\"104\">0</text><text class=\"nf-t\" x=\"252\" y=\"40\" text-anchor=\"middle\">EtCO₂</text><text class=\"nf-t\" x=\"128\" y=\"92\">α</text><text class=\"nf-t\" x=\"238\" y=\"74\">β</text><text class=\"nf-t\" x=\"95\" y=\"190\" text-anchor=\"middle\">expiration →</text><text class=\"nf-t\" x=\"320\" y=\"190\" text-anchor=\"middle\">inspiration</text></svg>",
+          "alt": "Normal capnogram with phases 0, I, II and III, alpha and beta angles",
+          "rows": [
+            [
+              "Phase I",
+              "Baseline: dead-space gas with no CO₂. Should sit at zero."
+            ],
+            [
+              "Phase II",
+              "Steep upstroke: mixing of dead-space and alveolar gas."
+            ],
+            [
+              "Phase III",
+              "Alveolar plateau, gently rising. EtCO₂ is read at its end."
+            ],
+            [
+              "Phase 0",
+              "Inspiratory downstroke back to zero (some texts call it phase IV)."
+            ],
+            [
+              "α angle",
+              "Between II and III, normally about 100–110°. Wider = airway obstruction."
+            ],
+            [
+              "β angle",
+              "Between III and 0, normally about 90°. Wider = rebreathing."
+            ],
+            [
+              "Normal EtCO₂",
+              "35–45 mmHg; usually 2–5 mmHg below PaCO₂ in healthy lungs."
+            ]
+          ]
+        },
+        {
+          "h": "Airway and breathing patterns",
+          "rows": [
+            [
+              "Bronchospasm / obstruction",
+              "Slow, sloping upstroke and steep phase III: the 'shark fin'. Wide α angle.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C26,68 30,48 38,38 C46,28 56,22 64,20 L68,68 M80,68 L94,68 C102,68 106,48 114,38 C122,28 132,22 140,20 L144,68 M156,68 L170,68 C178,68 182,48 190,38 C198,28 208,22 216,20 L220,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Curare cleft",
+              "A dip in the plateau: the patient is making small breaths against the ventilator as relaxant wears off. Surgeons leaning on the chest or abdomen can mimic it.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L50,20 C56,20 58,36 64,36 C70,36 72,20 78,20 L96,19 L101,68 L118,68 M118,68 L134,68 L140,20 L164,20 C170,20 172,36 178,36 C184,36 186,20 192,20 L210,19 L215,68 L232,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Spontaneous breathing",
+              "Small, rounded waves with a poorly defined plateau.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C22,18 44,18 48,68 L62,68 M62,68 L76,68 C80,18 102,18 106,68 L120,68 M120,68 L134,68 C138,18 160,18 164,68 L178,68 M178,68 L192,68 C196,18 218,18 222,68 L236,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "IMV / weaning",
+              "Tall mandatory breaths mixed with smaller spontaneous ones; comparing their heights shows how much the patient is doing.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C17,24 34,24 37,68 L46,68 M46,68 L56,68 C59,24 76,24 79,68 L88,68 M88,68 L96,68 L101,16 L150,14 L155,68 L162,68 M162,68 L172,68 C175,24 192,24 195,68 L204,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Cardiogenic oscillations",
+              "Small ripples on the end of the plateau or downstroke during a long expiratory pause, from the heartbeat moving gas at the sensor. Harmless.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 L20,20 L110,18 C116,20 118,30 124,28 C130,26 132,42 138,40 C144,38 146,54 152,52 C158,50 160,64 166,62 C172,60 176,68 184,68 L236,68\" class=\"nf-p\"/></svg>"
+            ]
+          ],
+          "tip": "Tap a pattern to see its waveform."
+        },
+        {
+          "h": "Circuit and equipment problems",
+          "rows": [
+            [
+              "Raised baseline (rebreathing)",
+              "Baseline does not return to zero: exhausted soda lime, faulty valves, or low fresh gas flow in a Mapleson circuit.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 L26,54 L32,20 L76,17 L81,54 L81,54 L103,54 L109,20 L153,17 L158,54 L158,54 L180,54 L186,20 L230,17 L235,54 L236,54\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Expiratory valve fault",
+              "Exhaled gas is re-inhaled from the expiratory limb: raised baseline and a slurred inspiratory downstroke.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,52 L22,52 L28,20 L66,20 C70,30 74,50 82,52 M80,52 L98,52 L104,20 L142,20 C146,30 150,50 158,52 M156,52 L174,52 L180,20 L218,20 C222,30 226,50 234,52\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Inspiratory valve fault",
+              "Exhaled gas passes back into the inspiratory limb and is re-inhaled: slanted downstroke, baseline may not reach zero.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,62 L16,62 L22,22 L52,22 L76,62 M80,62 L92,62 L98,22 L128,22 L152,62 M156,62 L168,62 L174,22 L204,22 L228,62\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Mapleson D / Bain",
+              "Rebreathing dip and raised baseline are expected if fresh gas flow is too low for the minute ventilation.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 C10,64 14,68 20,68 C26,68 30,50 34,48 L38,32 L80,30 L84,54 C90,68 96,60 102,66 C108,70 112,62 118,58 M118,54 C124,64 128,68 134,68 C140,68 144,50 148,48 L152,32 L194,30 L198,54 C204,68 210,60 216,66 C222,70 226,62 232,58\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Sensor contamination",
+              "Sudden step-up of baseline and EtCO₂ from secretions or water in the sampling line or sensor.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,24 L71,68 L71,54 L87,54 L93,18 L133,18 L138,54 L138,54 L154,54 L160,14 L200,14 L205,54 L236,54\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Sampling-port leak",
+              "Air dilutes the sample: low EtCO₂ and an odd double-peaked plateau (sidestream monitors).",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L16,68 L21,26 C28,24 32,40 42,38 L60,28 L64,68 L80,68 M80,68 L92,68 L97,26 C104,24 108,40 118,38 L136,28 L140,68 L156,68 M156,68 L168,68 L173,26 C180,24 184,40 194,38 L212,28 L216,68 L232,68\" class=\"nf-p\"/></svg>"
+            ]
+          ]
+        },
+        {
+          "h": "Tube position and circulation",
+          "rows": [
+            [
+              "Oesophageal intubation",
+              "A few small, shrinking waves (CO₂ washed out of the stomach) that fall to zero within about 6 breaths.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C18,42 32,42 36,68 L46,68 M46,68 L56,68 C60,50 74,50 78,68 L88,68 M88,68 L98,68 C102,56 116,56 120,68 L130,68 M130,68 L140,68 C144,60 158,60 162,68 L172,68 M172,68 L182,68 C186,64 200,64 204,68 L214,68 M214,68 L236,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Sudden fall to zero",
+              "Disconnection, extubation, blocked tube or sampling line, or cardiac arrest. Check the patient first.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,18 L71,68 L71,68 L87,68 L93,20 L133,18 L138,68 L236,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "CPR",
+              "Waves appear with each compression. EtCO₂ <10 mmHg suggests poor compressions; a sudden rise to normal levels suggests return of circulation.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 C9,52 17,52 22,68 L25,68 C30,50 38,50 43,68 L46,68 C51,50 59,50 64,68 L67,68 C72,52 80,52 85,68 L88,68 C93,58 101,58 106,68 L109,68 C114,50 122,50 127,68 L130,68 C135,54 143,54 148,68 L151,68 C156,50 164,50 169,68 L172,68 C177,56 185,56 190,68 L193,68 C198,50 206,50 211,68 L214,68 C219,56 227,56 232,68 L235,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Sudden drop (not zero)",
+              "Fall in cardiac output or pulmonary blood flow: massive PE, air embolism, severe hypotension.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L24,20 L58,18 L63,68 L63,68 L77,68 L83,20 L117,18 L122,68 L122,68 L136,68 L142,44 L176,44 L181,68 L181,68 L193,68 L199,46 L233,46 L238,68 L236,68\" class=\"nf-p\"/></svg>"
+            ]
+          ]
+        },
+        {
+          "h": "Special situations",
+          "rows": [
+            [
+              "Malignant hyperthermia",
+              "EtCO₂ climbs breath after breath with a normal zero baseline (soda lime still absorbing). Often the earliest sign.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L22,44 L48,43 L52,68 L52,68 L66,68 L70,38 L96,37 L100,68 L100,68 L114,68 L118,32 L144,31 L148,68 L148,68 L162,68 L166,26 L192,25 L196,68 L196,68 L210,68 L214,20 L240,19 L244,68 L236,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Pregnancy (GA)",
+              "Normal phase II but steeper phase III; a normal variant. EtCO₂ can equal or exceed PaCO₂.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,38 L60,16 L65,68 L80,68 M80,68 L96,68 L102,38 L136,16 L141,68 L156,68 M156,68 L172,68 L178,38 L212,16 L217,68 L232,68\" class=\"nf-p\"/></svg>"
+            ],
+            [
+              "Single-lung transplant",
+              "Two peaks in phase III: the first from the new healthy lung, the second from the slow-emptying native lung.",
+              "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,26 C34,22 40,42 54,40 C70,38 80,18 88,20 L94,68 L118,68 M118,68 L134,68 L140,26 C148,22 154,42 168,40 C184,38 194,18 202,20 L208,68 L232,68\" class=\"nf-p\"/></svg>"
+            ]
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Six breaths of a sustained, regular capnogram is the gold standard for confirming tracheal intubation.",
+            "A capnogram can be present in an oesophageal intubation for the first few breaths (gastric CO₂ after bag-mask ventilation or carbonated drinks), then it fades.",
+            "Shark fin = obstruction (bronchospasm, kinked tube, COPD). Raised baseline = rebreathing.",
+            "Gradual rise in EtCO₂ with normal baseline: think MH, hypoventilation, fever, laparoscopic CO₂ absorption, tourniquet or clamp release.",
+            "Sudden fall: think circuit first (disconnection, leak), then circulation (arrest, embolism).",
+            "During CPR, EtCO₂ guides compression quality and is often the first sign of ROSC."
+          ]
+        }
+      ],
+      "pearl": "Read the shape before the number: zero baseline, square plateau, steady trend. A shark fin means obstruction, a lifted baseline means rebreathing.",
+      "refs": [
+        {
+          "title": "Kodali BS. Capnography outside the operating rooms. Anesthesiology 2013;118:192–201",
+          "url": "https://doi.org/10.1097/ALN.0b013e318278c8b6"
+        }
+      ],
+      "created": "2026-11-18",
+      "updated": "2026-11-18",
+      "seen": 1
+    },
+    {
+      "id": "ap-vs-pa-chest-xray",
+      "cat": "ICU",
+      "title": "AP vs PA chest X-ray",
+      "aliases": [
+        "AP vs PA view",
+        "PA chest x-ray",
+        "AP chest radiograph",
+        "portable chest x-ray",
+        "supine CXR",
+        "CXR projection"
+      ],
+      "summary": "The letters say which way the X-ray beam travels. In a PA film the beam goes from back to front with the chest pressed against the detector; in an AP film it goes front to back, usually on a portable machine with the patient sitting or supine in bed. PA is the standard because it shows the heart and mediastinum close to true size. Most ICU and post-op films are AP, so you must adjust how you read them.",
+      "sections": [
+        {
+          "h": "How each is taken",
+          "rows": [
+            [
+              "PA",
+              "Standing, front of chest against the detector, chin up, hands on hips and shoulders rolled forward. Tube about 180 cm (72 in) away. Full inspiration."
+            ],
+            [
+              "AP",
+              "Beam from the front, detector behind the back. Sitting or supine, often portable. Tube closer, about 100 cm (40 in). Inspiration often poorer."
+            ],
+            [
+              "Both",
+              "Viewed the same way: as if facing the patient, heart on the image's right side."
+            ]
+          ]
+        },
+        {
+          "h": "Why the heart looks bigger on AP",
+          "items": [
+            "The heart lies anteriorly, so on AP it is farther from the detector and gets magnified.",
+            "The shorter tube distance makes the beam more divergent, adding more magnification.",
+            "Poorer inspiration and the supine position make the heart and upper mediastinum look wider still.",
+            "Rule: CTR >0.5 means cardiomegaly only on a good PA film. Do not diagnose cardiomegaly from CTR on AP alone; a normal-looking heart on AP is reassuring."
+          ],
+          "svg": "<svg viewBox=\"0 0 380 230\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><text class=\"nf-t nf-h\" x=\"10\" y=\"16\">PA: beam back → front</text><circle cx=\"20\" cy=\"47\" r=\"4\" class=\"nf-dot\"/><text class=\"nf-t\" x=\"20\" y=\"67\" text-anchor=\"middle\">Tube</text><line x1=\"20\" y1=\"47\" x2=\"350\" y2=\"34\" class=\"nf-l\"/><line x1=\"20\" y1=\"47\" x2=\"350\" y2=\"60\" class=\"nf-l\"/><ellipse cx=\"290\" cy=\"47\" rx=\"52\" ry=\"28\" class=\"nf-a\"/><circle cx=\"322\" cy=\"47\" r=\"12\" class=\"nf-f\"/><text class=\"nf-t\" x=\"322\" y=\"51\" text-anchor=\"middle\">H</text><line x1=\"352\" y1=\"17\" x2=\"352\" y2=\"77\" class=\"nf-a\"/><line x1=\"356\" y1=\"34\" x2=\"356\" y2=\"60\" class=\"nf-p\" stroke-width=\"4\"/><text class=\"nf-t\" x=\"10\" y=\"92\">Heart touching detector, tube far → near true size</text><text class=\"nf-t nf-h\" x=\"10\" y=\"130\">AP: beam front → back</text><circle cx=\"140\" cy=\"161\" r=\"4\" class=\"nf-dot\"/><text class=\"nf-t\" x=\"140\" y=\"181\" text-anchor=\"middle\">Tube</text><line x1=\"140\" y1=\"161\" x2=\"350\" y2=\"140\" class=\"nf-l\"/><line x1=\"140\" y1=\"161\" x2=\"350\" y2=\"182\" class=\"nf-l\"/><ellipse cx=\"295\" cy=\"161\" rx=\"52\" ry=\"28\" class=\"nf-a\"/><circle cx=\"258\" cy=\"161\" r=\"12\" class=\"nf-f\"/><text class=\"nf-t\" x=\"258\" y=\"165\" text-anchor=\"middle\">H</text><line x1=\"352\" y1=\"131\" x2=\"352\" y2=\"191\" class=\"nf-a\"/><line x1=\"356\" y1=\"140\" x2=\"356\" y2=\"182\" class=\"nf-p\" stroke-width=\"4\"/><text class=\"nf-t\" x=\"10\" y=\"206\">Heart far from detector, tube close → magnified</text><text class=\"nf-t\" x=\"376\" y=\"11\" text-anchor=\"end\">Detector</text><text class=\"nf-t\" x=\"10\" y=\"226\">Blue bar = heart shadow on the film</text></svg>"
+        },
+        {
+          "h": "How to tell them apart on the film",
+          "rows": [
+            [
+              "Label",
+              "AP films are usually marked AP / portable / supine / erect. Check the label first."
+            ],
+            [
+              "Scapulae",
+              "PA: rotated off the lung fields. AP: overlie the upper lateral lungs."
+            ],
+            [
+              "Clavicles",
+              "AP: higher and more horizontal, projected over or above the apices. PA: lower, more V-shaped."
+            ],
+            [
+              "Heart & mediastinum",
+              "AP: heart and superior mediastinum look larger and wider."
+            ],
+            [
+              "Inspiration",
+              "PA usually shows more posterior ribs above the diaphragm; AP often fewer (poorer inflation)."
+            ],
+            [
+              "Gastric bubble",
+              "An air-fluid level in the stomach means the patient was upright (PA or erect AP)."
+            ]
+          ]
+        },
+        {
+          "h": "Supine AP: things that change",
+          "items": [
+            "Pleural fluid layers behind the lung: a diffuse haze over one side instead of a blunted costophrenic angle and meniscus.",
+            "Pneumothorax air collects anteriorly and at the bases: look for a deep, lucent costophrenic sulcus (deep sulcus sign) rather than an apical rim.",
+            "Upper lobe vessels look as large as lower lobe vessels when supine; this is normal, not upper lobe diversion.",
+            "Free air under the diaphragm and air-fluid levels need an erect (or decubitus) film.",
+            "Mediastinal widening may be just projection; compare with old films and the clinical picture."
+          ]
+        },
+        {
+          "h": "Where AP is used",
+          "items": [
+            "ICU and ward portable films, trauma bay, post-op recovery, anyone who cannot stand.",
+            "Checking ETT tip, central line, NG tube, chest drain position and pneumothorax after a line.",
+            "Comparing serial ICU films is best done on films taken the same way (same projection and position)."
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "PA is the standard view; AP is a compromise for sick or immobile patients.",
+            "Two reasons for AP magnification: heart far from detector and short tube distance with divergent beam.",
+            "CTR >0.5 = cardiomegaly only on PA.",
+            "Quick tells for AP: label, scapulae over lungs, high horizontal clavicles.",
+            "Supine film: effusion = haze, pneumothorax = deep sulcus sign, no fluid levels."
+          ]
+        }
+      ],
+      "pearl": "Never call cardiomegaly on an AP film: the heart is magnified because it is far from the detector and the tube is close.",
+      "refs": [
+        {
+          "title": "Radiology Masterclass – Chest X-ray quality: projection",
+          "url": "https://www.radiologymasterclass.co.uk/tutorials/chest/chest_quality/chest_xray_quality_projection"
+        },
+        {
+          "title": "Radiopaedia – AP chest X-ray",
+          "url": "https://radiopaedia.org/articles/ap-chest-x-ray"
+        }
+      ],
+      "created": "2026-11-18",
+      "updated": "2026-11-18",
+      "seen": 1
+    },
+    {
+      "id": "paediatric-epidural-dosing",
+      "cat": "Paediatric",
+      "title": "Paediatric epidural dosing (bolus & infusion)",
+      "aliases": [
+        "paediatric epidural",
+        "pediatric epidural dose",
+        "caudal epidural dose",
+        "epidural infusion children",
+        "neonatal epidural",
+        "Armitage caudal volumes"
+      ],
+      "summary": "Epidurals in children are dosed by weight, and for a catheter by how many dermatomes you need to cover. You give a loading bolus of dilute local anaesthetic, then a low-concentration infusion with a strict mg/kg/hr ceiling. Neonates get about half the older-child infusion rate because they clear amide local anaesthetics slowly. Dilute solutions are the rule: 0.5% bupivacaine or ropivacaine is rarely needed.",
+      "sections": [
+        {
+          "h": "Loading bolus",
+          "rows": [
+            [
+              "Dermatome rule",
+              "0.05 mL/kg per dermatome to be covered from the catheter tip"
+            ],
+            [
+              "Lumbar/thoracic, >6 months",
+              "About 0.5 mL/kg of 0.25% bupivacaine is a practical starting load"
+            ],
+            [
+              "Upper limit",
+              "Bolus up to 1 mL/kg, maximum 20 mL"
+            ],
+            [
+              "Single-shot ceiling",
+              "Bupivacaine maximum 2.5 mg/kg"
+            ],
+            [
+              "Test dose",
+              "Epinephrine-containing test dose first; watch for a rise in T wave, HR or BP"
+            ]
+          ]
+        },
+        {
+          "h": "Caudal volumes (by height of block)",
+          "rows": [
+            [
+              "0.5 mL/kg",
+              "Sacral dermatomes (circumcision, hypospadias)"
+            ],
+            [
+              "1.0 mL/kg",
+              "Lower thoracic/upper lumbar (inguinal hernia, orchidopexy)"
+            ],
+            [
+              "1.25 mL/kg",
+              "Higher lumbar spread"
+            ],
+            [
+              "1.5 mL/kg",
+              "Low-to-mid thoracic (watch the total mg/kg)"
+            ],
+            [
+              "Usual drug",
+              "0.125–0.25% bupivacaine/levobupivacaine or 0.2% ropivacaine"
+            ]
+          ]
+        },
+        {
+          "h": "Continuous infusion",
+          "rows": [
+            [
+              "Bupivacaine, neonates",
+              "0.2 mg/kg/hr"
+            ],
+            [
+              "Bupivacaine, older children",
+              "0.4 mg/kg/hr (some centres up to 0.5 mg/kg/hr maximum)"
+            ],
+            [
+              "Practical recipe",
+              "0.1% bupivacaine at 0.3 mL/kg/hr (= 0.3 mg/kg/hr)"
+            ],
+            [
+              "Ropivacaine 0.1%",
+              "0.2 mg/kg/hr in neonates/infants, 0.4 mg/kg/hr in older children, ideally no longer than 48 h"
+            ],
+            [
+              "Published ranges",
+              "Bupivacaine 0.2–0.5 mg/kg/hr; ropivacaine 0.25–0.6 mg/kg/hr"
+            ]
+          ]
+        },
+        {
+          "h": "Adjuvants",
+          "items": [
+            "Fentanyl: 1–2 mcg/kg bolus, or about 2 mcg/mL added to the infusion",
+            "Clonidine: about 2 mcg/kg bolus or 0.1 mcg/kg/hr infusion; can cause sedation, bradycardia and hypotension, and apnoea in neonates",
+            "Epinephrine 1:200,000 in the test dose and to prolong a single shot",
+            "Avoid epidural opioids or use them cautiously in neonates and ex-prems unless monitored (respiratory depression)"
+          ]
+        },
+        {
+          "h": "Why neonates are different",
+          "items": [
+            "Low alpha-1 acid glycoprotein: more free (active) local anaesthetic in the blood",
+            "Immature liver enzymes: amides accumulate during a long infusion, so halve the rate and limit duration",
+            "Relatively higher cardiac output: faster systemic absorption of the bolus",
+            "Conus at about L3 and dura at about S3–S4 in infants: placement is lower and caudal-threaded catheters are common",
+            "Epidural depth in children is roughly 1 mm/kg (or 0.1 cm/kg)"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Know the three numbers: 2.5 mg/kg bupivacaine single shot, 0.2 mg/kg/hr neonate infusion, 0.4 mg/kg/hr older child",
+            "Worked example, 10 kg child: 5 mL 0.25% bupivacaine (12.5 mg, well under 25 mg), then 0.1% at 3 mL/hr",
+            "Children under about 8 years rarely get hypotension from a sympathetic block (immature sympathetic tone)",
+            "Toxicity under GA may show only as arrhythmia or cardiovascular collapse; know the lipid emulsion dose (20% at 1.5 mL/kg)",
+            "Always check your hospital's protocol: rates vary between centres"
+          ]
+        }
+      ],
+      "pearl": "Neonate 0.2, child 0.4 mg/kg/hr; bolus 0.05 mL/kg per dermatome; never above 2.5 mg/kg bupivacaine.",
+      "refs": [
+        {
+          "title": "NYSORA – Pediatric epidural and spinal anesthesia and analgesia",
+          "url": "https://www.nysora.com/topics/sub-specialties/pediatric-anesthesia/pediatric-epidural-spinal-anesthesia-analgesia/"
+        },
+        {
+          "title": "SPA Case Guide – Pediatric epidurals",
+          "url": "https://www2.pedsanesthesia.org/case-guides/Epidurals_Pediatric_SPA_Case_Guide_62525.pdf"
+        },
+        {
+          "title": "Stanford Pediatric Anesthesia – Neuraxial blockade",
+          "url": "https://med.stanford.edu/content/dam/sm/pedsanesthesia/documents/neuraxial-blockade.pdf"
+        }
+      ],
+      "created": "2026-11-19",
+      "updated": "2026-11-19",
+      "seen": 1
     }
-   ],
-   "created": "2026-11-12",
-   "updated": "2026-11-12",
-   "seen": 1,
-   "summary": "The ASA Physical Status (ASA-PS) classification grades a patient's overall health before anaesthesia. Current version: amended by the ASA House of Delegates on 13 Dec 2020 (first approved in this form on 15 Oct 2014). The class definitions did not change in 2020; the update added adult, paediatric and obstetric examples.",
-   "sections": [
-    {
-     "h": "The classes",
-     "rows": [
-      [
-       "ASA I",
-       "Normal healthy patient: no systemic disease, non-smoker, little or no alcohol."
-      ],
-      [
-       "ASA II",
-       "Mild systemic disease without real functional limitation, e.g. current smoker, social drinker, normal pregnancy, BMI 30–40, well-controlled diabetes or hypertension, mild lung disease."
-      ],
-      [
-       "ASA III",
-       "Severe systemic disease with functional limitation, e.g. poorly controlled diabetes or hypertension, COPD, BMI 40 or more, active hepatitis, alcohol dependence, implanted pacemaker, moderately reduced ejection fraction, end-stage renal disease on regular dialysis, MI/stroke/TIA/coronary stent more than 3 months ago."
-      ],
-      [
-       "ASA IV",
-       "Severe systemic disease that is a constant threat to life, e.g. MI/stroke/TIA/coronary stent within the last 3 months, ongoing cardiac ischaemia or severe valve disease, severely reduced ejection fraction, sepsis, DIC, ARDS, end-stage renal disease not on regular dialysis."
-      ],
-      [
-       "ASA V",
-       "Moribund: not expected to survive without the operation, e.g. ruptured abdominal or thoracic aneurysm, massive trauma, intracranial bleed with mass effect, ischaemic bowel with multiple organ failure."
-      ],
-      [
-       "ASA VI",
-       "Declared brain-dead patient whose organs are being removed for donation."
-      ],
-      [
-       "E",
-       "Added to the class for an emergency operation: one where delay would significantly increase the threat to life or to a body part (e.g. ASA IIIE). Not used with ASA VI."
-      ]
-     ]
-    },
-    {
-     "h": "Obstetric examples (2020)",
-     "items": [
-      "Normal pregnancy is ASA II (not ASA I).",
-      "Moves up a class as pregnancy complications become severe: e.g. pre-eclampsia with severe features is ASA III, and the same with HELLP or decompensated heart disease is ASA IV.",
-      "Uterine rupture is given as an ASA V example.",
-      "Add E when the case is an emergency (e.g. category 1 caesarean: ASA IIE or higher)."
-     ]
-    },
-    {
-     "h": "Paediatric examples (2020)",
-     "items": [
-      "The 2020 update added a separate column of children's examples, which improved agreement between paediatric anaesthetists.",
-      "Typical pattern: well-controlled chronic conditions (asthma without exacerbation, controlled epilepsy) are ASA II; poorly controlled disease, ex-premature infants under 60 weeks postconceptional age and difficult airway are ASA III; symptomatic heart disease, sepsis or ventilator dependence are ASA IV.",
-      "See the ASA page (reference 1) for the full table of children's examples."
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "The examples are illustrative, not exhaustive; the ASA gives no further rules, so the final grade is the anaesthetist's clinical judgement.",
-      "ASA-PS describes the patient's health, not the risk of the operation itself: it does not include the type of surgery, age alone, or airway difficulty in adults.",
-      "Inter-rater agreement is only fair to moderate (kappa about 0.4 to 0.6 in most studies); ASA II and III are the classes most often disputed. Using the official examples improves agreement.",
-      "Despite this, higher ASA class is consistently linked with more postoperative complications and mortality, and ASA-PS is built into many risk scores (e.g. POSSUM-type models, NSQIP calculator).",
-      "In India, SLCM and most hospital PAC forms record ASA with the E suffix for emergencies."
-     ]
-    }
-   ]
-  },
-  {
-   "id": "psv",
-   "cat": "Ventilation",
-   "title": "Pressure support ventilation (PSV)",
-   "aliases": [
-    "pressure support",
-    "psv",
-    "spontaneous mode"
-   ],
-   "pearl": "Used for weaning and SBT (e.g. PS 5–8 cmH2O + PEEP 5).",
-   "refs": [
-    {
-     "title": "Abramovitz A, Sung S. Pressure Support Ventilation (PSV). StatPearls. Treasure Island (FL): StatPearls Publishing; 2023 (archived)",
-     "url": "https://pubmed.ncbi.nlm.nih.gov/31536312/"
-    },
-    {
-     "title": "Liberation from mechanical ventilation in critically ill adults: an official American College of Chest Physicians / American Thoracic Society clinical practice guideline. Chest 2017 (suggests the first spontaneous breathing trial uses 5–8 cmH₂O of pressure support)",
-     "url": "https://seek.chestnet.org/AssetListing/CHEST-Guidelines-14139/Liberation-From-Mechanical-Ventilation-in-Critically-Ill-Adults-An-Official-American-College-of-Chest-Physicians-or-American-Thoracic-Society-Clinical-Practice-Guideline-76906"
-    },
-    {
-     "title": "GE Aisys CS2 User's Reference Manual: ventilation modes, factory default settings (ManualsLib)",
-     "url": "https://www.manualslib.com/manual/1210542/Ge-Auisys-Cs2.html?page=211"
-    }
-   ],
-   "created": "2026-11-13",
-   "updated": "2026-11-13",
-   "seen": 1,
-   "summary": "Pressure support ventilation is a purely spontaneous mode: every breath is triggered by the patient, pressure-limited (the ventilator holds PEEP + PS) and flow-cycled (it stops when flow falls to a set percentage of peak flow). There is no set rate, so the patient needs an intact respiratory drive, and minute ventilation is not guaranteed.",
-   "sections": [
-    {
-     "h": "How a breath works",
-     "items": [
-      "Trigger: the patient's effort is sensed as a small fall in airway pressure or a change in flow.",
-      "The ventilator raises airway pressure to PEEP + PS and holds it there for the rest of inspiration.",
-      "Flow is highest at the start, then falls as the lungs fill.",
-      "Cycle: when flow falls to the set percentage of peak flow (commonly 25%), the ventilator stops and expiration begins.",
-      "The patient decides the rate and the inspiratory time. Tidal volume depends on the PS level, the patient's effort, compliance and resistance."
-     ]
-    },
-    {
-     "h": "Settings",
-     "rows": [
-      [
-       "Pressure support (PS)",
-       "Pressure added above PEEP. Usually 5–20 cmH₂O (the GE Aisys CS2 manual lists a range of 2–40). Titrate to a tidal volume of about 6–8 mL/kg predicted body weight, a rate under 25–30 and no accessory muscle use. A level of 5–8 cmH₂O roughly offsets the resistance of the tube and circuit, and is the level suggested for a spontaneous breathing trial."
-      ],
-      [
-       "PEEP",
-       "Typically 5 cmH₂O. In COPD with intrinsic PEEP, external PEEP set below the intrinsic level reduces the effort needed to trigger a breath."
-      ],
-      [
-       "FiO₂",
-       "Set to reach the target SpO₂."
-      ],
-      [
-       "Trigger sensitivity",
-       "Flow trigger about 1–3 L/min, or pressure trigger about −0.5 to −2 cmH₂O. Too sensitive causes auto-triggering (leaks, cardiac oscillations, water in the circuit). Too insensitive causes missed efforts and extra work."
-      ],
-      [
-       "Rise time (ramp, slope)",
-       "How fast the airway pressure reaches the target. Shown in seconds, as a percentage or on a 1–10 scale, depending on the ventilator. Use a faster rise for a patient with high drive. Too fast gives pressure overshoot and early cycling; too slow starves the patient of flow."
-      ],
-      [
-       "Expiratory trigger (Esens, cycle-off, End of breath)",
-       "The percentage of peak flow at which inspiration ends. Commonly 25% by default; the GE Aisys CS2 lists 5–75%. Raise it to about 40–50% in COPD to shorten inspiration and limit air trapping. Lower it to about 10–15% in stiff (restrictive) lungs to avoid cycling too early and double triggering."
-      ],
-      [
-       "Maximum inspiratory time",
-       "A backup time limit on the breath, which matters with leaks and NIV. The value and name vary with the ventilator. Many ventilators also end the breath if pressure rises above the target (the patient breathing out against the breath)."
-      ],
-      [
-       "Apnoea backup",
-       "If the patient does not breathe for the set apnoea time, a mandatory backup mode with a set rate takes over. The time varies by machine (the GE Aisys CS2 manual lists 10–30 s)."
-      ],
-      [
-       "Alarms",
-       "High and low respiratory rate, low and high minute volume and tidal volume, high airway pressure."
-      ],
-      [
-       "Tube compensation",
-       "Optional on some ventilators. Adds extra pressure to offset the resistance of the tube."
-      ]
-     ]
-    },
-    {
-     "h": "Pressure and flow in one breath",
-     "svg": "<svg viewBox=\"0 0 380 360\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><defs><marker id=\"nfarr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" class=\"nf-m\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></marker></defs><text class=\"nf-t nf-h\" x=\"40\" y=\"34\">Pressure</text><line x1=\"40\" y1=\"130\" x2=\"340\" y2=\"130\" class=\"nf-l\"/><path d=\"M40,130 L80,130 L90,139 L96,132 C104,100 116,72 130,70 L250,70 L256,130 L340,130\" class=\"nf-p\"/><text class=\"nf-t\" x=\"190\" y=\"58\" text-anchor=\"middle\">PEEP + PS</text><line x1=\"256\" y1=\"70\" x2=\"290\" y2=\"70\" class=\"nf-l\"/><line x1=\"290\" y1=\"130\" x2=\"290\" y2=\"72\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"298\" y=\"104\">PS</text><text class=\"nf-t\" x=\"340\" y=\"146\" text-anchor=\"end\">PEEP</text><text class=\"nf-t\" x=\"40\" y=\"94\">Rise time</text><line x1=\"88\" y1=\"90\" x2=\"109\" y2=\"90\" class=\"nf-l\"/><line x1=\"90\" y1=\"151\" x2=\"90\" y2=\"142\" class=\"nf-l\"/><text class=\"nf-t\" x=\"90\" y=\"164\" text-anchor=\"middle\">Trigger</text><text class=\"nf-t nf-h\" x=\"40\" y=\"182\">Flow</text><line x1=\"40\" y1=\"250\" x2=\"340\" y2=\"250\" class=\"nf-l\"/><path d=\"M40,250 L96,250 C98,215 102,190 108,190 C130,205 180,225 250,235 L252,250 C256,290 266,292 280,285 C300,272 315,255 325,250 L340,250\" class=\"nf-f\"/><text class=\"nf-t\" x=\"126\" y=\"184\">Peak flow</text><circle cx=\"252\" cy=\"235\" r=\"3\" class=\"nf-dot\"/><line x1=\"252\" y1=\"231\" x2=\"252\" y2=\"219\" class=\"nf-l\"/><text class=\"nf-t\" x=\"340\" y=\"212\" text-anchor=\"end\">Cycles off at ~25% of peak</text><text class=\"nf-t\" x=\"340\" y=\"306\" text-anchor=\"end\">Passive expiration</text><line x1=\"96\" y1=\"316\" x2=\"96\" y2=\"328\" class=\"nf-l\"/><line x1=\"252\" y1=\"316\" x2=\"252\" y2=\"328\" class=\"nf-l\"/><line x1=\"98\" y1=\"322\" x2=\"250\" y2=\"322\" class=\"nf-a\" marker-start=\"url(#nfarr)\" marker-end=\"url(#nfarr)\"/><text class=\"nf-t\" x=\"174\" y=\"344\" text-anchor=\"middle\">Inspiratory time</text></svg>",
-     "alt": "Airway pressure and flow over one pressure support breath, marking the trigger, rise time, PEEP, PS, peak flow, the point where flow falls to about 25% of peak and the breath cycles off, and the inspiratory time.",
-     "items": [
-      "Trigger: the small dip below PEEP, with the matching flow change, is the patient's effort being sensed.",
-      "Rise time: the slope from PEEP up to the plateau.",
-      "PS: the height of the plateau above PEEP. It is the main determinant of tidal volume.",
-      "Expiratory trigger: the flow tails off, and the breath ends when flow falls to the set percentage of peak. A higher setting ends the breath earlier; a lower setting ends it later.",
-      "Inspiratory time: the width of the plateau. It is not set. It comes from the patient's effort, the lung mechanics and the cycle-off point (plus the maximum inspiratory time backup).",
-      "Bedside check: if the flow curve ends abruptly instead of tapering, the breath cycled too early or too late, so adjust the expiratory trigger or the rise time."
-     ]
-    },
-    {
-     "h": "Problems to watch",
-     "items": [
-      "Tidal volume is not fixed: it falls if compliance falls or resistance rises.",
-      "Too much support causes large volumes, hyperinflation, missed triggers and central apnoeas in sleep.",
-      "Too little support causes rapid shallow breathing and fatigue.",
-      "Sedation, opioids or residual neuromuscular block can cause hypoventilation. Because no mandatory breaths are given, minute ventilation is not guaranteed, which is why the apnoea backup matters."
-     ]
-    },
-    {
-     "h": "On anaesthesia machines",
-     "items": [
-      "Many anaesthesia machines offer pressure support with an apnoea backup, for example PSVPro on GE machines. If the patient stops breathing for the set backup time, a mandatory mode takes over. This is useful during emergence and LMA cases.",
-      "Names, ranges and defaults differ between machines, so check the manual of the machine you are using."
-     ]
-    }
-   ]
-  },
-  {
-   "id": "paediatric-spinal-dose",
-   "cat": "Paediatric",
-   "title": "Paediatric spinal anaesthesia: dose",
-   "aliases": [
-    "pediatric spinal dose",
-    "paediatric spinal",
-    "spinal in children",
-    "infant spinal",
-    "subarachnoid block in children",
-    "paediatric SAB dose"
-   ],
-   "pearl": "Smaller child = more mg/kg (more CSF per kg) but a shorter block.",
-   "refs": [
-    {
-     "title": "Gupta A, Saha U. Spinal anesthesia in children: a review. J Anaesthesiol Clin Pharmacol 2014;30:10–18",
-     "url": "https://doi.org/10.4103/0970-9185.125687"
-    },
-    {
-     "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019;19:126–34",
-     "url": "https://doi.org/10.1016/j.bjae.2018.12.003"
-    },
-    {
-     "title": "Spinal anesthesia in infants and children: a one year prospective audit. Anesth Essays Res 2014;8:324–9",
-     "url": "https://doi.org/10.4103/0259-1162.143124"
-    }
-   ],
-   "created": "2026-11-14",
-   "updated": "2026-11-14",
-   "seen": 1,
-   "summary": "The spinal dose in children is chosen by body weight, and the mg/kg dose rises as the child gets smaller. Infants have more CSF per kg, more of it in the spinal canal, and faster drug removal, so they need a larger weight-based dose and still get a shorter block than adults.",
-   "sections": [
-    {
-     "h": "0.5% hyperbaric bupivacaine by weight",
-     "rows": [
-      [
-       "Under 5 kg",
-       "0.5 mg/kg (0.1 mL/kg) in some schemes; up to 1 mg/kg (0.2 mL/kg) in others, especially for awake neonatal and infant spinals."
-      ],
-      [
-       "5–15 kg",
-       "0.4 mg/kg (0.08 mL/kg)."
-      ],
-      [
-       "Over 15 kg",
-       "0.3 mg/kg (0.06 mL/kg)."
-      ],
-      [
-       "Adolescents",
-       "Dose moves towards adult dosing; never give more than the adult dose."
-      ]
-     ]
-    },
-    {
-     "h": "Why smaller children need more per kg",
-     "items": [
-      "CSF volume per kg is higher: about 10 mL/kg in neonates and 4 mL/kg in infants and toddlers, against 2 mL/kg in adults.",
-      "About half of the CSF lies in the spinal canal in children, against roughly a third in adults, so the drug is diluted more.",
-      "A very vascular pia and a high cardiac output clear the drug quickly, so the block is short: about 45–90 minutes in neonates and infants."
-     ]
-    },
-    {
-     "h": "What changes the dose",
-     "items": [
-      "The surgery: its expected length and the level of block needed.",
-      "Adjuvants to lengthen the block: clonidine 1 microgram/kg, fentanyl 0.2 microgram/kg (higher doses are also described), adrenaline 2–4 micrograms/kg.",
-      "Intrathecal morphine has been used, but only with monitored postoperative care.",
-      "Ex-premature infants (under 60 weeks postconceptional age): avoid sedatives and opioids where possible because of postoperative apnoea."
-     ]
-    },
-    {
-     "h": "Practical points",
-     "items": [
-      "Volumes are tiny: draw up in a 1 mL syringe and allow for the dead space of the needle.",
-      "Puncture at L4–5 or L5–S1. At birth the cord ends near L3 and the dural sac at S3–S4; adult levels are reached by about 1–2 years.",
-      "Do not lift the legs after injection (for example to place the cautery pad): it can cause a high spinal.",
-      "Blood pressure usually stays stable in younger children (under about 5 years), so fluid preloading is not needed.",
-      "Dosing schemes differ slightly between texts: follow the department protocol."
-     ]
-    }
-   ]
-  },
-  {
-   "id": "achalasia-cardia",
-   "cat": "Airway",
-   "title": "Achalasia cardia",
-   "aliases": [
-    "achalasia",
-    "cardiospasm",
-    "POEM anaesthesia",
-    "Heller myotomy anaesthesia",
-    "megaoesophagus"
-   ],
-   "summary": "Achalasia is a motility disorder in which the lower oesophageal sphincter (LES) fails to relax on swallowing and the oesophageal body loses peristalsis, because the inhibitory nerves of the myenteric plexus degenerate. Food and fluid pool in a dilated oesophagus above a closed sphincter. For the anaesthetist the key issue is a large, retained oesophageal reservoir that can be regurgitated and aspirated at induction, regardless of fasting time.",
-   "sections": [
-    {
-     "h": "What goes wrong",
-     "items": [
-      "Loss of inhibitory neurons (nitric oxide / VIP) in the myenteric plexus",
-      "LES has high resting tone and does not relax with swallowing",
-      "Absent peristalsis in the oesophageal body, so emptying depends on gravity",
-      "Mostly idiopathic; secondary form in Chagas disease (Trypanosoma cruzi) and pseudoachalasia from tumour at the cardia"
-     ]
-    },
-    {
-     "h": "Clinical picture and diagnosis",
-     "items": [
-      "Dysphagia to both solids and liquids from the start (unlike stricture or cancer, which begin with solids)",
-      "Regurgitation of undigested food, often at night; chest pain; weight loss",
-      "Nocturnal cough or recurrent chest infections from silent aspiration",
-      "Barium swallow: dilated oesophagus tapering to a smooth 'bird's beak'",
-      "High-resolution manometry is the gold standard; endoscopy to exclude malignancy"
-     ]
-    },
-    {
-     "h": "Chicago classification (manometry types)",
-     "rows": [
-      [
-       "Type I",
-       "Classic: no pressurisation, minimal contractility; dilated oesophagus"
-      ],
-      [
-       "Type II",
-       "Pan-oesophageal pressurisation; best response to treatment"
-      ],
-      [
-       "Type III",
-       "Spastic, premature contractions; responds best to POEM (long myotomy)"
-      ]
-     ]
-    },
-    {
-     "h": "Treatment",
-     "rows": [
-      [
-       "Drugs",
-       "Nifedipine or nitrates before meals; weak, short-lived effect"
-      ],
-      [
-       "Botulinum toxin",
-       "Endoscopic LES injection; for frail patients, lasts months"
-      ],
-      [
-       "Pneumatic dilatation",
-       "Balloon stretch of LES; small perforation risk"
-      ],
-      [
-       "Heller myotomy",
-       "Laparoscopic myotomy plus partial fundoplication (Dor/Toupet)"
-      ],
-      [
-       "POEM",
-       "Per-oral endoscopic myotomy through a submucosal tunnel under GA"
-      ]
-     ]
-    },
-    {
-     "h": "Anaesthetic concerns and plan",
-     "items": [
-      "Treat as full stomach whatever the fasting time: the oesophagus holds retained food and fluid",
-      "Pre-op: liquid diet 24-48 h before, then clear fluids; ask about regurgitation and lying flat",
-      "Assess for aspiration lung disease, malnutrition, dehydration and electrolyte upset",
-      "Consider emptying the oesophagus before induction (wide-bore NG suction, or endoscopic clearance)",
-      "Head-up position; rapid sequence induction with cricoid pressure (its value is debated with a dilated oesophagus)",
-      "Some centres prefer awake or head-up induction for a massively dilated oesophagus",
-      "Extubate fully awake with reflexes back, head-up",
-      "Antacid/H2 blocker premedication does little for oesophageal contents, which are not acidic stomach juice"
-     ]
-    },
-    {
-     "h": "POEM specific issues",
-     "items": [
-      "GA with ETT and controlled ventilation; CO2 insufflation is used",
-      "CO2 can track out: subcutaneous emphysema, pneumomediastinum, capnoperitoneum, capnothorax",
-      "Watch for rising EtCO2 and peak airway pressure, falling SpO2, abdominal distension",
-      "Decompress capnoperitoneum with a Veress needle; tension capnothorax needs a chest drain",
-      "Increase minute ventilation to clear the CO2 load; check for subcutaneous crepitus at end of case",
-      "Mucosal perforation and bleeding are surgical risks; plan for post-op nil by mouth and antiemetics"
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "Achalasia = failed LES relaxation + aperistalsis; dysphagia to solids and liquids together",
-      "Bird's beak on barium; manometry confirms; Chicago types I-III",
-      "Main danger is aspiration of the oesophageal reservoir at induction, even after fasting",
-      "Empty the oesophagus, head-up, RSI, awake extubation",
-      "POEM: think CO2 complications (capnothorax, pneumoperitoneum, surgical emphysema)",
-      "Long-standing achalasia increases risk of squamous cell carcinoma of oesophagus"
-     ]
-    }
-   ],
-   "pearl": "Fasting does not empty an achalasia oesophagus: suction it, sit them up, and do an RSI.",
-   "refs": [
-    {
-     "title": "Yadlapati R et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil 2021",
-     "url": "https://doi.org/10.1111/nmo.14058"
-    },
-    {
-     "title": "Vaezi MF et al. ACG Clinical Guidelines: Diagnosis and Management of Achalasia. Am J Gastroenterol 2020",
-     "url": "https://doi.org/10.14309/ajg.0000000000000731"
-    }
-   ],
-   "created": "2026-11-16",
-   "updated": "2026-11-16",
-   "seen": 1
-  },
-  {
-   "id": "ckd-classification",
-   "cat": "Preop & scoring",
-   "title": "CKD classification (KDIGO)",
-   "aliases": [
-    "CKD staging",
-    "KDIGO",
-    "chronic kidney disease",
-    "CGA staging",
-    "GFR categories",
-    "albuminuria categories",
-    "CKD stages"
-   ],
-   "summary": "Chronic kidney disease means kidney structure or function has been abnormal for more than 3 months, with consequences for health. KDIGO stages it by Cause, GFR category (G1 to G5) and Albuminuria category (A1 to A3), which is why it is called CGA staging. Risk of progression, cardiovascular events and death rises along both the GFR and the albuminuria axes. For the anaesthetist the stage guides drug choice, fluid and potassium management, and cardiac risk.",
-   "sections": [
-    {
-     "h": "Definition",
-     "items": [
-      "Abnormal kidney structure or function for >3 months",
-      "Marker 1: eGFR <60 mL/min/1.73m² on its own is enough",
-      "Marker 2 (if eGFR is ≥60): albuminuria (ACR ≥30 mg/g), urine sediment abnormality, electrolyte/tubular disorder, histology or imaging abnormality, or a kidney transplant",
-      "G1 and G2 count as CKD only if one of these other markers is present"
-     ]
-    },
-    {
-     "h": "GFR categories (mL/min/1.73m²)",
-     "rows": [
-      [
-       "G1",
-       "≥90: normal or high"
-      ],
-      [
-       "G2",
-       "60–89: mildly decreased"
-      ],
-      [
-       "G3a",
-       "45–59: mild to moderately decreased"
-      ],
-      [
-       "G3b",
-       "30–44: moderate to severely decreased"
-      ],
-      [
-       "G4",
-       "15–29: severely decreased"
-      ],
-      [
-       "G5",
-       "<15: kidney failure (G5D if on dialysis, G5T if transplant)"
-      ]
-     ]
-    },
-    {
-     "h": "Albuminuria categories (ACR)",
-     "rows": [
-      [
-       "A1",
-       "<30 mg/g (<3 mg/mmol): normal to mildly increased"
-      ],
-      [
-       "A2",
-       "30–300 mg/g (3–30 mg/mmol): moderately increased"
-      ],
-      [
-       "A3",
-       ">300 mg/g (>30 mg/mmol): severely increased"
-      ]
-     ]
-    },
-    {
-     "h": "Reading the stage",
-     "items": [
-      "Written as e.g. 'diabetic nephropathy, G3b A2'",
-      "Heat map: green (low risk), yellow, orange, red (very high risk)",
-      "A G2 patient with A3 can be at higher risk than a G3a patient with A1",
-      "Referral to a nephrologist usually from G4, or A3, or rapid fall in eGFR"
-     ]
-    },
-    {
-     "h": "Anaesthetic relevance",
-     "items": [
-      "RCRI: creatinine >2 mg/dL (177 µmol/L) is one risk factor",
-      "Muscle relaxant: cisatracurium or atracurium (Hofmann elimination)",
-      "Check K⁺ before suxamethonium (rises by ~0.5 mmol/L)",
-      "Morphine metabolites (M6G) build up; prefer fentanyl; avoid pethidine (norpethidine)",
-      "Sugammadex not recommended when CrCl <30",
-      "Dialysis patients: dialyse within 24 h before surgery, check post-dialysis weight and K⁺, protect the fistula arm",
-      "Avoid NSAIDs and nephrotoxins; keep perfusion pressure up"
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "Name the three axes: Cause, GFR, Albuminuria",
-      "Know the G3a/G3b split at 45",
-      "Know ACR cut-offs 30 and 300 mg/g (3 and 30 mg/mmol)",
-      "Uraemia: platelet dysfunction (consider desmopressin), anaemia, acidosis, delayed gastric emptying"
-     ]
-    }
-   ],
-   "pearl": "Stage CKD on two axes: G by eGFR (90/60/45/30/15) and A by ACR (30/300).",
-   "refs": [
-    {
-     "title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD",
-     "url": "https://doi.org/10.1016/j.kint.2023.10.018"
-    }
-   ],
-   "created": "2026-11-17",
-   "updated": "2026-11-17",
-   "seen": 1
-  },
-  {
-   "id": "mets-functional-capacity",
-   "cat": "Preop & scoring",
-   "title": "METs (functional capacity)",
-   "aliases": [
-    "METs",
-    "metabolic equivalents",
-    "functional capacity",
-    "DASI",
-    "effort tolerance",
-    "exercise tolerance"
-   ],
-   "summary": "A MET (metabolic equivalent) is the oxygen a person uses at rest, about 3.5 mL O₂/kg/min. Activities are rated in multiples of this to estimate functional capacity before surgery. Being able to do 4 METs or more (for example climbing a flight or two of stairs) usually means the patient can go ahead without further cardiac testing. Because clinicians' estimates are unreliable, structured tools such as DASI are now preferred.",
-   "sections": [
-    {
-     "h": "Definition",
-     "items": [
-      "1 MET = resting O₂ consumption ≈ 3.5 mL O₂/kg/min (based on a 70 kg, 40-year-old man)",
-      "An activity of 4 METs uses about 4 times resting O₂"
-     ]
-    },
-    {
-     "h": "Classification and examples",
-     "rows": [
-      [
-       "<4 METs: poor",
-       "Self-care, eating, dressing, walking indoors, slow walking on level ground, light housework"
-      ],
-      [
-       "≈4 METs: threshold",
-       "Climbing 1–2 flights of stairs, walking up a hill, brisk walking (~6 km/h), heavy housework like scrubbing floors"
-      ],
-      [
-       "4–10 METs: moderate to good",
-       "Golf, doubles tennis, dancing, cycling"
-      ],
-      [
-       ">10 METs: excellent",
-       "Swimming, singles tennis, football, running"
-      ]
-     ]
-    },
-    {
-     "h": "Use in preop assessment",
-     "items": [
-      "ACC/AHA: patient with elevated risk but ≥4 METs can usually proceed without stress testing",
-      "<4 METs or unknown, with elevated risk: consider further testing only if it would change management",
-      "ESC 2022: inability to climb 2 flights of stairs suggests poor capacity; DASI or NT-proBNP can refine risk"
-     ]
-    },
-    {
-     "h": "DASI (Duke Activity Status Index)",
-     "items": [
-      "12-item questionnaire, score 0 to 58.2",
-      "Estimated VO₂peak = 0.43 × DASI + 9.6 (mL/kg/min); divide by 3.5 for METs",
-      "DASI >34 corresponds roughly to 4 METs and lower risk"
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "METS study (Wijeysundera, Lancet 2018): subjective estimate of METs predicted outcomes poorly; DASI and NT-proBNP did better",
-      "CPET gold standard: anaerobic threshold <11 mL/kg/min and VO₂peak <15 suggest high risk for major surgery",
-      "Capacity may be limited by non-cardiac causes (arthritis, claudication), so it is then 'unknown'"
-     ]
-    }
-   ],
-   "pearl": "Can climb two flights of stairs? That is about 4 METs, so usually no further cardiac testing.",
-   "refs": [
-    {
-     "title": "Wijeysundera DN et al. Assessment of functional capacity before major non-cardiac surgery (METS study). Lancet 2018",
-     "url": "https://doi.org/10.1016/S0140-6736(18)31131-0"
-    }
-   ],
-   "created": "2026-11-17",
-   "updated": "2026-11-17",
-   "seen": 1
-  },
-  {
-   "id": "body-weight-scalars-drug-dosing",
-   "cat": "Drugs",
-   "title": "Body weight scalars & drug dosing (TBW vs IBW vs LBW vs ABW)",
-   "aliases": [
-    "actual body weight",
-    "ideal body weight",
-    "adjusted body weight",
-    "lean body weight",
-    "TBW",
-    "IBW",
-    "ABW",
-    "LBW",
-    "obese drug dosing",
-    "dosing weight",
-    "predicted body weight"
-   ],
-   "summary": "In obesity, fat adds weight but adds little to cardiac output, blood volume or drug-clearing organs. So dosing everything by actual weight overdoses many drugs, while dosing by ideal weight underdoses some. Which weight to use depends on whether the drug spreads into fat (lipophilic), how it is cleared, and whether you are giving a single bolus or a maintenance infusion.",
-   "sections": [
-    {
-     "h": "The weights and formulas",
-     "rows": [
-      [
-       "Total (actual) body weight, TBW",
-       "What the scale says. Includes fat and lean tissue."
-      ],
-      [
-       "Ideal body weight, IBW (Devine/Broca)",
-       "Male 50 + 0.91 x (height cm − 152.4); female 45.5 + 0.91 x (height cm − 152.4). Quick bedside: height cm − 100 (M) or − 105 (F)."
-      ],
-      [
-       "Predicted body weight, PBW",
-       "Same as Devine IBW (ARDSnet). Used for tidal volume."
-      ],
-      [
-       "Lean body weight, LBW (Janmahasatian)",
-       "M: 9270 x TBW / (6680 + 216 x BMI); F: 9270 x TBW / (8780 + 244 x BMI). Plateaus around 100 kg (M) / 70 kg (F) however heavy the patient."
-      ],
-      [
-       "Adjusted body weight, ABW",
-       "IBW + 0.4 x (TBW − IBW). Middle ground for drugs that partly distribute into fat."
-      ]
-     ]
-    },
-    {
-     "h": "Why it matters (principles)",
-     "items": [
-      "Cardiac output and early drug distribution track lean mass, so induction bolus doses follow LBW.",
-      "Highly lipophilic drugs have a bigger volume of distribution in obesity, so repeated doses / infusions accumulate and need a larger weight (TBW or ABW) for maintenance.",
-      "Hydrophilic drugs (e.g. NMBAs) stay in lean tissue and ECF, so dose on IBW/LBW.",
-      "Clearance correlates best with LBW for most drugs.",
-      "Always titrate to effect; weight scalar is only the starting point."
-     ]
-    },
-    {
-     "h": "Induction agents & sedatives",
-     "rows": [
-      [
-       "Propofol",
-       "Induction: LBW. Maintenance infusion: TBW (or ABW); use BIS/pEEG."
-      ],
-      [
-       "Thiopentone",
-       "Induction: LBW."
-      ],
-      [
-       "Etomidate",
-       "LBW."
-      ],
-      [
-       "Ketamine",
-       "LBW (IBW)."
-      ],
-      [
-       "Midazolam",
-       "Single bolus: TBW (big Vd); infusion: IBW (clearance not increased)."
-      ],
-      [
-       "Dexmedetomidine",
-       "ABW/LBW; watch bradycardia and hypotension."
-      ]
-     ]
-    },
-    {
-     "h": "Opioids, NMBAs & reversal",
-     "rows": [
-      [
-       "Fentanyl, morphine, remifentanil",
-       "LBW (remifentanil infusion on TBW gives overdose and hypotension)."
-      ],
-      [
-       "Suxamethonium",
-       "TBW, 1 to 1.5 mg/kg (plasma cholinesterase and ECF both increase)."
-      ],
-      [
-       "Rocuronium, vecuronium",
-       "IBW (LBW). Using TBW prolongs block. For RSI some give 1.2 mg/kg on LBW/ABW for faster onset."
-      ],
-      [
-       "Atracurium, cisatracurium",
-       "IBW/LBW."
-      ],
-      [
-       "Neostigmine",
-       "TBW, 0.04 to 0.05 mg/kg, max 5 mg."
-      ],
-      [
-       "Sugammadex",
-       "Label: actual body weight (2 or 4 mg/kg; 16 mg/kg immediate). Studies suggest IBW + 40% is enough for moderate block."
-      ]
-     ]
-    },
-    {
-     "h": "Other drugs & settings",
-     "rows": [
-      [
-       "Local anaesthetic maximum dose",
-       "LBW/IBW (not TBW) — LAST risk."
-      ],
-      [
-       "Paracetamol",
-       "LBW (or fixed 1 g)."
-      ],
-      [
-       "Enoxaparin",
-       "TBW-based; prophylaxis often 40 mg BD if BMI > 40; treatment dose TBW, check anti-Xa if > 150 kg."
-      ],
-      [
-       "Unfractionated heparin infusion",
-       "ABW; monitor aPTT/ACT."
-      ],
-      [
-       "Cefazolin prophylaxis",
-       "2 g; 3 g if ≥ 120 kg."
-      ],
-      [
-       "Vancomycin",
-       "Loading on TBW; then levels."
-      ],
-      [
-       "Aminoglycosides",
-       "ABW (dosing weight)."
-      ],
-      [
-       "Tidal volume",
-       "6 to 8 ml/kg PBW (IBW), never TBW."
-      ],
-      [
-       "Maintenance fluids",
-       "IBW/ABW, goal-directed."
-      ]
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "Classic rule: induction on LBW, maintenance on TBW (propofol); NMBAs on IBW; sux on TBW.",
-      "LBW is non-linear and plateaus; IBW ignores the extra lean mass that obese people do carry.",
-      "ABW correction factor is 0.4 (some sources use 0.3 or 0.5 for specific drugs).",
-      "PBW for ventilation — a favourite viva question in obese ARDS.",
-      "Mention monitoring: BIS/pEEG for TIVA, quantitative TOF for NMBAs, levels for antibiotics/heparin."
-     ]
-    }
-   ],
-   "pearl": "Bolus on lean, infuse on total; paralyse on ideal (except sux = total); ventilate on predicted.",
-   "refs": [
-    {
-     "title": "Ingrande J, Lemmens HJM. Dose adjustment of anaesthetics in the morbidly obese. Br J Anaesth 2010;105(S1):i16–23",
-     "url": "https://doi.org/10.1093/bja/aeq312"
-    },
-    {
-     "title": "AAGBI. Peri-operative management of the obese surgical patient 2015. Anaesthesia 2015;70:859–76",
-     "url": "https://doi.org/10.1111/anae.13101"
-    }
-   ],
-   "created": "2026-11-17",
-   "updated": "2026-11-17",
-   "seen": 1
-  },
-  {
-   "id": "capnography-waveforms",
-   "cat": "Monitoring & equipment",
-   "title": "Capnography waveforms (abnormal capnograms)",
-   "aliases": [
-    "capnogram",
-    "capnography",
-    "etco2 waveform",
-    "abnormal capnogram",
-    "capnograph patterns",
-    "co2 waveform"
-   ],
-   "summary": "A capnogram plots exhaled CO₂ against time for each breath. The shape tells you more than the EtCO₂ number: where the tube is, whether the airway is narrowed, whether the circuit is leaking or letting you rebreathe, and whether the heart is pumping blood through the lungs. Read it in order: baseline, upstroke, plateau, downstroke, then the trend over many breaths.",
-   "sections": [
-    {
-     "h": "The normal capnogram",
-     "svg": "<svg viewBox=\"0 0 380 210\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><text class=\"nf-t nf-h\" x=\"30\" y=\"22\">CO₂ (mmHg)</text><line x1=\"30\" y1=\"170\" x2=\"360\" y2=\"170\" class=\"nf-l\"/><line x1=\"30\" y1=\"30\" x2=\"30\" y2=\"170\" class=\"nf-l\"/><path d=\"M30,168 L95,168 C108,168 112,72 128,64 L250,52 C258,52 262,60 266,110 C270,150 274,168 285,168 L360,168\" class=\"nf-p\"/><text class=\"nf-t\" x=\"60\" y=\"160\" text-anchor=\"middle\">I</text><text class=\"nf-t\" x=\"104\" y=\"120\">II</text><text class=\"nf-t\" x=\"185\" y=\"48\" text-anchor=\"middle\">III</text><text class=\"nf-t\" x=\"276\" y=\"104\">0</text><text class=\"nf-t\" x=\"252\" y=\"40\" text-anchor=\"middle\">EtCO₂</text><text class=\"nf-t\" x=\"128\" y=\"92\">α</text><text class=\"nf-t\" x=\"238\" y=\"74\">β</text><text class=\"nf-t\" x=\"95\" y=\"190\" text-anchor=\"middle\">expiration →</text><text class=\"nf-t\" x=\"320\" y=\"190\" text-anchor=\"middle\">inspiration</text></svg>",
-     "alt": "Normal capnogram with phases 0, I, II and III, alpha and beta angles",
-     "rows": [
-      [
-       "Phase I",
-       "Baseline: dead-space gas with no CO₂. Should sit at zero."
-      ],
-      [
-       "Phase II",
-       "Steep upstroke: mixing of dead-space and alveolar gas."
-      ],
-      [
-       "Phase III",
-       "Alveolar plateau, gently rising. EtCO₂ is read at its end."
-      ],
-      [
-       "Phase 0",
-       "Inspiratory downstroke back to zero (some texts call it phase IV)."
-      ],
-      [
-       "α angle",
-       "Between II and III, normally about 100–110°. Wider = airway obstruction."
-      ],
-      [
-       "β angle",
-       "Between III and 0, normally about 90°. Wider = rebreathing."
-      ],
-      [
-       "Normal EtCO₂",
-       "35–45 mmHg; usually 2–5 mmHg below PaCO₂ in healthy lungs."
-      ]
-     ]
-    },
-    {
-     "h": "Airway and breathing patterns",
-     "rows": [
-      [
-       "Bronchospasm / obstruction",
-       "Slow, sloping upstroke and steep phase III: the 'shark fin'. Wide α angle.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C26,68 30,48 38,38 C46,28 56,22 64,20 L68,68 M80,68 L94,68 C102,68 106,48 114,38 C122,28 132,22 140,20 L144,68 M156,68 L170,68 C178,68 182,48 190,38 C198,28 208,22 216,20 L220,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Curare cleft",
-       "A dip in the plateau: the patient is making small breaths against the ventilator as relaxant wears off. Surgeons leaning on the chest or abdomen can mimic it.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L50,20 C56,20 58,36 64,36 C70,36 72,20 78,20 L96,19 L101,68 L118,68 M118,68 L134,68 L140,20 L164,20 C170,20 172,36 178,36 C184,36 186,20 192,20 L210,19 L215,68 L232,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Spontaneous breathing",
-       "Small, rounded waves with a poorly defined plateau.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 C22,18 44,18 48,68 L62,68 M62,68 L76,68 C80,18 102,18 106,68 L120,68 M120,68 L134,68 C138,18 160,18 164,68 L178,68 M178,68 L192,68 C196,18 218,18 222,68 L236,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "IMV / weaning",
-       "Tall mandatory breaths mixed with smaller spontaneous ones; comparing their heights shows how much the patient is doing.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C17,24 34,24 37,68 L46,68 M46,68 L56,68 C59,24 76,24 79,68 L88,68 M88,68 L96,68 L101,16 L150,14 L155,68 L162,68 M162,68 L172,68 C175,24 192,24 195,68 L204,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Cardiogenic oscillations",
-       "Small ripples on the end of the plateau or downstroke during a long expiratory pause, from the heartbeat moving gas at the sensor. Harmless.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 L20,20 L110,18 C116,20 118,30 124,28 C130,26 132,42 138,40 C144,38 146,54 152,52 C158,50 160,64 166,62 C172,60 176,68 184,68 L236,68\" class=\"nf-p\"/></svg>"
-      ]
-     ],
-     "tip": "Tap a pattern to see its waveform."
-    },
-    {
-     "h": "Circuit and equipment problems",
-     "rows": [
-      [
-       "Raised baseline (rebreathing)",
-       "Baseline does not return to zero: exhausted soda lime, faulty valves, or low fresh gas flow in a Mapleson circuit.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 L26,54 L32,20 L76,17 L81,54 L81,54 L103,54 L109,20 L153,17 L158,54 L158,54 L180,54 L186,20 L230,17 L235,54 L236,54\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Expiratory valve fault",
-       "Exhaled gas is re-inhaled from the expiratory limb: raised baseline and a slurred inspiratory downstroke.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,52 L22,52 L28,20 L66,20 C70,30 74,50 82,52 M80,52 L98,52 L104,20 L142,20 C146,30 150,50 158,52 M156,52 L174,52 L180,20 L218,20 C222,30 226,50 234,52\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Inspiratory valve fault",
-       "Exhaled gas passes back into the inspiratory limb and is re-inhaled: slanted downstroke, baseline may not reach zero.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,62 L16,62 L22,22 L52,22 L76,62 M80,62 L92,62 L98,22 L128,22 L152,62 M156,62 L168,62 L174,22 L204,22 L228,62\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Mapleson D / Bain",
-       "Rebreathing dip and raised baseline are expected if fresh gas flow is too low for the minute ventilation.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,54 C10,64 14,68 20,68 C26,68 30,50 34,48 L38,32 L80,30 L84,54 C90,68 96,60 102,66 C108,70 112,62 118,58 M118,54 C124,64 128,68 134,68 C140,68 144,50 148,48 L152,32 L194,30 L198,54 C204,68 210,60 216,66 C222,70 226,62 232,58\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Sensor contamination",
-       "Sudden step-up of baseline and EtCO₂ from secretions or water in the sampling line or sensor.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,24 L71,68 L71,54 L87,54 L93,18 L133,18 L138,54 L138,54 L154,54 L160,14 L200,14 L205,54 L236,54\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Sampling-port leak",
-       "Air dilutes the sample: low EtCO₂ and an odd double-peaked plateau (sidestream monitors).",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L16,68 L21,26 C28,24 32,40 42,38 L60,28 L64,68 L80,68 M80,68 L92,68 L97,26 C104,24 108,40 118,38 L136,28 L140,68 L156,68 M156,68 L168,68 L173,26 C180,24 184,40 194,38 L212,28 L216,68 L232,68\" class=\"nf-p\"/></svg>"
-      ]
-     ]
-    },
-    {
-     "h": "Tube position and circulation",
-     "rows": [
-      [
-       "Oesophageal intubation",
-       "A few small, shrinking waves (CO₂ washed out of the stomach) that fall to zero within about 6 breaths.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L14,68 C18,42 32,42 36,68 L46,68 M46,68 L56,68 C60,50 74,50 78,68 L88,68 M88,68 L98,68 C102,56 116,56 120,68 L130,68 M130,68 L140,68 C144,60 158,60 162,68 L172,68 M172,68 L182,68 C186,64 200,64 204,68 L214,68 M214,68 L236,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Sudden fall to zero",
-       "Disconnection, extubation, blocked tube or sampling line, or cardiac arrest. Check the patient first.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,20 L66,18 L71,68 L71,68 L87,68 L93,20 L133,18 L138,68 L236,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "CPR",
-       "Waves appear with each compression. EtCO₂ <10 mmHg suggests poor compressions; a sudden rise to normal levels suggests return of circulation.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 C9,52 17,52 22,68 L25,68 C30,50 38,50 43,68 L46,68 C51,50 59,50 64,68 L67,68 C72,52 80,52 85,68 L88,68 C93,58 101,58 106,68 L109,68 C114,50 122,50 127,68 L130,68 C135,54 143,54 148,68 L151,68 C156,50 164,50 169,68 L172,68 C177,56 185,56 190,68 L193,68 C198,50 206,50 211,68 L214,68 C219,56 227,56 232,68 L235,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Sudden drop (not zero)",
-       "Fall in cardiac output or pulmonary blood flow: massive PE, air embolism, severe hypotension.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L24,20 L58,18 L63,68 L63,68 L77,68 L83,20 L117,18 L122,68 L122,68 L136,68 L142,44 L176,44 L181,68 L181,68 L193,68 L199,46 L233,46 L238,68 L236,68\" class=\"nf-p\"/></svg>"
-      ]
-     ]
-    },
-    {
-     "h": "Special situations",
-     "rows": [
-      [
-       "Malignant hyperthermia",
-       "EtCO₂ climbs breath after breath with a normal zero baseline (soda lime still absorbing). Often the earliest sign.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L18,68 L22,44 L48,43 L52,68 L52,68 L66,68 L70,38 L96,37 L100,68 L100,68 L114,68 L118,32 L144,31 L148,68 L148,68 L162,68 L166,26 L192,25 L196,68 L196,68 L210,68 L214,20 L240,19 L244,68 L236,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Pregnancy (GA)",
-       "Normal phase II but steeper phase III; a normal variant. EtCO₂ can equal or exceed PaCO₂.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,38 L60,16 L65,68 L80,68 M80,68 L96,68 L102,38 L136,16 L141,68 L156,68 M156,68 L172,68 L178,38 L212,16 L217,68 L232,68\" class=\"nf-p\"/></svg>"
-      ],
-      [
-       "Single-lung transplant",
-       "Two peaks in phase III: the first from the new healthy lung, the second from the slow-emptying native lung.",
-       "<svg viewBox=\"0 0 240 80\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><line x1=\"4\" y1=\"69\" x2=\"236\" y2=\"69\" class=\"nf-l\"/><path d=\"M4,68 L20,68 L26,26 C34,22 40,42 54,40 C70,38 80,18 88,20 L94,68 L118,68 M118,68 L134,68 L140,26 C148,22 154,42 168,40 C184,38 194,18 202,20 L208,68 L232,68\" class=\"nf-p\"/></svg>"
-      ]
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "Six breaths of a sustained, regular capnogram is the gold standard for confirming tracheal intubation.",
-      "A capnogram can be present in an oesophageal intubation for the first few breaths (gastric CO₂ after bag-mask ventilation or carbonated drinks), then it fades.",
-      "Shark fin = obstruction (bronchospasm, kinked tube, COPD). Raised baseline = rebreathing.",
-      "Gradual rise in EtCO₂ with normal baseline: think MH, hypoventilation, fever, laparoscopic CO₂ absorption, tourniquet or clamp release.",
-      "Sudden fall: think circuit first (disconnection, leak), then circulation (arrest, embolism).",
-      "During CPR, EtCO₂ guides compression quality and is often the first sign of ROSC."
-     ]
-    }
-   ],
-   "pearl": "Read the shape before the number: zero baseline, square plateau, steady trend. A shark fin means obstruction, a lifted baseline means rebreathing.",
-   "refs": [
-    {
-     "title": "Kodali BS. Capnography outside the operating rooms. Anesthesiology 2013;118:192–201",
-     "url": "https://doi.org/10.1097/ALN.0b013e318278c8b6"
-    }
-   ],
-   "created": "2026-11-18",
-   "updated": "2026-11-18",
-   "seen": 1
-  },
-  {
-   "id": "ap-vs-pa-chest-xray",
-   "cat": "ICU",
-   "title": "AP vs PA chest X-ray",
-   "aliases": [
-    "AP vs PA view",
-    "PA chest x-ray",
-    "AP chest radiograph",
-    "portable chest x-ray",
-    "supine CXR",
-    "CXR projection"
-   ],
-   "summary": "The letters say which way the X-ray beam travels. In a PA film the beam goes from back to front with the chest pressed against the detector; in an AP film it goes front to back, usually on a portable machine with the patient sitting or supine in bed. PA is the standard because it shows the heart and mediastinum close to true size. Most ICU and post-op films are AP, so you must adjust how you read them.",
-   "sections": [
-    {
-     "h": "How each is taken",
-     "rows": [
-      [
-       "PA",
-       "Standing, front of chest against the detector, chin up, hands on hips and shoulders rolled forward. Tube about 180 cm (72 in) away. Full inspiration."
-      ],
-      [
-       "AP",
-       "Beam from the front, detector behind the back. Sitting or supine, often portable. Tube closer, about 100 cm (40 in). Inspiration often poorer."
-      ],
-      [
-       "Both",
-       "Viewed the same way: as if facing the patient, heart on the image's right side."
-      ]
-     ]
-    },
-    {
-     "h": "Why the heart looks bigger on AP",
-     "items": [
-      "The heart lies anteriorly, so on AP it is farther from the detector and gets magnified.",
-      "The shorter tube distance makes the beam more divergent, adding more magnification.",
-      "Poorer inspiration and the supine position make the heart and upper mediastinum look wider still.",
-      "Rule: CTR >0.5 means cardiomegaly only on a good PA film. Do not diagnose cardiomegaly from CTR on AP alone; a normal-looking heart on AP is reassuring."
-     ],
-     "svg": "<svg viewBox=\"0 0 380 230\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\" aria-hidden=\"true\"><text class=\"nf-t nf-h\" x=\"10\" y=\"16\">PA: beam back → front</text><circle cx=\"20\" cy=\"47\" r=\"4\" class=\"nf-dot\"/><text class=\"nf-t\" x=\"20\" y=\"67\" text-anchor=\"middle\">Tube</text><line x1=\"20\" y1=\"47\" x2=\"350\" y2=\"34\" class=\"nf-l\"/><line x1=\"20\" y1=\"47\" x2=\"350\" y2=\"60\" class=\"nf-l\"/><ellipse cx=\"290\" cy=\"47\" rx=\"52\" ry=\"28\" class=\"nf-a\"/><circle cx=\"322\" cy=\"47\" r=\"12\" class=\"nf-f\"/><text class=\"nf-t\" x=\"322\" y=\"51\" text-anchor=\"middle\">H</text><line x1=\"352\" y1=\"17\" x2=\"352\" y2=\"77\" class=\"nf-a\"/><line x1=\"356\" y1=\"34\" x2=\"356\" y2=\"60\" class=\"nf-p\" stroke-width=\"4\"/><text class=\"nf-t\" x=\"10\" y=\"92\">Heart touching detector, tube far → near true size</text><text class=\"nf-t nf-h\" x=\"10\" y=\"130\">AP: beam front → back</text><circle cx=\"140\" cy=\"161\" r=\"4\" class=\"nf-dot\"/><text class=\"nf-t\" x=\"140\" y=\"181\" text-anchor=\"middle\">Tube</text><line x1=\"140\" y1=\"161\" x2=\"350\" y2=\"140\" class=\"nf-l\"/><line x1=\"140\" y1=\"161\" x2=\"350\" y2=\"182\" class=\"nf-l\"/><ellipse cx=\"295\" cy=\"161\" rx=\"52\" ry=\"28\" class=\"nf-a\"/><circle cx=\"258\" cy=\"161\" r=\"12\" class=\"nf-f\"/><text class=\"nf-t\" x=\"258\" y=\"165\" text-anchor=\"middle\">H</text><line x1=\"352\" y1=\"131\" x2=\"352\" y2=\"191\" class=\"nf-a\"/><line x1=\"356\" y1=\"140\" x2=\"356\" y2=\"182\" class=\"nf-p\" stroke-width=\"4\"/><text class=\"nf-t\" x=\"10\" y=\"206\">Heart far from detector, tube close → magnified</text><text class=\"nf-t\" x=\"376\" y=\"11\" text-anchor=\"end\">Detector</text><text class=\"nf-t\" x=\"10\" y=\"226\">Blue bar = heart shadow on the film</text></svg>"
-    },
-    {
-     "h": "How to tell them apart on the film",
-     "rows": [
-      [
-       "Label",
-       "AP films are usually marked AP / portable / supine / erect. Check the label first."
-      ],
-      [
-       "Scapulae",
-       "PA: rotated off the lung fields. AP: overlie the upper lateral lungs."
-      ],
-      [
-       "Clavicles",
-       "AP: higher and more horizontal, projected over or above the apices. PA: lower, more V-shaped."
-      ],
-      [
-       "Heart & mediastinum",
-       "AP: heart and superior mediastinum look larger and wider."
-      ],
-      [
-       "Inspiration",
-       "PA usually shows more posterior ribs above the diaphragm; AP often fewer (poorer inflation)."
-      ],
-      [
-       "Gastric bubble",
-       "An air-fluid level in the stomach means the patient was upright (PA or erect AP)."
-      ]
-     ]
-    },
-    {
-     "h": "Supine AP: things that change",
-     "items": [
-      "Pleural fluid layers behind the lung: a diffuse haze over one side instead of a blunted costophrenic angle and meniscus.",
-      "Pneumothorax air collects anteriorly and at the bases: look for a deep, lucent costophrenic sulcus (deep sulcus sign) rather than an apical rim.",
-      "Upper lobe vessels look as large as lower lobe vessels when supine; this is normal, not upper lobe diversion.",
-      "Free air under the diaphragm and air-fluid levels need an erect (or decubitus) film.",
-      "Mediastinal widening may be just projection; compare with old films and the clinical picture."
-     ]
-    },
-    {
-     "h": "Where AP is used",
-     "items": [
-      "ICU and ward portable films, trauma bay, post-op recovery, anyone who cannot stand.",
-      "Checking ETT tip, central line, NG tube, chest drain position and pneumothorax after a line.",
-      "Comparing serial ICU films is best done on films taken the same way (same projection and position)."
-     ]
-    },
-    {
-     "h": "Points for the exam / viva",
-     "items": [
-      "PA is the standard view; AP is a compromise for sick or immobile patients.",
-      "Two reasons for AP magnification: heart far from detector and short tube distance with divergent beam.",
-      "CTR >0.5 = cardiomegaly only on PA.",
-      "Quick tells for AP: label, scapulae over lungs, high horizontal clavicles.",
-      "Supine film: effusion = haze, pneumothorax = deep sulcus sign, no fluid levels."
-     ]
-    }
-   ],
-   "pearl": "Never call cardiomegaly on an AP film: the heart is magnified because it is far from the detector and the tube is close.",
-   "refs": [
-    {
-     "title": "Radiology Masterclass – Chest X-ray quality: projection",
-     "url": "https://www.radiologymasterclass.co.uk/tutorials/chest/chest_quality/chest_xray_quality_projection"
-    },
-    {
-     "title": "Radiopaedia – AP chest X-ray",
-     "url": "https://radiopaedia.org/articles/ap-chest-x-ray"
-    }
-   ],
-   "created": "2026-11-18",
-   "updated": "2026-11-18",
-   "seen": 1
-  }
- ]
+  ]
 }
