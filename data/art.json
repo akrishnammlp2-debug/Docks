@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-19",
-    "title": "Early Autumn",
-    "artist": "Qian Xuan (attributed)",
-    "artistLife": "Chinese, born 1235 – died 1305",
-    "year": "late 13th–14th century",
-    "medium": "Handscroll, ink, watercolour and gold on paper",
-    "size": "Painting section 26.7 × 120.7 cm, about as tall as a school ruler is long and roughly a metre and a bit wide",
-    "where": "Detroit Institute of Arts, Detroit (not currently on view)",
-    "movement": "Song–Yuan transition, Chinese bird-and-flower / insect painting",
-    "fame": "hidden gem",
+    "date": "2026-11-20",
+    "title": "The Birth of Venus",
+    "artist": "Sandro Botticelli",
+    "artistLife": "Italian (Florentine), 1445–1510",
+    "year": "c. 1485",
+    "medium": "Tempera on canvas",
+    "size": "172.5 × 278.5 cm (about 1.7 m by 2.8 m, wider than a double bed)",
+    "where": "Uffizi Gallery, Florence, Italy",
+    "movement": "Early Italian Renaissance",
+    "fame": "famous",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Qian_Xuan_-_Early_Autumn.jpg",
-      "credit": "Detroit Institute of Arts, public domain (image: Wikimedia Commons)",
-      "focus": "center 50%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
+      "credit": "Uffizi Gallery, public domain (image: Wikimedia Commons)",
+      "focus": "center 35%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A quiet patch of marsh at the turn of the season. Reeds and wilting leaves bend over the ground, and tiny creatures are scattered through them: a dragonfly, a grasshopper, a frog waiting in the grass. The scene is small and calm, but if you look closely there is a little drama too, since some of these insects are hunting each other."
+        "p": "The Roman goddess of love, Venus, has just arrived on the shore of Cyprus, standing on a giant scallop shell. On the left, the wind god Zephyr, wrapped around a female figure, blows her gently ashore with a shower of roses. On the right, a young woman in a flowery dress hurries forward with a cloak to cover her."
       },
       {
         "h": "The artist",
-        "p": "Qian Xuan lived from 1235 to 1305 in Huzhou, in what is now Zhejiang province, and he first trained to become a government official. When the Mongols took over southern China in 1276 and set up the Yuan dynasty, he gave up that path and turned to painting. His friend Zhao Mengfu took a post with the new rulers, but Qian declined to follow, so he is remembered as a loyalist to the fallen Song dynasty. The Detroit museum lists this scroll as 'attributed to' him, meaning experts are not completely certain it is his own hand."
+        "p": "Botticelli was a Florentine painter who worked in the city's busy workshops and became one of the best-loved painters of his generation. He is known for graceful figures drawn with a flowing, elegant outline. This picture and his \"Primavera\" are his two most famous mythological works."
       },
       {
         "h": "The time",
-        "p": "China was going through one of the biggest shake-ups in its history, as foreign Mongol rulers replaced the Song court that educated people had served for generations. Many scholars chose to stay away from public life and expressed their feelings through art instead. Small, humble subjects like insects, flowers and grass could carry quiet hidden meanings that were safer to hint at than to say out loud."
+        "p": "Florence in the late 1400s was a rich trading city where powerful families like the Medici paid for art and for scholars who were rediscovering ancient Greek and Roman stories. The Uffizi says a Medici commission is very likely, though nothing is written about the painting until 1550, when the biographer Vasari saw it at a Medici villa near Florence. The poet Agnolo Poliziano, who moved in those circles, may have suggested the subject. Painting a nearly life-size nude goddess from classical myth, not a saint, was a bold thing at the time."
       },
       {
         "h": "What's special",
-        "p": "The delicate brushwork is wonderfully precise: every blade of grass, veined leaf and insect wing is drawn with a fine line and soft colour. Some viewers read the wilting leaves and the predators as a gentle sign that a season, and perhaps a whole age, is ending. The scroll is also much longer than the picture itself, because admirers added poems and seals over the centuries, so you read it like a book of reactions. The full roll is over ten metres long, mostly made up of these added writings."
+        "p": "Most paintings of this period were on wooden panels, but this one is on canvas, a cheaper and lighter surface often used for decorative works in noble homes. Botticelli used tempera (pigment mixed with egg), which gives soft, matte colour, and added fine gold highlights in Venus's hair and in the trees. Her pose echoes ancient statues, and the embracing winds copy an ancient carved gem owned by Lorenzo de' Medici. The figures look almost weightless and the space is flat, more like a beautiful pattern than a window onto a real place."
       },
       {
         "h": "Look for",
-        "p": "Find the dragonfly eating a smaller fly, and the frog sitting very still nearby as if waiting its turn. Then look at the leaves, where some are fresh and some are browned and curling, as if autumn is just beginning."
+        "p": "Trace Venus's long hair: it swirls down and the tips are touched with gold. Then look at the wind-blown roses and the shell edge, and notice how the sea is drawn as neat repeating little waves, like a decorative pattern."
       }
     ],
     "source": {
-      "title": "Detroit Institute of Arts",
-      "url": "https://dia.org/collection/early-autumn/57885"
+      "title": "Uffizi Galleries",
+      "url": "https://www.uffizi.it/en/artworks/birth-of-venus"
     }
   },
   "history": [
+    {
+      "date": "2026-11-19",
+      "title": "Early Autumn",
+      "artist": "Qian Xuan (attributed)",
+      "artistLife": "Chinese, born 1235 – died 1305",
+      "year": "late 13th–14th century",
+      "medium": "Handscroll, ink, watercolour and gold on paper",
+      "size": "Painting section 26.7 × 120.7 cm, about as tall as a school ruler is long and roughly a metre and a bit wide",
+      "where": "Detroit Institute of Arts, Detroit (not currently on view)",
+      "movement": "Song–Yuan transition, Chinese bird-and-flower / insect painting",
+      "fame": "hidden gem",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Qian_Xuan_-_Early_Autumn.jpg",
+        "credit": "Detroit Institute of Arts, public domain (image: Wikimedia Commons)",
+        "focus": "center 50%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A quiet patch of marsh at the turn of the season. Reeds and wilting leaves bend over the ground, and tiny creatures are scattered through them: a dragonfly, a grasshopper, a frog waiting in the grass. The scene is small and calm, but if you look closely there is a little drama too, since some of these insects are hunting each other."
+        },
+        {
+          "h": "The artist",
+          "p": "Qian Xuan lived from 1235 to 1305 in Huzhou, in what is now Zhejiang province, and he first trained to become a government official. When the Mongols took over southern China in 1276 and set up the Yuan dynasty, he gave up that path and turned to painting. His friend Zhao Mengfu took a post with the new rulers, but Qian declined to follow, so he is remembered as a loyalist to the fallen Song dynasty. The Detroit museum lists this scroll as 'attributed to' him, meaning experts are not completely certain it is his own hand."
+        },
+        {
+          "h": "The time",
+          "p": "China was going through one of the biggest shake-ups in its history, as foreign Mongol rulers replaced the Song court that educated people had served for generations. Many scholars chose to stay away from public life and expressed their feelings through art instead. Small, humble subjects like insects, flowers and grass could carry quiet hidden meanings that were safer to hint at than to say out loud."
+        },
+        {
+          "h": "What's special",
+          "p": "The delicate brushwork is wonderfully precise: every blade of grass, veined leaf and insect wing is drawn with a fine line and soft colour. Some viewers read the wilting leaves and the predators as a gentle sign that a season, and perhaps a whole age, is ending. The scroll is also much longer than the picture itself, because admirers added poems and seals over the centuries, so you read it like a book of reactions. The full roll is over ten metres long, mostly made up of these added writings."
+        },
+        {
+          "h": "Look for",
+          "p": "Find the dragonfly eating a smaller fly, and the frog sitting very still nearby as if waiting its turn. Then look at the leaves, where some are fresh and some are browned and curling, as if autumn is just beginning."
+        }
+      ],
+      "source": {
+        "title": "Detroit Institute of Arts",
+        "url": "https://dia.org/collection/early-autumn/57885"
+      }
+    },
     {
       "date": "2026-11-18",
       "title": "Las Meninas (The Maids of Honour)",
