@@ -1,6 +1,6 @@
-// Study Desk offline support. Bump CACHE whenever index.html, icons or manifest change.
+// Inemuri (formerly Study Desk / Docks) offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v139';
+const CACHE = 'study-desk-v140';
 const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
 const PIC_DAYS = 3, PIC_MAX = 80;
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
@@ -51,8 +51,8 @@ self.addEventListener('fetch', e => {
 
 // phone notifications from Docks (sent by the private sync repository's notification job)
 self.addEventListener('push', e => {
-  let d = {}; try { d = e.data ? e.data.json() : {}; } catch (_) { d = { title: 'Docks', body: e.data ? e.data.text() : '' }; }
-  e.waitUntil(self.registration.showNotification(d.title || 'Docks', { body: d.body || '', tag: d.tag || undefined, icon: 'icon-180.png', badge: 'icon-180.png', data: { tab: d.tab || 'today' } }));
+  let d = {}; try { d = e.data ? e.data.json() : {}; } catch (_) { d = { title: 'Inemuri', body: e.data ? e.data.text() : '' }; }
+  e.waitUntil(self.registration.showNotification(d.title || 'Inemuri', { body: d.body || '', tag: d.tag || undefined, icon: 'icon-180.png', badge: 'icon-180.png', data: { tab: d.tab || 'today' } }));
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Study Desk</title>
+<title>Inemuri</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Study Desk">
+<meta name="apple-mobile-web-app-title" content="Inemuri">
 <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1E2622" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
@@ -1647,7 +1647,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.61 · shopping cart in the top bar; NBA & Dota refresh on pull-down';
+const APP_VERSION = '5.62 · now called Inemuri 🐈‍⬛';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
@@ -1962,11 +1962,11 @@ document.addEventListener('toggle', e => { const d = e.target; if (d && d.datase
 function notifCard() { const sub = pushSub(); const can = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
   const cfg = syncCfg();
   let top;
-  if (!can || !isStandalone()) top = `<span class="c-s">To get notifications on an iPhone, open Docks from its Home Screen icon (Safari → Share → Add to Home Screen), then come back here.</span>`;
+  if (!can || !isStandalone()) top = `<span class="c-s">To get notifications on an iPhone, open Inemuri from its Home Screen icon (Safari → Share → Add to Home Screen), then come back here.</span>`;
   else if (!cfg.token) top = `<span class="c-s">Connect iPhone ↔ iPad sync above first. Notifications are sent through the same private space.</span>`;
-  else if (sub && Notification.permission === 'granted') top = `<div class="c-top"><span class="c-lab">On for this device</span><span class="pill acc">On</span></div><span class="c-m">Docks plans the next 3 days of reminders whenever it syncs, and each one arrives within about 30 minutes of its time.</span>
+  else if (sub && Notification.permission === 'granted') top = `<div class="c-top"><span class="c-lab">On for this device</span><span class="pill acc">On</span></div><span class="c-m">Inemuri plans the next 3 days of reminders whenever it syncs, and each one arrives within about 30 minutes of its time.</span>
     <div class="btns" style="margin-top:8px"><button class="btn ghost" type="button" data-act="push-test">Test on this phone</button><button class="btn danger" type="button" data-act="push-off">Turn off</button></div>`;
-  else top = `<span class="c-s">${Notification.permission === 'denied' ? 'Notifications are blocked for Docks. Turn them on in iPhone Settings → Notifications → Docks, then tap the button.' : 'Get your Docks reminders as real phone notifications.'}</span><div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="push-on">Turn on notifications</button></div>`;
+  else top = `<span class="c-s">${Notification.permission === 'denied' ? 'Notifications are blocked for Inemuri. Turn them on in iPhone Settings → Notifications → Inemuri, then tap the button.' : 'Get your Inemuri reminders as real phone notifications.'}</span><div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="push-on">Turn on notifications</button></div>`;
   return `<div class="card">${top}</div><div class="group" style="margin-top:10px">${(() => { const row = ([k, l]) => `<label class="row toggle"><span>${l}</span><input type="checkbox" data-setting="${k}" ${nOn(k) ? 'checked' : ''}></label>`; const first = ['nRoutines', 'nAttend', 'nReminders']; const A = first.map(k => NOTIF_TYPES.find(x => x[0] === k)), B = NOTIF_TYPES.filter(x => !first.includes(x[0])); return A.map(row).join('') + fold('notif', 'More notification types', B.map(row).join(''), B.length); })()}</div>`; }
 async function pushOn() {
   try { const perm = await Notification.requestPermission(); if (perm !== 'granted') { toast('Notifications were not allowed'); render(); return; }
@@ -1978,7 +1978,7 @@ async function pushOn() {
 async function pushOff() {
   try { const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); if (sub) await sub.unsubscribe(); } catch (_) {}
   localStorage.removeItem('studydesk.pushSub'); devSyncPushSig = ''; toast('Notifications off'); render(); deviceSync(true); }
-async function pushTest() { try { const reg = await navigator.serviceWorker.ready; await reg.showNotification('Docks 🐾', { body: 'Notifications are working on this phone.', tag: 'docks-test', icon: 'icon-180.png', badge: 'icon-180.png', data: { tab: 'backup' } }); } catch (e) { toast("Couldn't show a test: " + (e.message || e)); } }
+async function pushTest() { try { const reg = await navigator.serviceWorker.ready; await reg.showNotification('Inemuri 🐾', { body: 'Notifications are working on this phone.', tag: 'docks-test', icon: 'icon-180.png', badge: 'icon-180.png', data: { tab: 'backup' } }); } catch (e) { toast("Couldn't show a test: " + (e.message || e)); } }
 let devSyncPushSig = '';
 /* the next 3 days of notifications, worked out from what's on this device right now */
 function notifSchedule() { const out = []; const t = today(); const nowMs = Date.now();
@@ -2016,7 +2016,7 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     // releases she asked to be reminded about
     if (nOn('nReleases')) ((D.upcoming && D.upcoming.items) || []).filter(u => (state.upWatch || {})[u.id] && u.date === day).forEach(u => push('up|' + u.id, day, 9, MT(u.type)[1] + ' Out today', u.title + (u.where ? ' · ' + u.where : ''), 'others', 30));
     // off-Instagram badge days
-    if (nOn('nStreak')) { const dd = igDaysOn(day); const b = dd > 0 && igMiles(dd).find(x => x[0] === dd); if (b) push('ig|' + dd, day, 9, b[1] + ' Badge unlocked: ' + b[2], plural(dd, 'day') + ' off Instagram. Open Docks to collect it.', 'today'); }
+    if (nOn('nStreak')) { const dd = igDaysOn(day); const b = dd > 0 && igMiles(dd).find(x => x[0] === dd); if (b) push('ig|' + dd, day, 9, b[1] + ' Badge unlocked: ' + b[2], plural(dd, 'day') + ' off Instagram. Open Inemuri to collect it.', 'today'); }
     // parcels arriving
     if (nOn('nDelivery')) ((PERS().deliveries) || []).filter(x => x.date === day && x.status !== 'delivered').forEach((x, j) => push('del|' + day + '|' + j, day, 9, '📦 Arriving today', (x.what || 'A parcel') + (x.store ? ' · ' + x.store : ''), 'calendar', 15));
   }
@@ -2034,7 +2034,7 @@ async function batteryPull() { const cfg = syncCfg(); if (!cfg.token || state.se
   if (ch) { try { localStorage.setItem(BATT_KEY, JSON.stringify(batt)); } catch (_) {} if (tab === 'today') render(); } }
 function battHow() { const st = (n, t, x) => `<div class="batt-step"><span class="batt-sn">${n}</span><div><b>${t}</b>${x ? `<span class="c-s">${x}</span>` : ''}</div></div>`;
   return `<details class="in-how" data-how="batt"><summary>🔋 Devices</summary><div class="in-how-b">
-    <p class="c-s">A small Shortcut on your iPhone and iPad sends the battery level here. Docks can't read batteries by itself. The time next to each device is when its Shortcut last ran, and it keeps counting up while Docks is open.</p>
+    <p class="c-s">A small Shortcut on your iPhone and iPad sends the battery level here. Inemuri can't read batteries by itself. The time next to each device is when its Shortcut last ran, and it keeps counting up while Inemuri is open.</p>
     <div class="btns row2"><button class="btn small" type="button" data-act="batt-copy" data-v="key">Copy access key</button><button class="btn small ghost" type="button" data-act="batt-copy" data-v="url">Copy address</button></div>
     <p class="c-s">The key is the one you typed into Device sync. Paste it only into the Shortcut.</p>
     ${st(1, 'Get Battery Level')}${st(2, 'Is Connected to Charger', 'Skip it if it isn’t there.')}${st(3, 'Get Device Details → Device Model')}${st(4, 'Format Date', 'Current Date · ISO 8601 · include time')}
@@ -2051,7 +2051,7 @@ function battCard() { if (state.settings.battOn === false || !syncCfg().token) r
   const ipad = batt.iPad && battLevel(batt.iPad), nudge = ipad !== null && ipad !== undefined && ipad < BATT_LOW && !battCharging(batt.iPad);
   return `<div class="card battc"><span class="c-lab">🔋 Devices</span>${rows}
     ${nudge ? `<span class="batt-nudge">🔌 Your iPad is at ${ipad}%. Plug it in when you get a moment.</span>` : ''}</div>`; }
-/* keep "x min ago" honest while Docks stays open, and fetch fresh levels every 5 minutes */
+/* keep "x min ago" honest while Inemuri stays open, and fetch fresh levels every 5 minutes */
 setInterval(() => { document.querySelectorAll('.batt-a[data-at]').forEach(el => { el.textContent = battAgo(el.dataset.at); }); }, 30e3);
 setInterval(() => { if (document.visibilityState === 'visible' && tab === 'today') batteryPull(); }, 5 * 60e3);
 /* ---------- Brain dump & To buy: jot anything; "buy …" lands in To buy ---------- */
@@ -2316,7 +2316,7 @@ function pageToday() {
   h += `<div class="gtiles">${T.join('')}</div>`;
   const items = itemsFor(t);
   if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`;
-  return h + `<p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+  return h + `<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
 const fmtMins = m => { m = Math.round(m || 0); return m < 60 ? m + ' min' : Math.floor(m / 60) + 'h' + (m % 60 ? ' ' + (m % 60) + 'm' : ''); };
@@ -2557,9 +2557,9 @@ function catSheet() { const F = catFoods();
         <b class="lv-t">${esc(f.name)}</b><span class="cat-prod">${esc(f.product || '')}</span>
         <p class="lv-x">${i.soon ? `<b>Reorder ${catWhen(i)}</b> (${catDate(i.next)}).` : `Next order around <b>${catDate(i.next)}</b>, ${catWhen(i)}.`}</p>
         <div class="btns"><button type="button" class="btn small cat-btn" data-act="cat-ordered" data-id="${esc(f.id)}">I ordered it today</button></div>
-        <div class="cat-hist"><span class="cat-hh">Orders</span>${i.all.slice(0, 8).map(d => `<span>${catDate(d)} ${d.slice(0, 4)}${d === (state.catOrdered || {})[f.id] ? ' · marked in Docks' : ''}</span>`).join('')}</div></div>`; }).join('')}
+        <div class="cat-hist"><span class="cat-hh">Orders</span>${i.all.slice(0, 8).map(d => `<span>${catDate(d)} ${d.slice(0, 4)}${d === (state.catOrdered || {})[f.id] ? ' · marked in Inemuri' : ''}</span>`).join('')}</div></div>`; }).join('')}
     <a class="btn ghost cat-amz" href="https://www.amazon.in/gp/buyagain" target="_blank" rel="noopener">Reorder on Amazon (Buy Again) ↗</a>
-    <p class="foot">Orders come from the Amazon account (scanned ${esc(catDate(((state.private || {}).cat || {}).scanned || today()))}). Docks reminds you on Today when fewer than ${CAT_WARN} days are left. Say "check cat food" to Claude to re-scan Amazon.</p></div>`); }
+    <p class="foot">Orders come from the Amazon account (scanned ${esc(catDate(((state.private || {}).cat || {}).scanned || today()))}). Inemuri reminds you on Today when fewer than ${CAT_WARN} days are left. Say "check cat food" to Claude to re-scan Amazon.</p></div>`); }
 function pageReminders() {
   const att = remAttention().length;
   let h = head('Reminders', state.reminders.length ? (att ? plural(att, 'reminder') + ' need attention' : 'All on track') : '', 'Daily');
@@ -2732,7 +2732,7 @@ function pageOt() {
   if (otSub === 'slcm') return pageCases(otSeg());
   const ds = otDates(); if (!otDay || !ds.includes(otDay)) otDay = otDefaultDay();
   let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics') + otSeg();
-  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Docks and shows up here.</span></div>`;
+  if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Inemuri and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
@@ -2957,7 +2957,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
   const body = [battHow(),
     it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
     it('cart', '🛒 Shopping cart', ['The cart at the top, next to your photo, holds everything to buy. The red number is how many things are on the list.', 'Typing “buy shampoo” or a grocery (“milk”, “eggs and bread”) in Brain dump still works: it goes straight into the cart.', 'Search in the cart for any everyday thing (food, cleaning, personal care, cat things) and tap + to add it. Grocery staples you buy regularly come back onto the list by themselves when due; tick one when bought and its timer restarts. Under Grocery staples you can add, remove and change how often items come back.', 'A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.']),
-    it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
+    it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Inemuri, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
     it('rem', '🔔 Reminders', ['Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.']),
     it('cal', '📅 Calendar', [`Sessions come from the department's program${SESSION_TIME() ? ' (' + esc(SESSION_TIME()) + ')' : ''}. Entries you add stay on this phone.${P.presenters ? '' : ' Presenter names come from your private file.'}`, 'Karnataka public holidays and major festivals are shown. Travel and deliveries come from your email and are kept locked.']),
     it('adv', '📰 New advances', ['Summaries are short plain-language digests written from the PubMed abstracts. Always read the original before changing practice.']),
@@ -2965,7 +2965,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('leis', '🎵 Music, NBA & stories', ['Tap a song to open it in Spotify.', 'NBA standings: orange bar is top 6 (direct playoff places), grey bar is 7 to 10 (play-in).', 'Fact of the day: one topic is picked at random each morning. Tap a topic to see its past picks or remove it.']),
     it('ig', '🌱 Off Instagram', ['The small line under the Today banner counts the days since you left. Tap it for your badges; tap a badge you have earned to replay it.', 'A new badge unlocks on days 1, 3, 7, 15, 30, 45, 60, 90, 120, 180, 270 and 365, then every year. It pops up once on the day.', 'To change the start date or hide it, use More settings.']),
     it('fest', '🎉 Festive and season look', ['The tab bar and the Today title at the top (it takes turns with the festival or season name) change 10 days before a festival and go back the day after.', 'On ordinary days they show the season: winter (Dec–Jan), spring (Feb–Mar), summer (Apr–May), monsoon (Jun–Sep) and autumn (Oct–Nov).', 'Turn both off with the Festive look switch in More settings.']),
-    it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Docks to the Home Screen, so the icon already on your phone stays as it is until you add Docks again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
+    it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Inemuri to the Home Screen, so the icon already on your phone stays as it is until you add Inemuri again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
     it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Pull down on Matches to get the latest results.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
@@ -3005,7 +3005,7 @@ function pageBackup() {
     const txt = s.from === 'network' ? 'Up to date' : s.from === 'saved' ? 'Saved copy from ' + ago(s.at) : 'Not loaded';
     return `<div class="row kv"><span class="r-l">${{ cases: 'Cases', schedule: 'Academic program', ot: 'OT list', nba: 'NBA', advances: 'New advances' }[f] || f[0].toUpperCase() + f.slice(1)}</span><span class="r-v">${txt}</span></div>`; }).join('')}</div>
     <button class="btn ghost wide" type="button" data-act="refresh">Check for updates</button></div>`;
-  h += `<div class="sec"><h2 class="sh">Storage</h2><div class="card"><span class="c-s" id="persistInfo">${esc(persistText)}</span>${standalone ? '' : '<span class="c-s">You\'re viewing this in Safari. Add it to your Home Screen and open it from there so the phone keeps your data.</span>'}<span class="c-m">Study Desk ${APP_VERSION} · ${plural(state.topics.length, 'topic')} · ${plural(state.log.length, 'session')} logged · ${plural(state.todos.length, 'task')}</span></div></div>`;
+  h += `<div class="sec"><h2 class="sh">Storage</h2><div class="card"><span class="c-s" id="persistInfo">${esc(persistText)}</span>${standalone ? '' : '<span class="c-s">You\'re viewing this in Safari. Add it to your Home Screen and open it from there so the phone keeps your data.</span>'}<span class="c-m">Inemuri ${APP_VERSION} · ${plural(state.topics.length, 'topic')} · ${plural(state.log.length, 'session')} logged · ${plural(state.todos.length, 'task')}</span></div></div>`;
   const inner = h; h = before + `<div class="sec"><details class="set-more sec-fold" data-fold="secs"${foldOpen.has('secs') ? ' open' : ''}><summary><span class="sm-c">Private sync, website data & storage</span><span class="sm-o">Hide sync, website data & storage</span></summary>${inner}</details></div>`; }
   return h;
 }
@@ -3302,7 +3302,7 @@ function iconSheet() {
     return `<button type="button" class="ip-opt${cur === id ? ' on' : ''}${sk ? ' sk' : ''}" data-act="icon-pack" data-id="${id}" aria-pressed="${cur === id}"><span class="ip-row">${icons.map(d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`).join('')}</span><span class="ip-n">${name}${cur === id ? ' ✓' : ''}</span><span class="ip-d">${note}</span></button>`; };
   const NOTES = { sketch: 'Pencil-drawn and a little rough, like notebook doodles', duo: 'Soft tinted shapes with a clear outline. Friendly and calm', fine: 'Thin, elegant lines, like a fountain-pen journal', round: 'Smooth, rounded and minimal', solid: 'Filled shapes. Bold and easy to spot' };
   let h = `<h2 class="sh-t">Icon style</h2><p class="sub" style="margin:0 0 12px">Changes the icons in the bottom bar and side menu. The Off duty tab gets a little cat in most styles.</p><div class="ip-list">`;
-  h += prev('classic', 'Original', 'The simple line icons Docks started with');
+  h += prev('classic', 'Original', 'The simple line icons Inemuri started with');
   if (D.icons) Object.keys(D.icons).forEach(id => { h += prev(id, D.icons[id].name, NOTES[id] || ''); });
   else h += `<p class="sub">The icon styles haven't downloaded yet. Open this again once you're online.</p>`;
   return h + '</div>';
@@ -3346,13 +3346,13 @@ function renderDrawer() {
     P.email && [ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'), P.email],
     ex !== null && state.settings.countdownOn && [ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>'), (state.settings.examLabel || 'Exam') + ' in ' + plural(ex, 'day')]
   ].filter(Boolean);
-  $('drawer').innerHTML = `<div class="prof${P.photo ? ' tinted' : ' tinted none'}">${P.photo ? `<div class="prof-bg" style="background-image:url('${esc(picUrl(P.photo))}')"></div>` : '<div class="prof-bg"></div>'}<div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Study Desk')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
+  $('drawer').innerHTML = `<div class="prof${P.photo ? ' tinted' : ' tinted none'}">${P.photo ? `<div class="prof-bg" style="background-image:url('${esc(picUrl(P.photo))}')"></div>` : '<div class="prof-bg"></div>'}<div class="prof-top"><div class="av">${avatarHTML(P)}</div><div><b>${esc(P.name || 'Inemuri')}</b><span>${esc(P.name ? greeting() + ' 👋' : 'Tap Edit to add your name and photo')}</span></div></div>
     ${profWeather()}
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}${item('dota', dotaLive().length ? 'live' : '')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Docks · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}${item('dota', dotaLive().length ? 'live' : '')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -4108,7 +4108,7 @@ async function readJsonFile(input) {
 $('importFile').addEventListener('change', async e => {
   const data = await readJsonFile(e.target); if (!data) return;
   if (data.app === 'study-desk-private') { return applyPrivate(data); }
-  if (data.app !== 'study-desk' || !Array.isArray(data.subjects)) { banners.info = "That file doesn't look like a Study Desk backup. Nothing was changed."; return renderBanner(); }
+  if (data.app !== 'study-desk' || !Array.isArray(data.subjects)) { banners.info = "That file doesn't look like a Inemuri backup. Nothing was changed."; return renderBanner(); }
   const n = `${(data.subjects || []).length} subjects, ${(data.topics || []).length} topics, ${(data.log || []).length} sessions, ${(data.todos || []).length} tasks`;
   if (!confirm(`Replace everything on this phone with this backup?\n\nBackup has: ${n}\nMade on: ${data.exportedAt ? dShort(dayOf(data.exportedAt)) : 'unknown date'}\n\nWhat's on the phone now will be replaced.`)) return;
   const prev = state; state = normalise(data);
@@ -4387,7 +4387,7 @@ function seedReminders() {
   return added;
 }
 function applyPrivate(data) {
-  if (data.app !== 'study-desk-private') { banners.info = "That isn't a Study Desk private file. Nothing was changed."; return renderBanner(); }
+  if (data.app !== 'study-desk-private') { banners.info = "That isn't a Inemuri private file. Nothing was changed."; return renderBanner(); }
   const prev = state.private;
   state.private = mergePrivate(prev, data); seedReminders();
   const parts = [data.roster && 'roster', data.presenters && 'presenters', data.ot && plural(Object.keys(data.ot).length, 'OT name'), data.cases && 'hospital IDs'].filter(Boolean);
