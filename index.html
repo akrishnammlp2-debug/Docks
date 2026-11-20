@@ -2793,8 +2793,10 @@ function dotaEvStatus(e) { const t = today(); return e.end && e.end < t ? 'done'
    Only series from tournaments already listed as tier 1 in dota.json are used, so her tier 1 rule still holds. */
 let dotaLiveD = (() => { try { return JSON.parse(localStorage.getItem('studydesk.dotalive') || 'null'); } catch (_) { return null; } })(), dotaBusy = false;
 const dNorm = x => String(x || '').toLowerCase().replace(/^team\s+/, '').replace(/[^a-z0-9]/g, '');
-function dotaEventFor(league) { const L = String(league || '').toLowerCase(); const toks = x => String(x || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 1 && !['the', 'dota', 'of', 'and', 'season'].includes(w));
-  return ((D.dota || {}).events || []).find(e => { const t = toks(e.name); return t.length && t.every(w => L.includes(w)); }) || ((D.dota || {}).events || []).find(e => e.short && toks(e.short).length && toks(e.short).every(w => L.includes(w))); }
+function dotaEventFor(league) { const raw = String(league || ''); if (/qualif|division|closed|open\b|showmatch|play-?in/i.test(raw)) return null; /* qualifiers and lower divisions are never tier 1 */
+  const toks = x => String(x || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w && !['the', 'dota', 'of', 'and', 'season', 'by', 'powered', 'presented'].includes(w)); const L = new Set(toks(raw));
+  const fits = n => { const t = toks(n); return t.length && t.every(w => L.has(w)); };
+  return ((D.dota || {}).events || []).find(e => fits(e.name)) || ((D.dota || {}).events || []).find(e => e.short && fits(e.short)); }
 async function dotaRefresh(quiet) { if (dotaBusy) return; dotaBusy = true; render();
   try { const r = await fetch('https://api.opendota.com/api/proMatches', { cache: 'no-store' }); if (!r.ok) throw new Error('OpenDota answered ' + r.status); const G = await r.json(); const S = {};
     G.forEach(g => { const ev = dotaEventFor(g.league_name); if (!ev || !g.radiant_name || !g.dire_name) return; const k = g.series_id || g.match_id;
