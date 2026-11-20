@@ -1,0 +1,51 @@
+{
+ "updated": "2026-11-21",
+ "note": "WFSA Anaesthesia Tutorial of the Week, from Apoorva's Gmail. Summarised every Saturday. Never removed (academic data).",
+ "items": [
+  {
+   "no": 583,
+   "title": "Complications associated with the use of supraglottic airway devices",
+   "cat": "Airway",
+   "published": "2026-11-17",
+   "authors": "Jeyadoss J, Sekandarzad MW, Thiruvenkatarajan V (Queen Elizabeth Hospital, Adelaide; Alfred Hospital, Melbourne)",
+   "url": "https://resources.wfsahq.org/atotw/complications-associated-with-the-use-of-supraglottic-airway-devices/",
+   "doi": "10.28923/atotw.583",
+   "full": false,
+   "summary": "A review of the minor and major harms of SGAs (pharyngolaryngeal injury, cranial nerve injury, pulmonary aspiration) and practical, evidence-based ways to prevent them.",
+   "sections": [
+    { "h": "What it covers", "items": ["Minor complications: pharyngolaryngeal injury (sore throat, trauma)", "Cranial nerve injuries linked to SGA use", "Pulmonary aspiration with SGAs", "Evidence-based strategies to reduce these complications"] }
+   ],
+   "added": "2026-11-21"
+  },
+  {
+   "no": 582,
+   "title": "Performing rapid sequence induction and intubation using TIVA: a practical guide",
+   "cat": "Airway",
+   "published": "2026-11-03",
+   "authors": "Smith AW, Nestor CC (Tallaght University Hospital, Dublin); Irwin MG (University of Hong Kong)",
+   "url": "https://resources.wfsahq.org/atotw/performing-rapid-sequence-induction-and-intubation-using-total-intravenous-anaesthesia-a-practical-guide/",
+   "doi": "10.28923/atotw.582",
+   "full": false,
+   "summary": "A practical guide to doing an RSI when the whole anaesthetic is intravenous: the drugs, how to dose them in unstable patients, how to deliver them, and the safety checks for emergency and elective lists.",
+   "sections": [
+    { "h": "What it covers", "items": ["Pharmacology of RSI under TIVA", "Dosing in physiologically unstable patients", "Drug delivery techniques", "Safety checks in emergency and elective settings"] }
+   ],
+   "added": "2026-11-21"
+  },
+  {
+   "no": 581,
+   "title": "Paediatric obesity: implications for anaesthesia",
+   "cat": "Paediatric",
+   "published": "2026-10-06",
+   "authors": "Raphael M-C, McKee K, Naik M (Royal London Hospital; University College Hospital, London)",
+   "url": "https://resources.wfsahq.org/atotw/paediatric-obesity-implications-for-anaesthesia/",
+   "doi": "10.28923/atotw.581",
+   "full": false,
+   "summary": "How rising childhood obesity changes anaesthetic care, followed step by step from pre-operative assessment to discharge from recovery.",
+   "sections": [
+    { "h": "What it covers", "items": ["Pre-operative assessment of the child with obesity", "Intra-operative management", "Recovery (PACU) care and discharge"] }
+   ],
+   "added": "2026-11-21"
+  }
+ ]
+}

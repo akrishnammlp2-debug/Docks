@@ -5,7 +5,7 @@
 //   Painting of the day . 15 days  (data/art.json history)
 //   Things I love facts . 15 days  (data/loves.json history)
 //   Articles ............ 7 days   (data/articles.json items, by date added; Apoorva asked for this on 20 Nov 2026)
-// NEVER trimmed: cases / SLCM records, schedule, advances, books, topics, bites or any other academic data.
+// NEVER trimmed: cases / SLCM records, schedule, advances, books, topics, bites, atotw or any other academic data.
 //
 //   node tools/tidy.mjs           trim and print what was removed (run before committing data updates)
 import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'node:fs';

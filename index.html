@@ -1647,9 +1647,9 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.62 · now called Inemuri 🐈‍⬛';
+const APP_VERSION = '5.63 · ATOTW in Academics';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'atotw'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2346,6 +2346,7 @@ function pageStudy() {
   h += booksSection();
   h += bitesSection();
   h += articlesSection();
+  h += atotwSection();
   h += pdfSection();
   {
     h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
@@ -3568,6 +3569,7 @@ function renderSearch(q) {
   add('Study topics', state.topics.filter(t => { const s = byId(state.subjects, t.subjectId); return hit(t.name, t.pointer, s && s.name, ...state.log.filter(l => l.topicId === t.id).map(l => l.note)); })
     .map(t => { const s = byId(state.subjects, t.subjectId); const notes = state.log.filter(l => l.topicId === t.id && l.note && hit(l.note)).map(l => l.note);
       return row(`data-act="sres-topic" data-id="${t.id}"`, t.name, [s && s.name, t.pointer, notes[0] && '“' + notes[0] + '”'].filter(Boolean).join(' · ')); }));
+  add('ATOTW', ATOTW().filter(x => hit(x.title, x.cat, x.summary, 'ATOTW ' + x.no, ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || [])]))).map(x => row(`data-act="atotw" data-id="${x.no}"`, x.title, 'ATOTW ' + x.no)));
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
@@ -3646,6 +3648,7 @@ document.addEventListener('click', e => {
     case 'hab-edit': habitEditSheet(); break;
     case 'bcat': biteCat = b.dataset.c; render(); break;
     case 'bite': biteSheet(id); break;
+    case 'atotw': atotwSheet(id); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
     case 'note-open': noteSheet(id); break;
     case 'pdf-edit': pdfEditSheet(id); break;
@@ -4202,6 +4205,21 @@ function articlesSection() { const A = ARTS(); let h = `<div class="sec"><h2 cla
     const left = a.added ? KEEP_DAYS.articles - 1 - Math.round((new Date(today() + 'T12:00') - new Date(a.added + 'T12:00')) / 864e5) : null;
     return `<a class="card art-c" href="${esc(url)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">${a.topic ? `<span class="art-q">You asked about ${esc(a.topic)}</span>` : ''}<b>${esc(a.title)}</b><span class="art-m">${esc([a.journal, a.year, a.type].filter(Boolean).join(' · '))}</span>${a.why ? `<span class="c-s">${esc(a.why)}</span>` : ''}<span class="art-q">${a.added ? 'Added ' + esc(dShort(a.added)) + (left !== null && left >= 0 ? ' · ' + (left === 0 ? 'leaves after today' : 'stays ' + plural(left, 'more day')) : '') : ''}</span></a>`; }).join('');
   return h + moreBtn('arts', A.length, 3, 'article', 'btn ghost wide') + `</div>`; }
+/* ATOTW: WFSA Anaesthesia Tutorial of the Week from Gmail, summarised every Saturday; never removed (Apoorva, 21 Nov 2026) */
+const ATOTW = () => ((D.atotw && D.atotw.items) || []).slice().sort((a, b) => (b.no || 0) - (a.no || 0));
+function atotwSection() { const T = ATOTW(); let h = `<div class="sec"><h2 class="sh"><span>ATOTW</span><span>${T.length ? plural(T.length, 'tutorial') : ''}</span></h2>`;
+  if (!T.length) return h + `<div class="card"><span class="c-s">New WFSA tutorials will appear here on Saturdays.</span></div></div>`;
+  h += moreCut('atotw', T, 3).map(t => `<button class="card art-c" type="button" data-act="atotw" data-id="${t.no}" style="text-align:left;display:flex;flex-direction:column;align-items:flex-start;width:100%"><span class="art-q">ATOTW ${t.no}${t.cat ? ' · ' + esc(t.cat) : ''} · ${esc(dShort(t.published))}</span><b>${esc(t.title)}</b><span class="c-s">${esc(t.summary || '')}</span>${t.full ? '' : `<span class="art-q">Short summary · full notes on Saturday</span>`}</button>`).join('');
+  return h + moreBtn('atotw', T.length, 3, 'tutorial', 'btn ghost wide') + `</div>`; }
+function atotwSheet(no) {
+  const t = ATOTW().find(x => String(x.no) === String(no)); if (!t) return;
+  openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>ATOTW ${t.no}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <h3 class="bite-t">${esc(t.title)}</h3><p class="foot" style="margin:0 4px 8px">${esc(t.authors || '')} · ${esc(dShort(t.published))}</p>
+    ${noteBody(t)}
+    ${t.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(t.pearl)}</span></div>` : ''}
+    <a class="btn wide" href="${esc(t.url)}" target="_blank" rel="noopener" style="text-decoration:none;margin-top:12px">Open tutorial &amp; CME quiz</a>
+    <p class="foot">${t.full ? 'Summarised in plain words from the full tutorial.' : 'From the public abstract only: the full tutorial needs a WFSA sign-in, so detailed notes come on the next Saturday run.'} Check the original for exact wording.</p></div>`);
+}
 const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
 function bitesSection() {
   const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>`;
