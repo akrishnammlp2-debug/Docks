@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
   "cats": [
     "Drugs",
@@ -1241,6 +1241,111 @@
       ],
       "created": "2026-11-19",
       "updated": "2026-11-19",
+      "seen": 1
+    },
+    {
+      "id": "bone-cement-implantation-syndrome",
+      "cat": "Other",
+      "title": "Bone cement implantation syndrome (BCIS)",
+      "aliases": [
+        "bone cement syndrome",
+        "BCIS",
+        "cement reaction",
+        "cementation hypotension",
+        "PMMA reaction",
+        "cemented hemiarthroplasty collapse"
+      ],
+      "summary": "BCIS is sudden hypoxia, hypotension, arrhythmia, loss of consciousness or cardiac arrest around the time of cementing in arthroplasty, most often cemented hemiarthroplasty for hip fracture. Pressurised cement pushes marrow, fat, cement and air into the venous circulation; the emboli plus mediator release raise pulmonary vascular resistance and the right ventricle fails. It is a major cause of intraoperative death in frail elderly hip-fracture patients, so prevention and vigilance at cementation matter most.",
+      "sections": [
+        {
+          "h": "When it happens",
+          "items": [
+            "Cementation, prosthesis insertion or joint reduction (within minutes)",
+            "Occasionally at tourniquet deflation in cemented knee replacement",
+            "Also seen in other cemented procedures (vertebroplasty, shoulder)"
+          ]
+        },
+        {
+          "h": "Donaldson grading (2009)",
+          "rows": [
+            [
+              "Grade 1",
+              "SpO2 < 94% or SBP falls > 20%"
+            ],
+            [
+              "Grade 2",
+              "SpO2 < 88% or SBP falls > 40% or unexpected loss of consciousness (regional)"
+            ],
+            [
+              "Grade 3",
+              "Cardiovascular collapse needing CPR"
+            ]
+          ]
+        },
+        {
+          "h": "Mechanism",
+          "items": [
+            "Embolic model (favoured): high intramedullary pressure → fat, marrow, cement and air emboli → raised PVR → acute RV failure → low output",
+            "Echo shows emboli 'snowstorm' in right heart at cementing",
+            "Mediators: histamine, complement activation, anaphylactoid picture",
+            "Methyl methacrylate monomer vasodilation: probably minor at clinical levels",
+            "Final pathway: RV ischaemia, hypotension, hypoxia (V/Q mismatch), arrest"
+          ]
+        },
+        {
+          "h": "Risk factors",
+          "items": [
+            "ASA III–IV, frail elderly",
+            "Pre-existing pulmonary hypertension, significant cardiac disease, RV dysfunction",
+            "COPD, diuretic use, male sex",
+            "Pathological fracture/metastases, osteoporosis, intertrochanteric fracture",
+            "Long-stem femoral prosthesis, unreamed canal"
+          ]
+        },
+        {
+          "h": "Prevention (team approach)",
+          "items": [
+            "Identify high-risk patients preop; discuss cemented vs uncemented with surgeon",
+            "Surgeon tells anaesthetist before cementing; anaesthetist watches closely",
+            "Surgical: medullary lavage, good haemostasis, venting, retrograde cement gun, gentle pressurisation in high risk",
+            "Anaesthetic: euvolaemia before cementing, raise FiO2, invasive BP in high risk, vasopressor drawn up",
+            "Avoid nitrous oxide (air emboli)"
+          ]
+        },
+        {
+          "h": "Management",
+          "items": [
+            "100% oxygen; secure airway if needed",
+            "Fluids to support RV preload (cautiously)",
+            "Vasopressor: phenylephrine/noradrenaline to keep coronary perfusion of the RV; adrenaline if severe",
+            "Inotropes for RV failure; consider pulmonary vasodilators in ICU",
+            "Grade 3: ALS/CPR; post-event ICU and echo"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Know the 3 Donaldson grades with numbers",
+            "Embolic → raised PVR → RV failure is the key mechanism",
+            "AAGBI 2015 guideline: three-way team roles (surgeon, anaesthetist, team) at cementation",
+            "Grades 2–3 carry markedly higher 30-day mortality",
+            "Treatment is supportive: O2, fluids, alpha agonist, inotrope, CPR"
+          ]
+        }
+      ],
+      "pearl": "Cementing = embolic hit to the right heart: 100% O2, fill, and an alpha agonist ready before the surgeon pressurises.",
+      "refs": [
+        {
+          "title": "Donaldson AJ et al. Bone cement implantation syndrome. Br J Anaesth 2009",
+          "url": "https://doi.org/10.1093/bja/aen328"
+        },
+        {
+          "title": "Griffiths R et al. Safety guideline: reducing the risk from cemented hemiarthroplasty for hip fracture. Anaesthesia 2015",
+          "url": "https://doi.org/10.1111/anae.12987"
+        }
+      ],
+      "created": "2026-11-20",
+      "updated": "2026-11-20",
       "seen": 1
     }
   ]
