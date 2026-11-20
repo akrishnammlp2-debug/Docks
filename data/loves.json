@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T03:00:00Z",
+ "updated": "2026-11-20T03:00:00Z",
  "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
  "topics": [
   {
@@ -64,22 +64,38 @@
   }
  ],
  "today": {
-  "date": "2026-11-19",
-  "topic": "nature",
-  "topicName": "Nature",
+  "date": "2026-11-20",
+  "topic": "cats",
+  "topicName": "Cats",
   "kind": "fact",
-  "title": "Europe's 'wildwood' may never have been a solid forest",
-  "text": "We picture prehistoric Europe as an endless closed forest, but a new review from Aarhus University argues otherwise. A team led by PhD student Szymon Czyżewski and Professor Jens-Christian Svenning, with 21 co-authors, combined fossil pollen, ancient charcoal, tooth chemistry, fossil insects and ancient DNA from sediments going back about 23 million years. The picture that emerged is a patchwork of scattered trees, open woodland, grassland and flowering meadows, kept open by elephants, rhinos, aurochs and bison. Larks, jackdaws and even the European hamster may trace their roots to these open habitats, and the authors warn that blanket tree-planting could harm biodiversity.",
+  "title": "Your cat's ancestors reached Europe only ~2,000 years ago",
+  "text": "For years the story was that cats walked into Europe alongside Neolithic farmers some 6,000 years ago. A team led by Claudio Ottoni and Marco De Martino at the University of Rome Tor Vergata sequenced DNA from 70 ancient cats from Europe, North Africa and Anatolia, spanning the 9th century BC to the 19th century AD. Cats from before about 2,000 years ago turned out to be European wildcats, not domestic ones, and modern house cats trace back to North African wildcats instead. Even the feral cats of Sardinia, long assumed to be local, descend from African wildcats that people brought over roughly 2,200 years ago. The team now wants to test mummies from Pharaonic Egypt to pin down when domestication really began.",
   "source": {
-   "title": "ScienceDaily: Scientists discover Europe's ancient forests were nothing like we imagined",
-   "url": "https://www.sciencedaily.com/releases/2026/11/261104012333.htm"
+   "title": "Archaeology Magazine: Genetic Study Offers New Thoughts on Cat Domestication",
+   "url": "https://archaeology.org/news/2025/12/03/genetic-study-offers-new-thoughts-on-cat-domestication/"
   },
   "image": {
-   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison_bonasus_bonasus.jpg?width=1200",
-   "page": "https://commons.wikimedia.org/wiki/File:Bison_bonasus_bonasus.jpg"
+   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Felis_lybica.jpg?width=1200",
+   "page": "https://commons.wikimedia.org/wiki/File:Felis_lybica.jpg"
   }
  },
  "history": [
+  {
+   "date": "2026-11-19",
+   "topic": "nature",
+   "topicName": "Nature",
+   "kind": "fact",
+   "title": "Europe's 'wildwood' may never have been a solid forest",
+   "text": "We picture prehistoric Europe as an endless closed forest, but a new review from Aarhus University argues otherwise. A team led by PhD student Szymon Czyżewski and Professor Jens-Christian Svenning, with 21 co-authors, combined fossil pollen, ancient charcoal, tooth chemistry, fossil insects and ancient DNA from sediments going back about 23 million years. The picture that emerged is a patchwork of scattered trees, open woodland, grassland and flowering meadows, kept open by elephants, rhinos, aurochs and bison. Larks, jackdaws and even the European hamster may trace their roots to these open habitats, and the authors warn that blanket tree-planting could harm biodiversity.",
+   "source": {
+    "title": "ScienceDaily: Scientists discover Europe's ancient forests were nothing like we imagined",
+    "url": "https://www.sciencedaily.com/releases/2026/11/261104012333.htm"
+   },
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bison_bonasus_bonasus.jpg?width=1200",
+    "page": "https://commons.wikimedia.org/wiki/File:Bison_bonasus_bonasus.jpg"
+   }
+  },
   {
    "date": "2026-11-18",
    "topic": "dota2",
