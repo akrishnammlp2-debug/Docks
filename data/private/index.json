@@ -23,6 +23,7 @@
   "case-9.enc.json",
   "cases.enc.json",
   "catfood.enc.json",
+  "gcal.enc.json",
   "orders.enc.json",
   "personal.enc.json",
   "presenters-2026-11.enc.json",
@@ -37,5 +38,5 @@
   "ot-2026-11-19.enc.json",
   "ot-2026-11-20.enc.json"
  ],
- "updated": "2026-11-20T08:32:12.463Z"
+ "updated": "2026-11-20T08:40:11.201Z"
 }

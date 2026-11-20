@@ -1435,6 +1435,8 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 .more-row{color:var(--accent)!important;font-weight:600;font-size:15px}
 .more-card{width:100%;justify-content:center;text-align:center;padding:12px!important}
 #sheet .more-row{color:#2B6448!important}
+.page .more-row{color:#2B6448!important}
+@media (prefers-color-scheme:dark){.page .more-row,#sheet .more-row{color:#A8D5B8!important}}
 .groc-h{display:flex;align-items:center;justify-content:flex-start;gap:10px}.groc-t{font-size:13px;font-weight:600;text-align:left}
 .groc-on{flex:none;width:28px;height:28px;display:grid;place-items:center;font-weight:700;color:#2B6448!important}
 .groc-plus{flex:none;width:28px;height:28px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;font-size:19px;line-height:1;display:grid;place-items:center}
@@ -1557,6 +1559,16 @@ body[data-season="autumn"]{--fb-l:url("data:image/svg+xml,<svg xmlns='http://www
 .igp-w{display:flex;justify-content:center;margin:8px 0 0}
 .igp{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:4px 12px;border-radius:999px;border:0;font:inherit;font-size:12.5px;font-weight:500;letter-spacing:.01em;background:#E3EFE6!important;color:#2F6B4F!important}
 .igp b{font-weight:700;color:inherit!important}
+.tsiren{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:4px 12px;border-radius:999px;border:0;font:inherit;font-size:12.5px;font-weight:500;letter-spacing:.01em;background:#FBE6E6!important;color:#9B2C2C!important;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tsiren b{font-weight:700;color:inherit!important}
+.ts-dot{width:7px;height:7px;border-radius:50%;background:#D33A3A;flex:none;animation:tsp 2.4s ease-in-out infinite}
+@keyframes tsp{0%,100%{box-shadow:0 0 0 0 rgba(211,58,58,.45)}50%{box-shadow:0 0 0 5px rgba(211,58,58,0)}}
+@media (prefers-reduced-motion:reduce){.ts-dot{animation:none}}
+.ts-old{color:#B03030!important}
+@media (prefers-color-scheme:dark){.tsiren{background:#4A1E1E!important;color:#FBE3E3!important}.ts-dot{background:#FF7A7A}.ts-old{color:#FF9C9C!important}}
+.art-c{gap:6px}.art-c .art-q{font-size:12.5px;color:var(--fg-3)}.art-c b{font-size:15.5px;line-height:1.3}
+.art-c .art-m{font-size:12.5px;color:var(--fg-2)}
+.pc-bday .pc-when{font-weight:600}
 .igp.hit{background:#FBF2D4!important;color:#6B560F!important}
 @media (prefers-color-scheme:dark){.igp{background:#24493F!important;color:#E4EFE6!important}.igp.hit{background:#5A4A12!important;color:#FBF2D4!important}}
 #sheet .ig-top{display:flex;flex-direction:row;align-items:center;gap:14px}
@@ -1619,9 +1631,9 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.59 · groceries from Brain dump';
+const APP_VERSION = '5.60 · weekend batch: OT + SLCM together, articles, live NBA & Dota, birthdays';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1720,7 +1732,7 @@ function commit(msg, undo) { const ok = save(); render(); if (ok && msg) toast(m
 const D = {}; const dataStatus = {};
 /* Keep things uncluttered (Apoorva, 16 Nov 2026): OT lists and NBA games for 5 days, painting of the day and
    "Things I love" facts for 15 days. Cases, SLCM and all academic data are never trimmed. tools/tidy.mjs does the same to the repo. */
-const KEEP_DAYS = { ot: 5, nba: 5, art: 15, loves: 15 };
+const KEEP_DAYS = { ot: 5, nba: 5, art: 15, loves: 15, articles: 7 };
 function nbaIso(k) { const [m, d] = String(k).split(' '); const mi = MON.indexOf(m); if (mi < 0) return ''; return (mi >= 6 ? '2003' : '2004') + '-' + String(mi + 1).padStart(2, '0') + '-' + String(+d).padStart(2, '0'); }
 function trimData(f, j) {
   try {
@@ -1728,6 +1740,7 @@ function trimData(f, j) {
     if (f === 'ot' && Array.isArray(j.items)) { const from = addDays(today(), -(KEEP_DAYS.ot - 1)); return { ...j, items: j.items.filter(r => !r.date || r.date >= from) }; }
     if (f === 'nba' && Array.isArray(j.games) && j.games.length) { const ds = j.games.map(g => nbaIso(g[0])).filter(Boolean).sort(); const from = addDays(ds[ds.length - 1], -(KEEP_DAYS.nba - 1)); return { ...j, games: j.games.filter(g => { const x = nbaIso(g[0]); return !x || x >= from; }) }; }
     if (f === 'dota') { const t = today(), day = m => m.start ? m.start.slice(0, 10) : (m.date || ''); return { ...j, matches: (j.matches || []).filter(m => m.as == null || day(m) >= addDays(t, -6)), news: (j.news || []).filter(n => !n.date || n.date >= addDays(t, -30).slice(0, n.date.length)), events: (j.events || []).filter(e => e.status !== 'done' || !e.end || e.end >= addDays(t, -30)) }; }
+    if (f === 'articles' && Array.isArray(j.items)) { const from = addDays(today(), -(KEEP_DAYS.articles - 1)); return { ...j, items: j.items.filter(a => !a.added || a.added >= from) }; }
     if ((f === 'art' || f === 'loves') && Array.isArray(j.history)) { const from = addDays(today(), -(KEEP_DAYS[f] - 1)); return { ...j, history: j.history.filter(h => !h.date || h.date >= from) }; }
   } catch (_) {}
   return j;
@@ -1843,6 +1856,8 @@ const now0 = new Date();
 let view = { y: now0.getFullYear(), m: now0.getMonth() };
 let sel = today();
 let searchHitDate = null, searchHitName = '';
+let otSub = (() => { try { return localStorage.getItem('studydesk.otSub') || 'ot'; } catch (_) { return 'ot'; } })();
+const otSeg = () => `<div class="seg otseg"><button type="button" data-act="otsub" data-s="ot" aria-pressed="${otSub !== 'slcm'}">OT list</button><button type="button" data-act="otsub" data-s="slcm" aria-pressed="${otSub === 'slcm'}">SLCM cases${toSyncCount() ? ' · ' + toSyncCount() : ''}</button></div>`;
 let dotaSub = 'matches', rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
 /* v5.57 long lists: show the first few, then "More" (key → open) */
@@ -2173,6 +2188,12 @@ const igDays = () => igDaysOn(today());
 function igMiles(d) { const M = IG_MILES.slice(); for (let y = 2; 365 * (y - 1) <= d; y++) M.push([365 * y, '🌟', y + ' Years Unbothered', y + ' years. At this point the badge is just showing off on your behalf.']); return M; }
 const igRank = d => igMiles(d).filter(x => x[0] <= d).pop() || null;
 const igNext = d => igMiles(d).find(x => x[0] > d);
+/* to-dos left undone for more than a week: a small, gently pulsing red pill on Today (Apoorva, 20 Nov 2026) */
+const TODO_STALE = 7;
+const staleTodos = () => state.todos.filter(t => !t.done && t.created && Date.now() - new Date(t.created) > TODO_STALE * 864e5);
+function todoSiren() { if (state.settings.todoSirenOn === false) return ''; const L = staleTodos(); if (!L.length) return '';
+  const old = L.reduce((a, t) => t.created < a.created ? t : a); const d = Math.floor((Date.now() - new Date(old.created)) / 864e5);
+  return `<div class="igp-w"><button class="tsiren" type="button" data-act="goto" data-tab="todos"><span class="ts-dot" aria-hidden="true"></span><span aria-hidden="true">🚨</span>${L.length === 1 ? `“${esc(old.text.length > 28 ? old.text.slice(0, 26) + '…' : old.text)}” waiting ${d} days` : `<b>${L.length}</b> to-dos waiting over a week`}</button></div>`; }
 function igPill() { const d = igDays(); if (d < 0) return ''; const r = igRank(d), hit = r && r[0] === d;
   return `<div class="igp-w"><button class="igp${hit ? ' hit' : ''}" type="button" data-act="ig-open"><span aria-hidden="true">${hit ? r[1] : '🌱'}</span>${d === 0 ? 'Day zero off Instagram' : `<b>${d}</b> ${d === 1 ? 'day' : 'days'} off Instagram`}${hit ? '<span aria-hidden="true">✨</span>' : ''}</button></div>`; }
 const igSeenKey = r => state.settings.igSince + '|' + r[0];
@@ -2208,6 +2229,7 @@ function pageToday() {
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
   let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   h += igPill();
+  h += todoSiren();
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
@@ -2263,6 +2285,7 @@ function pageStudy() {
   h += timerCard();
   h += booksSection();
   h += bitesSection();
+  h += articlesSection();
   h += pdfSection();
   {
     h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
@@ -2305,7 +2328,8 @@ function pageTodos() {
   const done = state.todos.filter(t => t.done).sort((a, b) => (b.doneAt || '').localeCompare(a.doneAt || ''));
   let h = head('To-do', open.length ? plural(open.length, 'open task') : '');
   h += `<form data-form="todo" class="quick"><input class="tin" name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn" type="submit">Add</button></form>`;
-  const row = t => `<div class="rowwrap${t.done ? ' done' : ''}"><button class="row" type="button" data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
+  const stale = t => !t.done && t.created && Date.now() - new Date(t.created) > TODO_STALE * 864e5;
+  const row = t => `<div class="rowwrap${t.done ? ' done' : ''}"><button class="row" type="button" data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : stale(t) ? `<span class="r-s ts-old">🚨 added ${ago(t.created)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
   h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<p class="foot" style="text-align:center">${state.todos.length ? 'All clear.' : 'No tasks yet. Add one above.'}</p>`;
   if (done.length) {
     h += `<div class="sec"><h2 class="sh"><button type="button" data-act="toggle-done" style="color:var(--accent);font:inherit;text-transform:inherit;letter-spacing:inherit">${showDone ? 'Hide' : 'Show'} done (${done.length})</button>${showDone ? '<button type="button" data-act="clear-done" style="color:var(--danger);font:inherit;text-transform:inherit;letter-spacing:inherit">Clear done</button>' : ''}</h2>${showDone ? `<div class="group">${done.map(row).join('')}</div>` : ''}</div>`;
@@ -2316,7 +2340,7 @@ function pageTodos() {
 let calMode = (() => { try { return localStorage.getItem('studydesk.calMode') || 'academic'; } catch (_) { return 'academic'; } })();
 function pageCalendar() {
   const { y, m } = view; const t = today();
-  let h = head('Calendar', '', calMode === 'personal' ? 'Travel, deliveries & festivals' : 'Classes, cases & duties');
+  let h = head('Calendar', '', calMode === 'personal' ? 'Birthdays, travel, deliveries & festivals' : 'Classes, cases & duties');
   h += `<div class="sec cal-mode"><div class="seg"><button type="button" data-act="cal-mode" data-m="academic" aria-pressed="${calMode !== 'personal'}">Academic</button><button type="button" data-act="cal-mode" data-m="personal" aria-pressed="${calMode === 'personal'}">Personal</button></div></div>`;
   if (calMode === 'personal') return h + personalCal();
   const offset = (new Date(y, m, 1).getDay() + 6) % 7; const last = new Date(y, m + 1, 0).getDate();
@@ -2383,6 +2407,10 @@ const remAttention = () => state.reminders.map(r => ({ r, st: remStatus(r) })).f
 /* ---------- Personal calendar: travel, deliveries, festivals & holidays ---------- */
 const FESTS = () => ((D.festivals && D.festivals.items) || []);
 const PERS = () => ((state.private && state.private.personal) || {});
+/* Google Calendar (birthdays and your own events), copied in locked by the calendar job */
+const GCAL = () => { const g = (state.private && state.private.gcal) || {}; return { birthdays: g.birthdays || [], events: g.events || [] }; };
+function bdays() { const t = today(), y = +t.slice(0, 4);
+  return GCAL().birthdays.map(b => { let d = y + '-' + b.md; if (d < t) d = (y + 1) + '-' + b.md; return { name: b.name, d }; }).sort((a, b) => a.d.localeCompare(b.d)); }
 const dIn = d => Math.round((new Date(d + 'T12:00') - new Date(today() + 'T12:00')) / 864e5);
 const inWords = n => n === 0 ? 'today' : n === 1 ? 'tomorrow' : n < 0 ? plural(-n, 'day') + ' ago' : 'in ' + plural(n, 'day');
 const pDate = d => new Date(d + 'T12:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
@@ -2393,12 +2421,15 @@ function personalCal() { const t = today(); const P = PERS(); const tr = P.trave
   tr.filter(x => dIn(x.date) >= 0 && dIn(x.date) <= 60).forEach(x => soon.push({ d: x.date, e: MODE_EMO[x.mode] || '🧳', t: `${x.from} → ${x.to}`, s: x.detail || '', k: 'trip' }));
   dv.filter(x => x.status !== 'delivered').forEach(x => soon.push({ d: x.date || t, e: '📦', t: x.what || 'Delivery', s: (x.store || '') + (x.status ? ' · ' + x.status : ''), k: 'parcel' }));
   catFoods().forEach(f => { const i = catInfo(f); if (i && i.days <= 60 && i.days >= -7) soon.push({ d: i.next, e: '🐈', t: 'Reorder ' + f.name, s: 'Cat food', k: 'cat' }); });
+  bdays().filter(b => dIn(b.d) <= 60).forEach(b => soon.push({ d: b.d, e: '🎂', t: b.name + '’s birthday', s: '', k: 'bday' }));
+  GCAL().events.filter(x => x.date >= t && dIn(x.date) <= 60).forEach(x => soon.push({ d: x.date, e: '📅', t: x.title, s: [x.time, x.cal].filter(Boolean).join(' · '), k: 'gcal' }));
   soon.sort((a, b) => a.d.localeCompare(b.d));
   const row = x => `<div class="row pc-row pc-${x.k}"><span class="pc-e" aria-hidden="true">${esc(x.e)}</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${esc(pDate(x.d))}${x.s ? ' · ' + esc(x.s) : ''}</span></span><span class="pc-when">${esc(inWords(dIn(x.d)))}</span></div>`;
   let h = `<div class="sec"><h2 class="sh">Coming up</h2>${soon.length ? `<div class="group">${soon.map(row).join('')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>'}</div>`;
   h += `<div class="sec"><h2 class="sh">📦 On the way</h2>${dv.filter(x => x.status !== 'delivered').length ? `<div class="group">${dv.filter(x => x.status !== 'delivered').map(x => `<div class="row pc-row"><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.date ? ' · expected ' + esc(pDate(x.date)) : ''}${x.status ? ' · ' + esc(x.status) : ''}</span></span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">Nothing on its way right now. Shipments from your email show up here.</span></div>'}</div>`;
   const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
+  { const B = bdays(); h += `<div class="sec"><h2 class="sh"><span>🎂 Birthdays</span><span>${B.length ? plural(B.length, 'person') : ''}</span></h2>${B.length ? `<div class="group">${moreCut('bdays', B, 4).map(b => `<div class="row pc-row pc-bday"><span class="pc-e" aria-hidden="true">🎂</span><span class="cat-tx"><b>${esc(b.name)}</b><span>${esc(pDate(b.d))}</span></span><span class="pc-when">${esc(inWords(dIn(b.d)))}</span></div>`).join('')}${moreBtn('bdays', B.length, 4, 'birthday')}</div>` : '<div class="card"><span class="c-s">Birthdays from your Google Calendar show up here.</span></div>'}</div>`; }
   const months = {}; FESTS().filter(f => dIn(f.date) >= 0).forEach(f => { const k = f.date.slice(0, 7); (months[k] = months[k] || []).push(f); });
   h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}</div>`;
   return h; }
@@ -2638,13 +2669,16 @@ async function otUpload(files) { const cfg = syncCfg(); if (!cfg.token) { toast(
       if (!res.ok) throw new Error(res.status); ok++; otSent.push({ at: Date.now() }); } catch (e) { toast('Could not send the photo (' + (e.message || 'no connection') + '). Try again.'); } }
   otSentSave(); if (ok) { toast(ok === 1 ? '📷 Sent. The list appears within about an hour' : '📷 ' + ok + ' photos sent'); render(); } }
 function pageOt() {
+  if (otSub === 'slcm') return pageCases(otSeg());
   const ds = otDates(); if (!otDay || !ds.includes(otDay)) otDay = otDefaultDay();
-  let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics');
+  let h = head('OT list', otDay ? esc(dLong(otDay)) + ' · ' + relDay(otDay) : 'No OT list yet', 'Academics') + otSeg();
   if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Docks and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
   h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
-  h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, rows, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
+  /* finished cases drop to the bottom of the list (Apoorva, 20 Nov 2026) */
+  const sorted = rows.filter(r => !state.otDone[r.id]).concat(rows.filter(r => state.otDone[r.id]));
+  h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, sorted, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
   const named = rows.some(r => otInfo(r.id).patient);
   return h;
 }
@@ -2674,9 +2708,9 @@ function pageRoster() {
   return h;
 }
 
-function pageCases() {
+function pageCases(seg) {
   const C = CASES(); const unsynced = toSyncCount();
-  let h = head('SLCM cases', '', 'Logbook');
+  let h = head('SLCM cases', '', 'Logbook') + (typeof seg === 'string' ? seg : '');
   h += `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Logged', C.length + mcNew().length, '<span class="s-m">All cases</span>')}${stat('To sync', unsynced, `<span class="pill ${unsynced ? 'tosync' : 'good'}">${unsynced ? 'Not on SLCM' : 'All synced'}</span>`)}${stat('Emergency', C.filter(c => c.urgency === 'Emergency').length, '<span class="s-m">Of all logged</span>')}</div>`;
   h += myCasesSection(0);
   const CS = C.slice().sort((a, b) => b.date.localeCompare(a.date) || b.n - a.n); const CLIM = 5;
@@ -2705,14 +2739,28 @@ const ESPN_AB = { GS: 'GSW', NY: 'NYK', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 
 let nbaLive = (() => { try { return JSON.parse(localStorage.getItem('studydesk.nbalive') || 'null'); } catch (_) { return null; } })(), nbaBusy = false;
 const usDay = iso => { const d = new Date(iso); const p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' }).formatToParts(d); return p.find(x => x.type === 'month').value + ' ' + p.find(x => x.type === 'day').value; };
 const ymdNY = off => { const d = new Date(Date.now() + off * 864e5); const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); return p.replace(/-/g, ''); };
-async function nbaRefresh() {
+/* standings and per-game leaders straight from ESPN too, so they are never stuck on an old daily file (Apoorva, 20 Nov 2026) */
+async function nbaExtras() { const out = {};
+  try { const r = await fetch('https://site.api.espn.com/apis/v2/sports/basketball/nba/standings', { cache: 'no-store' }); if (r.ok) { const j = await r.json();
+    (j.children || []).forEach(c => { const k = /east/i.test(c.abbreviation || c.name) ? 'east' : /west/i.test(c.abbreviation || c.name) ? 'west' : ''; if (!k) return;
+      const st = (e, n) => { const x = (e.stats || []).find(z => z.name === n); return x ? +x.value : 0; };
+      const rows = ((c.standings || {}).entries || []).map(e => { const a = ((e.team || {}).abbreviation || '').toUpperCase(); return [ESPN_AB[a] || a, st(e, 'wins'), st(e, 'losses'), st(e, 'playoffSeed') || 99]; });
+      rows.sort((a, b) => a[3] - b[3] || b[1] / (b[1] + b[2] || 1) - a[1] / (a[1] + a[2] || 1)); if (rows.length) out[k] = rows.map(r => r.slice(0, 3)); }); } } catch (_) {}
+  try { const L = {}; const want = [['Points', 'offensive', 'avgPoints'], ['Rebounds', 'general', 'avgRebounds'], ['Assists', 'offensive', 'avgAssists']];
+    await Promise.all(want.map(async ([lab, cat, stat]) => { const r = await fetch(`https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/statistics/byathlete?limit=10&sort=${cat}.${stat}:desc`, { cache: 'no-store' }); if (!r.ok) return; const j = await r.json();
+      const names = c => ((j.categories || []).find(x => x.name === c) || {}).names || [];
+      const val = (a, c, n) => { const x = (a.categories || []).find(z => z.name === c); const i = names(c).indexOf(n); return x && i >= 0 ? +x.values[i] : 0; };
+      L[lab] = (j.athletes || []).slice(0, 10).map(a => { const t = ((a.athlete || {}).teamShortName || '').toUpperCase(); return [(a.athlete || {}).displayName || '', ESPN_AB[t] || t, Math.round(val(a, 'general', 'gamesPlayed')), Math.round(val(a, cat, stat) * 10) / 10]; }).filter(r => r[0]); }));
+    if (L.Points && L.Points.length) out.leaders = { Points: L.Points || [], Rebounds: L.Rebounds || [], Assists: L.Assists || [] }; } catch (_) {}
+  return out; }
+const nbaStale = () => !nbaLive || !nbaLive.east || Date.now() - new Date(nbaLive.at) > 15 * 60e3;
+async function nbaRefresh(quiet) {
   if (nbaBusy) return; nbaBusy = true; render();
   try {
-    const days = [ymdNY(-1), ymdNY(0)]; const games = [];
-    for (const dd of days) {
-      const r = await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=' + dd, { cache: 'no-store' });
-      if (!r.ok) throw new Error('ESPN answered ' + r.status);
-      const j = await r.json();
+    const days = [ymdNY(-4), ymdNY(-3), ymdNY(-2), ymdNY(-1), ymdNY(0)]; const games = [];
+    const ext = await nbaExtras();
+    const boards = await Promise.all(days.map(async dd => { const r = await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=' + dd, { cache: 'no-store' }); if (!r.ok) throw new Error('ESPN answered ' + r.status); return r.json(); }));
+    for (const j of boards) {
       (j.events || []).forEach(ev => { const c = ev.competitions && ev.competitions[0]; if (!c) return; const tm = side => c.competitors.find(x => x.homeAway === side) || {};
         const ab = x => { const a = ((x.team || {}).abbreviation || '').toUpperCase(); return ESPN_AB[a] || a; };
         const st = (ev.status || c.status || {}).type || {}; const a = tm('away'), hm = tm('home');
@@ -2720,16 +2768,16 @@ async function nbaRefresh() {
     }
     const seen = new Set(); const uniq = games.filter(g => { const k = g.day + g.away + g.home; if (seen.has(k)) return false; seen.add(k); return true; });
     games.length = 0; games.push(...uniq);
-    nbaLive = { at: nowISO(), games }; try { localStorage.setItem('studydesk.nbalive', JSON.stringify(nbaLive)); } catch (_) {}
+    nbaLive = { at: nowISO(), games, ...ext }; try { localStorage.setItem('studydesk.nbalive', JSON.stringify(nbaLive)); } catch (_) {}
     const live = games.filter(g => g.state === 'in').length;
-    toast(games.length ? 'Scores updated' + (live ? ' · ' + live + ' live' : '') + ' ✓' : 'No games today');
+    if (!quiet) toast(games.length ? 'Scores and standings updated' + (live ? ' · ' + live + ' live' : '') + ' ✓' : 'Standings updated · no games today');
     const liveG = games.find(g => g.state === 'in'); const todayK = usDay(new Date().toISOString()); const lastDone = games.filter(g => g.state === 'post').pop();
     nbaDay = liveG ? liveG.day : games.some(g => g.day === todayK && g.state !== 'pre') ? todayK : lastDone ? lastDone.day : (games[0] || {}).day || nbaDay;
-  } catch (e) { toast(e instanceof TypeError ? "Couldn't reach the scores just now. Try again in a bit." : "Couldn't refresh: " + e.message); }
+  } catch (e) { if (!quiet) toast(e instanceof TypeError ? "Couldn't reach the scores just now. Showing the last saved copy." : "Couldn't refresh: " + e.message); }
   finally { nbaBusy = false; render(); }
 }
 function nbaGames() {
-  const N = D.nba; const base = (N ? N.games : []).map(g => ({ day: g[0], away: g[1], as: g[2], home: g[3], hs: g[4], ot: g[5], state: 'post', label: g[5] ? 'Final · OT' : 'Final' }));
+  const N = D.nba; const base = ((N && N.games) || []).map(g => ({ day: g[0], away: g[1], as: g[2], home: g[3], hs: g[4], ot: g[5], state: 'post', label: g[5] ? 'Final · OT' : 'Final' }));
   if (!nbaLive || !nbaLive.games) return base;
   const liveDays = new Set(nbaLive.games.map(g => g.day));
   return base.filter(g => !liveDays.has(g.day)).concat(nbaLive.games.map(g => ({ ...g, label: g.state === 'post' ? (g.ot ? 'Final · OT' : 'Final') : g.state === 'in' ? g.label : (g.label || 'Today') })));
@@ -2738,18 +2786,47 @@ function nbaLatestDay() { const N = D.nba; if (!N) return null; const ds = [...n
 /* ---------- Dota 2: tier 1 tournaments only (data/dota.json, refreshed daily) ---------- */
 const dotaDate = s => !s ? '' : /^\d{4}-\d\d$/.test(s) ? MON[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4) : dShort(s);
 const dotaState = m => m.as != null && m.bs != null && !m.live ? 'post' : m.live ? 'in' : 'pre';
-const dotaLive = () => ((D.dota || {}).matches || []).filter(m => dotaState(m) === 'in');
+const dotaLive = () => (typeof dotaMatches === 'function' ? dotaMatches() : ((D.dota || {}).matches || [])).filter(m => dotaState(m) === 'in');
 const dotaWhen = m => m.start ? new Date(m.start) : new Date((m.date || today()) + 'T12:00');
 function dotaEvStatus(e) { const t = today(); return e.end && e.end < t ? 'done' : e.start && e.start > t ? 'upcoming' : e.status === 'done' ? 'done' : e.start ? 'live' : (e.status || 'upcoming'); }
+/* Dota results straight from OpenDota (free, no sign-in), so the feed no longer waits on the morning job (Apoorva, 20 Nov 2026).
+   Only series from tournaments already listed as tier 1 in dota.json are used, so her tier 1 rule still holds. */
+let dotaLiveD = (() => { try { return JSON.parse(localStorage.getItem('studydesk.dotalive') || 'null'); } catch (_) { return null; } })(), dotaBusy = false;
+const dNorm = x => String(x || '').toLowerCase().replace(/^team\s+/, '').replace(/[^a-z0-9]/g, '');
+function dotaEventFor(league) { const L = String(league || '').toLowerCase(); const toks = x => String(x || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 1 && !['the', 'dota', 'of', 'and', 'season'].includes(w));
+  return ((D.dota || {}).events || []).find(e => { const t = toks(e.name); return t.length && t.every(w => L.includes(w)); }) || ((D.dota || {}).events || []).find(e => e.short && toks(e.short).length && toks(e.short).every(w => L.includes(w))); }
+async function dotaRefresh(quiet) { if (dotaBusy) return; dotaBusy = true; render();
+  try { const r = await fetch('https://api.opendota.com/api/proMatches', { cache: 'no-store' }); if (!r.ok) throw new Error('OpenDota answered ' + r.status); const G = await r.json(); const S = {};
+    G.forEach(g => { const ev = dotaEventFor(g.league_name); if (!ev || !g.radiant_name || !g.dire_name) return; const k = g.series_id || g.match_id;
+      const s = S[k] = S[k] || { event: ev.id, bo: [1, 3, 5, 2][g.series_type] || 1, teams: {}, start: g.start_time, end: 0 };
+      const win = g.radiant_win ? g.radiant_name : g.dire_name; [g.radiant_name, g.dire_name].forEach(n => { s.teams[n] = s.teams[n] || 0; }); s.teams[win]++;
+      s.start = Math.min(s.start, g.start_time); s.end = Math.max(s.end, g.start_time + (g.duration || 0)); });
+    const out = Object.values(S).map(s => { const [a, b] = Object.keys(s.teams); if (!b) return null; const as = s.teams[a], bs = s.teams[b], need = s.bo === 2 ? 2 : Math.ceil(s.bo / 2);
+      const over = as >= need || bs >= need || (s.bo === 2 && as + bs >= 2); const live = !over && Date.now() / 1000 - s.end < 2 * 3600;
+      return { event: s.event, bo: s.bo, a, b, as, bs, live, start: new Date(s.start * 1000).toISOString(), src: 'od' }; }).filter(Boolean);
+    dotaLiveD = { at: nowISO(), matches: out }; try { localStorage.setItem('studydesk.dotalive', JSON.stringify(dotaLiveD)); } catch (_) {}
+    if (!quiet) toast(out.length ? 'Dota results updated ✓' : 'No new tier 1 games right now');
+  } catch (e) { if (!quiet) toast(e instanceof TypeError ? "Couldn't reach OpenDota just now. Showing the saved copy." : "Couldn't refresh: " + e.message); }
+  finally { dotaBusy = false; render(); } }
+const dotaStale = () => !dotaLiveD || Date.now() - new Date(dotaLiveD.at) > 15 * 60e3;
+/* daily file + live results: a live series updates the matching scheduled one (same two teams, within a day); anything else is added */
+function dotaMatches() { const base = ((D.dota || {}).matches || []).map(m => ({ ...m }));
+  if (!dotaLiveD || !dotaLiveD.matches) return base;
+  dotaLiveD.matches.forEach(L => { const at = new Date(L.start); const pair = [dNorm(L.a), dNorm(L.b)].sort().join('|');
+    const hit = base.find(m => [dNorm(m.a), dNorm(m.b)].sort().join('|') === pair && Math.abs(dotaWhen(m) - at) < 36 * 3600e3);
+    if (hit) { const flip = dNorm(hit.a) !== dNorm(L.a); hit.as = flip ? L.bs : L.as; hit.bs = flip ? L.as : L.bs; hit.live = L.live; if (!hit.bo) hit.bo = L.bo; }
+    else if (Date.now() - at < 7 * 864e5) base.push({ event: L.event, stage: '', bo: L.bo, start: L.start, a: L.a, b: L.b, as: L.as, bs: L.bs, live: L.live }); });
+  return base; }
 function pageDota() {
-  const N = D.dota; let h = head('Dota 2', N ? esc(N.asOf || '') : '', 'Esports');
+  const N = D.dota; let h = head('Dota 2', N ? esc(N.asOf || '') + (dotaLiveD ? ' · results ' + esc(ago(dotaLiveD.at)) : '') : '', 'Esports');
   if (!N) return h + '<div class="card"><span class="c-s">No Dota 2 data yet.</span></div>';
   h += `<div class="seg">${[['matches', 'Matches'], ['events', 'Events'], ['news', 'Patch & news']].map(([k, l]) => `<button type="button" data-act="dsub" data-s="${k}" aria-pressed="${dotaSub === k}">${l}</button>`).join('')}</div>`;
   const EV = (N.events || []).map(e => ({ ...e, st: dotaEvStatus(e) })), ev = id => EV.find(e => e.id === id) || {};
   const tag = n => (N.tags || {})[n] || (n.split(/\s+/).length > 1 ? n.split(/\s+/).map(w => w[0]).join('') : n).slice(0, 4).toUpperCase();
   const span = e => e.start ? dotaDate(e.start) + (e.end && e.end !== e.start ? ' to ' + dotaDate(e.end) : '') : '';
   if (dotaSub === 'matches') {
-    const M = (N.matches || []).map(m => ({ ...m, st: dotaState(m), at: dotaWhen(m) }));
+    h += `<div class="ptr" id="ptr">${dotaBusy ? 'Checking results…' : 'Pull down to refresh results'}</div>`;
+    const M = dotaMatches().map(m => ({ ...m, st: dotaState(m), at: dotaWhen(m) }));
     const row = (n, sc, win) => `<div class="nrow${win ? ' win' : ''}" style="--h:${hue(n)}"><span class="badge">${esc(tag(n))}</span><span class="tn"><em>${esc(n)}</em></span><b>${sc == null ? '' : sc}</b></div>`;
     const game = m => `<div class="ngame${m.st === 'in' ? ' live' : ''}"><div class="nhead">${m.st === 'in' ? '<span class="ldot"></span>Live · ' : ''}${esc([ev(m.event).short || ev(m.event).name || '', m.stage, m.bo ? 'Bo' + m.bo : ''].filter(Boolean).join(' · '))}</div>${row(m.a, m.st === 'pre' ? null : m.as, m.st === 'post' && m.as > m.bs)}${row(m.b, m.st === 'pre' ? null : m.bs, m.st === 'post' && m.bs > m.as)}<span class="dota-t">${esc(m.start ? m.at.toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) + (m.st === 'pre' ? ' your time' : '') : dotaDate(m.date))}</span></div>`;
     const sec = (t, list) => list.length ? `<div class="sec"><h2 class="sh">${t}</h2><div class="ngrid dota-g">${moreCut('dota|' + t, list, 4).map(game).join('')}</div>${moreBtn('dota|' + t, list.length, 4, 'match', 'btn ghost wide')}</div>` : '';
@@ -2771,14 +2848,15 @@ function pageDota() {
 }
 function pageNba() {
   const N = D.nba;
-  let h = head('NBA', N ? esc(N.asOf || '') : '', 'Sports');
-  if (!N) return h + '<div class="card"><span class="c-s">No NBA data yet.</span></div>';
+  const LV = nbaLive && nbaLive.east ? nbaLive : null;
+  let h = head('NBA', LV ? 'Live from ESPN · updated ' + esc(ago(LV.at)) : N ? esc(N.asOf || '') : '', 'Sports');
+  if (!N && !LV) return h + '<div class="card"><span class="c-s">No NBA data yet. Pull down to refresh.</span></div>';
   const G = nbaGames(); const MI = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
   const ord = d => { const [m, n] = d.split(' '); const mi = MI[m]; return (mi >= 9 ? mi : mi + 12) * 100 + +n; };
   const ds = [...new Set(G.map(g => g.day))].sort((a, b) => ord(a) - ord(b)); if (!nbaDay || !ds.includes(nbaDay)) { const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); nbaDay = ds.includes(k) ? k : ds[ds.length - 1]; }
   h += `<div class="ptr" id="ptr">${nbaBusy ? 'Refreshing scores…' : nbaLive ? 'Pull down to refresh · updated ' + esc(ago(nbaLive.at)) : 'Pull down to refresh scores'}</div>`;
   h += `<div class="seg">${[['scores', 'Scores'], ['standings', 'Standings'], ['stats', 'Leaders']].map(([k, l]) => `<button type="button" data-act="nsub" data-s="${k}" aria-pressed="${nbaSub === k}">${l}</button>`).join('')}</div>`;
-  const nm = ab => N.names[ab] || ab;
+  const nm = ab => ((N || {}).names || {})[ab] || ab; const SD = LV || N;
   const split = ab => { const s = nm(ab), k = /(Trail Blazers|76ers)$/.test(s) ? 2 : 1, w = s.split(' '); return [w.slice(0, w.length - k).join(' '), w.slice(w.length - k).join(' ')]; };
   if (nbaSub === 'scores') {
     const list = G.filter(g => g.day === nbaDay).sort((a, b) => (a.state === 'in' ? -1 : 0) - (b.state === 'in' ? -1 : 0));
@@ -2788,9 +2866,10 @@ function pageNba() {
         return `<div class="ngame${g.state === 'in' ? ' live' : ''}"><div class="nhead">${g.state === 'in' ? '<span class="ldot"></span>' : ''}${esc(pre && g.start ? new Date(g.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ' your time' : g.label)}</div>${row(g.away, pre ? '' : g.as, done && aw)}${row(g.home, pre ? '' : g.hs, done && !aw)}</div>`; }).join('')}</div>${moreBtn('nba|' + nbaDay, list.length, 6, 'game', 'btn ghost wide')}`;
   } else if (nbaSub === 'standings') {
     const conf = (rows, title) => `<div class="sec"><h2 class="sh">${title}</h2><div class="group">${moreCut('st|' + title, rows, 8).map((r, i) => `<div class="row" style="gap:10px"><span class="st-z" style="--c:${i < 6 ? 'var(--f-nba)' : i < 10 ? 'var(--fg-3)' : 'transparent'}"></span><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[0])}">${esc(r[0])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(nm(r[0]))}</span></span><span class="st-wl">${r[1]}-${r[2]}</span><span class="st-p">${(r[1] / (r[1] + r[2] || 1)).toFixed(3).replace(/^0/, '')}</span></div>`).join('')}${moreBtn('st|' + title, rows.length, 8, 'team')}</div></div>`;
-    h += conf(N.west, 'Western Conference') + conf(N.east, 'Eastern Conference');
+    h += conf(SD.west || [], 'Western Conference') + conf(SD.east || [], 'Eastern Conference');
   } else {
-    h += Object.keys(N.leaders).map(k => `<div class="sec"><h2 class="sh">${esc(k)} per game</h2><div class="group">${moreCut('ld|' + k, N.leaders[k], 5).map((r, i) => `<div class="row" style="gap:10px"><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[1])}">${esc(r[1])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(r[0])}</span><span class="r-s">${esc(nm(r[1]))} · ${r[2]} GP</span></span><span class="ld-v">${(+r[3]).toFixed(1)}</span></div>`).join('')}${moreBtn('ld|' + k, N.leaders[k].length, 5, 'player')}</div></div>`).join('');
+    const LD = (LV && LV.leaders) || (N || {}).leaders || {};
+    h += Object.keys(LD).map(k => `<div class="sec"><h2 class="sh">${esc(k)} per game</h2><div class="group">${moreCut('ld|' + k, LD[k], 5).map((r, i) => `<div class="row" style="gap:10px"><span class="st-r">${i + 1}</span><span class="badge" style="--h:${hue(r[1])}">${esc(r[1])}</span><span class="r-main"><span class="r-t" style="font-size:15px">${esc(r[0])}</span><span class="r-s">${esc(nm(r[1]))} · ${r[2]} GP</span></span><span class="ld-v">${(+r[3]).toFixed(1)}</span></div>`).join('')}${moreBtn('ld|' + k, LD[k].length, 5, 'player')}</div></div>`).join('');
   }
   return h;
 }
@@ -2847,6 +2926,7 @@ function pageBackup() {
     <label class="row toggle"><span>Exam countdown on Today</span><input type="checkbox" data-setting="countdownOn" ${S.countdownOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
+    <label class="row toggle"><span>Red alert on Today for to-dos older than a week</span><input type="checkbox" data-setting="todoSirenOn" ${S.todoSirenOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Days off Instagram on Today</span><input type="checkbox" data-setting="igOn" ${S.igOn !== false ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Off Instagram since</span><input type="date" data-setting="igSince" max="${today()}" value="${esc(S.igSince || '')}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
@@ -3225,7 +3305,9 @@ function toast(msg, undo) {
   if (undo) $('undoBtn').onclick = () => { undo(); el.classList.remove('show'); };
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
-function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1) heroIdx = (heroIdx + 1) % heroPics.length; if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); }
+function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1) heroIdx = (heroIdx + 1) % heroPics.length; if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); liveAuto(); }
+/* NBA and Dota refresh by themselves when you open them (at most every 15 minutes) */
+function liveAuto() { if (!navigator.onLine) return; if (tab === 'nba' && nbaStale()) nbaRefresh(true); if (tab === 'dota' && dotaStale()) dotaRefresh(true); }
 const drawerShown = () => $('drawer').classList.contains('open') || matchMedia('(min-width:900px)').matches;
 function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
@@ -3456,9 +3538,9 @@ function renderSearch(q) {
 document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); });
 document.addEventListener('focusout', () => { if (render.pending) setTimeout(() => { const a = document.activeElement; if (render.pending && !(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && $('page').contains(a))) render(); }, 120); });
 (() => { let y0 = null, pulled = 0;
-  document.addEventListener('touchstart', e => { y0 = tab === 'nba' && !sheetOpen() && (window.scrollY || document.documentElement.scrollTop) <= 0 ? e.touches[0].clientY : null; pulled = 0; }, { passive: true });
+  document.addEventListener('touchstart', e => { y0 = (tab === 'nba' || (tab === 'dota' && dotaSub === 'matches')) && !sheetOpen() && (window.scrollY || document.documentElement.scrollTop) <= 0 ? e.touches[0].clientY : null; pulled = 0; }, { passive: true });
   document.addEventListener('touchmove', e => { if (y0 === null) return; pulled = e.touches[0].clientY - y0; const p = $('ptr'); if (p) { p.style.height = Math.min(70, Math.max(0, pulled / 2.2)) + 34 + 'px'; p.classList.toggle('ready', pulled > 110); if (pulled > 110) p.textContent = 'Let go to refresh'; } }, { passive: true });
-  document.addEventListener('touchend', () => { if (y0 === null) return; const p = $('ptr'); if (p) { p.style.height = ''; p.classList.remove('ready'); } if (pulled > 110) nbaRefresh(); y0 = null; pulled = 0; }, { passive: true });
+  document.addEventListener('touchend', () => { if (y0 === null) return; const p = $('ptr'); if (p) { p.style.height = ''; p.classList.remove('ready'); } if (pulled > 110) { if (tab === 'dota') dotaRefresh(); else nbaRefresh(); } y0 = null; pulled = 0; }, { passive: true });
 })();
 document.addEventListener('keydown', e => { if (e.key === '/' && !sheetOpen() && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); searchSheet(); } });
 
@@ -3530,6 +3612,7 @@ document.addEventListener('click', e => {
     case 'nday': nbaDay = b.dataset.d; render(); break;
     case 'dsub': dotaSub = b.dataset.s; render(); break;
     case 'otday': otDay = b.dataset.d; render(); break;
+    case 'otsub': otSub = b.dataset.s === 'slcm' ? 'slcm' : 'ot'; try { localStorage.setItem('studydesk.otSub', otSub); } catch (_) {} render(); window.scrollTo(0, 0); break;
     case 'book-open': bookOpen = id; bookSheet(id); break;
     case 'mc-ot': mcSheet('', id); break;
     case 'mc-new': mcPick(); break;
@@ -3986,6 +4069,7 @@ function mergePrivate(prev, data) {
   if (data.faculty) next.faculty = data.faculty;
   if (data.cat) next.cat = data.cat;
   if (data.personal) next.personal = data.personal;
+  if (data.gcal) next.gcal = data.gcal;
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
   if (data.ot) {
     const keepFrom = addDays(today(), -(KEEP_DAYS.ot - 1)); const ot = { ...(cur.ot || {}), ...data.ot };
@@ -4044,6 +4128,14 @@ function noteSheet(id) {
 /* ---------- Bite-size: short notes from her academic questions, one per topic, sorted into columns ---------- */
 let biteCat = null;
 const BITES = () => (D.bites && D.bites.items) || [];
+/* Articles: one good PubMed / BJA read for each academic question asked in Claude, kept 7 days (Apoorva, 20 Nov 2026) */
+const ARTS = () => ((D.articles && D.articles.items) || []).filter(a => !a.added || a.added >= addDays(today(), -(KEEP_DAYS.articles - 1))).sort((a, b) => (b.added || '').localeCompare(a.added || ''));
+function articlesSection() { const A = ARTS(); let h = `<div class="sec"><h2 class="sh"><span>Articles</span><span>${A.length ? plural(A.length, 'article') : ''}</span></h2>`;
+  if (!A.length) return h + `<div class="card"><span class="c-s">Nothing to read this week yet.</span></div></div>`;
+  h += moreCut('arts', A, 3).map(a => { const url = a.url || (a.doi ? 'https://doi.org/' + a.doi : a.pmid ? 'https://pubmed.ncbi.nlm.nih.gov/' + a.pmid + '/' : '#');
+    const left = a.added ? KEEP_DAYS.articles - 1 - Math.round((new Date(today() + 'T12:00') - new Date(a.added + 'T12:00')) / 864e5) : null;
+    return `<a class="card art-c" href="${esc(url)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">${a.topic ? `<span class="art-q">You asked about ${esc(a.topic)}</span>` : ''}<b>${esc(a.title)}</b><span class="art-m">${esc([a.journal, a.year, a.type].filter(Boolean).join(' · '))}</span>${a.why ? `<span class="c-s">${esc(a.why)}</span>` : ''}<span class="art-q">${a.added ? 'Added ' + esc(dShort(a.added)) + (left !== null && left >= 0 ? ' · ' + (left === 0 ? 'leaves after today' : 'stays ' + plural(left, 'more day')) : '') : ''}</span></a>`; }).join('');
+  return h + moreBtn('arts', A.length, 3, 'article', 'btn ghost wide') + `</div>`; }
 const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
 function bitesSection() {
   const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>`;
@@ -4246,7 +4338,7 @@ async function checkPersist() {
 }
 
 /* ---------- start ---------- */
-renderBanner(); render(); igCheck(); checkPersist(); loadData(false); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); batteryPull(); }); if (state.settings.weatherOn) fetchWeather(false);
+renderBanner(); render(); igCheck(); checkPersist(); loadData(false); setTimeout(liveAuto, 800); loadDevice().then(() => { render(); privateSync(false); deviceSync(false); batteryPull(); }); if (state.settings.weatherOn) fetchWeather(false);
 (() => {
   let x0 = null, y0 = null, from = null;
   document.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
@@ -4258,7 +4350,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) { render(); igCheck(); } } }, 60e3);
 setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (tab === 'today' && !sheetOpen()) render(); igCheck(); loadData(false); privateSync(false); deviceSync(false); batteryPull(); if (state.settings.weatherOn) fetchWeather(false); } });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { liveAuto(); if (tab === 'today' && !sheetOpen()) render(); igCheck(); loadData(false); privateSync(false); deviceSync(false); batteryPull(); if (state.settings.weatherOn) fetchWeather(false); } });
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {}));
 </script>
 </body>

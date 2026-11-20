@@ -4,6 +4,7 @@
 //   NBA games ........... 5 days   (counted back from the newest game in data/nba.json)
 //   Painting of the day . 15 days  (data/art.json history)
 //   Things I love facts . 15 days  (data/loves.json history)
+//   Articles ............ 7 days   (data/articles.json items, by date added; Apoorva asked for this on 20 Nov 2026)
 // NEVER trimmed: cases / SLCM records, schedule, advances, books, topics, bites or any other academic data.
 //
 //   node tools/tidy.mjs           trim and print what was removed (run before committing data updates)
@@ -13,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
-const KEEP = { ot: 5, nba: 5, art: 15, loves: 15 };
+const KEEP = { ot: 5, nba: 5, art: 15, loves: 15, articles: 7 };
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const todayIndia = () => new Date(Date.now() + 5.5 * 36e5).toISOString().slice(0, 10);
@@ -57,6 +58,12 @@ for (const f of ['art', 'loves']) {
   const j = read(f + '.json'); const from = addDays(today, -(KEEP[f] - 1)); const n = (j.history || []).length;
   j.history = (j.history || []).filter(h => !h.date || h.date >= from);
   if (j.history.length !== n) { write(f + '.json', j); log.push(`${f}.json: removed ${n - j.history.length} entries before ${from}`); }
+}
+
+if (existsSync(join(DATA, 'articles.json'))) {
+  const j = read('articles.json'); const from = addDays(today, -(KEEP.articles - 1)); const n = (j.items || []).length;
+  j.items = (j.items || []).filter(a => !a.added || a.added >= from);
+  if (j.items.length !== n) { write('articles.json', j); log.push(`articles.json: removed ${n - j.items.length} articles added before ${from}`); }
 }
 
 console.log(log.length ? log.join('\n') : 'Nothing to tidy.');
