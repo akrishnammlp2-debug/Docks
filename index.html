@@ -65,6 +65,10 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke
 .nb-t{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
 .avbtn{justify-self:start;width:36px;height:36px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:18px;box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px var(--label)}
 .nb-r{justify-self:end;display:flex;gap:4px}
+.nb-l{justify-self:start;display:flex;align-items:center;gap:8px}
+.cartbtn{position:relative}
+.cart-n{position:absolute;top:1px;right:0;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#C93A46;color:#FFFFFF!important;font-size:10.5px;font-weight:700;line-height:17px;text-align:center;font-family:var(--font-body,system-ui)!important;box-shadow:0 0 0 2px var(--bg)}
+.cart-n[hidden]{display:none}
 .iconbtn{width:38px;height:38px;border-radius:50%;color:var(--accent);display:grid;place-items:center}
 .iconbtn:active{background:var(--surface-2)}
 #banner{max-width:760px;margin:0 auto;padding:0 16px}
@@ -1430,6 +1434,18 @@ body.sketchy .ip-opt:not(.sk) .ip-row svg>*{filter:none}
 #sheet .batt-step{display:flex!important;flex-direction:row!important;align-items:flex-start}
 #sheet .batt-step b{color:#1C2621!important}#sheet .batt-sn,#sheet span.batt-sn{color:#FFFFFF!important;background:#2B6448!important}
 .batt-sn{flex:none;width:24px;height:24px;border-radius:50%;background:#2B6448;color:#FFFFFF!important;display:grid;place-items:center;font-size:13px;font-weight:700}
+/* shopping cart v5.61 */
+.cart-s{display:flex;gap:6px;margin:4px 0 8px}.cart-s input{flex:1;min-width:0}
+.cart-res{display:flex;flex-direction:column}
+.cart-i{display:flex;align-items:center;gap:10px;padding:9px 2px;border-top:1px solid var(--sep)}
+.cart-i:first-child{border-top:0}
+.cart-i .cart-nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.cart-i .cart-nm b{font-weight:600}
+.cart-i .cart-nm span{font-size:12.5px;color:var(--fg-3)}
+#sheet .cart-i .cart-nm b{color:#1C2621!important}#sheet .cart-i .cart-nm span{color:#36433C!important}#sheet .cart-i{border-top-color:rgba(28,38,33,.14)}
+.cart-cat{margin-top:6px}.cart-cat summary{list-style:none;display:flex;align-items:center;gap:8px;padding:10px 2px;font-weight:600;cursor:pointer}
+.cart-cat summary::-webkit-details-marker{display:none}.cart-cat summary .pc-n{margin-left:auto}
+#sheet .cart-cat summary{color:#1C2621!important}
+#sheet .card .groc-plus,#sheet .groc-plus{color:#FFFFFF!important}#sheet .card .groc-on{color:#2B6448!important}
 /* groceries v5.54 */
 .groc-d{margin-top:6px}
 .more-row{color:var(--accent)!important;font-weight:600;font-size:15px}
@@ -1608,7 +1624,7 @@ a.dota-n .r-main{gap:3px}
 <body data-sec="today">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-4" y="-4" width="32" height="32"><feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" result="a"/><feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="1" seed="31" result="m"/><feDisplacementMap in="SourceGraphic" in2="m" scale="2.6" xChannelSelector="G" yChannelSelector="R" result="b0"/><feComponentTransfer in="b0" result="b"><feFuncA type="linear" slope="0.45"/></feComponentTransfer><feMerge><feMergeNode in="b"/><feMergeNode in="a"/></feMerge></filter></defs></svg>
 <header class="navbar"><div class="nb-in">
-  <button class="avbtn" id="nb-av" type="button" data-act="drawer" aria-label="Open menu">S</button>
+  <span class="nb-l"><button class="avbtn" id="nb-av" type="button" data-act="drawer" aria-label="Open menu">S</button><button class="iconbtn cartbtn" id="nb-cart" type="button" data-act="cart" aria-label="Shopping list"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a1.6 1.6 0 001.6 1.3h8.4a1.6 1.6 0 001.6-1.2L20.5 8H6.1"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg><span class="cart-n" id="nb-cart-n" hidden></span></button></span>
   <span class="nb-t" id="nb-title">Today</span>
   <span class="nb-r"><button class="iconbtn" type="button" data-act="search" aria-label="Search everything"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button class="iconbtn" id="nb-add" type="button" data-act="add" aria-label="Add entry"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></span>
 </div></header>
@@ -1631,7 +1647,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.60 · weekend batch: OT + SLCM together, articles, live NBA & Dota, birthdays';
+const APP_VERSION = '5.61 · shopping cart in the top bar; NBA & Dota refresh on pull-down';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
@@ -2061,6 +2077,21 @@ const parseBuy = text => { const m = String(text).match(/^\s*(?:to[\s-]?buy|buy)
 /* ---------- Groceries v5.54: staples that come back onto To buy every N days ---------- */
 const GROC_SEED = [['Milk', 2], ['Curd', 3], ['Bread', 4], ['Eggs', 7], ['Vegetables', 4], ['Fruits', 5], ['Tomatoes', 5], ['Onions', 10], ['Potatoes', 14], ['Paneer', 7], ['Rice', 30], ['Atta', 30], ['Toor dal', 30], ['Cooking oil', 30], ['Ghee', 30], ['Sugar', 30], ['Tea / coffee powder', 30], ['Salt', 60], ['Spices & masalas', 45], ['Dishwash liquid', 30], ['Laundry detergent', 30], ['Toilet cleaner', 45], ['Garbage bags', 30], ['Tissues / kitchen roll', 30]];
 const GROC_EVERY = [1, 2, 3, 4, 5, 7, 10, 14, 21, 30, 45, 60, 90];
+/* v5.61 everyday things for a home in India, to search and add from the cart (name, usual days between buys) */
+const GROC_CAT = [
+  ['🥛 Dairy & eggs', [['Milk', 2], ['Curd', 3], ['Paneer', 7], ['Butter', 21], ['Ghee', 30], ['Cheese slices', 21], ['Buttermilk', 3], ['Fresh cream', 21], ['Eggs', 7]]],
+  ['🥬 Vegetables', [['Vegetables', 4], ['Tomatoes', 5], ['Onions', 10], ['Potatoes', 14], ['Garlic', 14], ['Ginger', 10], ['Green chillies', 7], ['Coriander leaves', 4], ['Curry leaves', 7], ['Mint leaves', 5], ['Lemons', 7], ['Spinach', 4], ['Carrots', 7], ['Beans', 5], ['Capsicum', 5], ['Cucumber', 5], ['Cabbage', 7], ['Cauliflower', 5], ['Brinjal', 5], ['Lady finger', 4], ['Bottle gourd', 5], ['Mushrooms', 4], ['Sweet corn', 7], ['Coconut', 7]]],
+  ['🍎 Fruits', [['Fruits', 5], ['Bananas', 4], ['Apples', 7], ['Oranges', 7], ['Papaya', 5], ['Pomegranate', 7], ['Grapes', 5], ['Watermelon', 7], ['Guava', 7], ['Mangoes', 5]]],
+  ['🍚 Grains, flour & dal', [['Rice', 30], ['Atta', 30], ['Toor dal', 30], ['Moong dal', 30], ['Chana dal', 30], ['Masoor dal', 30], ['Urad dal', 30], ['Rajma', 45], ['Chickpeas (chana)', 45], ['Poha', 21], ['Rava / sooji', 30], ['Besan', 30], ['Maida', 45], ['Oats', 30], ['Ragi flour', 30], ['Vermicelli', 30], ['Pasta', 30], ['Noodles', 21]]],
+  ['🧂 Oils, spices & basics', [['Cooking oil', 30], ['Coconut oil', 45], ['Mustard oil', 45], ['Olive oil', 60], ['Salt', 60], ['Sugar', 30], ['Jaggery', 30], ['Spices & masalas', 45], ['Turmeric', 60], ['Chilli powder', 60], ['Coriander powder', 60], ['Cumin (jeera)', 60], ['Mustard seeds', 60], ['Garam masala', 60], ['Black pepper', 60], ['Tamarind', 60], ['Vinegar', 90], ['Soy sauce', 90], ['Tomato ketchup', 45], ['Pickle', 60], ['Honey', 60], ['Peanut butter', 45], ['Jam', 45]]],
+  ['🍞 Breakfast, bakery & snacks', [['Bread', 4], ['Biscuits', 10], ['Cornflakes / muesli', 21], ['Rusk', 14], ['Namkeen', 14], ['Chips', 10], ['Dry fruits & nuts', 30], ['Peanuts', 30], ['Dark chocolate', 14], ['Instant idli / dosa batter', 4]]],
+  ['☕ Drinks', [['Tea / coffee powder', 30], ['Green tea', 45], ['Drinking water cans', 5], ['Juice', 7], ['Soft drinks', 14], ['Protein powder', 45]]],
+  ['🧽 Cleaning & home', [['Dishwash liquid', 30], ['Dishwash bar', 21], ['Scrub pads', 30], ['Laundry detergent', 30], ['Fabric softener', 45], ['Floor cleaner', 30], ['Toilet cleaner', 45], ['Bathroom cleaner', 45], ['Glass cleaner', 60], ['Garbage bags', 30], ['Tissues / kitchen roll', 30], ['Aluminium foil', 60], ['Cling wrap', 60], ['Mosquito repellent', 30], ['Room freshener', 45], ['Matchbox / lighter', 60], ['Batteries', 90], ['Bulbs', 90]]],
+  ['🧴 Personal care', [['Bath soap', 30], ['Body wash', 30], ['Shampoo', 45], ['Conditioner', 45], ['Toothpaste', 30], ['Toothbrush', 90], ['Face wash', 45], ['Moisturiser', 45], ['Sunscreen', 45], ['Deodorant', 45], ['Hand wash', 30], ['Sanitary pads', 30], ['Cotton & earbuds', 60], ['Lip balm', 60], ['Hair oil', 45], ['Razor', 60], ['Dental floss', 60], ['Hand sanitiser', 30]]],
+  ['🐈 Cat', [['Cat litter', 21], ['Cat treats', 21], ['Cat wet food', 24], ['Cat dry food', 60]]],
+  ['💊 Medicine cabinet', [['Paracetamol', 90], ['ORS', 90], ['Band-aids', 90], ['Antiseptic liquid', 90], ['Vitamin supplements', 30]]]
+];
+const GROC_ALL = () => { const seen = new Set(), out = []; GROC_CAT.forEach(([cat, L]) => L.forEach(([name, every]) => { const k = name.toLowerCase(); if (!seen.has(k)) { seen.add(k); out.push({ name, every, cat }); } })); return out; };
 function grocSeed() { const t = today(); /* spread first due dates so they don't all land on one day */
   return GROC_SEED.map(([name, every], i) => ({ id: 'g-' + name.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-+$/, ''), name, every, last: addDays(t, -Math.floor((every - 1) * ((i * 0.37) % 1))), updated: nowISO() })); }
 const GROC = () => { if (!Array.isArray(state.groceries)) { state.groceries = grocSeed(); setTimeout(() => { if (save()) syncSoon(); }, 0); } return state.groceries.filter(g => !g.deleted); };
@@ -2077,15 +2108,14 @@ function grocStaples() { const G = GROC().slice().sort((a, b) => grocLeft(a) - g
 let grocOpen = false;
 const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Dump an idea, or “buy …”" aria-label="Add to brain dump" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
 const grocRow = (g, sm) => `<div class="dump-i buy-i"><button type="button" class="buy-tick${sm ? ' sm' : ''}" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></button></div>`;
-function dumpLive() { const N = JOTS(), B = BUYS(), G = grocDue(); if (!N.length && !B.length && !G.length) return '';
+function dumpLive() { const N = JOTS(); if (!N.length) return '';
   const nr = N.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all"><span class="dump-dot" aria-hidden="true"></span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('');
-  const br = B.slice(0, 3).map(d => `<div class="dump-i buy-i"><button type="button" class="buy-tick sm" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span></button></div>`).join('');
-  const tot = B.length + G.length; const gr = G.slice(0, Math.max(0, 3 - B.slice(0, 3).length)).map(g => grocRow(g, 1)).join('');
-  return `<div class="dump-l">${nr}${tot ? `<button type="button" class="buy-cap" data-act="dump-all" data-id="buy">To buy <span>${Math.min(3, tot)}/${tot}</span></button>${br}${gr}` : ''}</div>`; }
+  return `<div class="dump-l">${nr}</div>`; }
 function dumpCard() { const n = JOTS().length;
   return `<div class="card dumpc"><div class="c-top"><span class="c-lab" id="dump-lab">🧠 Brain dump${n ? ' · ' + n : ''}</span><button type="button" class="link" data-act="dump-all">See all</button></div>
     ${dumpForm()}<div id="dump-live">${dumpLive()}</div></div>`; }
-function dumpSheetLive() { const N = JOTS(), B = BUYS(), G = grocDue();
+function dumpSheetLive() { const N = JOTS();
+  const B = [], G = [];
   const buys = B.length ? moreCut('dumpbuy', B, 5).map(d => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${buyAge(d.created)}</span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Delete">✕</button></div></div>`).join('')
     : '';
   const gbuys = G.map(g => `<div class="card dump-card buy-row"><div class="dump-top"><button type="button" class="buy-tick" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></div></div>`).join('');
@@ -2094,12 +2124,42 @@ function dumpSheetLive() { const N = JOTS(), B = BUYS(), G = grocDue();
       <div class="dump-cats"><button type="button" class="dump-cat" data-act="dump-todo" data-id="${d.id}">✅ Make a to-do</button><button type="button" class="dump-cat" data-act="dump-tobuy" data-id="${d.id}">🛒 To buy</button></div>
       <span class="dump-ago">${dumpAgo(d.created)}</span></div>`).join('')
     : `<div class="card"><span class="c-s">Nothing here yet. Dump any idea above.</span></div>`;
-  return `<h3 class="sh" id="dump-buy"><span>🛒 To buy</span><span>${B.length + G.length}</span></h3>${gbuys}${buys}${moreBtn('dumpbuy', B.length, 5, 'item', 'btn ghost wide')}${empty}${grocStaples()}<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}${moreBtn('dumpnote', N.length, 5, 'note', 'btn ghost wide')}`; }
-function dumpSheet(at) { openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
+  return `<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}${moreBtn('dumpnote', N.length, 5, 'note', 'btn ghost wide')}`; }
+function dumpSheet(at) { if (at === 'buy') return cartSheet();
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
     ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
   if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
 /* update the notes in place, so the box you're typing in is never rebuilt (no lost text, keyboard stays up) */
-function dumpRefresh() { const l = $('dump-live'); if (l) l.innerHTML = dumpLive(); const lab = $('dump-lab'); if (lab) { const n = JOTS().length; lab.textContent = '🧠 Brain dump' + (n ? ' · ' + n : ''); } const sl = $('dump-sheet-live'); if (sl) sl.innerHTML = dumpSheetLive(); }
+/* ---------- Shopping cart (v5.61): groceries + "buy …" items live behind the cart in the top bar ---------- */
+const cartCount = () => grocDue().length + BUYS().length;
+function cartBadge() { const b = $('nb-cart-n'); if (!b) return; const n = cartCount(); b.hidden = !n; b.textContent = n > 99 ? '99+' : String(n); const c = $('nb-cart'); if (c) c.setAttribute('aria-label', n ? 'Shopping list, ' + plural(n, 'thing') + ' to buy' : 'Shopping list'); }
+let cartQ = '';
+function cartToBuy() { const B = BUYS(), G = grocDue();
+  const g = G.map(x => `<div class="cart-i"><button type="button" class="buy-tick" data-act="groc-bought" data-id="${x.id}" aria-label="Bought ${esc(x.name)}"></button><span class="cart-nm"><b>${esc(x.name)}</b><span>${esc(grocWhen(x))} · comes back every ${plural(x.every, 'day')}</span></span></div>`).join('');
+  const b = B.map(d => `<div class="cart-i"><button type="button" class="buy-tick" data-act="dump-bought" data-id="${d.id}" aria-label="Bought ${esc(d.text)}"></button><span class="cart-nm"><b>${esc(d.text)}</b><span>added ${buyAge(d.created) === 'today' ? 'today' : buyAge(d.created) + ' ago'}</span></span><button type="button" class="dump-x" data-act="dump-del" data-id="${d.id}" aria-label="Remove ${esc(d.text)}">✕</button></div>`).join('');
+  return `<h3 class="sh"><span>🛒 To buy</span><span>${B.length + G.length}</span></h3>${g || b ? `<div class="card cart-res">${g}${b}</div>` : '<div class="card"><span class="c-s">Nothing to buy right now 🎉</span></div>'}`; }
+const onList = name => { const k = name.toLowerCase(); return grocDue().some(g => g.name.toLowerCase() === k) || BUYS().some(d => d.text.toLowerCase() === k); };
+function cartItemRow(name, sub) { const on = onList(name);
+  return `<div class="cart-i"><span class="cart-nm"><b>${esc(name)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</span>${on ? `<span class="groc-on" aria-label="${esc(name)} is on the list">✓</span>` : `<button type="button" class="groc-plus" data-act="cart-add" data-name="${esc(name)}" aria-label="Add ${esc(name)} to the list">+</button>`}</div>`; }
+function cartResults() { const q = cartQ.trim().toLowerCase(); if (!q) return '';
+  const mine = GROC().map(g => ({ name: g.name, sub: 'your staple · every ' + plural(g.every, 'day') }));
+  const cat = GROC_ALL().filter(x => !mine.some(m => m.name.toLowerCase() === x.name.toLowerCase())).map(x => ({ name: x.name, sub: x.cat.replace(/^\S+\s/, '') }));
+  const rank = x => { const n = x.name.toLowerCase(); return (GROC_ALIAS[q] && n === GROC_ALIAS[q]) || n.startsWith(q) ? 0 : n.split(/[\s/()&-]+/).some(w => w.startsWith(q)) ? 1 : n.includes(q) ? 2 : 9; };
+  const hits = mine.concat(cat).map(x => ({ ...x, r: rank(x) })).filter(x => x.r < 9).sort((a, b) => a.r - b.r).slice(0, 12);
+  const exact = hits.some(x => x.name.toLowerCase() === q);
+  return `<div class="card cart-res">${hits.map(x => cartItemRow(x.name, x.sub)).join('')}${exact ? '' : `<div class="cart-i"><span class="cart-nm"><b>Add “${esc(cartQ.trim())}”</b><span>just this once</span></span><button type="button" class="groc-plus" data-act="cart-add" data-name="${esc(cartQ.trim())}" aria-label="Add ${esc(cartQ.trim())}">+</button></div>`}</div>`; }
+function cartBrowse() { return `<h3 class="sh"><span>📋 Everyday list</span><span>${GROC_ALL().length}</span></h3>` + GROC_CAT.map(([cat, L]) => `<details class="card cart-cat"><summary>${esc(cat)}<span class="pc-n">${L.length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${L.map(([n]) => cartItemRow(n, '')).join('')}</details>`).join(''); }
+function cartLive() { return `<div id="cart-res">${cartResults()}</div>${cartToBuy()}${grocStaples()}${cartBrowse()}`; }
+function cartSheet() { cartQ = '';
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🛒 Shopping</h2><span></span></div>
+    <form data-form="cart" class="cart-s" autocomplete="off"><input class="tin" name="q" data-cart-search maxlength="60" placeholder="Search milk, soap, dal…" aria-label="Search everyday things" enterkeyhint="done"></form>
+    <div id="cart-live">${cartLive()}</div></div>`); }
+function cartRefresh() { const l = $('cart-live'); if (l) { const open = [...l.querySelectorAll('details.cart-cat')].map(d => d.open); l.innerHTML = cartLive(); l.querySelectorAll('details.cart-cat').forEach((d, i) => { if (open[i]) d.open = true; }); } cartBadge(); }
+function cartAdd(name) { name = String(name || '').trim(); if (!name) return; const nm = name.charAt(0).toUpperCase() + name.slice(1);
+  const st = GROC().find(g => g.name.toLowerCase() === name.toLowerCase());
+  if (st) grocSet(st.id, { want: true }); else state.dumps = (state.dumps || []).concat([{ id: uid(), text: nm, cat: 'buy', created: nowISO(), updated: nowISO() }]);
+  commit('🛒 ' + nm + ' added'); cartQ = ''; const i = document.querySelector('[data-cart-search]'); if (i) i.value = ''; dumpRefresh(); }
+function dumpRefresh() { cartRefresh(); const l = $('dump-live'); if (l) l.innerHTML = dumpLive(); const lab = $('dump-lab'); if (lab) { const n = JOTS().length; lab.textContent = '🧠 Brain dump' + (n ? ' · ' + n : ''); } const sl = $('dump-sheet-live'); if (sl) sl.innerHTML = dumpSheetLive(); }
 const dumpSet = (id, patch) => { state.dumps = (state.dumps || []).map(d => d.id === id ? { ...d, ...patch, updated: nowISO() } : d); };
 
 /* ---------- gentle habits: shown on Today only in their time window; monthly tracker ---------- */
@@ -2895,7 +2955,8 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
-    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Start with “buy …” and it goes to To buy, showing how long ago you added it.', 'Groceries: staples you buy regularly (milk, rice, dal…) come back onto To buy by themselves when due, marked 🥬. Tick one when bought and its timer restarts. Typing a grocery in Brain dump (“milk”, “buy eggs and bread”) puts it straight on To buy; start with “groceries:” to add something new to the staples. In Brain dump › To buy › Grocery staples, tap + beside any item to add it to To buy now, or add, remove and change how often items come back. A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
+    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
+    it('cart', '🛒 Shopping cart', ['The cart at the top, next to your photo, holds everything to buy. The red number is how many things are on the list.', 'Typing “buy shampoo” or a grocery (“milk”, “eggs and bread”) in Brain dump still works: it goes straight into the cart.', 'Search in the cart for any everyday thing (food, cleaning, personal care, cat things) and tap + to add it. Grocery staples you buy regularly come back onto the list by themselves when due; tick one when bought and its timer restarts. Under Grocery staples you can add, remove and change how often items come back.', 'A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.']),
     it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Docks, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
     it('rem', '🔔 Reminders', ['Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.']),
     it('cal', '📅 Calendar', [`Sessions come from the department's program${SESSION_TIME() ? ' (' + esc(SESSION_TIME()) + ')' : ''}. Entries you add stay on this phone.${P.presenters ? '' : ' Presenter names come from your private file.'}`, 'Karnataka public holidays and major festivals are shown. Travel and deliveries come from your email and are kept locked.']),
@@ -2905,7 +2966,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('ig', '🌱 Off Instagram', ['The small line under the Today banner counts the days since you left. Tap it for your badges; tap a badge you have earned to replay it.', 'A new badge unlocks on days 1, 3, 7, 15, 30, 45, 60, 90, 120, 180, 270 and 365, then every year. It pops up once on the day.', 'To change the start date or hide it, use More settings.']),
     it('fest', '🎉 Festive and season look', ['The tab bar and the Today title at the top (it takes turns with the festival or season name) change 10 days before a festival and go back the day after.', 'On ordinary days they show the season: winter (Dec–Jan), spring (Feb–Mar), summer (Apr–May), monsoon (Jun–Sep) and autumn (Oct–Nov).', 'Turn both off with the Festive look switch in More settings.']),
     it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Docks to the Home Screen, so the icon already on your phone stays as it is until you add Docks again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
-    it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Everything is refreshed once a day.']),
+    it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Pull down on Matches to get the latest results.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
@@ -3216,7 +3277,7 @@ function render() {
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
-  renderTabbar(); festFx();
+  renderTabbar(); festFx(); cartBadge();
   if (drawerShown()) renderDrawer(); else render.drawerStale = true;
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
@@ -3308,8 +3369,8 @@ function toast(msg, undo) {
   toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 5000 : 1800);
 }
 function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1) heroIdx = (heroIdx + 1) % heroPics.length; if (tab === 'advances' && k !== 'advances' && ADV().length) { state.advSeen = ADV().reduce((m, a) => a.added > m ? a.added : m, state.advSeen || ''); save(); } tab = k; history.replaceState(null, '', '#' + k); closeDrawer(); render(); window.scrollTo(0, 0); liveAuto(); }
-/* NBA and Dota refresh by themselves when you open them (at most every 15 minutes) */
-function liveAuto() { if (!navigator.onLine) return; if (tab === 'nba' && nbaStale()) nbaRefresh(true); if (tab === 'dota' && dotaStale()) dotaRefresh(true); }
+
+function liveAuto() { /* off: NBA and Dota refresh only when you pull down (Apoorva, 20 Nov 2026) */ }
 const drawerShown = () => $('drawer').classList.contains('open') || matchMedia('(min-width:900px)').matches;
 function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
@@ -3510,7 +3571,7 @@ function renderSearch(q) {
   add('Bite-size', BITES().filter(x => hit(x.title, x.cat, x.pearl, x.summary, ...(x.aliases || []), ...(x.points || []), ...(x.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(x => row(`data-act="bite" data-id="${esc(x.id)}"`, x.title, 'Bite · ' + x.cat)));
   { const A = ART(); add('Paintings', [A.today, ...(A.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).map((x, i) => [x, i]).filter(([x]) => hit(x.title, x.artist, x.movement, x.where)).map(([x, i]) => row(`data-act="art-past" data-i="${i}"`, x.title, 'Painting · ' + x.artist))); }
   { const S = SHOP().stores || {}; const hits = []; Object.entries(S).forEach(([k, st]) => (st.orders || []).forEach(o => o.items.forEach(i => { if (hit(i.n)) hits.push(row(`data-act="shop-open" data-id="${esc(k)}"`, i.n, 'My orders · ' + st.name + ' · ' + catDate(o.date))); }))); add('My orders', hits.slice(0, 12)); }
-  add('Brain dump', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row(`data-act="dump-all"${d.cat === 'buy' ? ' data-id="buy"' : ''}`, d.text, d.cat === 'buy' ? 'To buy · ' + buyAge(d.created) : 'Notes')));
+  add('Brain dump', DUMPS().filter(d => hit(d.text)).slice(0, 10).map(d => row(d.cat === 'buy' ? 'data-act="cart"' : 'data-act="dump-all"', d.text, d.cat === 'buy' ? 'Shopping · ' + buyAge(d.created) : 'Notes')));
   { const L = LOVES(); add('Off duty', [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, arr) => arr.findIndex(y => y.date === x.date) === i).filter(x => hit(x.title, x.text, x.topicName)).map(x => row(`data-act="love-topic" data-id="${esc(x.topic)}"`, x.title, 'Things I love · ' + (x.topicName || '')))); }
   add('Topics', NOTES().filter(n => hit(n.title, n.topic, n.summary, ...(n.sections || []).flatMap(sc => [sc.h, ...(sc.items || []), ...(sc.rows || []).flat()]))).map(n => row(`data-act="note-open" data-id="${esc(n.id)}"`, n.title, ['Note', n.topic].filter(Boolean).join(' · '))));
   add('PDFs', (pdfList || []).filter(m => hit(m.name, m.topic)).map(m => row(`data-act="pdf-read" data-id="${m.id}"`, m.name, ['PDF', m.topic, m.pages ? 'page ' + m.page + ' of ' + m.pages : ''].filter(Boolean).join(' · '))));
@@ -3537,7 +3598,7 @@ function renderSearch(q) {
   box.innerHTML = groups.length ? groups.map(g => `<div class="sec"><h3 class="sh"><span>${g.title}</span><span>${g.rows.length}</span></h3><div class="group">${g.rows.slice(0, 12).join('')}</div>${g.rows.length > 12 ? `<p class="foot">${g.rows.length - 12} more. Type a few more letters to narrow it down.</p>` : ''}</div>`).join('')
     : `<p class="foot">Nothing found for “${esc(q)}”.</p>`;
 }
-document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); });
+document.addEventListener('input', e => { if (e.target.matches && e.target.matches('[data-search]')) renderSearch(e.target.value); if (e.target.matches && e.target.matches('[data-cart-search]')) { cartQ = e.target.value; const r = $('cart-res'); if (r) r.innerHTML = cartResults(); } });
 document.addEventListener('focusout', () => { if (render.pending) setTimeout(() => { const a = document.activeElement; if (render.pending && !(a && /^(INPUT|TEXTAREA)$/.test(a.tagName) && $('page').contains(a))) render(); }, 120); });
 (() => { let y0 = null, pulled = 0;
   document.addEventListener('touchstart', e => { y0 = (tab === 'nba' || (tab === 'dota' && dotaSub === 'matches')) && !sheetOpen() && (window.scrollY || document.documentElement.scrollTop) <= 0 ? e.touches[0].clientY : null; pulled = 0; }, { passive: true });
@@ -3627,6 +3688,8 @@ document.addEventListener('click', e => {
     case 'push-off': pushOff(); break;
     case 'push-test': pushTest(); break;
     case 'dump-all': dumpSheet(id); break;
+    case 'cart': cartSheet(); break;
+    case 'cart-add': cartAdd(b.dataset.name); break;
     case 'batt-help': { tab = 'backup'; foldOpen.add('how'); render(); window.scrollTo(0, 0); setTimeout(() => { const d = document.querySelector('[data-how="batt"]'); if (d) { d.open = true; d.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }, 60); break; }
     case 'batt-copy': { const cfg = syncCfg(); const v = b.dataset.v === 'key' ? 'Bearer ' + cfg.token : 'https://api.github.com/repos/' + (cfg.repo || 'akrishnammlp2-debug/docks-sync') + '/contents/battery/';
       navigator.clipboard.writeText(v).then(() => toast(b.dataset.v === 'key' ? 'Key copied ✓ Paste it into the Shortcut' : 'Address copied ✓'), () => toast("Couldn't copy. Long-press to copy instead.")); break; }
@@ -3637,7 +3700,7 @@ document.addEventListener('click', e => {
     case 'groc-fold': grocOpen = !grocOpen; dumpRefresh(); break;
     case 'groc-add': grocOpen = true; dumpRefresh(); setTimeout(() => { const i = document.querySelector('#sheet .groc-f input'); if (i) { i.focus(); i.scrollIntoView({ block: 'center', behavior: 'smooth' }); } }, 40); break;
     case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
-    case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to To buy 🛒'); dumpRefresh(); } break; }
+    case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to your shopping cart 🛒'); dumpRefresh(); } break; }
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
     case 'cat-open': catSheet(); break;
     case 'ig-open': igSheet(); break;
@@ -3844,10 +3907,11 @@ document.addEventListener('submit', e => {
         else add.forEach(t => { state.dumps = (state.dumps || []).concat([{ id: uid(), text: t, cat: 'buy', created: nowISO(), updated: nowISO() }]); });
         if (inp) inp.value = ''; const ok = save(); if (ok) syncSoon(); dumpRefresh();
         const names = gp.hit.map(g => g.name).concat(gp.isGroc ? add : []);
-        if (ok) toast((names.length ? '🥬 ' + names.join(', ') + ' added to groceries' : '') + (!gp.isGroc && add.length ? (names.length ? ' · ' : '') + add.join(', ') + ' added to To buy' : '')); break; }
+        if (ok) toast((names.length ? '🥬 ' + names.join(', ') + ' added to groceries' : '') + (!gp.isGroc && add.length ? (names.length ? ' · ' : '') + add.join(', ') + ' added to your shopping list' : '')); break; }
       const buy = parseBuy(text); const mp = !buy && state.settings.mediaOn !== false ? parseMedia(text) : null; let mit = null; if (mp) mit = addMedia(mp, 'dump');
       if (!mit) state.dumps = (state.dumps || []).concat([{ id: uid(), text: buy || text, cat: buy ? 'buy' : '', created: nowISO(), updated: nowISO() }]);
       if (inp) inp.value = ''; const ok = save(); if (ok) syncSoon(); dumpRefresh(); if (ok) toast(mit ? `${MT(mit.type)[1]} Added to Off duty · ${MT(mit.type)[2]}` : buy ? 'Added to To buy 🛒' : 'Noted 📝'); break; }
+    case 'cart': { const q = (fd.get('q') || '').trim(); if (!q) return; const r = document.querySelector('#cart-res .groc-plus'); cartAdd(r ? r.dataset.name : q); break; }
     case 'groc': { const name = (fd.get('name') || '').trim(); if (!name) return; const every = +fd.get('every') || 7;
       const ex = (state.groceries || []).find(g => g.name.toLowerCase() === name.toLowerCase());
       if (ex) grocSet(ex.id, { deleted: false, every }); else state.groceries = (state.groceries || []).concat([{ id: 'g-' + uid(), name: name.charAt(0).toUpperCase() + name.slice(1), every, last: today(), updated: nowISO() }]);
