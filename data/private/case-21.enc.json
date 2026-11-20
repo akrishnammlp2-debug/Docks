@@ -1,0 +1,27 @@
+{
+ "v": 1,
+ "alg": "ECDH-P256+SHA256+A256GCM",
+ "created": "2026-11-20T08:32:12.056Z",
+ "recipients": [
+  {
+   "kid": "9a0b232c",
+   "epk": "BK6y87fwRu_3cofrmJuqbAaQMXSK19r1HhPjzfB8ay7X_aV9SGs_U4cjBZY1-ZDtabSJtfhQA6Wx2V4w0u6L8gI",
+   "iv": "rkBWU3I470FsLidf",
+   "wk": "lewOqeZR672hquTNsTE5aENjOXemXHKJX7TcoGy3LkQQGAjUIQtw5qTrcfwR188c"
+  },
+  {
+   "kid": "1524a8a8",
+   "epk": "BGdZNtaHL-12yP8U_umi7rhVlhLm9qK4rckUKWbfv10ovo3gDaxxtPmIwwqGVA4Z34H6YL3V7dnKqlUZt-afpIY",
+   "iv": "7P0OmC48tEpPbvIv",
+   "wk": "kTOUIxY1RbT_mWf9xFmQxhSWmzq9CTmbX2kcgO0N6qCoYOExZDt8WsqWDkQGPaF4"
+  },
+  {
+   "kid": "90a4521d",
+   "epk": "BExNtVwjSwvMDI-TU8tvY28UzSqCE1xKYgyOOK7tv7oSQSf3bhf458qM9PaF-WsGW3sQwWD9HNJRPgWWjcPwxXg",
+   "iv": "VZ_n2YWVYtknvjlE",
+   "wk": "K9DZt3Bk-S_Ty1kD4Lso0wzaVcIhMvwYW8o31ckh1Au2DPokSwoSMzUgiGMxXwiW"
+  }
+ ],
+ "iv": "vx6oWba4l0xLoepg",
+ "ct": "H6MqkJV8DrLtCvabZYnFSKyCtyczWa07shvCwdKA9pJOjluj69TSUbqUhijR8_GAuPq_pF1pQtuFfEjFWdXT0G44Yg6_sJXyyB0FkFi1hkQnFMA2smAJLQQ4mfRr"
+}
