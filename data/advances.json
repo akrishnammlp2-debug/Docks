@@ -1,7 +1,39 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-20",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43049460",
+      "doi": "10.1097/CCM.0000000000007451",
+      "added": "2026-11-20",
+      "date": "2026-11-18",
+      "title": "High-Flow Nasal Cannula Versus Conventional Oxygen Therapy in Adults With De Novo Acute Hypoxemic Respiratory Failure: A Systematic Review and Meta-Analysis With Trial Sequential Analysis.",
+      "journal": "Crit Care Med",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Ventilation",
+        "Airway"
+      ],
+      "summary": "Thirteen randomised trials (4,294 adults with new-onset acute hypoxaemic respiratory failure) compared high-flow nasal oxygen with standard oxygen devices. Intubation was modestly less likely with high-flow (RR 0.88, 95% CI 0.78-0.99, low certainty) but mortality was unchanged (RR 0.96), and sequential analysis said the evidence is still not conclusive for either outcome.",
+      "why": "High-flow may spare some patients intubation but does not clearly save lives, which helps when deciding how to use limited HFNC devices in Indian ICUs and is a common viva topic."
+    },
+    {
+      "pmid": "43053147",
+      "doi": "10.1186/s13054-026-06280-7",
+      "added": "2026-11-20",
+      "date": "2026-08-24",
+      "title": "Effect of megadose vitamin C in patients with sepsis: the CEMVIS randomized clinical trial.",
+      "journal": "Crit Care",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis",
+        "Pharmacology"
+      ],
+      "summary": "231 adults with sepsis in four Chinese hospitals received either 12 g intravenous vitamin C twice daily for 4 days or placebo. Death at 28 days was the same (about 31% in both arms), organ-support duration and SOFA changes did not differ, and high sodium levels were more frequent with vitamin C (35% vs 21%). A hint of benefit without shock and harm with shock came from a subgroup analysis only.",
+      "why": "Another neutral trial against routine high-dose vitamin C in sepsis, so you can leave it out of your sepsis bundle and cite it when asked about adjuncts."
+    },
     {
       "pmid": "43043609",
       "doi": "10.1007/s12630-026-03226-z",
