@@ -1,5 +1,19 @@
 {
- "updated": "2026-11-20",
- "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
- "items": []
+  "updated": "2026-11-21",
+  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
+  "items": [
+    {
+      "id": "34878131",
+      "added": "2026-11-21",
+      "topic": "mitral stenosis",
+      "title": "Management of mitral stenosis: a systematic review of clinical practice guidelines and recommendations",
+      "journal": "Eur Heart J Qual Care Clin Outcomes",
+      "year": 2022,
+      "type": "Review",
+      "why": "Side-by-side summary of the major guidelines: when to use balloon valvotomy, when to send for surgery, and medical/antibiotic therapy.",
+      "doi": "10.1093/ehjqcco/qcab083",
+      "pmid": "34878131",
+      "url": "https://doi.org/10.1093/ehjqcco/qcab083"
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
   "cats": [
     "Drugs",
@@ -18,6 +18,155 @@
     "Other"
   ],
   "items": [
+    {
+      "id": "mitral-stenosis-management",
+      "cat": "Cardiac",
+      "title": "Mitral stenosis – management (medical, PBMV, repair, replacement)",
+      "aliases": [
+        "MS management",
+        "mitral stenosis",
+        "PBMV",
+        "PTMC",
+        "PMC",
+        "balloon mitral valvotomy",
+        "closed mitral valvotomy",
+        "open mitral commissurotomy",
+        "MVR",
+        "Wilkins score"
+      ],
+      "summary": "Medical therapy in mitral stenosis (MS) controls symptoms, rate and clot risk but does not fix the valve. Once MS is significant (MVA ≤1.5 cm²) and the patient has symptoms, the valve needs mechanical relief. Balloon valvotomy (PBMV/PMC) is first choice when anatomy is favourable; surgery is for those unsuitable for, or failed by, PBMV. Within surgery, a valve-sparing repair/open commissurotomy is preferred if the valve is pliable enough; replacement (MVR) is for valves too calcified, fibrosed or regurgitant to repair.",
+      "sections": [
+        {
+          "h": "Severity (echo)",
+          "rows": [
+            [
+              "Normal MVA",
+              "4–6 cm²"
+            ],
+            [
+              "Mild",
+              "MVA >2.0 cm²"
+            ],
+            [
+              "Moderate",
+              "1.6–2.0 cm² (some texts 1.0–1.5)"
+            ],
+            [
+              "Severe / clinically significant",
+              "MVA ≤1.5 cm² (very severe ≤1.0); mean gradient usually >5–10 mmHg at normal HR; PASP often >50"
+            ],
+            [
+              "Wilkins score",
+              "Mobility, leaflet thickening, subvalvular thickening, calcification, each 1–4 (total 4–16). ≤8 favourable for PBMV"
+            ]
+          ]
+        },
+        {
+          "h": "Medical management (all patients; bridge, not cure)",
+          "items": [
+            "Rate control – β-blocker first, or non-DHP CCB (verapamil/diltiazem); digoxin if AF with LV dysfunction. Longer diastole = more LV filling, lower LA pressure",
+            "Diuretics (loop) + salt restriction for pulmonary congestion; avoid over-drying (preload-dependent)",
+            "Anticoagulation with warfarin (VKA, INR 2–3) if AF, prior embolism or LA thrombus; consider with very large LA or dense spontaneous echo contrast. DOACs NOT used in moderate–severe rheumatic MS (INVICTUS trial)",
+            "AF: rate control ± cardioversion/rhythm control after intervention; anticoagulate before cardioversion",
+            "Secondary prophylaxis of rheumatic fever – benzathine penicillin G 1.2 MU IM every 3–4 weeks (long-term; duration by age/carditis)",
+            "Infective endocarditis prophylaxis/dental hygiene, treat anaemia/infection, avoid tachycardia, counsel about pregnancy (treat severe MS before conception)",
+            "Asymptomatic mild–moderate MS: medical therapy + echo follow-up (severe yearly, moderate 1–2 yearly)"
+          ]
+        },
+        {
+          "h": "Who needs intervention (the trigger)",
+          "items": [
+            "Symptomatic (NYHA II–IV) + MVA ≤1.5 cm² → intervene (PBMV if suitable, else surgery)",
+            "Asymptomatic severe MS → consider PBMV (if favourable anatomy, low risk) when: PASP >50 mmHg at rest, new AF, high embolic risk (prior embolism, dense LA contrast), planned pregnancy or major non-cardiac surgery",
+            "Symptoms but MVA >1.5 cm²: exercise echo – PBMV considered if gradient/PASP rises a lot on exercise (mean gradient >15, PASP >60)",
+            "Already having other cardiac surgery (CABG/AVR) + severe MS → do mitral surgery at the same time"
+          ]
+        },
+        {
+          "h": "PBMV / PTMC – eligibility",
+          "rows": [
+            [
+              "Favourable",
+              "Pliable, non-calcified leaflets, Wilkins ≤8, commissural fusion present, MR ≤ mild (grade ≤2/4), no LA/LAA thrombus on TEE, young patient, sinus rhythm"
+            ],
+            [
+              "Absolute contraindications",
+              "LA or LAA thrombus (on TEE – do TEE before every PBMV); moderate–severe MR; MVA >1.5 cm²; severe or bicommissural calcification; no commissural fusion; severe aortic valve disease or severe TR/TS needing surgery; CAD needing CABG"
+            ],
+            [
+              "Grey zone",
+              "Wilkins >8 but not heavily calcified, elderly, high surgical risk/pregnant → PBMV still reasonable (good result in ~40% of score >8)"
+            ],
+            [
+              "Thrombus found",
+              "Warfarin 1–3 months, repeat TEE; if resolved → PBMV, if not → surgery"
+            ],
+            [
+              "Success",
+              "MVA ≥1.5 cm² with ≤ mild MR increase; main complication = severe MR (needs urgent MVR), tamponade, embolism, residual ASD"
+            ]
+          ]
+        },
+        {
+          "h": "Surgery – repair vs replacement",
+          "rows": [
+            [
+              "When surgery at all",
+              "Symptomatic severe MS (NYHA III–IV) and: not a PBMV candidate (anatomy/contraindication), failed or restenosed after PBMV, LA thrombus persisting despite anticoagulation, ≥moderate MR, concomitant cardiac surgery, or no PBMV expertise"
+            ],
+            [
+              "Closed mitral valvotomy (CMV)",
+              "Beating heart, no bypass, finger/Tubbs dilator via LA appendage. Same anatomy as PBMV; used in low-resource settings / pregnancy. Mostly replaced by PBMV"
+            ],
+            [
+              "Open commissurotomy / repair",
+              "On bypass under direct vision: incise fused commissures, split fused chordae/papillary muscles, remove thrombus, ± annuloplasty and LAA excision. Choose when leaflets still reasonably pliable, little calcium, MR mild–moderate and repairable, or LA thrombus present but valve otherwise good. Better than PBMV when Wilkins >8 with some pliability"
+            ],
+            [
+              "Why prefer repair",
+              "Keeps native valve and subvalvular apparatus (LV function), no lifelong anticoagulation (if sinus), lower thromboembolism/bleeding. Needs ongoing penicillin prophylaxis; restenosis/reoperation possible"
+            ],
+            [
+              "Mitral valve replacement (MVR)",
+              "When repair not possible: heavy leaflet/annular calcification, severe subvalvular fusion and shortening (thick, matted chordae), rigid immobile leaflets, severe/mixed MR not repairable, failed prior repair/PBMV, restenosis with unfavourable anatomy. Preserve chordae where possible"
+            ],
+            [
+              "Prosthesis choice",
+              "Mechanical: younger (<50 ACC/AHA, <65 ESC for mitral), already on warfarin for AF, can do INR – target INR 2.5–3.5. Bioprosthetic: older (>65–70), high bleeding risk, poor INR access, woman wanting pregnancy (discussed)"
+            ]
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "Algorithm: significant MS → symptoms? → PBMV-suitable anatomy (Wilkins ≤8, MR ≤ mild, no LA clot)? → PBMV; if not → surgery → repair/open commissurotomy if valve pliable, MVR if calcified/fibrosed/regurgitant",
+            "Always TEE before PBMV to exclude LA appendage clot",
+            "Medical therapy does not change natural history – only relieves symptoms and prevents embolism",
+            "Warfarin, not DOAC, for AF in rheumatic MS",
+            "Pregnancy with severe symptomatic MS refractory to drugs → PBMV in 2nd trimester is preferred over surgery",
+            "Anaesthesia goals: slow HR, sinus rhythm, adequate preload but no fluid overload, maintain SVR, avoid rise in PVR (hypoxia, hypercarbia, acidosis, pain)"
+          ]
+        }
+      ],
+      "pearl": "Pliable + no clot + no MR → balloon; pliable but unsuitable for balloon → repair; calcified/fibrosed/regurgitant → replace.",
+      "refs": [
+        {
+          "title": "Galusko V et al. Management of mitral stenosis: a systematic review of clinical practice guidelines. Eur Heart J Qual Care Clin Outcomes 2022;8:602–18",
+          "url": "https://doi.org/10.1093/ehjqcco/qcab083"
+        },
+        {
+          "title": "2021 ESC/EACTS Guidelines for valvular heart disease – MS recommendations (PMC table)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9725093/table/T17"
+        },
+        {
+          "title": "StatPearls: Percutaneous mitral balloon valvotomy",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK538483"
+        }
+      ],
+      "created": "2026-11-21",
+      "updated": "2026-11-21",
+      "seen": 1
+    },
     {
       "id": "asa-ps",
       "cat": "Preop & scoring",
