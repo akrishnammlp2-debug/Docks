@@ -2,6 +2,7 @@
   "updated": "2026-11-22",
   "sessionTime": "7:45 to 8:45 AM",
   "source": "Department of Anaesthesiology academic program, November and December 2026",
+  "rule": "Whenever sessions are added here, give every session that has a topic a 'read' list of 1-3 real articles (BJA Education preferred; verify title and DOI on PubMed; never invent). Skip sessions with no topic (Clancon, OSCE, open journal club).",
   "items": [
     {
       "date": "2026-11-03",
