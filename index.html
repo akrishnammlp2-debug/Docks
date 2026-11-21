@@ -1619,6 +1619,9 @@ a.dota-n .r-main{gap:3px}
 .dota-e .link{align-self:flex-start;font-size:14px}
 .dota-p{background:var(--surface-2);color:var(--fg)}
 .dota-p.live{background:#C93A46;color:#fff}
+.wk-l{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}.wk-l li{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--fg)}
+.bk-btns{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none}.bk-btns .link{font-size:13px;color:var(--fg-2);background:none;border:0;padding:2px}
+.brev-b{flex-direction:row!important;gap:10px;margin:14px 0 4px}.brev-b .btn{flex:1}
 </style>
 </head>
 <body data-sec="today">
@@ -1647,7 +1650,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.62 · now called Inemuri 🐈‍⬛';
+const APP_VERSION = '5.63 · daily bite revision';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
@@ -1703,7 +1706,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -1712,7 +1715,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
@@ -2297,6 +2300,9 @@ function pageToday() {
   }
   const S = state.settings;
   h += attCard();
+  h += bkNudge();
+  h += weekCard();
+  h += biteRevCard();
   h += dumpCard();
   h += battCard();
   h += catTodayCard();
@@ -2967,6 +2973,9 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('fest', '🎉 Festive and season look', ['The tab bar and the Today title at the top (it takes turns with the festival or season name) change 10 days before a festival and go back the day after.', 'On ordinary days they show the season: winter (Dec–Jan), spring (Feb–Mar), summer (Apr–May), monsoon (Jun–Sep) and autumn (Oct–Nov).', 'Turn both off with the Festive look switch in More settings.']),
     it('icon', '🐈‍⬛ Festive app icon', ['Around a festival the cat on the app icon dresses up. The iPhone only reads an icon at the moment you add Inemuri to the Home Screen, so the icon already on your phone stays as it is until you add Inemuri again.', 'Removing the old icon also removes the data saved on that device, so export a backup first and restore it in the new one.']),
     it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Pull down on Matches to get the latest results.']),
+    it('brev', '🧠 Daily bite revision', ['Today shows up to 3 Bite-size notes a day to revise, starting the day after a note is added. Open one, read it, then tap Got it or Again tomorrow.', 'Got it spaces it out: back in 3 days, then 7, 21, 60 and 120 days. Again tomorrow starts it over. Oldest due notes come first.', 'Your revision progress syncs between iPhone and iPad and is in your backup. Switch it off in More settings.']),
+    it('week', '🗓️ Sunday round-up', ['Every Sunday, Today shows what you got done in the last 7 days: notes added and revised, cases logged, topics studied, to-dos done, academic sessions and articles added. Tap Got it to hide it until next Sunday.']),
+    it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
@@ -2994,6 +3003,9 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Off Instagram since</span><input type="date" data-setting="igSince" max="${today()}" value="${esc(S.igSince || '')}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
+    <label class="row toggle"><span>Daily bite revision on Today (3 notes a day)</span><input type="checkbox" data-setting="biteRevOn" ${S.biteRevOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Sunday round-up of your week on Today</span><input type="checkbox" data-setting="weekOn" ${S.weekOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Backup reminder on Today after 30 days</span><input type="checkbox" data-setting="bkNudgeOn" ${S.bkNudgeOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup dot in the menu (orange = no backup this week)</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
   </div></div>`;
   h += howSection();
@@ -3646,6 +3658,11 @@ document.addEventListener('click', e => {
     case 'hab-edit': habitEditSheet(); break;
     case 'bcat': biteCat = b.dataset.c; render(); break;
     case 'bite': biteSheet(id); break;
+    case 'brev': biteSheet(id, true); break;
+    case 'brev-ok': biteRevMark(id, true); break;
+    case 'brev-again': biteRevMark(id, false); break;
+    case 'wk-seen': state.settings.weekSeen = today(); commit(); break;
+    case 'bk-later': state.settings.bkSnooze = addDays(today(), 3); commit('I’ll remind you in 3 days'); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
     case 'note-open': noteSheet(id); break;
     case 'pdf-edit': pdfEditSheet(id); break;
@@ -3941,7 +3958,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -4214,12 +4231,59 @@ function bitesSection() {
   h += `<div class="bgrid">${moreCut(bk, list, 6).map(b => `<button class="card bite" type="button" data-act="bite" data-id="${esc(b.id)}"><span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b>${esc(b.title)}</b><span class="bite-1">${esc(b.summary || (b.points || [])[0] || '')}</span><small>${b.updated && b.updated !== b.created ? 'Updated ' + esc(dShort(b.updated)) : 'Added ' + esc(dShort(b.created || b.updated || today()))}</small></button>`).join('')}</div>${moreBtn(bk, list.length, 6, 'note', 'btn ghost wide')}`;
   return h + `</div>`;
 }
-function biteSheet(id) {
+
+/* ---------- v5.63: daily bite revision, Sunday round-up, monthly backup nudge ---------- */
+const BREV_N = 3, BREV_I = [3, 7, 21, 60, 120];
+const d10 = s => !s ? '' : String(s).length === 10 ? String(s) : dayOf(s);
+const brecOf = id => (state.biteRev || {})[id] || null;
+function biteDueList() { const t = today();
+  return BITES().map(b => { const r = brecOf(b.id); return { b, r, due: r ? r.due : addDays(d10(b.created || b.updated) || t, 1) }; })
+    .filter(x => x.due <= t && !(x.r && x.r.last === t)).sort((a, b) => a.due.localeCompare(b.due) || (a.b.created || '').localeCompare(b.b.created || '')); }
+function biteToday() { const t = today(); const done = BITES().filter(b => { const r = brecOf(b.id); return r && r.last === t; });
+  const left = Math.max(0, BREV_N - done.length); return { done, todo: left ? biteDueList().slice(0, left).map(x => x.b) : [] }; }
+function biteRevCard() { if (state.settings.biteRevOn === false || !BITES().length) return '';
+  const { done, todo } = biteToday(); if (!todo.length) return '';
+  return `<div class="sec"><h2 class="sh"><span>🧠 Revise today</span><span>${done.length} of ${done.length + todo.length} done</span></h2><div class="group">${todo.map(b => { const r = brecOf(b.id);
+    return `<button type="button" class="row" data-act="brev" data-id="${esc(b.id)}"><span class="r-main"><span class="r-t">${esc(b.title)}</span><span class="r-s">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)} · ${r ? 'revised ' + plural(r.n || 1, 'time') : 'first revision'}</span></span>${CHEV}</button>`; }).join('')}</div></div>`; }
+function biteRevMark(id, ok) { const r = brecOf(id) || { lvl: 0, n: 0 }; const t = today();
+  const lvl = ok ? (r.lvl || 0) + 1 : 0; const gap = ok ? BREV_I[Math.min(lvl - 1, BREV_I.length - 1)] : 1;
+  state.biteRev = { ...(state.biteRev || {}), [id]: { lvl, n: (r.n || 0) + 1, last: t, due: addDays(t, gap) } };
+  closeSheet(); const left = biteToday().todo.length;
+  commit(!left ? 'All done for today ✓' : ok ? 'Got it ✓ · back in ' + plural(gap, 'day') : 'It will come back tomorrow 🔁'); }
+/* Sunday round-up: what got done in the last 7 days. Shown on Sundays until "Got it". */
+function weekStats() { const t = today(), from = addDays(t, -6); const inW = d => { const x = d10(d); return x && x >= from && x <= t; };
+  const B = BITES(); const bNew = B.filter(b => inW(b.created)).length, bUpd = B.filter(b => b.updated && b.updated !== b.created && inW(b.updated) && !inW(b.created)).length;
+  const rev = Object.values(state.biteRev || {}).filter(r => inW(r.last)).length;
+  const cases = CASES().filter(c => inW(c.date)).length + mcNew().filter(c => inW(c.date)).length;
+  const studied = weekCount(); const mins = state.log.filter(l => inW(l.date)).reduce((a, l) => a + (+l.mins || 0), 0);
+  const todos = state.todos.filter(x => x.done && inW(x.doneAt)).length;
+  const classes = SCHED().filter(x => x.kind === 'acad' && inW(x.date)).length;
+  const arts = ((D.articles && D.articles.items) || []).filter(a => inW(a.added)).length;
+  return { from, t, bNew, bUpd, rev, cases, studied, mins, todos, classes, arts }; }
+function weekCard() { if (state.settings.weekOn === false || new Date().getDay() !== 0 || state.settings.weekSeen === today()) return '';
+  const w = weekStats(); const L = [
+    w.bNew || w.bUpd ? ['📝', [w.bNew && plural(w.bNew, 'new note'), w.bUpd && plural(w.bUpd, 'note') + ' updated'].filter(Boolean).join(' · ')] : null,
+    w.rev ? ['🧠', plural(w.rev, 'note') + ' revised'] : null,
+    w.cases ? ['📋', plural(w.cases, 'case') + ' logged'] : null,
+    w.studied ? ['📚', plural(w.studied, 'topic') + ' studied' + (w.mins ? ' · ' + fmtMins(w.mins) : '')] : null,
+    w.todos ? ['✅', plural(w.todos, 'to-do') + ' done'] : null,
+    w.classes ? ['🎓', plural(w.classes, 'academic session')] : null,
+    w.arts ? ['📰', plural(w.arts, 'article') + ' added to read'] : null].filter(Boolean);
+  return `<div class="sec"><div class="card wk"><div class="c-top"><span class="c-lab">Your week · ${esc(dShort(w.from))} – ${esc(dShort(w.t))}</span></div>
+    ${L.length ? `<ul class="wk-l">${L.map(l => `<li><span aria-hidden="true">${l[0]}</span><span>${esc(l[1])}</span></li>`).join('')}</ul>` : '<span class="c-s">A quiet week. A fresh one starts tomorrow.</span>'}
+    <div class="btns" style="flex-direction:row;margin-top:6px"><button class="btn small ghost" type="button" data-act="wk-seen">Got it</button></div></div></div>`; }
+/* Monthly backup nudge: shows when the last backup is over 30 days old (or there is none yet). "Later" hides it for 3 days. */
+function bkNudge() { if (state.settings.bkNudgeOn === false) return ''; const le = state.meta.lastExport;
+  if (le && Date.now() - new Date(le) < 30 * 864e5) return ''; if (state.settings.bkSnooze && state.settings.bkSnooze > today()) return '';
+  if (!le && Date.now() - new Date(state.meta.created || nowISO()) < 3 * 864e5) return '';
+  return `<div class="sec"><div class="card cat-due"><span class="cat-due-i" aria-hidden="true">☁️</span><span class="cat-tx"><b>Time for a backup</b><span>${le ? 'Last one was ' + esc(ago(le)) : 'No backup made yet'}. One small file to keep in Files.</span></span><span class="bk-btns"><button type="button" class="btn small" data-act="export">Back up</button><button type="button" class="link" data-act="bk-later">Later</button></span></div></div>`; }
+function biteSheet(id, rev) {
   const b = BITES().find(x => x.id === id); if (!b) return;
   openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(b.cat)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <h3 class="bite-t">${esc(b.title)}</h3>
     ${b.sections ? noteBody(b) : `<ul class="note-ul">${(b.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>${b.refs && b.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${b.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}`}
     ${b.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(b.pearl)}</span></div>` : ''}
+    ${rev ? `<div class="btns brev-b"><button class="btn" type="button" data-act="brev-ok" data-id="${esc(b.id)}">Got it</button><button class="btn ghost" type="button" data-act="brev-again" data-id="${esc(b.id)}">Again tomorrow</button></div>` : ''}
     <p class="foot">Added ${esc(dShort(b.created || b.updated))}${b.updated && b.updated !== b.created ? ' · updated ' + esc(dShort(b.updated)) : ''}${b.seen > 1 ? ' · asked ' + b.seen + ' times' : ''}. Written in plain words for revision; check references for detail.</p></div>`);
 }
 function pdfSection() {
