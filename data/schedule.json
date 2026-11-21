@@ -1,280 +1,442 @@
 {
- "updated": "2026-11-17",
- "sessionTime": "7:45 to 8:45 AM",
- "source": "Department of Anaesthesiology academic program, November and December 2026",
- "items": [
-  {
-   "date": "2026-11-03",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "65-year-old with alcoholic liver cirrhosis for laparoscopic umbilical hernia repair"
-  },
-  {
-   "date": "2026-11-04",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "50-year-old with supratentorial space-occupying lesion for craniotomy and evacuation"
-  },
-  {
-   "date": "2026-11-06",
-   "kind": "acad",
-   "short": "Seminar",
-   "session": "Postgraduate Seminar",
-   "topic": "Neuromuscular physiology and monitoring"
-  },
-  {
-   "date": "2026-11-10",
-   "kind": "acad",
-   "short": "Group disc.",
-   "session": "Group Discussion",
-   "topic": "High pressure system: supply of medical gases"
-  },
-  {
-   "date": "2026-11-11",
-   "kind": "acad",
-   "short": "Journal club",
-   "session": "Journal Club",
-   "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
-  },
-  {
-   "date": "2026-11-13",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "55-year-old with large thyroid and retrosternal extension for total thyroidectomy",
-   "read": [
+  "updated": "2026-11-22",
+  "sessionTime": "7:45 to 8:45 AM",
+  "source": "Department of Anaesthesiology academic program, November and December 2026",
+  "items": [
     {
-     "title": "Anaesthesia for thyroid and parathyroid surgery",
-     "journal": "BJA Education",
-     "year": 2024,
-     "why": "Main read: airway assessment, retrosternal goitre, induction plan, RLN monitoring, post-op complications.",
-     "url": "https://doi.org/10.1016/j.bjae.2024.04.004"
+      "date": "2026-11-03",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "65-year-old with alcoholic liver cirrhosis for laparoscopic umbilical hernia repair"
     },
     {
-     "title": "Management of haematoma after thyroid surgery (DAS / BAETS / ENT-UK guidelines)",
-     "journal": "Anaesthesia",
-     "year": 2021,
-     "why": "For the post-op discussion: SCOOP approach to neck haematoma.",
-     "url": "https://doi.org/10.1111/anae.15585"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-17",
-   "kind": "acad",
-   "short": "Regional",
-   "session": "Regional Anaesthesia",
-   "topic": "Intrathecal and epidural space anatomy; spinal and epidural techniques",
-   "read": [
-    {
-     "title": "Update on applied epidural anatomy",
-     "journal": "BJA Education",
-     "year": 2022,
-     "why": "Epidural space contents, ligaments, CSF and spread, with the technique implications.",
-     "url": "https://doi.org/10.1016/j.bjae.2021.12.006"
+      "date": "2026-11-04",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "50-year-old with supratentorial space-occupying lesion for craniotomy and evacuation"
     },
     {
-     "title": "Strategies for successful lumbar neuraxial anaesthesia in challenging anatomy",
-     "journal": "BJA Education",
-     "year": 2023,
-     "why": "Practical technique tips: positioning, approaches, ultrasound.",
-     "url": "https://doi.org/10.1016/j.bjae.2023.10.006"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-19",
-   "kind": "acad",
-   "short": "Group disc.",
-   "session": "Group Discussion",
-   "topic": "Intermediate pressure system of the anaesthesia machine: components and mechanisms",
-   "read": [
-    {
-     "title": "The basic anaesthesia machine",
-     "journal": "Indian Journal of Anaesthesia",
-     "year": 2013,
-     "why": "Free full text; walks through the high, intermediate and low pressure systems.",
-     "url": "https://doi.org/10.4103/0019-5049.120138"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-20",
-   "kind": "acad",
-   "short": "Faculty lecture",
-   "session": "Faculty Lecture",
-   "topic": "Anaesthesia for hepatic resection",
-   "read": [
-    {
-     "title": "Guidelines 2025: perioperative management of adults undergoing liver resection",
-     "journal": "Anaesth Crit Care Pain Med (SFAR)",
-     "year": 2026,
-     "why": "Up-to-date recommendations: low CVP, blood loss, analgesia, ERAS.",
-     "url": "https://doi.org/10.1016/j.accpm.2026.101879"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-24",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "28-year-old primigravida with severe mitral stenosis scheduled for caesarean delivery",
-   "read": [
-    {
-     "title": "Mitral stenosis and pregnancy: current concepts in anaesthetic practice",
-     "journal": "Indian Journal of Anaesthesia",
-     "year": 2010,
-     "why": "Physiology, labour analgesia, regional vs general for caesarean in MS.",
-     "url": "https://doi.org/10.4103/0019-5049.71043"
+      "date": "2026-11-06",
+      "kind": "acad",
+      "short": "Seminar",
+      "session": "Postgraduate Seminar",
+      "topic": "Neuromuscular physiology and monitoring"
     },
     {
-     "title": "Uterotonics in pregnant patients with cardiac disease: a focused review",
-     "journal": "Int J Obstetric Anesthesia",
-     "year": 2026,
-     "why": "Oxytocin and other uterotonics in cardiac patients, a common viva question.",
-     "url": "https://doi.org/10.1016/j.ijoa.2026.104891"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-26",
-   "kind": "acad",
-   "short": "Group disc.",
-   "session": "Group Discussion",
-   "topic": "Low pressure system of the anaesthesia machine: components and mechanism",
-   "read": [
+      "date": "2026-11-10",
+      "kind": "acad",
+      "short": "Group disc.",
+      "session": "Group Discussion",
+      "topic": "High pressure system: supply of medical gases"
+    },
     {
-     "title": "The basic anaesthesia machine",
-     "journal": "Indian Journal of Anaesthesia",
-     "year": 2013,
-     "why": "Low pressure section: flowmeters, hypoxic guard, vaporizers, common gas outlet.",
-     "url": "https://doi.org/10.4103/0019-5049.120138"
-    }
-   ]
-  },
-  {
-   "date": "2026-11-27",
-   "kind": "acad",
-   "short": "Regional",
-   "session": "Regional Anaesthesia",
-   "topic": "Segmental spinal anaesthesia; complications of spinal anaesthesia",
-   "read": [
+      "date": "2026-11-11",
+      "kind": "acad",
+      "short": "Journal club",
+      "session": "Journal Club",
+      "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
+    },
     {
-     "title": "Defining the role of thoracic spinal anaesthesia in the 21st century",
-     "journal": "British Journal of Anaesthesia",
-     "year": 2022,
-     "why": "Narrative review covering segmental/thoracic spinal technique and safety.",
-     "url": "https://doi.org/10.1016/j.bja.2022.03.008"
+      "date": "2026-11-13",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "55-year-old with large thyroid and retrosternal extension for total thyroidectomy",
+      "read": [
+        {
+          "title": "Anaesthesia for thyroid and parathyroid surgery",
+          "journal": "BJA Education",
+          "year": 2024,
+          "why": "Main read: airway assessment, retrosternal goitre, induction plan, RLN monitoring, post-op complications.",
+          "url": "https://doi.org/10.1016/j.bjae.2024.04.004"
+        },
+        {
+          "title": "Management of haematoma after thyroid surgery (DAS / BAETS / ENT-UK guidelines)",
+          "journal": "Anaesthesia",
+          "year": 2021,
+          "why": "For the post-op discussion: SCOOP approach to neck haematoma.",
+          "url": "https://doi.org/10.1111/anae.15585"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "acad",
+      "short": "Regional",
+      "session": "Regional Anaesthesia",
+      "topic": "Intrathecal and epidural space anatomy; spinal and epidural techniques",
+      "read": [
+        {
+          "title": "Update on applied epidural anatomy",
+          "journal": "BJA Education",
+          "year": 2022,
+          "why": "Epidural space contents, ligaments, CSF and spread, with the technique implications.",
+          "url": "https://doi.org/10.1016/j.bjae.2021.12.006"
+        },
+        {
+          "title": "Strategies for successful lumbar neuraxial anaesthesia in challenging anatomy",
+          "journal": "BJA Education",
+          "year": 2023,
+          "why": "Practical technique tips: positioning, approaches, ultrasound.",
+          "url": "https://doi.org/10.1016/j.bjae.2023.10.006"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "acad",
+      "short": "Group disc.",
+      "session": "Group Discussion",
+      "topic": "Intermediate pressure system of the anaesthesia machine: components and mechanisms",
+      "read": [
+        {
+          "title": "The basic anaesthesia machine",
+          "journal": "Indian Journal of Anaesthesia",
+          "year": 2013,
+          "why": "Free full text; walks through the high, intermediate and low pressure systems.",
+          "url": "https://doi.org/10.4103/0019-5049.120138"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "acad",
+      "short": "Faculty lecture",
+      "session": "Faculty Lecture",
+      "topic": "Anaesthesia for hepatic resection",
+      "read": [
+        {
+          "title": "Guidelines 2025: perioperative management of adults undergoing liver resection",
+          "journal": "Anaesth Crit Care Pain Med (SFAR)",
+          "year": 2026,
+          "why": "Up-to-date recommendations: low CVP, blood loss, analgesia, ERAS.",
+          "url": "https://doi.org/10.1016/j.accpm.2026.101879"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "28-year-old primigravida with severe mitral stenosis scheduled for caesarean delivery",
+      "read": [
+        {
+          "title": "Mitral stenosis and pregnancy: current concepts in anaesthetic practice",
+          "journal": "Indian Journal of Anaesthesia",
+          "year": 2010,
+          "why": "Physiology, labour analgesia, regional vs general for caesarean in MS.",
+          "url": "https://doi.org/10.4103/0019-5049.71043"
+        },
+        {
+          "title": "Uterotonics in pregnant patients with cardiac disease: a focused review",
+          "journal": "Int J Obstetric Anesthesia",
+          "year": 2026,
+          "why": "Oxytocin and other uterotonics in cardiac patients, a common viva question.",
+          "url": "https://doi.org/10.1016/j.ijoa.2026.104891"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-26",
+      "kind": "acad",
+      "short": "Group disc.",
+      "session": "Group Discussion",
+      "topic": "Low pressure system of the anaesthesia machine: components and mechanism",
+      "read": [
+        {
+          "title": "The basic anaesthesia machine",
+          "journal": "Indian Journal of Anaesthesia",
+          "year": 2013,
+          "why": "Low pressure section: flowmeters, hypoxic guard, vaporizers, common gas outlet.",
+          "url": "https://doi.org/10.4103/0019-5049.120138"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-27",
+      "kind": "acad",
+      "short": "Regional",
+      "session": "Regional Anaesthesia",
+      "topic": "Segmental spinal anaesthesia; complications of spinal anaesthesia",
+      "read": [
+        {
+          "title": "Defining the role of thoracic spinal anaesthesia in the 21st century",
+          "journal": "British Journal of Anaesthesia",
+          "year": 2022,
+          "why": "Narrative review covering segmental/thoracic spinal technique and safety.",
+          "url": "https://doi.org/10.1016/j.bja.2022.03.008"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-30",
+      "kind": "exam",
+      "short": "OSCE",
+      "session": "OSCE test / quiz",
+      "topic": ""
+    },
+    {
+      "date": "2026-12-02",
+      "kind": "acad",
+      "short": "Guest lecture",
+      "session": "Guest Lecture",
+      "topic": "Perioperative management of a patient with a pacemaker and ICD",
+      "read": [
+        {
+          "title": "Perioperative management of patients with cardiac implantable electronic devices",
+          "journal": "Korean J Anesthesiol",
+          "year": 2024,
+          "why": "Free review: pacemaker vs ICD, pre-op interrogation, magnet use, reprogramming, diathermy precautions.",
+          "url": "https://doi.org/10.4097/kja.23826"
+        },
+        {
+          "title": "Periprocedural management and multidisciplinary care pathways for patients with cardiac implantable electronic devices (AHA scientific statement)",
+          "journal": "Circulation",
+          "year": 2024,
+          "why": "Current consensus on when to reprogramme, suspend tachy-therapies and re-check after surgery.",
+          "url": "https://doi.org/10.1161/CIR.0000000000001264"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-04",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "65-year-old chronic smoker with persistent cough, known COPD, for laparoscopic cholecystectomy",
+      "read": [
+        {
+          "title": "Postoperative pulmonary complications",
+          "journal": "British Journal of Anaesthesia",
+          "year": 2017,
+          "why": "Risk factors (COPD, smoking, laparoscopy), prediction and prevention strategies for the case discussion.",
+          "url": "https://doi.org/10.1093/bja/aex002"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-07",
+      "kind": "acad",
+      "short": "Group disc.",
+      "session": "Group Discussion",
+      "topic": "Paediatric crisis management: stridor, perioperative anaphylaxis, local anaesthetic systemic toxicity",
+      "read": [
+        {
+          "title": "Perioperative anaphylaxis: pathophysiology, clinical presentation and management",
+          "journal": "BJA Education",
+          "year": 2019,
+          "why": "Recognition, grading, adrenaline dosing, tryptase timing and referral.",
+          "url": "https://doi.org/10.1016/j.bjae.2019.06.002"
+        },
+        {
+          "title": "The third ASRA practice advisory on local anesthetic systemic toxicity: executive summary 2017",
+          "journal": "Reg Anesth Pain Med",
+          "year": 2018,
+          "why": "LAST prevention, signs, and lipid emulsion protocol (includes paediatric doses by weight).",
+          "url": "https://doi.org/10.1097/AAP.0000000000000720"
+        },
+        {
+          "title": "Stridor in the infant patient",
+          "journal": "Pediatr Clin North Am",
+          "year": 2022,
+          "why": "Causes of infant stridor by site and the approach to airway evaluation.",
+          "url": "https://doi.org/10.1016/j.pcl.2021.12.003"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-08",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "70-year-old with CKD on twice-weekly dialysis and bowel obstruction for emergency laparotomy",
+      "read": [
+        {
+          "title": "Chronic kidney disease and anaesthesia",
+          "journal": "BJA Education",
+          "year": 2022,
+          "why": "Main read: CKD physiology, dialysis timing, potassium, drug choice, fluids and vascular access care.",
+          "url": "https://doi.org/10.1016/j.bjae.2022.03.005"
+        },
+        {
+          "title": "Management of the patient presenting for emergency laparotomy",
+          "journal": "BJA Education",
+          "year": 2019,
+          "why": "Risk scoring, timing, RSI, goal-directed fluids and post-op critical care for the laparotomy part.",
+          "url": "https://doi.org/10.1016/j.bjae.2018.12.002"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-10",
+      "kind": "acad",
+      "short": "Seminar",
+      "session": "Postgraduate Seminar",
+      "topic": "Scavenging systems",
+      "read": [
+        {
+          "title": "Environmental and occupational considerations of anesthesia: a narrative review and update",
+          "journal": "Anesth Analg",
+          "year": 2021,
+          "why": "Free review: waste anaesthetic gases, exposure limits and the role of scavenging systems.",
+          "url": "https://doi.org/10.1213/ANE.0000000000005504"
+        },
+        {
+          "title": "Scavenging in the operating room",
+          "journal": "Curr Opin Anaesthesiol",
+          "year": 2003,
+          "why": "Older but focused: how waste gas escapes and how active/passive scavenging removes it.",
+          "url": "https://doi.org/10.1097/00001503-200312000-00007"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-11",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "45-year-old man with 40% thermal burns for tangential excision",
+      "read": [
+        {
+          "title": "Major burns: Part 1. Epidemiology, pathophysiology and initial management",
+          "journal": "BJA Education",
+          "year": 2022,
+          "why": "Burn physiology, TBSA, fluid resuscitation and airway/inhalation injury.",
+          "url": "https://doi.org/10.1016/j.bjae.2021.10.001"
+        },
+        {
+          "title": "Major burns: part 2. Anaesthesia, intensive care and pain management",
+          "journal": "BJA Education",
+          "year": 2022,
+          "why": "Main read for the case: anaesthesia for excision, blood loss, temperature, suxamethonium, analgesia.",
+          "url": "https://doi.org/10.1016/j.bjae.2022.01.001"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-15",
+      "kind": "acad",
+      "short": "Regional",
+      "session": "Regional Anaesthesia",
+      "topic": "Regional innervation and analgesia strategies for shoulder surgery",
+      "read": [
+        {
+          "title": "Regional anaesthesia for shoulder surgery",
+          "journal": "BJA Education",
+          "year": 2019,
+          "why": "Shoulder innervation, interscalene block and diaphragm-sparing alternatives.",
+          "url": "https://doi.org/10.1016/j.bjae.2018.12.004"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-17",
+      "kind": "acad",
+      "short": "Faculty lecture",
+      "session": "Faculty Lecture",
+      "topic": "Anaesthesia for organ donors",
+      "read": [
+        {
+          "title": "Perioperative management of the organ donor after diagnosis of death using neurological criteria",
+          "journal": "BJA Education",
+          "year": 2021,
+          "why": "Main read: physiology after brainstem death and intra-op donor optimisation targets.",
+          "url": "https://doi.org/10.1016/j.bjae.2021.01.001"
+        },
+        {
+          "title": "Two fundamental ethical and legal rules for deceased organ donation",
+          "journal": "BJA Education",
+          "year": 2021,
+          "why": "Dead donor rule, consent, DBD vs DCD for the viva questions.",
+          "url": "https://doi.org/10.1016/j.bjae.2021.03.003"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-18",
+      "kind": "acad",
+      "short": "Seminar",
+      "session": "Postgraduate Seminar",
+      "topic": "Management of a patient with an intercostal drain",
+      "read": [
+        {
+          "title": "British Thoracic Society Guideline for pleural disease",
+          "journal": "Thorax",
+          "year": 2023,
+          "why": "Current guideline on chest drain indications, insertion, safety and management.",
+          "url": "https://doi.org/10.1136/thorax-2022-219784"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-21",
+      "kind": "acad",
+      "short": "Clancon",
+      "session": "Clancon",
+      "topic": ""
+    },
+    {
+      "date": "2026-12-22",
+      "kind": "acad",
+      "short": "Journal club",
+      "session": "Journal Club",
+      "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
+    },
+    {
+      "date": "2026-12-23",
+      "kind": "acad",
+      "short": "Case",
+      "session": "Case Presentation",
+      "topic": "37-year-old primigravida with pregnancy-induced hypertension",
+      "read": [
+        {
+          "title": "Update on hypertensive disorders in pregnancy",
+          "journal": "BJA Education",
+          "year": 2020,
+          "why": "Classification, BP control, magnesium, and anaesthetic plan for pre-eclampsia.",
+          "url": "https://doi.org/10.1016/j.bjae.2020.07.007"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-29",
+      "kind": "acad",
+      "short": "Regional",
+      "session": "Regional Anaesthesia",
+      "topic": "Regional innervation and analgesia strategies for total hip and knee replacement",
+      "read": [
+        {
+          "title": "Perioperative care of patients undergoing total hip arthroplasty",
+          "journal": "BJA Education",
+          "year": 2024,
+          "why": "Spinal vs GA, hip blocks (PENG, fascia iliaca) and multimodal analgesia.",
+          "url": "https://doi.org/10.1016/j.bjae.2024.03.002"
+        },
+        {
+          "title": "Anaesthesia and analgesia for total knee arthroplasty",
+          "journal": "BJA Education",
+          "year": 2026,
+          "why": "Newest review: adductor canal, iPACK, LIA and ERAS for TKA.",
+          "url": "https://doi.org/10.1016/j.bjae.2026.03.004"
+        },
+        {
+          "title": "Innervation of the hip joint: implications for regional anaesthesia",
+          "journal": "BJA Education",
+          "year": 2024,
+          "why": "The hip's nerve supply, which explains why each block works.",
+          "url": "https://doi.org/10.1016/j.bjae.2024.02.005"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-30",
+      "kind": "exam",
+      "short": "OSCE",
+      "session": "OSCE test / quiz",
+      "topic": ""
     }
-   ]
-  },
-  {
-   "date": "2026-11-30",
-   "kind": "exam",
-   "short": "OSCE",
-   "session": "OSCE test / quiz",
-   "topic": ""
-  },
-  {
-   "date": "2026-12-02",
-   "kind": "acad",
-   "short": "Guest lecture",
-   "session": "Guest Lecture",
-   "topic": "Perioperative management of a patient with a pacemaker and ICD"
-  },
-  {
-   "date": "2026-12-04",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "65-year-old chronic smoker with persistent cough, known COPD, for laparoscopic cholecystectomy"
-  },
-  {
-   "date": "2026-12-07",
-   "kind": "acad",
-   "short": "Group disc.",
-   "session": "Group Discussion",
-   "topic": "Paediatric crisis management: stridor, perioperative anaphylaxis, local anaesthetic systemic toxicity"
-  },
-  {
-   "date": "2026-12-08",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "70-year-old with CKD on twice-weekly dialysis and bowel obstruction for emergency laparotomy"
-  },
-  {
-   "date": "2026-12-10",
-   "kind": "acad",
-   "short": "Seminar",
-   "session": "Postgraduate Seminar",
-   "topic": "Scavenging systems"
-  },
-  {
-   "date": "2026-12-11",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "45-year-old man with 40% thermal burns for tangential excision"
-  },
-  {
-   "date": "2026-12-15",
-   "kind": "acad",
-   "short": "Regional",
-   "session": "Regional Anaesthesia",
-   "topic": "Regional innervation and analgesia strategies for shoulder surgery"
-  },
-  {
-   "date": "2026-12-17",
-   "kind": "acad",
-   "short": "Faculty lecture",
-   "session": "Faculty Lecture",
-   "topic": "Anaesthesia for organ donors"
-  },
-  {
-   "date": "2026-12-18",
-   "kind": "acad",
-   "short": "Seminar",
-   "session": "Postgraduate Seminar",
-   "topic": "Management of a patient with an intercostal drain"
-  },
-  {
-   "date": "2026-12-21",
-   "kind": "acad",
-   "short": "Clancon",
-   "session": "Clancon",
-   "topic": ""
-  },
-  {
-   "date": "2026-12-22",
-   "kind": "acad",
-   "short": "Journal club",
-   "session": "Journal Club",
-   "topic": "Original article (Scopus-indexed Q1/Q2 journal, 2023 to 2026)"
-  },
-  {
-   "date": "2026-12-23",
-   "kind": "acad",
-   "short": "Case",
-   "session": "Case Presentation",
-   "topic": "37-year-old primigravida with pregnancy-induced hypertension"
-  },
-  {
-   "date": "2026-12-29",
-   "kind": "acad",
-   "short": "Regional",
-   "session": "Regional Anaesthesia",
-   "topic": "Regional innervation and analgesia strategies for total hip and knee replacement"
-  },
-  {
-   "date": "2026-12-30",
-   "kind": "exam",
-   "short": "OSCE",
-   "session": "OSCE test / quiz",
-   "topic": ""
-  }
- ]
+  ]
 }
