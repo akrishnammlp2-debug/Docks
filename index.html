@@ -1650,7 +1650,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.63 · daily bite revision';
+const APP_VERSION = '5.64 · Brain dump at the top';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
@@ -2292,6 +2292,7 @@ function pageToday() {
   const pic = heroPics.length ? heroPics[heroIdx % heroPics.length] : ''; const ph = skyPhase();
   let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   h += igPill();
+  h += dumpCard();
   h += todoSiren();
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   if (up) {
@@ -2303,7 +2304,6 @@ function pageToday() {
   h += bkNudge();
   h += weekCard();
   h += biteRevCard();
-  h += dumpCard();
   h += battCard();
   h += catTodayCard();
   h += habitCard();
