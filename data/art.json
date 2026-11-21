@@ -1,326 +1,372 @@
 {
-  "updated": "2026-11-20",
-  "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
-  "today": {
-    "date": "2026-11-20",
-    "title": "The Birth of Venus",
-    "artist": "Sandro Botticelli",
-    "artistLife": "Italian (Florentine), 1445–1510",
-    "year": "c. 1485",
-    "medium": "Tempera on canvas",
-    "size": "172.5 × 278.5 cm (about 1.7 m by 2.8 m, wider than a double bed)",
-    "where": "Uffizi Gallery, Florence, Italy",
-    "movement": "Early Italian Renaissance",
-    "fame": "famous",
-    "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
-      "credit": "Uffizi Gallery, public domain (image: Wikimedia Commons)",
-      "focus": "center 35%"
-    },
-    "sections": [
-      {
-        "h": "The painting",
-        "p": "The Roman goddess of love, Venus, has just arrived on the shore of Cyprus, standing on a giant scallop shell. On the left, the wind god Zephyr, wrapped around a female figure, blows her gently ashore with a shower of roses. On the right, a young woman in a flowery dress hurries forward with a cloak to cover her."
-      },
-      {
-        "h": "The artist",
-        "p": "Botticelli was a Florentine painter who worked in the city's busy workshops and became one of the best-loved painters of his generation. He is known for graceful figures drawn with a flowing, elegant outline. This picture and his \"Primavera\" are his two most famous mythological works."
-      },
-      {
-        "h": "The time",
-        "p": "Florence in the late 1400s was a rich trading city where powerful families like the Medici paid for art and for scholars who were rediscovering ancient Greek and Roman stories. The Uffizi says a Medici commission is very likely, though nothing is written about the painting until 1550, when the biographer Vasari saw it at a Medici villa near Florence. The poet Agnolo Poliziano, who moved in those circles, may have suggested the subject. Painting a nearly life-size nude goddess from classical myth, not a saint, was a bold thing at the time."
-      },
-      {
-        "h": "What's special",
-        "p": "Most paintings of this period were on wooden panels, but this one is on canvas, a cheaper and lighter surface often used for decorative works in noble homes. Botticelli used tempera (pigment mixed with egg), which gives soft, matte colour, and added fine gold highlights in Venus's hair and in the trees. Her pose echoes ancient statues, and the embracing winds copy an ancient carved gem owned by Lorenzo de' Medici. The figures look almost weightless and the space is flat, more like a beautiful pattern than a window onto a real place."
-      },
-      {
-        "h": "Look for",
-        "p": "Trace Venus's long hair: it swirls down and the tips are touched with gold. Then look at the wind-blown roses and the shell edge, and notice how the sea is drawn as neat repeating little waves, like a decorative pattern."
-      }
-    ],
-    "source": {
-      "title": "Uffizi Galleries",
-      "url": "https://www.uffizi.it/en/artworks/birth-of-venus"
-    }
+ "updated": "2026-11-21",
+ "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
+ "today": {
+  "date": "2026-11-21",
+  "title": "The Lovers",
+  "artist": "Reza Abbasi (Riza-yi 'Abbasi)",
+  "artistLife": "Persian (Safavid Iran), c. 1565–1635",
+  "year": "1630",
+  "medium": "Opaque watercolour, ink and gold on paper",
+  "size": "17.5 × 11.1 cm (small enough to hold in one hand, like a book page)",
+  "where": "The Metropolitan Museum of Art, New York",
+  "movement": "Safavid Persian painting (Isfahan school)",
+  "fame": "hidden gem",
+  "image": {
+   "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Reza_Abbasi_-_Two_Lovers_(1630).jpg?width=1200",
+   "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Reza_Abbasi_-_Two_Lovers_(1630).jpg?width=300",
+   "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Reza_Abbasi_-_Two_Lovers_(1630).jpg?width=2400",
+   "page": "https://commons.wikimedia.org/wiki/File:Reza_Abbasi_-_Two_Lovers_(1630).jpg",
+   "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+   "focus": "center 40%"
   },
-  "history": [
+  "sections": [
+   {
+    "h": "The painting",
+    "p": "Two young people sit pressed close together, so close that their bodies seem to melt into a single shape. She leans back against him while he holds her; both look calm and a little distant rather than excited. Around them are drifting clouds, flowers and trees, and at their feet a wine carafe and a half-eaten plate of fruit."
+   },
+   {
+    "h": "The artist",
+    "p": "Reza Abbasi was one of the greatest painters of Safavid Iran, working at the royal court in Isfahan. He was famous for drawing with a lively, calligraphy-like line, the way a master penman writes, and for unusual colour choices. This picture is dated 1630, painted late in a long career."
+   },
+   {
+    "h": "The time",
+    "p": "In the 1600s Isfahan was a splendid new capital, rich from silk trade and filled with court artists, poets and calligraphers. Persian painters of the day often made single pages for albums that collectors flipped through, rather than illustrations for long books. The Met notes that the relaxed attitude to pleasure and sensuality under Shah Safi, who ruled from 1629, helps explain a subject like this."
+   },
+   {
+    "h": "What's special",
+    "p": "The big idea here is the outline. Instead of two separate figures, Reza Abbasi wraps them in one flowing contour, so their shapes merge into a kind of swirl. Dark, rich clothing stands out against a brown ground touched with gold, a quiet colour scheme that feels modern even now. It is tiny, yet the confident curves make it feel monumental."
+   },
+   {
+    "h": "Look for",
+    "p": "Follow the single curving line that runs around both bodies and see where one person ends and the other begins. Then spot the small still life at their feet, the wine carafe and the fruit, and the gold highlights glinting on the clothes."
+   }
+  ],
+  "source": {
+   "title": "The Metropolitan Museum of Art",
+   "url": "https://www.metmuseum.org/toah/works-of-art/50.164"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-11-20",
+   "title": "The Birth of Venus",
+   "artist": "Sandro Botticelli",
+   "artistLife": "Italian (Florentine), 1445–1510",
+   "year": "c. 1485",
+   "medium": "Tempera on canvas",
+   "size": "172.5 × 278.5 cm (about 1.7 m by 2.8 m, wider than a double bed)",
+   "where": "Uffizi Gallery, Florence, Italy",
+   "movement": "Early Italian Renaissance",
+   "fame": "famous",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
+    "credit": "Uffizi Gallery, public domain (image: Wikimedia Commons)",
+    "focus": "center 35%"
+   },
+   "sections": [
     {
-      "date": "2026-11-19",
-      "title": "Early Autumn",
-      "artist": "Qian Xuan (attributed)",
-      "artistLife": "Chinese, born 1235 – died 1305",
-      "year": "late 13th–14th century",
-      "medium": "Handscroll, ink, watercolour and gold on paper",
-      "size": "Painting section 26.7 × 120.7 cm, about as tall as a school ruler is long and roughly a metre and a bit wide",
-      "where": "Detroit Institute of Arts, Detroit (not currently on view)",
-      "movement": "Song–Yuan transition, Chinese bird-and-flower / insect painting",
-      "fame": "hidden gem",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=2400",
-        "page": "https://commons.wikimedia.org/wiki/File:Qian_Xuan_-_Early_Autumn.jpg",
-        "credit": "Detroit Institute of Arts, public domain (image: Wikimedia Commons)",
-        "focus": "center 50%"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "A quiet patch of marsh at the turn of the season. Reeds and wilting leaves bend over the ground, and tiny creatures are scattered through them: a dragonfly, a grasshopper, a frog waiting in the grass. The scene is small and calm, but if you look closely there is a little drama too, since some of these insects are hunting each other."
-        },
-        {
-          "h": "The artist",
-          "p": "Qian Xuan lived from 1235 to 1305 in Huzhou, in what is now Zhejiang province, and he first trained to become a government official. When the Mongols took over southern China in 1276 and set up the Yuan dynasty, he gave up that path and turned to painting. His friend Zhao Mengfu took a post with the new rulers, but Qian declined to follow, so he is remembered as a loyalist to the fallen Song dynasty. The Detroit museum lists this scroll as 'attributed to' him, meaning experts are not completely certain it is his own hand."
-        },
-        {
-          "h": "The time",
-          "p": "China was going through one of the biggest shake-ups in its history, as foreign Mongol rulers replaced the Song court that educated people had served for generations. Many scholars chose to stay away from public life and expressed their feelings through art instead. Small, humble subjects like insects, flowers and grass could carry quiet hidden meanings that were safer to hint at than to say out loud."
-        },
-        {
-          "h": "What's special",
-          "p": "The delicate brushwork is wonderfully precise: every blade of grass, veined leaf and insect wing is drawn with a fine line and soft colour. Some viewers read the wilting leaves and the predators as a gentle sign that a season, and perhaps a whole age, is ending. The scroll is also much longer than the picture itself, because admirers added poems and seals over the centuries, so you read it like a book of reactions. The full roll is over ten metres long, mostly made up of these added writings."
-        },
-        {
-          "h": "Look for",
-          "p": "Find the dragonfly eating a smaller fly, and the frog sitting very still nearby as if waiting its turn. Then look at the leaves, where some are fresh and some are browned and curling, as if autumn is just beginning."
-        }
-      ],
-      "source": {
-        "title": "Detroit Institute of Arts",
-        "url": "https://dia.org/collection/early-autumn/57885"
-      }
+     "h": "The painting",
+     "p": "The Roman goddess of love, Venus, has just arrived on the shore of Cyprus, standing on a giant scallop shell. On the left, the wind god Zephyr, wrapped around a female figure, blows her gently ashore with a shower of roses. On the right, a young woman in a flowery dress hurries forward with a cloak to cover her."
     },
     {
-      "date": "2026-11-18",
-      "title": "Las Meninas (The Maids of Honour)",
-      "artist": "Diego Velázquez",
-      "artistLife": "Spanish, born 1599 – died 1660",
-      "year": "1656",
-      "medium": "Oil on canvas",
-      "size": "318 × 276 cm, taller than a doorway and nearly square, so the figures are about life-size",
-      "where": "Museo Nacional del Prado, Madrid",
-      "movement": "Spanish Baroque (Golden Age)",
-      "fame": "famous",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=2400",
-        "page": "https://commons.wikimedia.org/wiki/File:Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg",
-        "credit": "Museo Nacional del Prado, public domain (image: Wikimedia Commons)",
-        "focus": "center 45%"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "We are looking into a big room in the royal palace in Madrid. A little five-year-old princess, the Infanta Margarita Teresa, stands in the brightest light, with two young ladies-in-waiting fussing around her (they are the 'meninas' of the title). On the right, two court dwarfs and a sleepy mastiff share the corner, and on the left the painter himself stands at a giant canvas, brush in hand, looking straight out at us."
-        },
-        {
-          "h": "The artist",
-          "p": "Diego Velázquez was born in Seville and trained there under the painter Francisco Pacheco, whose daughter he later married. In 1623 he was called to Madrid and soon became the favourite painter of King Philip IV, eventually holding important court jobs beyond painting. He travelled to Italy twice to study art and buy works for the king. He wanted very much to be accepted into the Order of Santiago, a noble knighthood, and finally was in 1659."
-        },
-        {
-          "h": "The time",
-          "p": "Spain in the 1650s was still a vast empire, but it was tired and short of money after decades of war in Europe. King Philip IV was a serious art lover, and he gave his court painter a spacious room in the palace to use as a studio. The painting was made for the king's private rooms rather than for the public, and was hung in the palace for generations. It was damaged in the 1734 fire that destroyed that palace, was repaired, and joined the Prado when the museum opened in 1819."
-        },
-        {
-          "h": "What's special",
-          "p": "Velázquez paints with loose, quick strokes that look messy up close and snap into perfect fabric, light and air when you step back. The room feels so deep that visitors often feel the space continues into the gallery where they stand. The picture is also a clever puzzle: the king and queen appear only as tiny reflections in the back mirror, so we seem to be standing where they are. Many people read it as Velázquez arguing that painting is a noble art, not just a craft."
-        },
-        {
-          "h": "Look for",
-          "p": "Find the small mirror on the back wall with the faint faces of King Philip IV and Queen Mariana. Then spot the man standing in the bright doorway behind, who looks like he is about to leave or has just walked in. Finally, look at the red cross on the painter's chest: it was added after he died, as a tribute to the honour he longed for."
-        }
-      ],
-      "source": {
-        "title": "Museo Nacional del Prado",
-        "url": "https://www.museodelprado.es/en/the-collection/art-work/las-meninas/9fdc7800-9ade-48b0-ab8b-edee94ea877f"
-      }
+     "h": "The artist",
+     "p": "Botticelli was a Florentine painter who worked in the city's busy workshops and became one of the best-loved painters of his generation. He is known for graceful figures drawn with a flowing, elegant outline. This picture and his \"Primavera\" are his two most famous mythological works."
     },
     {
-      "date": "2026-11-17",
-      "title": "Squirrels in a Plane Tree",
-      "artist": "Abu'l Hasan (attributed)",
-      "artistLife": "Mughal Indian, born c. 1589 – died c. 1630",
-      "year": "c. 1605–1610",
-      "medium": "Opaque watercolour (gouache) with gold on paper",
-      "size": "36 × 22 cm, about the size of a large paperback book",
-      "where": "British Library, London",
-      "movement": "Mughal painting, Jahangir period",
-      "fame": "hidden gem",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=2400",
-        "page": "https://commons.wikimedia.org/wiki/File:6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg",
-        "credit": "British Library, public domain (image: Wikimedia Commons)",
-        "focus": "center 40%"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "A huge plane tree (the Indian name is chinar) fills the page, its leaves glowing red, orange and green against a sky of beaten gold. Squirrels leap, chatter and cling all through the branches, while birds swoop in the open gaps. At the bottom, a barefoot man in a woollen tunic and fur hat has just started to climb the trunk, and goats, deer and a heron rest nearby, mostly unbothered."
-        },
-        {
-          "h": "The artist",
-          "p": "Abu'l Hasan was born around 1589 into a family of painters; his father, Aqa Riza, had come from Herat in Iran to work for the Mughal court. Abu'l Hasan grew up alongside the future emperor Jahangir, who adored his work and gave him grand honorary titles, calling him one of the wonders of his age. The British Library notes that the attribution here is a little uncertain, and some scholars think the older painter Mansur may have helped."
-        },
-        {
-          "h": "The time",
-          "p": "India in the early 1600s was ruled by the Mughal dynasty, and Emperor Jahangir was famously curious about the natural world. He kept menageries, ordered paintings of unusual animals and plants, and wanted what artists drew to look exactly like what they saw. Court painters had also been studying European prints that reached India, which gave them new ideas about shading and depth."
-        },
-        {
-          "h": "What's special",
-          "p": "The artist painted with fine brushes in opaque watercolour, then added gold for the sky, so the whole scene glows like a jewel. The squirrels' tails repeat in curling rhythms that echo the branches, and each animal is shown with careful, lifelike detail. Nobody is sure what the picture means: it may be a gentle story about humans disturbing nature, a tree-of-life image, or simply a celebration of the wild."
-        },
-        {
-          "h": "Look for",
-          "p": "Spot the barefoot man at the base of the trunk and ask what he wants from those squirrels. Then see how many squirrels you can count, and notice the thin strip of blue at the very top of the golden sky."
-        }
-      ],
-      "source": {
-        "title": "British Library, Johnson Album 1,30",
-        "url": "https://searcharchives.bl.uk/catalog/041-003286485"
-      }
+     "h": "The time",
+     "p": "Florence in the late 1400s was a rich trading city where powerful families like the Medici paid for art and for scholars who were rediscovering ancient Greek and Roman stories. The Uffizi says a Medici commission is very likely, though nothing is written about the painting until 1550, when the biographer Vasari saw it at a Medici villa near Florence. The poet Agnolo Poliziano, who moved in those circles, may have suggested the subject. Painting a nearly life-size nude goddess from classical myth, not a saint, was a bold thing at the time."
     },
     {
-      "date": "2026-11-16",
-      "title": "The Heart of the Andes",
-      "artist": "Frederic Edwin Church",
-      "artistLife": "American, 1826–1900",
-      "year": "1859",
-      "medium": "Oil on canvas",
-      "size": "168 × 303 cm (about three metres wide, like a cinema screen for its day)",
-      "where": "The Metropolitan Museum of Art, New York",
-      "movement": "Hudson River School, American landscape painting",
-      "fame": "famous",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=2400",
-        "page": "https://commons.wikimedia.org/wiki/File:Church_Heart_of_the_Andes.jpg",
-        "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
-        "focus": "center 45%"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "A whole South American world squeezed into one huge canvas. Snowy volcanic peaks glow far away, a waterfall tumbles into a bright pool at the right, and in the foreground there are palms, flowers, birds and butterflies. Two tiny figures kneel by a wooden cross at the left, so small that you almost miss them."
-        },
-        {
-          "h": "The artist",
-          "p": "Frederic Church grew up in Connecticut and studied under Thomas Cole, the founder of the Hudson River School. He became the most famous American landscape painter of his generation. He travelled to Colombia and Ecuador in 1853 and 1857, filling sketchbooks with plants, rocks, clouds and mountains."
-        },
-        {
-          "h": "The time",
-          "p": "In the 1850s, the German naturalist Alexander von Humboldt was a hero to many readers. He had described how one mountain could hold every climate, from steamy jungle at the bottom to ice at the top, and Church set out to follow his footsteps. The painting is not one real view but a made-up mix of places he had seen. When it was shown in New York in 1859, thousands of people paid 25 cents to see it, and it helped make Church the leading American landscape painter. He later sold it for $10,000, a record for a living American artist then."
-        },
-        {
-          "h": "What's special",
-          "p": "Church mixed scientific accuracy with theatre. Every plant and rock is painted with a botanist's care, yet the scene is arranged like a stage set, with warm light on the left and cool distance on the right. It was shown alone in a darkened room with a window-like frame, and visitors were given opera glasses to look at the details. It was meant to feel less like looking at a picture and more like looking out of a window."
-        },
-        {
-          "h": "Look for",
-          "p": "Find the two small figures and the cross at the far left, then follow the stream into the middle of the picture and up the waterfall. Bring your eyes right up close to the leaves and flowers in the foreground: every one is painted individually."
-        }
-      ],
-      "source": {
-        "title": "The Metropolitan Museum of Art",
-        "url": "https://www.metmuseum.org/art/collection/search/10481"
-      }
+     "h": "What's special",
+     "p": "Most paintings of this period were on wooden panels, but this one is on canvas, a cheaper and lighter surface often used for decorative works in noble homes. Botticelli used tempera (pigment mixed with egg), which gives soft, matte colour, and added fine gold highlights in Venus's hair and in the trees. Her pose echoes ancient statues, and the embracing winds copy an ancient carved gem owned by Lorenzo de' Medici. The figures look almost weightless and the space is flat, more like a beautiful pattern than a window onto a real place."
     },
     {
-      "date": "2026-11-15",
-      "title": "Old Plum",
-      "artist": "Kano Sansetsu",
-      "artistLife": "Japanese, 1590–1651",
-      "year": "1646",
-      "medium": "Ink, colour, gold and gold leaf on paper, painted across four sliding doors (fusuma)",
-      "size": "174.6 × 485.5 cm (almost five metres wide: once a whole wall of a room)",
-      "where": "The Metropolitan Museum of Art, New York",
-      "movement": "Kano school, early Edo period (Japan)",
-      "fame": "hidden gem",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=2400",
-        "page": "https://commons.wikimedia.org/wiki/File:老梅図襖-Old_Plum_MET_DT229.jpg",
-        "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
-        "focus": "center 60%"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "One ancient plum tree sprawls across four sliding doors. Its huge, mossy black trunk heaves in from the lower right and snakes left over a field of shimmering gold, while thin twigs carry small white blossoms that look almost frozen in the cold. It is the very start of spring: the old tree is flowering again."
-        },
-        {
-          "h": "The artist",
-          "p": "Kano Sansetsu was born in Kyushu, trained under the painter Kano Sanraku, married his daughter and was adopted as his heir. He went on to lead the Kyoto branch of the Kano family, Japan's most powerful dynasty of painters. Writers describe him as a bit of an eccentric, a bookish collector who liked strange, twisting forms, and later rebels such as Ito Jakuchu are sometimes seen as his artistic grandchildren."
-        },
-        {
-          "h": "The time",
-          "p": "In the early 1600s the Tokugawa shoguns took over Japan and moved power to Edo (today's Tokyo). The family's star painters followed them there and developed a cooler, more delicate style, but Sanraku had been close to the defeated Toyotomi clan, so his branch stayed behind in Kyoto and kept the bold, oversized look of the previous generation. This wall was commissioned by a young lord, Matsudaira Tadahiro, for Tensho-in, a small Zen temple he founded in Kyoto in memory of his father, a grandson of the first Tokugawa shogun."
-        },
-        {
-          "h": "What's special",
-          "p": "Gold leaf was not just showing off: in dim temple rooms lit by paper screens and lamps, it caught every bit of light and made the room glow. Because the painting is on doors, it was meant to be lived in, so you would see the tree grow and change as you walked past or slid the panels open. The temple burned in the 1880s and only these four panels survived; they were trimmed down, separated from their back side (now in Minneapolis), and the Met later built a traditional Japanese room just to show them."
-        },
-        {
-          "h": "Look for",
-          "p": "Green lichen crusting the old trunk, next to tall, pillar-like rocks and low bamboo grass at the lower right. Just behind the rock, a branch from a second tree sneaks in with pink blossoms instead of white. At the far left edge, azalea leaves hint that the story once carried on into summer on the missing doors."
-        }
-      ],
-      "source": {
-        "title": "The Metropolitan Museum of Art",
-        "url": "https://www.metmuseum.org/art/collection/search/44858"
-      }
-    },
-    {
-      "date": "2026-11-14",
-      "title": "Paris Street; Rainy Day",
-      "artist": "Gustave Caillebotte",
-      "artistLife": "French, 1848–1894",
-      "year": "1877",
-      "medium": "Oil on canvas",
-      "size": "212 × 276 cm (the people are nearly life-size)",
-      "where": "Art Institute of Chicago",
-      "movement": "Impressionism, with a Realist finish",
-      "fame": "famous",
-      "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=1200",
-        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=300",
-        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=2400",
-        "credit": "Art Institute of Chicago, public domain (image: Wikimedia Commons)"
-      },
-      "sections": [
-        {
-          "h": "The painting",
-          "p": "A damp afternoon at a big crossroads near the Gare Saint-Lazare in Paris. Well-dressed couples stroll under near-identical umbrellas on the wet, shiny cobbles while a tall green lamppost splits the canvas down the middle. It was Caillebotte's largest and most ambitious work."
-        },
-        {
-          "h": "The artist",
-          "p": "Caillebotte trained as an engineer and lawyer before turning to painting. He was rich, and used that money to rent exhibition halls and buy paintings from struggling friends like Monet, Renoir and Pissarro. When he died at 45 he left his collection to France, and after a long row the state accepted much of it. That gift became the heart of the Impressionist rooms at the Musée d'Orsay."
-        },
-        {
-          "h": "The time",
-          "p": "In the 1850s and 60s, Baron Haussmann tore down much of medieval Paris and built wide boulevards, uniform cream-stone buildings and gas lamps. This painting shows that brand-new city only a few years old, and a new middle class learning to stroll in it. It hung at the third Impressionist exhibition in 1877, which Caillebotte helped organise and pay for."
-        },
-        {
-          "h": "What's special",
-          "p": "Unlike his friends' quick, broken brushwork, Caillebotte painted smooth, almost photographic surfaces. He crops figures at the edges as if a camera had snapped them, and the man on the right is cut in half. The streets rush away in steep perspective, and nobody looks at anyone else, a quiet comment on how lonely the modern city could feel."
-        },
-        {
-          "h": "Look for",
-          "p": "The lamppost and its shadow form a cross that divides the scene into four parts. The rain is only in the shine of the stones and the umbrellas. Then count how many umbrellas are almost exactly the same."
-        }
-      ],
-      "source": {
-        "title": "Art Institute of Chicago",
-        "url": "https://www.artic.edu/artworks/20684/paris-street-rainy-day"
-      }
+     "h": "Look for",
+     "p": "Trace Venus's long hair: it swirls down and the tips are touched with gold. Then look at the wind-blown roses and the shell edge, and notice how the sea is drawn as neat repeating little waves, like a decorative pattern."
     }
-  ]
+   ],
+   "source": {
+    "title": "Uffizi Galleries",
+    "url": "https://www.uffizi.it/en/artworks/birth-of-venus"
+   }
+  },
+  {
+   "date": "2026-11-19",
+   "title": "Early Autumn",
+   "artist": "Qian Xuan (attributed)",
+   "artistLife": "Chinese, born 1235 – died 1305",
+   "year": "late 13th–14th century",
+   "medium": "Handscroll, ink, watercolour and gold on paper",
+   "size": "Painting section 26.7 × 120.7 cm, about as tall as a school ruler is long and roughly a metre and a bit wide",
+   "where": "Detroit Institute of Arts, Detroit (not currently on view)",
+   "movement": "Song–Yuan transition, Chinese bird-and-flower / insect painting",
+   "fame": "hidden gem",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Qian_Xuan_-_Early_Autumn.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:Qian_Xuan_-_Early_Autumn.jpg",
+    "credit": "Detroit Institute of Arts, public domain (image: Wikimedia Commons)",
+    "focus": "center 50%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "A quiet patch of marsh at the turn of the season. Reeds and wilting leaves bend over the ground, and tiny creatures are scattered through them: a dragonfly, a grasshopper, a frog waiting in the grass. The scene is small and calm, but if you look closely there is a little drama too, since some of these insects are hunting each other."
+    },
+    {
+     "h": "The artist",
+     "p": "Qian Xuan lived from 1235 to 1305 in Huzhou, in what is now Zhejiang province, and he first trained to become a government official. When the Mongols took over southern China in 1276 and set up the Yuan dynasty, he gave up that path and turned to painting. His friend Zhao Mengfu took a post with the new rulers, but Qian declined to follow, so he is remembered as a loyalist to the fallen Song dynasty. The Detroit museum lists this scroll as 'attributed to' him, meaning experts are not completely certain it is his own hand."
+    },
+    {
+     "h": "The time",
+     "p": "China was going through one of the biggest shake-ups in its history, as foreign Mongol rulers replaced the Song court that educated people had served for generations. Many scholars chose to stay away from public life and expressed their feelings through art instead. Small, humble subjects like insects, flowers and grass could carry quiet hidden meanings that were safer to hint at than to say out loud."
+    },
+    {
+     "h": "What's special",
+     "p": "The delicate brushwork is wonderfully precise: every blade of grass, veined leaf and insect wing is drawn with a fine line and soft colour. Some viewers read the wilting leaves and the predators as a gentle sign that a season, and perhaps a whole age, is ending. The scroll is also much longer than the picture itself, because admirers added poems and seals over the centuries, so you read it like a book of reactions. The full roll is over ten metres long, mostly made up of these added writings."
+    },
+    {
+     "h": "Look for",
+     "p": "Find the dragonfly eating a smaller fly, and the frog sitting very still nearby as if waiting its turn. Then look at the leaves, where some are fresh and some are browned and curling, as if autumn is just beginning."
+    }
+   ],
+   "source": {
+    "title": "Detroit Institute of Arts",
+    "url": "https://dia.org/collection/early-autumn/57885"
+   }
+  },
+  {
+   "date": "2026-11-18",
+   "title": "Las Meninas (The Maids of Honour)",
+   "artist": "Diego Velázquez",
+   "artistLife": "Spanish, born 1599 – died 1660",
+   "year": "1656",
+   "medium": "Oil on canvas",
+   "size": "318 × 276 cm, taller than a doorway and nearly square, so the figures are about life-size",
+   "where": "Museo Nacional del Prado, Madrid",
+   "movement": "Spanish Baroque (Golden Age)",
+   "fame": "famous",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:Las_Meninas,_by_Diego_Vel%C3%A1zquez,_from_Prado_in_Google_Earth.jpg",
+    "credit": "Museo Nacional del Prado, public domain (image: Wikimedia Commons)",
+    "focus": "center 45%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "We are looking into a big room in the royal palace in Madrid. A little five-year-old princess, the Infanta Margarita Teresa, stands in the brightest light, with two young ladies-in-waiting fussing around her (they are the 'meninas' of the title). On the right, two court dwarfs and a sleepy mastiff share the corner, and on the left the painter himself stands at a giant canvas, brush in hand, looking straight out at us."
+    },
+    {
+     "h": "The artist",
+     "p": "Diego Velázquez was born in Seville and trained there under the painter Francisco Pacheco, whose daughter he later married. In 1623 he was called to Madrid and soon became the favourite painter of King Philip IV, eventually holding important court jobs beyond painting. He travelled to Italy twice to study art and buy works for the king. He wanted very much to be accepted into the Order of Santiago, a noble knighthood, and finally was in 1659."
+    },
+    {
+     "h": "The time",
+     "p": "Spain in the 1650s was still a vast empire, but it was tired and short of money after decades of war in Europe. King Philip IV was a serious art lover, and he gave his court painter a spacious room in the palace to use as a studio. The painting was made for the king's private rooms rather than for the public, and was hung in the palace for generations. It was damaged in the 1734 fire that destroyed that palace, was repaired, and joined the Prado when the museum opened in 1819."
+    },
+    {
+     "h": "What's special",
+     "p": "Velázquez paints with loose, quick strokes that look messy up close and snap into perfect fabric, light and air when you step back. The room feels so deep that visitors often feel the space continues into the gallery where they stand. The picture is also a clever puzzle: the king and queen appear only as tiny reflections in the back mirror, so we seem to be standing where they are. Many people read it as Velázquez arguing that painting is a noble art, not just a craft."
+    },
+    {
+     "h": "Look for",
+     "p": "Find the small mirror on the back wall with the faint faces of King Philip IV and Queen Mariana. Then spot the man standing in the bright doorway behind, who looks like he is about to leave or has just walked in. Finally, look at the red cross on the painter's chest: it was added after he died, as a tribute to the honour he longed for."
+    }
+   ],
+   "source": {
+    "title": "Museo Nacional del Prado",
+    "url": "https://www.museodelprado.es/en/the-collection/art-work/las-meninas/9fdc7800-9ade-48b0-ab8b-edee94ea877f"
+   }
+  },
+  {
+   "date": "2026-11-17",
+   "title": "Squirrels in a Plane Tree",
+   "artist": "Abu'l Hasan (attributed)",
+   "artistLife": "Mughal Indian, born c. 1589 – died c. 1630",
+   "year": "c. 1605–1610",
+   "medium": "Opaque watercolour (gouache) with gold on paper",
+   "size": "36 × 22 cm, about the size of a large paperback book",
+   "where": "British Library, London",
+   "movement": "Mughal painting, Jahangir period",
+   "fame": "hidden gem",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:6Abu%27l_Hasan_Squirrels_in_a_Plane_Tree,_ca._1610,_India_Office_Library_and_Records,_London.jpg",
+    "credit": "British Library, public domain (image: Wikimedia Commons)",
+    "focus": "center 40%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "A huge plane tree (the Indian name is chinar) fills the page, its leaves glowing red, orange and green against a sky of beaten gold. Squirrels leap, chatter and cling all through the branches, while birds swoop in the open gaps. At the bottom, a barefoot man in a woollen tunic and fur hat has just started to climb the trunk, and goats, deer and a heron rest nearby, mostly unbothered."
+    },
+    {
+     "h": "The artist",
+     "p": "Abu'l Hasan was born around 1589 into a family of painters; his father, Aqa Riza, had come from Herat in Iran to work for the Mughal court. Abu'l Hasan grew up alongside the future emperor Jahangir, who adored his work and gave him grand honorary titles, calling him one of the wonders of his age. The British Library notes that the attribution here is a little uncertain, and some scholars think the older painter Mansur may have helped."
+    },
+    {
+     "h": "The time",
+     "p": "India in the early 1600s was ruled by the Mughal dynasty, and Emperor Jahangir was famously curious about the natural world. He kept menageries, ordered paintings of unusual animals and plants, and wanted what artists drew to look exactly like what they saw. Court painters had also been studying European prints that reached India, which gave them new ideas about shading and depth."
+    },
+    {
+     "h": "What's special",
+     "p": "The artist painted with fine brushes in opaque watercolour, then added gold for the sky, so the whole scene glows like a jewel. The squirrels' tails repeat in curling rhythms that echo the branches, and each animal is shown with careful, lifelike detail. Nobody is sure what the picture means: it may be a gentle story about humans disturbing nature, a tree-of-life image, or simply a celebration of the wild."
+    },
+    {
+     "h": "Look for",
+     "p": "Spot the barefoot man at the base of the trunk and ask what he wants from those squirrels. Then see how many squirrels you can count, and notice the thin strip of blue at the very top of the golden sky."
+    }
+   ],
+   "source": {
+    "title": "British Library, Johnson Album 1,30",
+    "url": "https://searcharchives.bl.uk/catalog/041-003286485"
+   }
+  },
+  {
+   "date": "2026-11-16",
+   "title": "The Heart of the Andes",
+   "artist": "Frederic Edwin Church",
+   "artistLife": "American, 1826–1900",
+   "year": "1859",
+   "medium": "Oil on canvas",
+   "size": "168 × 303 cm (about three metres wide, like a cinema screen for its day)",
+   "where": "The Metropolitan Museum of Art, New York",
+   "movement": "Hudson River School, American landscape painting",
+   "fame": "famous",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Church_Heart_of_the_Andes.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:Church_Heart_of_the_Andes.jpg",
+    "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+    "focus": "center 45%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "A whole South American world squeezed into one huge canvas. Snowy volcanic peaks glow far away, a waterfall tumbles into a bright pool at the right, and in the foreground there are palms, flowers, birds and butterflies. Two tiny figures kneel by a wooden cross at the left, so small that you almost miss them."
+    },
+    {
+     "h": "The artist",
+     "p": "Frederic Church grew up in Connecticut and studied under Thomas Cole, the founder of the Hudson River School. He became the most famous American landscape painter of his generation. He travelled to Colombia and Ecuador in 1853 and 1857, filling sketchbooks with plants, rocks, clouds and mountains."
+    },
+    {
+     "h": "The time",
+     "p": "In the 1850s, the German naturalist Alexander von Humboldt was a hero to many readers. He had described how one mountain could hold every climate, from steamy jungle at the bottom to ice at the top, and Church set out to follow his footsteps. The painting is not one real view but a made-up mix of places he had seen. When it was shown in New York in 1859, thousands of people paid 25 cents to see it, and it helped make Church the leading American landscape painter. He later sold it for $10,000, a record for a living American artist then."
+    },
+    {
+     "h": "What's special",
+     "p": "Church mixed scientific accuracy with theatre. Every plant and rock is painted with a botanist's care, yet the scene is arranged like a stage set, with warm light on the left and cool distance on the right. It was shown alone in a darkened room with a window-like frame, and visitors were given opera glasses to look at the details. It was meant to feel less like looking at a picture and more like looking out of a window."
+    },
+    {
+     "h": "Look for",
+     "p": "Find the two small figures and the cross at the far left, then follow the stream into the middle of the picture and up the waterfall. Bring your eyes right up close to the leaves and flowers in the foreground: every one is painted individually."
+    }
+   ],
+   "source": {
+    "title": "The Metropolitan Museum of Art",
+    "url": "https://www.metmuseum.org/art/collection/search/10481"
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "title": "Old Plum",
+   "artist": "Kano Sansetsu",
+   "artistLife": "Japanese, 1590–1651",
+   "year": "1646",
+   "medium": "Ink, colour, gold and gold leaf on paper, painted across four sliding doors (fusuma)",
+   "size": "174.6 × 485.5 cm (almost five metres wide: once a whole wall of a room)",
+   "where": "The Metropolitan Museum of Art, New York",
+   "movement": "Kano school, early Edo period (Japan)",
+   "fame": "hidden gem",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/老梅図襖-Old_Plum_MET_DT229.jpg?width=2400",
+    "page": "https://commons.wikimedia.org/wiki/File:老梅図襖-Old_Plum_MET_DT229.jpg",
+    "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+    "focus": "center 60%"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "One ancient plum tree sprawls across four sliding doors. Its huge, mossy black trunk heaves in from the lower right and snakes left over a field of shimmering gold, while thin twigs carry small white blossoms that look almost frozen in the cold. It is the very start of spring: the old tree is flowering again."
+    },
+    {
+     "h": "The artist",
+     "p": "Kano Sansetsu was born in Kyushu, trained under the painter Kano Sanraku, married his daughter and was adopted as his heir. He went on to lead the Kyoto branch of the Kano family, Japan's most powerful dynasty of painters. Writers describe him as a bit of an eccentric, a bookish collector who liked strange, twisting forms, and later rebels such as Ito Jakuchu are sometimes seen as his artistic grandchildren."
+    },
+    {
+     "h": "The time",
+     "p": "In the early 1600s the Tokugawa shoguns took over Japan and moved power to Edo (today's Tokyo). The family's star painters followed them there and developed a cooler, more delicate style, but Sanraku had been close to the defeated Toyotomi clan, so his branch stayed behind in Kyoto and kept the bold, oversized look of the previous generation. This wall was commissioned by a young lord, Matsudaira Tadahiro, for Tensho-in, a small Zen temple he founded in Kyoto in memory of his father, a grandson of the first Tokugawa shogun."
+    },
+    {
+     "h": "What's special",
+     "p": "Gold leaf was not just showing off: in dim temple rooms lit by paper screens and lamps, it caught every bit of light and made the room glow. Because the painting is on doors, it was meant to be lived in, so you would see the tree grow and change as you walked past or slid the panels open. The temple burned in the 1880s and only these four panels survived; they were trimmed down, separated from their back side (now in Minneapolis), and the Met later built a traditional Japanese room just to show them."
+    },
+    {
+     "h": "Look for",
+     "p": "Green lichen crusting the old trunk, next to tall, pillar-like rocks and low bamboo grass at the lower right. Just behind the rock, a branch from a second tree sneaks in with pink blossoms instead of white. At the far left edge, azalea leaves hint that the story once carried on into summer on the missing doors."
+    }
+   ],
+   "source": {
+    "title": "The Metropolitan Museum of Art",
+    "url": "https://www.metmuseum.org/art/collection/search/44858"
+   }
+  },
+  {
+   "date": "2026-11-14",
+   "title": "Paris Street; Rainy Day",
+   "artist": "Gustave Caillebotte",
+   "artistLife": "French, 1848–1894",
+   "year": "1877",
+   "medium": "Oil on canvas",
+   "size": "212 × 276 cm (the people are nearly life-size)",
+   "where": "Art Institute of Chicago",
+   "movement": "Impressionism, with a Realist finish",
+   "fame": "famous",
+   "image": {
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=1200",
+    "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=300",
+    "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Gustave_Caillebotte_-_Paris_Street;_Rainy_Day_-_Google_Art_Project.jpg?width=2400",
+    "credit": "Art Institute of Chicago, public domain (image: Wikimedia Commons)"
+   },
+   "sections": [
+    {
+     "h": "The painting",
+     "p": "A damp afternoon at a big crossroads near the Gare Saint-Lazare in Paris. Well-dressed couples stroll under near-identical umbrellas on the wet, shiny cobbles while a tall green lamppost splits the canvas down the middle. It was Caillebotte's largest and most ambitious work."
+    },
+    {
+     "h": "The artist",
+     "p": "Caillebotte trained as an engineer and lawyer before turning to painting. He was rich, and used that money to rent exhibition halls and buy paintings from struggling friends like Monet, Renoir and Pissarro. When he died at 45 he left his collection to France, and after a long row the state accepted much of it. That gift became the heart of the Impressionist rooms at the Musée d'Orsay."
+    },
+    {
+     "h": "The time",
+     "p": "In the 1850s and 60s, Baron Haussmann tore down much of medieval Paris and built wide boulevards, uniform cream-stone buildings and gas lamps. This painting shows that brand-new city only a few years old, and a new middle class learning to stroll in it. It hung at the third Impressionist exhibition in 1877, which Caillebotte helped organise and pay for."
+    },
+    {
+     "h": "What's special",
+     "p": "Unlike his friends' quick, broken brushwork, Caillebotte painted smooth, almost photographic surfaces. He crops figures at the edges as if a camera had snapped them, and the man on the right is cut in half. The streets rush away in steep perspective, and nobody looks at anyone else, a quiet comment on how lonely the modern city could feel."
+    },
+    {
+     "h": "Look for",
+     "p": "The lamppost and its shadow form a cross that divides the scene into four parts. The rain is only in the shine of the stones and the umbrellas. Then count how many umbrellas are almost exactly the same."
+    }
+   ],
+   "source": {
+    "title": "Art Institute of Chicago",
+    "url": "https://www.artic.edu/artworks/20684/paris-street-rainy-day"
+   }
+  }
+ ]
 }
