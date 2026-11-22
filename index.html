@@ -1777,6 +1777,58 @@ body[data-fest="diwali"],body[data-fest="dasara"],body[data-fest="ganesha"]{--se
 body[data-fest="holi"]{--season:#E86FB5}body[data-fest="eid"],body[data-fest="ugadi"]{--season:#6FBF77}body[data-fest="janmashtami"]{--season:#5B86D6}body[data-fest="india"]{--season:#FF9933}
 .navbar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--season,transparent) 70%,transparent) 20%,color-mix(in srgb,var(--season,transparent) 70%,transparent) 80%,transparent);pointer-events:none}
 .tban-txt{box-shadow:inset 3px 0 0 color-mix(in srgb,var(--season,transparent) 90%,transparent)}
+/* ===== v5.70: habit plant + animations ===== */
+.pl-w{display:flex;align-items:center;gap:12px;padding:4px 0}
+.pl-w .plant{flex:none;overflow:visible}
+.pl-t{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--fg-2);min-width:0}
+.pl-t b{color:var(--fg);font-size:14px}
+.pl-t .pl-ok{color:var(--st-done)!important;font-size:13px}
+.pl-c{display:inline-flex;padding:0;gap:6px;vertical-align:middle}
+.pl-c .pl-t{display:none}
+.hab-done{display:inline-flex;align-items:center;gap:6px}
+.hab-done .pl-c{margin:-6px 0}
+@keyframes plGrow{from{transform:scale(0);opacity:0}70%{transform:scale(1.12);opacity:1}to{transform:scale(1)}}
+@keyframes plStem{from{stroke-dasharray:60;stroke-dashoffset:60}to{stroke-dasharray:60;stroke-dashoffset:0}}
+.plant .pl-new{transform-box:fill-box;transform-origin:50% 100%;animation:plGrow .8s cubic-bezier(.2,.9,.25,1.1) both;animation-delay:calc(.35s + var(--d,0s))}
+.plant .pl-stem.pl-new{animation:plStem .7s ease-out both}
+@keyframes sway{0%,100%{transform:rotate(0)}30%{transform:rotate(2.5deg)}70%{transform:rotate(-2deg)}}
+#page.pg-in .plant{transform-origin:50% 75%;animation:sway 1.6s ease-in-out 2}
+/* 1: the tick draws itself; the row settles */
+@keyframes tickIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.pop .check.on::after,.check.on.pop::after{animation:tickIn .3s ease-out .05s both}
+/* 2: a small bounce when a swipe passes the "done" point */
+@keyframes swHit{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.rowwrap.swipe-hit::after{animation:swHit .22s ease-out}
+/* 3: sheets open with a soft spring and close quickly */
+#sheet.open{transition:transform .46s cubic-bezier(.2,1.18,.32,1)!important}
+#sheet:not(.open){transition:transform .22s cubic-bezier(.4,0,.8,.4)!important}
+/* 4: the cat stretches once; the milestone cat peeks up */
+@keyframes stretch{0%,100%{transform:scaleX(1)}35%{transform:scaleX(1.1) translateX(1px)}60%{transform:scaleX(.98)}}
+@keyframes tailWag{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(8deg)}}
+.nap-cat.awake .ac-body{transform-origin:10px 34px;animation:stretch 1.4s ease-in-out .3s 2}
+.nap-cat.awake .ac-tail{transform-box:fill-box;transform-origin:0 50%;animation:tailWag 1.2s ease-in-out .5s 3}
+.peek-cat{width:22px;height:15px;margin-left:2px;vertical-align:-2px}
+@keyframes peek{0%{transform:translateY(8px);opacity:0}60%{transform:translateY(-2px);opacity:1}100%{transform:none}}
+.peek-cat{animation:peek .7s cubic-bezier(.2,.9,.25,1.2) .6s both}
+/* 5: viva cards turn over like a real card */
+.viva-card{transform-style:preserve-3d;backface-visibility:hidden}
+.viva-card.flipping{transition:transform .18s ease-in;transform:perspective(900px) rotateY(90deg)}
+@keyframes flipIn{from{transform:perspective(900px) rotateY(-90deg)}to{transform:perspective(900px) rotateY(0)}}
+.viva-card.flip-in{animation:flipIn .26s ease-out}
+/* 7: what needs you breathes once when Home opens */
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--st-soon) 0%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--st-soon) 28%,transparent)}}
+#page.pg-in .card.cat-due{animation:breathe 1.3s ease-in-out .4s 1}
+@keyframes breatheR{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+#page.pg-in .tsiren{animation:breatheR 1.2s ease-in-out .5s 1}
+/* 8: festival days: diyas flicker and snow drifts for a few seconds on Home */
+@keyframes flicker{0%,100%{opacity:1}30%{opacity:.75}50%{opacity:.95}70%{opacity:.7}}
+body[data-sec="today"] .fest-diyas{animation:flicker 1.1s ease-in-out 4}
+@keyframes drift{from{transform:translateY(-6px)}to{transform:translateY(10px)}}
+body[data-sec="today"] .fest-snow{animation:drift 2.5s ease-in-out 3 alternate}
+/* one switch for all of it, and iPhone Reduce Motion */
+body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.plant *,.plant,.nap-cat *,.peek-cat,.viva-card,#sheet,.rowwrap::after,.check::after,.card,.tsiren,.fest-diyas,.fest-snow{animation:none!important}}
+#sheet .pl-t{color:#3E4A44!important}#sheet .pl-t b{color:#1F2A24!important}#sheet .pl-t .pl-ok{color:#2F6B4F!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1805,7 +1857,7 @@ body[data-fest="holi"]{--season:#E86FB5}body[data-fest="eid"],body[data-fest="ug
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.69 · Colours';
+const APP_VERSION = '5.70 · Plant & motion';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -2354,8 +2406,8 @@ function habitCard() {
   const dayOf = h => h._day || habitDay(h);
   const done = now.filter(h => state.habitDone[habitKey(h, dayOf(h))]).length;
   const label = hr >= 17 || hr < 4 ? 'Night routine' : hr >= 6 && hr < 15 ? 'Morning routine' : 'Today';
-  if (done === now.length) return `<button class="hab-done" type="button" data-act="hab-month">🐾 ${label} done · ${now.length}/${now.length}</button>` + habitNudges();
-  return `<div class="card habc"><div class="c-top"><span class="c-lab">${label} · ${done}/${now.length}</span><button type="button" class="link" data-act="hab-month">This month</button></div>
+  if (done === now.length) return `<button class="hab-done" type="button" data-act="hab-month">${plantBlock(true) || '🐾'} ${label} done · ${now.length}/${now.length}</button>` + habitNudges();
+  return `<div class="card habc"><div class="c-top"><span class="c-lab">${label} · ${done}/${now.length}</span><button type="button" class="link" data-act="hab-month">This month</button></div>${plantBlock(false)}
     <div class="hab-row">${now.map(h => { const on = !!state.habitDone[habitKey(h, dayOf(h))]; return `<button type="button" class="hab${on ? ' on' : ''}${h._late ? ' late' : ''}" data-act="hab-tick" data-id="${esc(h.id)}"${h._late ? ` data-day="${h._day}"` : ''} aria-pressed="${on}"><span class="hab-e">${on ? '✓' : esc(h.emoji)}</span><span class="hab-n">${esc(h.name)}${h._late ? '<small>missed this morning</small>' : ''}</span></button>`; }).join('')}</div></div>` + habitNudges();
 }
 /* gentle catch-up notes: plants skipped too long, every-N habits overdue */
@@ -2378,7 +2430,7 @@ function habitMonthSheet(ym) {
   const prev = new Date(y, m - 2, 1), next = new Date(y, m, 1); const fmt = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
   const grid = H.map(h => `<div class="hm-row"><span class="hm-n">${esc(h.emoji)} ${esc(h.name)}</span><div class="hm-days">${Array.from({ length: st.days }, (_, i) => { const k = ym + '-' + String(i + 1).padStart(2, '0') + '|' + h.id; const fut = i + 1 > st.last; return `<i class="${state.habitDone[k] ? 'on' : fut ? 'fut' : ''}"></i>`; }).join('')}</div></div>`).join('');
   openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="hab-m" data-ym="${fmt(prev)}">‹ ${MONTHS[prev.getMonth()].slice(0, 3)}</button><h2>${MONTHS[m - 1]} ${y}</h2>${fmt(next) <= today().slice(0, 7) ? `<button type="button" class="link" data-act="hab-m" data-ym="${fmt(next)}">${MONTHS[next.getMonth()].slice(0, 3)} ›</button>` : '<span></span>'}</div>
-    <div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + plural(st.span, 'day') + ')' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
+    ${ym === today().slice(0, 7) ? plantBlock(false) : ''}<div class="hm-sum">${ring(st.pct, 100, 64, 'hm-' + ym)}<div><b>${st.pct}% of habits done</b><span>${st.first > 1 ? 'Since you started on ' + st.first + ' ' + MONTHS[m - 1].slice(0, 3) + ' (' + plural(st.span, 'day') + ')' : st.last < st.days ? 'So far this month (' + st.last + ' of ' + st.days + ' days)' : 'Whole month'}</span></div></div>
     <div class="hm-list">${st.per.map(x => `<div class="hm-bar"><span>${esc(x.h.emoji)} ${esc(x.h.name)}</span><b>${x.c}/${x.of}</b><div class="track"><div class="fill" style="width:${x.of ? Math.min(100, Math.round(100 * x.c / x.of)) : 0}%"></div></div></div>`).join('')}</div>
     <h3 class="sh">Day by day</h3><div class="hm-grid">${grid}</div>
     <button class="btn ghost" type="button" data-act="hab-edit">Edit habits</button></div>`);
@@ -2418,7 +2470,7 @@ function todoSiren() { if (state.settings.todoSirenOn === false) return ''; cons
   const old = L.reduce((a, t) => t.created < a.created ? t : a); const d = Math.floor((Date.now() - new Date(old.created)) / 864e5);
   return `<div class="igp-w"><button class="tsiren" type="button" data-act="goto" data-tab="todos"><span class="ts-dot" aria-hidden="true"></span><span aria-hidden="true">🚨</span>${L.length === 1 ? `“${esc(old.text.length > 28 ? old.text.slice(0, 26) + '…' : old.text)}” waiting ${d} days` : `<b>${L.length}</b> to-dos waiting over a week`}</button></div>`; }
 function igPill() { const d = igDays(); if (d < 0) return ''; const r = igRank(d), hit = r && r[0] === d;
-  return `<div class="igp-w"><button class="igp${hit ? ' hit' : ''}" type="button" data-act="ig-open"><span aria-hidden="true">${hit ? r[1] : '🌱'}</span>${d === 0 ? 'Day zero off Instagram' : `<b>${d}</b> ${d === 1 ? 'day' : 'days'} off Instagram`}${hit ? '<span aria-hidden="true">✨</span>' : ''}</button></div>`; }
+  return `<div class="igp-w"><button class="igp${hit ? ' hit' : ''}" type="button" data-act="ig-open"><span aria-hidden="true">${hit ? r[1] : '🌱'}</span>${d === 0 ? 'Day zero off Instagram' : `<b>${d}</b> ${d === 1 ? 'day' : 'days'} off Instagram`}${hit ? '<span aria-hidden="true">✨</span>' + PEEK_CAT : ''}</button></div>`; }
 const igSeenKey = r => state.settings.igSince + '|' + r[0];
 function igMarkSeen(d) { const r = igRank(d); if (r && state.settings.igSeen !== igSeenKey(r)) { state.settings.igSeen = igSeenKey(r); if (save()) syncSoon(); } }
 function igSheet(partyDay) { const d = igDays(); if (d < 0) return; const M = igMiles(d), r = igRank(d), nx = igNext(d), prev = r ? r[0] : 0;
@@ -2479,7 +2531,7 @@ function pageToday() {
   add(bkNudge(), 30);
   // glance tiles: one block, no repeats of what a card above already says
   const T = [];
-  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : n, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam'))); }
+  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : `<span data-count="${n}">${n}</span>`, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam'))); }
   BOOKS().forEach(b => { const x = bookStats(b); T.push(gTile('study', 'peach', '', x.d + '/' + x.n, esc(b.title.length > 22 ? b.title.slice(0, 20) + '…' : b.title), ring(x.d, x.n, 40, 'gt-' + b.id))); });
   if (S.revisionsOn && state.topics.length) { const due = dueTopics().length; if (due) T.push(gTile('study', 'peach', '🔁', due, due === 1 ? 'topic to revise' : 'topics to revise')); }
   const od = otDefaultDay();
@@ -2576,7 +2628,7 @@ function pageTodos() {
   h += `<form data-form="todo" class="quick"><input class="tin" name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn" type="submit">Add</button></form>`;
   const stale = t => !t.done && t.created && Date.now() - new Date(t.created) > TODO_STALE * 864e5;
   const row = t => `<div class="rowwrap${t.done ? ' done' : ''}" data-swipe="${t.done ? 'Undo' : 'Done'}"><button class="row" type="button" data-swipe-act data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : stale(t) ? `<span class="r-s ts-old">🚨 added ${ago(t.created)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
-  h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<div class="card">${napLine(state.todos.length ? 'All clear. Nothing waiting.' : 'No tasks yet. Add one above.')}</div>`;
+  h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<div class="card">${state.todos.length ? `<div class="nap">${AWAKE_CAT}<span class="c-s">All clear. Nothing waiting.</span></div>` : napLine('No tasks yet. Add one above.')}</div>`;
   if (done.length) {
     h += `<div class="sec"><h2 class="sh"><button type="button" data-act="toggle-done" style="color:var(--accent);font:inherit;text-transform:inherit;letter-spacing:inherit">${showDone ? 'Hide' : 'Show'} done (${done.length})</button>${showDone ? '<button type="button" data-act="clear-done" style="color:var(--danger);font:inherit;text-transform:inherit;letter-spacing:inherit">Clear done</button>' : ''}</h2>${showDone ? `<div class="group">${done.map(row).join('')}</div>` : ''}</div>`;
   }
@@ -2921,7 +2973,7 @@ function pageOt() {
   if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Inemuri and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
-  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div>${all ? NAP_CAT.replace('class="nap-cat"', 'class="nap-cat prog-cat"') : ''}</div></div>`;
+  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div>${all ? AWAKE_CAT.replace('class="nap-cat awake"', 'class="nap-cat awake prog-cat"') : ''}</div></div>`;
   /* finished cases drop to the bottom of the list (Apoorva, 20 Nov 2026) */
   const sorted = rows.filter(r => !state.otDone[r.id]).concat(rows.filter(r => state.otDone[r.id]));
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, sorted, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
@@ -3166,6 +3218,7 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
+    it('plant', '🪴 Habit plant', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows the plant: seed, sprout, leaves, a bushy plant, a bud, and a flower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
     it('viva', '🎤 Viva round', ['Five flashcards from the “Points for the exam / viva” in your bite-size notes. Say the points out loud, tap to check, then Knew it or Again tomorrow. It shares the same spacing as the daily bite revision.']),
     it('emap', '🗺️ Exam map', ['One ring per exam area. It counts your bite-size notes (done once revised), your study topics (done once studied) and textbook chapters (done once ticked) in that area. Empty areas show “nothing yet”, so the thin spots stand out.']),
@@ -3203,6 +3256,8 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Cards on Today</span><select data-setting="homeCap">${[3, 4, 5, 6, 7, 8].map(n => `<option value="${n}"${(+S.homeCap || 5) === n ? ' selected' : ''}>${n}${n === 5 ? ' (default)' : ''}</option>`).join('')}</select></label>
     <label class="row toggle"><span>Quiet morning on Today after a duty (from your roster)</span><input type="checkbox" data-setting="quietOn" ${S.quietOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="quiet-on"><span>Quiet Today until tomorrow (one-off)</span>${CHEV}</button>
+    <label class="row toggle"><span>Animations (off also when iPhone Reduce Motion is on)</span><input type="checkbox" data-setting="animOn" ${S.animOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Habit plant (grows on days you do 75% of your habits)</span><input type="checkbox" data-setting="plantOn" ${S.plantOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Warmer, dimmer screen after 10 PM and on quiet mornings</span><input type="checkbox" data-setting="nightTintOn" ${S.nightTintOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Always show device batteries on Today (off: only when one is low)</span><input type="checkbox" data-setting="battAlways" ${S.battAlways ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
@@ -3505,7 +3560,8 @@ function render() {
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
   const tabChanged = render.lastTab !== tab;
   pg.innerHTML = PAGES[tab]();
-  lineIcons(pg); if (tabChanged) { pg.classList.remove('pg-in'); void pg.offsetWidth; pg.classList.add('pg-in'); }
+  lineIcons(pg); if (tabChanged) { pg.classList.remove('pg-in'); void pg.offsetWidth; pg.classList.add('pg-in'); countUp(pg); }
+  document.body.classList.toggle('no-anim', state.settings.animOn === false);
   { const f = { advances: 'advances', ot: 'ot', nba: 'nba', dota: 'dota', music: 'music', calendar: 'schedule' }[tab], st = f && dataStatus[f], w = pg.querySelector('.lt-wrap'); /* honest freshness label (v5.65) */
     if (st && w && st.at) w.insertAdjacentHTML('beforeend', st.from === 'saved' ? `<span class="fresh off">Offline · saved copy from ${esc(agoT(st.at))}</span>` : `<span class="fresh">Checked ${esc(agoT(st.at))}</span>`);
     else if (st && w && st.from === 'none') w.insertAdjacentHTML('beforeend', '<span class="fresh off">Not loaded yet · pull down to try again</span>'); }
@@ -3768,13 +3824,52 @@ window.addEventListener('scroll', nbtCheck, { passive: true });
 let popWant = null;
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-act="toggle-todo"],[data-act="ot-tick"],[data-act="hab-tick"],[data-act="rem-done"]'); if (b) popWant = { act: b.dataset.act, id: b.dataset.id, t: Date.now() }; }, true);
 function popApply() { if (!popWant || Date.now() - popWant.t > 900) return; const el = document.querySelector(`[data-act="${popWant.act}"][data-id="${CSS.escape(popWant.id || '')}"]`); popWant = null; if (!el) return; const tgt = el.closest('.rowwrap, tr') || el; tgt.classList.add('pop'); setTimeout(() => tgt.classList.remove('pop'), 400); }
+
+/* ---------- v5.70: the habit plant. A day "counts" when you do at least 75% of that day's habits.
+   Every-few-days habits count only when done (a bonus, never a penalty). The plant never wilts: a missed day just doesn't grow it. ---------- */
+const PLANT_AT = [0, 1, 3, 6, 10, 15, 21]; /* good days needed for: seed, sprout, leaves, more leaves, bushy, bud, flower */
+const PLANT_NAMES = ['a seed', 'a sprout', 'first leaves', 'a young plant', 'a bushy plant', 'a bud', 'in flower'];
+function dayScore(day) { let due = 0, done = 0; HABITS().forEach(h => { const d = !!state.habitDone[habitKey(h, day)]; if (h.every > 1) { if (d) { due++; done++; } } else { due++; if (d) done++; } }); return { due, done, ok: due > 0 && done / due >= 0.75 }; }
+function plantInfo() { const S = state.settings; if (!S.plantStart) { S.plantStart = today(); if (save()) syncSoon(); }
+  let g = 0; for (let d = S.plantStart; d <= today(); d = addDays(d, 1)) if (dayScore(d).ok) g++;
+  const T = dayScore(today()); const full = PLANT_AT[PLANT_AT.length - 1];
+  let grown = Math.floor(g / full), inCyc = g % full; if (g > 0 && inCyc === 0 && T.ok) { grown--; inCyc = full; } /* the day it flowers, keep the flower up */
+  const stage = PLANT_AT.filter(n => inCyc >= n).length - 1; const next = PLANT_AT.find(n => n > inCyc);
+  const need = T.ok ? 0 : Math.max(0, Math.ceil(0.75 * T.due - T.done - 1e-9));
+  return { g, grown, inCyc, stage, toNext: next ? next - inCyc : 0, today: T, need }; }
+function plantSVG(stage, size, seen) { const top = [56, 49, 42, 35, 28, 22, 20][stage];
+  const part = (n, inner) => n <= stage ? `<g class="pl-p${seen != null && n > seen ? ' pl-new' : ''}" style="--d:${seen != null && n > seen ? (n - seen - 1) * .25 : 0}s">${inner}</g>` : '';
+  const leaf = (cx, cy, rx, ry, a) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${a} ${cx} ${cy})"/>`;
+  return `<svg class="plant" viewBox="0 0 60 80" width="${size}" height="${Math.round(size * 4 / 3)}" aria-hidden="true">
+    ${stage === 0 ? `<ellipse cx="30" cy="55.5" rx="3.2" ry="2.1" fill="#8A5A35"/><path d="M28.6 55.3q1.4 -1 2.8 0" stroke="#C9A27A" stroke-width=".7" fill="none"/>` : `<path class="pl-stem${seen != null && stage > seen ? ' pl-new' : ''}" d="M30 57 Q28.6 ${(57 + top) / 2} 30 ${top}" stroke="#4E8F63" stroke-width="2.2" fill="none" stroke-linecap="round"/>`}
+    <g fill="#8CCB97">${part(1, leaf(26, 48.5, 4, 2.2, -25) + leaf(34, 48.5, 4, 2.2, 25))}</g>
+    <g fill="#6FAF7F">${part(2, leaf(23, 42, 7, 3, -25) + leaf(37, 42, 7, 3, 25))}${part(3, leaf(22, 35.5, 8, 3.4, -20) + leaf(38, 35.5, 8, 3.4, 20))}</g>
+    <g fill="#5A9C6C">${part(4, leaf(23.5, 29, 7, 3, -30) + leaf(36.5, 29, 7, 3, 30))}</g>
+    ${part(5, stage === 5 ? '<path d="M27.5 23.5q2.5 -2 5 0" stroke="#5A9C6C" stroke-width="1.6" fill="none"/><ellipse cx="30" cy="20.5" rx="3.2" ry="4.4" fill="#E89BB0"/>' : '')}
+    ${part(6, [0, 72, 144, 216, 288].map(a => `<circle cx="${(30 + 4.6 * Math.sin(a * Math.PI / 180)).toFixed(2)}" cy="${(19 - 4.6 * Math.cos(a * Math.PI / 180)).toFixed(2)}" r="3.9" fill="#F4A7BE"/>`).join('') + '<circle cx="30" cy="19" r="2.7" fill="#E0A526"/>')}
+    <rect x="14" y="56" width="32" height="6" rx="2" fill="#B5653C"/><path d="M16 62h28l-3 16H19z" fill="#C9774B"/><ellipse cx="30" cy="57.4" rx="13" ry="1.6" fill="#5A3E2B" opacity=".55"/></svg>`; }
+function plantLine(P, compact) { const t = P.today.ok ? '<b class="pl-ok">Today counts ✓</b>' : P.need ? `${P.need} more ${P.need === 1 ? 'habit' : 'habits'} today to grow it` : 'Tick your habits to grow it';
+  return compact ? `<span class="pl-t">${t}</span>` : `<span class="pl-t"><b>${P.stage === 6 ? 'In flower 🌸' : 'Your plant: ' + PLANT_NAMES[P.stage]}</b><span>${t}</span><span>${P.stage === 6 ? 'A new seed starts tomorrow' : plural(P.toNext, 'more good day') + ' to the next stage'}${P.grown ? ' · ' + plural(P.grown, 'plant') + ' grown' : ''}</span></span>`; }
+function plantBlock(compact) { if (state.settings.plantOn === false || !HABITS().length) return ''; const P = plantInfo(); const seen = state.settings.plantSeen;
+  const html = `<div class="pl-w${compact ? ' pl-c' : ''}">${plantSVG(P.stage, compact ? 30 : 54, seen == null || seen === P.stage ? null : Math.min(seen, P.stage))}${plantLine(P, compact)}</div>`;
+  if (seen !== P.stage) { const grew = seen != null && P.stage > seen; state.settings.plantSeen = P.stage; if (save()) syncSoon(); if (grew) setTimeout(() => toast(P.stage === 6 ? 'Your plant flowered 🌸' : 'Your plant grew 🌱'), 300); }
+  return html; }
+
+/* ---------- v5.70 animations: helpers ---------- */
+const animOn = () => state.settings.animOn !== false && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* 6: numbers count up once when a page opens */
+function countUp(root) { if (!animOn()) return; root.querySelectorAll('[data-count]').forEach(el => { const n = +el.dataset.count; if (!(n > 1)) return; const t0 = performance.now(), dur = Math.min(900, 300 + n * 40);
+  const step = t => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; el.textContent = '0'; requestAnimationFrame(step); }); }
+/* 4: the cat awake (eyes open, stretches once) and a peeking cat head */
+const AWAKE_CAT = `<svg class="nap-cat awake" viewBox="0 0 64 40" aria-hidden="true"><g class="ac-body"><path d="M10 34c-3-9 4-17 17-18 9-1 17 2 21 7 3 4 2 9-2 11z" fill="#1d1d22"/><path class="ac-tail" d="M46 34c6 1 11-2 11-6 0-3-3-4-5-3" fill="none" stroke="#1d1d22" stroke-width="4" stroke-linecap="round"/></g><circle cx="17" cy="26" r="8" fill="#1d1d22"/><path d="M11 21l-1-7 6 4zM23 21l1-7-6 4z" fill="#1d1d22"/><circle cx="14.2" cy="26" r="1.7" fill="#E0A526"/><circle cx="19.8" cy="26" r="1.7" fill="#E0A526"/><circle cx="14.4" cy="26" r=".6" fill="#1d1d22"/><circle cx="20" cy="26" r=".6" fill="#1d1d22"/></svg>`;
+const PEEK_CAT = `<svg class="peek-cat" viewBox="0 0 24 16" aria-hidden="true"><path d="M4 16v-8l-1-6 4 3h10l4-3-1 6v8z" fill="#1d1d22"/><circle cx="9" cy="10" r="1.4" fill="#E0A526"/><circle cx="15" cy="10" r="1.4" fill="#E0A526"/></svg>`;
 /* ---------- swipe right to finish (v5.65): to-dos and due reminders ---------- */
 (() => { let el = null, x0 = 0, y0 = 0, dx = 0, mode = 0; const MAX = 96, GO = 70;
   document.addEventListener('touchstart', e => { if (e.touches.length !== 1 || sheetOpen()) return; const w = e.target.closest('[data-swipe]'); if (!w || e.target.closest('input,textarea,.xbtn')) return;
     el = w; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; mode = 0; }, { passive: true });
   document.addEventListener('touchmove', e => { if (!el) return; const t = e.touches[0], mx = t.clientX - x0, my = t.clientY - y0;
     if (!mode) { if (Math.abs(mx) < 10 && Math.abs(my) < 10) return; mode = Math.abs(mx) > Math.abs(my) * 1.4 && mx > 0 ? 1 : -1; if (mode === 1) { el.classList.add('swiping'); el.dataset.go = ''; } }
-    if (mode !== 1) return; e.preventDefault(); dx = Math.max(0, Math.min(MAX, mx)); el.style.setProperty('--sx', dx + 'px'); el.classList.toggle('swipe-go', dx >= GO); }, { passive: false });
+    if (mode !== 1) return; e.preventDefault(); dx = Math.max(0, Math.min(MAX, mx)); el.style.setProperty('--sx', dx + 'px'); const was = el.classList.contains('swipe-go'); el.classList.toggle('swipe-go', dx >= GO); if (!was && dx >= GO) { el.classList.remove('swipe-hit'); void el.offsetWidth; el.classList.add('swipe-hit'); } }, { passive: false });
   const end = () => { if (!el) return; const w = el, go = mode === 1 && dx >= GO; el = null;
     w.classList.remove('swiping'); w.style.setProperty('--sx', '0px');
     if (go) { const b = w.querySelector('[data-swipe-act]'); setTimeout(() => { w.classList.remove('swipe-go'); if (b) b.click(); }, 160); } else w.classList.remove('swipe-go');
@@ -4056,7 +4151,7 @@ document.addEventListener('click', e => {
     case 'brev-again': biteRevMark(id, false); break;
     case 'prep': prepSheet(id); break;
     case 'viva-start': vivaStart(); break;
-    case 'viva-flip': if (viva) { viva.flip = !viva.flip; vivaShow(); } break;
+    case 'viva-flip': if (viva) { const c = document.querySelector('.viva-card'); if (c && animOn() && !viva.flip) { c.classList.add('flipping'); setTimeout(() => { viva.flip = true; vivaShow(); const n = document.querySelector('.viva-card'); if (n) n.classList.add('flip-in'); }, 180); } else { viva.flip = !viva.flip; vivaShow(); } } break;
     case 'viva-mark': vivaMark(b.dataset.ok === '1'); break;
     case 'emap': emapSheet(b.dataset.c); break;
     case 'quiet-off': state.settings.quietOff = today(); state.settings.quietDay = ''; commit('Quiet mode off for today'); break;
@@ -4678,7 +4773,7 @@ function weekCard() { if (state.settings.weekOn === false || new Date().getDay()
     w.arts ? ['📰', plural(w.arts, 'article') + ' added to read'] : null,
     igDays() > 0 && state.settings.igOn !== false ? ['🌱', plural(igDays(), 'day') + ' off Instagram'] : null].filter(Boolean);
   return `<div class="sec"><div class="card wk"><div class="c-top"><span class="c-lab">Your week · ${esc(dShort(w.from))} – ${esc(dShort(w.t))}</span></div>
-    ${L.length ? `<ul class="wk-l">${L.map(l => `<li><span aria-hidden="true">${l[0]}</span><span>${esc(l[1])}</span></li>`).join('')}</ul>` : '<span class="c-s">A quiet week. A fresh one starts tomorrow.</span>'}
+    ${L.length ? `<ul class="wk-l">${L.map(l => `<li><span aria-hidden="true">${l[0]}</span><span>${esc(l[1]).replace(/^(\d+)/, '<span data-count="$1">$1</span>')}</span></li>`).join('')}</ul>` : '<span class="c-s">A quiet week. A fresh one starts tomorrow.</span>'}
     <div class="btns" style="flex-direction:row;margin-top:6px"><button class="btn small ghost" type="button" data-act="wk-seen">Got it</button></div></div></div>`; }
 /* Monthly backup nudge: shows when the last backup is over 30 days old (or there is none yet). "Later" hides it for 3 days. */
 function bkNudge() { if (state.settings.bkNudgeOn === false) return ''; const le = state.meta.lastExport;
