@@ -1829,6 +1829,8 @@ body[data-sec="today"] .fest-snow{animation:drift 2.5s ease-in-out 3 alternate}
 body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
 @media (prefers-reduced-motion:reduce){.plant *,.plant,.nap-cat *,.peek-cat,.viva-card,#sheet,.rowwrap::after,.check::after,.card,.tsiren,.fest-diyas,.fest-snow{animation:none!important}}
 #sheet .pl-t{color:#3E4A44!important}#sheet .pl-t b{color:#1F2A24!important}#sheet .pl-t .pl-ok{color:#2F6B4F!important}
+/* v5.71: the black cat gets a soft moonlight rim in dark mode so it shows on charcoal */
+@media (prefers-color-scheme:dark){#page .nap-cat,#page .peek-cat,.quiet-p .nap-cat,.igp .peek-cat{filter:drop-shadow(0 0 .6px rgba(240,232,220,.95)) drop-shadow(0 0 .6px rgba(240,232,220,.95)) drop-shadow(0 0 3px rgba(240,232,220,.25))}}
 </style>
 </head>
 <body data-sec="today">
@@ -1857,7 +1859,7 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.70 · Plant & motion';
+const APP_VERSION = '5.71 · Visible cat';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
