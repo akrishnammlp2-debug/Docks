@@ -1832,6 +1832,14 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 /* v5.71: the black cat gets a soft moonlight rim in dark mode so it shows on charcoal */
 #page .nap-cat,#page .peek-cat,.quiet-p .nap-cat,.igp .peek-cat{filter:drop-shadow(0 1px 1.5px rgba(110,72,36,.35))}
 @media (prefers-color-scheme:dark){#page .nap-cat,#page .peek-cat,.quiet-p .nap-cat,.igp .peek-cat{filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}}
+/* v5.74: a full ring closes in its section colour with a tiny happy Fudge inside (a tick on small rings) instead of the old smiley */
+.ring.smile .sm-disc{fill:var(--sec,var(--surface))}
+.ring.smile .sm-ring{fill:none;stroke:var(--sec-i,var(--label));stroke-width:6}
+.gt .ring.smile .sm-ring{stroke:var(--ti,var(--sec-i))}.gt .ring.smile .sm-disc{fill:color-mix(in srgb,var(--ti,var(--label)) 14%,var(--surface))}
+.ring.smile .sm-tick{fill:none;stroke:var(--sec-i,var(--label));stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.gt .ring.smile .sm-tick{stroke:var(--ti,var(--sec-i))}
+#sheet .ring.smile .sm-ring,#sheet .ring.smile .sm-tick{stroke:#2F6B4F}#sheet .ring.smile .sm-disc{fill:#DDEADF}
+.sm-face,.sm-eye,.sm-mouth{display:none}
 </style>
 </head>
 <body data-sec="today">
@@ -1860,7 +1868,7 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.73 · Fudge';
+const APP_VERSION = '5.74 · Fudge rings';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -2940,7 +2948,8 @@ function pageAdvances() {
 let otJustDone = null;
 function ring(done, total, size, key) {
   const pct = total ? Math.round(done / total * 100) : 0;
-  if (total && done >= total) return `<div class="ring smile${otJustDone === key ? ' anim' : ''}" style="--sz:${size}px" role="img" aria-label="All done"><svg viewBox="0 0 72 72"><circle class="sm-face" cx="36" cy="36" r="33"/><circle class="sm-eye" cx="25" cy="29" r="4.2"/><circle class="sm-eye" cx="47" cy="29" r="4.2"/><path class="sm-mouth" d="M22 42 Q36 56 50 42"/></svg></div>`;
+  const cid = 'smc-' + String(key || Math.random().toString(36).slice(2)).replace(/[^\w-]/g, '_');
+  if (total && done >= total) return `<div class="ring smile${otJustDone === key ? ' anim' : ''}" style="--sz:${size}px" role="img" aria-label="All done"><svg viewBox="0 0 72 72"><circle class="sm-disc" cx="36" cy="36" r="30"/><circle class="sm-ring" cx="36" cy="36" r="30"/>${size < 40 ? '<path class="sm-tick" d="M24 37l8 8 16-17"/>' : '<g class="sm-fudge"><clipPath id="' + cid + '"><circle cx="36" cy="36" r="27"/></clipPath><g clip-path="url(#' + cid + ')"><path d="M24.6 33.5L23.8 21.6L32 28.6Z M47.4 33.5L48.2 21.6L40 28.6Z" fill="#E6BE93"/><path d="M26.2 30.6L26 24.6L30.4 28.4Z M45.8 30.6L46 24.6L41.6 28.4Z" fill="#EDB3A8"/><path d="M51.5 44.5 Q52.8 46.7 50.6 48.4 Q50.9 50.9 47.9 51.9 Q47.2 54.4 43.8 54.5 Q42.0 56.8 38.7 55.8 Q36.0 57.6 33.3 55.8 Q30.0 56.8 28.3 54.5 Q24.8 54.4 24.1 51.9 Q21.1 50.9 21.4 48.4 Q19.2 46.7 20.5 44.5 Q19.2 42.3 21.4 40.6 Q21.1 38.1 24.1 37.1 Q24.8 34.6 28.2 34.5 Q30.0 32.2 33.3 33.2 Q36.0 31.4 38.7 33.2 Q42.0 32.2 43.8 34.5 Q47.2 34.6 47.9 37.1 Q50.9 38.1 50.6 40.6 Q52.8 42.3 51.5 44.5 Z" fill="#F5E0C6"/><path d="M48.8 39.0 Q49.8 41.6 47.8 43.6 Q47.7 46.3 45.1 47.5 Q43.8 50.0 40.9 50.1 Q38.8 52.0 36.0 51.0 Q33.2 52.0 31.1 50.1 Q28.2 50.0 26.9 47.5 Q24.3 46.3 24.2 43.6 Q22.2 41.6 23.2 39.0 Q22.2 36.4 24.2 34.4 Q24.3 31.7 26.9 30.5 Q28.2 28.0 31.1 27.9 Q33.2 26.0 36.0 27.0 Q38.8 26.0 40.9 27.9 Q43.8 28.0 45.1 30.5 Q47.7 31.7 47.8 34.4 Q49.8 36.4 48.8 39.0 Z" fill="#E6BE93"/><ellipse cx="36" cy="44.6" rx="6.6" ry="4.6" fill="#F5E0C6"/><path d="M29 39.6q2.6 -3.4 5.2 0M37.8 39.6q2.6 -3.4 5.2 0" fill="none" stroke="#6B4A30" stroke-width="1.7" stroke-linecap="round"/><path d="M34.5 42.6h3l-1.5 1.7z" fill="#D49C99"/><path d="M36 44.3v1.1M36 45.4q-1.4 1.2 -2.6 .2M36 45.4q1.4 1.2 2.6 .2" fill="none" stroke="#6B4A30" stroke-width=".8" stroke-linecap="round"/><circle cx="28.6" cy="43.6" r="1.9" fill="#F2A7A0" opacity=".55"/><circle cx="43.4" cy="43.6" r="1.9" fill="#F2A7A0" opacity=".55"/></g></g>'}</svg></div>`;
   const C = 2 * Math.PI * 30;
   return `<div class="ring" style="--sz:${size}px" role="img" aria-label="${pct} percent done"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - pct / 100)).toFixed(1)}"/></svg><span class="rg-v">${pct}<small>%</small></span></div>`;
 }
