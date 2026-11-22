@@ -1622,6 +1622,24 @@ a.dota-n .r-main{gap:3px}
 .wk-l{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}.wk-l li{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--fg)}
 .bk-btns{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none}.bk-btns .link{font-size:13px;color:var(--fg-2);background:none;border:0;padding:2px}
 .brev-b{flex-direction:row!important;gap:10px;margin:14px 0 4px}.brev-b .btn{flex:1}
+/* v5.65: Now home, swipe, freshness, settings search, Off duty tabs */
+.home-more{margin-top:2px}
+.home-rest{display:flex;flex-direction:column;gap:inherit}
+.home-rest>*{margin-top:12px}
+.rowwrap[data-swipe]>*{transform:translateX(var(--sx,0px));transition:transform .22s ease}
+.rowwrap.swiping>*{transition:none}
+.rowwrap[data-swipe]::after{content:"✓ " attr(data-swipe);position:absolute;left:0;top:0;bottom:0;width:var(--sx,0px);display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-size:13px;font-weight:600;background:color-mix(in srgb,var(--good) 20%,var(--surface));color:var(--good);transition:width .22s ease,background .15s;pointer-events:none}
+.rowwrap.swiping::after{transition:none}
+.rowwrap.swipe-go::after{background:var(--good);color:var(--surface)}
+.fresh{font-size:12.5px;color:var(--fg-3)}
+.fresh.off{color:var(--fg-2)}
+.fresh.off::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#d08a2e;margin-right:6px;vertical-align:1px}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--danger);vertical-align:2px;margin-left:2px}
+.offseg{margin-top:12px}
+.set-qw{margin-top:12px}
+.set-qw input{width:100%}
+.sq-hide{display:none!important}
+.ditem[data-tab="others"] svg,.ditem[data-tab="others"] .demo{background:var(--t-lav)!important;color:var(--t-lav-i)!important}
 </style>
 </head>
 <body data-sec="today">
@@ -1650,7 +1668,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.64 · Brain dump at the top';
+const APP_VERSION = '5.65 · Calmer Today';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
 
@@ -1698,6 +1716,7 @@ const dDow = s => DOW[(dt(s).getDay() + 6) % 7];
 const dLong = s => { const d = dt(s); return DOWL[(d.getDay() + 6) % 7] + ', ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; };
 const daysUntil = s => Math.round((dt(s) - dt(today())) / 864e5);
 const relDay = s => { const n = daysUntil(s); return n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : n === -1 ? 'Yesterday' : n > 1 ? 'In ' + n + ' days' : -n + ' days ago'; };
+const agoT = isoStr => { const m = Math.round((Date.now() - new Date(isoStr)) / 60e3); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 24 * 60 ? Math.round(m / 60) + ' h ago' : ago(isoStr); };
 const ago = isoStr => { const n = -daysUntil(dayOf(isoStr)); return n <= 0 ? 'today' : n === 1 ? 'yesterday' : n + ' days ago'; };
 const addDays = (s, n) => { const d = dt(s); d.setDate(d.getDate() + n); return isoOf(d); };
 const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
@@ -1876,6 +1895,9 @@ let view = { y: now0.getFullYear(), m: now0.getMonth() };
 let sel = today();
 let searchHitDate = null, searchHitName = '';
 let otSub = (() => { try { return localStorage.getItem('studydesk.otSub') || 'ot'; } catch (_) { return 'ot'; } })();
+const OFF_TABS = [['others', 'Stories'], ['music', 'Music'], ['nba', 'NBA'], ['dota', 'Dota 2']]; /* leisure lives inside Off duty (v5.65) */
+const isOff = k => OFF_TABS.some(t => t[0] === k);
+const offSeg = () => `<div class="seg otseg offseg">${OFF_TABS.map(([k, l]) => `<button type="button" data-act="tab" data-tab="${k}" aria-pressed="${tab === k}">${l}${k === 'dota' && dotaLive().length ? ' <span class="live-dot" aria-label="live"></span>' : ''}</button>`).join('')}</div>`;
 const otSeg = () => `<div class="seg otseg"><button type="button" data-act="otsub" data-s="ot" aria-pressed="${otSub !== 'slcm'}">OT list</button><button type="button" data-act="otsub" data-s="slcm" aria-pressed="${otSub === 'slcm'}">SLCM cases${toSyncCount() ? ' · ' + toSyncCount() : ''}</button></div>`;
 let dotaSub = 'matches', rmode = 'mine', nbaSub = 'scores', nbaDay = null, otDay = null, showDone = false;
 const collapsed = new Set();
@@ -2046,6 +2068,7 @@ function battHow() { const st = (n, t, x) => `<div class="batt-step"><span class
     ${st(9, 'Get Contents of URL (PUT)', 'Same address and header · JSON body: message, content = Base64, sha = Dictionary Value')}
     <p class="c-s">Then add automations on each device: charger connected, charger disconnected, battery below 30%, and a few times a day (more times = fresher numbers). Run Immediately, notify off.</p>
     <label class="row toggle"><span>Show device batteries on Today</span><input type="checkbox" data-setting="battOn" ${state.settings.battOn !== false ? 'checked' : ''}></label></div></details>`; }
+function battLow() { if (state.settings.battOn === false || !syncCfg().token) return false; return BATT_DEV.some(([d]) => batt[d] && battLevel(batt[d]) !== null && batt[d].at !== 'setup' && battLevel(batt[d]) < BATT_LOW && !battCharging(batt[d])); }
 function battCard() { if (state.settings.battOn === false || !syncCfg().token) return '';
   const have = BATT_DEV.filter(([d]) => batt[d] && battLevel(batt[d]) !== null && batt[d].at !== 'setup');
   if (!have.length) return `<div class="card battc"><span class="c-lab">🔋 Devices</span><span class="c-s">No readings yet. Set it up in Backup & settings › How things work.</span></div>`;
@@ -2109,7 +2132,7 @@ function grocStaples() { const G = GROC().slice().sort((a, b) => grocLeft(a) - g
 ` : ''}
   </div>`; }
 let grocOpen = false;
-const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Dump an idea, or “buy …”" aria-label="Add to brain dump" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
+const dumpForm = () => `<form data-form="dump" class="dump-f" autocomplete="off"><input name="text" maxlength="400" placeholder="Anything: an idea, “buy …”, “todo …”" aria-label="Quick capture" enterkeyhint="done" autocapitalize="sentences"><button type="submit" class="dump-add" aria-label="Add">+</button></form>`;
 const grocRow = (g, sm) => `<div class="dump-i buy-i"><button type="button" class="buy-tick${sm ? ' sm' : ''}" data-act="groc-bought" data-id="${g.id}" aria-label="Bought ${esc(g.name)}"></button><button type="button" class="buy-go" data-act="dump-all" data-id="buy"><span class="dump-t">🥬 ${esc(g.name)}</span><span class="dump-ago">${grocWhen(g)}</span></button></div>`;
 function dumpLive() { const N = JOTS(); if (!N.length) return '';
   const nr = N.slice(0, 3).map(d => `<button type="button" class="dump-i" data-act="dump-all"><span class="dump-dot" aria-hidden="true"></span><span class="dump-t">${esc(d.text)}</span><span class="dump-ago">${dumpAgo(d.created)}</span></button>`).join('');
@@ -2129,7 +2152,7 @@ function dumpSheetLive() { const N = JOTS();
     : `<div class="card"><span class="c-s">Nothing here yet. Dump any idea above.</span></div>`;
   return `<h3 class="sh"><span>🧠 Ideas & thoughts</span><span>${N.length}</span></h3>${notes}${moreBtn('dumpnote', N.length, 5, 'note', 'btn ghost wide')}`; }
 function dumpSheet(at) { if (at === 'buy') return cartSheet();
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🧠 Brain dump</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>🧠 Brain dump</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${dumpForm()}<div id="dump-sheet-live">${dumpSheetLive()}</div></div>`);
   if (at === 'buy') setTimeout(() => { const el = $('dump-buy'); if (el) el.scrollIntoView({ block: 'start' }); }, 60); }
 /* update the notes in place, so the box you're typing in is never rebuilt (no lost text, keyboard stays up) */
@@ -2154,7 +2177,7 @@ function cartResults() { const q = cartQ.trim().toLowerCase(); if (!q) return ''
 function cartBrowse() { return `<h3 class="sh"><span>📋 Everyday list</span><span>${GROC_ALL().length}</span></h3>` + GROC_CAT.map(([cat, L]) => `<details class="card cart-cat"><summary>${esc(cat)}<span class="pc-n">${L.length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${L.map(([n]) => cartItemRow(n, '')).join('')}</details>`).join(''); }
 function cartLive() { return `<div id="cart-res">${cartResults()}</div>${cartToBuy()}${grocStaples()}${cartBrowse()}`; }
 function cartSheet() { cartQ = '';
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🛒 Shopping</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>🛒 Shopping</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <form data-form="cart" class="cart-s" autocomplete="off"><input class="tin" name="q" data-cart-search maxlength="60" placeholder="Search milk, soap, dal…" aria-label="Search everyday things" enterkeyhint="done"></form>
     <div id="cart-live">${cartLive()}</div></div>`); }
 function cartRefresh() { const l = $('cart-live'); if (l) { const open = [...l.querySelectorAll('details.cart-cat')].map(d => d.open); l.innerHTML = cartLive(); l.querySelectorAll('details.cart-cat').forEach((d, i) => { if (open[i]) d.open = true; }); } cartBadge(); }
@@ -2293,35 +2316,52 @@ function pageToday() {
   let h = `<div class="tban tban-${ph}${pic ? ' has-pic' : ''}">${pic ? `<img class="tban-pic" src="${picUrl(pic)}" alt="" decoding="async">` : tbanArt(ph)}<button class="tban-cam" type="button" data-act="hero-pics" aria-label="Change banner pictures"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button><div class="tban-top"><span class="tban-date">${esc(dLong(t))}</span>${wxChip()}</div><div class="tban-txt"><h1 class="hello-t">${esc(greeting())}${P.name ? ', ' + esc(P.name.split(' ')[0]) : ''}<svg class="paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.2" rx="4.6" ry="3.8"/><ellipse cx="5.6" cy="10.6" rx="1.9" ry="2.4" transform="rotate(-18 5.6 10.6)"/><ellipse cx="9.4" cy="6.6" rx="2" ry="2.6" transform="rotate(-6 9.4 6.6)"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6" transform="rotate(6 14.6 6.6)"/><ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4" transform="rotate(18 18.4 10.6)"/></svg></h1><span class="hello-s">${esc(helloLine())}</span></div></div>`;
   h += igPill();
   h += dumpCard();
-  h += todoSiren();
+  /* "Now" stack (v5.65): every card gets a score for this time of day; the top few show, the rest wait under "More today".
+     Cards with nothing to say return '' and never take space. */
+  const hr = new Date().getHours(); const ph2 = hr < 5 ? 'night' : hr < 12 ? 'morning' : hr < 17 ? 'day' : 'evening';
+  const by = o => o[ph2] ?? o.all ?? 50;
+  const C = []; const add = (html, score) => { if (html) C.push({ html, score }); };
+  const siren = todoSiren();
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
+  let upHTML = '';
   if (up) {
     const id = reg({ date: up.date, kind: up.kind, title: up.session, topic: up.topic, who: presenters(up.date), src: 'Department program' });
-    h += `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
+    upHTML = `<button class="card hero" type="button" data-act="item" data-id="${id}"><div class="c-top"><span class="c-lab">Up next · ${relDay(up.date)}</span><span class="c-m">${dDow(up.date)} ${dShort(up.date)}, 7:45 AM</span></div><span class="c-big">${esc(up.session)}</span>${up.topic ? `<span class="c-s">${esc(up.topic)}</span>` : ''}${presenters(up.date) ? `<span class="c-m">${esc(presenters(up.date))}</span>` : ''}</button>`;
   }
+  const upSoon = up ? daysUntil(up.date) : 99;
   const S = state.settings;
-  h += attCard();
-  h += bkNudge();
-  h += weekCard();
-  h += biteRevCard();
-  h += battCard();
-  h += catTodayCard();
-  h += habitCard();
-  h += timerCard();
-  // minimal glance tiles
+  add(timerCard(), 100);
+  add(upHTML, upSoon === 0 ? by({ morning: 97, night: 60, all: 75 }) : upSoon === 1 ? by({ evening: 88, night: 80, all: 62 }) : 45);
+  add(attCard(), by({ morning: 94, day: 90, all: 70 }));
+  add(habitCard(), by({ morning: 92, evening: 86, night: 84, day: 40 }));
+  add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
+  add(siren, 64);
+  add(weekCard(), 72);
+  add(catTodayCard(), 56);
+  add(battCard(), battLow() || state.settings.battAlways ? 78 : -1); /* full levels only when something is low; otherwise under More today */
+  add(bkNudge(), 30);
+  // glance tiles: one block, no repeats of what a card above already says
   const T = [];
   if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : n, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam'))); }
   BOOKS().forEach(b => { const x = bookStats(b); T.push(gTile('study', 'peach', '', x.d + '/' + x.n, esc(b.title.length > 22 ? b.title.slice(0, 20) + '…' : b.title), ring(x.d, x.n, 40, 'gt-' + b.id))); });
-  if (S.revisionsOn && state.topics.length) { const due = dueTopics().length; T.push(gTile('study', 'peach', '🔁', due, due === 1 ? 'topic to revise' : 'topics to revise')); }
+  if (S.revisionsOn && state.topics.length) { const due = dueTopics().length; if (due) T.push(gTile('study', 'peach', '🔁', due, due === 1 ? 'topic to revise' : 'topics to revise')); }
   const od = otDefaultDay();
-  if (od) { const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length; T.push(gTile('ot', 'sky', '', n + '/' + rows.length, 'OT · ' + relDay(od), ring(n, rows.length, 40, 'today-' + od))); }
-  if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
+  if (od && daysUntil(od) >= 0 && daysUntil(od) <= 1) { const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length; T.push(gTile('ot', 'sky', '', n + '/' + rows.length, 'OT · ' + relDay(od), ring(n, rows.length, 40, 'today-' + od))); }
+  const items = itemsFor(t).filter(i => !(upSoon === 0 && i.src === 'Department program')); /* Up next already shows today's session */
+  if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx && nx.date !== t) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
   const att = remAttention().length; if (att) T.push(gTile('reminders', 'rose', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
-  const open = state.todos.filter(x => !x.done).length; T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
-  const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', unsynced ? 'butter' : 'sage', '📋', unsynced, unsynced ? '<span class="tosync">cases to sync</span>' : 'cases all synced'));
-  h += `<div class="gtiles">${T.join('')}</div>`;
-  const items = itemsFor(t);
-  if (items.length) h += `<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`;
+  const open = state.todos.filter(x => !x.done).length; if (open && !siren) T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
+  const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', 'butter', '📋', unsynced, '<span class="tosync">cases to sync</span>'));
+  if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }));
+  if (items.length) add(`<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`, by({ morning: 93, night: 40, all: 68 }));
+  const cap = Math.max(2, Math.min(12, +S.homeCap || 5));
+  const ranked = C.map((c, i) => ({ ...c, i })).sort((a, b) => b.score - a.score || a.i - b.i);
+  const pos = ranked.filter(c => c.score >= 0); const shown = pos.slice(0, pos.length === cap + 1 ? cap + 1 : cap), rest = ranked.filter(c => !shown.includes(c)); /* never hide just one card */
+  h += shown.map(c => c.html).join('');
+  if (rest.length) { const openM = moreOpen.has('home');
+    h += `<div class="sec home-more"><button type="button" class="btn ghost wide more-row" data-act="more" data-k="home">${openM ? 'Show less ▴' : 'More today · ' + rest.length + ' ▾'}</button></div>`;
+    if (openM) h += `<div class="home-rest">${rest.sort((a, b) => a.i - b.i).map(c => c.html).join('')}</div>`; }
+  if (!shown.length) h += `<div class="card"><span class="c-s">All quiet. Nothing needs you right now 🐈‍⬛</span></div>`;
   return h + `<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
@@ -2395,7 +2435,7 @@ function pageTodos() {
   let h = head('To-do', open.length ? plural(open.length, 'open task') : '');
   h += `<form data-form="todo" class="quick"><input class="tin" name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn" type="submit">Add</button></form>`;
   const stale = t => !t.done && t.created && Date.now() - new Date(t.created) > TODO_STALE * 864e5;
-  const row = t => `<div class="rowwrap${t.done ? ' done' : ''}"><button class="row" type="button" data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : stale(t) ? `<span class="r-s ts-old">🚨 added ${ago(t.created)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
+  const row = t => `<div class="rowwrap${t.done ? ' done' : ''}" data-swipe="${t.done ? 'Undo' : 'Done'}"><button class="row" type="button" data-swipe-act data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : stale(t) ? `<span class="r-s ts-old">🚨 added ${ago(t.created)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
   h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<p class="foot" style="text-align:center">${state.todos.length ? 'All clear.' : 'No tasks yet. Add one above.'}</p>`;
   if (done.length) {
     h += `<div class="sec"><h2 class="sh"><button type="button" data-act="toggle-done" style="color:var(--accent);font:inherit;text-transform:inherit;letter-spacing:inherit">${showDone ? 'Hide' : 'Show'} done (${done.length})</button>${showDone ? '<button type="button" data-act="clear-done" style="color:var(--danger);font:inherit;text-transform:inherit;letter-spacing:inherit">Clear done</button>' : ''}</h2>${showDone ? `<div class="group">${done.map(row).join('')}</div>` : ''}</div>`;
@@ -2467,7 +2507,7 @@ function remLine(r, st) {
 }
 function remRow(r, size, compact) {
   const st = remStatus(r); const open = st.s !== 'soon' || (!st.doneFor && st.days <= 3);
-  return `<div class="rowwrap rem">${remRing(st, size)}<button type="button" class="r-main" style="text-align:left" data-act="rem-edit" data-id="${r.id}"><span class="r-t" style="font-weight:600">${esc(r.title)}</span>${compact ? '' : `<span class="r-s">${esc(remRule(r))}</span>`}${remLine(r, st)}</button>${open && !st.doneFor ? `<button class="btn small ghost" type="button" data-act="rem-done" data-id="${r.id}" data-k="${st.p.key}">Done</button>` : ''}</div>`;
+  return `<div class="rowwrap rem"${open && !st.doneFor ? ' data-swipe="Done"' : ''}>${remRing(st, size)}<button type="button" class="r-main" style="text-align:left" data-act="rem-edit" data-id="${r.id}"><span class="r-t" style="font-weight:600">${esc(r.title)}</span>${compact ? '' : `<span class="r-s">${esc(remRule(r))}</span>`}${remLine(r, st)}</button>${open && !st.doneFor ? `<button class="btn small ghost" type="button" data-swipe-act data-act="rem-done" data-id="${r.id}" data-k="${st.p.key}">Done</button>` : ''}</div>`;
 }
 const remAttention = () => state.reminders.map(r => ({ r, st: remStatus(r) })).filter(x => x.st.s !== 'soon' || (!x.st.doneFor && x.st.days <= 3));
 /* ---------- Personal calendar: travel, deliveries, festivals & holidays ---------- */
@@ -2557,7 +2597,7 @@ function catRemSection() { const F = catFoods(); if (!F.length) return '';
   return `<div class="sec"><h2 class="sh">🐈 Cat food</h2><div class="group">${F.map(f => { const i = catInfo(f); if (!i) return '';
     return `<button type="button" class="row cat-row${i.soon ? ' soon' : ''}" data-act="cat-open"><span class="cat-tx"><b>${esc(f.name)}</b><span>Last ordered ${catDate(i.last)} · ${i.every}</span></span><span class="cat-badge">${i.soon ? 'Buy ' + catWhen(i).replace('in ', 'in ') : catDate(i.next)}</span></button>`; }).join('')}</div></div>`; }
 function catSheet() { const F = catFoods();
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>🐈 Cat food</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>🐈 Cat food</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${F.map(f => { const i = catInfo(f); if (!i) return '';
       return `<div class="card cat-card"><div class="lv-top"><span class="lv-chip">${f.kind === 'wet' ? '🥫 Wet' : '🥣 Dry'}</span><span class="lv-kind">${esc(i.every)}</span></div>
         <b class="lv-t">${esc(f.name)}</b><span class="cat-prod">${esc(f.product || '')}</span>
@@ -2793,7 +2833,7 @@ const hue = ab => { let x = 0; for (const c of ab) x = (x * 31 + c.charCodeAt(0)
 let musicSub = 'global';
 const spotifyUrl = x => 'https://open.spotify.com/search/' + encodeURIComponent(x.t + ' ' + x.a.replace(/\b(ft\.|feat\.|featuring)\b/gi, ' ').replace(/[&,]/g, ' ').replace(/\s+/g, ' ').trim());
 function pageMusic() {
-  const M = D.music; let h = head('Music', M ? 'Updated ' + esc(dShort(M.updated)) : '', 'Leisure');
+  const M = D.music; let h = head('Music', M ? 'Updated ' + esc(dShort(M.updated)) : '', 'Off duty') + offSeg();
   if (!M || !M.lists) return h + '<div class="card"><span class="c-s">No music lists yet.</span></div>';
   const L = M.lists.find(x => x.id === musicSub) || M.lists[0];
   h += `<div class="seg">${M.lists.map(x => `<button type="button" data-act="msub" data-s="${x.id}" aria-pressed="${x.id === L.id}">${esc(x.label)}</button>`).join('')}</div>`;
@@ -2886,7 +2926,7 @@ function dotaMatches() { const base = ((D.dota || {}).matches || []).map(m => ({
     else if (Date.now() - at < 7 * 864e5) base.push({ event: L.event, stage: '', bo: L.bo, start: L.start, a: L.a, b: L.b, as: L.as, bs: L.bs, live: L.live }); });
   return base; }
 function pageDota() {
-  const N = D.dota; let h = head('Dota 2', N ? esc(N.asOf || '') + (dotaLiveD ? ' · results ' + esc(ago(dotaLiveD.at)) : '') : '', 'Esports');
+  const N = D.dota; let h = head('Dota 2', N ? esc(N.asOf || '') + (dotaLiveD ? ' · results ' + esc(ago(dotaLiveD.at)) : '') : '', 'Off duty') + offSeg();
   if (!N) return h + '<div class="card"><span class="c-s">No Dota 2 data yet.</span></div>';
   h += `<div class="seg">${[['matches', 'Matches'], ['events', 'Events'], ['news', 'Patch & news']].map(([k, l]) => `<button type="button" data-act="dsub" data-s="${k}" aria-pressed="${dotaSub === k}">${l}</button>`).join('')}</div>`;
   const EV = (N.events || []).map(e => ({ ...e, st: dotaEvStatus(e) })), ev = id => EV.find(e => e.id === id) || {};
@@ -2917,7 +2957,7 @@ function pageDota() {
 function pageNba() {
   const N = D.nba;
   const LV = nbaLive && nbaLive.east ? nbaLive : null;
-  let h = head('NBA', LV ? 'Live from ESPN · updated ' + esc(ago(LV.at)) : N ? esc(N.asOf || '') : '', 'Sports');
+  let h = head('NBA', LV ? 'Live from ESPN · updated ' + esc(ago(LV.at)) : N ? esc(N.asOf || '') : '', 'Off duty') + offSeg();
   if (!N && !LV) return h + '<div class="card"><span class="c-s">No NBA data yet. Pull down to refresh.</span></div>';
   const G = nbaGames(); const MI = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
   const ord = d => { const [m, n] = d.split(' '); const mi = MI[m]; return (mi >= 9 ? mi : mi + 12) * 100 + +n; };
@@ -2961,7 +3001,8 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
-    it('dump', '🧠 Brain dump', ['Dump any idea, nothing is sorted. Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
+    it('home', '🏠 Today', ['Today shows only the few cards that matter right now (5 by default, change it in Settings). Mornings put the OT, Up next, attendance and your routine first; evenings put bite revision first.', 'Everything else waits under “More today” at the bottom. Cards with nothing to say don’t appear at all: cat food only near reorder time, batteries only when one is low, the backup card only when one is due.']),
+    it('dump', '🧠 Brain dump (quick capture)', ['Dump any idea, nothing is sorted.', 'Start with “todo …” and it goes to To-do. Start with “remind me …” and a new reminder opens with the words filled in. “buy …” or a grocery goes to the cart.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
     it('cart', '🛒 Shopping cart', ['The cart at the top, next to your photo, holds everything to buy. The red number is how many things are on the list.', 'Typing “buy shampoo” or a grocery (“milk”, “eggs and bread”) in Brain dump still works: it goes straight into the cart.', 'Search in the cart for any everyday thing (food, cleaning, personal care, cat things) and tap + to add it. Grocery staples you buy regularly come back onto the list by themselves when due; tick one when bought and its timer restarts. Under Grocery staples you can add, remove and change how often items come back.', 'A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.']),
     it('study', '📚 Study', ['▶ starts a timer and opens the topic\'s notes in GoodNotes (add the GoodNotes link under Edit). When you come back to Inemuri, it asks how far you got.', 'Bars show pages read out of total pages, where you\'ve entered page counts.', `Each topic comes back for revision after ${esc(state.settings.intervals.join(', '))} days. Change this under More settings.`, 'PDFs you add are kept on this device only (not synced to your iPad, never uploaded). Back up the originals in Files or Drive.']),
     it('rem', '🔔 Reminders', ['Tap a reminder to edit it. Reminders live on this phone and in your backup. They only remind you; the app never moves money.']),
@@ -2982,12 +3023,15 @@ function pageBackup() {
   const S = state.settings; const le = state.meta.lastExport; const P = state.private;
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
   let h = head('Backup', 'Your data, the website data, and settings', 'App');
+  h += `<div class="sec set-qw"><input type="search" class="tin" id="set-q" placeholder="Search settings and how things work" aria-label="Search settings" autocomplete="off" enterkeyhint="search"></div><p class="foot set-none" id="set-none" hidden>Nothing matches. Try another word.</p>`;
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
   h += `<div class="sec"><h2 class="sh">iPhone ↔ iPad sync</h2><div class="card">${devSyncCard()}</div></div>`;
   h += `<div class="sec"><h2 class="sh">Phone notifications</h2>${notifCard()}</div>`;
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
+    <label class="row field"><span class="f-l">Cards on Today</span><select data-setting="homeCap">${[3, 4, 5, 6, 7, 8].map(n => `<option value="${n}"${(+S.homeCap || 5) === n ? ' selected' : ''}>${n}${n === 5 ? ' (default)' : ''}</option>`).join('')}</select></label>
+    <label class="row toggle"><span>Always show device batteries on Today (off: only when one is low)</span><input type="checkbox" data-setting="battAlways" ${S.battAlways ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
     <label class="row toggle"><span>Hospital attendance reminder on Today (from 9 AM)</span><input type="checkbox" data-setting="attOn" ${S.attOn !== false ? 'checked' : ''}></label>
@@ -3040,7 +3084,7 @@ function lovePickCard(x, big) { if (!x) return ''; const t = (LOVES().topics || 
   return `<div class="card lv-card${big ? ' lv-big' : ''}">${img}<div class="lv-top"><span class="lv-chip">${esc(t.emoji || '✨')} ${esc(t.name || x.topicName || '')}</span><span class="lv-kind">${x.kind === 'article' ? 'Read today' : 'Fact of the day'}${big && x.date !== today() ? ' · ' + esc(fmtShort(x.date)) : ''}</span></div><b class="lv-t">${esc(x.title || '')}</b><p class="lv-x">${esc(x.text || '')}</p>${src}</div>`; }
 function pageOthers() {
   const L = LOVES(); const pick = L.today; const T = loveTopics();
-  let h = head('Off duty', 'Life outside the hospital');
+  let h = head('Off duty', 'Life outside the hospital') + offSeg();
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(bannerSrc(pick.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
@@ -3153,7 +3197,7 @@ function upList(kind) { const L = UPC().filter(u => u.type === kind); const t = 
   h += `<div class="card up-l">${L.slice(0, 4).map(row).join('')}${L.length > 4 ? fold('up-' + kind, 'Show all', L.slice(4).map(row).join(''), L.length - 4) : ''}</div>`;
   return h; }
 function upSheet(id) { const u = ((D.upcoming && D.upcoming.items) || []).find(x => x.id === id); if (!u) return; const t = MT(u.type); const on = (state.upWatch || {})[u.id];
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t[1]} Upcoming</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>${t[1]} Upcoming</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <div class="md-top"><div class="md-cov"><span class="cf-face" style="--ch:${normT(u.title).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}"><span class="cf-ph"><span class="cf-ph-e" aria-hidden="true">${t[1]}</span><span class="cf-ph-t">${esc(u.title)}</span></span>${upCovers[u.id] ? `<img class="cf-img" src="${esc(upCovers[u.id])}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}</span></div>
       <div class="md-tx"><h3>${esc(u.title)}</h3><p class="md-a">${esc(upWhen(u.date))}</p>${u.where ? `<p class="md-i">${esc(u.where)}</p>` : ''}${u.why ? `<p class="md-d">Because you love ${esc(u.why)}</p>` : ''}</div></div>
     ${u.blurb ? `<p class="up-blurb">${esc(u.blurb)}</p>` : ''}
@@ -3201,7 +3245,7 @@ function cfInit() { const cf = $('cf'); if (!cf || cf.dataset.ready) return; cf.
   cfGo(Math.min(pos, cf.children.length - 1), false); cfLayout();
   if (window.ResizeObserver) { let w = cf.clientWidth; new ResizeObserver(() => { if (cf.clientWidth !== w) { w = cf.clientWidth; cfGo(+cf.dataset.best || 0, false); cfLayout(); } }).observe(cf); } }
 function mediaSheet(id) { const m = (state.media || []).find(x => x.id === id); if (!m) return closeSheet(); const t = MT(m.type);
-  openSheet(`<div class="sheet-in" data-media="${m.id}"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t[1]} ${t[2].replace(/s$/, '')}</h2><span></span></div>
+  openSheet(`<div class="sheet-in" data-media="${m.id}"><div class="sheet-head"><span></span><h2>${t[1]} ${t[2].replace(/s$/, '')}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <div class="md-top"><div class="md-cov">${coverFace(m)}</div><div class="md-tx"><h3>${esc(m.title)}</h3>${m.author ? `<p class="md-a">${esc(m.author)}</p>` : ''}${m.info ? `<p class="md-i">${esc(m.info)}</p>` : ''}
       <p class="md-d">Added ${dShort(m.added)}${m.done ? ' · ' + t[4] + ' ' + dShort(m.done) : ''}</p></div></div>
     <div class="md-btns"><button type="button" class="btn${m.status === 'now' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="now">${t[3]}</button><button type="button" class="btn${m.status === 'done' ? '' : ' ghost'}" data-act="media-status" data-id="${m.id}" data-v="done">${t[4]} ✓</button></div>
@@ -3255,12 +3299,12 @@ function artBody(a) { if (!a) return '';
     ${(a.sections || []).map(sc => `<div class="art-sec"><h4>${esc(sc.h)}</h4><p>${esc(sc.p)}</p></div>`).join('')}
     ${a.source && a.source.url ? `<a class="lv-src" href="${esc(a.source.url)}" target="_blank" rel="noopener">More at ${esc(a.source.title || 'the museum')} ↗</a>` : ''}</div>`; }
 function artSheet(i) { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean).filter((x, j, arr) => arr.findIndex(y => y.date === x.date) === j); const a = all[i || 0];
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${i ? esc(fmtShort(a.date)) : 'Painting of the day'}</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>${i ? esc(fmtShort(a.date)) : 'Painting of the day'}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${a ? artBody(a) : '<div class="card"><span class="c-s">Your first painting arrives tomorrow morning.</span></div>'}
     ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.thumb || x.image.url)}" alt="" loading="lazy" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`); }
 function loveSheet() {
   const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>Things I love</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Things I love</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${pick ? lovePickCard(pick, true) : '<div class="card"><span class="c-s">Your first fact arrives tomorrow morning.</span></div>'}
     <details class="card lv-more"><summary><span class="lv-ems" aria-hidden="true">${T.slice(0, 6).map(t => esc(t.emoji || '✨')).join('')}</span><span class="lv-mt">My topics · ${T.length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>
       <div class="lv-topics">${T.map(t => `<button type="button" class="lv-tp" data-act="love-topic" data-id="${esc(t.id)}">${esc(t.emoji || '✨')} ${esc(t.name)}</button>`).join('')}<button type="button" class="lv-tp lv-add" data-act="love-add">＋ Add</button></div></details>
@@ -3268,7 +3312,7 @@ function loveSheet() {
 function fmtShort(d) { try { return new Date(d + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); } catch (_) { return d; } }
 function loveHistSheet(id) { const L = LOVES(); const all = [L.today, ...(L.history || [])].filter(Boolean).filter((x, i, a) => a.findIndex(y => y.date === x.date) === i).filter(x => !id || x.topic === id);
   const t = id && loveTopics().find(x => x.id === id);
-  openSheet(`<div class="sheet-in"><div class="sheet-head"><button type="button" class="link" data-act="close">Done</button><h2>${t ? esc(t.emoji + ' ' + t.name) : 'Earlier picks'}</h2><span></span></div>
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>${t ? esc(t.emoji + ' ' + t.name) : 'Earlier picks'}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${all.length ? all.map(x => lovePickCard(x, true)).join('') : '<div class="card"><span class="c-s">No picks from this topic yet. It will come up soon.</span></div>'}
     ${t ? `<button type="button" class="btn danger" data-act="love-rm" data-id="${esc(t.id)}" style="margin-top:14px">Remove “${esc(t.name)}” from my list</button>` : ''}</div>`); }
 function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Something I love</h2><button type="submit" class="link strong">Add</button></div>
@@ -3285,6 +3329,9 @@ function render() {
   const keepY = render.lastTab === tab ? (window.scrollY || document.documentElement.scrollTop || 0) : null; const pg = $('page'); const keepPg = render.lastTab === tab ? pg.scrollTop : 0;
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
   pg.innerHTML = PAGES[tab]();
+  { const f = { advances: 'advances', ot: 'ot', nba: 'nba', dota: 'dota', music: 'music', calendar: 'schedule' }[tab], st = f && dataStatus[f], w = pg.querySelector('.lt-wrap'); /* honest freshness label (v5.65) */
+    if (st && w && st.at) w.insertAdjacentHTML('beforeend', st.from === 'saved' ? `<span class="fresh off">Offline · saved copy from ${esc(agoT(st.at))}</span>` : `<span class="fresh">Checked ${esc(agoT(st.at))}</span>`);
+    else if (st && w && st.from === 'none') w.insertAdjacentHTML('beforeend', '<span class="fresh off">Not loaded yet · pull down to try again</span>'); }
   if (tab === 'others') cfInit();
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
@@ -3322,7 +3369,7 @@ function iconSheet() {
 function renderTabbar() {
   const tk = tab + '|' + iconPackId() + '|' + !!D.icons;
   if (renderTabbar.t === tk) return; renderTabbar.t = tk;
-  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco(k)}</svg><span>${label}</span></button>`;
+  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab || (k === 'others' && isOff(tab)) ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco(k)}</svg><span>${label}</span></button>`;
   $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
     `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco('today')}</svg></button>` +
     b('calendar', 'Calendar') + b('others', 'Off duty');
@@ -3362,9 +3409,11 @@ function renderDrawer() {
     ${profWeather()}
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
-    <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}<p class="sh">Study</p>${item('study', due ? due + ' due' : '')}${item('todos', open ? open + ' open' : '')}
-    <p class="sh">Academics</p>${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('roster')}
-    <p class="sh">Logbook</p>${item('cases')}<p class="sh">Leisure</p>${item('music')}${item('nba')}${item('dota', dotaLive().length ? 'live' : '')}<p class="sh">Personal</p>${item('orders')}<p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
+    <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
+    <p class="sh">Academics</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
+    <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}
+    <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
+    <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
 function renderBanner() {
   let h = '';
@@ -3387,6 +3436,30 @@ const drawerShown = () => $('drawer').classList.contains('open') || matchMedia('
 function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
 
+/* ---------- settings search (v5.65): hides what doesn't match, opens folds that hold a match ---------- */
+document.addEventListener('input', e => { if (e.target.id !== 'set-q') return; const q = e.target.value.trim().toLowerCase(); const pg = $('page');
+  const C = [...pg.querySelectorAll('.group > .row, .group > label, details.in-how, .sec > .card')].filter(el => !el.closest('.set-qw'));
+  const secs = [...pg.querySelectorAll('.sec')].filter(el => !el.classList.contains('set-qw'));
+  if (!q) { C.concat(secs).forEach(el => el.classList.remove('sq-hide')); $('set-none').hidden = true; return; }
+  let any = false;
+  C.forEach(el => { const hit = el.textContent.toLowerCase().includes(q); el.classList.toggle('sq-hide', !hit); if (hit) { any = true; if (el.tagName === 'DETAILS') el.open = true; let d = el.parentElement; while (d && d !== pg) { if (d.tagName === 'DETAILS') d.open = true; d = d.parentElement; } } });
+  secs.forEach(sec => { const h = sec.querySelector(':scope > .sh, :scope > h2'); const hHit = h && h.textContent.toLowerCase().includes(q);
+    if (hHit) { sec.querySelectorAll('.sq-hide').forEach(x => x.classList.remove('sq-hide')); any = true; }
+    const vis = hHit || [...sec.querySelectorAll('.group > .row, .group > label, details.in-how, .sec > .card')].some(x => !x.classList.contains('sq-hide'));
+    sec.classList.toggle('sq-hide', !vis); });
+  $('set-none').hidden = any; });
+/* ---------- swipe right to finish (v5.65): to-dos and due reminders ---------- */
+(() => { let el = null, x0 = 0, y0 = 0, dx = 0, mode = 0; const MAX = 96, GO = 70;
+  document.addEventListener('touchstart', e => { if (e.touches.length !== 1 || sheetOpen()) return; const w = e.target.closest('[data-swipe]'); if (!w || e.target.closest('input,textarea,.xbtn')) return;
+    el = w; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; mode = 0; }, { passive: true });
+  document.addEventListener('touchmove', e => { if (!el) return; const t = e.touches[0], mx = t.clientX - x0, my = t.clientY - y0;
+    if (!mode) { if (Math.abs(mx) < 10 && Math.abs(my) < 10) return; mode = Math.abs(mx) > Math.abs(my) * 1.4 && mx > 0 ? 1 : -1; if (mode === 1) { el.classList.add('swiping'); el.dataset.go = ''; } }
+    if (mode !== 1) return; e.preventDefault(); dx = Math.max(0, Math.min(MAX, mx)); el.style.setProperty('--sx', dx + 'px'); el.classList.toggle('swipe-go', dx >= GO); }, { passive: false });
+  const end = () => { if (!el) return; const w = el, go = mode === 1 && dx >= GO; el = null;
+    w.classList.remove('swiping'); w.style.setProperty('--sx', '0px');
+    if (go) { const b = w.querySelector('[data-swipe-act]'); setTimeout(() => { w.classList.remove('swipe-go'); if (b) b.click(); }, 160); } else w.classList.remove('swipe-go');
+    if (mode === 1) { const stop = ev => { if (!ev.isTrusted) return; ev.stopPropagation(); ev.preventDefault(); }; document.addEventListener('click', stop, true); setTimeout(() => document.removeEventListener('click', stop, true), 350); } };
+  document.addEventListener('touchend', end); document.addEventListener('touchcancel', end); })();
 /* ---------- sheets ---------- */
 function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; lockBody.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -lockBody.y + 'px'; B.classList.add('locked'); }
 function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); B.style.top = ''; window.scrollTo(0, lockBody.y || 0); }
@@ -3917,6 +3990,12 @@ document.addEventListener('submit', e => {
       const tid = logTopicFor(fd.get('topic') || 'new', fd); if (!tid) { toast('Type what you read'); return; } const mins = Math.max(0, parseInt(fd.get('mins'), 10) || 0), page = Math.max(0, parseInt(fd.get('page'), 10) || 0);
       state.log.push({ id: uid(), topicId: tid, date: nowISO(), note: (fd.get('note') || '').trim(), mins, page }); closeSheet(); commit('Session logged ✓'); break; }
     case 'dump': { const inp = f.querySelector('input[name=text]'); const text = (fd.get('text') || '').trim(); if (!text) return;
+      { /* one capture box (v5.65): "todo …" goes to To-do, "remind me …" opens a new reminder */
+        const td = text.match(/^(?:to-?\s?do|task)\s*[:\-–]?\s+(.+)$/i);
+        if (td) { state.todos.push({ id: uid(), text: td[1].trim(), done: false, created: nowISO(), doneAt: null }); if (inp) inp.value = ''; commit('✅ Added to To-do'); break; }
+        const rm = text.match(/^remind(?:\s+me)?(?:\s+to)?\s*[:\-–]?\s+(.+)$/i);
+        if (rm) { if (inp) inp.value = ''; remSheet(); const ti = document.querySelector('#sheet input[name=title]'); if (ti) ti.value = rm[1].trim().replace(/^./, c => c.toUpperCase()).slice(0, 80); break; }
+      }
       const gp = grocParse(text);
       if (gp) { gp.hit.forEach(g => grocSet(g.id, { want: true }));
         const add = gp.miss.map(x => x.charAt(0).toUpperCase() + x.slice(1));

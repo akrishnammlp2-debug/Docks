@@ -20,6 +20,10 @@ It is built only for her and will never be monetised.
 - Wide tables (e.g. OT list) keep every column and scroll sideways.
 - Progress is shown as a ring with the percentage inside; at 100% it turns into a smiley face.
 - Festive tab bar: subtle and clean, unique per festival; translucent, frosty, scattered motifs; nothing placed on the home button.
+- Today is a "Now" stack (v5.65): each card gets a score for the time of day, only the top few show (Settings › Cards on Today, default 5), the rest wait under "More today". A card with nothing to say returns '' (batteries only when low, cat food only near reorder). Don't repeat on Today what another card already shows.
+- Sheet headers: Cancel (or nothing) on the left, Save / Add / Done on the right. Always.
+- Music, NBA and Dota 2 live inside Off duty (tabs at the top); the side menu groups are Daily, Academics, Hospital, Life, App.
+- To-dos and due reminders can be swiped right to finish (`data-swipe` + `data-swipe-act`). OT rows are not swipeable (the table scrolls sideways).
 - **Any colour or theme change:** check that all text is readable in BOTH light and dark mode (`tools/contrast_check.py`) before pushing.
 
 ## Privacy
