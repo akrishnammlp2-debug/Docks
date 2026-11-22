@@ -21,6 +21,8 @@ It is built only for her and will never be monetised.
 - Progress is shown as a ring with the percentage inside; at 100% it turns into a smiley face.
 - Festive tab bar: subtle and clean, unique per festival; translucent, frosty, scattered motifs; nothing placed on the home button.
 - Today is a "Now" stack (v5.65): each card gets a score for the time of day, only the top few show (Settings › Cards on Today, default 5), the rest wait under "More today". A card with nothing to say returns '' (batteries only when low, cat food only near reorder). Don't repeat on Today what another card already shows.
+- Look (v5.68): each section's page title sits on a soft band of its menu colour (`--sec`); only "do this now" cards (.hero, .cat-due) are tinted, other cards are quiet outlined; glance tiles are chips; doodles only on Today and Off duty; section headings use line icons (SH_ICO) instead of emoji; the sleepy cat (NAP_CAT) appears in empty states; motion is subtle and off under Reduce Motion.
+- **Never restyle the tab bar's colours**: it shows the season/festival colours and she likes it that way (22 Nov 2026). The Home banner keeps its size.
 - Sheet headers: Cancel (or nothing) on the left, Save / Add / Done on the right. Always.
 - Music, NBA and Dota 2 live inside Off duty (tabs at the top); the side menu groups are Daily, Academics, Hospital, Life, App.
 - To-dos and due reminders can be swiped right to finish (`data-swipe` + `data-swipe-act`). OT rows are not swipeable (the table scrolls sideways).

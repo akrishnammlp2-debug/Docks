@@ -1665,6 +1665,59 @@ a.dota-n .r-main{gap:3px}
 .ditem[data-tab="calc"] svg,.ditem[data-tab="calc"] .demo{background:var(--t-sky)!important;color:var(--t-sky-i)!important}
 .calc-src .note-refs{color:var(--fg)}
 .calc-src .note-refs a{color:var(--fg);text-decoration:underline}
+/* ===== v5.68 appearance (Apoorva, 22 Nov 2026) ===== */
+/* 2: each section carries its colour from the side menu */
+body{--sec:var(--t-sage);--sec-i:var(--t-sage-i)}
+body[data-sec="today"]{--sec:var(--t-butter);--sec-i:var(--t-butter-i)}
+body[data-sec="study"],body[data-sec="todos"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
+body[data-sec="calendar"],body[data-sec="advances"],body[data-sec="others"],body[data-sec="music"],body[data-sec="nba"],body[data-sec="dota"]{--sec:var(--t-lav);--sec-i:var(--t-lav-i)}
+body[data-sec="ot"],body[data-sec="roster"],body[data-sec="cases"],body[data-sec="calc"]{--sec:var(--t-sky);--sec-i:var(--t-sky-i)}
+body[data-sec="reminders"],body[data-sec="backup"],body[data-sec="orders"]{--sec:var(--t-rose);--sec-i:var(--t-rose-i)}
+.lt-wrap{position:relative;isolation:isolate}
+.lt-wrap::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);width:100vw;top:-80px;bottom:-26px;background:linear-gradient(180deg,color-mix(in srgb,var(--sec) 90%,transparent) 0%,color-mix(in srgb,var(--sec) 55%,transparent) 55%,transparent 100%);pointer-events:none}
+@media (prefers-color-scheme:dark){.lt-wrap::before{background:linear-gradient(180deg,color-mix(in srgb,var(--sec) 16%,transparent) 0%,color-mix(in srgb,var(--sec) 7%,transparent) 55%,transparent 100%)}}
+/* 1: one strong card at a time; the rest stay quiet */
+#page .card:not(.hero):not(.cat-due):not(.calc-link):not(.art-hero):not(.lv-hero):not(.viva-card):not(.ig-party){background:color-mix(in srgb,var(--surface) 35%,var(--bg))!important;box-shadow:none!important;border:1px solid var(--sep)!important}
+#page .card.hero,#page .card.cat-due{background:color-mix(in srgb,var(--accent) 16%,var(--surface))!important;border:0!important;box-shadow:0 12px 28px -16px color-mix(in srgb,var(--accent) 70%,transparent)!important}
+#page .group{box-shadow:none!important;border:1px solid var(--sep)}
+/* 3: tab bar left as it is: it carries the season/festival colours (Apoorva, 22 Nov 2026) */
+/* 4: one title: the top-bar title fades in only after the big heading scrolls away (Today keeps its title) */
+#nb-title{transition:opacity .2s ease}
+body:not([data-sec="today"]):not(.nbt-show) #nb-title{opacity:0}
+.lt-wrap .eyebrow{display:none}
+/* 6: Dota cards use the same type as everything else */
+.nhead{font-family:var(--font-body,inherit)!important;letter-spacing:.02em!important;text-transform:none!important;font-size:12px!important}
+/* 8: glance tiles become one row of chips */
+.gtiles{display:flex!important;flex-wrap:wrap;gap:8px!important}
+.gt{flex-direction:row!important;align-items:center!important;gap:8px!important;min-height:0!important;padding:6px 12px 6px 6px!important;border-radius:999px!important;width:auto!important;box-shadow:none!important;border:1px solid var(--sep)!important;background:color-mix(in srgb,var(--surface) 35%,var(--bg))!important}
+.gt .ring{--sz:28px!important}.gt .ring .rg-v{display:none}
+.gt-i{width:28px!important;height:28px!important;border-radius:50%!important;font-size:14px!important}
+.gt-v{font-size:15px!important;margin:0!important}
+.gt-l{font-size:12.5px!important;color:var(--fg-2)!important}
+/* 9: background doodles only on Today and Off duty */
+body:not([data-sec="today"]):not([data-sec="others"]):not([data-sec="music"]):not([data-sec="nba"]):not([data-sec="dota"])::before{background-image:none!important}
+/* 10: the sleepy cat */
+.nap{display:flex;align-items:center;gap:12px}
+.nap-cat{flex:none;width:64px;height:40px;color:var(--fg)}
+.nap-cat .z{fill:var(--fg-3);font:700 9px var(--font-body,system-ui)}
+.nap-cat .z{animation:zz 3.2s ease-in-out infinite}
+.nap-cat .z2{animation-delay:1.1s}
+@keyframes zz{0%,100%{opacity:0;transform:translate(0,2px)}40%,60%{opacity:1;transform:translate(2px,-3px)}}
+.quiet-p .nap-cat{width:34px;height:21px}
+.prog-cat{width:46px;height:29px;margin-left:auto;align-self:center}
+/* 11: line icons in section headings instead of emoji */
+.sh-i{width:18px;height:18px;flex:none;fill:none;stroke:var(--sec-i,currentColor);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
+@media (prefers-color-scheme:dark){.sh-i{stroke:var(--sec,currentColor)}}
+.c-lab .sh-i{width:15px;height:15px;margin-right:4px}
+/* 12: soft motion */
+@keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#page.pg-in{animation:pgIn .24s ease-out}
+@keyframes ringIn{from{stroke-dashoffset:188.5}}
+#page.pg-in .rg-fg{animation:ringIn .9s cubic-bezier(.2,.9,.25,1)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.pop .check,.check.pop,.pop.check{animation:pop .28s ease-out}
+.rowwrap.pop,.row.pop,tr.pop{animation:pgIn .25s ease-out}
+@media (prefers-reduced-motion:reduce){#page.pg-in,#page.pg-in .rg-fg,.pop,.pop .check,.nap-cat .z{animation:none!important}}
 </style>
 </head>
 <body data-sec="today">
@@ -1693,7 +1746,7 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.67 · Case prep, viva, exam map, calculators';
+const APP_VERSION = '5.68 · New look';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -1716,7 +1769,7 @@ const IC = {
 const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
-  calc: 'OT calculators', today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
+  calc: 'OT calculators', today: 'Today', study: 'Academics', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
   roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
@@ -2388,7 +2441,7 @@ function pageToday() {
   if (rest.length) { const openM = moreOpen.has('home');
     h += `<div class="sec home-more"><button type="button" class="btn ghost wide more-row" data-act="more" data-k="home">${openM ? 'Show less ▴' : 'More today · ' + rest.length + ' ▾'}</button></div>`;
     if (openM) h += `<div class="home-rest">${rest.sort((a, b) => a.i - b.i).map(c => c.html).join('')}</div>`; }
-  if (!shown.length) h += `<div class="card"><span class="c-s">All quiet. Nothing needs you right now 🐈‍⬛</span></div>`;
+  if (!shown.length) h += `<div class="card">${napLine('All quiet. Nothing needs you right now.')}</div>`;
   return h + `<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
 function weekCount() { const from = addDays(today(), -6); return new Set(state.log.filter(l => dayOf(l.date) >= from).map(l => l.topicId)).size; }
@@ -2414,7 +2467,7 @@ function timerCard() {
 function pageStudy() {
   const due = dueTopics(); const wk = addDays(today(), -6);
   const W = state.log.filter(l => dayOf(l.date) >= wk);
-  let h = head('Study', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
+  let h = head('Academics', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
   h += timerCard();
   h += examMapSection();
   h += booksSection();
@@ -2464,7 +2517,7 @@ function pageTodos() {
   h += `<form data-form="todo" class="quick"><input class="tin" name="text" placeholder="Add a task…" autocomplete="off" enterkeyhint="done" maxlength="200"><button class="btn" type="submit">Add</button></form>`;
   const stale = t => !t.done && t.created && Date.now() - new Date(t.created) > TODO_STALE * 864e5;
   const row = t => `<div class="rowwrap${t.done ? ' done' : ''}" data-swipe="${t.done ? 'Undo' : 'Done'}"><button class="row" type="button" data-swipe-act data-act="toggle-todo" data-id="${t.id}" aria-label="${t.done ? 'Mark not done' : 'Mark done'}"><span class="check${t.done ? ' on' : ''}"></span><span class="r-main"><span class="r-t">${esc(t.text)}</span>${t.done && t.doneAt ? `<span class="r-s">done ${ago(t.doneAt)}</span>` : stale(t) ? `<span class="r-s ts-old">🚨 added ${ago(t.created)}</span>` : ''}</span></button><button class="xbtn" type="button" data-act="del-todo" data-id="${t.id}" aria-label="Delete task">×</button></div>`;
-  h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<p class="foot" style="text-align:center">${state.todos.length ? 'All clear.' : 'No tasks yet. Add one above.'}</p>`;
+  h += open.length ? `<div class="group">${moreCut('todos', open, 5).map(row).join('')}${moreBtn('todos', open.length, 5, 'task')}</div>` : `<div class="card">${napLine(state.todos.length ? 'All clear. Nothing waiting.' : 'No tasks yet. Add one above.')}</div>`;
   if (done.length) {
     h += `<div class="sec"><h2 class="sh"><button type="button" data-act="toggle-done" style="color:var(--accent);font:inherit;text-transform:inherit;letter-spacing:inherit">${showDone ? 'Hide' : 'Show'} done (${done.length})</button>${showDone ? '<button type="button" data-act="clear-done" style="color:var(--danger);font:inherit;text-transform:inherit;letter-spacing:inherit">Clear done</button>' : ''}</h2>${showDone ? `<div class="group">${done.map(row).join('')}</div>` : ''}</div>`;
   }
@@ -2809,7 +2862,7 @@ function pageOt() {
   if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Inemuri and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
-  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
+  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div>${all ? NAP_CAT.replace('class="nap-cat"', 'class="nap-cat prog-cat"') : ''}</div></div>`;
   /* finished cases drop to the bottom of the list (Apoorva, 20 Nov 2026) */
   const sorted = rows.filter(r => !state.otDone[r.id]).concat(rows.filter(r => state.otDone[r.id]));
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, sorted, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
@@ -3080,7 +3133,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
 function pageBackup() {
   const S = state.settings; const le = state.meta.lastExport; const P = state.private;
   const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-  let h = head('Backup', 'Your data, the website data, and settings', 'App');
+  let h = head('Backup & settings', 'Your data, the website data, and settings', 'App');
   h += `<div class="sec set-qw"><input type="search" class="tin" id="set-q" placeholder="Search settings and how things work" aria-label="Search settings" autocomplete="off" enterkeyhint="search"></div><p class="foot set-none" id="set-none" hidden>Nothing matches. Try another word.</p>`;
   h += `<div class="sec"><h2 class="sh">Your backup</h2><div class="card"><span class="c-s">${le ? 'Last backup: ' + ago(le) + ' (' + dShort(dayOf(le)) + ')' : 'No backup made yet.'}</span><span class="c-m">Study topics, revision log, to-dos, your entries, OT ticks, settings and the private file live only on this phone. A backup is one small file you keep in Files or iCloud Drive.</span>
     <div class="btns" style="margin-top:8px"><button class="btn" type="button" data-act="export">Export backup</button><button class="btn ghost" type="button" data-act="import">Restore from a backup file</button></div></div></div>`;
@@ -3390,7 +3443,9 @@ function render() {
   { const av = avatarHTML(profile()); if (render.av !== av) { $('nb-av').innerHTML = av; render.av = av; } }
   const keepY = render.lastTab === tab ? (window.scrollY || document.documentElement.scrollTop || 0) : null; const pg = $('page'); const keepPg = render.lastTab === tab ? pg.scrollTop : 0;
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
+  const tabChanged = render.lastTab !== tab;
   pg.innerHTML = PAGES[tab]();
+  lineIcons(pg); if (tabChanged) { pg.classList.remove('pg-in'); void pg.offsetWidth; pg.classList.add('pg-in'); }
   { const f = { advances: 'advances', ot: 'ot', nba: 'nba', dota: 'dota', music: 'music', calendar: 'schedule' }[tab], st = f && dataStatus[f], w = pg.querySelector('.lt-wrap'); /* honest freshness label (v5.65) */
     if (st && w && st.at) w.insertAdjacentHTML('beforeend', st.from === 'saved' ? `<span class="fresh off">Offline · saved copy from ${esc(agoT(st.at))}</span>` : `<span class="fresh">Checked ${esc(agoT(st.at))}</span>`);
     else if (st && w && st.from === 'none') w.insertAdjacentHTML('beforeend', '<span class="fresh off">Not loaded yet · pull down to try again</span>'); }
@@ -3398,7 +3453,7 @@ function render() {
   if (keepY !== null) { pg.scrollTop = keepPg; window.scrollTo(0, keepY); requestAnimationFrame(() => window.scrollTo(0, keepY)); [...pg.querySelectorAll('.strip,.hab-row,.otw')].forEach((e, i) => { if (strips[i]) e.scrollLeft = strips[i]; }); }
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
-  renderTabbar(); festFx(); cartBadge();
+  renderTabbar(); festFx(); cartBadge(); nbtCheck(); popApply();
   if (drawerShown()) renderDrawer(); else render.drawerStale = true;
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
@@ -3473,7 +3528,7 @@ function renderDrawer() {
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
-    <p class="sh">Academics</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
+    <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
@@ -3573,7 +3628,7 @@ function quietNow() { const S = state.settings; if (S.quietOn === false) return 
   const y = addDays(t, -1); const d = dutiesFor(y); const untilHr = +S.quietUntil || 14;
   if (d.length && hr < untilHr) return { why: 'after yesterday\'s ' + d[0].toLowerCase() + ' duty', until: (untilHr > 12 ? untilHr - 12 + ' PM' : untilHr + ' AM') };
   return null; }
-function quietPill(q) { return `<div class="igp-w"><span class="quiet-p">🌙 Quiet morning · ${esc(q.why)} · until ${esc(q.until)} <button type="button" class="link" data-act="quiet-off">Turn off</button></span></div>`; }
+function quietPill(q) { return `<div class="igp-w"><span class="quiet-p">${NAP_CAT} Quiet morning · ${esc(q.why)} · until ${esc(q.until)} <button type="button" class="link" data-act="quiet-off">Turn off</button></span></div>`; }
 
 /* ---------- v5.67: OT calculators. Formulas checked against the sources listed on the page (22 Nov 2026). ---------- */
 const LA_DRUGS = [ /* mg/kg plain, mg/kg with adrenaline */
@@ -3625,6 +3680,33 @@ function calcRefresh() { try { localStorage.setItem('studydesk.calc', JSON.strin
 function calcRun() {}
 document.addEventListener('input', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); });
 document.addEventListener('change', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); if (k === 'la' || k === 'ebvg' || (k === 'age' && !calcV.ebvg)) render(); });
+
+/* ---------- v5.68 appearance helpers ---------- */
+/* 10: an original sleepy black cat, curled up (matches the app icon's idea, drawn fresh) */
+const NAP_CAT = `<svg class="nap-cat" viewBox="0 0 64 40" aria-hidden="true"><path d="M10 34c-3-9 4-17 17-18 9-1 17 2 21 7 3 4 2 9-2 11z" fill="#1d1d22"/><path d="M46 34c6 1 11-2 11-6 0-3-3-4-5-3" fill="none" stroke="#1d1d22" stroke-width="4" stroke-linecap="round"/><circle cx="17" cy="27" r="8" fill="#1d1d22"/><path d="M11 22l-1-7 6 4zM23 22l1-7-6 4z" fill="#1d1d22"/><path d="M13.5 27.5q1.5 1.2 3 0M18.5 27.5q1.5 1.2 3 0" fill="none" stroke="#e8e2d6" stroke-width="1.1" stroke-linecap="round"/><text class="z" x="28" y="12">z</text><text class="z z2" x="34" y="7">z</text></svg>`;
+const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
+/* 11: line icons for section headings */
+const SH_ICO = { '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
+  '📖': '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>', '📚': '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>',
+  '🗺️': '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>', '🛒': '<path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>',
+  '🎂': '<path d="M4 20h16v-7a2 2 0 00-2-2H6a2 2 0 00-2 2z"/><path d="M4 15c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0M12 11V7M12 4.5v.5"/>', '📦': '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',
+  '🧳': '<rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V4.5h6V7M9 11v5M15 11v5"/>', '🎉': '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
+  '🐈': '<path d="M5 20v-9l-1-6 4 3h8l4-3-1 6v9z"/><path d="M9 14h.01M15 14h.01M11 17h2"/>', '🎤': '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/>',
+  '📰': '<path d="M5 4h11l3 3v13H5z"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4.5"/>', '🔔': '<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 004 0"/>',
+  '📋': '<path d="M9 4h6v2H9z"/><path d="M8 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-2"/>', '🌱': '<path d="M12 21v-9"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6zM12 10c0-3 2.5-5 6-5 0 3-2.5 5-6 5z"/>',
+  '🔋': '<rect x="3" y="8" width="16" height="9" rx="2"/><path d="M21 11v3M6 11v3"/>', '📅': '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  '🗓️': '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>', '📝': '<path d="M5 4h10l4 4v12H5z"/><path d="M8.5 12h7M8.5 16h5"/>',
+  '💡': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>', '🏀': '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17"/>' };
+function lineIcons(root) { if (!root) return; root.querySelectorAll('.sh, .c-lab').forEach(el => { const host = el.querySelector(':scope > span') || el; const n = host.firstChild; if (!n || n.nodeType !== 3) return;
+  const m = /^\s*(\p{Extended_Pictographic}️?)\s*/u.exec(n.textContent); if (!m || !SH_ICO[m[1]]) return;
+  n.textContent = n.textContent.slice(m[0].length); host.insertAdjacentHTML('afterbegin', `<svg class="sh-i" viewBox="0 0 24 24" aria-hidden="true">${SH_ICO[m[1]]}</svg>`); }); }
+/* 4: show the top-bar title only once the big heading has scrolled away */
+function nbtCheck() { const w = document.querySelector('#page .lt-wrap h1'); const show = !w || w.getBoundingClientRect().bottom < 56; document.body.classList.toggle('nbt-show', show); }
+window.addEventListener('scroll', nbtCheck, { passive: true });
+/* 12: a small pop on the thing you just ticked */
+let popWant = null;
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-act="toggle-todo"],[data-act="ot-tick"],[data-act="hab-tick"],[data-act="rem-done"]'); if (b) popWant = { act: b.dataset.act, id: b.dataset.id, t: Date.now() }; }, true);
+function popApply() { if (!popWant || Date.now() - popWant.t > 900) return; const el = document.querySelector(`[data-act="${popWant.act}"][data-id="${CSS.escape(popWant.id || '')}"]`); popWant = null; if (!el) return; const tgt = el.closest('.rowwrap, tr') || el; tgt.classList.add('pop'); setTimeout(() => tgt.classList.remove('pop'), 400); }
 /* ---------- swipe right to finish (v5.65): to-dos and due reminders ---------- */
 (() => { let el = null, x0 = 0, y0 = 0, dx = 0, mode = 0; const MAX = 96, GO = 70;
   document.addEventListener('touchstart', e => { if (e.touches.length !== 1 || sheetOpen()) return; const w = e.target.closest('[data-swipe]'); if (!w || e.target.closest('input,textarea,.xbtn')) return;
@@ -3640,7 +3722,7 @@ document.addEventListener('change', e => { const k = e.target.dataset && e.targe
 /* ---------- sheets ---------- */
 function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; lockBody.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -lockBody.y + 'px'; B.classList.add('locked'); }
 function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); B.style.top = ''; window.scrollTo(0, lockBody.y || 0); }
-function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; sh.scrollTop = 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
+function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; lineIcons($('sheet-body')); sh.scrollTop = 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
   lockBody(); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
 function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); unlockBody(); }
 const sheetOpen = () => $('sheet').classList.contains('open') || document.body.classList.contains('locked');
