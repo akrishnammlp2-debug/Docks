@@ -2985,7 +2985,7 @@ function pageOt() {
   if (!otDay) return h + `<div class="card"><span class="c-s">Send Claude the next day's OT list in chat (photo or text). It's added to Inemuri and shows up here.</span></div>`;
   if (ds.length > 1) h += `<div class="strip">${ds.map(d => `<button type="button" data-act="otday" data-d="${d}" aria-pressed="${d === otDay}">${dDow(d)} ${dShort(d)}</button>`).join('')}</div>`;
   const rows = otRows(otDay); const n = rows.filter(r => state.otDone[r.id]).length; const all = rows.length && n === rows.length;
-  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div>${all ? AWAKE_CAT.replace('class="nap-cat awake"', 'class="nap-cat awake prog-cat"') : ''}</div></div>`;
+  h += `<div class="card"><div class="prog-row">${ring(n, rows.length, 72, otDay)}<div class="prog-txt"><span class="c-lab">Progress</span><span class="c-t">${all ? 'All done' : n + ' of ' + plural(rows.length, 'case')}</span><span class="c-m">${all ? 'Every case on this list is ticked off.' : 'Tap a case to tick it off.'}</span></div></div></div>`;
   /* finished cases drop to the bottom of the list (Apoorva, 20 Nov 2026) */
   const sorted = rows.filter(r => !state.otDone[r.id]).concat(rows.filter(r => state.otDone[r.id]));
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, sorted, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
