@@ -1707,7 +1707,7 @@ body:not([data-sec="today"]):not([data-sec="others"]):not([data-sec="music"]):no
 .prog-cat{width:46px;height:29px;margin-left:auto;align-self:center}
 /* 11: line icons in section headings instead of emoji */
 .sh-i{width:18px;height:18px;flex:none;fill:none;stroke:var(--sec-i,currentColor);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
-@media (prefers-color-scheme:dark){.sh-i{stroke:var(--sec,currentColor)}}
+@media (prefers-color-scheme:dark){.sh-i{stroke:var(--sec-i,currentColor)}}
 .c-lab .sh-i{width:15px;height:15px;margin-right:4px}
 /* 12: soft motion */
 @keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -1718,6 +1718,65 @@ body:not([data-sec="today"]):not([data-sec="others"]):not([data-sec="music"]):no
 .pop .check,.check.pop,.pop.check{animation:pop .28s ease-out}
 .rowwrap.pop,.row.pop,tr.pop{animation:pgIn .25s ease-out}
 @media (prefers-reduced-motion:reduce){#page.pg-in,#page.pg-in .rg-fg,.pop,.pop .check,.nap-cat .z{animation:none!important}}
+/* ===== v5.69 colour (Apoorva, 22 Nov 2026) ===== */
+/* 1: one meaning per colour: sage = done, amber = due soon, soft red = overdue, sky = information */
+:root{--st-done:#2F6B4F;--st-soon:#C08A2E;--st-soon-bg:#FBEFD9;--st-soon-fg:#7E5410;--st-over-bg:#FBE6E6;--st-over-fg:#9B2C2C;--st-info-bg:#E2EEF8;--st-info-fg:#2F5E86;--amber:#E0A526}
+@media (prefers-color-scheme:dark){:root{--st-done:#9FD0B2;--st-soon:#D9A445;--st-soon-bg:#3B2E14;--st-soon-fg:#F2CF85;--st-over-bg:#3E2222;--st-over-fg:#F4AFAF;--st-info-bg:#22303C;--st-info-fg:#A9CBEA;--amber:#E8B23A}}
+.cat-due{border-color:var(--st-soon)!important}
+.pill.tosync{background:var(--st-soon-bg)!important;color:var(--st-soon-fg)!important}
+.gt:has(.gt-l.tosync),.stats .stat:has(.pill.tosync){background:var(--st-soon-bg)!important}
+.gt-l.tosync,.stats .stat:has(.pill.tosync) .s-n{color:var(--st-soon-fg)!important}
+.tsiren{background:var(--st-over-bg)!important;color:var(--st-over-fg)!important}
+.ring.late .rg-fg{stroke:var(--st-over-fg)!important}
+.pill.good{color:var(--st-done)!important}
+/* 2: rings take the colour of their section (the 100% smiley stays) */
+#page .rg-fg{stroke:var(--sec-i)}
+#page .gt .rg-fg{stroke:var(--ti)}
+@media (prefers-color-scheme:dark){#page .rg-tr{stroke:color-mix(in srgb,var(--sec-i) 18%,transparent)}}
+/* 3: real night versions of the section colours (light pastels look grey on dark) */
+@media (prefers-color-scheme:dark){:root{
+  --t-sage:#26332C;--t-sage-i:#A3D3B7;--t-peach:#3A2C24;--t-peach-i:#F0BA94;--t-sky:#22303C;--t-sky-i:#A3C8E8;
+  --t-lav:#2E2A3D;--t-lav-i:#C9BCEF;--t-butter:#37321F;--t-butter-i:#E9D38E;--t-rose:#3A2629;--t-rose-i:#EFADB6}
+  .lt-wrap::before{background:linear-gradient(180deg,color-mix(in srgb,var(--sec) 95%,transparent) 0%,color-mix(in srgb,var(--sec) 55%,transparent) 55%,transparent 100%)!important}}
+/* 4: warmer dark mode: charcoal instead of deep green; sage stays as the accent */
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1B1A18;--blk:#272521;--blk-2:#312E29;--surface:#272521;--surface-2:#312E29;--line:#3D3A33;--bar:rgba(27,26,24,.88);--sep:rgba(240,232,220,.12)}
+  body{background:#1B1A18!important}
+  .navbar{background:rgba(27,26,24,.88)!important}
+  .strip button,.seg button{background:#312E29!important;color:#EDE6DA!important}
+  .card,.gt,.ht,.stats .stat,.stats .stat:nth-child(n),.group,.bk,.bite{color:#EDE6DA!important}
+  .card .c-lab,.card .c-m,.gt .gt-l,.group .r-s,.stats .s-l,.bite small,.card .c-s,.card small{color:#BDB4A6!important}
+  .card .c-big,.card .c-t,.gt .gt-v,.group .r-t,.stats .s-n,.bite b,.card b{color:#F4EFE7!important}
+  .card,.gt,.ht,.stats .stat,.stats .stat:nth-child(n),.group,.bk,.bite{background:var(--blk)!important}
+  #page .card.hero,#page .card.cat-due{background:#2C3830!important}
+  .hero .c-lab,.hero .c-m{color:#A3D3B7!important}
+  .gt-i,.hab-e{background:#312E29!important;color:#EDE6DA}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#272521!important;color:#F4EFE7!important}
+  .prof,.drawer .prof.tinted{background:#272521!important}
+  .drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(39,37,33,0) 45%,rgba(39,37,33,.96))!important}
+  .drawer .prof.tinted .prof-top span,.drawer .prof.tinted .prof-top>div>span{color:#BDB4A6!important}
+  .drawer .prof.tinted .prof-l,.drawer .prof.tinted .btn.ghost{background:#312E29!important}
+  .igp{background:#2C3830!important;color:#E8F1EA!important}
+  .lt-wrap .lt-sub,.lt-wrap .eyebrow{color:#CFC6B8!important}
+}
+/* 5: night-shift tint: a little warmer and dimmer late at night and on quiet mornings */
+body.night-tint::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background:rgba(255,150,40,.07);mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){body.night-tint::after{background:rgba(255,140,30,.06);mix-blend-mode:normal}}
+/* 6: the cat's colours: near-black ink for big headings, amber used rarely */
+.lt,.hello-t{letter-spacing:-.01em}
+@media (prefers-color-scheme:light){.lt{color:#17181B!important}}
+:focus-visible{outline:2px solid var(--amber)!important;outline-offset:2px}
+.igp.hit{box-shadow:inset 0 0 0 1.5px var(--amber)!important}
+.rowwrap.pop,.row.pop,tr.pop{box-shadow:inset 3px 0 0 var(--amber)}
+/* 7: the lightest grey text a shade darker so it reads in theatre light (light mode) */
+@media (prefers-color-scheme:light){:root{--fg-3:#4D5852}}
+@media (prefers-color-scheme:dark){:root{--fg-3:#BDB4A6}.pill.good{background:#26332C!important}}
+/* 8: the season or festival colour, very lightly, on the top bar edge and the Home greeting (tab bar untouched) */
+body[data-season="winter"]{--season:#9FC5E8}body[data-season="spring"]{--season:#F2A7C0}body[data-season="summer"]{--season:#F2C14E}body[data-season="monsoon"]{--season:#7FB3C9}body[data-season="autumn"]{--season:#D9883B}
+body[data-fest="diwali"],body[data-fest="dasara"],body[data-fest="ganesha"]{--season:#F2A541}body[data-fest="christmas"]{--season:#E25555}body[data-fest="newyear"],body[data-fest="sankranti"],body[data-fest="rajyotsava"]{--season:#F2C14E}
+body[data-fest="holi"]{--season:#E86FB5}body[data-fest="eid"],body[data-fest="ugadi"]{--season:#6FBF77}body[data-fest="janmashtami"]{--season:#5B86D6}body[data-fest="india"]{--season:#FF9933}
+.navbar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--season,transparent) 70%,transparent) 20%,color-mix(in srgb,var(--season,transparent) 70%,transparent) 80%,transparent);pointer-events:none}
+.tban-txt{box-shadow:inset 3px 0 0 color-mix(in srgb,var(--season,transparent) 90%,transparent)}
 </style>
 </head>
 <body data-sec="today">
@@ -1746,7 +1805,7 @@ body:not([data-sec="today"]):not([data-sec="others"]):not([data-sec="music"]):no
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.68 · New look';
+const APP_VERSION = '5.69 · Colours';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -2427,7 +2486,7 @@ function pageToday() {
   if (od && daysUntil(od) >= 0 && daysUntil(od) <= 1) { const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length; T.push(gTile('ot', 'sky', '', n + '/' + rows.length, 'OT · ' + relDay(od), ring(n, rows.length, 40, 'today-' + od))); }
   const items = itemsFor(t).filter(i => !(upSoon === 0 && i.src === 'Department program')); /* Up next already shows today's session */
   if (ROSTER().length && S.myName.trim()) { const nx = ROSTER().find(r => r.date >= t && dutiesFor(r.date).length); if (nx && nx.date !== t) T.push(gTile('roster', 'rose', '🩺', dShort(nx.date), 'next duty · ' + relDay(nx.date))); }
-  const att = remAttention().length; if (att) T.push(gTile('reminders', 'rose', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
+  const att = remAttention().length; if (att) T.push(gTile('reminders', 'butter', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
   const open = state.todos.filter(x => !x.done).length; if (open && !siren) T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
   const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', 'butter', '📋', unsynced, '<span class="tosync">cases to sync</span>'));
   if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }));
@@ -3144,6 +3203,7 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Cards on Today</span><select data-setting="homeCap">${[3, 4, 5, 6, 7, 8].map(n => `<option value="${n}"${(+S.homeCap || 5) === n ? ' selected' : ''}>${n}${n === 5 ? ' (default)' : ''}</option>`).join('')}</select></label>
     <label class="row toggle"><span>Quiet morning on Today after a duty (from your roster)</span><input type="checkbox" data-setting="quietOn" ${S.quietOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="quiet-on"><span>Quiet Today until tomorrow (one-off)</span>${CHEV}</button>
+    <label class="row toggle"><span>Warmer, dimmer screen after 10 PM and on quiet mornings</span><input type="checkbox" data-setting="nightTintOn" ${S.nightTintOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Always show device batteries on Today (off: only when one is low)</span><input type="checkbox" data-setting="battAlways" ${S.battAlways ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
@@ -3454,6 +3514,7 @@ function render() {
   render.lastTab = tab;
   if (false) $('dock').innerHTML = DOCK.map(k => `<button type="button" data-act="tab" data-tab="${k}" style="--c:var(--f-${k})" aria-label="${SECS[k]}"${k === tab ? ' aria-current="page"' : ''}>${svg(k)}<span>${DOCK_LABEL[k]}</span></button>`).join('');
   renderTabbar(); festFx(); cartBadge(); nbtCheck(); popApply();
+  { const hr = new Date().getHours(); document.body.classList.toggle('night-tint', state.settings.nightTintOn !== false && (hr >= 22 || hr < 6 || !!quietNow())); }
   if (drawerShown()) renderDrawer(); else render.drawerStale = true;
   if (tab === 'nba') { const s = $('nba-strip'), on = s && s.querySelector('[aria-pressed="true"]'); if (on) s.scrollLeft = on.offsetLeft - s.clientWidth / 2; }
 }
