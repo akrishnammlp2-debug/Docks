@@ -1,0 +1,196 @@
+{
+  "updated": "2026-11-22",
+  "note": "Prep for today's cases: short anaesthetic points per procedure group, matched to OT list procedure names. Articles verified on PubMed. Plain revision notes; follow department protocols.",
+  "items": [
+    {
+      "id": "turp",
+      "title": "TURP & endoscopic urology",
+      "match": ["turp", "transurethral", "bladder neck", "turbt", "cystoscop", "ureteroscop", "\\burs\\b", "\\bbph\\b", "holep"],
+      "points": [
+        "Spinal to about T10 is the usual choice: an awake patient shows early TURP syndrome (restlessness, confusion, nausea, visual change) before it becomes severe.",
+        "TURP syndrome = absorption of irrigating fluid through open prostatic venous sinuses: fluid overload, dilutional hyponatraemia and, with 1.5% glycine, glycine toxicity (transient blindness).",
+        "Risk rises with long resection (over about an hour), a high irrigation bag, a large gland and capsular perforation.",
+        "Bipolar resection with saline removes the hyponatraemia risk but not the fluid overload risk.",
+        "Check serum sodium if symptoms appear; stop resection, control bleeding, and treat severe symptomatic hyponatraemia with hypertonic saline under close monitoring.",
+        "Bladder perforation in an awake patient: sudden abdominal or shoulder-tip pain, sometimes with hypotension or bradycardia.",
+        "Elderly patients: cold irrigant causes hypothermia; watch bleeding and postoperative delirium."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Hawary A et al. Transurethral resection of the prostate syndrome: almost gone but not forgotten. J Endourol 2009", "url": "https://doi.org/10.1089/end.2009.0129" }
+      ]
+    },
+    {
+      "id": "laparoscopy",
+      "title": "Laparoscopic & robotic abdominal surgery",
+      "match": ["laparoscop", "robotic", "\\blap\\b", "appendicectomy", "cholecystectomy", "fundoplication"],
+      "points": [
+        "CO2 pneumoperitoneum (usually 12–15 mmHg) raises SVR and blood pressure and can lower cardiac output, more so in heart disease.",
+        "Lung compliance and FRC fall and airway pressures rise: use PEEP and raise minute ventilation as end-tidal CO2 climbs.",
+        "Insufflation can cause vagal bradycardia or asystole: ask the surgeon to deflate, give atropine.",
+        "Watch for CO2 embolism (sudden fall in end-tidal CO2 with hypotension), capnothorax and surgical emphysema.",
+        "Head-down tilt can push the tube into the right main bronchus: recheck air entry after positioning.",
+        "Robotic cases: steep tilt, docked robot and limited access to the patient; protect eyes and pressure points and plan lines before docking.",
+        "Give PONV prophylaxis and plan for shoulder-tip pain."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Atkinson TM et al. Cardiovascular and ventilatory consequences of laparoscopic surgery. Circulation 2017", "url": "https://doi.org/10.1161/CIRCULATIONAHA.116.023262" }
+      ]
+    },
+    {
+      "id": "shoulder",
+      "title": "Shoulder arthroscopy & surgery",
+      "match": ["shoulder", "bankart", "labral", "rotator cuff", "acromio", "spinoglenoid", "remplissage", "glenoid"],
+      "points": [
+        "Interscalene block gives excellent analgesia but blocks the phrenic nerve on that side in almost every patient: caution in significant lung disease.",
+        "Diaphragm-sparing options: superior trunk or suprascapular-based blocks, with less complete analgesia.",
+        "Beach-chair position risks cerebral hypoperfusion: a cuff on the arm reads higher than the pressure at the brain, roughly 0.8 mmHg for every cm the head is above the cuff.",
+        "Sitting position plus interscalene block can trigger sudden hypotension and bradycardia (Bezold–Jarisch type reflex).",
+        "Lateral decubitus position is the alternative some surgeons use; check traction and pressure points."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Hewson DW et al. Regional anaesthesia for shoulder surgery. BJA Educ 2019", "url": "https://doi.org/10.1016/j.bjae.2018.12.004" }
+      ]
+    },
+    {
+      "id": "arthroplasty",
+      "title": "Knee & hip arthroplasty",
+      "match": ["knee replacement", "\\btkr\\b", "\\btka\\b", "hip replacement", "\\bthr\\b", "\\btha\\b", "arthroplasty", "hemiarthroplasty"],
+      "points": [
+        "Spinal anaesthesia is common; add multimodal analgesia.",
+        "Knee: adductor canal block and periarticular infiltration give analgesia while keeping the quadriceps working for early mobilisation.",
+        "Tranexamic acid reduces blood loss and transfusion.",
+        "Tourniquet (knee): tourniquet pain over time; on deflation expect a fall in blood pressure and a rise in end-tidal CO2.",
+        "Cemented components carry a risk of bone cement implantation syndrome: be ready at cementing.",
+        "Elderly patients: delirium, VTE prophylaxis and early mobilisation matter."
+      ],
+      "bites": ["bone-cement-implantation-syndrome"],
+      "read": [
+        { "title": "de Carvalho CC et al. Anaesthesia and analgesia for total knee arthroplasty. BJA Educ 2026", "url": "https://doi.org/10.1016/j.bjae.2026.03.004" },
+        { "title": "Haslam N et al. Perioperative care of patients undergoing total hip arthroplasty. BJA Educ 2024", "url": "https://doi.org/10.1016/j.bjae.2024.03.002" }
+      ]
+    },
+    {
+      "id": "hipfracture",
+      "title": "Hip fracture surgery",
+      "match": ["hip fracture", "neck of femur", "\\bnof\\b", "\\bdhs\\b", "intertrochanteric", "pfn"],
+      "points": [
+        "Frail, elderly patients: aim for surgery without delay once optimised.",
+        "Fascia iliaca or femoral nerve block helps analgesia before and after surgery.",
+        "Spinal or general anaesthesia are both acceptable; avoid hypotension.",
+        "Cemented hemiarthroplasty: risk of bone cement implantation syndrome; plan with the surgeon."
+      ],
+      "bites": ["bone-cement-implantation-syndrome"],
+      "read": [
+        { "title": "Shelton C, White S. Anaesthesia for hip fracture repair. BJA Educ 2020", "url": "https://doi.org/10.1016/j.bjae.2020.02.003" }
+      ]
+    },
+    {
+      "id": "tracheostomy",
+      "title": "Tracheostomy",
+      "match": ["trache"],
+      "points": [
+        "Shared airway: agree the plan and the communication steps with the surgeon beforehand.",
+        "Airway fire risk: no diathermy to open the trachea, and lower the FiO2 before the tracheal incision if oxygenation allows.",
+        "Withdraw the tracheal tube under vision until the cuff is just above the stoma, ready to re-advance it if needed.",
+        "Confirm the tracheostomy tube with waveform capnography before removing the tracheal tube.",
+        "After surgery: a displaced new tracheostomy is an emergency; know the emergency tracheostomy algorithm."
+      ],
+      "bites": ["capnography-waveforms"],
+      "read": [
+        { "title": "Lewith H, Athanassoglou V. Update on management of tracheostomy. BJA Educ 2019", "url": "https://doi.org/10.1016/j.bjae.2019.08.002" }
+      ]
+    },
+    {
+      "id": "giendoscopy",
+      "title": "GI endoscopy (OGD, colonoscopy, EUS, ERCP)",
+      "match": ["endoscop", "colonoscop", "gastroscop", "\\bogd\\b", "oesophagogastro", "\\beus\\b", "endosonograph", "\\bercp\\b"],
+      "points": [
+        "Usually sedation with propofol and a shared airway: monitor with capnography for moderate or deep sedation.",
+        "Higher aspiration risk (achalasia, upper GI bleed, gastric outlet obstruction): consider tracheal intubation.",
+        "ERCP is often prone or semi-prone and long: think about airway access before starting.",
+        "Endoscopy suites are remote locations: same monitoring standards, check equipment and how to get help."
+      ],
+      "bites": ["achalasia-cardia"],
+      "read": [
+        { "title": "Sneyd JR. Developments in procedural sedation for adults. BJA Educ 2022", "url": "https://doi.org/10.1016/j.bjae.2022.02.006" },
+        { "title": "Henriksson AM, Thakrar SV. Anaesthesia and sedation for ERCP. BJA Educ 2022", "url": "https://doi.org/10.1016/j.bjae.2022.04.002" }
+      ]
+    },
+    {
+      "id": "remote",
+      "title": "Interventional radiology & cath lab",
+      "match": ["angioplasty", "\\bivr\\b", "emboli", "stent", "pigtail", "venaseal", "sclerotherapy", "cath lab", "interventional", "\\bmri\\b", "\\bct\\b"],
+      "points": [
+        "Remote location: same monitoring standards as theatre; check the machine, suction, drugs and how to call for help before starting.",
+        "Radiation safety: time, distance and shielding (lead apron, thyroid shield, mobile screens). Dose falls with the square of distance.",
+        "Contrast: ask about previous reactions, renal function and metformin.",
+        "Patients must lie flat and still, sometimes for long periods: plan sedation versus general anaesthesia early.",
+        "Carotid stenting: balloon inflation can cause bradycardia and hypotension; keep the patient awake enough for neuro checks if planned."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Lalabekyan B et al. Principles of radiation safety for anaesthetists. BJA Educ 2025", "url": "https://doi.org/10.1016/j.bjae.2025.01.005" }
+      ]
+    },
+    {
+      "id": "hysteroscopy",
+      "title": "Operative hysteroscopy",
+      "match": ["hysteroscop", "\\btcre\\b", "myomectomy \\(hysteroscopic\\)"],
+      "points": [
+        "Distension fluid is absorbed into the circulation: hypotonic media (glycine, sorbitol) cause dilutional hyponatraemia; saline causes fluid overload.",
+        "Track the fluid deficit throughout. Commonly used stop limits in healthy women: about 1000 mL for hypotonic and 2500 mL for isotonic media, lower in the elderly or those with comorbidity.",
+        "Other complications: uterine perforation, bleeding and gas embolism.",
+        "Check sodium if the deficit is large or the patient is symptomatic."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Elahmedawy H, Snook NJ. Complications of operative hysteroscopy: an anaesthetist's perspective. BJA Educ 2021", "url": "https://doi.org/10.1016/j.bjae.2021.03.001" }
+      ]
+    },
+    {
+      "id": "hernia",
+      "title": "Inguinal & femoral hernia",
+      "match": ["hernia", "hernioplasty", "herniorrhaphy"],
+      "points": [
+        "Adults: general anaesthesia (often with an LMA), spinal, or local infiltration with sedation are all options.",
+        "Ilioinguinal–iliohypogastric or TAP block helps analgesia after open repair.",
+        "Laparoscopic repair carries the pneumoperitoneum issues of any laparoscopy.",
+        "Ex-premature infants: risk of postoperative apnoea, highest below about 60 weeks postmenstrual age; consider awake spinal and apnoea monitoring afterwards."
+      ],
+      "bites": [],
+      "read": [
+        { "title": "Ahmad N, Greenaway S. Anaesthesia for inguinal hernia repair in the newborn or ex-premature infant. BJA Educ 2018", "url": "https://doi.org/10.1016/j.bjae.2018.04.004" }
+      ]
+    },
+    {
+      "id": "paeds",
+      "title": "Paediatric surgery",
+      "match": ["paediatric", "pediatric", "ureteric reimplant", "circumcision", "orchidopexy", "hypospadias", "pyeloplasty", "\\bchild\\b"],
+      "points": [
+        "Weight-based everything: drugs, fluids, tube size; check your calculations twice.",
+        "Caudal or epidural blocks give good analgesia for lower abdominal and perineal surgery; mind the total local anaesthetic dose.",
+        "Spinal anaesthesia in infants is short-lasting; plan the surgery time.",
+        "Ex-premature infants: postoperative apnoea risk."
+      ],
+      "bites": ["paediatric-spinal-dose", "paediatric-epidural-dosing"],
+      "read": [
+        { "title": "Greaney D, Everett T. Paediatric regional anaesthesia: updates in central neuraxial techniques and thoracic and abdominal blocks. BJA Educ 2019", "url": "https://doi.org/10.1016/j.bjae.2018.12.003" }
+      ]
+    },
+    {
+      "id": "anal",
+      "title": "Anal & perianal surgery",
+      "match": ["sphincterotomy", "haemorrhoid", "hemorrhoid", "fissure", "fistula", "\\banal\\b", "perianal", "pilonidal"],
+      "points": [
+        "Saddle block (low-dose spinal in the sitting position) suits most short perianal procedures.",
+        "Under light general anaesthesia, anal stretch can trigger laryngospasm or bradycardia: keep the plane deep enough.",
+        "Lithotomy or prone jack-knife position: check pressure points and, prone, the airway."
+      ],
+      "bites": [],
+      "read": []
+    }
+  ]
+}

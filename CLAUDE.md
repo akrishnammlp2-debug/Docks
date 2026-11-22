@@ -39,4 +39,6 @@ It is built only for her and will never be monetised.
 - Always double-check academic facts against sources before writing them. Never invent an article, DOI or PMID.
 - **Bite-size notes** (`data/bites.json`): one note per topic, in her own-words revision style (summary, 3–6 sections, "Points for the exam / viva", pearl, real refs). Asking again updates the same note. A message ending in "BS" means: answer, then save the bite.
 - **Articles** (`data/articles.json`): every academic question adds the single most relevant article (BJA Education / major anaesthesia journals preferred, verified on PubMed).
+- **Case prep** (`data/caseprep.json`): procedure groups matched to OT list procedure names by `match` regexes; short anaesthetic points, linked bite ids, and 1–2 articles verified on PubMed. When a new kind of case shows up on OT lists often, add a group (verify facts and DOIs first).
+- **OT calculators** (`pageCalc` in index.html): formulas and limits are sourced on the page. Never change a dose or formula without checking a primary source and re-running the worked examples.
 - **Academic schedule** (`data/schedule.json`): whenever sessions are added, every session that has a topic gets a `read` list of 1–3 verified articles (BJA Education preferred). Skip sessions with no topic (Clancon, OSCE, open journal club). See the `rule` field in that file.

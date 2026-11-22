@@ -1640,6 +1640,31 @@ a.dota-n .r-main{gap:3px}
 .set-qw input{width:100%}
 .sq-hide{display:none!important}
 .ditem[data-tab="others"] svg,.ditem[data-tab="others"] .demo{background:var(--t-lav)!important;color:var(--t-lav-i)!important}
+/* v5.67: case prep, viva, exam map, quiet morning, calculators */
+.calc-link{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;width:100%;padding:12px 14px!important;margin-bottom:10px;text-align:left}
+.calc-link .chev{flex:none}
+.emap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.emap-t{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:16px;background:var(--surface);text-align:center;min-width:0}
+.emap-t b{font-size:13px;line-height:1.2;color:var(--fg)}
+.emap-t span{font-size:12px;color:var(--fg-2)}
+.emap-t.thin{background:transparent;border:1.5px dashed var(--sep)}
+.emap-0{width:46px;height:46px;display:grid;place-items:center;font-size:22px;opacity:.7}
+.viva-card{display:flex!important;flex-direction:column;gap:10px;padding:18px!important;min-height:220px;text-align:left;width:100%}
+.viva-q{font-size:20px;line-height:1.25;color:var(--fg)}
+.viva-a{margin:0}
+.viva-end{display:flex!important;flex-direction:column;align-items:center;gap:6px;padding:22px!important;text-align:center}
+.viva-big{font-size:40px}
+.quiet-p{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;font-size:13px;color:var(--fg-2);padding:6px 12px;border-radius:999px;background:var(--surface)}
+.quiet-p .link{font-size:13px}
+.calc-f{gap:8px}
+.calc-f input,.calc-f select{flex:1;min-width:0;text-align:right}
+.calc-u{flex:none;font-size:13px;color:var(--fg-2);min-width:44px}
+.calc-o .r-l{display:flex;flex-direction:column}
+.calc-o small{font-size:12px;color:var(--fg-2)}
+.calc-o .r-v{color:var(--fg);font-size:16px}
+.ditem[data-tab="calc"] svg,.ditem[data-tab="calc"] .demo{background:var(--t-sky)!important;color:var(--t-sky-i)!important}
+.calc-src .note-refs{color:var(--fg)}
+.calc-src .note-refs a{color:var(--fg);text-decoration:underline}
 </style>
 </head>
 <body data-sec="today">
@@ -1668,9 +1693,9 @@ a.dota-n .r-main{gap:3px}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.66 · Full Dota series';
+const APP_VERSION = '5.67 · Case prep, viva, exam map, calculators';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1691,7 +1716,7 @@ const IC = {
 const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
-  today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
+  calc: 'OT calculators', today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
   roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
@@ -2354,6 +2379,8 @@ function pageToday() {
   const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', 'butter', '📋', unsynced, '<span class="tosync">cases to sync</span>'));
   if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }));
   if (items.length) add(`<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`, by({ morning: 93, night: 40, all: 68 }));
+  const Q = quietNow(); /* after a night duty: only what is truly due shows; the rest waits under More today */
+  if (Q) { const keep = new Set([timerCard(), catTodayCard()].filter(Boolean)); C.forEach(c => { if (!keep.has(c.html) && !/data-tab="reminders"/.test(c.html)) c.score = -1; }); h += quietPill(Q); }
   const cap = Math.max(2, Math.min(12, +S.homeCap || 5));
   const ranked = C.map((c, i) => ({ ...c, i })).sort((a, b) => b.score - a.score || a.i - b.i);
   const pos = ranked.filter(c => c.score >= 0); const shown = pos.slice(0, pos.length === cap + 1 ? cap + 1 : cap), rest = ranked.filter(c => !shown.includes(c)); /* never hide just one card */
@@ -2389,6 +2416,7 @@ function pageStudy() {
   const W = state.log.filter(l => dayOf(l.date) >= wk);
   let h = head('Study', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
   h += timerCard();
+  h += examMapSection();
   h += booksSection();
   h += bitesSection();
   h += articlesSection();
@@ -2785,7 +2813,8 @@ function pageOt() {
   /* finished cases drop to the bottom of the list (Apoorva, 20 Nov 2026) */
   const sorted = rows.filter(r => !state.otDone[r.id]).concat(rows.filter(r => state.otDone[r.id]));
   h += `<div class="sec"><h2 class="sh">Cases</h2>${otTable(moreCut('ot|' + otDay, sorted, 5))}${moreBtn('ot|' + otDay, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
-  const named = rows.some(r => otInfo(r.id).patient);
+  h += prepSection(rows);
+  h += `<div class="sec"><button type="button" class="card calc-link" data-act="goto" data-tab="calc"><span class="cat-due-i" aria-hidden="true">🧮</span><span class="cat-tx"><b>OT calculators</b><span>Weights, blood loss, local anaesthetic doses, paediatric numbers</span></span>${CHEV}</button></div>`;
   return h;
 }
 
@@ -3025,6 +3054,11 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
+    it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
+    it('viva', '🎤 Viva round', ['Five flashcards from the “Points for the exam / viva” in your bite-size notes. Say the points out loud, tap to check, then Knew it or Again tomorrow. It shares the same spacing as the daily bite revision.']),
+    it('emap', '🗺️ Exam map', ['One ring per exam area. It counts your bite-size notes (done once revised), your study topics (done once studied) and textbook chapters (done once ticked) in that area. Empty areas show “nothing yet”, so the thin spots stand out.']),
+    it('quiet', '🌙 Quiet morning', ['If the roster shows you on duty yesterday, Today stays quiet until 2 PM: only reminders that are due, cat food if due, and a running study timer. Everything else waits under More today. Turn it off for the day from the moon line, or switch it off in Settings.']),
+    it('calc', '🧮 OT calculators', ['From the OT list (and the side menu). Weight scalars, maximum allowable blood loss, local anaesthetic maximum doses and paediatric numbers. Each shows its formula and source. Always check against your department’s chart.']),
     it('home', '🏠 Today', ['Today shows only the few cards that matter right now (5 by default, change it in Settings). Mornings put the OT, Up next, attendance and your routine first; evenings put bite revision first.', 'Everything else waits under “More today” at the bottom. Cards with nothing to say don’t appear at all: cat food only near reorder time, batteries only when one is low, the backup card only when one is due.']),
     it('dump', '🧠 Brain dump (quick capture)', ['Dump any idea, nothing is sorted.', 'Start with “todo …” and it goes to To-do. Start with “remind me …” and a new reminder opens with the words filled in. “buy …” or a grocery goes to the cart.', 'Type “watched …”, “reading …”, “watching …” or “playing …” and it goes to My year in stories with its cover.']),
     it('cart', '🛒 Shopping cart', ['The cart at the top, next to your photo, holds everything to buy. The red number is how many things are on the list.', 'Typing “buy shampoo” or a grocery (“milk”, “eggs and bread”) in Brain dump still works: it goes straight into the cart.', 'Search in the cart for any everyday thing (food, cleaning, personal care, cat things) and tap + to add it. Grocery staples you buy regularly come back onto the list by themselves when due; tick one when bought and its timer restarts. Under Grocery staples you can add, remove and change how often items come back.', 'A reminder comes on Saturday at 9 AM if anything is due, and on any evening when 3 or more staples are due.']),
@@ -3055,6 +3089,8 @@ function pageBackup() {
   h += `<div class="sec"><h2 class="sh">Settings</h2><div class="group">
     <label class="row toggle"><span>Weather on Today (uses your location)</span><input type="checkbox" data-setting="weatherOn" ${S.weatherOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Cards on Today</span><select data-setting="homeCap">${[3, 4, 5, 6, 7, 8].map(n => `<option value="${n}"${(+S.homeCap || 5) === n ? ' selected' : ''}>${n}${n === 5 ? ' (default)' : ''}</option>`).join('')}</select></label>
+    <label class="row toggle"><span>Quiet morning on Today after a duty (from your roster)</span><input type="checkbox" data-setting="quietOn" ${S.quietOn !== false ? 'checked' : ''}></label>
+    <button type="button" class="row" data-act="quiet-on"><span>Quiet Today until tomorrow (one-off)</span>${CHEV}</button>
     <label class="row toggle"><span>Always show device batteries on Today (off: only when one is low)</span><input type="checkbox" data-setting="battAlways" ${S.battAlways ? 'checked' : ''}></label>
     <label class="row toggle"><span>Gentle habit reminders on Today</span><input type="checkbox" data-setting="habitsOn" ${S.habitsOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="icon-sheet"><span>Icon style</span><span class="r-v">${iconPackId() === 'classic' ? 'Original' : (D.icons && D.icons[iconPackId()] ? D.icons[iconPackId()].name : '')}</span>${CHEV}</button>
@@ -3071,6 +3107,8 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Off Instagram since</span><input type="date" data-setting="igSince" max="${today()}" value="${esc(S.igSince || '')}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Revise after (days)</span><input type="text" inputmode="numeric" data-setting="intervals" value="${esc(S.intervals.join(', '))}"></label>
+    <label class="row toggle"><span>Prep for these cases on the OT list</span><input type="checkbox" data-setting="prepOn" ${S.prepOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Exam map in Academics</span><input type="checkbox" data-setting="examMapOn" ${S.examMapOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Daily bite revision on Today (3 notes a day)</span><input type="checkbox" data-setting="biteRevOn" ${S.biteRevOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Sunday round-up of your week on Today</span><input type="checkbox" data-setting="weekOn" ${S.weekOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup reminder on Today after 30 days</span><input type="checkbox" data-setting="bkNudgeOn" ${S.bkNudgeOn !== false ? 'checked' : ''}></label>
@@ -3091,7 +3129,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
+const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -3413,6 +3451,7 @@ const MENU_LINE = {
   nba: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
   backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
   orders: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 016 0"/>',
+  calc: '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h1M12 12h1M15.5 12h0M8.5 16h1M12 16h1M15.5 16h0"/>',
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
 };
 const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', dota: '⚔️', backup: '☁️' };
@@ -3435,7 +3474,7 @@ function renderDrawer() {
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Academics</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
-    <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}
+    <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
@@ -3472,6 +3511,120 @@ document.addEventListener('input', e => { if (e.target.id !== 'set-q') return; c
     const vis = hHit || [...sec.querySelectorAll('.group > .row, .group > label, details.in-how, .sec > .card')].some(x => !x.classList.contains('sq-hide'));
     sec.classList.toggle('sq-hide', !vis); });
   $('set-none').hidden = any; });
+
+/* ---------- v5.67: Prep for today's cases (data/caseprep.json) ---------- */
+const PREP = () => (D.caseprep && D.caseprep.items) || [];
+const prepRx = new Map(); const prepTest = (m, txt) => { let r = prepRx.get(m); if (!r) { try { r = new RegExp(m, 'i'); } catch (_) { r = /$^/; } prepRx.set(m, r); } return r.test(txt); };
+const prepFor = proc => PREP().filter(c => (c.match || []).some(m => prepTest(m, proc || '')));
+function prepGroups(rows) { const g = new Map(); rows.forEach(r => prepFor(r.procedure).forEach(c => { const x = g.get(c.id) || { c, n: 0, procs: new Set() }; x.n++; x.procs.add(r.procedure); g.set(c.id, x); })); return [...g.values()].sort((a, b) => b.n - a.n); }
+function prepSection(rows) { if (state.settings.prepOn === false) return ''; const G = prepGroups(rows); if (!G.length) return '';
+  return `<div class="sec"><h2 class="sh"><span>📖 Prep for these cases</span><span>${plural(G.length, 'topic')}</span></h2><div class="group">${moreCut('prep', G, 3).map(x => `<button type="button" class="row" data-act="prep" data-id="${esc(x.c.id)}"><span class="r-main"><span class="r-t">${esc(x.c.title)}</span><span class="r-s">${plural(x.n, 'case')} · ${esc([...x.procs].slice(0, 2).join(', '))}${x.procs.size > 2 ? '…' : ''}</span></span>${CHEV}</button>`).join('')}${moreBtn('prep', G.length, 3, 'topic')}</div></div>`; }
+function prepSheet(id) { const c = PREP().find(x => x.id === id); if (!c) return;
+  const bites = (c.bites || []).map(i => BITES().find(b => b.id === i)).filter(Boolean);
+  const arts = ARTS ? ARTS().filter(a => (c.match || []).some(m => prepTest(m, (a.topic || '') + ' ' + a.title))) : [];
+  openSheet(`<div class="sheet-in note">${sheetHead(c.title)}
+    <h3 class="sh">Think about</h3><ul class="note-ul">${(c.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>
+    ${bites.length ? `<h3 class="sh">Your bite-size notes</h3><div class="group">${bites.map(b => `<button type="button" class="row" data-act="bite" data-id="${esc(b.id)}"><span class="r-main"><span class="r-t">${esc(b.title)}</span><span class="r-s">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span></span>${CHEV}</button>`).join('')}</div>` : ''}
+    ${(c.read || []).length || arts.length ? `<h3 class="sh">Read</h3><ol class="note-refs">${(c.read || []).map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}${arts.map(a => `<li><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a> (${esc(a.journal || '')} ${esc(String(a.year || ''))})</li>`).join('')}</ol>` : ''}
+    <p class="foot">Short revision points, not a protocol. Follow your department's practice.</p></div>`); }
+
+/* ---------- v5.67: Viva flashcards from the "Points for the exam / viva" of each bite ---------- */
+const vivaPts = b => { const s = (b.sections || []).find(x => /viva|exam/i.test(x.h || '')); return s ? (s.items || (s.rows || []).map(r => r[0] + ': ' + r[1])) : []; };
+let viva = null;
+function vivaStart() { const pool = BITES().filter(b => vivaPts(b).length);
+  if (!pool.length) { toast('No viva points yet. They come with your bite-size notes.'); return; }
+  const due = biteDueList().map(x => x.b).filter(b => vivaPts(b).length);
+  const rest = pool.filter(b => !due.includes(b)).sort((a, b) => ((brecOf(a.id) || {}).last || '').localeCompare((brecOf(b.id) || {}).last || ''));
+  viva = { ids: due.concat(rest).slice(0, 5).map(b => b.id), i: 0, flip: false, ok: 0 }; vivaShow(); }
+function vivaShow() { if (!viva) return; const b = BITES().find(x => x.id === viva.ids[viva.i]);
+  if (!b) { const n = viva.ids.length, ok = viva.ok; viva = null; openSheet(`<div class="sheet-in">${sheetHead('Viva round')}<div class="card viva-end"><span class="viva-big" aria-hidden="true">🎤</span><b>Round done</b><span class="c-s">${ok} of ${n} you knew well. The others come back tomorrow.</span></div><button class="btn wide" type="button" data-act="viva-start">Another round</button></div>`); commit(); return; }
+  const P = vivaPts(b);
+  openSheet(`<div class="sheet-in">${sheetHead('Viva round · ' + (viva.i + 1) + ' of ' + viva.ids.length)}
+    <button type="button" class="card viva-card${viva.flip ? ' flipped' : ''}" data-act="viva-flip" aria-label="${viva.flip ? 'Answer shown' : 'Tap to show the answer'}">
+      <span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b class="viva-q">${esc(b.title)}</b>
+      ${viva.flip ? `<ul class="note-ul viva-a">${P.map(x => `<li>${esc(x)}</li>`).join('')}</ul>${b.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(b.pearl)}</span></div>` : ''}` : `<span class="c-s">Say the ${P.length === 1 ? 'key point' : P.length + ' key points'} out loud, then tap to check.</span>`}
+    </button>
+    ${viva.flip ? `<div class="btns brev-b" style="flex-direction:row"><button class="btn" type="button" data-act="viva-mark" data-ok="1">Knew it</button><button class="btn ghost" type="button" data-act="viva-mark" data-ok="0">Again tomorrow</button></div>` : ''}</div>`); }
+function vivaMark(ok) { if (!viva) return; const id = viva.ids[viva.i]; const r = brecOf(id) || { lvl: 0, n: 0 }; const t = today();
+  const lvl = ok ? (r.lvl || 0) + 1 : 0; const gap = ok ? BREV_I[Math.min(lvl - 1, BREV_I.length - 1)] : 1;
+  state.biteRev = { ...(state.biteRev || {}), [id]: { lvl, n: (r.n || 0) + 1, last: t, due: addDays(t, gap) } }; if (save()) syncSoon();
+  if (ok) viva.ok++; viva.i++; viva.flip = false; vivaShow(); }
+
+/* ---------- v5.67: Exam map — how much of each domain you've touched ---------- */
+const DOMAINS = [['Drugs', /pharm|drug|anaesthetic agent|opioid|relaxant/i], ['Ventilation', /venti|respir|lung|oxygen/i], ['Physiology', /physio/i], ['Airway', /airway|intubat/i], ['Regional', /regional|block|neurax|spinal|epidural|caudal|local anaes/i], ['Obstetric', /obstet|obg|labou?r|pregnan|caesar/i], ['Paediatric', /paed|pediat|neonat|child|infant/i], ['Cardiac', /cardi|heart|valv|coronary/i], ['Neuro', /neuro|brain|cerebr|spine surgery/i], ['ICU', /icu|critical|sepsis|intensive/i], ['Monitoring & equipment', /monitor|equipment|physics|machine/i], ['Preop & scoring', /preop|pre-op|assessment|scor|asa\b/i]];
+function examMap() { const B = BITES(); const out = DOMAINS.map(([name]) => ({ name, n: 0, d: 0, notes: 0, other: 0 }));
+  const add = (name, done, isNote) => { const x = out.find(o => o.name === name); if (!x) return; x.n++; if (done) x.d++; if (isNote) x.notes++; else x.other++; };
+  B.forEach(b => add(b.cat, !!brecOf(b.id), true));
+  state.topics.forEach(t => { const subj = byId(state.subjects || [], t.subjectId); const txt = t.name + ' ' + (subj ? subj.name : ''); const dm = DOMAINS.find(([, rx]) => rx.test(txt)); if (dm) add(dm[0], state.log.some(l => l.topicId === t.id), false); });
+  BOOKS().forEach(bk => bk.chapters.forEach(c => { const txt = (c.part || '') + ' ' + c.title + ' ' + bk.title; const dm = /physiolog/i.test(bk.title) ? DOMAINS.find(([n]) => n === 'Physiology') : DOMAINS.find(([, rx]) => rx.test((c.part || '') + ' ' + c.title)); if (dm) add(dm[0], !!state.bookDone[bk.id + '|' + c.n], false); }));
+  return out; }
+function examMapSection() { if (state.settings.examMapOn === false) return ''; const M = examMap(); const thin = M.filter(x => !x.n);
+  return `<div class="sec"><h2 class="sh"><span>🗺️ Exam map</span><span>${thin.length ? thin.length + ' still empty' : 'every area started'}</span></h2><div class="emap">${M.map(x => `<button type="button" class="emap-t${x.n ? '' : ' thin'}" data-act="emap" data-c="${esc(x.name)}">${x.n ? ring(x.d, x.n, 46, 'em-' + x.name) : `<span class="emap-0" aria-hidden="true">${BCAT_ICON[x.name] || '•'}</span>`}<b>${esc(x.name)}</b><span>${x.n ? x.d + '/' + x.n + ' done' : 'nothing yet'}</span></button>`).join('')}</div></div>`; }
+function emapSheet(name) { const x = examMap().find(o => o.name === name); if (!x) return;
+  const B = BITES().filter(b => b.cat === name);
+  openSheet(`<div class="sheet-in">${sheetHead((BCAT_ICON[name] || '') + ' ' + name)}
+    <div class="card"><span class="c-s">${x.n ? `${x.d} of ${x.n} done: ${plural(x.notes, 'bite-size note')} (revised at least once counts as done) and ${plural(x.other, 'study topic or chapter')} (studied or ticked counts as done).` : 'Nothing here yet. Ask Claude a question in this area and it becomes your first bite-size note.'}</span></div>
+    ${B.length ? `<h3 class="sh">Notes</h3><div class="group">${B.map(b => `<button type="button" class="row" data-act="bite" data-id="${esc(b.id)}"><span class="r-main"><span class="r-t">${esc(b.title)}</span><span class="r-s">${brecOf(b.id) ? 'revised ' + plural(brecOf(b.id).n || 1, 'time') : 'not revised yet'}</span></span>${CHEV}</button>`).join('')}</div>` : ''}</div>`); }
+
+/* ---------- v5.67: after-duty quiet mode (from the duty roster) ---------- */
+function quietNow() { const S = state.settings; if (S.quietOn === false) return null; const hr = new Date().getHours(); const t = today();
+  if (S.quietDay === t) return { why: 'you turned it on', until: 'tomorrow' };
+  if (S.quietOff === t) return null;
+  const y = addDays(t, -1); const d = dutiesFor(y); const untilHr = +S.quietUntil || 14;
+  if (d.length && hr < untilHr) return { why: 'after yesterday\'s ' + d[0].toLowerCase() + ' duty', until: (untilHr > 12 ? untilHr - 12 + ' PM' : untilHr + ' AM') };
+  return null; }
+function quietPill(q) { return `<div class="igp-w"><span class="quiet-p">🌙 Quiet morning · ${esc(q.why)} · until ${esc(q.until)} <button type="button" class="link" data-act="quiet-off">Turn off</button></span></div>`; }
+
+/* ---------- v5.67: OT calculators. Formulas checked against the sources listed on the page (22 Nov 2026). ---------- */
+const LA_DRUGS = [ /* mg/kg plain, mg/kg with adrenaline */
+  ['lido', 'Lidocaine', 3, 7], ['bupi', 'Bupivacaine', 2, 2], ['levo', 'Levobupivacaine', 2, 2], ['ropi', 'Ropivacaine', 3, 3], ['prilo', 'Prilocaine', 6, 8]];
+const EBV_K = [['pre', 'Preterm neonate', 95], ['term', 'Term neonate', 85], ['inf', 'Infant', 80], ['child', 'Child', 75], ['m', 'Adult man', 70], ['f', 'Adult woman', 65]];
+let calcV = (() => { try { return JSON.parse(localStorage.getItem('studydesk.calc') || 'null') || {}; } catch (_) { return {}; } })();
+const ebvDefault = () => { const a = cNum('age'); return a !== null && a < 1 ? 'inf' : a !== null && a < 13 ? 'child' : calcV.sex === 'f' ? 'f' : 'm'; };
+const cNum = k => { const v = parseFloat(calcV[k]); return isFinite(v) ? v : null; };
+const r1 = x => Math.round(x * 10) / 10, r0 = x => Math.round(x);
+function calcBody() { const V = calcV, sex = V.sex === 'f' ? 'f' : 'm', ht = cNum('ht'), wt = cNum('wt');
+  const out = {};
+  if (ht && wt) { const bmi = wt / Math.pow(ht / 100, 2); const ibw = (sex === 'm' ? 50 : 45.5) + 0.91 * (ht - 152.4);
+    const lbw = sex === 'm' ? 9270 * wt / (6680 + 216 * bmi) : 9270 * wt / (8780 + 244 * bmi); const abw = ibw + 0.4 * (wt - ibw);
+    Object.assign(out, { bmi, ibw, lbw, abw }); }
+  return out; }
+const cIn = (k, label, unit, attrs) => `<label class="row field calc-f"><span class="f-l">${label}</span><input type="text" inputmode="decimal" data-calc="${k}" value="${esc(calcV[k] ?? '')}" ${attrs || ''}><span class="calc-u">${unit}</span></label>`;
+const cOut = (label, val, note) => `<div class="row kv calc-o"><span class="r-l">${label}${note ? `<small>${note}</small>` : ''}</span><b class="r-v">${val}</b></div>`;
+function calcResults() { const V = calcV, W = calcBody(), wt = cNum('wt'); const R = {};
+  R.body = W.bmi ? cOut('BMI', r1(W.bmi) + ' kg/m²') + cOut('Ideal body weight', r1(W.ibw) + ' kg', 'Devine') + cOut('Lean body weight', r1(W.lbw) + ' kg', 'Janmahasatian') + cOut('Adjusted body weight', r1(W.abw) + ' kg', 'IBW + 0.4 × (TBW − IBW)') : '<div class="row empty">Enter height and weight.</div>';
+  const k = EBV_K.find(e => e[0] === (V.ebvg || ebvDefault())); const mlkg = cNum('ebvk') || k[2]; const hi = cNum('hi'), hf = cNum('hf');
+  if (wt && hi && hf && hi > hf) { const ebv = wt * mlkg; const mabl = ebv * (hi - hf) / hi; R.mabl = cOut('Estimated blood volume', r0(ebv) + ' mL', mlkg + ' mL/kg × ' + wt + ' kg') + cOut('Maximum allowable blood loss', r0(mabl) + ' mL', 'EBV × (Hi − Hf) / Hi'); }
+  else R.mabl = `<div class="row empty">${wt ? 'Enter starting and lowest acceptable haematocrit (start must be higher).' : 'Enter weight above.'}</div>`;
+  const d = LA_DRUGS.find(x => x[0] === V.la) || LA_DRUGS[0]; const adr = !!V.adr; const mgkg = adr ? d[3] : d[2]; const conc = cNum('conc');
+  const doseW = W.lbw && W.bmi >= 30 ? Math.min(wt, W.lbw) : wt;
+  if (wt) { const mg = mgkg * doseW; R.la = cOut('Maximum dose', r0(mg) + ' mg', mgkg + ' mg/kg × ' + r1(doseW) + ' kg' + (doseW !== wt ? ' (lean body weight, BMI ≥ 30)' : '')) + (conc ? cOut('As volume', r1(mg / (conc * 10)) + ' mL', conc + '% = ' + (conc * 10) + ' mg/mL') : ''); }
+  else R.la = '<div class="row empty">Enter weight above.</div>';
+  const age = cNum('age');
+  if (wt) { const mf = wt <= 10 ? 4 * wt : wt <= 20 ? 40 + 2 * (wt - 10) : 60 + (wt - 20); R.paed = cOut('Maintenance fluid', r0(mf) + ' mL/h', '4-2-1 rule') + cOut('Lipid emulsion 20% bolus', r1(1.5 * wt) + ' mL', '1.5 mL/kg, then 0.25 mL/kg/min = ' + r1(0.25 * wt) + ' mL/min');
+    if (age !== null && age >= 2) R.paed += cOut('Tube size, cuffed', (Math.round((age / 4 + 3.5) * 2) / 2).toFixed(1) + ' mm ID', 'age/4 + 3.5') + cOut('Tube size, uncuffed', (Math.round((age / 4 + 4) * 2) / 2).toFixed(1) + ' mm ID', 'age/4 + 4') + cOut('Oral tube length', r1(age / 2 + 12) + ' cm at lips', 'age/2 + 12'); }
+  else R.paed = '<div class="row empty">Enter weight above (and age in years for tube sizes).</div>';
+  return R; }
+function pageCalc() { const V = calcV, R = calcResults();
+  let h = head('OT calculators', 'Quick numbers with their formulas. Check against your department’s chart.', 'Hospital');
+  h += `<div class="sec"><h2 class="sh">Patient</h2><div class="seg"><button type="button" data-act="calc-set" data-k="sex" data-v="m" aria-pressed="${V.sex !== 'f'}">Male</button><button type="button" data-act="calc-set" data-k="sex" data-v="f" aria-pressed="${V.sex === 'f'}">Female</button></div><div class="group" style="margin-top:8px">${cIn('wt', 'Weight', 'kg')}${cIn('ht', 'Height', 'cm')}${cIn('age', 'Age', 'years')}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Body weight scalars</h2><div class="group" id="calc-body">${R.body}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Maximum allowable blood loss</h2><div class="group"><label class="row field calc-f"><span class="f-l">Patient</span><select data-calc="ebvg">${EBV_K.map(e => `<option value="${e[0]}"${(V.ebvg || ebvDefault()) === e[0] ? ' selected' : ''}>${e[1]} (${e[2]} mL/kg)</option>`).join('')}</select></label>${cIn('ebvk', 'Own mL/kg', 'optional')}${cIn('hi', 'Starting Hct', '%')}${cIn('hf', 'Lowest Hct', '%')}</div><div class="group" id="calc-mabl" style="margin-top:8px">${R.mabl}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Local anaesthetic maximum dose</h2><div class="group"><label class="row field calc-f"><span class="f-l">Drug</span><select data-calc="la">${LA_DRUGS.map(d => `<option value="${d[0]}"${(V.la || 'lido') === d[0] ? ' selected' : ''}>${d[1]} (${d[2]}${d[3] !== d[2] ? ' / ' + d[3] + ' with adrenaline' : ''} mg/kg)</option>`).join('')}</select></label><label class="row toggle"><span>With adrenaline</span><input type="checkbox" data-calc="adr" ${V.adr ? 'checked' : ''}></label>${cIn('conc', 'Strength', '%')}</div><div class="group" id="calc-la" style="margin-top:8px">${R.la}</div>
+    <p class="foot">Upper limits, not targets. Reduce in the elderly, frail, pregnant and in heart, liver or kidney disease, and for vascular sites. North American sources allow more plain lidocaine (4.5–5 mg/kg). Doses add up when you mix drugs.</p></div>`;
+  h += `<div class="sec"><h2 class="sh">Paediatric numbers</h2><div class="group" id="calc-paed">${R.paed}</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Sources</h2><div class="card calc-src"><ol class="note-refs">
+    <li><a href="https://doi.org/10.1093/bja/aeq312" target="_blank" rel="noopener">Ingrande J, Lemmens HJM. Dose adjustment of anaesthetics in the morbidly obese. Br J Anaesth 2010</a> (IBW, LBW, ABW)</li>
+    <li><a href="https://doi.org/10.1016/j.bjae.2019.10.002" target="_blank" rel="noopener">Taylor A, McLeod G. Basic pharmacology of local anaesthetics. BJA Educ 2020</a> (bupivacaine, levobupivacaine, ropivacaine)</li>
+    <li><a href="https://doi.org/10.1503/cmaj.220835" target="_blank" rel="noopener">Local anesthetic systemic toxicity. CMAJ 2022</a> (prilocaine, lidocaine with adrenaline, lipid emulsion)</li>
+    <li><a href="https://gme.medicine.uiowa.edu/iowaprotocols/maximum-allowable-blood-loss" target="_blank" rel="noopener">Iowa Head and Neck Protocols: Maximum allowable blood loss</a> (blood volume by age)</li>
+    <li>Paediatric tube size, tube length and 4-2-1 fluids: standard APLS formulae.</li></ol></div></div>`;
+  return h; }
+function calcRefresh() { try { localStorage.setItem('studydesk.calc', JSON.stringify(calcV)); } catch (_) {} const R = calcResults();
+  [['calc-body', 'body'], ['calc-mabl', 'mabl'], ['calc-la', 'la'], ['calc-paed', 'paed']].forEach(([id, k]) => { const el = $(id); if (el) el.innerHTML = R[k]; }); }
+function calcRun() {}
+document.addEventListener('input', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); });
+document.addEventListener('change', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); if (k === 'la' || k === 'ebvg' || (k === 'age' && !calcV.ebvg)) render(); });
 /* ---------- swipe right to finish (v5.65): to-dos and due reminders ---------- */
 (() => { let el = null, x0 = 0, y0 = 0, dx = 0, mode = 0; const MAX = 96, GO = 70;
   document.addEventListener('touchstart', e => { if (e.touches.length !== 1 || sheetOpen()) return; const w = e.target.closest('[data-swipe]'); if (!w || e.target.closest('input,textarea,.xbtn')) return;
@@ -3758,6 +3911,14 @@ document.addEventListener('click', e => {
     case 'brev': biteSheet(id, true); break;
     case 'brev-ok': biteRevMark(id, true); break;
     case 'brev-again': biteRevMark(id, false); break;
+    case 'prep': prepSheet(id); break;
+    case 'viva-start': vivaStart(); break;
+    case 'viva-flip': if (viva) { viva.flip = !viva.flip; vivaShow(); } break;
+    case 'viva-mark': vivaMark(b.dataset.ok === '1'); break;
+    case 'emap': emapSheet(b.dataset.c); break;
+    case 'quiet-off': state.settings.quietOff = today(); state.settings.quietDay = ''; commit('Quiet mode off for today'); break;
+    case 'quiet-on': state.settings.quietDay = today(); state.settings.quietOff = ''; commit('Quiet until tomorrow 🌙'); break;
+    case 'calc-set': calcV[b.dataset.k] = b.dataset.v; calcRefresh(); render(); break;
     case 'wk-seen': state.settings.weekSeen = today(); commit(); break;
     case 'bk-later': state.settings.bkSnooze = addDays(today(), 3); commit('I’ll remind you in 3 days'); break;
     case 'msub': musicSub = b.dataset.s; render(); break;
@@ -4324,7 +4485,7 @@ function articlesSection() { const A = ARTS(); let h = `<div class="sec"><h2 cla
   return h + moreBtn('arts', A.length, 3, 'article', 'btn ghost wide') + `</div>`; }
 const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
 function bitesSection() {
-  const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>`;
+  const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>${B.some(b => vivaPts(b).length) ? `<button type="button" class="card calc-link" data-act="viva-start"><span class="cat-due-i" aria-hidden="true">🎤</span><span class="cat-tx"><b>Viva round</b><span>5 quick flashcards from your notes, about 2 minutes</span></span>${CHEV}</button>` : ''}`;
   if (!B.length) return h + `<div class="card"><span class="c-s">Ask Claude your academic questions (drugs, ventilator settings, physiology, papers). Each topic is saved here as a short note, sorted into columns, and updated when you ask again.</span></div></div>`;
   const cats = ((D.bites && D.bites.cats) || []).filter(c => B.some(b => b.cat === c)); B.forEach(b => { if (!cats.includes(b.cat)) cats.push(b.cat); });
   if (!biteCat || !cats.includes(biteCat)) biteCat = 'All';
@@ -4346,7 +4507,7 @@ function biteToday() { const t = today(); const done = BITES().filter(b => { con
   const left = Math.max(0, BREV_N - done.length); return { done, todo: left ? biteDueList().slice(0, left).map(x => x.b) : [] }; }
 function biteRevCard() { if (state.settings.biteRevOn === false || !BITES().length) return '';
   const { done, todo } = biteToday(); if (!todo.length) return '';
-  return `<div class="sec"><h2 class="sh"><span>🧠 Revise today</span><span>${done.length} of ${done.length + todo.length} done</span></h2><div class="group">${todo.map(b => { const r = brecOf(b.id);
+  return `<div class="sec"><h2 class="sh"><span>🧠 Revise today</span><span>${done.length} of ${done.length + todo.length} done · <button type="button" class="link" data-act="viva-start" style="font:inherit;text-transform:none;letter-spacing:0">🎤 Viva round</button></span></h2><div class="group">${todo.map(b => { const r = brecOf(b.id);
     return `<button type="button" class="row" data-act="brev" data-id="${esc(b.id)}"><span class="r-main"><span class="r-t">${esc(b.title)}</span><span class="r-s">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)} · ${r ? 'revised ' + plural(r.n || 1, 'time') : 'first revision'}</span></span>${CHEV}</button>`; }).join('')}</div></div>`; }
 function biteRevMark(id, ok) { const r = brecOf(id) || { lvl: 0, n: 0 }; const t = today();
   const lvl = ok ? (r.lvl || 0) + 1 : 0; const gap = ok ? BREV_I[Math.min(lvl - 1, BREV_I.length - 1)] : 1;
@@ -4371,7 +4532,8 @@ function weekCard() { if (state.settings.weekOn === false || new Date().getDay()
     w.studied ? ['📚', plural(w.studied, 'topic') + ' studied' + (w.mins ? ' · ' + fmtMins(w.mins) : '')] : null,
     w.todos ? ['✅', plural(w.todos, 'to-do') + ' done'] : null,
     w.classes ? ['🎓', plural(w.classes, 'academic session')] : null,
-    w.arts ? ['📰', plural(w.arts, 'article') + ' added to read'] : null].filter(Boolean);
+    w.arts ? ['📰', plural(w.arts, 'article') + ' added to read'] : null,
+    igDays() > 0 && state.settings.igOn !== false ? ['🌱', plural(igDays(), 'day') + ' off Instagram'] : null].filter(Boolean);
   return `<div class="sec"><div class="card wk"><div class="c-top"><span class="c-lab">Your week · ${esc(dShort(w.from))} – ${esc(dShort(w.t))}</span></div>
     ${L.length ? `<ul class="wk-l">${L.map(l => `<li><span aria-hidden="true">${l[0]}</span><span>${esc(l[1])}</span></li>`).join('')}</ul>` : '<span class="c-s">A quiet week. A fresh one starts tomorrow.</span>'}
     <div class="btns" style="flex-direction:row;margin-top:6px"><button class="btn small ghost" type="button" data-act="wk-seen">Got it</button></div></div></div>`; }
