@@ -1317,8 +1317,8 @@ body::before{will-change:transform;transform:translateZ(0)}
 
 /* morning routine v5.26 */
 .hab-n small{display:block;font-size:10.5px;font-weight:600;color:var(--fg-2)!important;margin-top:2px}
-.hab-row{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:12px 6px;overflow:visible!important;margin:0!important}
-.hab{width:auto!important;min-width:0}
+.hab-row{display:flex!important;flex-wrap:nowrap!important;gap:6px;overflow-x:auto!important;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;margin:0 -14px!important;padding:2px 14px 4px!important;scroll-padding:0 14px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent)}
+.hab{flex:0 0 72px!important;width:72px!important;min-width:0;scroll-snap-align:start}
 .hab-n{white-space:normal!important;overflow-wrap:break-word!important;max-width:100%;display:block}
 .hab-nudge{display:flex;flex-direction:column;gap:6px;padding:12px 14px!important;border:1.5px solid #B5782A!important}
 .hab-nudge span{font-size:14px;line-height:1.4;color:var(--fg)!important}
@@ -1688,7 +1688,11 @@ body:not([data-sec="today"]):not(.nbt-show) #nb-title{opacity:0}
 /* 6: Dota cards use the same type as everything else */
 .nhead{font-family:var(--font-body,inherit)!important;letter-spacing:.02em!important;text-transform:none!important;font-size:12px!important}
 /* 8: glance tiles become one row of chips */
-.gtiles{display:flex!important;flex-wrap:wrap;gap:8px!important}
+.gtiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}
+.gtiles .gt{width:100%!important;min-width:0;justify-content:flex-start}
+.gtiles .gt.gt-wide{grid-column:1/-1}
+.gtiles .gt-v{flex:none}
+.gtiles .gt-l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
 .gt{flex-direction:row!important;align-items:center!important;gap:8px!important;min-height:0!important;padding:6px 12px 6px 6px!important;border-radius:999px!important;width:auto!important;box-shadow:none!important;border:1px solid var(--sep)!important;background:color-mix(in srgb,var(--surface) 35%,var(--bg))!important}
 .gt .ring{--sz:28px!important}.gt .ring .rg-v{display:none}
 .gt-i{width:28px!important;height:28px!important;border-radius:50%!important;font-size:14px!important}
@@ -1868,7 +1872,7 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.74 · Fudge rings';
+const APP_VERSION = '5.75 · Tidy Today';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -2542,8 +2546,8 @@ function pageToday() {
   add(bkNudge(), 30);
   // glance tiles: one block, no repeats of what a card above already says
   const T = [];
-  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : `<span data-count="${n}">${n}</span>`, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam'))); }
-  BOOKS().forEach(b => { const x = bookStats(b); T.push(gTile('study', 'peach', '', x.d + '/' + x.n, esc(b.title.length > 22 ? b.title.slice(0, 20) + '…' : b.title), ring(x.d, x.n, 40, 'gt-' + b.id))); });
+  if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : `<span data-count="${n}">${n}</span>`, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam')).replace('class="gt"', 'class="gt gt-wide"')); }
+  BOOKS().forEach(b => { const x = bookStats(b); T.push(gTile('study', 'peach', '', x.d + '/' + x.n, esc(b.title), ring(x.d, x.n, 40, 'gt-' + b.id))); });
   if (S.revisionsOn && state.topics.length) { const due = dueTopics().length; if (due) T.push(gTile('study', 'peach', '🔁', due, due === 1 ? 'topic to revise' : 'topics to revise')); }
   const od = otDefaultDay();
   if (od && daysUntil(od) >= 0 && daysUntil(od) <= 1) { const rows = otRows(od); const n = rows.filter(r => state.otDone[r.id]).length; T.push(gTile('ot', 'sky', '', n + '/' + rows.length, 'OT · ' + relDay(od), ring(n, rows.length, 40, 'today-' + od))); }
@@ -2552,6 +2556,7 @@ function pageToday() {
   const att = remAttention().length; if (att) T.push(gTile('reminders', 'butter', '🔔', att, att === 1 ? 'reminder due' : 'reminders due'));
   const open = state.todos.filter(x => !x.done).length; if (open && !siren) T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
   const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', 'butter', '📋', unsynced, '<span class="tosync">cases to sync</span>'));
+  { const half = T.filter(x => !x.includes('gt-wide')); if (half.length % 2) { const i = T.lastIndexOf(half[half.length - 1]); T[i] = T[i].replace('class="gt"', 'class="gt gt-wide"'); } } /* tidy 2-column grid: a lone last chip spans the row */
   if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }));
   if (items.length) add(`<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`, by({ morning: 93, night: 40, all: 68 }));
   const Q = quietNow(); /* after a night duty: only what is truly due shows; the rest waits under More today */
