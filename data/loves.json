@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T03:00:00Z",
+  "updated": "2026-11-22",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,18 +64,30 @@
     }
   ],
   "today": {
-    "date": "2026-11-21",
-    "topic": "nature",
-    "topicName": "Nature",
+    "date": "2026-11-22",
+    "topic": "superheroes",
+    "topicName": "Superheroes (DC & Marvel)",
     "kind": "fact",
-    "title": "The first land animals could barely turn their heads",
-    "text": "Nearly 380 million years ago, fish-like animals such as Tiktaalik began crawling onto land, and it was long assumed that their newly separated necks let them look around. A team led by Dana Korneisel measured how stiff the notochord is in living sturgeon and used those numbers to model the necks of these fossil animals. Even with the head and shoulders anatomically separate, the backbone would have restricted movement so much that head lift was no better than in fish, and shaking the head was impossible. The study, published in Nature, suggests the neck first appeared alongside stronger front limbs for holding up the body, and real flexibility came later.",
+    "title": "Superman's creators sold him for $130",
+    "text": "In 1938, Jerry Siegel and Joe Shuster sold all rights to Superman to the company that became DC Comics for just $130, roughly $3,000 in today's money. They sued in 1946, but real change only came after the 1978 Superman film, when DC agreed to pay each of them $20,000 a year for life and to print a \"created by\" credit. Meanwhile, an unrestored copy of Action Comics No. 1, the issue where Superman debuted, sold for $6 million at Heritage Auctions in April 2024, making it the most valuable comic book ever sold at that time.",
     "source": {
-      "title": "ScienceDaily: Scientists discover that necks didn't evolve for the reason we thought",
-      "url": "https://www.sciencedaily.com/releases/2026/11/261108233101.htm"
+      "title": "The Saturday Evening Post: 10 Wild Stories from Comic Book History",
+      "url": "https://www.saturdayeveningpost.com/2026/02/10-wild-stories-from-comic-book-history/"
     }
   },
   "history": [
+    {
+      "date": "2026-11-21",
+      "topic": "nature",
+      "topicName": "Nature",
+      "kind": "fact",
+      "title": "The first land animals could barely turn their heads",
+      "text": "Nearly 380 million years ago, fish-like animals such as Tiktaalik began crawling onto land, and it was long assumed that their newly separated necks let them look around. A team led by Dana Korneisel measured how stiff the notochord is in living sturgeon and used those numbers to model the necks of these fossil animals. Even with the head and shoulders anatomically separate, the backbone would have restricted movement so much that head lift was no better than in fish, and shaking the head was impossible. The study, published in Nature, suggests the neck first appeared alongside stronger front limbs for holding up the body, and real flexibility came later.",
+      "source": {
+        "title": "ScienceDaily: Scientists discover that necks didn't evolve for the reason we thought",
+        "url": "https://www.sciencedaily.com/releases/2026/11/261108233101.htm"
+      }
+    },
     {
       "date": "2026-11-18",
       "topic": "dota2",
