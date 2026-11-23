@@ -1,7 +1,102 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-23",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43065122",
+      "doi": "10.1111/anae.70462",
+      "added": "2026-11-23",
+      "date": "2026-11-20",
+      "title": "Opioid-free vs. opioid-inclusive anaesthesia in laparoscopic cholecystectomy: a multicentre randomised controlled trial.",
+      "journal": "Anaesthesia",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Analgesia",
+        "PONV",
+        "Haemodynamics"
+      ],
+      "summary": "315 adults having elective laparoscopic cholecystectomy received either opioid-free anaesthesia (dexmedetomidine plus esketamine with sevoflurane) or sufentanil with sevoflurane, both with multimodal analgesia. The 24-hour overall analgesic benefit score was slightly better with opioid-free (2.2 vs 3.4) but did not reach the pre-set clinically important 3-point gap, and chronic pain at 90 days was similar (about 16% in both). Opioid-free had less intra-operative hypotension (19.6% vs 35.7%) and less PONV (23.4% vs 33.8%).",
+      "why": "Opioid-free anaesthesia is popular but this trial does not support routine use for lap chole; useful for discussing its trade-offs (less PONV, but dexmedetomidine/esketamine availability and cost) in viva and practice."
+    },
+    {
+      "pmid": "43065085",
+      "doi": "10.1111/anae.70457",
+      "added": "2026-11-23",
+      "date": "2026-11-20",
+      "title": "Incidence of pain, supplemental analgesia and conversion to general anaesthesia during intrapartum caesarean delivery using converted epidural anaesthesia: a meta-analysis.",
+      "journal": "Anaesthesia",
+      "type": "Meta-analysis",
+      "area": "Anaesthesia",
+      "tags": [
+        "Obstetric",
+        "Regional"
+      ],
+      "summary": "Forty-three studies with 11,904 women who had a labour epidural topped up for intrapartum caesarean were pooled. About 1 in 5 had pain during surgery (20.2%), about 1 in 6 needed extra analgesia (17.7%), and 1.3% needed conversion to general anaesthesia. Results were very heterogeneous, so local figures may differ.",
+      "why": "Reminds residents to counsel women about a real chance of an inadequate block and to have a plan B ready, a frequent obstetric anaesthesia exam point."
+    },
+    {
+      "pmid": "43064581",
+      "doi": "10.1016/j.bja.2026.10.007",
+      "added": "2026-11-23",
+      "date": "2026-11-20",
+      "title": "Preoperative roxadustat in major elective noncardiac surgery: a phase 2a randomised clinical trial.",
+      "journal": "Br J Anaesth",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Perioperative medicine",
+        "Pharmacology"
+      ],
+      "summary": "In this single-centre pilot, 148 adults having major elective non-cardiac surgery got three alternate-day doses of roxadustat (a HIF-pathway drug) or placebo before surgery. Side effects before surgery (28% vs 27%) and complications within 30 days (31% vs 30%) were about the same, and no serious drug reactions occurred. It shows the approach is feasible but says nothing yet about benefit.",
+      "why": "An early look at a drug that may one day protect organs during surgery; good for knowing where perioperative research is heading, but not a change in practice."
+    },
+    {
+      "pmid": "43063977",
+      "doi": "10.1213/ANE.0000000000008349",
+      "added": "2026-11-23",
+      "date": "2026-11-18",
+      "title": "Balancing Feasibility and Validity: A Delphi Consensus on Frailty Assessment Tools in Perioperative Care.",
+      "journal": "Anesth Analg",
+      "type": "Consensus",
+      "area": "Anaesthesia",
+      "tags": [
+        "Perioperative medicine"
+      ],
+      "summary": "This Delphi consensus asked experts to agree on which frailty assessment tools are both valid and practical to use in perioperative care. PubMed does not yet show an abstract, so the specific tools and levels of agreement are not summarised here; please read the full paper.",
+      "why": "Frailty screening is increasingly part of pre-anaesthetic assessment of older patients, and knowing which quick tools experts favour helps in the PAC clinic and in exams."
+    },
+    {
+      "pmid": "43063968",
+      "doi": "10.1213/ANE.0000000000008416",
+      "added": "2026-11-23",
+      "date": "2026-11-17",
+      "title": "Left Paratracheal Pressure versus Cricoid Pressure During Airway Management: A Focused Synthesis of Randomized Evidence.",
+      "journal": "Anesth Analg",
+      "type": "Systematic review",
+      "area": "Anaesthesia",
+      "tags": [
+        "Airway"
+      ],
+      "summary": "This paper pulls together randomised trials that compared pressure on the left side of the trachea with standard cricoid pressure during airway management. PubMed does not yet show an abstract, so the results are not summarised here; please read the full paper.",
+      "why": "Cricoid pressure during rapid sequence induction is a perennial viva topic and this is a new angle on whether an alternative is better."
+    },
+    {
+      "pmid": "43068145",
+      "doi": "10.1016/j.aicoj.2026.100200",
+      "added": "2026-11-23",
+      "date": "2026-11-07",
+      "title": "Impact of ventilation strategy during the transition phase of ARDS: Synchronized vs. non-synchronized pressure-regulated vs. volume-controlled mode - A randomized crossover study.",
+      "journal": "Ann Intensive Care",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "ARDS",
+        "Ventilation"
+      ],
+      "summary": "Nineteen ARDS patients who were starting to breathe spontaneously each received three ventilator modes (volume assist-control, PRVC and pressure control with non-synchronised spontaneous breaths) for 45 minutes each in random order. Oxygenation, breathlessness, effort and lung pressures did not differ between modes, although breath-to-breath tidal volume varied more with the non-synchronised pressure mode. It is a small physiology study.",
+      "why": "Suggests that the choice among common modes matters less than expected during ARDS recovery, which is reassuring where ventilator options are limited and handy for ventilation viva discussion."
+    },
     {
       "pmid": "43049460",
       "doi": "10.1097/CCM.0000000000007451",
