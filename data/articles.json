@@ -3,6 +3,19 @@
   "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
   "items": [
     {
+      "id": "34992797",
+      "added": "2026-11-23",
+      "topic": "opioid receptors",
+      "title": "Drug-receptor interactions in anaesthesia.",
+      "journal": "BJA Educ",
+      "year": 2022,
+      "type": "Review",
+      "why": "Leicester opioid-receptor group explaining receptor types, GPCR signalling, agonists, partial agonists and antagonists, with opioid examples.",
+      "doi": "10.1016/j.bjae.2021.07.009",
+      "pmid": "34992797",
+      "url": "https://doi.org/10.1016/j.bjae.2021.07.009"
+    },
+    {
       "id": "28970630",
       "added": "2026-11-23",
       "topic": "preload in MS",

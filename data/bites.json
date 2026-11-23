@@ -1517,6 +1517,125 @@
       "created": "2026-11-20",
       "updated": "2026-11-20",
       "seen": 1
+    },
+    {
+      "id": "opioid-receptors",
+      "cat": "Drugs",
+      "title": "Opioid receptors (mu, delta, kappa, NOP)",
+      "aliases": [
+        "opioid receptor types",
+        "mu receptor",
+        "delta receptor",
+        "kappa receptor",
+        "MOP",
+        "DOP",
+        "KOP",
+        "NOP",
+        "ORL-1",
+        "opioid receptor table",
+        "Stoelting table 17.2"
+      ],
+      "summary": "Opioids act on four related receptors: mu (MOP), delta (DOP), kappa (KOP) and the nociceptin receptor (NOP, also called ORL-1). All are inhibitory G-protein (Gi/o) coupled receptors found in the brain, spinal cord dorsal horn and periphery (gut). Mu is the one that matters most clinically: it gives the analgesia we want and most of the side effects we fear, especially respiratory depression. Kappa gives spinal analgesia and sedation with dysphoria, and naloxone blocks mu, delta and kappa but not NOP.",
+      "sections": [
+        {
+          "h": "How they work (all types)",
+          "items": [
+            "Gi/o coupled: inhibit adenylyl cyclase → less cAMP",
+            "Open K⁺ channels → neuron hyperpolarises (postsynaptic inhibition)",
+            "Close voltage-gated Ca²⁺ channels → less transmitter release (presynaptic inhibition, e.g. less substance P and glutamate in dorsal horn)",
+            "Net effect: pain signals damped at spinal (substantia gelatinosa) and supraspinal (PAG, rostral ventromedial medulla) levels; descending inhibition is switched on"
+          ]
+        },
+        {
+          "h": "Receptor summary (Stoelting Table 17.2)",
+          "rows": [
+            [
+              "Bioassay tissue",
+              "Mu – guinea pig ileum · Delta – mouse vas deferens · Kappa – rabbit vas deferens"
+            ],
+            [
+              "Endogenous ligand",
+              "Mu – β-endorphin, endomorphins · Delta – leu- and met-enkephalin · Kappa – dynorphin · NOP – nociceptin/orphanin FQ"
+            ],
+            [
+              "Agonist prototype",
+              "Mu – morphine, fentanyl · Delta – deltorphin · Kappa – pentazocine (table also lists buprenorphine, see caution below)"
+            ],
+            [
+              "Antagonist",
+              "Naloxone for all three (highest affinity for mu; kappa needs bigger doses). NOP is naloxone-insensitive"
+            ],
+            [
+              "Analgesia",
+              "Supraspinal and spinal: yes for all three"
+            ],
+            [
+              "Respiratory depression",
+              "Mu yes; delta and kappa no (per table)"
+            ],
+            [
+              "GI effects",
+              "Mu yes, kappa yes, delta no"
+            ],
+            [
+              "Sedation",
+              "Mu yes, kappa yes, delta no"
+            ]
+          ]
+        },
+        {
+          "h": "Clinical effects by receptor",
+          "rows": [
+            [
+              "Mu (MOP)",
+              "Analgesia, euphoria, respiratory depression, miosis, bradycardia, constipation, nausea/vomiting, pruritus, urinary retention, tolerance and physical dependence. Old split: μ1 analgesia, μ2 respiratory depression/GI – not confirmed by cloning (one gene)"
+            ],
+            [
+              "Kappa (KOP)",
+              "Spinal analgesia, sedation, dysphoria/psychotomimetic effects, diuresis (ADH inhibition), miosis, less respiratory depression – a 'ceiling' effect"
+            ],
+            [
+              "Delta (DOP)",
+              "Analgesia (mainly spinal), modulates mu activity; no clinically used selective agonist"
+            ],
+            [
+              "NOP (ORL-1)",
+              "Fourth member, ~60% similar structure; spinal analgesia but supraspinal anti-opioid effect; not reversed by naloxone; buprenorphine has some NOP action"
+            ]
+          ]
+        },
+        {
+          "h": "Caution: what the table simplifies",
+          "items": [
+            "Buprenorphine is really a mu PARTIAL agonist with very high mu affinity and slow dissociation, and a kappa ANTAGONIST – it is listed under kappa agonists in the table, but quote it as a mu partial agonist in the viva",
+            "Pentazocine (and butorphanol, nalbuphine) are kappa agonist–mu antagonist/partial agonists: can precipitate withdrawal in mu-dependent patients",
+            "Delta 'no respiratory depression' is from older animal work; delta agonists may add to mu depression",
+            "Naloxone is non-selective but best at mu – high-dose buprenorphine respiratory depression is hard to reverse (needs large doses/infusion)"
+          ]
+        },
+        {
+          "h": "Points for the exam / viva",
+          "items": [
+            "IUPHAR names: MOP, DOP, KOP, NOP (old: OP3, OP1, OP2, ORL-1)",
+            "All 7-transmembrane Gi/o GPCRs: ↓cAMP, ↑K⁺ conductance, ↓Ca²⁺ entry",
+            "Remember bioassays: Guinea pig → mu, Mouse → delta, Rabbit → kappa",
+            "Ligands: Endorphin–mu, Enkephalin–delta, Dynorphin–kappa (E-E-D in order mu-delta-kappa)",
+            "Respiratory depression is a mu effect – blunted CO₂ response at brainstem",
+            "Kappa = dysphoria + diuresis + spinal analgesia with ceiling on respiratory depression",
+            "Naloxone does not block NOP"
+          ]
+        }
+      ],
+      "pearl": "Mu does everything (good and bad); kappa = sedation, dysphoria, diuresis; and buprenorphine is a mu partial agonist / kappa antagonist despite the table.",
+      "refs": [
+        {
+          "title": "McDonald J, Lambert DG. Drug-receptor interactions in anaesthesia. BJA Educ 2022;22:20-25",
+          "url": "https://doi.org/10.1016/j.bjae.2021.07.009"
+        }
+      ],
+      "created": "2026-11-23",
+      "updated": "2026-11-23",
+      "seen": 1
     }
   ]
 }
