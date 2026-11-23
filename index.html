@@ -1654,6 +1654,24 @@ a.dota-n .r-main{gap:3px}
 .viva-a{margin:0}
 .viva-end{display:flex!important;flex-direction:column;align-items:center;gap:6px;padding:22px!important;text-align:center}
 .viva-big{font-size:40px}
+/* v5.79 ECG + ABG flashcards */
+.ecg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;margin:4px 0 2px}
+.ecg{display:block;width:100%;height:auto}
+.ecg-bg{fill:#FFF5F4}.ecg-g1{fill:none;stroke:#F6CFCB;stroke-width:.12}.ecg-g5{fill:none;stroke:#E9A29B;stroke-width:.25}
+.ecg-tr{fill:none;stroke:#1d1517;stroke-width:.42;stroke-linejoin:round;stroke-linecap:round}.ecg-sp{stroke:#1d1517;stroke-width:.3}
+.ecg-l{font:600 3.6px -apple-system,system-ui,sans-serif;fill:#6b2f3a}
+.ecg-cap{margin:2px 0 0;font-size:11px;color:var(--fg-2)}
+@media (prefers-color-scheme:dark){.ecg-bg{fill:#2A2124}.ecg-g1{stroke:#46303A}.ecg-g5{stroke:#6E4452}.ecg-tr,.ecg-sp{stroke:#F7EEF0}.ecg-l{fill:#F2C6D0}}
+.fc-stem{margin:0;font-size:15px;line-height:1.4;color:var(--fg)}
+.fc-q{font-size:16px;line-height:1.3}
+.fc-dx{font-size:18px;line-height:1.25}
+.fc-ans h4{margin:8px 0 2px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg-2)}
+.fc-src{margin:6px 0 0;font-size:12px;color:var(--fg-2)}
+.fc-card,.fc-ans,.fc-step{display:flex!important;flex-direction:column;gap:8px;margin-bottom:10px}
+.fc-abg{margin:2px 0}.fc-abg .r-v small{color:var(--fg-2);font-size:12px}
+.fc-ico{width:26px;text-align:center;font-size:18px}
+.fc-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fc-pair .calc-link{margin:0}
 .quiet-p{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;font-size:13px;color:var(--fg-2);padding:6px 12px;border-radius:999px;background:var(--surface)}
 .quiet-p .link{font-size:13px}
 .calc-f{gap:8px}
@@ -1949,9 +1967,9 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.78 · Dusk sky';
+const APP_VERSION = '5.79 · ECG & ABG flashcards';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2006,7 +2024,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcDay: null,
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2015,7 +2033,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcDay: s.fcDay || null,
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
@@ -2616,6 +2634,7 @@ function pageToday() {
   add(attCard(), by({ morning: 94, day: 90, all: 70 }));
   add(habitCard(), by({ morning: 92, evening: 86, night: 84, day: 40 }));
   add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
+  add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }));
   add(siren, 64);
   add(weekCard(), 72);
   add(catTodayCard(), 56);
@@ -2676,6 +2695,7 @@ function pageStudy() {
   h += examMapSection();
   h += booksSection();
   h += bitesSection();
+  h += flashSection();
   h += articlesSection();
   h += pdfSection();
   {
@@ -3314,6 +3334,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
   const body = [battHow(),
     it('plant', '🪴 Habit plant', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows the plant: seed, sprout, leaves, a bushy plant, a bud, and a flower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
+    it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette with a drawn strip and one ABG. Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
     it('viva', '🎤 Viva round', ['Five flashcards from the “Points for the exam / viva” in your bite-size notes. Say the points out loud, tap to check, then Knew it or Again tomorrow. It shares the same spacing as the daily bite revision.']),
     it('emap', '🗺️ Exam map', ['One ring per exam area. It counts your bite-size notes (done once revised), your study topics (done once studied) and textbook chapters (done once ticked) in that area. Empty areas show “nothing yet”, so the thin spots stand out.']),
     it('quiet', '🌙 Quiet morning', ['If the roster shows you on duty yesterday, Today stays quiet until 2 PM: only reminders that are due, cat food if due, and a running study timer. Everything else waits under More today. Turn it off for the day from the moon line, or switch it off in Settings.']),
@@ -3372,6 +3393,7 @@ function pageBackup() {
     <label class="row toggle"><span>Prep for these cases on the OT list</span><input type="checkbox" data-setting="prepOn" ${S.prepOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Exam map in Academics</span><input type="checkbox" data-setting="examMapOn" ${S.examMapOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Daily bite revision on Today (3 notes a day)</span><input type="checkbox" data-setting="biteRevOn" ${S.biteRevOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Daily ECG + ABG flashcards (Today and Academics)</span><input type="checkbox" data-setting="flashOn" ${S.flashOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Sunday round-up of your week on Today</span><input type="checkbox" data-setting="weekOn" ${S.weekOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup reminder on Today after 30 days</span><input type="checkbox" data-setting="bkNudgeOn" ${S.bkNudgeOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup dot in the menu (orange = no backup this week)</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
@@ -3794,6 +3816,263 @@ function prepSheet(id) { const c = PREP().find(x => x.id === id); if (!c) return
     ${(c.read || []).length || arts.length ? `<h3 class="sh">Read</h3><ol class="note-refs">${(c.read || []).map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}${arts.map(a => `<li><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a> (${esc(a.journal || '')} ${esc(String(a.year || ''))})</li>`).join('')}</ol>` : ''}
     <p class="foot">Short revision points, not a protocol. Follow your department's practice.</p></div>`); }
 
+/* ---------- v5.79: daily ECG + ABG flashcards (Apoorva, 23 Nov 2026) ----------
+   ECG cases live in data/ecg.json (each fact checked against LITFL / RCUK 2025 / Association of Anaesthetists before it went in).
+   ABG cases are made fresh each day from the scenarios below: values obey Henderson–Hasselbalch, and the
+   step-by-step answer is worked out by abgRead() with the bedside rules (Brandis 1-4-2-5, Winter's, 0.7×HCO3+21,
+   albumin-corrected anion gap, delta ratio). tools/flash_test.mjs checks every scenario against those rules. */
+const FC_I = [4, 10, 25, 60]; /* "Got it" spacing in days; "Again" brings it back in 2 days */
+const ECGS = () => (D.ecg && D.ecg.cases) || [];
+const fcRng = seed => { let h = 2166136261; for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };
+
+/* ---- ECG strip drawing: 25 mm/s, 10 mm/mV, one SVG unit = 1 mm ---- */
+const fcG = (t, c, sd, a) => a * Math.exp(-((t - c) * (t - c)) / (2 * sd * sd));
+function ecgEvents(L, dur, rnd) {
+  const r = L.r || 'sinus', P = [], B = [], pa = L.p ?? 0.15, pr = L.pr || 160;
+  if (['sinus', 'svt', 'junc', 'vt', 'paced', 'tdp'].includes(r)) { const rr = 60000 / (L.rate || 72);
+    for (let t = L.off ?? 280; t < (r === 'tdp' ? (L.from || 1500) : dur); t += rr * (L.jit ? 1 + (rnd() - 0.5) * L.jit : 1)) {
+      B.push(t); if (r === 'sinus' || r === 'tdp' || (r === 'paced' && L.p)) P.push({ c: t - pr + 45, a: pa }); if (r === 'junc' && L.retro) P.push({ c: t + (L.qrs || 90) + 50, a: -0.12 }); } }
+  if (r === 'af') { const m = 60000 / (L.rate || 140); for (let t = 180; t < dur; t += m * (0.55 + rnd() * 0.9)) B.push(t); }
+  if (r === 'flutter') { const ac = 60000 / (L.arate || 300), n = L.ratio || 2; for (let t = ac * 0.75, k = 0; t < dur; t += ac, k++) if (k % n === 0) B.push(t + ac * 0.35); }
+  if (r === 'av') { const ac = 60000 / (L.arate || 75), seq = L.seq || [160]; for (let c = 140, k = 0; c < dur + 300; c += ac, k++) { const q = seq[k % seq.length]; if (c < dur) P.push({ c, a: pa }); if (q != null) B.push(c - 45 + q); } }
+  if (r === 'chb') { const ac = 60000 / (L.arate || 90), vc = 60000 / (L.vrate || 36); for (let c = 120; c < dur; c += ac) P.push({ c, a: pa }); for (let t = L.off ?? 520; t < dur; t += vc) B.push(t); }
+  return { P, B };
+}
+const QRS_SHAPES = { /* [position as fraction of QRS width, sd fraction, mV] */
+  rsr: L => [[0.2, 0.08, 0.28], [0.46, 0.09, -(L.S ?? 0.5)], [0.78, 0.11, L.rp ?? 0.9]],
+  qs: L => [[0.45, 0.2, -(L.S ?? 1.5)]],
+  rS: L => [[0.15, 0.07, 0.12], [0.5, 0.17, -(L.S ?? 1.4)]],
+  mR: L => [[0.32, 0.15, L.R ?? 1.1], [0.7, 0.15, (L.R ?? 1.1) * 1.05]],
+  vt: L => [[0.42, 0.2, L.R ?? 1.5], [0.86, 0.13, -(L.S ?? 0.5)]],
+  Rsw: L => [[0.3, 0.11, L.R ?? 0.9], [0.74, 0.17, -(L.S ?? 0.35)]],
+  Rs: L => [[0.4, 0.13, L.R ?? 1.2], [0.75, 0.1, -(L.S ?? 0.25)]]
+};
+function ecgV(t, ev, L) {
+  let v = 0; const w = L.qrs || 90, qt = L.qt || 380;
+  for (const p of ev.P) if (Math.abs(t - p.c) < 120) v += fcG(t, p.c, L.pw || 22, p.a);
+  for (const t0 of ev.B) { const d = t - t0; if (d < -200 || d > qt + 260) continue;
+    const comps = L.shape ? QRS_SHAPES[L.shape](L) : [[0.12, 0.06, -(L.Q ?? 0.08)], [0.42, 0.11, L.R ?? 1.1], [0.72, 0.09, -(L.S ?? 0.25)]];
+    for (const [f, s, a] of comps) v += fcG(d, w * f, w * s, a);
+    if (L.dl) v += 0.3 * (1 / (1 + Math.exp(-(d + L.dl * 0.55) / (L.dl / 7)))) * (1 - 1 / (1 + Math.exp(-(d - w * 0.5) / 6)));
+    const J = w, tc = qt - (L.tw || 45) * 1.9, sig = x => 1 / (1 + Math.exp(-x));
+    if (L.st) v += L.stc ? (d > J - 6 ? L.st * Math.exp(-Math.max(0, d - J) / 170) * sig((d - J + 4) / 3) : 0) : L.st * sig((d - J + 4) / 4) * (1 - sig((d - tc) / 22));
+    v += fcG(d, tc, L.pk ? 26 : (L.tw || 45), L.t ?? 0.3);
+    if (L.u) v += fcG(d, qt + 80, 34, L.u);
+    if (L.j) v += fcG(d, J + 12, 13, L.j);
+  }
+  const s = t / 1000;
+  if (L.r === 'af') v += 0.05 * Math.sin(2 * Math.PI * 6.3 * s) + 0.035 * Math.sin(2 * Math.PI * 8.9 * s + 1.3) + 0.03 * Math.sin(2 * Math.PI * 5.1 * s + 2.1);
+  if (L.r === 'flutter') { const f = ((t / (60000 / (L.arate || 300))) % 1); v += -0.4 * (f < 0.78 ? f / 0.78 : (1 - f) / 0.22) + 0.2; }
+  if (L.r === 'vf') { const e = 0.35 + 0.25 * Math.sin(2 * Math.PI * 0.45 * s + 0.6); v += e * (Math.sin(2 * Math.PI * 4.6 * s) + 0.6 * Math.sin(2 * Math.PI * 6.7 * s + 1.1) + 0.4 * Math.sin(2 * Math.PI * 3.3 * s + 2.4)); }
+  if (L.r === 'tdp' && t > (L.from || 1500)) { const x = (t - (L.from || 1500)) / 1000; const e = 0.2 + 0.8 * Math.abs(Math.sin(Math.PI * x / 1.6)); const c = Math.sin(2 * Math.PI * 4 * x); v += e * Math.sign(c) * Math.pow(Math.abs(c), 0.6); }
+  if (L.shiver) v += 0.016 * Math.sin(2 * Math.PI * 23 * s) + 0.012 * Math.sin(2 * Math.PI * 31 * s + 0.7);
+  return v;
+}
+function ecgSVG(card) {
+  const dur = card.dur || 6000, mm = dur / 40, leads = card.leads || [], H = 30, rnd = fcRng(card.id);
+  const rows = leads.map((L, i) => { const ev = ecgEvents(L, dur, rnd), y0 = i * H + 19; let d = '';
+    for (let t = 0; t <= dur; t += 4) { const y = Math.max(i * H + 1, Math.min(i * H + H - 1, y0 - ecgV(t, ev, L) * 10)); d += (t ? 'L' : 'M') + (t / 40).toFixed(2) + ' ' + y.toFixed(2); }
+    const sp = L.r === 'paced' ? ev.B.map(t0 => `<path class="ecg-sp" d="M${((t0 - 6) / 40).toFixed(2)} ${y0 + 2}V${y0 - 13}"/>`).join('') : '';
+    return `<text class="ecg-l" x="2" y="${i * H + 5.5}">${esc(L.n || 'II')}</text><path class="ecg-tr" d="${d}"/>${sp}`; }).join('');
+  const h = leads.length * H;
+  return `<div class="ecg-wrap"><svg class="ecg" viewBox="0 0 ${mm} ${h}" style="min-width:${Math.round(mm * 3.4)}px" role="img" aria-label="ECG strip, leads ${esc(leads.map(l => l.n || 'II').join(', '))}">
+    <defs><pattern id="eg1" width="1" height="1" patternUnits="userSpaceOnUse"><path d="M1 0V1H0" class="ecg-g1"/></pattern><pattern id="eg5" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="url(#eg1)"/><path d="M5 0V5H0" class="ecg-g5"/></pattern></defs>
+    <rect width="${mm}" height="${h}" class="ecg-bg"/><rect width="${mm}" height="${h}" fill="url(#eg5)"/>${rows}</svg></div><p class="ecg-cap">25 mm/s · 10 mm/mV · ${(dur / 1000)} s${(card.leads || []).length > 1 ? ' · leads drawn one under the other, not at the same moment' : ''} · drawn for teaching, not a real tracing</p>`;
+}
+
+/* ---- ABG: bedside rules ---- */
+const HH = (h, c) => 6.1 + Math.log10(h / (0.03 * c)); /* r1 (1 decimal) is shared from above */
+function abgRead(v) {
+  const { ph, pco2: c, hco3: h } = v, S = [], tags = new Set();
+  const acid = ph < 7.35, alk = ph > 7.45, hiC = c > 45, loC = c < 35, loH = h < 22, hiH = h > 26;
+  S.push(['pH', acid ? `pH ${ph.toFixed(2)} is below 7.35: acidaemia.` : alk ? `pH ${ph.toFixed(2)} is above 7.45: alkalaemia.` : `pH ${ph.toFixed(2)} is within 7.35–7.45, but look at the PaCO₂ and HCO₃⁻ before calling it normal.`]);
+  let prim;
+  if (acid) prim = loH && hiC ? 'mixacid' : hiC ? 'racid' : 'macid';
+  else if (alk) prim = hiH && loC ? 'mixalk' : loC ? 'ralk' : 'malk';
+  else prim = !hiC && !loC && !loH && !hiH ? 'normal' : ph < 7.40 ? (hiC ? 'racid' : 'macid') : (loC ? 'ralk' : 'malk');
+  const P = { macid: `HCO₃⁻ ${h} is low and explains the ${acid ? 'acidaemia' : 'pH on the acid side'}: primary metabolic acidosis.`, racid: `PaCO₂ ${c} is high and explains the ${acid ? 'acidaemia' : 'pH on the acid side'}: primary respiratory acidosis.`,
+    malk: `HCO₃⁻ ${h} is high and explains the ${alk ? 'alkalaemia' : 'pH on the alkaline side'}: primary metabolic alkalosis.`, ralk: `PaCO₂ ${c} is low and explains the ${alk ? 'alkalaemia' : 'pH on the alkaline side'}: primary respiratory alkalosis.`,
+    mixacid: `PaCO₂ ${c} is high AND HCO₃⁻ ${h} is low: both push the pH down. Mixed respiratory and metabolic acidosis.`, mixalk: `PaCO₂ ${c} is low AND HCO₃⁻ ${h} is high: both push the pH up. Mixed respiratory and metabolic alkalosis.`, normal: 'PaCO₂ and HCO₃⁻ are both normal: no acid–base disorder.' };
+  S.push(['Primary disorder', P[prim]]);
+  let comp = '';
+  if (prim === 'macid') { const e = 1.5 * h + 8; comp = `Winter's formula: expected PaCO₂ = 1.5 × ${h} + 8 = ${r1(e)} ± 2. Measured ${c}: ` + (c > e + 2 ? 'higher than expected, so there is also a respiratory acidosis.' : c < e - 2 ? 'lower than expected, so there is also a primary respiratory alkalosis.' : 'as expected, so the respiratory compensation is appropriate.');
+    tags.add('macid'); if (c > e + 2) tags.add('racid'); if (c < e - 2) tags.add('ralk'); }
+  if (prim === 'malk') { const e = 0.7 * h + 21; comp = `Expected PaCO₂ = 0.7 × ${h} + 21 = ${r1(e)} ± 2. Measured ${c}: ` + (c > e + 2 ? 'higher than expected, so there is also a respiratory acidosis.' : c < e - 2 ? 'lower than expected, so there is also a respiratory alkalosis.' : 'as expected, so the compensation is appropriate.');
+    tags.add('malk'); if (c > e + 2) tags.add('racid'); if (c < e - 2) tags.add('ralk'); }
+  if (prim === 'racid') { const d = c - 40, a = 24 + 0.1 * d, k = 24 + 0.4 * d; tags.add('racid');
+    comp = `PaCO₂ is up by ${d}. Acute: HCO₃⁻ rises 1 per 10 → about ${r1(a)}. Chronic: 4 per 10 → about ${r1(k)}. Measured ${h}: `;
+    if (h < a - 2) { comp += 'lower than even the acute value, so there is also a metabolic acidosis.'; tags.add('macid'); }
+    else if (h > k + 2) { comp += 'higher than the chronic value, so there is also a metabolic alkalosis.'; tags.add('malk'); }
+    else if (Math.abs(h - a) <= 2 && Math.abs(h - a) <= Math.abs(h - k)) { comp += 'fits ACUTE respiratory acidosis (no time for the kidneys yet).'; tags.add('acute'); }
+    else if (Math.abs(h - k) <= 2) { comp += 'fits CHRONIC (renally compensated) respiratory acidosis.'; tags.add('chronic'); }
+    else { comp += 'between the acute and chronic values: acute-on-chronic respiratory acidosis.'; tags.add('aoc'); } }
+  if (prim === 'ralk') { const d = 40 - c, a = 24 - 0.2 * d, k = 24 - 0.5 * d; tags.add('ralk');
+    comp = `PaCO₂ is down by ${d}. Acute: HCO₃⁻ falls 2 per 10 → about ${r1(a)}. Chronic: 5 per 10 → about ${r1(k)}. Measured ${h}: `;
+    if (h > a + 2) { comp += 'higher than even the acute value, so there is also a metabolic alkalosis.'; tags.add('malk'); }
+    else if (h < k - 2) { comp += 'lower than the chronic value, so there is also a metabolic acidosis.'; tags.add('macid'); }
+    else if (Math.abs(h - a) <= 2 && Math.abs(h - a) <= Math.abs(h - k)) { comp += 'fits ACUTE respiratory alkalosis.'; tags.add('acute'); }
+    else if (Math.abs(h - k) <= 2) { comp += 'fits CHRONIC respiratory alkalosis (the kidneys have had days to excrete HCO₃⁻).'; tags.add('chronic'); }
+    else { comp += 'between the acute and chronic values: partly compensated respiratory alkalosis.'; tags.add('sub'); } }
+  if (prim === 'mixacid') { tags.add('racid'); tags.add('macid'); comp = 'Both systems are going the same way, so neither is compensating: no compensation to calculate.'; }
+  if (prim === 'mixalk') { tags.add('ralk'); tags.add('malk'); comp = 'Both systems are going the same way: no compensation to calculate.'; }
+  if (comp) S.push(['Compensation', comp]);
+  if (v.na != null) { const ag = v.na - (v.cl + h), agc = ag + 2.5 * (4 - (v.alb ?? 4)), corr = Math.abs((v.alb ?? 4) - 4) >= 0.3;
+    let t = `AG = Na⁺ − (Cl⁻ + HCO₃⁻) = ${v.na} − (${v.cl} + ${h}) = ${r1(ag)}.`;
+    if (corr) t += ` Albumin is ${v.alb} g/dL, so correct it: AG + 2.5 × (4 − ${v.alb}) = ${r1(agc)}.`;
+    t += ' Normal is about 12. ';
+    if (agc > 16) { tags.add('hagma'); tags.add('macid');
+      t += corr && ag <= 16 ? 'The corrected gap is HIGH even though the raw gap looked normal: a hidden high anion gap metabolic acidosis.' : 'High: high anion gap metabolic acidosis.'; }
+    else if (tags.has('macid')) { tags.add('nagma'); t += 'Normal: this is a normal anion gap (hyperchloraemic) metabolic acidosis.'; }
+    else t += 'Normal.';
+    S.push(['Anion gap', t]);
+    if (agc > 16) { if (h < 24) { const dr = (agc - 12) / (24 - h);
+        let x = `Delta ratio = (AG − 12) ÷ (24 − HCO₃⁻) = ${r1(agc - 12)} ÷ ${r1(24 - h)} = ${dr.toFixed(1)}. `;
+        if (dr < 0.4) { x += 'Below 0.4: mostly a normal anion gap acidosis.'; tags.add('nagma'); }
+        else if (dr <= 0.8) { x += '0.4–0.8: a high AND a normal anion gap acidosis together.'; tags.add('nagma'); }
+        else if (dr <= 2) x += '0.8–2: a pure high anion gap acidosis.';
+        else { x += 'Above 2: HCO₃⁻ fell less than expected, so there is also a metabolic alkalosis (or a chronic respiratory acidosis already raising HCO₃⁻).'; if (!tags.has('racid')) tags.add('malk'); }
+        S.push(['Delta ratio', x]); }
+      else { S.push(['Delta ratio', `HCO₃⁻ is not low despite a high gap, so a metabolic alkalosis is hiding the acidosis.`]); tags.add('malk'); } } }
+  if (v.pao2 != null) { const fi = v.fio2 || 0.21, PA = fi * (760 - 47) - c / 0.8, g = PA - v.pao2, nl = (v.age || 40) / 4 + 4;
+    let x = `PAO₂ = FiO₂ × (760 − 47) − PaCO₂ ÷ 0.8 = ${r1(PA)}. A–a gradient = ${r1(PA)} − ${v.pao2} = ${r1(g)} (expected about ${r1(nl)} for age ${v.age || 40}). `;
+    x += fi <= 0.21 ? (g <= nl + 5 ? 'Normal gradient: the low PaO₂ is from hypoventilation alone.' : 'Raised: lung problem (V/Q mismatch, shunt or diffusion).') : `On oxygen the gradient is less useful; use P/F = ${v.pao2} ÷ ${fi} = ${Math.round(v.pao2 / fi)}${v.peep ? ' (Berlin ARDS on PEEP ≥ 5: mild 200–300, moderate 100–200, severe ≤ 100)' : ''}.`;
+    S.push(['Oxygenation', x]); }
+  return { S, tags, prim };
+}
+/* Scenarios: gen(U) returns raw values; U(a,b) is a seeded uniform. expect = disorders the answer must contain. */
+const ABG_SC = [
+  { id: 'dka', t: 'Ketoacidosis before an emergency laparotomy', stem: 'A 19-year-old with type 1 diabetes and 2 days of abdominal pain is booked for emergency laparotomy. Deep sighing breaths, glucose 480 mg/dL, urine ketones 3+. Room air.', expect: ['macid', 'hagma'],
+    gen: U => { const h = U(6, 10); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: 12 + U(1.0, 1.4) * (24 - h), alb: U(3.9, 4.3), na: U(130, 135) }; },
+    dx: 'High anion gap metabolic acidosis with appropriate respiratory compensation: diabetic ketoacidosis.', pearl: 'Abdominal pain often settles once DKA is treated, so ask the surgeon whether the case can wait. Fluids and fixed-rate insulin (0.1 unit/kg/h) first; potassium falls fast once insulin starts.', src: 'JBDS-IP DKA guideline; LITFL acid–base' },
+  { id: 'sepsis', t: 'Septic shock, ventilated', stem: 'ICU: a 64-year-old after laparotomy for faecal peritonitis, on noradrenaline 0.3 mcg/kg/min, lactate 7.5 mmol/L. Minute ventilation was reduced overnight. FiO₂ 0.5.', expect: ['macid', 'hagma', 'racid'],
+    gen: U => { const h = U(12, 15); return { hco3: h, pco2: 1.5 * h + 8 + U(8, 13), ag: 12 + U(1.3, 1.8) * (24 - h), alb: 4, na: U(136, 141), pao2: U(82, 96), fio2: 0.5, age: 64 }; },
+    dx: 'High anion gap (lactic) metabolic acidosis with an added respiratory acidosis: the ventilator is not letting him compensate.', pearl: 'On a ventilator you are the compensation. Raise the minute ventilation (rate) to bring PaCO₂ near the Winter\'s value while you treat the sepsis.', src: 'Brandis, Acid–base physiology; LITFL' },
+  { id: 'saline', t: 'After a big saline load', stem: 'A 30-year-old after a 6-hour trauma laparotomy received 7 L of 0.9% saline. Stable, lactate 1.2 mmol/L. Spontaneously breathing in recovery.', expect: ['macid', 'nagma'],
+    gen: U => { const h = U(16, 18.5); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: U(10, 12.5), alb: 4, na: U(140, 145) }; },
+    dx: 'Normal anion gap (hyperchloraemic) metabolic acidosis from 0.9% saline.', pearl: '0.9% saline carries 154 mmol/L of chloride. Balanced crystalloids (Ringer\'s lactate, Plasma-Lyte) cause less hyperchloraemia.', src: 'LITFL acid–base; Brandis' },
+  { id: 'ileo', t: 'High-output ileostomy', stem: 'A 45-year-old, day 4 after an ileostomy, output 2.5 L a day, K⁺ 2.9 mmol/L, booked for a CVC. Room air.', expect: ['macid', 'nagma'],
+    gen: U => { const h = U(14, 17); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: U(10, 12.5), alb: 4, na: U(134, 138) }; },
+    dx: 'Normal anion gap metabolic acidosis from bicarbonate loss in ileostomy fluid.', pearl: 'GI bicarbonate loss gives a negative urinary anion gap (the kidney still excretes NH₄⁺), unlike distal RTA. Replace K⁺ and Mg²⁺ before anaesthesia.', src: 'LITFL urinary anion gap; Brandis' },
+  { id: 'dkavom', t: 'DKA with days of vomiting', stem: 'A 24-year-old with type 1 diabetes has vomited for 3 days. Glucose 420 mg/dL, ketones positive, dry and tachycardic. Room air.', expect: ['macid', 'hagma', 'malk'],
+    gen: U => { const h = U(15, 18); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: 12 + U(2.5, 3.2) * (24 - h), alb: 4, na: U(130, 134) }; },
+    dx: 'High anion gap metabolic acidosis (DKA) with a hidden metabolic alkalosis from vomiting: HCO₃⁻ fell much less than the gap rose.', pearl: 'A delta ratio above 2 is the clue. Vomiting loses HCl, which props the HCO₃⁻ up and can make DKA look milder than it is.', src: 'LITFL delta ratio' },
+  { id: 'salic', t: 'Confused elderly woman on high-dose aspirin', stem: 'A 72-year-old woman has taken large doses of aspirin for arthritis pain for weeks. Now confused, ringing in the ears, RR 32, listed for a hip hemiarthroplasty. Room air.', expect: ['macid', 'hagma', 'ralk'],
+    gen: U => { const h = U(11, 14); return { hco3: h, pco2: 1.5 * h + 8 - U(4, 6), ag: 12 + U(1.1, 1.5) * (24 - h), alb: U(3.6, 4.0), na: U(136, 140) }; }, ok: v => v.ph < 7.39,
+    dx: 'High anion gap metabolic acidosis plus a primary respiratory alkalosis (PaCO₂ lower than Winter\'s): salicylate toxicity.', pearl: 'Salicylates stimulate the respiratory centre directly. If she has to be intubated, keep her minute ventilation high: letting PaCO₂ rise can kill.', src: 'LITFL salicylate toxicity; Brandis' },
+  { id: 'goo', t: 'Gastric outlet obstruction', stem: 'A 55-year-old with gastric outlet obstruction from a pyloric tumour has vomited for a week. Listed for gastrojejunostomy. K⁺ 2.8 mmol/L. Room air.', expect: ['malk'],
+    gen: U => { const h = U(34, 40); return { hco3: h, pco2: 0.7 * h + 21 + U(-1, 1), ag: U(11, 13), alb: 3.8, na: U(132, 136) }; },
+    dx: 'Hypochloraemic, hypokalaemic metabolic alkalosis with appropriate respiratory compensation, from vomiting.', pearl: 'Chloride-responsive: correct with 0.9% saline and potassium before surgery. It is a full stomach: decompress with an NG tube and do a rapid sequence induction.', src: 'LITFL metabolic alkalosis' },
+  { id: 'opioid', t: 'Drowsy in recovery', stem: 'A 68-year-old in recovery after open hernia repair had IV morphine in theatre. Drowsy, RR 6, SpO₂ 89% on room air. ABG on room air.', expect: ['racid', 'acute'],
+    gen: U => { const c = U(60, 72); return { pco2: c, hco3: 24 + 0.1 * (c - 40) + U(-0.5, 0.5), ag: U(11, 13), alb: 4, na: U(137, 141), fio2: 0.21, aa: U(6, 10), age: 68 }; },
+    dx: 'Acute respiratory acidosis with a normal A–a gradient: opioid-induced hypoventilation.', pearl: 'The normal gradient says the lungs are fine and the problem is ventilation. Stimulate, support the airway, titrate small IV doses of naloxone. Supplemental oxygen fixes the SpO₂ but hides rising CO₂.', src: 'Brandis; LITFL A–a gradient' },
+  { id: 'copd', t: 'Severe COPD, pre-op', stem: 'Pre-op clinic: a 70-year-old with severe COPD (home oxygen), stable, listed for TURP. ABG on 2 L/min nasal oxygen.', expect: ['racid', 'chronic'],
+    gen: U => { const c = U(55, 62); return { pco2: c, hco3: 24 + 0.4 * (c - 40) + U(-0.5, 0.5), ag: U(10, 13), alb: 4, na: U(137, 141) }; },
+    dx: 'Chronic (renally compensated) respiratory acidosis: his baseline.', pearl: 'This is his normal. Regional anaesthesia suits him; if ventilated, aim for his own PaCO₂ and SpO₂ 88–92%. Bringing PaCO₂ to 40 leaves a post-hypercapnic metabolic alkalosis.', src: 'BTS emergency oxygen guideline; Brandis' },
+  { id: 'lap', t: 'Rising EtCO₂ during laparoscopy', stem: 'Laparoscopic cholecystectomy under GA, volume control, settings unchanged. EtCO₂ has climbed from 34 to 52 mmHg over 40 minutes. ABG drawn.', expect: ['racid', 'acute'],
+    gen: U => { const c = U(55, 62); return { pco2: c, hco3: 24 + 0.1 * (c - 40) + U(-0.5, 0.5), ag: U(10, 13), alb: 4, na: U(137, 141) }; },
+    dx: 'Acute respiratory acidosis from CO₂ absorbed out of the pneumoperitoneum.', pearl: 'Raise the minute ventilation and ask for a lower insufflation pressure. If EtCO₂ keeps climbing, feel for surgical emphysema and think of CO₂ embolism (sudden fall in EtCO₂ with hypotension).', src: 'LITFL; BJA Education laparoscopy physiology' },
+  { id: 'mh', t: 'Hot and rigid after induction', stem: '20 minutes after induction with sevoflurane and suxamethonium, a 22-year-old has rising EtCO₂ despite doubling the minute ventilation, HR 140, masseter rigidity, temperature 38.9 °C. Lactate 9 mmol/L. FiO₂ 0.5.', expect: ['racid', 'macid', 'hagma'],
+    gen: U => { const h = U(15, 18); return { pco2: U(70, 85), hco3: h, ag: 12 + U(1.2, 1.6) * (24 - h), alb: 4, na: U(138, 142) }; },
+    dx: 'Mixed respiratory and metabolic (lactic) acidosis: malignant hyperthermia.', pearl: 'Stop the volatile, call for help, maintain with TIVA, give dantrolene 2–3 mg/kg IV then 1 mg/kg every 5 min until EtCO₂ < 6 kPa and temperature < 38.5 °C. Cool actively; treat hyperkalaemia.', src: 'Association of Anaesthetists QRH 3-8 MH crisis' },
+  { id: 'preg', t: 'Term pregnancy', stem: 'A healthy 32-year-old at 36 weeks with an arterial line in place before caesarean section. Breathing room air.', expect: ['ralk', 'chronic'],
+    gen: U => { const c = U(28, 32); return { pco2: c, hco3: 24 - 0.5 * (40 - c) + U(-0.4, 0.4), ag: U(9, 12), alb: 3.4, na: U(135, 138), fio2: 0.21, aa: U(6, 10), age: 32 }; },
+    dx: 'Chronic compensated respiratory alkalosis: normal for pregnancy.', pearl: 'Progesterone drives ventilation, so PaCO₂ around 30 mmHg is normal at term. A "normal" PaCO₂ of 40 in a pregnant woman (for example in severe asthma) means she is tiring.', src: 'BJA Education physiology of pregnancy; Brandis' },
+  { id: 'anx', t: 'Tingling lips before surgery', stem: 'A 25-year-old in the pre-op holding area with an ankle fracture, anxious and in pain, tingling around the lips, RR 32. Room air.', expect: ['ralk', 'acute'],
+    gen: U => { const c = U(25, 29); return { pco2: c, hco3: 24 - 0.2 * (40 - c) + U(-0.4, 0.4), ag: U(10, 13), alb: 4, na: U(137, 141), fio2: 0.21, aa: U(5, 9), age: 25 }; },
+    dx: 'Acute respiratory alkalosis with a normal A–a gradient: hyperventilation from pain and anxiety.', pearl: 'Always check the gradient. Hyperventilation with a raised gradient points to PE, pneumonia or pulmonary oedema, not anxiety. A normal gradient does not fully exclude PE.', src: 'LITFL A–a gradient' },
+  { id: 'lowalb', t: 'The gap that looks normal', stem: 'ICU day 6 after a perforated duodenal ulcer. A thin 60-year-old, albumin 2.0 g/dL, lactate 4.5 mmol/L, breathing spontaneously on FiO₂ 0.35.', expect: ['macid', 'hagma'],
+    gen: U => { const h = U(17, 19); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: 12 + U(1.1, 1.5) * (24 - h), alb: U(1.8, 2.2), na: U(136, 140) }; }, ok: v => v.na - v.cl - v.hco3 <= 16,
+    dx: 'High anion gap (lactic) metabolic acidosis, hidden by low albumin until the gap is corrected.', pearl: 'Albumin is an unmeasured anion. Each 1 g/dL fall lowers the anion gap by about 2.5, so always correct it in ICU patients.', src: 'Figge correction; LITFL anion gap' },
+  { id: 'rosc', t: 'Just after ROSC', stem: 'A 59-year-old, 10 minutes after return of circulation from a VF arrest in the cath lab, being hand-ventilated through an ETT. Lactate 11 mmol/L.', expect: ['racid', 'macid', 'hagma'],
+    gen: U => { const h = U(14, 17); return { pco2: U(58, 68), hco3: h, ag: 12 + U(1.3, 1.7) * (24 - h), alb: 4, na: U(137, 141) }; },
+    dx: 'Mixed respiratory and metabolic (lactic) acidosis after cardiac arrest.', pearl: 'After ROSC, ventilate to normal PaCO₂ (35–45 mmHg) and titrate oxygen to SpO₂ 94–98%: avoid both hypoxia and hyperoxia.', src: 'RCUK / ERC 2025 post-resuscitation care' },
+  { id: 'aoc', t: 'COPD with pneumonia, drowsy', stem: 'A 66-year-old with known COPD and a new pneumonia, drowsy, on a 60% Venturi mask in the ward. Called for airway review.', expect: ['racid', 'aoc'],
+    gen: U => { const c = U(75, 85), d = c - 40; return { pco2: c, hco3: U(24 + 0.1 * d + 3.5, 24 + 0.4 * d - 3.5), ag: U(10, 13), alb: 3.8, na: U(136, 140) }; },
+    dx: 'Acute-on-chronic respiratory acidosis: HCO₃⁻ sits between the acute and chronic predictions.', pearl: 'Too much oxygen worsens hypercapnia in COPD. Titrate to SpO₂ 88–92% and start NIV for a respiratory acidosis (pH < 7.35, PaCO₂ > 6.5 kPa) that persists.', src: 'BTS emergency oxygen and NIV guidelines; Brandis' },
+  { id: 'ards', t: 'Lung-protective ventilation, day 3', stem: 'ICU day 3, a 45-year-old with severe pneumonia, ventilated with tidal volume 6 mL/kg predicted body weight, PEEP 12, FiO₂ 0.7.', expect: ['racid', 'chronic'],
+    gen: U => { const c = U(52, 58); return { pco2: c, hco3: 24 + 0.4 * (c - 40) + U(-0.4, 0.4), ag: U(10, 13), alb: 3.5, na: U(137, 141), fio2: 0.7, peep: 12, pao2fix: U(84, 98), age: 45 }; },
+    dx: 'Compensated respiratory acidosis (permissive hypercapnia) with moderate ARDS by P/F ratio.', pearl: 'Hypercapnia is accepted with low tidal volumes as long as the pH stays acceptable (often above about 7.20). P/F 100–200 on PEEP ≥ 5 is moderate ARDS (Berlin).', src: 'ARDS Definition Task Force (Berlin), JAMA 2012' },
+  { id: 'citrate', t: 'Day after a massive transfusion', stem: 'Day 1 after a massive transfusion (18 units of blood products) for a ruptured AAA, now extubated and comfortable, K⁺ 3.3 mmol/L. Room air.', expect: ['malk'],
+    gen: U => { const h = U(31, 34); return { hco3: h, pco2: 0.7 * h + 21 + U(-1, 1), ag: U(10, 13), alb: 3.4, na: U(137, 141) }; },
+    dx: 'Metabolic alkalosis with appropriate compensation: citrate from stored blood metabolised to bicarbonate.', pearl: 'The liver turns each citrate into bicarbonate, so the acidosis of the bleed turns into an alkalosis a day later. Check ionised calcium too.', src: 'BJA Education massive transfusion' },
+  { id: 'ckd', t: 'Missed dialysis', stem: 'A 62-year-old with CKD stage 5 who has missed two dialysis sessions, listed for an AV fistula. K⁺ 6.1 mmol/L. Room air.', expect: ['macid', 'hagma', 'nagma'],
+    gen: U => { const h = U(13, 16); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: 12 + U(0.5, 0.7) * (24 - h), alb: 3.6, na: U(136, 140) }; },
+    dx: 'Mixed high and normal anion gap metabolic acidosis of renal failure (delta ratio 0.4–0.8).', pearl: 'Retained anions (phosphate, sulphate) raise the gap; failing tubules lose bicarbonate too. Dialyse first if you can; avoid suxamethonium with K⁺ already high.', src: 'LITFL delta ratio' }
+];
+function abgMake(sc, seed) {
+  const rnd = fcRng(sc.id + '|' + seed);
+  for (let k = 0; k < 60; k++) { const U = (a, b) => a + (b - a) * rnd(); const g = sc.gen(U);
+    const pco2 = Math.round(g.pco2), hco3 = r1(g.hco3), na = Math.round(g.na), alb = r1(g.alb ?? 4);
+    const cl = Math.round(na - hco3 - (g.ag - 2.5 * (4 - alb)));
+    const ph = Math.round(HH(hco3, pco2) * 100) / 100;
+    const v = { ph, pco2, hco3, na, cl, alb, age: g.age };
+    if (g.fio2) { v.fio2 = g.fio2; v.pao2 = g.pao2fix != null ? Math.round(g.pao2fix) : g.pao2 != null ? Math.round(g.pao2) : Math.round(g.fio2 * 713 - pco2 / 0.8 - (g.aa || 8)); }
+    if (g.peep) v.peep = g.peep;
+    if (sc.ok && !sc.ok(v)) continue;
+    const R = abgRead(v); if (sc.expect.every(e => R.tags.has(e)) && [...R.tags].filter(t => ['macid', 'racid', 'malk', 'ralk', 'hagma', 'nagma'].includes(t)).every(t => sc.expect.includes(t))) return { v, R };
+  }
+  return null;
+}
+
+/* ---- daily pick + spacing: state.flash['ecg|id' / 'abg|id'] = { lvl, n, last, due } (synced); state.fcDay = today's pick (this device) ---- */
+const fcRec = (k, id) => (state.flash || {})[k + '|' + id] || null;
+const fcSeen = k => Object.keys(state.flash || {}).filter(x => x.startsWith(k + '|')).length;
+function fcPick(k, ids) { const t = today();
+  const due = ids.filter(id => { const r = fcRec(k, id); return r && r.due <= t && r.last !== t; }).sort((a, b) => fcRec(k, a).due.localeCompare(fcRec(k, b).due));
+  if (due.length) return due[0];
+  const fresh = ids.filter(id => !fcRec(k, id)); if (fresh.length) return fresh[0];
+  return ids.slice().sort((a, b) => (fcRec(k, a).last || '').localeCompare(fcRec(k, b).last || ''))[0]; }
+function fcDay() { const t = today(); let d = state.fcDay;
+  if (!d || d.date !== t || (!d.ecg && ECGS().length)) { const E = ECGS().map(c => c.id);
+    d = state.fcDay = { date: t, ecg: E.length ? fcPick('ecg', E) : null, abg: fcPick('abg', ABG_SC.map(s => s.id)), seed: t }; save(); }
+  return d; }
+const fcDone = (k, id) => { const r = fcRec(k, id); return !!(r && r.last === today()); };
+function flashCard() { if (state.settings.flashOn === false) return ''; const d = fcDay();
+  const e = ECGS().find(c => c.id === d.ecg), a = ABG_SC.find(s => s.id === d.abg); const eD = e && fcDone('ecg', e.id), aD = a && fcDone('abg', a.id);
+  if ((!e || eD) && (!a || aD)) return '';
+  const row = (act, id, ico, lab, title, done) => `<button type="button" class="row" data-act="${act}" data-id="${esc(id)}" data-daily="1"><span class="fc-ico" aria-hidden="true">${ico}</span><span class="r-main"><span class="r-t">${esc(lab)}</span><span class="r-s">${done ? 'Done for today ✓' : esc(title)}</span></span>${CHEV}</button>`;
+  return `<div class="sec"><h2 class="sh"><span>🫀 Flashcards</span><span>${(eD ? 1 : 0) + (aD ? 1 : 0)} of ${(e ? 1 : 0) + (a ? 1 : 0)} done</span></h2><div class="group">${e ? row('fc-ecg', e.id, '〰️', 'ECG of the day', e.hook || 'Read the strip, then reveal', eD) : ''}${a ? row('fc-abg', a.id, '🩸', 'ABG of the day', a.t, aD) : ''}</div></div>`; }
+function flashSection() { if (state.settings.flashOn === false) return ''; const E = ECGS(); const seen = fcSeen('ecg'), aS = fcSeen('abg');
+  const d = fcDay();
+  let h = `<div class="sec"><h2 class="sh"><span>🫀 ECG &amp; ABG</span><span>${seen}/${E.length} ECGs · ${aS}/${ABG_SC.length} ABG types seen</span></h2>`;
+  h += `<div class="fc-pair"><button type="button" class="card calc-link" data-act="fc-ecg" data-id="${esc(d.ecg || '')}" data-daily="1"><span class="cat-due-i" aria-hidden="true">〰️</span><span class="cat-tx"><b>ECG of the day</b><span>${d.ecg && fcDone('ecg', d.ecg) ? 'Done ✓' : 'Vignette + strip'}</span></span></button>
+    <button type="button" class="card calc-link" data-act="fc-abg" data-id="${esc(d.abg)}" data-daily="1"><span class="cat-due-i" aria-hidden="true">🩸</span><span class="cat-tx"><b>ABG of the day</b><span>${fcDone('abg', d.abg) ? 'Done ✓' : 'Work it out step by step'}</span></span></button></div>`;
+  h += `<button type="button" class="btn ghost wide" data-act="fc-abg-extra">🩸 Another ABG (fresh numbers)</button>`;
+  if (E.length) { const L = E.slice().sort((a, b) => (fcRec('ecg', a.id) ? 1 : 0) - (fcRec('ecg', b.id) ? 1 : 0));
+    h += `<div class="group" style="margin-top:10px">${moreCut('ecglib', L, 3).map(c => { const r = fcRec('ecg', c.id);
+      return `<button type="button" class="row" data-act="fc-ecg" data-id="${esc(c.id)}"><span class="r-main"><span class="r-t">${r ? esc(c.title) : 'Unseen ECG · ' + esc(c.cat || '')}</span><span class="r-s">${r ? (r.lvl ? 'Knew it · back ' + esc(dShort(r.due)) : 'Again · back ' + esc(dShort(r.due))) : esc(c.hook || '')}</span></span>${CHEV}</button>`; }).join('')}${moreBtn('ecglib', L.length, 3, 'ECG')}</div>`; }
+  return h + `</div>`; }
+let fc = null; /* the open card: { k:'ecg'|'abg', id, daily, step, seed } */
+function fcMark(ok) { if (!fc) return; const { k, id } = fc; const t = today(); const r = fcRec(k, id) || { lvl: 0, n: 0 };
+  const lvl = ok ? (r.lvl || 0) + 1 : 0, gap = ok ? FC_I[Math.min(lvl - 1, FC_I.length - 1)] : 2;
+  state.flash = { ...(state.flash || {}), [k + '|' + id]: { lvl, n: (r.n || 0) + 1, last: t, due: addDays(t, gap) } };
+  fc = null; closeSheet(); commit(ok ? 'Got it ✓ · back in ' + plural(gap, 'day') : 'It will come back in 2 days 🔁'); }
+const fcBtns = () => `<div class="btns brev-b" style="flex-direction:row"><button class="btn" type="button" data-act="fc-mark" data-ok="1">Got it</button><button class="btn ghost" type="button" data-act="fc-mark" data-ok="0">Again</button></div>`;
+function fcEcgSheet() { const c = ECGS().find(x => x.id === fc.id); if (!c) { toast('That ECG is not in the app yet. Pull down to refresh.'); fc = null; return; }
+  const open = fc.step > 0;
+  openSheet(`<div class="sheet-in fc-sheet">${sheetHead(fc.daily ? 'ECG of the day' : 'ECG')}
+    <div class="card fc-card"><span class="bite-cat">〰️ ${esc(c.cat || 'ECG')}</span><p class="fc-stem">${esc(c.vignette)}</p>${ecgSVG(c)}<b class="fc-q">${esc(c.q || 'What is the rhythm, and what will you do?')}</b></div>
+    ${open ? `<div class="card fc-ans"><span class="c-lab">Answer</span><b class="fc-dx">${esc(c.title)}</b>
+      ${(c.findings || []).length ? `<h4>On the strip</h4><ul class="note-ul">${c.findings.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${(c.manage || []).length ? `<h4>What to do</h4><ul class="note-ul">${c.manage.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${c.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(c.pearl)}</span></div>` : ''}
+      ${c.src ? `<p class="fc-src">Checked against: ${esc(c.src)}</p>` : ''}</div>${fcBtns()}` : `<button class="btn wide" type="button" data-act="fc-step">Show the answer</button>`}
+    <p class="foot">Teaching cards, not a protocol. Follow your department's practice.</p></div>`); }
+function fcAbgSheet() { const sc = ABG_SC.find(s => s.id === fc.id); const made = sc && abgMake(sc, fc.seed);
+  if (!made) { toast("Couldn't make this ABG. Try another."); fc = null; return; }
+  const { v, R } = made; const S = R.S; const n = Math.min(fc.step, S.length + 1);
+  const row = (l, x, u) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${x}${u ? ' <small>' + u + '</small>' : ''}</span></div>`;
+  openSheet(`<div class="sheet-in fc-sheet">${sheetHead(fc.daily ? 'ABG of the day' : 'ABG practice')}
+    <div class="card fc-card"><span class="bite-cat">🩸 ${esc(sc.t)}</span><p class="fc-stem">${esc(sc.stem)}</p>
+      <div class="group fc-abg">${row('pH', v.ph.toFixed(2))}${row('PaCO₂', v.pco2, 'mmHg')}${v.pao2 != null ? row('PaO₂', v.pao2, 'mmHg' + (v.fio2 ? ' · FiO₂ ' + v.fio2 : '')) : ''}${row('HCO₃⁻', v.hco3, 'mmol/L')}${row('Na⁺', v.na, 'mmol/L')}${row('Cl⁻', v.cl, 'mmol/L')}${row('Albumin', v.alb, 'g/dL')}</div>
+      <b class="fc-q">Work through it: pH, primary disorder, compensation, anion gap${v.pao2 != null ? ', oxygenation' : ''}. What's going on?</b></div>
+    ${S.slice(0, n).map(([h, t], i) => `<div class="card fc-step"><span class="c-lab">${i + 1} · ${esc(h)}</span><span class="c-s">${esc(t)}</span></div>`).join('')}
+    ${n > S.length ? `<div class="card fc-ans"><span class="c-lab">Putting it together</span><b class="fc-dx">${esc(sc.dx)}</b><div class="bite-pearl"><b>Remember</b><span>${esc(sc.pearl)}</span></div><p class="fc-src">Rules: Brandis bedside rules, Winter's formula, LITFL delta ratio · Case points checked against: ${esc(sc.src)}</p></div>${fcBtns()}`
+      : `<button class="btn wide" type="button" data-act="fc-step">${n ? 'Next step' : 'Start: show step 1'}</button>${n ? '' : '<button class="btn ghost wide" type="button" data-act="fc-all">Show the whole answer</button>'}`}
+    <p class="foot">Values are made up for practice and follow Henderson–Hasselbalch. Teaching cards, not a protocol.</p></div>`); }
+function fcShow() { if (!fc) return; fc.k === 'ecg' ? fcEcgSheet() : fcAbgSheet(); }
+
 /* ---------- v5.67: Viva flashcards from the "Points for the exam / viva" of each bite ---------- */
 const vivaPts = b => { const s = (b.sections || []).find(x => /viva|exam/i.test(x.h || '')); return s ? (s.items || (s.rows || []).map(r => r[0] + ': ' + r[1])) : []; };
 let viva = null;
@@ -3897,7 +4176,7 @@ document.addEventListener('change', e => { const k = e.target.dataset && e.targe
 const NAP_CAT = `<svg class="nap-cat" viewBox="0 0 64 40" aria-hidden="true"><path d="M58.5 29.5 Q59.3 30.9 57.6 31.8 Q57.5 33.4 55.2 33.5 Q54.1 35.0 52.0 34.1 Q49.9 35.0 48.8 33.5 Q46.5 33.4 46.4 31.8 Q44.7 30.9 45.5 29.5 Q44.7 28.1 46.4 27.2 Q46.5 25.6 48.8 25.5 Q49.9 24.0 52.0 24.9 Q54.1 24.0 55.2 25.5 Q57.5 25.6 57.6 27.2 Q59.3 28.1 58.5 29.5 Z" fill="#D3A574"/><path d="M50.5 25.5 Q51.6 27.0 49.7 28.3 Q49.9 29.9 47.2 30.9 Q46.7 32.6 43.4 33.1 Q42.2 34.1 38.5 33.5 Q35.7 33.5 32.9 33.5 Q30.0 33.5 27.1 33.5 Q24.3 33.5 21.5 33.5 Q17.8 34.1 16.6 33.1 Q13.3 32.6 12.8 30.9 Q10.1 29.9 10.3 28.3 Q8.4 27.0 9.5 25.5 Q8.4 24.0 10.3 22.7 Q10.1 21.1 12.8 20.1 Q13.3 18.4 16.6 17.9 Q17.8 16.3 21.5 16.4 Q23.5 14.7 27.1 15.6 Q30.0 14.1 32.9 15.6 Q36.5 14.7 38.5 16.4 Q42.2 16.3 43.4 17.9 Q46.7 18.4 47.2 20.1 Q49.9 21.1 49.7 22.7 Q51.6 24.0 50.5 25.5 Z" fill="#E6BE93"/><path d="M20 17.5q10 -4.5 21 .5M27 16q5 -1 9 .4" fill="none" stroke="#D3A574" stroke-width="1.3" stroke-linecap="round" opacity=".8"/><ellipse cx="26" cy="33" rx="4" ry="2.2" fill="#F5E0C6"/><ellipse cx="33" cy="33.2" rx="3.6" ry="2" fill="#F5E0C6"/><path d="M27.6 27.7 Q28.8 29.4 27.0 30.6 Q27.4 32.6 25.1 33.2 Q24.8 35.2 22.3 35.1 Q21.2 37.0 18.8 36.2 Q17.0 37.7 15.2 36.2 Q12.8 37.0 11.7 35.1 Q9.2 35.2 8.9 33.2 Q6.6 32.6 7.0 30.6 Q5.2 29.4 6.4 27.7 Q5.2 26.0 7.0 24.8 Q6.6 22.8 8.9 22.2 Q9.2 20.2 11.7 20.3 Q12.8 18.4 15.2 19.2 Q17.0 17.7 18.8 19.2 Q21.2 18.4 22.3 20.3 Q24.8 20.2 25.1 22.2 Q27.4 22.8 27.0 24.8 Q28.8 26.0 27.6 27.7 Z" fill="#F5E0C6"/><path d="M9.6 20.3L9.4 12.7L15 17.5Z M24.4 20.3L24.6 12.7L19 17.5Z" fill="#E6BE93"/><path d="M10.6 18.9L10.6 14.7L13.6 17.3Z M23.4 18.9L23.4 14.7L20.4 17.3Z" fill="#EDB3A8"/><path d="M10.4 17.0l-1.2-1.4M23.6 17.0l1.2-1.4" stroke="#F5E0C6" stroke-width=".8" stroke-linecap="round"/><path d="M25.6 24.5 Q26.4 26.3 24.9 27.6 Q24.9 29.6 23.1 30.3 Q22.3 32.1 20.3 32.1 Q18.9 33.5 17.0 32.7 Q15.1 33.5 13.7 32.1 Q11.7 32.1 10.9 30.3 Q9.1 29.6 9.1 27.6 Q7.6 26.3 8.4 24.5 Q7.6 22.7 9.1 21.4 Q9.1 19.4 10.9 18.7 Q11.7 16.9 13.7 16.9 Q15.1 15.5 17.0 16.3 Q18.9 15.5 20.3 16.9 Q22.3 16.9 23.1 18.7 Q24.9 19.4 24.9 21.4 Q26.4 22.7 25.6 24.5 Z" fill="#E6BE93"/><ellipse cx="17" cy="28.1" rx="4.6" ry="3.2" fill="#F5E0C6"/><path d="M15.9 26.7h2.2l-1.1 1.2z" fill="#D49C99"/><path d="M17 27.9v.9M17 28.8q-1 .9 -1.9 .2M17 28.8q1 .9 1.9 .2" fill="none" stroke="#7A5638" stroke-width=".55" stroke-linecap="round"/><path d="M13 28.1l-6 -.6M13 29.0l-5.8 .8M21 28.1l6 -.6M21 29.0l5.8 .8" stroke="#FFF8EE" stroke-width=".4" stroke-linecap="round" opacity=".9"/><path d="M12.3 24.2q1.6 1.3 3.2 0M18.5 24.2q1.6 1.3 3.2 0" fill="none" stroke="#7A5638" stroke-width="1.05" stroke-linecap="round"/><text class="z" x="29" y="10">z</text><text class="z z2" x="35" y="5.5">z</text></svg>`;
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
-const SH_ICO = { '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
+const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
   '📖': '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>', '📚': '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>',
   '🗺️': '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>', '🛒': '<path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>',
   '🎂': '<path d="M4 20h16v-7a2 2 0 00-2-2H6a2 2 0 00-2 2z"/><path d="M4 15c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0M12 11V7M12 4.5v.5"/>', '📦': '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',
@@ -4241,6 +4520,12 @@ document.addEventListener('click', e => {
     case 'bcat': biteCat = b.dataset.c; render(); break;
     case 'bite': biteSheet(id); break;
     case 'brev': biteSheet(id, true); break;
+    case 'fc-ecg': if (!id) { toast('No ECG cards loaded yet. Pull down to refresh.'); break; } fc = { k: 'ecg', id, daily: !!b.dataset.daily, step: 0 }; fcShow(); break;
+    case 'fc-abg': fc = { k: 'abg', id, daily: !!b.dataset.daily, step: 0, seed: fcDay().seed }; fcShow(); break;
+    case 'fc-abg-extra': { const sc = ABG_SC[Math.floor(Math.random() * ABG_SC.length)]; fc = { k: 'abg', id: sc.id, daily: false, step: 0, seed: 'x' + Date.now() }; fcShow(); break; }
+    case 'fc-step': if (fc) { fc.step++; fcShow(); } break;
+    case 'fc-all': if (fc) { fc.step = 99; fcShow(); } break;
+    case 'fc-mark': fcMark(b.dataset.ok === '1'); break;
     case 'brev-ok': biteRevMark(id, true); break;
     case 'brev-again': biteRevMark(id, false); break;
     case 'prep': prepSheet(id); break;
@@ -4554,7 +4839,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};

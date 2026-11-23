@@ -1,0 +1,841 @@
+{
+ "about": "ECG vignettes for the daily flashcard (Academics and Today). Strips are drawn by the app from the 'leads' settings. Every fact was checked against the source named in 'src' (Nov 2026). Add cases at the end; never remove (academic data).",
+ "cases": [
+  {
+   "id": "af-rvr",
+   "cat": "Tachyarrhythmia",
+   "hook": "Fast and irregular after induction",
+   "vignette": "A 72-year-old is on the table for an emergency laparotomy. Ten minutes after induction the heart rate jumps to about 150 and BP falls from 128/76 to 84/50. Lead II on the monitor:",
+   "q": "What is the rhythm, and what will you do now?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "af",
+     "rate": 150,
+     "t": 0.22
+    }
+   ],
+   "title": "Atrial fibrillation with a fast ventricular response",
+   "findings": [
+    "Irregularly irregular narrow QRS complexes",
+    "No P waves; a fine, wavy fibrillatory baseline",
+    "Ventricular rate about 150/min"
+   ],
+   "manage": [
+    "Hypotension under anaesthesia counts as a life-threatening feature (shock): synchronised DC shock, up to 3 attempts",
+    "Look for the trigger: hypovolaemia, light anaesthesia, hypoxia or hypercapnia, low K⁺ or Mg²⁺",
+    "If stable: control the rate (a beta-blocker if EF > 40%; amiodarone or digoxin if in heart failure)"
+   ],
+   "pearl": "New AF during surgery usually has a cause. Check K⁺, Mg²⁺, fluid status and depth of anaesthesia before reaching for drugs.",
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL ECG library"
+  },
+  {
+   "id": "flutter",
+   "cat": "Tachyarrhythmia",
+   "hook": "Rate stuck at exactly 150",
+   "vignette": "Day 2 after an oesophagectomy, a 61-year-old has had a steady heart rate of exactly 150 for an hour. BP 118/72, comfortable, SpO₂ 96%. Lead II:",
+   "q": "What is the rhythm?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "flutter",
+     "arate": 300,
+     "ratio": 2,
+     "t": 0.15
+    }
+   ],
+   "title": "Atrial flutter with 2:1 block",
+   "findings": [
+    "Regular narrow-complex tachycardia at 150/min",
+    "Sawtooth flutter waves at about 300/min, best seen in II, III and aVF",
+    "Every second flutter wave is hidden in the QRS or T wave"
+   ],
+   "manage": [
+    "Stable: control the rate (for example a beta-blocker)",
+    "Vagal manoeuvres or adenosine slow the ventricles briefly and unmask the flutter waves, but rarely convert flutter",
+    "Unstable: synchronised DC shock"
+   ],
+   "pearl": "A regular narrow tachycardia at exactly 150 is flutter with 2:1 block until proven otherwise. After oesophagectomy, a new atrial arrhythmia can be the first sign of an anastomotic leak.",
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL atrial flutter"
+  },
+  {
+   "id": "svt",
+   "cat": "Tachyarrhythmia",
+   "hook": "Sudden palpitations in pre-op holding",
+   "vignette": "A 28-year-old woman waiting for a laparoscopic cystectomy suddenly feels her heart racing. HR 180, BP 112/70, alert and talking. Lead II:",
+   "q": "What is it, and what is your first step?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "svt",
+     "rate": 180,
+     "t": 0.25,
+     "qt": 260
+    }
+   ],
+   "title": "Regular narrow-complex tachycardia: re-entrant SVT (most likely AVNRT)",
+   "findings": [
+    "Regular, narrow QRS at 180/min",
+    "No visible P waves before the QRS (hidden in or just after it)"
+   ],
+   "manage": [
+    "Stable: vagal manoeuvres first (modified Valsalva)",
+    "Then adenosine (if no pre-excitation): 6 mg rapid IV bolus, then 12 mg, then 18 mg, with continuous ECG",
+    "If adenosine fails: verapamil or a beta-blocker",
+    "Unstable: synchronised DC shock"
+   ],
+   "pearl": "Warn her that adenosine causes a few seconds of chest tightness and flushing. Give it fast through a large cannula with a quick flush.",
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025"
+  },
+  {
+   "id": "brady-spinal",
+   "cat": "Bradyarrhythmia",
+   "hook": "Slow and low under spinal",
+   "vignette": "A 34-year-old under spinal anaesthesia for caesarean section, block to T4. A few minutes later HR falls to 38, BP 70/40, she feels sick. Lead II:",
+   "q": "What is the rhythm, and what will you give?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 38
+    }
+   ],
+   "title": "Sinus bradycardia with hypotension after spinal anaesthesia",
+   "findings": [
+    "Regular rhythm at about 38/min",
+    "A P wave before every QRS, normal PR interval, narrow QRS"
+   ],
+   "manage": [
+    "Shock is a life-threatening feature: atropine 500 mcg IV, repeat up to 3 mg",
+    "Left uterine displacement, fluid, and a vasopressor; with bradycardia, an anticholinergic or ephedrine suits better than phenylephrine alone",
+    "Check the block height and keep an eye on her breathing"
+   ],
+   "pearl": "A block reaching T1–T4 takes out the cardioaccelerator fibres, so bradycardia plus hypotension means a high block.",
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025; International consensus on hypotension at spinal caesarean (Anaesthesia 2018)"
+  },
+  {
+   "id": "avb1",
+   "cat": "Conduction",
+   "hook": "Pre-op ECG of a fit man on metoprolol",
+   "vignette": "Pre-op ECG of a fit 66-year-old on metoprolol, listed for a knee replacement. HR 62, no symptoms. Lead II:",
+   "q": "What does the ECG show? Can he go ahead?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 62,
+     "pr": 300
+    }
+   ],
+   "title": "Sinus rhythm with first-degree AV block",
+   "findings": [
+    "Every P wave is followed by a QRS",
+    "PR interval constant and long (about 300 ms; normal 120–200 ms)"
+   ],
+   "manage": [
+    "No treatment needed on its own; it does not need a pacing wire",
+    "Note the drugs that lengthen PR (beta-blockers, calcium channel blockers, digoxin) and check K⁺",
+    "Fine to proceed"
+   ],
+   "pearl": "Count the PR in small squares: more than 5 small squares (200 ms) is first-degree block.",
+   "src": "LITFL first-degree AV block"
+  },
+  {
+   "id": "wenck",
+   "cat": "Conduction",
+   "hook": "Grouped beats at night in ICU",
+   "vignette": "A fit 25-year-old footballer, asleep in the surgical ICU the night after an appendicectomy. HR 50–60, BP normal. Lead II:",
+   "q": "What is the rhythm?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "av",
+     "arate": 80,
+     "seq": [
+      180,
+      260,
+      320,
+      null
+     ]
+    }
+   ],
+   "title": "Second-degree AV block, Mobitz I (Wenckebach)",
+   "findings": [
+    "PR gets longer with each beat until one P wave is not followed by a QRS",
+    "Then the cycle starts again: grouped beating",
+    "Narrow QRS"
+   ],
+   "manage": [
+    "Usually benign (block in the AV node), common in athletes and during sleep",
+    "No treatment if he is well; atropine if he becomes symptomatic"
+   ],
+   "pearl": "Mobitz I sits in the AV node and usually responds to atropine; Mobitz II sits below it and carries a risk of asystole.",
+   "src": "LITFL AV block; RCUK Adult bradyarrhythmia algorithm 2025"
+  },
+  {
+   "id": "mobitz2",
+   "cat": "Conduction",
+   "hook": "Dizzy spells before a TURP",
+   "vignette": "A 74-year-old with dizzy spells is listed for a TURP. Pre-op lead II:",
+   "q": "What is the rhythm, and does it change your plan?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "av",
+     "arate": 84,
+     "seq": [
+      180,
+      180,
+      null
+     ],
+     "qrs": 125,
+     "shape": "rsr",
+     "rp": 0.7
+    }
+   ],
+   "title": "Second-degree AV block, Mobitz II",
+   "findings": [
+    "PR interval stays the same in conducted beats",
+    "A P wave suddenly fails to conduct (here every third P)",
+    "Broad QRS: the block is below the AV node"
+   ],
+   "manage": [
+    "Mobitz II is a 'risk of asystole' rhythm: defer elective surgery and get cardiology review for pacing",
+    "Pads on and pacing ready if surgery cannot wait; atropine often does not work"
+   ],
+   "pearl": "Constant PR with a sudden dropped beat = Mobitz II. Dizzy spells plus Mobitz II = needs a pacemaker.",
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025; LITFL AV block"
+  },
+  {
+   "id": "chb",
+   "cat": "Conduction",
+   "hook": "HR 35 before a hip fracture",
+   "vignette": "An 80-year-old for hip fracture fixation: HR 35, BP 90/50, drowsy. Lead II:",
+   "q": "What is the rhythm, and what will you do?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "chb",
+     "arate": 90,
+     "vrate": 35,
+     "qrs": 140,
+     "shape": "vt",
+     "R": 1.1,
+     "S": 0.3,
+     "t": -0.3
+    }
+   ],
+   "title": "Complete (third-degree) heart block with a broad ventricular escape",
+   "findings": [
+    "P waves regular at about 90/min",
+    "QRS regular at about 35/min, broad",
+    "No relationship between P waves and QRS (AV dissociation)"
+   ],
+   "manage": [
+    "Life-threatening features: atropine 500 mcg IV (may not work with a broad escape)",
+    "Then isoprenaline 5 mcg/min or adrenaline 2–10 mcg/min, and/or transcutaneous pacing",
+    "Transvenous pacing before the surgery"
+   ],
+   "pearl": "March out the P waves with the edge of a paper: they keep their own rhythm and walk through the QRS complexes.",
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025"
+  },
+  {
+   "id": "vt",
+   "cat": "Tachyarrhythmia",
+   "hook": "Broad and fast in recovery",
+   "vignette": "A 58-year-old with an old MI, in recovery after a bowel resection: HR 180, BP 76/40, clammy, with a pulse. Lead II:",
+   "q": "What is the rhythm, and what will you do?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "vt",
+     "rate": 180,
+     "qrs": 170,
+     "shape": "vt",
+     "R": 1.3,
+     "S": 0.5,
+     "t": -0.5,
+     "qt": 300,
+     "off": 120
+    }
+   ],
+   "title": "Monomorphic ventricular tachycardia (with a pulse, unstable)",
+   "findings": [
+    "Regular broad-complex tachycardia at 180/min, QRS about 170 ms",
+    "Every complex looks the same; no P waves visible"
+   ],
+   "manage": [
+    "Shock with a pulse: synchronised DC shock, up to 3 attempts (sedation if conscious)",
+    "If that fails: amiodarone 300 mg IV over 10–20 min, then shock again",
+    "No pulse: start CPR and follow the ALS shockable rhythm algorithm",
+    "Check K⁺ and Mg²⁺"
+   ],
+   "pearl": "A regular broad-complex tachycardia in someone with heart disease is VT until proven otherwise.",
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; RCUK ALS 2025"
+  },
+  {
+   "id": "tdp",
+   "cat": "Tachyarrhythmia",
+   "hook": "Twisting rhythm in PACU",
+   "vignette": "A 48-year-old woman in recovery, given ondansetron and haloperidol for nausea. Her pre-op QTc was 520 ms and K⁺ is 3.0. The monitor alarms. Lead II:",
+   "q": "What is this rhythm, and what is the specific treatment?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "tdp",
+     "rate": 60,
+     "qt": 580,
+     "t": 0.25,
+     "tw": 60,
+     "from": 2000
+    }
+   ],
+   "title": "Torsades de pointes (polymorphic VT with a long QT)",
+   "findings": [
+    "Sinus beats with a very long QT, then a run of fast polymorphic VT",
+    "QRS complexes twist around the baseline, growing and shrinking in height"
+   ],
+   "manage": [
+    "Magnesium 8 mmol (2 g magnesium sulphate) IV over 10 min",
+    "Stop QT-prolonging drugs; correct K⁺",
+    "Isoprenaline or temporary pacing to raise the heart rate; avoid amiodarone",
+    "No pulse: defibrillate and follow ALS"
+   ],
+   "pearl": "Many antiemetics, antipsychotics and antibiotics lengthen QT. Check the QTc before stacking them.",
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025"
+  },
+  {
+   "id": "vf",
+   "cat": "Arrest",
+   "hook": "Unresponsive during a TURP",
+   "vignette": "During a TURP under spinal, an 81-year-old suddenly becomes unresponsive. No carotid pulse. Lead II:",
+   "q": "What is the rhythm, and what are your first actions?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "vf"
+    }
+   ],
+   "title": "Ventricular fibrillation (cardiac arrest)",
+   "findings": [
+    "Chaotic, irregular waves of varying size",
+    "No identifiable P waves, QRS complexes or T waves"
+   ],
+   "manage": [
+    "Call for help, start CPR, attach pads and defibrillate as soon as possible",
+    "Adrenaline 1 mg IV and amiodarone 300 mg IV after the 3rd shock",
+    "Work through the 4 Hs and 4 Ts; in a TURP add fluid absorption with hyponatraemia"
+   ],
+   "pearl": "Check the monitor leads and the patient together: loose electrodes can mimic VF, but a pulseless patient never lies.",
+   "src": "RCUK Adult ALS algorithm 2025"
+  },
+  {
+   "id": "hyperk",
+   "cat": "Electrolytes",
+   "hook": "Missed dialysis, fistula revision",
+   "vignette": "A 60-year-old on haemodialysis who missed a session is listed for an AV fistula revision. K⁺ result still pending. Lead II:",
+   "q": "What does the ECG suggest, and what do you give first?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 70,
+     "p": 0.06,
+     "pw": 30,
+     "pr": 230,
+     "qrs": 130,
+     "R": 0.9,
+     "S": 0.35,
+     "t": 0.95,
+     "pk": true,
+     "qt": 360
+    }
+   ],
+   "title": "Hyperkalaemia",
+   "findings": [
+    "Tall, narrow, peaked T waves",
+    "Flattened, broad P waves with a long PR interval",
+    "Widened QRS"
+   ],
+   "manage": [
+    "Protect the heart: 10 mL 10% calcium chloride or 30 mL 10% calcium gluconate IV (both 6.8 mmol) over 5–10 min; repeat if the ECG does not improve",
+    "Shift K⁺ into cells: 10 units soluble insulin with 25 g glucose; nebulised salbutamol",
+    "Remove K⁺: dialysis. Postpone the case; no suxamethonium"
+   ],
+   "pearl": "Calcium gluconate 10 mL is only a third of the calcium in 10 mL of calcium chloride: give 30 mL of gluconate.",
+   "src": "UK Kidney Association hyperkalaemia guideline; MHRA Drug Safety Update on calcium salts; LITFL hyperkalaemia"
+  },
+  {
+   "id": "hypok",
+   "cat": "Electrolytes",
+   "hook": "Bowel obstruction, days of vomiting",
+   "vignette": "A 52-year-old with small bowel obstruction has vomited for 4 days and is listed for laparotomy. Lead II:",
+   "q": "Which electrolyte do you suspect?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 80,
+     "p": 0.2,
+     "pr": 200,
+     "st": -0.08,
+     "t": 0.08,
+     "tw": 50,
+     "u": 0.18,
+     "qt": 380
+    }
+   ],
+   "title": "Hypokalaemia",
+   "findings": [
+    "Flat T waves with ST depression",
+    "Prominent U waves after the T wave",
+    "Apparent long QT that is really a long QU interval"
+   ],
+   "manage": [
+    "Replace potassium IV (follow your hospital's maximum rate and concentration) and magnesium",
+    "Avoid hyperventilation under anaesthesia: alkalosis pushes K⁺ further into cells",
+    "Watch for ectopics and arrhythmias"
+   ],
+   "pearl": "ECG changes usually appear only once K⁺ is below about 2.7–3.0 mmol/L, often with low magnesium too.",
+   "src": "LITFL hypokalaemia; ECGpedia electrolyte disorders"
+  },
+  {
+   "id": "hypoca",
+   "cat": "Electrolytes",
+   "hook": "Tingling lips after thyroidectomy",
+   "vignette": "Day 1 after a total thyroidectomy, a 38-year-old has tingling around the mouth and in her fingers. Lead II:",
+   "q": "What is the abnormality, and the likely cause?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 72,
+     "qt": 520,
+     "t": 0.3,
+     "tw": 42
+    }
+   ],
+   "title": "Long QT from hypocalcaemia",
+   "findings": [
+    "Long QT interval",
+    "The ST segment is long and flat; the T wave itself looks normal"
+   ],
+   "manage": [
+    "Check ionised calcium, magnesium and PTH",
+    "Symptomatic: IV calcium gluconate 10% slowly with ECG monitoring, then an infusion (follow local guidance)",
+    "Correct low magnesium too"
+   ],
+   "pearl": "After thyroidectomy, think of the parathyroids. It is the ST segment that stretches, not the T wave.",
+   "src": "ECGpedia electrolyte disorders; LITFL hypocalcaemia"
+  },
+  {
+   "id": "wpw",
+   "cat": "Conduction",
+   "hook": "Racing-heart episodes since school",
+   "vignette": "Pre-op ECG of a 22-year-old for septorhinoplasty, who mentions episodes of a racing heart since school. Lead II:",
+   "q": "What does this ECG show?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 75,
+     "pr": 105,
+     "dl": 55,
+     "qrs": 125,
+     "t": 0.15,
+     "Q": 0
+    }
+   ],
+   "title": "Wolff–Parkinson–White pattern (ventricular pre-excitation)",
+   "findings": [
+    "Short PR interval (< 120 ms)",
+    "Slurred upstroke of the QRS: the delta wave",
+    "Broad QRS (> 110 ms) with secondary ST–T changes"
+   ],
+   "manage": [
+    "Symptomatic WPW: cardiology review before elective surgery (ablation is curative)",
+    "Pre-excited AF under anaesthesia: procainamide or synchronised cardioversion",
+    "Avoid AV-node blockers (adenosine, verapamil, digoxin, beta-blockers) in pre-excited AF: they speed conduction down the accessory pathway"
+   ],
+   "pearl": "Short PR + delta wave + palpitations = WPW syndrome. Without symptoms it is called a WPW pattern.",
+   "src": "LITFL pre-excitation syndromes; RCUK Adult tachyarrhythmia algorithm 2025"
+  },
+  {
+   "id": "brugada",
+   "cat": "Channelopathy",
+   "hook": "Feverish, brother died in his sleep",
+   "vignette": "A 30-year-old man with a fever of 39 °C is listed for drainage of a perianal abscess. His brother died suddenly in his sleep at 35. V1 and V2:",
+   "q": "What is the pattern, and why does it matter here?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "V1",
+     "r": "sinus",
+     "rate": 80,
+     "shape": "rsr",
+     "rp": 0.55,
+     "S": 0.4,
+     "qrs": 110,
+     "st": 0.38,
+     "stc": true,
+     "t": -0.3,
+     "p": 0.08,
+     "tw": 55
+    },
+    {
+     "n": "V2",
+     "r": "sinus",
+     "rate": 80,
+     "shape": "rsr",
+     "rp": 0.75,
+     "S": 0.6,
+     "qrs": 110,
+     "st": 0.42,
+     "stc": true,
+     "t": -0.3,
+     "p": 0.08,
+     "tw": 55
+    }
+   ],
+   "title": "Brugada type 1 pattern",
+   "findings": [
+    "Coved ST elevation of 2 mm or more in V1–V2",
+    "The elevated ST segment slopes down into a negative T wave",
+    "RBBB-like rSR' shape in the right precordial leads"
+   ],
+   "manage": [
+    "Bring the fever down: fever unmasks and worsens the pattern",
+    "Defibrillator pads on; cardiology review",
+    "Check every drug you plan to give against brugadadrugs.org",
+    "An ICD is the definitive treatment"
+   ],
+   "pearl": "Only the coved (type 1) pattern is diagnostic, and only with a clinical feature such as syncope or a family history of sudden death.",
+   "src": "LITFL Brugada syndrome"
+  },
+  {
+   "id": "stemi-inf",
+   "cat": "Ischaemia",
+   "hook": "Chest pain during a hip hemiarthroplasty",
+   "vignette": "During a hip hemiarthroplasty under spinal, a 76-year-old complains of crushing chest pain and is sweating. BP 90/60. Leads II, III and aVL:",
+   "q": "Which territory, and what are your next steps?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 88,
+     "st": 0.25,
+     "t": 0.4
+    },
+    {
+     "n": "III",
+     "r": "sinus",
+     "rate": 88,
+     "R": 0.8,
+     "st": 0.35,
+     "t": 0.45
+    },
+    {
+     "n": "aVL",
+     "r": "sinus",
+     "rate": 88,
+     "R": 0.5,
+     "st": -0.15,
+     "t": -0.12
+    }
+   ],
+   "title": "Acute inferior STEMI",
+   "findings": [
+    "ST elevation in II and III (III more than II suggests the right coronary artery)",
+    "Reciprocal ST depression in aVL"
+   ],
+   "manage": [
+    "Tell the surgeon and finish quickly; get a full 12-lead with right-sided leads (V4R)",
+    "Call cardiology for urgent reperfusion; agree antiplatelets with the surgeon because of bleeding",
+    "Right ventricular infarction makes her preload-dependent: give fluid, avoid nitrates"
+   ],
+   "pearl": "With an inferior STEMI, always look at V1–V3 for posterior extension and at V4R for the right ventricle.",
+   "src": "LITFL inferior STEMI; LITFL posterior MI"
+  },
+  {
+   "id": "stemi-post",
+   "cat": "Ischaemia",
+   "hook": "Sweaty and nauseated after carotid surgery",
+   "vignette": "A 63-year-old with diabetes, in recovery after a carotid endarterectomy, is sweaty and nauseated. Leads V2 and V3:",
+   "q": "What could this be, and how do you confirm it?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "V2",
+     "r": "sinus",
+     "rate": 92,
+     "shape": "Rs",
+     "R": 1.2,
+     "S": 0.35,
+     "st": -0.35,
+     "t": 0.35
+    },
+    {
+     "n": "V3",
+     "r": "sinus",
+     "rate": 92,
+     "shape": "Rs",
+     "R": 1.0,
+     "S": 0.5,
+     "st": -0.3,
+     "t": 0.3
+    }
+   ],
+   "title": "Posterior STEMI (shown as its mirror image in V1–V3)",
+   "findings": [
+    "Horizontal ST depression in V2–V3",
+    "Tall, broad R waves with R/S > 1 in V2",
+    "Upright T waves"
+   ],
+   "manage": [
+    "Record posterior leads V7–V9: ST elevation of only 0.5 mm confirms it",
+    "Treat as a STEMI equivalent: emergency reperfusion"
+   ],
+   "pearl": "Turn the ECG upside down: the ST depression becomes ST elevation and the tall R becomes a Q wave.",
+   "src": "LITFL posterior myocardial infarction"
+  },
+  {
+   "id": "pe",
+   "cat": "Other",
+   "hook": "Breathless on day 5 after a knee replacement",
+   "vignette": "Day 5 after a total knee replacement, a 67-year-old is suddenly breathless. HR 115, SpO₂ 88% on air. Leads I and III:",
+   "q": "What are the ECG clues, and how much do they tell you?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "I",
+     "r": "sinus",
+     "rate": 115,
+     "Q": 0,
+     "R": 0.6,
+     "S": 0.55,
+     "t": 0.2,
+     "qt": 320
+    },
+    {
+     "n": "III",
+     "r": "sinus",
+     "rate": 115,
+     "Q": 0.3,
+     "R": 0.5,
+     "S": 0.05,
+     "t": -0.25,
+     "qt": 320
+    }
+   ],
+   "title": "Sinus tachycardia with S1Q3T3: suggests pulmonary embolism",
+   "findings": [
+    "Sinus tachycardia (the commonest ECG finding in PE)",
+    "Deep S wave in lead I; Q wave and inverted T wave in lead III",
+    "Others to look for: right axis, RBBB, T inversion in V1–V4"
+   ],
+   "manage": [
+    "CT pulmonary angiography (or bedside echo if too unstable to move)",
+    "Anticoagulate; thrombolysis if shocked (massive PE)"
+   ],
+   "pearl": "S1Q3T3 is specific but not sensitive: a normal ECG never rules out PE.",
+   "src": "LITFL pulmonary embolism ECG; WikEM ECGs by diagnosis"
+  },
+  {
+   "id": "lbbb",
+   "cat": "Conduction",
+   "hook": "Pre-op ECG, aortic stenosis",
+   "vignette": "Pre-op ECG of a 70-year-old with moderate aortic stenosis, listed for a hemicolectomy. No chest pain. Leads V1 and V6:",
+   "q": "What is the conduction abnormality?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "V1",
+     "r": "sinus",
+     "rate": 72,
+     "shape": "rS",
+     "S": 1.5,
+     "qrs": 150,
+     "st": 0.12,
+     "t": 0.35
+    },
+    {
+     "n": "V6",
+     "r": "sinus",
+     "rate": 72,
+     "shape": "mR",
+     "R": 1.0,
+     "qrs": 150,
+     "st": -0.1,
+     "t": -0.3
+    }
+   ],
+   "title": "Left bundle branch block",
+   "findings": [
+    "QRS ≥ 120 ms",
+    "Deep S (rS or QS) in V1",
+    "Broad, notched (M-shaped) R in V6 with no Q wave",
+    "ST–T changes point the opposite way to the QRS (appropriate discordance)"
+   ],
+   "manage": [
+    "Compare with old ECGs: known LBBB with no symptoms needs no action",
+    "New LBBB, or with chest pain: think ischaemia and get an echo",
+    "LBBB makes ST changes hard to read during surgery"
+   ],
+   "pearl": "A pulmonary artery catheter can bruise the right bundle; with an existing LBBB that can cause complete heart block, so have pacing ready.",
+   "src": "LITFL LBBB; MSD Manual bundle branch block"
+  },
+  {
+   "id": "rbbb",
+   "cat": "Conduction",
+   "hook": "Incidental pre-op finding",
+   "vignette": "Pre-op ECG of a fit 45-year-old for a lap cholecystectomy. Leads V1 and I:",
+   "q": "What does this show?",
+   "dur": 4000,
+   "leads": [
+    {
+     "n": "V1",
+     "r": "sinus",
+     "rate": 70,
+     "shape": "rsr",
+     "rp": 0.9,
+     "S": 0.5,
+     "qrs": 135,
+     "t": -0.2
+    },
+    {
+     "n": "I",
+     "r": "sinus",
+     "rate": 70,
+     "shape": "Rsw",
+     "R": 0.9,
+     "S": 0.4,
+     "qrs": 135,
+     "t": 0.2
+    }
+   ],
+   "title": "Right bundle branch block",
+   "findings": [
+    "QRS ≥ 120 ms",
+    "rsR' ('M') pattern in V1",
+    "Wide, slurred S wave in I and V6"
+   ],
+   "manage": [
+    "Isolated RBBB in a well person: usually benign, proceed",
+    "A new RBBB with symptoms: think of PE or anterior ischaemia"
+   ],
+   "pearl": "RBBB: the M is in V1. LBBB: the M is in V6.",
+   "src": "MSD Manual bundle branch block; 2-Minute Medicine BBB criteria"
+  },
+  {
+   "id": "paced",
+   "cat": "Devices",
+   "hook": "Pacemaker patient for a TURP",
+   "vignette": "An 82-year-old with a pacemaker for complete heart block is listed for a TURP with monopolar diathermy. Lead II:",
+   "q": "What is the rhythm, and what do you plan for the diathermy?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "paced",
+     "rate": 70,
+     "qrs": 150,
+     "shape": "vt",
+     "R": 1.2,
+     "S": 0.25,
+     "t": -0.35
+    }
+   ],
+   "title": "Ventricular paced rhythm",
+   "findings": [
+    "A sharp pacing spike before every QRS",
+    "Broad QRS (right ventricular pacing looks like an LBBB)",
+    "Regular at the programmed rate (70/min)"
+   ],
+   "manage": [
+    "Before surgery: know the device type, why it was put in, and whether she is pacing-dependent; get a device check",
+    "Use bipolar diathermy if possible, or short bursts with the return pad placed so current flows away from the device",
+    "Watch the pulse oximeter or arterial line: diathermy can make the ECG unreadable",
+    "A magnet usually gives fixed-rate pacing in pacemakers, but the response varies by model; ICDs need shocks turned off"
+   ],
+   "pearl": "She has complete heart block underneath: if diathermy inhibits the pacemaker, she may have no rhythm at all.",
+   "src": "British Heart Rhythm Society CIED guideline (Anaesthesia 2022); NHS GGC perioperative CIED guideline"
+  },
+  {
+   "id": "hypotherm",
+   "cat": "Other",
+   "hook": "Cold after a long AAA repair",
+   "vignette": "After a 6-hour open AAA repair, a 70-year-old arrives in ICU with a core temperature of 31.5 °C. Lead II:",
+   "q": "Name the extra wave and what it tells you.",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "sinus",
+     "rate": 46,
+     "pr": 220,
+     "qrs": 110,
+     "j": 0.38,
+     "qt": 540,
+     "tw": 55,
+     "shiver": true
+    }
+   ],
+   "title": "Hypothermia: sinus bradycardia with Osborn (J) waves",
+   "findings": [
+    "Sinus bradycardia",
+    "A positive hump at the J point: the Osborn wave",
+    "Long PR, QRS and QT; fuzzy baseline from shivering"
+   ],
+   "manage": [
+    "Active rewarming (forced air, warm fluids)",
+    "Handle gently: a cold heart is prone to VF",
+    "Drugs and relaxants last longer; check K⁺ and glucose as you warm"
+   ],
+   "pearl": "The size of the Osborn wave roughly follows how cold the patient is.",
+   "src": "LITFL hypothermia; LITFL Osborn wave"
+  },
+  {
+   "id": "junctional",
+   "cat": "Bradyarrhythmia",
+   "hook": "P waves vanish under sevoflurane",
+   "vignette": "A healthy 30-year-old under GA with sevoflurane for a laparoscopic hernia repair. HR falls from 72 to 52 and the P waves seem to vanish. BP 104/62. Lead II:",
+   "q": "What is the rhythm?",
+   "dur": 6000,
+   "leads": [
+    {
+     "n": "II",
+     "r": "junc",
+     "rate": 52,
+     "retro": true
+    }
+   ],
+   "title": "Junctional (nodal) rhythm",
+   "findings": [
+    "Regular, narrow QRS at 40–60/min",
+    "No P wave before the QRS; a small inverted (retrograde) P wave just after it"
+   ],
+   "manage": [
+    "Usually harmless under volatile anaesthesia",
+    "If BP falls (loss of the atrial kick): lighten the volatile, give an anticholinergic"
+   ],
+   "pearl": "Junctional rhythm loses the atrial kick, which matters most in a stiff heart (aortic stenosis, LVH).",
+   "src": "LITFL junctional rhythms"
+  }
+ ]
+}
