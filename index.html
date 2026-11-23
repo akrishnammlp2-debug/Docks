@@ -1861,6 +1861,11 @@ body{background:var(--bg)!important}
 .drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(247,228,228,0) 50%,rgba(247,228,228,.95))!important}
 .drawer .prof.tinted .prof-l,.hab-e{background:#F0D6DA!important}
 #sheet .link,#sheet .link.strong{color:#5A2F7A!important}
+.drawer{background:var(--bg)!important;border-right:1px solid var(--line)!important}
+.prof .av{background:#E0647A!important;color:#FFFFFF!important}
+.drawer .prof.tinted.none>.prof-bg{background:radial-gradient(circle at 20% 20%,#E9C4E4,transparent 60%),radial-gradient(circle at 85% 30%,#FDCDB8,transparent 55%),radial-gradient(circle at 60% 90%,#D6CCF2,transparent 60%),#FBF1EE!important}
+.prof .btn.ghost,.drawer .prof.tinted .btn.ghost{color:#6B3F8F!important}
+.dump-add{background:#6B3F8F!important;color:#FFFFFF!important}
 @media (prefers-color-scheme:dark){
   :root{
     --bg:#160F1E;--surface:#231931;--surface-2:#2C2040;--blk:#231931;--blk-2:#2C2040;--line:#3B2D52;--sep:rgba(244,234,240,.12);--bar:rgba(22,15,30,.88);
@@ -1896,6 +1901,11 @@ body{background:var(--bg)!important}
   .ring circle:first-child{stroke:rgba(244,234,240,.18)}
   #page a,#page .link{color:var(--accent-t)!important}
   #page .dc.sel.today .n{color:#160F1E!important}
+  .drawer{background:#160F1E!important;border-right-color:rgba(244,234,240,.08)!important}
+  .prof .av{background:#F2A6BE!important;color:#160F1E!important}
+  .drawer .prof.tinted.none>.prof-bg{background:radial-gradient(circle at 20% 20%,#5A3A7E,transparent 60%),radial-gradient(circle at 85% 30%,#8A3E5C,transparent 55%),radial-gradient(circle at 60% 90%,#3F2A6E,transparent 60%),#231931!important}
+  .prof .btn.ghost,.drawer .prof.tinted .btn.ghost{color:#F4EAF0!important}
+  .dump-add{background:#F2A6BE!important;color:#160F1E!important}
   .btn:not(.ghost):not(.danger),.btn:not(.ghost):not(.danger) *,.btn.danger{color:#160F1E!important}
 }
 </style>
@@ -1926,7 +1936,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.76 · Sunset';
+const APP_VERSION = '5.77 · Sunset';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
