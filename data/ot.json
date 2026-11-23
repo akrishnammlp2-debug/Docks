@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19",
+ "updated": "2026-11-23",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -221,6 +221,106 @@
    "procedure": "Colonoscopy",
    "unit": "GEC002",
    "status": "Pending"
+  },
+  {
+   "id": "2026-11-24-01",
+   "date": "2026-11-24",
+   "order": 1,
+   "time": "06:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Arthroscopic anterior cruciate ligament reconstruction",
+   "unit": "ORT002",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-02",
+   "date": "2026-11-24",
+   "order": 2,
+   "time": "10:30",
+   "ot": "KHSB-OR1",
+   "procedure": "ORIF under GA",
+   "unit": "OSUR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-03",
+   "date": "2026-11-24",
+   "order": 3,
+   "time": "14:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Hernioplasty, inguinal/femoral (unilateral)",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-04",
+   "date": "2026-11-24",
+   "order": 4,
+   "time": "08:30",
+   "ot": "KHSB-OR2",
+   "procedure": "Rotator cuff repair",
+   "unit": "ORT005",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-05",
+   "date": "2026-11-24",
+   "order": 5,
+   "time": "13:00",
+   "ot": "KHSB-OR2",
+   "procedure": "Lumpectomy",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-06",
+   "date": "2026-11-24",
+   "order": 6,
+   "time": "09:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Functional endoscopic sinus surgery (FESS)",
+   "unit": "ENT001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-07",
+   "date": "2026-11-24",
+   "order": 7,
+   "time": "11:30",
+   "ot": "KHSB-OR3",
+   "procedure": "Myringoplasty",
+   "unit": "ENT001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-08",
+   "date": "2026-11-24",
+   "order": 8,
+   "time": "09:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Exploratory laparotomy",
+   "unit": "GYN003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-09",
+   "date": "2026-11-24",
+   "order": 9,
+   "time": "14:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Haemorrhoidectomy",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-24-10",
+   "date": "2026-11-24",
+   "order": 10,
+   "time": "09:00",
+   "ot": "khsbcathLab",
+   "procedure": "Embolization (interventional radiology)",
+   "unit": "RADIVR",
+   "status": "Approved"
   }
  ]
 }
