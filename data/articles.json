@@ -1,58 +1,71 @@
 {
-  "updated": "2026-11-23",
-  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
-  "items": [
-    {
-      "id": "34992797",
-      "added": "2026-11-23",
-      "topic": "opioid receptors",
-      "title": "Drug-receptor interactions in anaesthesia.",
-      "journal": "BJA Educ",
-      "year": 2022,
-      "type": "Review",
-      "why": "Leicester opioid-receptor group explaining receptor types, GPCR signalling, agonists, partial agonists and antagonists, with opioid examples.",
-      "doi": "10.1016/j.bjae.2021.07.009",
-      "pmid": "34992797",
-      "url": "https://doi.org/10.1016/j.bjae.2021.07.009"
-    },
-    {
-      "id": "28970630",
-      "added": "2026-11-23",
-      "topic": "preload in MS",
-      "title": "Valvular heart disease and anaesthesia.",
-      "journal": "Indian J Anaesth",
-      "year": 2017,
-      "type": "Review",
-      "why": "Haemodynamic goals for each valve lesion, including why filling, rate and rhythm matter so much in mitral stenosis.",
-      "doi": "10.4103/ija.IJA_378_17",
-      "pmid": "28970630",
-      "url": "https://doi.org/10.4103/ija.IJA_378_17"
-    },
-    {
-      "id": "36855721",
-      "added": "2026-11-23",
-      "topic": "permcath",
-      "title": "Tunneled Hemodialysis Catheter Insertion: Technical and Clinical Considerations",
-      "journal": "Indian J Radiol Imaging",
-      "year": 2023,
-      "type": "Review",
-      "why": "Short primer on when to choose a tunnelled vs non-tunnelled dialysis line, site choice, tip position and complications.",
-      "doi": "10.1055/s-0042-1758877",
-      "pmid": "36855721",
-      "url": "https://doi.org/10.1055/s-0042-1758877"
-    },
-    {
-      "id": "34878131",
-      "added": "2026-11-21",
-      "topic": "mitral stenosis",
-      "title": "Management of mitral stenosis: a systematic review of clinical practice guidelines and recommendations",
-      "journal": "Eur Heart J Qual Care Clin Outcomes",
-      "year": 2022,
-      "type": "Review",
-      "why": "Side-by-side summary of the major guidelines: when to use balloon valvotomy, when to send for surgery, and medical/antibiotic therapy.",
-      "doi": "10.1093/ehjqcco/qcab083",
-      "pmid": "34878131",
-      "url": "https://doi.org/10.1093/ehjqcco/qcab083"
-    }
-  ]
+ "updated": "2026-11-23",
+ "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
+ "items": [
+  {
+   "id": "11412159",
+   "added": "2026-11-23",
+   "topic": "tourniquet",
+   "title": "The arterial tourniquet: pathophysiological consequences and anaesthetic implications.",
+   "journal": "Anaesthesia",
+   "year": 2001,
+   "type": "Review",
+   "why": "Classic anaesthesia review of local and systemic effects of inflation and deflation, tourniquet pain and safe use.",
+   "doi": "10.1046/j.1365-2044.2001.01982.x",
+   "pmid": "11412159",
+   "url": "https://doi.org/10.1046/j.1365-2044.2001.01982.x"
+  },
+  {
+   "id": "34992797",
+   "added": "2026-11-23",
+   "topic": "opioid receptors",
+   "title": "Drug-receptor interactions in anaesthesia.",
+   "journal": "BJA Educ",
+   "year": 2022,
+   "type": "Review",
+   "why": "Leicester opioid-receptor group explaining receptor types, GPCR signalling, agonists, partial agonists and antagonists, with opioid examples.",
+   "doi": "10.1016/j.bjae.2021.07.009",
+   "pmid": "34992797",
+   "url": "https://doi.org/10.1016/j.bjae.2021.07.009"
+  },
+  {
+   "id": "28970630",
+   "added": "2026-11-23",
+   "topic": "preload in MS",
+   "title": "Valvular heart disease and anaesthesia.",
+   "journal": "Indian J Anaesth",
+   "year": 2017,
+   "type": "Review",
+   "why": "Haemodynamic goals for each valve lesion, including why filling, rate and rhythm matter so much in mitral stenosis.",
+   "doi": "10.4103/ija.IJA_378_17",
+   "pmid": "28970630",
+   "url": "https://doi.org/10.4103/ija.IJA_378_17"
+  },
+  {
+   "id": "36855721",
+   "added": "2026-11-23",
+   "topic": "permcath",
+   "title": "Tunneled Hemodialysis Catheter Insertion: Technical and Clinical Considerations",
+   "journal": "Indian J Radiol Imaging",
+   "year": 2023,
+   "type": "Review",
+   "why": "Short primer on when to choose a tunnelled vs non-tunnelled dialysis line, site choice, tip position and complications.",
+   "doi": "10.1055/s-0042-1758877",
+   "pmid": "36855721",
+   "url": "https://doi.org/10.1055/s-0042-1758877"
+  },
+  {
+   "id": "34878131",
+   "added": "2026-11-21",
+   "topic": "mitral stenosis",
+   "title": "Management of mitral stenosis: a systematic review of clinical practice guidelines and recommendations",
+   "journal": "Eur Heart J Qual Care Clin Outcomes",
+   "year": 2022,
+   "type": "Review",
+   "why": "Side-by-side summary of the major guidelines: when to use balloon valvotomy, when to send for surgery, and medical/antibiotic therapy.",
+   "doi": "10.1093/ehjqcco/qcab083",
+   "pmid": "34878131",
+   "url": "https://doi.org/10.1093/ehjqcco/qcab083"
+  }
+ ]
 }
