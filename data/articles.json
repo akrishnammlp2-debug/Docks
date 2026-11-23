@@ -3,6 +3,19 @@
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
   {
+   "id": "30165617",
+   "added": "2026-11-23",
+   "topic": "ECG criteria for MI",
+   "title": "Fourth universal definition of myocardial infarction (2018).",
+   "journal": "Eur Heart J",
+   "year": 2019,
+   "type": "Guideline",
+   "why": "The source of the current ST elevation, ST depression and pathological Q-wave cut-offs used to call an MI on the ECG.",
+   "doi": "10.1093/eurheartj/ehy462",
+   "pmid": "30165617",
+   "url": "https://doi.org/10.1093/eurheartj/ehy462"
+  },
+  {
    "id": "11412159",
    "added": "2026-11-23",
    "topic": "tourniquet",

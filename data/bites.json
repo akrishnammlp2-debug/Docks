@@ -10,6 +10,7 @@
   "Obstetric",
   "Paediatric",
   "Cardiac",
+  "ECG",
   "Neuro",
   "ICU",
   "Monitoring & equipment",
@@ -1744,6 +1745,1135 @@
     {
      "title": "BOAST: The safe use of intraoperative tourniquets (BOA, 2021)",
      "url": "https://www.boa.ac.uk/resource/boast-the-safe-use-of-intraoperative-tourniquets.html"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-normal-values",
+   "cat": "ECG",
+   "title": "ECG normal values, intervals & QTc",
+   "aliases": [
+    "ECG intervals",
+    "PR interval",
+    "QRS duration",
+    "QT",
+    "QTc",
+    "Bazett",
+    "ECG paper",
+    "heart rate from ECG"
+   ],
+   "summary": "The numbers every ECG reading starts with: paper speed, box sizes, and the normal PR, QRS and QT. Most criteria in the other ECG notes are just these numbers pushed out of range.",
+   "sections": [
+    {
+     "h": "The paper",
+     "rows": [
+      [
+       "Small box",
+       "1 mm = 40 ms across, 0.1 mV up (at 25 mm/s and 10 mm/mV)"
+      ],
+      [
+       "Large box",
+       "5 mm = 200 ms, 0.5 mV"
+      ],
+      [
+       "Rate (regular)",
+       "300 ÷ large boxes between two R waves (or 1500 ÷ small boxes)"
+      ],
+      [
+       "Rate (irregular)",
+       "QRS count on a 10 s strip × 6"
+      ]
+     ]
+    },
+    {
+     "h": "Normal intervals",
+     "rows": [
+      [
+       "PR",
+       "120–200 ms. Short (< 120): pre-excitation (WPW). Long (> 200): first-degree AV block"
+      ],
+      [
+       "QRS",
+       "60–100 ms. 100–120: incomplete BBB / non-specific delay. ≥ 120: complete BBB, VT, hyperkalaemia, paced"
+      ],
+      [
+       "QTc",
+       "Abnormal above 440 ms in men and 460 ms in women (ESC cut-offs)"
+      ],
+      [
+       "Sinus rhythm",
+       "P before every QRS; P upright in I and II, negative in aVR"
+      ]
+     ]
+    },
+    {
+     "h": "Correcting the QT",
+     "items": [
+      "Bazett: QTc = QT ÷ √(RR in seconds)",
+      "Bazett over-corrects at fast rates and under-corrects at slow rates",
+      "Measure QT in II or V5, from QRS onset to the end of the T wave; leave out a separate U wave"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Count PR in small boxes: more than 5 = first-degree block; fewer than 3 = short PR",
+      "QRS of 3 small boxes or more = broad",
+      "Long QT + bradycardia + low K⁺/Mg²⁺ + QT drugs = torsades risk under anaesthesia"
+     ]
+    }
+   ],
+   "pearl": "Five small boxes = one large box = 200 ms = 1 second ÷ 5.",
+   "refs": [
+    {
+     "title": "Vanderbilt VIM book: approach to the ECG",
+     "url": "https://vimbook.vumc.org/cardiology/approach-ecg"
+    },
+    {
+     "title": "Sharma S et al. Refined criteria for ECG interpretation in athletes (Heart 2015, table 1)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4345900/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-axis",
+   "cat": "ECG",
+   "title": "ECG axis & fascicular blocks (LAFB, LPFB)",
+   "aliases": [
+    "axis",
+    "left axis deviation",
+    "LAD",
+    "right axis deviation",
+    "RAD",
+    "northwest axis",
+    "hemiblock",
+    "LAFB",
+    "LPFB",
+    "bifascicular block"
+   ],
+   "summary": "Axis is the overall direction of ventricular depolarisation in the frontal plane. Normally it points down and to the left because the left ventricle dominates. A shifted axis is a clue to hypertrophy, a fascicular block, an infarct or a ventricular rhythm.",
+   "sections": [
+    {
+     "h": "Ranges",
+     "rows": [
+      [
+       "Normal",
+       "−30° to +90°"
+      ],
+      [
+       "Left axis deviation",
+       "−30° to −90°"
+      ],
+      [
+       "Right axis deviation",
+       "+90° to +180°"
+      ],
+      [
+       "Extreme (northwest)",
+       "−90° to 180°: think VT, lead reversal"
+      ]
+     ]
+    },
+    {
+     "h": "Quick method (I, II, aVF)",
+     "rows": [
+      [
+       "I + and aVF +",
+       "Normal (0 to +90°)"
+      ],
+      [
+       "I +, aVF −, II +",
+       "Still normal (0 to −30°)"
+      ],
+      [
+       "I +, aVF −, II −",
+       "Left axis deviation"
+      ],
+      [
+       "I −, aVF +",
+       "Right axis deviation"
+      ],
+      [
+       "I − and aVF −",
+       "Extreme axis"
+      ],
+      [
+       "Fine-tune",
+       "Find the most isoelectric lead: the axis is 90° from it"
+      ]
+     ]
+    },
+    {
+     "h": "Causes",
+     "rows": [
+      [
+       "Left axis",
+       "LAFB, LBBB, LVH, inferior MI, paced rhythm, ventricular ectopy, WPW"
+      ],
+      [
+       "Right axis",
+       "RVH (pulmonary hypertension, PE, cor pulmonale), LPFB, lateral MI, normal in tall thin young people and children"
+      ]
+     ]
+    },
+    {
+     "h": "LAFB criteria",
+     "items": [
+      "Left axis, usually −45° to −90°",
+      "qR in I and aVL; rS in II, III and aVF",
+      "R-wave peak time in aVL ≥ 45 ms",
+      "QRS < 120 ms (it is not a bundle branch block)"
+     ]
+    },
+    {
+     "h": "LPFB criteria",
+     "items": [
+      "Right axis (+90° to +180°)",
+      "rS in I and aVL; qR in II, III and aVF",
+      "QRS < 120 ms",
+      "Diagnosis of exclusion: rule out RVH, PE, lateral MI first"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Bifascicular block = RBBB + LAFB (or LPFB)",
+      "LPFB is rare because the posterior fascicle is broad and has a double blood supply",
+      "Axis in a newborn is to the right and moves left with age"
+     ]
+    }
+   ],
+   "pearl": "Lead I and aVF both up = normal. Thumbs pointing away from each other = LAD; towards each other = RAD.",
+   "refs": [
+    {
+     "title": "LITFL: ECG axis interpretation",
+     "url": "https://litfl.com/ecg-axis-interpretation/"
+    },
+    {
+     "title": "LITFL: Left anterior fascicular block",
+     "url": "https://litfl.com/left-anterior-fascicular-block-lafb-ecg-library/"
+    },
+    {
+     "title": "LITFL: Left posterior fascicular block",
+     "url": "https://litfl.com/left-posterior-fascicular-block-lpfb-ecg-library/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-lvh",
+   "cat": "ECG",
+   "title": "LVH criteria on ECG (Sokolow-Lyon, Cornell, Romhilt-Estes, Peguero)",
+   "aliases": [
+    "LVH",
+    "left ventricular hypertrophy",
+    "Sokolow-Lyon",
+    "Sokolow Lyon",
+    "Cornell voltage",
+    "Cornell product",
+    "Romhilt-Estes",
+    "Romhilt Estes",
+    "Peguero-Lo Presti",
+    "LV strain"
+   ],
+   "summary": "There is no single accepted ECG definition of LVH. Voltage criteria are specific but miss many cases (low sensitivity), so a normal ECG does not rule LVH out; echo does. Know two or three named criteria and the strain pattern.",
+   "sections": [
+    {
+     "h": "Voltage criteria",
+     "rows": [
+      [
+       "Sokolow-Lyon (1949)",
+       "S in V1 + tallest R in V5 or V6 ≥ 35 mm. Also R in aVL ≥ 11 mm"
+      ],
+      [
+       "Cornell voltage (1987)",
+       "R in aVL + S in V3 > 28 mm (men), > 20 mm (women)"
+      ],
+      [
+       "Cornell product (1992)",
+       "(R aVL + S V3, add 8 mm in women) × QRS duration > 2440 mm·ms"
+      ],
+      [
+       "Peguero-Lo Presti (2017)",
+       "Deepest S in any lead + S in V4 ≥ 28 mm (men), ≥ 23 mm (women)"
+      ],
+      [
+       "Limb lead",
+       "R in I + S in III > 25 mm"
+      ]
+     ]
+    },
+    {
+     "h": "Romhilt-Estes points (≥ 5 definite, 4 probable)",
+     "rows": [
+      [
+       "3 points",
+       "Voltage: R or S ≥ 20 mm in any limb lead, or S in V1/V2 ≥ 30 mm, or R in V5/V6 ≥ 30 mm"
+      ],
+      [
+       "3 points (1 if on digoxin)",
+       "ST–T changes of LV strain"
+      ],
+      [
+       "3 points",
+       "Left atrial enlargement: P terminal force in V1 ≥ 1 mm deep and ≥ 40 ms"
+      ],
+      [
+       "2 points",
+       "Left axis deviation (≤ −30°)"
+      ],
+      [
+       "1 point",
+       "QRS ≥ 90 ms"
+      ],
+      [
+       "1 point",
+       "Intrinsicoid deflection (R-peak time) in V5/V6 ≥ 50 ms"
+      ]
+     ]
+    },
+    {
+     "h": "How good are they?",
+     "items": [
+      "Sokolow-Lyon: most specific, least sensitive (picks up roughly a quarter of echo LVH)",
+      "Peguero-Lo Presti: the most sensitive in recent studies, with similar specificity",
+      "Voltage is higher in thin young people (false positive) and lower in obesity, COPD, effusion (false negative)"
+     ]
+    },
+    {
+     "h": "LV strain pattern",
+     "items": [
+      "Downsloping ST depression with asymmetric T inversion in the lateral leads (I, aVL, V5–V6)",
+      "Means long-standing pressure load: aortic stenosis, hypertension, HOCM"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Name one specific (Sokolow-Lyon) and one sex-specific (Cornell) criterion",
+      "LVH + strain in a patient for surgery: think aortic stenosis, check for a murmur and get an echo",
+      "LVH changes make ST depression hard to read for ischaemia during surgery"
+     ]
+    }
+   ],
+   "pearl": "Sokolow-Lyon 35, Cornell 28/20, Romhilt-Estes 5 points.",
+   "refs": [
+    {
+     "title": "LITFL: ECG criteria for left ventricular hypertrophy",
+     "url": "https://litfl.com/ecg-criteria-for-left-ventricular-hypertrophy/"
+    },
+    {
+     "title": "MSD Manual: criteria for ECG diagnosis of LVH (Romhilt-Estes table)",
+     "url": "https://www.msdmanuals.com/professional/multimedia/table/criteria-for-ecg-diagnosis-of-left-ventricular-hypertrophy"
+    },
+    {
+     "title": "Peguero-Lo Presti criteria: systematic review and meta-analysis",
+     "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7846009/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-rvh",
+   "cat": "ECG",
+   "title": "RVH criteria on ECG",
+   "aliases": [
+    "RVH",
+    "right ventricular hypertrophy",
+    "RV strain",
+    "cor pulmonale ECG",
+    "dominant R in V1",
+    "tall R V1"
+   ],
+   "summary": "The left ventricle normally dominates the ECG, so the right ventricle has to be quite thick before the ECG shows it. RVH is suggested by a right axis, a dominant R in V1 and deep S waves on the left, with a normal QRS width.",
+   "sections": [
+    {
+     "h": "Diagnostic criteria",
+     "items": [
+      "Right axis deviation of +110° or more",
+      "Dominant R in V1: R > 7 mm, or R/S ratio > 1",
+      "Dominant S in V5 or V6: S > 7 mm, or R/S ratio < 1",
+      "QRS < 120 ms (so the changes are not just RBBB)",
+      "Voltage sum: R in V1 + S in V5 or V6 ≥ 10.5 mm (ESC athlete criteria)"
+     ]
+    },
+    {
+     "h": "Supporting signs",
+     "items": [
+      "Right atrial enlargement (P pulmonale)",
+      "RV strain: ST depression / T inversion in V1–V4 and II, III, aVF",
+      "S1 S2 S3 pattern (deep S in I, II and III)",
+      "Incomplete or complete RBBB"
+     ]
+    },
+    {
+     "h": "Causes",
+     "items": [
+      "Pulmonary hypertension, mitral stenosis, chronic lung disease (cor pulmonale)",
+      "Pulmonary embolism (acute strain)",
+      "Congenital: tetralogy of Fallot, pulmonary stenosis",
+      "ARVC"
+     ]
+    },
+    {
+     "h": "Other causes of a tall R in V1",
+     "items": [
+      "Posterior MI",
+      "RBBB",
+      "WPW type A (left-sided pathway)",
+      "Normal in children and young adults",
+      "V1 lead placed too high, dextrocardia, HOCM"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "RVH + P pulmonale in a pre-op patient: think pulmonary hypertension; it raises anaesthetic risk (avoid hypoxia, hypercapnia, acidosis that raise PVR)",
+      "There are no agreed RVH criteria once RBBB is present"
+     ]
+    }
+   ],
+   "pearl": "Tall R in V1? Run the list: RVH, RBBB, posterior MI, WPW type A, young age, lead placement.",
+   "refs": [
+    {
+     "title": "LITFL: Right ventricular hypertrophy",
+     "url": "https://litfl.com/right-ventricular-hypertrophy-rvh-ecg-library"
+    },
+    {
+     "title": "Sharma S et al. Refined ECG criteria in athletes (Heart 2015, table 1)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4345900/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-atrial-enlargement",
+   "cat": "ECG",
+   "title": "Atrial enlargement on ECG (P pulmonale, P mitrale)",
+   "aliases": [
+    "P pulmonale",
+    "P mitrale",
+    "left atrial enlargement",
+    "right atrial enlargement",
+    "LAE",
+    "RAE",
+    "P terminal force",
+    "biatrial enlargement"
+   ],
+   "summary": "The P wave is the right atrium first, then the left. A right atrium that is big makes the P tall; a left atrium that is big makes the P long and notched, with a deep negative end in V1. The criteria are specific but not very sensitive.",
+   "sections": [
+    {
+     "h": "Right atrial enlargement",
+     "items": [
+      "P wave > 2.5 mm tall in II (and/or > 1.5 mm in V1): P pulmonale",
+      "Causes: pulmonary hypertension, cor pulmonale, tricuspid stenosis, congenital heart disease"
+     ]
+    },
+    {
+     "h": "Left atrial enlargement",
+     "items": [
+      "P wave ≥ 120 ms in lead II",
+      "Notched (bifid) P with ≥ 40 ms between the peaks: P mitrale",
+      "Terminal negative part of P in V1 ≥ 1 mm deep and ≥ 40 ms long (P terminal force)",
+      "Causes: mitral stenosis or regurgitation, LVH, hypertension"
+     ]
+    },
+    {
+     "h": "Biatrial enlargement",
+     "items": [
+      "Features of both: tall (> 2.5 mm) and long (≥ 120 ms) P in II",
+      "Or a large biphasic P in V1 with tall start and deep end"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "P mitrale + AF risk: mitral stenosis patients often move into AF; plan rate control",
+      "LA enlargement scores 3 points in Romhilt-Estes for LVH"
+     ]
+    }
+   ],
+   "pearl": "Pulmonale = tall (> 2.5 mm); mitrale = long and notched (≥ 120 ms).",
+   "refs": [
+    {
+     "title": "University of Utah ECG tutorial: atrial enlargement",
+     "url": "https://ecg.utah.edu/lesson/7"
+    },
+    {
+     "title": "MSD Manual: electrocardiography",
+     "url": "https://www.msdmanuals.com/professional/cardiovascular-disorders/cardiovascular-tests-and-procedures/electrocardiography-ecg"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-stemi-criteria",
+   "cat": "ECG",
+   "title": "STEMI & ischaemia criteria (4th Universal Definition), Q waves, territories",
+   "aliases": [
+    "STEMI criteria",
+    "ST elevation criteria",
+    "MI criteria",
+    "universal definition of MI",
+    "UDMI",
+    "pathological Q wave",
+    "ST depression criteria",
+    "territories",
+    "posterior leads",
+    "V7 V8 V9"
+   ],
+   "summary": "The Fourth Universal Definition of MI (2018) gives the ECG cut-offs for acute ischaemia and old infarction. ST elevation must be new, at the J point, and in two contiguous leads, with higher cut-offs in V2–V3 because healthy young men often have some elevation there.",
+   "sections": [
+    {
+     "h": "ST elevation (new, at J point, 2 contiguous leads)",
+     "rows": [
+      [
+       "All leads except V2–V3",
+       "≥ 1 mm"
+      ],
+      [
+       "V2–V3, men ≥ 40 y",
+       "≥ 2 mm"
+      ],
+      [
+       "V2–V3, men < 40 y",
+       "≥ 2.5 mm"
+      ],
+      [
+       "V2–V3, women (any age)",
+       "≥ 1.5 mm"
+      ],
+      [
+       "Posterior V7–V9",
+       "≥ 0.5 mm (≥ 1 mm in men < 40 y)"
+      ]
+     ]
+    },
+    {
+     "h": "ST depression and T changes",
+     "items": [
+      "New horizontal or downsloping ST depression ≥ 0.5 mm in 2 contiguous leads",
+      "and/or T inversion > 1 mm in 2 contiguous leads with a prominent R or R/S > 1",
+      "ST depression in V1–V4 should make you think of posterior STEMI"
+     ]
+    },
+    {
+     "h": "Pathological Q waves (old MI; no LVH or LBBB)",
+     "items": [
+      "Any Q in V2–V3 > 20 ms, or a QS complex in V2–V3",
+      "Q ≥ 30 ms and ≥ 1 mm deep (or QS) in 2 contiguous leads of I, aVL / II, III, aVF / V4–V6",
+      "R > 40 ms in V1–V2 with R/S > 1 and an upright T (posterior Q equivalent)",
+      "A Q in lead III alone is often normal if II and aVF have none"
+     ]
+    },
+    {
+     "h": "Territories",
+     "rows": [
+      [
+       "Inferior (II, III, aVF)",
+       "RCA (III > II) or circumflex; check V4R for RV infarct"
+      ],
+      [
+       "Septal (V1–V2) / anterior (V3–V4)",
+       "LAD"
+      ],
+      [
+       "Lateral (I, aVL, V5–V6)",
+       "Circumflex or diagonal"
+      ],
+      [
+       "Posterior (ST depression V1–V3, tall R)",
+       "Circumflex or RCA; confirm with V7–V9"
+      ],
+      [
+       "aVR elevation + widespread ST depression",
+       "Left main or triple-vessel disease / diffuse subendocardial ischaemia"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Look for reciprocal ST depression: it makes true STEMI much more likely than pericarditis or early repolarisation",
+      "MI needs troponin rise/fall plus symptoms, ECG change, new Q waves, imaging or angiographic evidence",
+      "Perioperative MI is often silent: troponin surveillance in high-risk patients"
+     ]
+    }
+   ],
+   "pearl": "V2–V3 cut-offs: 2 mm men ≥ 40, 2.5 mm men < 40, 1.5 mm women. Everywhere else 1 mm.",
+   "refs": [
+    {
+     "title": "Thygesen K et al. Fourth universal definition of myocardial infarction (2018). Eur Heart J 2019",
+     "url": "https://doi.org/10.1093/eurheartj/ehy462"
+    },
+    {
+     "title": "Kashou AH et al. ECG manifestations of acute myocardial ischaemia (J Electrocardiol 2021, table 1)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8665024/"
+    },
+    {
+     "title": "ECGpedia: pathologic Q waves",
+     "url": "https://en.ecgpedia.org/wiki/Q_wave"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-stemi-equivalents",
+   "cat": "ECG",
+   "title": "STEMI equivalents: Sgarbossa, Smith-modified Sgarbossa, de Winter, Wellens, posterior MI",
+   "aliases": [
+    "Sgarbossa",
+    "Smith modified Sgarbossa",
+    "modified Sgarbossa",
+    "LBBB MI",
+    "paced rhythm MI",
+    "de Winter",
+    "Wellens",
+    "Wellens syndrome",
+    "STEMI equivalent",
+    "OMI",
+    "posterior MI",
+    "left main aVR"
+   ],
+   "summary": "Some coronary occlusions do not meet the usual ST elevation rules: infarction hidden by LBBB or pacing, de Winter T waves, posterior MI and Wellens pattern. Recognising them gets the patient to the cath lab.",
+   "sections": [
+    {
+     "h": "Sgarbossa (LBBB or V-paced), score ≥ 3",
+     "rows": [
+      [
+       "5 points",
+       "Concordant ST elevation ≥ 1 mm in a lead with a positive QRS"
+      ],
+      [
+       "3 points",
+       "Concordant ST depression ≥ 1 mm in V1, V2 or V3"
+      ],
+      [
+       "2 points",
+       "Excessively discordant ST elevation ≥ 5 mm in a lead with a negative QRS"
+      ],
+      [
+       "Performance",
+       "≥ 3 points: very specific (about 90–98%) but insensitive"
+      ]
+     ]
+    },
+    {
+     "h": "Smith-modified Sgarbossa (any one = positive)",
+     "items": [
+      "Concordant ST elevation ≥ 1 mm in ≥ 1 lead",
+      "Concordant ST depression ≥ 1 mm in ≥ 1 of V1–V3",
+      "Proportionally excessive discordant ST elevation: ST elevation ≥ 1 mm that is ≥ 25% of the depth of the preceding S wave (ST/S ratio ≤ −0.25)",
+      "Replaces the arbitrary 5 mm rule; raises sensitivity a lot with a small fall in specificity"
+     ]
+    },
+    {
+     "h": "Posterior MI",
+     "items": [
+      "Horizontal ST depression in V1–V3",
+      "Tall, broad R (> 30 ms) with R/S > 1 in V2",
+      "Upright T waves",
+      "Confirm: ST elevation ≥ 0.5 mm in V7–V9"
+     ]
+    },
+    {
+     "h": "de Winter T waves (proximal LAD occlusion)",
+     "items": [
+      "Upsloping ST depression > 1 mm at the J point in the precordial leads",
+      "Tall, symmetrical, peaked T waves in V1–V4",
+      "Often slight ST elevation (about 0.5 mm) in aVR",
+      "Treat as STEMI"
+     ]
+    },
+    {
+     "h": "Wellens syndrome (critical proximal LAD stenosis)",
+     "items": [
+      "Biphasic (type A, about 25%) or deep symmetrical T inversion (type B, about 75%) in V2–V3",
+      "Seen when PAIN-FREE, after recent angina",
+      "ST isoelectric or < 1 mm elevated; no precordial Q waves; R-wave progression preserved",
+      "High risk of anterior MI: no stress test; urgent angiography",
+      "Pseudo-normalisation of the T waves with returning pain = re-occlusion"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "LBBB patients with chest pain: apply Smith-modified Sgarbossa, also for RV pacing",
+      "Wellens is a pattern seen after the pain has gone; de Winter is seen during the occlusion",
+      "aVR ST elevation with ST depression in many leads: left main / multivessel ischaemia"
+     ]
+    }
+   ],
+   "pearl": "Sgarbossa 5-3-2, needs ≥ 3; Smith swaps the 5 mm rule for ST/S ≥ 25%.",
+   "refs": [
+    {
+     "title": "LITFL: Sgarbossa criteria",
+     "url": "https://litfl.com/sgarbossa-criteria-ecg-library/"
+    },
+    {
+     "title": "LITFL: Wellens syndrome",
+     "url": "https://litfl.com/wellens-syndrome-ecg-library/"
+    },
+    {
+     "title": "LITFL: Posterior myocardial infarction",
+     "url": "https://litfl.com/posterior-myocardial-infarction-ecg-library"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-bundle-branch-blocks",
+   "cat": "ECG",
+   "title": "Bundle branch block criteria (LBBB, RBBB)",
+   "aliases": [
+    "LBBB",
+    "RBBB",
+    "bundle branch block",
+    "left bundle branch block",
+    "right bundle branch block",
+    "incomplete RBBB",
+    "IVCD",
+    "MaRRoW WiLLiaM"
+   ],
+   "summary": "In a bundle branch block one ventricle is activated late through muscle instead of the conduction system, so the QRS widens to 120 ms or more and the ST–T points the opposite way to the QRS. LBBB usually means heart disease; isolated RBBB often does not.",
+   "sections": [
+    {
+     "h": "LBBB",
+     "items": [
+      "QRS ≥ 120 ms",
+      "Dominant S in V1 (rS or QS)",
+      "Broad, notched or slurred (M-shaped) R in I, aVL, V5–V6",
+      "No Q waves in I, V5, V6",
+      "R-peak time in V5–V6 > 60 ms",
+      "ST–T discordant to the QRS (appropriate discordance)"
+     ]
+    },
+    {
+     "h": "RBBB",
+     "items": [
+      "QRS ≥ 120 ms",
+      "rsR' (M-shaped) pattern in V1–V2",
+      "Wide, slurred S in I and V6 (longer than R or > 40 ms)",
+      "R-peak time in V1 > 50 ms",
+      "T inversion in V1–V3 is expected"
+     ]
+    },
+    {
+     "h": "Incomplete blocks",
+     "items": [
+      "Same shape with QRS 110–120 ms",
+      "Non-specific intraventricular conduction delay: QRS ≥ 110 ms without a typical BBB shape"
+     ]
+    },
+    {
+     "h": "Causes",
+     "rows": [
+      [
+       "LBBB",
+       "Aortic stenosis, ischaemic heart disease, hypertension, dilated cardiomyopathy, anterior MI"
+      ],
+      [
+       "RBBB",
+       "Often normal; also PE (new), RVH, ASD, ischaemia, Brugada"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "WiLLiaM: W in V1, M in V6 = LBBB. MaRRoW: M in V1, W in V6 = RBBB",
+      "New LBBB with chest pain: use Smith-modified Sgarbossa, not \"LBBB = STEMI\"",
+      "Existing LBBB + PA catheter: risk of complete heart block if the right bundle is bruised; have pacing ready"
+     ]
+    }
+   ],
+   "pearl": "LBBB is a marker of heart disease until proven otherwise: get an echo.",
+   "refs": [
+    {
+     "title": "LITFL: Left bundle branch block",
+     "url": "https://litfl.com/left-bundle-branch-block-lbbb-ecg-library/"
+    },
+    {
+     "title": "MSD Manual: bundle branch block and fascicular block",
+     "url": "https://www.msdmanuals.com/professional/cardiovascular-disorders/arrhythmias-and-conduction-disorders/bundle-branch-block-and-fascicular-block"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-vt-vs-svt",
+   "cat": "ECG",
+   "title": "VT vs SVT with aberrancy (Brugada algorithm, Vereckei)",
+   "aliases": [
+    "VT vs SVT",
+    "broad complex tachycardia",
+    "wide complex tachycardia",
+    "Brugada algorithm",
+    "Vereckei",
+    "aVR algorithm",
+    "fusion beats",
+    "capture beats",
+    "concordance",
+    "Josephson sign"
+   ],
+   "summary": "A regular broad-complex tachycardia is VT or SVT with aberrant conduction. The ECG cannot always tell them apart, so in doubt, and always in someone with heart disease, treat it as VT.",
+   "sections": [
+    {
+     "h": "Features that favour VT",
+     "items": [
+      "AV dissociation (P waves marching through at their own rate)",
+      "Capture beats (a normal narrow beat) and fusion beats (half-normal hybrid)",
+      "Precordial concordance: all V1–V6 positive or all negative (about 97% specific)",
+      "Northwest axis (−90° to 180°): positive in aVR, negative in I and aVF",
+      "Very broad QRS (> 160 ms)",
+      "Brugada sign: R onset to S nadir > 100 ms; Josephson sign: notch near the S nadir",
+      "QS or qR in V6 with LBBB-like shape"
+     ]
+    },
+    {
+     "h": "Brugada algorithm (any yes = VT)",
+     "rows": [
+      [
+       "1",
+       "No RS complex in any precordial lead?"
+      ],
+      [
+       "2",
+       "RS interval (R onset to S nadir) > 100 ms in any precordial lead?"
+      ],
+      [
+       "3",
+       "AV dissociation?"
+      ],
+      [
+       "4",
+       "Morphology criteria for VT in V1–V2 and V6?"
+      ],
+      [
+       "All no",
+       "SVT with aberrancy"
+      ]
+     ]
+    },
+    {
+     "h": "Vereckei aVR algorithm (simpler)",
+     "items": [
+      "Looks only at lead aVR, step by step",
+      "1: Initial R wave in aVR → VT",
+      "2: Initial r or q wider than 40 ms → VT",
+      "3: Notch on the downstroke of a negative-onset QRS → VT",
+      "4: Ventricular activation-velocity ratio (vi/vt) ≤ 1 → VT, otherwise SVT"
+     ]
+    },
+    {
+     "h": "Favour SVT with aberrancy",
+     "items": [
+      "An old ECG showing the same bundle branch block shape in sinus rhythm",
+      "Known WPW, or rate exactly 150 with a narrower QRS (120–140 ms)",
+      "Past episodes ended with adenosine"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Clinical: age > 35, previous MI, heart failure or structural disease → VT is far more likely",
+      "Haemodynamic stability does NOT mean it is SVT",
+      "Never give verapamil to a broad-complex tachycardia of unknown origin"
+     ]
+    }
+   ],
+   "pearl": "Broad, regular, and a scarred heart = VT until proven otherwise.",
+   "refs": [
+    {
+     "title": "LITFL: VT versus SVT",
+     "url": "https://litfl.com/vt-versus-svt-ecg-library/"
+    },
+    {
+     "title": "LITFL: VT versus SVT, it's as easy as ABCDE",
+     "url": "https://litfl.com/vt-versus-svt-its-as-easy-as-abcde/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-pericarditis",
+   "cat": "ECG",
+   "title": "Pericarditis vs early repolarisation vs STEMI on ECG",
+   "aliases": [
+    "pericarditis ECG",
+    "Spodick sign",
+    "PR depression",
+    "benign early repolarisation",
+    "BER",
+    "ST/T ratio",
+    "saddle ST elevation"
+   ],
+   "summary": "Three causes of ST elevation get mixed up: acute pericarditis, benign early repolarisation (BER) and STEMI. Pericarditis is widespread and concave with PR depression; BER is stable with big T waves; STEMI is territorial with reciprocal change.",
+   "sections": [
+    {
+     "h": "Acute pericarditis",
+     "items": [
+      "Widespread concave ST elevation (I, II, aVL, aVF, V2–V6)",
+      "PR depression in the same leads",
+      "Reciprocal ST depression and PR elevation in aVR (± V1) only",
+      "Spodick sign: downsloping TP segment, best in II",
+      "Often sinus tachycardia"
+     ]
+    },
+    {
+     "h": "Stages",
+     "rows": [
+      [
+       "1",
+       "Widespread ST elevation + PR depression (first 2 weeks)"
+      ],
+      [
+       "2",
+       "ST and PR normalise, T waves flatten"
+      ],
+      [
+       "3",
+       "T waves invert"
+      ],
+      [
+       "4",
+       "ECG returns to normal (may take weeks)"
+      ]
+     ]
+    },
+    {
+     "h": "Benign early repolarisation",
+     "items": [
+      "Concave ST elevation mostly in V2–V5, with prominent T waves",
+      "J-point notch (\"fish-hook\"), often in V4",
+      "No PR depression; stable over time",
+      "ST/T ratio in V6 < 0.25 (pericarditis > 0.25)"
+     ]
+    },
+    {
+     "h": "Pointing to STEMI",
+     "items": [
+      "ST elevation in a coronary territory",
+      "Reciprocal ST depression in other leads (not just aVR)",
+      "Convex or straight ST, Q waves, evolving changes, new LBBB"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "ST/T ratio in V6: ST height ÷ T height; > 0.25 favours pericarditis",
+      "Post-cardiotomy and uraemic pericarditis are classic anaesthesia contexts"
+     ]
+    }
+   ],
+   "pearl": "Pericarditis: everywhere up, PR down, aVR the only one down.",
+   "refs": [
+    {
+     "title": "LITFL: Pericarditis",
+     "url": "https://litfl.com/pericarditis-ecg-library/"
+    },
+    {
+     "title": "LITFL ECG case 032 (pericarditis vs BER, ST/T ratio)",
+     "url": "https://litfl.com/ecg-case-032/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-electrolytes-hypothermia",
+   "cat": "ECG",
+   "title": "Electrolytes & temperature on the ECG (K⁺, Ca²⁺, hypothermia)",
+   "aliases": [
+    "hyperkalaemia ECG",
+    "hypokalaemia ECG",
+    "hypocalcaemia ECG",
+    "hypercalcaemia ECG",
+    "peaked T",
+    "U wave",
+    "Osborn wave",
+    "J wave",
+    "hypothermia ECG"
+   ],
+   "summary": "Potassium, calcium and temperature all show on the ECG in a predictable order. The ECG does not track the blood level closely, so a near-normal ECG never makes a high K⁺ safe.",
+   "sections": [
+    {
+     "h": "Hyperkalaemia (usual order)",
+     "rows": [
+      [
+       "5.5–6.5 mmol/L",
+       "Tall, narrow, peaked T waves"
+      ],
+      [
+       "6.5–7.5",
+       "P flattens and widens, PR lengthens, P may disappear"
+      ],
+      [
+       "7.0–8.0",
+       "QRS widens"
+      ],
+      [
+       "8.0–10",
+       "Sine wave, VF, asystole, bizarre PEA"
+      ]
+     ]
+    },
+    {
+     "h": "Hypokalaemia (ECG changes usually below about 2.7–3.0)",
+     "items": [
+      "T waves flatten, ST depression",
+      "Prominent U waves (best V2–V3)",
+      "Apparent long QT that is really a long QU",
+      "Ectopics, torsades risk; often low Mg²⁺ too"
+     ]
+    },
+    {
+     "h": "Calcium",
+     "rows": [
+      [
+       "Low Ca²⁺",
+       "Long QT from a long, flat ST segment; the T wave itself is normal"
+      ],
+      [
+       "High Ca²⁺",
+       "Short QT (short ST segment)"
+      ]
+     ]
+    },
+    {
+     "h": "Hypothermia",
+     "items": [
+      "Bradycardia (sinus, slow AF, junctional), AV blocks",
+      "Osborn (J) wave: positive hump at the J point, size roughly follows how cold",
+      "Long PR, QRS and QT; shivering artefact",
+      "Risk of VT/VF and asystole as it gets colder"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "High K⁺ order runs backwards along the trace: T, then P/PR, then QRS",
+      "Never give suxamethonium with peaked T waves",
+      "Calcium protects the heart in hyperkalaemia within minutes but lowers no potassium"
+     ]
+    }
+   ],
+   "pearl": "Hyper-K pulls the T wave up; hypo-K pushes it down and raises the U.",
+   "refs": [
+    {
+     "title": "Webster A et al. ABC of clinical electrocardiography: conditions not primarily affecting the heart (BMJ 2002)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1123277"
+    },
+    {
+     "title": "LITFL: Hypokalaemia",
+     "url": "https://litfl.com/hypokalaemia-ecg-library/"
+    },
+    {
+     "title": "LITFL: Hypothermia",
+     "url": "https://litfl.com/hypothermia-ecg-library/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "ecg-pre-excitation-channelopathies",
+   "cat": "ECG",
+   "title": "WPW, Brugada & long QT criteria",
+   "aliases": [
+    "WPW",
+    "Wolff-Parkinson-White",
+    "delta wave",
+    "pre-excitation",
+    "Brugada syndrome",
+    "Brugada pattern",
+    "coved ST",
+    "long QT syndrome",
+    "channelopathy"
+   ],
+   "summary": "Three ECG patterns in young, fit-looking patients that can cause sudden death under anaesthesia: pre-excitation (WPW), Brugada pattern and long QT. Each has clear ECG criteria worth knowing for pre-op ECGs.",
+   "sections": [
+    {
+     "h": "WPW",
+     "items": [
+      "PR < 120 ms",
+      "Delta wave: slurred upstroke of the QRS",
+      "QRS > 110 ms with discordant ST–T changes",
+      "Type A: positive delta in V1 (left pathway, dominant R in V1); type B: negative delta in V1–V2 (right pathway)",
+      "WPW syndrome = pattern + tachyarrhythmias"
+     ]
+    },
+    {
+     "h": "Brugada",
+     "rows": [
+      [
+       "Type 1 (diagnostic)",
+       "Coved ST elevation ≥ 2 mm in ≥ 1 of V1–V2 (2nd–4th intercostal space) falling into a negative T wave"
+      ],
+      [
+       "Type 2 (suggestive)",
+       "Saddle-back ST elevation with a positive or flat T wave"
+      ],
+      [
+       "Diagnosis",
+       "Type 1 pattern + clinical feature: VF/polymorphic VT, syncope, family history of sudden death < 45 y, nocturnal agonal breathing"
+      ],
+      [
+       "Unmasked by",
+       "Fever, sodium-channel blockers, cocaine, alcohol"
+      ]
+     ]
+    },
+    {
+     "h": "Long QT",
+     "items": [
+      "QTc > 440 ms (men) / 460 ms (women) is prolonged; risk rises steeply above 500 ms",
+      "Causes: congenital channelopathies, drugs (antiemetics, antipsychotics, macrolides, quinolones), low K⁺/Mg²⁺/Ca²⁺, hypothermia",
+      "Risk: torsades de pointes"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Pre-excited AF: avoid AV-node blockers; procainamide or synchronised cardioversion",
+      "Brugada: treat fever, defib pads on, check drugs on brugadadrugs.org",
+      "Long QT: avoid stacking QT drugs (ondansetron + droperidol + haloperidol), keep K⁺ and Mg²⁺ up"
+     ]
+    }
+   ],
+   "pearl": "Short PR + delta = WPW; coved V1 + negative T = Brugada type 1.",
+   "refs": [
+    {
+     "title": "LITFL: Pre-excitation syndromes",
+     "url": "https://litfl.com/ecg-library/pre-excitation-syndromes/"
+    },
+    {
+     "title": "LITFL: Brugada syndrome",
+     "url": "https://litfl.com/brugada-syndrome-ecg-library/"
     }
    ],
    "created": "2026-11-23",

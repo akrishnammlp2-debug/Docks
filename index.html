@@ -1967,7 +1967,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.79 · ECG & ABG flashcards';
+const APP_VERSION = '5.80 · ECG criteria notes';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
 
@@ -5100,7 +5100,7 @@ function articlesSection() { const A = ARTS(); let h = `<div class="sec"><h2 cla
     const left = a.added ? KEEP_DAYS.articles - 1 - Math.round((new Date(today() + 'T12:00') - new Date(a.added + 'T12:00')) / 864e5) : null;
     return `<a class="card art-c" href="${esc(url)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">${a.topic ? `<span class="art-q">You asked about ${esc(a.topic)}</span>` : ''}<b>${esc(a.title)}</b><span class="art-m">${esc([a.journal, a.year, a.type].filter(Boolean).join(' · '))}</span>${a.why ? `<span class="c-s">${esc(a.why)}</span>` : ''}<span class="art-q">${a.added ? 'Added ' + esc(dShort(a.added)) + (left !== null && left >= 0 ? ' · ' + (left === 0 ? 'leaves after today' : 'stays ' + plural(left, 'more day')) : '') : ''}</span></a>`; }).join('');
   return h + moreBtn('arts', A.length, 3, 'article', 'btn ghost wide') + `</div>`; }
-const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
+const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', ECG: '〰️', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
 function bitesSection() {
   const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>${B.some(b => vivaPts(b).length) ? `<button type="button" class="card calc-link" data-act="viva-start"><span class="cat-due-i" aria-hidden="true">🎤</span><span class="cat-tx"><b>Viva round</b><span>5 quick flashcards from your notes, about 2 minutes</span></span>${CHEV}</button>` : ''}`;
   if (!B.length) return h + `<div class="card"><span class="c-s">Ask Claude your academic questions (drugs, ventilator settings, physiology, papers). Each topic is saved here as a short note, sorted into columns, and updated when you ask again.</span></div></div>`;
