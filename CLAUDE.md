@@ -27,6 +27,7 @@ It is built only for her and will never be monetised.
 - Animations (v5.70): tick draw, swipe bounce, spring sheets, awake cat, viva 3D flip, count-up numbers, one-time pulse on due items, short festival flicker/snow. Nothing loops forever. `settings.animOn` and iPhone Reduce Motion turn all of it off.
 - **Never restyle the tab bar's colours**: it shows the season/festival colours and she likes it that way (22 Nov 2026). The Home banner keeps its size.
 - Sheet headers: Cancel (or nothing) on the left, Save / Add / Done on the right. Always.
+- **Never jump back to the top** when a sheet grows in place (next step, show answer, reveal more): call `openSheet(html, true)` so the scroll position stays, then bring the newly shown part into view. Only a brand-new sheet starts at the top (23 Nov 2026).
 - Music, NBA and Dota 2 live inside Off duty (tabs at the top); the side menu groups are Daily, Academics, Hospital, Life, App.
 - To-dos and due reminders can be swiped right to finish (`data-swipe` + `data-swipe-act`). OT rows are not swipeable (the table scrolls sideways).
 - **Any colour or theme change:** check that all text is readable in BOTH light and dark mode (`tools/contrast_check.py`) before pushing.

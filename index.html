@@ -1967,7 +1967,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.81 · Debug check';
+const APP_VERSION = '5.82 · Steps stay in place';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
 
@@ -4058,7 +4058,7 @@ function fcEcgSheet() { const c = ECGS().find(x => x.id === fc.id); if (!c) { to
       ${(c.manage || []).length ? `<h4>What to do</h4><ul class="note-ul">${c.manage.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       ${c.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(c.pearl)}</span></div>` : ''}
       ${c.src ? `<p class="fc-src">Checked against: ${esc(c.src)}</p>` : ''}</div>${fcBtns()}` : `<button class="btn wide" type="button" data-act="fc-step">Show the answer</button>`}
-    <p class="foot">Teaching cards, not a protocol. Follow your department's practice.</p></div>`); }
+    <p class="foot">Teaching cards, not a protocol. Follow your department's practice.</p></div>`, fc.step > 0); }
 function fcAbgSheet() { const sc = ABG_SC.find(s => s.id === fc.id); const made = sc && abgMake(sc, fc.seed);
   if (!made) { toast("Couldn't make this ABG. Try another."); fc = null; return; }
   const { v, R } = made; const S = R.S; const n = Math.min(fc.step, S.length + 1);
@@ -4070,8 +4070,9 @@ function fcAbgSheet() { const sc = ABG_SC.find(s => s.id === fc.id); const made 
     ${S.slice(0, n).map(([h, t], i) => `<div class="card fc-step"><span class="c-lab">${i + 1} · ${esc(h)}</span><span class="c-s">${esc(t)}</span></div>`).join('')}
     ${n > S.length ? `<div class="card fc-ans"><span class="c-lab">Putting it together</span><b class="fc-dx">${esc(sc.dx)}</b><div class="bite-pearl"><b>Remember</b><span>${esc(sc.pearl)}</span></div><p class="fc-src">Rules: Brandis bedside rules, Winter's formula, LITFL delta ratio · Case points checked against: ${esc(sc.src)}</p></div>${fcBtns()}`
       : `<button class="btn wide" type="button" data-act="fc-step">${n ? 'Next step' : 'Start: show step 1'}</button>${n ? '' : '<button class="btn ghost wide" type="button" data-act="fc-all">Show the whole answer</button>'}`}
-    <p class="foot">Values are made up for practice and follow Henderson–Hasselbalch. Teaching cards, not a protocol.</p></div>`); }
-function fcShow() { if (!fc) return; fc.k === 'ecg' ? fcEcgSheet() : fcAbgSheet(); }
+    <p class="foot">Values are made up for practice and follow Henderson–Hasselbalch. Teaching cards, not a protocol.</p></div>`, fc.step > 0); }
+function fcShow() { if (!fc) return; fc.k === 'ecg' ? fcEcgSheet() : fcAbgSheet();
+  if (fc && fc.step > 0) { const el = [...document.querySelectorAll('#sheet .fc-step, #sheet .fc-ans')].pop(); if (el) requestAnimationFrame(() => el.scrollIntoView({ block: 'nearest', behavior: animOn() ? 'smooth' : 'auto' })); } }
 
 /* ---------- v5.67: Viva flashcards from the "Points for the exam / viva" of each bite ---------- */
 const vivaPts = b => { const s = (b.sections || []).find(x => /viva|exam/i.test(x.h || '')); return s ? (s.items || (s.rows || []).map(r => r[0] + ': ' + r[1])) : []; };
@@ -4089,7 +4090,7 @@ function vivaShow() { if (!viva) return; const b = BITES().find(x => x.id === vi
       <span class="bite-cat">${BCAT_ICON[b.cat] || '•'} ${esc(b.cat)}</span><b class="viva-q">${esc(b.title)}</b>
       ${viva.flip ? `<ul class="note-ul viva-a">${P.map(x => `<li>${esc(x)}</li>`).join('')}</ul>${b.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(b.pearl)}</span></div>` : ''}` : `<span class="c-s">Say the ${P.length === 1 ? 'key point' : P.length + ' key points'} out loud, then tap to check.</span>`}
     </button>
-    ${viva.flip ? `<div class="btns brev-b" style="flex-direction:row"><button class="btn" type="button" data-act="viva-mark" data-ok="1">Knew it</button><button class="btn ghost" type="button" data-act="viva-mark" data-ok="0">Again tomorrow</button></div>` : ''}</div>`); }
+    ${viva.flip ? `<div class="btns brev-b" style="flex-direction:row"><button class="btn" type="button" data-act="viva-mark" data-ok="1">Knew it</button><button class="btn ghost" type="button" data-act="viva-mark" data-ok="0">Again tomorrow</button></div>` : ''}</div>`, viva.flip); }
 function vivaMark(ok) { if (!viva) return; const id = viva.ids[viva.i]; const r = brecOf(id) || { lvl: 0, n: 0 }; const t = today();
   const lvl = ok ? (r.lvl || 0) + 1 : 0; const gap = ok ? BREV_I[Math.min(lvl - 1, BREV_I.length - 1)] : 1;
   state.biteRev = { ...(state.biteRev || {}), [id]: { lvl, n: (r.n || 0) + 1, last: t, due: addDays(t, gap) } }; if (save()) syncSoon();
@@ -4251,7 +4252,8 @@ const PEEK_CAT = `<svg class="peek-cat" viewBox="0 0 24 16" aria-hidden="true"><
 /* ---------- sheets ---------- */
 function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; lockBody.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -lockBody.y + 'px'; B.classList.add('locked'); }
 function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); B.style.top = ''; window.scrollTo(0, lockBody.y || 0); }
-function openSheet(html) { const sh = $('sheet'), was = sh.classList.contains('open'); $('sheet-body').innerHTML = html; lineIcons($('sheet-body')); sh.scrollTop = 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
+/* keep = the same sheet is growing (next step, reveal answer): stay where she is reading, never jump to the top (Apoorva, 23 Nov 2026) */
+function openSheet(html, keep) { const sh = $('sheet'), was = sh.classList.contains('open'), y = sh.scrollTop; $('sheet-body').innerHTML = html; lineIcons($('sheet-body')); sh.scrollTop = keep && was ? y : 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
   lockBody(); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
 function closeSheet() { $('sheet').classList.remove('open'); $('scrim').classList.remove('open'); unlockBody(); }
 const sheetOpen = () => $('sheet').classList.contains('open') || document.body.classList.contains('locked');
