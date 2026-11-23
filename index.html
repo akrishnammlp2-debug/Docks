@@ -1844,6 +1844,60 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 .gt .ring.smile .sm-tick{stroke:var(--ti,var(--sec-i))}
 #sheet .ring.smile .sm-ring,#sheet .ring.smile .sm-tick{stroke:#2F6B4F}#sheet .ring.smile .sm-disc{fill:#DDEADF}
 .sm-face,.sm-eye,.sm-mouth{display:none}
+/* ===== v5.76 sunset palette (Apoorva, 23 Nov 2026): colours taken from her sunset photo — dusk indigo, violet, magenta, sunset pink, coral, horizon gold. Tab bar untouched; status colours keep their meanings ===== */
+:root{
+  --bg:#FBF1EE;--surface:#F7E4E4;--surface-2:#F0D6DA;--blk:#F7E4E4;--blk-2:#F0D6DA;--line:#EBCFD3;--sep:rgba(36,20,44,.10);--bar:rgba(251,241,238,.88);--card-soft:#FFF8F5;
+  --fg:#24142C;--fg-2:#4E3A5A;--fg-3:#634C6A;--scrim:rgba(36,20,44,.38);
+  --accent:#6B3F8F;--accent-soft:#EEE2F4;--accent-t:#6B3F8F;--label:#6B3F8F;--on-label:#FFFFFF;--ring:#6B3F8F;--on-ring:#FFFFFF;
+  --t-sage:#F1E0EE;--t-sage-i:#7A3A73;--t-peach:#FDE3D6;--t-peach-i:#A2442A;--t-sky:#E4E1F4;--t-sky-i:#3F3A86;
+  --t-lav:#ECE2F6;--t-lav-i:#5E3D8C;--t-butter:#FCEBD0;--t-butter-i:#875011;--t-rose:#FBE1E7;--t-rose-i:#9E3556;
+  --sh-bg:#F8EBEA;--sh-blk:#F1DEE0;--sh-in:#FDF6F4;--sh-line:#E6CBD0}
+body{background:var(--bg)!important}
+@media (prefers-color-scheme:light){.lt{color:#24142C!important}:root{--fg-3:#634C6A}}
+#page .card.hero,#page .card.cat-due{background:#FBDDD2!important;box-shadow:0 12px 28px -16px rgba(224,100,122,.55)!important}
+#page .card.cat-due{border:1.5px solid var(--st-soon)!important}
+.hero .c-lab,.hero .c-m,#page .hero .c-lab,#page .hero .c-m{color:#76234D!important}
+.drawer .prof.tinted .prof-top span,.drawer .prof.tinted .prof-top>div>span{color:#4E3A5A!important}
+.drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(247,228,228,0) 50%,rgba(247,228,228,.95))!important}
+.drawer .prof.tinted .prof-l,.hab-e{background:#F0D6DA!important}
+#sheet .link,#sheet .link.strong{color:#5A2F7A!important}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#160F1E;--surface:#231931;--surface-2:#2C2040;--blk:#231931;--blk-2:#2C2040;--line:#3B2D52;--sep:rgba(244,234,240,.12);--bar:rgba(22,15,30,.88);
+    --fg:#F4EAF0;--fg-2:#DCCBD8;--fg-3:#C9B6C9;--scrim:rgba(0,0,0,.55);
+    --accent:#F2A6BE;--accent-soft:#3A2240;--accent-t:#F2A6BE;--label:#F2A6BE;--on-label:#160F1E;--ring:#F2A6BE;--on-ring:#160F1E;
+    --t-sage:#33213A;--t-sage-i:#E4A9D8;--t-peach:#3A2228;--t-peach-i:#FFB59A;--t-sky:#24223F;--t-sky-i:#B4B6F2;
+    --t-lav:#2C2140;--t-lav-i:#CDB5F2;--t-butter:#3A2A18;--t-butter-i:#F6C27A;--t-rose:#3A1F2B;--t-rose-i:#F4A9BE;
+    --sh-bg:#EBD9E0;--sh-blk:#E0C9D3;--sh-in:#F4E7EC;--sh-line:#CFB3C1}
+  body{background:#160F1E!important}
+  .navbar{background:rgba(22,15,30,.88)!important}
+  .strip button,.seg button,#page .seg button,#page .strip button{background:#2C2040!important;color:#F4EAF0!important}
+  .strip button[aria-pressed="true"],.seg button[aria-pressed="true"],#page .seg button[aria-pressed="true"],#page .strip button[aria-pressed="true"]{background:#F2A6BE!important;color:#160F1E!important}
+  .card,.gt,.ht,.stats .stat,.stats .stat:nth-child(n),.group,.bk,.bite{color:#F4EAF0!important}
+  .card .c-lab,.card .c-m,.gt .gt-l,.group .r-s,.stats .s-l,.bite small,.card .c-s,.card small{color:#C9B6C9!important}
+  .card .c-big,.card .c-t,.gt .gt-v,.group .r-t,.stats .s-n,.bite b,.card b{color:#FBF4F8!important}
+  #page .card.hero,#page .card.cat-due{background:#3A2033!important;box-shadow:0 12px 28px -16px rgba(0,0,0,.6)!important}
+  .hero .c-lab,.hero .c-m,#page .hero .c-lab,#page .hero .c-m{color:#FFC2A8!important}
+  #page .hero .c-s{color:#EBDCE4!important}
+  .gt-i,.hab-e{background:#2C2040!important;color:#F4EAF0}
+  .hab.on .hab-e{background:#F2A6BE!important;color:#160F1E!important}
+  .ditem[aria-current="page"],.ditem[aria-current="page"][data-tab]{background:#231931!important;color:#FBF4F8!important}
+  .prof,.drawer .prof.tinted{background:#231931!important}
+  .drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(35,25,49,0) 45%,rgba(35,25,49,.96))!important}
+  .drawer .prof.tinted .prof-top b,.drawer .prof.tinted .prof-top>div>b{color:#FBF4F8!important}
+  .drawer .prof.tinted .prof-top span,.drawer .prof.tinted .prof-top>div>span{color:#C9B6C9!important}
+  .drawer .prof.tinted .prof-l,.drawer .prof.tinted .btn.ghost,#page .btn.ghost,#page .hab-done{background:#2C2040!important;color:#F4EAF0!important}
+  #page .otbl th,#page .otbl td{background:#231931!important;border-color:#3B2D52!important}
+  #page .otbl tr.done td{background:#1C1426!important;color:#B4A3BC!important}
+  .igp{background:#3A2033!important;color:#F4EAF0!important}
+  .lt-wrap .lt-sub,.lt-wrap .eyebrow{color:#DCCBD8!important}
+  #page .appver,.drawer .appver{color:#C9B6C9!important}
+  #page .badge,.drawer .ditem small{background:#EAD9E3!important;color:#1E1226!important}
+  .ring circle:first-child{stroke:rgba(244,234,240,.18)}
+  #page a,#page .link{color:var(--accent-t)!important}
+  #page .dc.sel.today .n{color:#160F1E!important}
+  .btn:not(.ghost):not(.danger),.btn:not(.ghost):not(.danger) *,.btn.danger{color:#160F1E!important}
+}
 </style>
 </head>
 <body data-sec="today">
@@ -1872,7 +1926,7 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.75 · Tidy Today';
+const APP_VERSION = '5.76 · Sunset';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
