@@ -1833,6 +1833,19 @@ body[data-sec="today"] .fest-snow{animation:drift 2.5s ease-in-out 3 alternate}
 body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
 @media (prefers-reduced-motion:reduce){.plant *,.plant,.nap-cat *,.peek-cat,.viva-card,#sheet,.rowwrap::after,.check::after,.card,.tsiren,.fest-diyas,.fest-snow{animation:none!important}}
 #sheet .pl-t{color:#3E4A44!important}#sheet .pl-t b{color:#1F2A24!important}#sheet .pl-t .pl-ok{color:#2F6B4F!important}
+/* v5.78: side panel: her dusk-sky photo (img/side-sky.jpg) behind the menu under a soft veil so text stays readable; Fudge asleep at the foot */
+.drawer{background:var(--bg)!important;isolation:isolate}
+.drawer::before{content:"";position:sticky;top:calc(-1 * env(safe-area-inset-top) - 16px);flex:none;height:100vh;height:100dvh;margin:calc(-1 * env(safe-area-inset-top) - 16px) -14px -100dvh;margin-bottom:-100vh;margin-bottom:-100dvh;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(251,241,238,.76) 0%,rgba(251,241,238,.81) 55%,rgba(251,241,238,.88) 100%),url("img/side-sky.jpg") center/cover no-repeat}
+.drawer .d-foot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:0;padding:22px 0 4px}
+.drawer .d-foot .nap-cat{width:88px;height:55px}
+.drawer .d-foot .appver{margin:6px 0 0}
+.drawer .d-moon{display:none}
+@media (prefers-color-scheme:dark){
+  .drawer{background:#160F1E!important}
+  .drawer::before{background:linear-gradient(180deg,rgba(22,15,30,.50) 0%,rgba(22,15,30,.60) 50%,rgba(22,15,30,.72) 100%),url("img/side-sky.jpg") center/cover no-repeat}
+  .drawer .d-foot .nap-cat{filter:drop-shadow(0 0 6px rgba(246,194,122,.35))!important}
+}
 /* v5.71: the black cat gets a soft moonlight rim in dark mode so it shows on charcoal */
 #page .nap-cat,#page .peek-cat,.quiet-p .nap-cat,.igp .peek-cat{filter:drop-shadow(0 1px 1.5px rgba(110,72,36,.35))}
 @media (prefers-color-scheme:dark){#page .nap-cat,#page .peek-cat,.quiet-p .nap-cat,.igp .peek-cat{filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}}
@@ -1861,7 +1874,7 @@ body{background:var(--bg)!important}
 .drawer .prof.tinted>.prof-bg::after{background:linear-gradient(180deg,rgba(247,228,228,0) 50%,rgba(247,228,228,.95))!important}
 .drawer .prof.tinted .prof-l,.hab-e{background:#F0D6DA!important}
 #sheet .link,#sheet .link.strong{color:#5A2F7A!important}
-.drawer{background:var(--bg)!important;border-right:1px solid var(--line)!important}
+.drawer{border-right:1px solid var(--line)!important}
 .prof .av{background:#E0647A!important;color:#FFFFFF!important}
 .drawer .prof.tinted.none>.prof-bg{background:radial-gradient(circle at 20% 20%,#E9C4E4,transparent 60%),radial-gradient(circle at 85% 30%,#FDCDB8,transparent 55%),radial-gradient(circle at 60% 90%,#D6CCF2,transparent 60%),#FBF1EE!important}
 .prof .btn.ghost,.drawer .prof.tinted .btn.ghost{color:#6B3F8F!important}
@@ -1901,7 +1914,7 @@ body{background:var(--bg)!important}
   .ring circle:first-child{stroke:rgba(244,234,240,.18)}
   #page a,#page .link{color:var(--accent-t)!important}
   #page .dc.sel.today .n{color:#160F1E!important}
-  .drawer{background:#160F1E!important;border-right-color:rgba(244,234,240,.08)!important}
+  .drawer{border-right-color:rgba(244,234,240,.08)!important}
   .prof .av{background:#F2A6BE!important;color:#160F1E!important}
   .drawer .prof.tinted.none>.prof-bg{background:radial-gradient(circle at 20% 20%,#5A3A7E,transparent 60%),radial-gradient(circle at 85% 30%,#8A3E5C,transparent 55%),radial-gradient(circle at 60% 90%,#3F2A6E,transparent 60%),#231931!important}
   .prof .btn.ghost,.drawer .prof.tinted .btn.ghost{color:#F4EAF0!important}
@@ -1936,7 +1949,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.77 · Sunset';
+const APP_VERSION = '5.78 · Dusk sky';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep'];
 
@@ -3729,7 +3742,7 @@ function renderDrawer() {
     <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
-    <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
+    <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${NAP_CAT}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
 }
 function renderBanner() {
   let h = '';
