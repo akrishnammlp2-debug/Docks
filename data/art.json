@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-22",
-    "title": "The Starry Night",
-    "artist": "Vincent van Gogh",
-    "artistLife": "Dutch, 1853–1890",
-    "year": "1889",
+    "date": "2026-11-23",
+    "title": "The Tortoise Trainer",
+    "artist": "Osman Hamdi Bey",
+    "artistLife": "Ottoman Turkish, 1842–1910",
+    "year": "1906",
     "medium": "Oil on canvas",
-    "size": "73.7 × 92.1 cm (about the size of a small window)",
-    "where": "The Museum of Modern Art (MoMA), New York",
-    "movement": "Post-Impressionism",
-    "fame": "famous",
+    "size": "221.5 × 120 cm (a tall canvas, taller than most doorways are wide)",
+    "where": "Pera Museum, Istanbul",
+    "movement": "Orientalist academic realism (Ottoman)",
+    "fame": "hidden gem",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
-      "credit": "The Museum of Modern Art, New York, public domain (image: Wikimedia Commons)",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg",
+      "credit": "Pera Museum, public domain (image: Wikimedia Commons)",
       "focus": "center 40%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A huge night sky churns above a sleeping village, with swirling ribbons of blue, a glowing crescent moon and stars ringed in yellow halos. A dark, flame-shaped cypress tree rises on the left like a green-black torch. Down below, the little houses are quiet, with a church spire pointing up into all that motion."
+        "p": "An old man in a long red robe stands in a shabby, empty room, a small drum on his back and a reed flute (a ney) in his hand. Around his feet are five tortoises. They are meant to be his pupils, but they are ignoring him and nibbling green leaves. The room is peeling and worn, yet the walls still carry beautiful tilework and a line of Arabic writing above the window."
       },
       {
         "h": "The artist",
-        "p": "Van Gogh sold almost nothing in his lifetime and worked in intense bursts, writing long letters to his brother Theo about his ideas. In May 1889 he checked himself into the Saint-Paul-de-Mausole asylum at Saint-Rémy in the south of France, seeking care after a serious breakdown. He kept painting there, and this picture comes from that year."
+        "p": "Osman Hamdi Bey was born in Istanbul in 1842 to a Grand Vizier's family. He went to Paris to study law, but turned to painting and trained under Jean-Léon Gérôme and Gustave Boulanger. Back home he became one of the Ottoman Empire's first archaeologists and the director of the Imperial Museum. He founded the Academy of Fine Arts in 1882 and pushed through a law that stopped ancient finds leaving the country. He led the dig at Sidon in Lebanon, where the famous carved sarcophagi were found."
       },
       {
         "h": "The time",
-        "p": "In the late 1800s, painters were moving away from tidy, realistic scenes towards showing feelings and personal vision, and Van Gogh was part of that shift. He painted the sky he saw from his east-facing window just before sunrise, with the bright morning star (Venus) low in the sky. The village was not in that view; he invented it, and the church steeple is thought to echo the Dutch churches of his childhood."
+        "p": "In 1906 the Ottoman Empire was under Sultan Abdülhamid II. Reforms had been promised for decades, but many felt they were slow or going nowhere, and pressure was growing from nationalist movements and foreign powers. Two years later the Young Turk Revolution ended the Sultan's autocratic rule. Hamdi painted this at a time when Ottoman artists were learning European oil painting and using it to look at their own society."
       },
       {
         "h": "What's special",
-        "p": "The paint is laid on thickly, in short, rhythmic strokes you can almost feel, so the whole sky seems to keep moving. Van Gogh used colour for mood rather than accuracy, pairing deep blues with bright yellows so each makes the other glow. He himself wrote that he thought it a failure, yet it became one of the most loved paintings in the world."
+        "p": "The painting is in the polished, detailed style Hamdi learned in Paris, and it was shown at the 1906 Paris Salon. Its charm is the puzzle. Many people read it as a gentle joke about how slowly things change, with the patient old man and his unteachable tortoises standing in for reform. Others see a comment on Turkey caught between old and new, and historians still disagree about what the tortoises mean. Hamdi's own view of the painting is not recorded, so the meaning is open. A second, smaller version followed in 1907."
       },
       {
         "h": "Look for",
-        "p": "Follow the spiral swirl in the middle of the sky and notice how the brushstrokes curl around like water. Spot the very bright morning star just right of the cypress. Then notice how calm and straight the village below is, compared with the sky."
+        "p": "Count the five tortoises and notice how unbothered they are. Find the Arabic inscription above the pointed window, which speaks of the healing of hearts through meeting the beloved. Look at the man's drum and flute, and the worn floor and walls: a grand room that has seen better days."
       }
     ],
     "source": {
-      "title": "MoMA, The Museum of Modern Art",
-      "url": "https://www.moma.org/collection/works/79802"
+      "title": "Wikimedia Commons: The Tortoise Trainer (Pera Museum)",
+      "url": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg"
     }
   },
   "history": [
+    {
+      "date": "2026-11-22",
+      "title": "The Starry Night",
+      "artist": "Vincent van Gogh",
+      "artistLife": "Dutch, 1853–1890",
+      "year": "1889",
+      "medium": "Oil on canvas",
+      "size": "73.7 × 92.1 cm (about the size of a small window)",
+      "where": "The Museum of Modern Art (MoMA), New York",
+      "movement": "Post-Impressionism",
+      "fame": "famous",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+        "credit": "The Museum of Modern Art, New York, public domain (image: Wikimedia Commons)",
+        "focus": "center 40%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A huge night sky churns above a sleeping village, with swirling ribbons of blue, a glowing crescent moon and stars ringed in yellow halos. A dark, flame-shaped cypress tree rises on the left like a green-black torch. Down below, the little houses are quiet, with a church spire pointing up into all that motion."
+        },
+        {
+          "h": "The artist",
+          "p": "Van Gogh sold almost nothing in his lifetime and worked in intense bursts, writing long letters to his brother Theo about his ideas. In May 1889 he checked himself into the Saint-Paul-de-Mausole asylum at Saint-Rémy in the south of France, seeking care after a serious breakdown. He kept painting there, and this picture comes from that year."
+        },
+        {
+          "h": "The time",
+          "p": "In the late 1800s, painters were moving away from tidy, realistic scenes towards showing feelings and personal vision, and Van Gogh was part of that shift. He painted the sky he saw from his east-facing window just before sunrise, with the bright morning star (Venus) low in the sky. The village was not in that view; he invented it, and the church steeple is thought to echo the Dutch churches of his childhood."
+        },
+        {
+          "h": "What's special",
+          "p": "The paint is laid on thickly, in short, rhythmic strokes you can almost feel, so the whole sky seems to keep moving. Van Gogh used colour for mood rather than accuracy, pairing deep blues with bright yellows so each makes the other glow. He himself wrote that he thought it a failure, yet it became one of the most loved paintings in the world."
+        },
+        {
+          "h": "Look for",
+          "p": "Follow the spiral swirl in the middle of the sky and notice how the brushstrokes curl around like water. Spot the very bright morning star just right of the cypress. Then notice how calm and straight the village below is, compared with the sky."
+        }
+      ],
+      "source": {
+        "title": "MoMA, The Museum of Modern Art",
+        "url": "https://www.moma.org/collection/works/79802"
+      }
+    },
     {
       "date": "2026-11-21",
       "title": "The Lovers",
