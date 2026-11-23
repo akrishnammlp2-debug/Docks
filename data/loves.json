@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,18 +64,35 @@
     }
   ],
   "today": {
-    "date": "2026-11-22",
-    "topic": "superheroes",
-    "topicName": "Superheroes (DC & Marvel)",
+    "date": "2026-11-23",
+    "topic": "houseplants",
+    "topicName": "Houseplants",
     "kind": "fact",
-    "title": "Superman's creators sold him for $130",
-    "text": "In 1938, Jerry Siegel and Joe Shuster sold all rights to Superman to the company that became DC Comics for just $130, roughly $3,000 in today's money. They sued in 1946, but real change only came after the 1978 Superman film, when DC agreed to pay each of them $20,000 a year for life and to print a \"created by\" credit. Meanwhile, an unrestored copy of Action Comics No. 1, the issue where Superman debuted, sold for $6 million at Heritage Auctions in April 2024, making it the most valuable comic book ever sold at that time.",
+    "title": "Why Swiss cheese plants have holes in their leaves",
+    "text": "Monstera, the \"Swiss cheese plant\", grows in the shady understory of tropical rainforests, where brief patches of sunlight called sunflecks supply a large share of a plant's daily energy. A 2013 model by biologist Christopher Muir in The American Naturalist suggests the holes may help here: leaves with gaps let some light fall through to lower leaves, which makes the plant's growth steadier from day to day. Steadier growth could mean better long-term fitness when light is patchy and unpredictable. It is still a testable hypothesis rather than a settled answer, which is part of the charm of a plant most of us keep on a windowsill.",
     "source": {
-      "title": "The Saturday Evening Post: 10 Wild Stories from Comic Book History",
-      "url": "https://www.saturdayeveningpost.com/2026/02/10-wild-stories-from-comic-book-history/"
+      "title": "Muir CD (2013), How did the swiss cheese plant get its holes? The American Naturalist 181(2):273-81 (PubMed)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23348781/"
+    },
+    "image": {
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Monstera_deliciosa2.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Monstera_deliciosa2.jpg",
+      "credit": "See file page for author and licence (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-22",
+      "topic": "superheroes",
+      "topicName": "Superheroes (DC & Marvel)",
+      "kind": "fact",
+      "title": "Superman's creators sold him for $130",
+      "text": "In 1938, Jerry Siegel and Joe Shuster sold all rights to Superman to the company that became DC Comics for just $130, roughly $3,000 in today's money. They sued in 1946, but real change only came after the 1978 Superman film, when DC agreed to pay each of them $20,000 a year for life and to print a \"created by\" credit. Meanwhile, an unrestored copy of Action Comics No. 1, the issue where Superman debuted, sold for $6 million at Heritage Auctions in April 2024, making it the most valuable comic book ever sold at that time.",
+      "source": {
+        "title": "The Saturday Evening Post: 10 Wild Stories from Comic Book History",
+        "url": "https://www.saturdayeveningpost.com/2026/02/10-wild-stories-from-comic-book-history/"
+      }
+    },
     {
       "date": "2026-11-21",
       "topic": "nature",
