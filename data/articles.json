@@ -1,7 +1,20 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-23",
   "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
   "items": [
+    {
+      "id": "36855721",
+      "added": "2026-11-23",
+      "topic": "permcath",
+      "title": "Tunneled Hemodialysis Catheter Insertion: Technical and Clinical Considerations",
+      "journal": "Indian J Radiol Imaging",
+      "year": 2023,
+      "type": "Review",
+      "why": "Short primer on when to choose a tunnelled vs non-tunnelled dialysis line, site choice, tip position and complications.",
+      "doi": "10.1055/s-0042-1758877",
+      "pmid": "36855721",
+      "url": "https://doi.org/10.1055/s-0042-1758877"
+    },
     {
       "id": "34878131",
       "added": "2026-11-21",
