@@ -52,7 +52,8 @@
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
 body{background:var(--bg);color:var(--fg);font:16.5px/1.38 var(--font-body);-webkit-font-smoothing:antialiased;padding-left:var(--side)}
-body.locked{overflow:hidden;position:fixed;left:0;right:0;width:100%}
+body.locked,body.pinned{overflow:hidden;position:fixed;left:0;right:0;width:100%}
+.drawer{overscroll-behavior:contain}.scrim{touch-action:none}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0;padding:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -1967,7 +1968,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.83 · ABG notes';
+const APP_VERSION = '5.84 · Menu scroll fix';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
 
@@ -3784,8 +3785,8 @@ function goTab(k) { if (k === 'today' && tab !== 'today' && heroPics.length > 1)
 
 function liveAuto() { /* off: NBA and Dota refresh only when you pull down (Apoorva, 20 Nov 2026) */ }
 const drawerShown = () => $('drawer').classList.contains('open') || matchMedia('(min-width:900px)').matches;
-function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); }
-function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); }
+function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); render.drawerStale = false; } $('drawer').classList.add('open'); $('dscrim').classList.add('open'); if (!matchMedia('(min-width:900px)').matches) pinPage(true, 'drawer'); }
+function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); pinPage(false, 'drawer'); }
 
 /* ---------- settings search (v5.65): hides what doesn't match, opens folds that hold a match ---------- */
 document.addEventListener('input', e => { if (e.target.id !== 'set-q') return; const q = e.target.value.trim().toLowerCase(); const pg = $('page');
@@ -4250,8 +4251,12 @@ const PEEK_CAT = `<svg class="peek-cat" viewBox="0 0 24 16" aria-hidden="true"><
     if (mode === 1) { const stop = ev => { if (!ev.isTrusted) return; ev.stopPropagation(); ev.preventDefault(); }; document.addEventListener('click', stop, true); setTimeout(() => document.removeEventListener('click', stop, true), 350); } };
   document.addEventListener('touchend', end); document.addEventListener('touchcancel', end); })();
 /* ---------- sheets ---------- */
-function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; lockBody.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -lockBody.y + 'px'; B.classList.add('locked'); }
-function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); B.style.top = ''; window.scrollTo(0, lockBody.y || 0); }
+/* pinPage: freezes the page behind the side menu or a sheet so it can't scroll underneath; remembers where you were */
+function pinPage(on, why) { const B = document.body, S = pinPage.by || (pinPage.by = new Set());
+  if (on) { if (S.has(why)) return; if (!S.size) { pinPage.y = window.scrollY || document.documentElement.scrollTop || 0; B.style.top = -pinPage.y + 'px'; B.classList.add('pinned'); } S.add(why); }
+  else { if (!S.has(why)) return; S.delete(why); if (!S.size) { B.classList.remove('pinned'); B.style.top = ''; window.scrollTo(0, pinPage.y || 0); } } }
+function lockBody() { const B = document.body; if (B.classList.contains('locked')) return; pinPage(true, 'sheet'); B.classList.add('locked'); }
+function unlockBody() { const B = document.body; if (!B.classList.contains('locked')) return; B.classList.remove('locked'); pinPage(false, 'sheet'); }
 /* keep = the same sheet is growing (next step, reveal answer): stay where she is reading, never jump to the top (Apoorva, 23 Nov 2026) */
 function openSheet(html, keep) { const sh = $('sheet'), was = sh.classList.contains('open'), y = sh.scrollTop; $('sheet-body').innerHTML = html; lineIcons($('sheet-body')); sh.scrollTop = keep && was ? y : 0; if (html.includes('data-cc')) setTimeout(fillCredits, 0); if (was) return;
   lockBody(); $('scrim').classList.add('open'); requestAnimationFrame(() => { if (document.body.classList.contains('locked')) sh.classList.add('open'); }); }
