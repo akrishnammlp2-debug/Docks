@@ -1967,7 +1967,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.82 · Steps stay in place';
+const APP_VERSION = '5.83 · ABG notes';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
 
@@ -3819,7 +3819,7 @@ function prepSheet(id) { const c = PREP().find(x => x.id === id); if (!c) return
 /* ---------- v5.79: daily ECG + ABG flashcards (Apoorva, 23 Nov 2026) ----------
    ECG cases live in data/ecg.json (each fact checked against LITFL / RCUK 2025 / Association of Anaesthetists before it went in).
    ABG cases are made fresh each day from the scenarios below: values obey Henderson–Hasselbalch, and the
-   step-by-step answer is worked out by abgRead() with the bedside rules (Brandis 1-4-2-5, Winter's, 0.7×HCO3+21,
+   step-by-step answer is worked out by abgRead() with the bedside rules (Brandis 1-4-2-5, Winter's, 0.7×HCO3+20 (±5),
    albumin-corrected anion gap, delta ratio). tools/flash_test.mjs checks every scenario against those rules. */
 const FC_I = [4, 10, 25, 60]; /* "Got it" spacing in days; "Again" brings it back in 2 days */
 const ECGS = () => (D.ecg && D.ecg.cases) || [];
@@ -3898,8 +3898,8 @@ function abgRead(v) {
   let comp = '';
   if (prim === 'macid') { const e = 1.5 * h + 8; comp = `Winter's formula: expected PaCO₂ = 1.5 × ${h} + 8 = ${r1(e)} ± 2. Measured ${c}: ` + (c > e + 2 ? 'higher than expected, so there is also a respiratory acidosis.' : c < e - 2 ? 'lower than expected, so there is also a primary respiratory alkalosis.' : 'as expected, so the respiratory compensation is appropriate.');
     tags.add('macid'); if (c > e + 2) tags.add('racid'); if (c < e - 2) tags.add('ralk'); }
-  if (prim === 'malk') { const e = 0.7 * h + 21; comp = `Expected PaCO₂ = 0.7 × ${h} + 21 = ${r1(e)} ± 2. Measured ${c}: ` + (c > e + 2 ? 'higher than expected, so there is also a respiratory acidosis.' : c < e - 2 ? 'lower than expected, so there is also a respiratory alkalosis.' : 'as expected, so the compensation is appropriate.');
-    tags.add('malk'); if (c > e + 2) tags.add('racid'); if (c < e - 2) tags.add('ralk'); }
+  if (prim === 'malk') { const e = 0.7 * h + 20; comp = `Expected PaCO₂ = 0.7 × ${h} + 20 = ${r1(e)} ± 5. Measured ${c}: ` + (c > e + 5 ? 'higher than expected, so there is also a respiratory acidosis.' : c < e - 5 ? 'lower than expected, so there is also a respiratory alkalosis.' : 'as expected, so the compensation is appropriate.');
+    tags.add('malk'); if (c > e + 5) tags.add('racid'); if (c < e - 5) tags.add('ralk'); }
   if (prim === 'racid') { const d = c - 40, a = 24 + 0.1 * d, k = 24 + 0.4 * d; tags.add('racid');
     comp = `PaCO₂ is up by ${d}. Acute: HCO₃⁻ rises 1 per 10 → about ${r1(a)}. Chronic: 4 per 10 → about ${r1(k)}. Measured ${h}: `;
     if (h < a - 2) { comp += 'lower than even the acute value, so there is also a metabolic acidosis.'; tags.add('macid'); }
@@ -3961,7 +3961,7 @@ const ABG_SC = [
     gen: U => { const h = U(11, 14); return { hco3: h, pco2: 1.5 * h + 8 - U(4, 6), ag: 12 + U(1.1, 1.5) * (24 - h), alb: U(3.6, 4.0), na: U(136, 140) }; }, ok: v => v.ph < 7.39,
     dx: 'High anion gap metabolic acidosis plus a primary respiratory alkalosis (PaCO₂ lower than Winter\'s): salicylate toxicity.', pearl: 'Salicylates stimulate the respiratory centre directly. If she has to be intubated, keep her minute ventilation high: letting PaCO₂ rise can kill.', src: 'LITFL salicylate toxicity; Brandis' },
   { id: 'goo', t: 'Gastric outlet obstruction', stem: 'A 55-year-old with gastric outlet obstruction from a pyloric tumour has vomited for a week. Listed for gastrojejunostomy. K⁺ 2.8 mmol/L. Room air.', expect: ['malk'],
-    gen: U => { const h = U(34, 40); return { hco3: h, pco2: 0.7 * h + 21 + U(-1, 1), ag: U(11, 13), alb: 3.8, na: U(132, 136) }; },
+    gen: U => { const h = U(34, 40); return { hco3: h, pco2: 0.7 * h + 20 + U(-1, 1), ag: U(11, 13), alb: 3.8, na: U(132, 136) }; },
     dx: 'Hypochloraemic, hypokalaemic metabolic alkalosis with appropriate respiratory compensation, from vomiting.', pearl: 'Chloride-responsive: correct with 0.9% saline and potassium before surgery. It is a full stomach: decompress with an NG tube and do a rapid sequence induction.', src: 'LITFL metabolic alkalosis' },
   { id: 'opioid', t: 'Drowsy in recovery', stem: 'A 68-year-old in recovery after open hernia repair had IV morphine in theatre. Drowsy, RR 6, SpO₂ 89% on room air. ABG on room air.', expect: ['racid', 'acute'],
     gen: U => { const c = U(60, 72); return { pco2: c, hco3: 24 + 0.1 * (c - 40) + U(-0.5, 0.5), ag: U(11, 13), alb: 4, na: U(137, 141), fio2: 0.21, aa: U(6, 10), age: 68 }; },
@@ -3994,7 +3994,7 @@ const ABG_SC = [
     gen: U => { const c = U(52, 58); return { pco2: c, hco3: 24 + 0.4 * (c - 40) + U(-0.4, 0.4), ag: U(10, 13), alb: 3.5, na: U(137, 141), fio2: 0.7, peep: 12, pao2fix: U(84, 98), age: 45 }; },
     dx: 'Compensated respiratory acidosis (permissive hypercapnia) with moderate ARDS by P/F ratio.', pearl: 'Hypercapnia is accepted with low tidal volumes as long as the pH stays acceptable (often above about 7.20). P/F 100–200 on PEEP ≥ 5 is moderate ARDS (Berlin).', src: 'ARDS Definition Task Force (Berlin), JAMA 2012' },
   { id: 'citrate', t: 'Day after a massive transfusion', stem: 'Day 1 after a massive transfusion (18 units of blood products) for a ruptured AAA, now extubated and comfortable, K⁺ 3.3 mmol/L. Room air.', expect: ['malk'],
-    gen: U => { const h = U(31, 34); return { hco3: h, pco2: 0.7 * h + 21 + U(-1, 1), ag: U(10, 13), alb: 3.4, na: U(137, 141) }; },
+    gen: U => { const h = U(31, 34); return { hco3: h, pco2: 0.7 * h + 20 + U(-1, 1), ag: U(10, 13), alb: 3.4, na: U(137, 141) }; },
     dx: 'Metabolic alkalosis with appropriate compensation: citrate from stored blood metabolised to bicarbonate.', pearl: 'The liver turns each citrate into bicarbonate, so the acidosis of the bleed turns into an alkalosis a day later. Check ionised calcium too.', src: 'BJA Education massive transfusion' },
   { id: 'ckd', t: 'Missed dialysis', stem: 'A 62-year-old with CKD stage 5 who has missed two dialysis sessions, listed for an AV fistula. K⁺ 6.1 mmol/L. Room air.', expect: ['macid', 'hagma', 'nagma'],
     gen: U => { const h = U(13, 16); return { hco3: h, pco2: 1.5 * h + 8 + U(-1, 1), ag: 12 + U(0.5, 0.7) * (24 - h), alb: 3.6, na: U(136, 140) }; },
@@ -5102,7 +5102,7 @@ function articlesSection() { const A = ARTS(); let h = `<div class="sec"><h2 cla
     const left = a.added ? KEEP_DAYS.articles - 1 - Math.round((new Date(today() + 'T12:00') - new Date(a.added + 'T12:00')) / 864e5) : null;
     return `<a class="card art-c" href="${esc(url)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">${a.topic ? `<span class="art-q">You asked about ${esc(a.topic)}</span>` : ''}<b>${esc(a.title)}</b><span class="art-m">${esc([a.journal, a.year, a.type].filter(Boolean).join(' · '))}</span>${a.why ? `<span class="c-s">${esc(a.why)}</span>` : ''}<span class="art-q">${a.added ? 'Added ' + esc(dShort(a.added)) + (left !== null && left >= 0 ? ' · ' + (left === 0 ? 'leaves after today' : 'stays ' + plural(left, 'more day')) : '') : ''}</span></a>`; }).join('');
   return h + moreBtn('arts', A.length, 3, 'article', 'btn ghost wide') + `</div>`; }
-const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', ECG: '〰️', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
+const BCAT_ICON = { Drugs: '💊', Ventilation: '🫁', Physiology: '🧬', Airway: '😮‍💨', Regional: '💉', Obstetric: '🤰', Paediatric: '🧒', Cardiac: '🫀', ECG: '〰️', ABG: '🩸', Neuro: '🧠', ICU: '🏥', 'Monitoring & equipment': '📟', 'Preop & scoring': '📋', 'New papers': '📰', Other: '✨' };
 function bitesSection() {
   const B = BITES(); let h = `<div class="sec"><h2 class="sh"><span>Bite-size</span><span>${B.length ? plural(B.length, 'note') : ''}</span></h2>${B.some(b => vivaPts(b).length) ? `<button type="button" class="card calc-link" data-act="viva-start"><span class="cat-due-i" aria-hidden="true">🎤</span><span class="cat-tx"><b>Viva round</b><span>5 quick flashcards from your notes, about 2 minutes</span></span>${CHEV}</button>` : ''}`;
   if (!B.length) return h + `<div class="card"><span class="c-s">Ask Claude your academic questions (drugs, ventilator settings, physiology, papers). Each topic is saved here as a short note, sorted into columns, and updated when you ask again.</span></div></div>`;

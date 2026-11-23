@@ -11,6 +11,7 @@
   "Paediatric",
   "Cardiac",
   "ECG",
+  "ABG",
   "Neuro",
   "ICU",
   "Monitoring & equipment",
@@ -2874,6 +2875,1014 @@
     {
      "title": "LITFL: Brugada syndrome",
      "url": "https://litfl.com/brugada-syndrome-ecg-library/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-normal-values",
+   "cat": "ABG",
+   "title": "ABG normal values, units & conversions",
+   "aliases": [
+    "ABG normal values",
+    "blood gas normal",
+    "kPa to mmHg",
+    "H+ concentration",
+    "base excess normal",
+    "respiratory failure types",
+    "Henderson-Hasselbalch"
+   ],
+   "summary": "The reference numbers for a blood gas, in both mmHg and kPa, plus the equations that tie pH, PaCO₂ and HCO₃⁻ together. Ranges vary a little between labs; these are the standard teaching values.",
+   "sections": [
+    {
+     "h": "Normal values",
+     "rows": [
+      [
+       "pH",
+       "7.35–7.45 (H⁺ about 44–36 nmol/L)"
+      ],
+      [
+       "PaCO₂",
+       "35–45 mmHg = 4.7–6.0 kPa (mean 40 mmHg / 5.3 kPa)"
+      ],
+      [
+       "HCO₃⁻",
+       "22–26 mmol/L"
+      ],
+      [
+       "Base excess",
+       "−2 to +2 mmol/L"
+      ],
+      [
+       "PaO₂ on room air",
+       "Above 11 kPa (about 80–100 mmHg) in a healthy adult"
+      ],
+      [
+       "Lactate",
+       "Under 2 mmol/L"
+      ],
+      [
+       "Anion gap (Na − Cl − HCO₃)",
+       "About 12 (lab range roughly 8–16)"
+      ]
+     ]
+    },
+    {
+     "h": "Conversions and quick maths",
+     "rows": [
+      [
+       "kPa ↔ mmHg",
+       "1 kPa = 7.5 mmHg"
+      ],
+      [
+       "Henderson–Hasselbalch",
+       "pH = 6.1 + log [HCO₃⁻ ÷ (0.03 × PaCO₂ in mmHg)]"
+      ],
+      [
+       "Henderson (no logs)",
+       "[H⁺] nmol/L = 24 × PaCO₂ (mmHg) ÷ HCO₃⁻"
+      ],
+      [
+       "pH → H⁺",
+       "7.40 = 40, 7.30 = 50, 7.20 = 63, 7.10 = 79, 7.50 = 32 nmol/L"
+      ],
+      [
+       "Expected PaO₂ on oxygen",
+       "Roughly inspired O₂ % minus 10, in kPa (e.g. 40% O₂ → about 30 kPa)"
+      ]
+     ]
+    },
+    {
+     "h": "What each number tells you",
+     "items": [
+      "pH: is the blood acidaemic or alkalaemic overall",
+      "PaCO₂: the respiratory side (alveolar ventilation)",
+      "HCO₃⁻ and base excess: the metabolic side; both are CALCULATED by the analyser from pH and PaCO₂",
+      "Base excess: the strong acid or base needed to bring the sample back to pH 7.40 at PaCO₂ 40",
+      "PaO₂: oxygenation, always read with the FiO₂"
+     ]
+    },
+    {
+     "h": "Respiratory failure",
+     "rows": [
+      [
+       "Type 1",
+       "PaO₂ < 8 kPa (60 mmHg) with normal or low PaCO₂: V/Q mismatch, shunt"
+      ],
+      [
+       "Type 2",
+       "PaO₂ < 8 kPa with PaCO₂ > 6.0 kPa (45 mmHg): hypoventilation"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Check the gas is internally consistent: put PaCO₂ and HCO₃⁻ into Henderson; the H⁺ should match the pH",
+      "Only pH, PaCO₂ and PaO₂ are measured directly; HCO₃⁻, BE and SaO₂ (unless co-oximetry) are calculated",
+      "In the 7.2–7.5 range, each 0.01 pH change ≈ 1 nmol/L change in H⁺"
+     ]
+    }
+   ],
+   "pearl": "pH 7.40 = H⁺ 40 nmol/L; PaCO₂ 40 mmHg = 5.3 kPa; HCO₃⁻ 24.",
+   "refs": [
+    {
+     "title": "Resuscitation Council UK ALS: introduction to ABG interpretation",
+     "url": "https://lms.resus.org.uk/modules/m35-v2-blood-gasses/10346/m35/t05/content/m35_t05_005.htm"
+    },
+    {
+     "title": "LITFL: Acid–base and blood gas interpretation",
+     "url": "https://litfl.com/acid-base"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-compensation-rules",
+   "cat": "ABG",
+   "title": "ABG compensation rules (Winter's, 0.7 rule, 1-4-2-5) with examples",
+   "aliases": [
+    "compensation",
+    "Winter's formula",
+    "Winters formula",
+    "1-2-4-5 rule",
+    "Boston rules",
+    "expected PaCO2",
+    "expected HCO3",
+    "acute vs chronic respiratory acidosis",
+    "mixed disorder"
+   ],
+   "summary": "After finding the primary disorder, predict what the body's compensation should look like. If the measured value is outside the prediction, there is a second primary disorder. These are the Boston \"bedside rules\" taught by Brandis.",
+   "sections": [
+    {
+     "h": "The six rules",
+     "rows": [
+      [
+       "Metabolic acidosis (Winter's)",
+       "Expected PaCO₂ = 1.5 × HCO₃⁻ + 8 (± 2)"
+      ],
+      [
+       "Metabolic alkalosis",
+       "Expected PaCO₂ = 0.7 × HCO₃⁻ + 20 (± 5)"
+      ],
+      [
+       "Acute respiratory acidosis",
+       "HCO₃⁻ rises 1 per 10 mmHg rise in PaCO₂"
+      ],
+      [
+       "Chronic respiratory acidosis",
+       "HCO₃⁻ rises 4 per 10 mmHg rise"
+      ],
+      [
+       "Acute respiratory alkalosis",
+       "HCO₃⁻ falls 2 per 10 mmHg fall"
+      ],
+      [
+       "Chronic respiratory alkalosis",
+       "HCO₃⁻ falls 5 per 10 mmHg fall"
+      ]
+     ]
+    },
+    {
+     "h": "Timing",
+     "items": [
+      "Respiratory compensation starts within minutes, complete by 12–24 h",
+      "Renal (metabolic) compensation takes 3–5 days to be complete",
+      "Compensation never overshoots: a \"fully corrected\" pH suggests a second disorder (except chronic respiratory alkalosis, which can reach a normal pH)"
+     ]
+    },
+    {
+     "h": "Worked examples",
+     "rows": [
+      [
+       "DKA",
+       "pH 7.22, PaCO₂ 20, HCO₃⁻ 8. Winter's: 1.5 × 8 + 8 = 20 ± 2 → measured 20: appropriate compensation"
+      ],
+      [
+       "Vomiting",
+       "pH 7.53, PaCO₂ 47, HCO₃⁻ 38. Expected 0.7 × 38 + 20 = 46.6 ± 5 → appropriate"
+      ],
+      [
+       "COPD",
+       "pH 7.35, PaCO₂ 60, HCO₃⁻ 32. Rise of 20: acute → 26, chronic → 32 → chronic respiratory acidosis"
+      ],
+      [
+       "Opioid in PACU",
+       "pH 7.21, PaCO₂ 70, HCO₃⁻ 27. Rise of 30: acute → 27 → acute respiratory acidosis"
+      ],
+      [
+       "Term pregnancy",
+       "pH 7.42, PaCO₂ 30, HCO₃⁻ 19. Fall of 10: acute → 22, chronic → 19 → chronic respiratory alkalosis (normal for pregnancy)"
+      ],
+      [
+       "Salicylate",
+       "pH 7.40, PaCO₂ 20, HCO₃⁻ 12, AG 24. Winter's 26 ± 2 but PaCO₂ is 20 → metabolic acidosis + respiratory alkalosis, hidden behind a normal pH"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Shortcut for Winter's: in a compensated metabolic acidosis the PaCO₂ is roughly the last two digits of the pH (pH 7.22 → PaCO₂ ≈ 22)",
+      "Ventilated patients cannot compensate on their own: you set the minute ventilation, so aim for the Winter's PaCO₂",
+      "A normal pH with abnormal PaCO₂ and HCO₃⁻ = mixed disorder until proven otherwise"
+     ]
+    }
+   ],
+   "pearl": "Winter's 1.5 × HCO₃ + 8 ± 2; alkalosis 0.7 × HCO₃ + 20 ± 5; respiratory 1-4 up, 2-5 down.",
+   "refs": [
+    {
+     "title": "Brandis K. Acid-base physiology: bedside rules for assessment of compensation",
+     "url": "https://med.libretexts.org/Bookshelves/Anatomy_and_Physiology/Book%3A_Acid-base_Physiology_(Brandis)/09%3A_Assessment_of_Acid-Base_Disorders/9.03%3A_Bedside_Rules_for_Assessment_of_Compensation"
+    },
+    {
+     "title": "LITFL: Blood gas interpretation",
+     "url": "https://litfl.com/acid-base-disorders/"
+    },
+    {
+     "title": "Deranged Physiology: Boston and Copenhagen methods",
+     "url": "https://derangedphysiology.com/main/cicm-primary-exam/acid-base-physiology/Chapter-605/assessment-compensation-boston-and-copenhagen-methods"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-anion-gap",
+   "cat": "ABG",
+   "title": "Anion gap, corrected AG, delta ratio & HAGMA causes",
+   "aliases": [
+    "anion gap",
+    "AG",
+    "corrected anion gap",
+    "albumin correction",
+    "delta ratio",
+    "delta gap",
+    "delta-delta",
+    "HAGMA",
+    "GOLDMARK",
+    "MUDPILES",
+    "high anion gap metabolic acidosis"
+   ],
+   "summary": "In a metabolic acidosis the anion gap tells you whether an unmeasured acid has been added (high gap) or bicarbonate lost / chloride gained (normal gap). Correct it for albumin, then use the delta ratio to find a hidden second disorder.",
+   "sections": [
+    {
+     "h": "Formulas",
+     "rows": [
+      [
+       "Anion gap",
+       "Na⁺ − (Cl⁻ + HCO₃⁻); normal about 12 (8–16 depending on the lab)"
+      ],
+      [
+       "Albumin correction",
+       "Add 2.5 for every 1 g/dL that albumin is below 4 (or 0.25 per g/L below 40)"
+      ],
+      [
+       "Delta ratio",
+       "(AG − 12) ÷ (24 − HCO₃⁻)"
+      ],
+      [
+       "Delta gap / corrected HCO₃⁻",
+       "HCO₃⁻ + (AG − 12): > 24 = extra metabolic alkalosis; < 24 = extra normal-gap acidosis"
+      ]
+     ]
+    },
+    {
+     "h": "Delta ratio meaning",
+     "rows": [
+      [
+       "< 0.4",
+       "Pure normal anion gap acidosis"
+      ],
+      [
+       "0.4–0.8",
+       "High + normal anion gap acidosis together (e.g. renal failure)"
+      ],
+      [
+       "0.8–2",
+       "Pure high anion gap acidosis (DKA often about 1; lactic about 1.6)"
+      ],
+      [
+       "> 2",
+       "High gap acidosis + metabolic alkalosis (or pre-existing chronic respiratory acidosis)"
+      ]
+     ]
+    },
+    {
+     "h": "HAGMA causes: GOLD MARK (Lancet 2008)",
+     "items": [
+      "Glycols (ethylene, propylene)",
+      "Oxoproline (chronic paracetamol, malnutrition)",
+      "L-lactate (shock, sepsis, metformin)",
+      "D-lactate (short bowel)",
+      "Methanol",
+      "Aspirin (salicylates)",
+      "Renal failure",
+      "Ketoacidosis (diabetic, alcoholic, starvation)",
+      "Older mnemonic: MUDPILES"
+     ]
+    },
+    {
+     "h": "Worked examples",
+     "rows": [
+      [
+       "DKA",
+       "Na 134, Cl 98, HCO₃⁻ 8 → AG 28. Delta ratio 16 ÷ 16 = 1.0: pure HAGMA"
+      ],
+      [
+       "DKA + vomiting",
+       "Na 132, Cl 82, HCO₃⁻ 17 → AG 33. Delta ratio 21 ÷ 7 = 3.0: HAGMA + metabolic alkalosis"
+      ],
+      [
+       "Low albumin ICU patient",
+       "Na 138, Cl 106, HCO₃⁻ 18, albumin 2.0 → AG 14 looks normal; corrected 14 + 5 = 19: hidden HAGMA"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Always correct the AG for albumin in ICU patients; low albumin hides a high gap",
+      "Some labs include K⁺ in the AG; then normal is about 4 higher",
+      "A low anion gap: think low albumin, lab error, myeloma (cationic paraprotein), lithium or bromide"
+     ]
+    }
+   ],
+   "pearl": "AG = Na − Cl − HCO₃; +2.5 per g/dL albumin below 4; delta ratio 0.4 / 0.8 / 2.",
+   "refs": [
+    {
+     "title": "LITFL: Delta ratio",
+     "url": "https://litfl.com/delta-ratio"
+    },
+    {
+     "title": "Mehta AN et al. GOLD MARK: an anion gap mnemonic for the 21st century. Lancet 2008",
+     "url": "https://doi.org/10.1016/S0140-6736(08)61398-7"
+    },
+    {
+     "title": "LITFL: Blood gas interpretation",
+     "url": "https://litfl.com/acid-base-disorders/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-nagma-osmolar-gap",
+   "cat": "ABG",
+   "title": "Normal anion gap acidosis, urinary anion gap & osmolar gap",
+   "aliases": [
+    "NAGMA",
+    "normal anion gap acidosis",
+    "hyperchloraemic acidosis",
+    "HARDUPS",
+    "urinary anion gap",
+    "UAG",
+    "RTA",
+    "renal tubular acidosis",
+    "osmolar gap",
+    "osmolal gap",
+    "toxic alcohol"
+   ],
+   "summary": "A normal anion gap (hyperchloraemic) acidosis means bicarbonate has been lost, from the gut or the kidney, or chloride has been added. The urinary anion gap separates gut from kidney. The osmolar gap is the screening test for toxic alcohols in a high-gap acidosis.",
+   "sections": [
+    {
+     "h": "NAGMA causes: HARDUPS",
+     "items": [
+      "Hyperalimentation (TPN)",
+      "Acetazolamide (carbonic anhydrase inhibitors)",
+      "Renal tubular acidosis",
+      "Diarrhoea, ileostomy and other GI losses",
+      "Ureteric diversion (ileal conduit)",
+      "Pancreatic fistula",
+      "Saline in large volumes (0.9% NaCl has 154 mmol/L Cl⁻)"
+     ]
+    },
+    {
+     "h": "Urinary anion gap",
+     "rows": [
+      [
+       "Formula",
+       "Urine (Na⁺ + K⁺) − urine Cl⁻"
+      ],
+      [
+       "Negative",
+       "GI bicarbonate loss: the kidney is excreting acid (NH₄⁺) normally"
+      ],
+      [
+       "Positive",
+       "Kidney cannot excrete acid: renal tubular acidosis"
+      ],
+      [
+       "Use only",
+       "In a normal anion gap acidosis"
+      ]
+     ]
+    },
+    {
+     "h": "RTA types",
+     "rows": [
+      [
+       "Type 1 (distal)",
+       "Cannot secrete H⁺; urine pH > 5.5; low K⁺; stones"
+      ],
+      [
+       "Type 2 (proximal)",
+       "Cannot reabsorb HCO₃⁻; low K⁺; urine pH < 5.5 once bicarbonate is depleted"
+      ],
+      [
+       "Type 4",
+       "Hypoaldosteronism; HIGH K⁺"
+      ]
+     ]
+    },
+    {
+     "h": "Osmolar gap",
+     "rows": [
+      [
+       "Calculated osmolality",
+       "2 × Na⁺ + glucose + urea (all mmol/L). With mg/dL: 2 × Na + glucose ÷ 18 + BUN ÷ 2.8"
+      ],
+      [
+       "Osmolar gap",
+       "Measured − calculated; normal < 10"
+      ],
+      [
+       "High gap",
+       "Methanol, ethylene glycol, propylene glycol, ethanol, mannitol, sorbitol"
+      ],
+      [
+       "Caution",
+       "A normal osmolar gap does NOT rule out a toxic alcohol (late presentation)"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Saline-induced hyperchloraemic acidosis is the commonest NAGMA in theatre; balanced crystalloids reduce it",
+      "Ileal conduit after cystectomy: chronic NAGMA from urine reabsorbing Cl⁻ in the bowel segment",
+      "High anion gap + high osmolar gap = think toxic alcohol"
+     ]
+    }
+   ],
+   "pearl": "Urinary AG negative = gut (neGUTive); positive = kidney.",
+   "refs": [
+    {
+     "title": "LITFL: Urinary anion gap",
+     "url": "https://litfl.com/urinary-anion-gap/"
+    },
+    {
+     "title": "LITFL: Osmolar gap",
+     "url": "https://litfl.com/osmolar-gap/"
+    },
+    {
+     "title": "WikEM: Non anion gap acidosis",
+     "url": "https://wikem.org/wiki/Non_anion_gap_acidosis"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-metabolic-alkalosis-respiratory",
+   "cat": "ABG",
+   "title": "Metabolic alkalosis & respiratory disorders: causes",
+   "aliases": [
+    "metabolic alkalosis",
+    "chloride responsive",
+    "chloride resistant",
+    "urine chloride",
+    "respiratory acidosis causes",
+    "respiratory alkalosis causes",
+    "post-hypercapnic alkalosis",
+    "contraction alkalosis"
+   ],
+   "summary": "Metabolic alkalosis is split by urine chloride into chloride-responsive (volume or chloride depletion, fixed with saline) and chloride-resistant (mineralocorticoid excess). Respiratory acidosis is hypoventilation; respiratory alkalosis is hyperventilation.",
+   "sections": [
+    {
+     "h": "Metabolic alkalosis",
+     "rows": [
+      [
+       "Chloride-responsive (low urine Cl⁻, typically < 20 mmol/L)",
+       "Vomiting / NG drainage, past diuretic use, post-hypercapnia, contraction alkalosis"
+      ],
+      [
+       "Chloride-resistant (high urine Cl⁻)",
+       "Hyperaldosteronism, Cushing's, steroids or fludrocortisone, liquorice, renal artery stenosis, current diuretics"
+      ],
+      [
+       "Added alkali",
+       "Citrate from massive transfusion, bicarbonate, antacids"
+      ],
+      [
+       "Treatment",
+       "Responsive: 0.9% saline + potassium. Resistant: treat the hormone cause; spironolactone"
+      ]
+     ]
+    },
+    {
+     "h": "Respiratory acidosis (PaCO₂ ↑)",
+     "items": [
+      "Central: opioids, sedatives, residual anaesthesia, head injury",
+      "Neuromuscular: residual paralysis, myasthenia, Guillain–Barré, high spinal",
+      "Chest wall / lung: COPD, severe asthma, obesity hypoventilation, pneumothorax",
+      "Iatrogenic: low minute ventilation, CO₂ from laparoscopy, rebreathing (exhausted soda lime)",
+      "Hypermetabolic: malignant hyperthermia, thyroid storm"
+     ]
+    },
+    {
+     "h": "Respiratory alkalosis (PaCO₂ ↓)",
+     "items": [
+      "Pain, anxiety",
+      "Hypoxia: pneumonia, PE, altitude",
+      "Pregnancy (progesterone), liver failure",
+      "Sepsis (early), salicylates",
+      "Over-ventilation on the ventilator",
+      "CNS disease (stroke, haemorrhage)"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Post-hypercapnic alkalosis: ventilating a chronic CO₂ retainer to PaCO₂ 40 leaves their high HCO₃⁻ unopposed",
+      "Metabolic alkalosis + hypokalaemia under anaesthesia: risk of arrhythmias and prolonged weaning (hypoventilation)",
+      "Alkalosis shifts the oxygen dissociation curve left and lowers ionised calcium"
+     ]
+    }
+   ],
+   "pearl": "Urine Cl⁻ low = give saline; urine Cl⁻ high = look for steroids/aldosterone.",
+   "refs": [
+    {
+     "title": "LITFL: Blood gas interpretation (causes)",
+     "url": "https://litfl.com/acid-base-disorders/"
+    },
+    {
+     "title": "Emmett M. Metabolic alkalosis: a brief pathophysiologic review. CJASN 2020",
+     "url": "https://doi.org/10.2215/CJN.16041219"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-oxygenation",
+   "cat": "ABG",
+   "title": "Oxygenation: alveolar gas equation, A–a gradient, P/F ratio",
+   "aliases": [
+    "A-a gradient",
+    "alveolar gas equation",
+    "PAO2",
+    "P/F ratio",
+    "PaO2/FiO2",
+    "oxygenation index",
+    "Berlin ARDS",
+    "hypoxaemia causes",
+    "shunt"
+   ],
+   "summary": "The PaO₂ only makes sense next to the FiO₂. The alveolar gas equation predicts the alveolar PO₂; the A–a gradient then tells you whether low oxygen is from hypoventilation (normal gradient) or a lung problem (raised gradient).",
+   "sections": [
+    {
+     "h": "Equations",
+     "rows": [
+      [
+       "Alveolar gas equation",
+       "PAO₂ = FiO₂ × (Patm − PH₂O) − PaCO₂ ÷ 0.8. At sea level on air: 0.21 × (760 − 47) − PaCO₂ ÷ 0.8 ≈ 150 − 1.25 × PaCO₂"
+      ],
+      [
+       "A–a gradient",
+       "PAO₂ − PaO₂"
+      ],
+      [
+       "Normal A–a",
+       "Roughly age ÷ 4 + 4 mmHg on room air (5–10 mmHg in young adults)"
+      ],
+      [
+       "P/F ratio",
+       "PaO₂ (mmHg) ÷ FiO₂; normal about 400–500"
+      ],
+      [
+       "Oxygenation index",
+       "FiO₂ × mean airway pressure × 100 ÷ PaO₂ (used in paediatric ARDS and for ECMO decisions)"
+      ]
+     ]
+    },
+    {
+     "h": "Hypoxaemia by A–a gradient",
+     "rows": [
+      [
+       "Normal gradient",
+       "Hypoventilation (high PaCO₂), low inspired O₂ (altitude)"
+      ],
+      [
+       "Raised gradient",
+       "V/Q mismatch, shunt (intrapulmonary or cardiac), diffusion defect"
+      ],
+      [
+       "Shunt clue",
+       "PaO₂ barely rises with 100% O₂"
+      ]
+     ]
+    },
+    {
+     "h": "ARDS by P/F (Berlin, on PEEP ≥ 5)",
+     "rows": [
+      [
+       "Mild",
+       "200–300"
+      ],
+      [
+       "Moderate",
+       "100–200"
+      ],
+      [
+       "Severe",
+       "≤ 100"
+      ]
+     ]
+    },
+    {
+     "h": "Worked example",
+     "items": [
+      "Drowsy after morphine, room air: PaCO₂ 70, PaO₂ 52, age 60",
+      "PAO₂ = 150 − 70 ÷ 0.8 ≈ 62",
+      "A–a = 62 − 52 = 10 (expected about 19 for age 60): normal",
+      "So the low PaO₂ is pure hypoventilation: treat the ventilation, not the lungs"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "The A–a gradient widens with age and with FiO₂, so it is least reliable on high oxygen; use P/F there",
+      "Supplemental oxygen keeps SpO₂ normal while CO₂ climbs: pulse oximetry is not a monitor of ventilation",
+      "Quick check on oxygen: expected PaO₂ (kPa) ≈ inspired % − 10"
+     ]
+    }
+   ],
+   "pearl": "Low PaO₂ + normal A–a = hypoventilation; raised A–a = lung problem.",
+   "refs": [
+    {
+     "title": "LITFL: A–a gradient",
+     "url": "https://litfl.com/a-a-gradient/"
+    },
+    {
+     "title": "MSD Manual: alveolar gas and A–a gradient equations",
+     "url": "https://www.msdmanuals.com/professional/multimedia/table/equations-for-calculating-alveolar-oxygen-pressure-and-alveolar-to-arterial-oxygen-gradient"
+    },
+    {
+     "title": "ARDS Definition Task Force. Acute respiratory distress syndrome: the Berlin Definition. JAMA 2012",
+     "url": "https://doi.org/10.1001/jama.2012.5669"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-stewart-approach",
+   "cat": "ABG",
+   "title": "Stewart (strong ion) approach & base excess partitioning",
+   "aliases": [
+    "Stewart approach",
+    "strong ion difference",
+    "SID",
+    "SIDa",
+    "SIDe",
+    "strong ion gap",
+    "SIG",
+    "ATOT",
+    "base excess partitioning",
+    "Fencl-Stewart",
+    "Story bedside Stewart"
+   ],
+   "summary": "Stewart says pH is set by three independent things: PaCO₂, the strong ion difference (mainly Na⁺ minus Cl⁻) and weak acids (mainly albumin). Bicarbonate just follows. The bedside version splits the base excess into a chloride part, an albumin part and the unmeasured-anion remainder.",
+   "sections": [
+    {
+     "h": "The three independent variables",
+     "rows": [
+      [
+       "PaCO₂",
+       "Respiratory component"
+      ],
+      [
+       "SID (strong ion difference)",
+       "Na⁺ + K⁺ + Ca²⁺ + Mg²⁺ − Cl⁻ − lactate; normal about +40. A lower SID = acidosis"
+      ],
+      [
+       "ATOT (weak acids)",
+       "Mainly albumin (about 78%) and phosphate. Low albumin = alkalosis"
+      ]
+     ]
+    },
+    {
+     "h": "Gaps",
+     "rows": [
+      [
+       "SIDa (apparent)",
+       "From measured strong ions"
+      ],
+      [
+       "SIDe (effective)",
+       "HCO₃⁻ + charge on albumin and phosphate"
+      ],
+      [
+       "Strong ion gap (SIG)",
+       "SIDa − SIDe; normal about 0. Raised = unmeasured anions (ketones, toxins, renal acids)"
+      ]
+     ]
+    },
+    {
+     "h": "Bedside partitioning (Story)",
+     "rows": [
+      [
+       "Na–Cl effect",
+       "Na⁺ − Cl⁻ − 38 (newer versions use 35 or 32). Negative = hyperchloraemic acidosis"
+      ],
+      [
+       "Albumin effect",
+       "0.25 × (42 − albumin in g/L). Positive = alkalinising"
+      ],
+      [
+       "Lactate effect",
+       "Minus the lactate (mmol/L)"
+      ],
+      [
+       "Unmeasured anions",
+       "Base excess − (Na–Cl effect + albumin effect + lactate effect)"
+      ]
+     ]
+    },
+    {
+     "h": "Worked example",
+     "items": [
+      "After 6 L saline: BE −10, Na 140, Cl 115, albumin 30 g/L, lactate 2",
+      "Na–Cl effect: 140 − 115 − 38 = −13 (acidifying)",
+      "Albumin effect: 0.25 × (42 − 30) = +3 (alkalinising)",
+      "Lactate effect: −2",
+      "Unmeasured anions: −10 − (−13 + 3 − 2) = +2, i.e. essentially none: the acidosis is the chloride"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Why saline acidifies: it has an SID of 0 (Na 154, Cl 154), so large volumes dilute the plasma SID; balanced fluids contain metabolisable anions (lactate, acetate, gluconate) that leave a higher effective SID",
+      "Hypoalbuminaemia is a metabolic alkalosis in Stewart terms and can hide an acidosis",
+      "Both approaches describe the same blood; Stewart explains WHY (chloride, albumin, unmeasured ions)"
+     ]
+    }
+   ],
+   "pearl": "Na − Cl tells the chloride story; albumin is a weak acid; what is left is unmeasured anions.",
+   "refs": [
+    {
+     "title": "Story DA, Morimatsu H, Bellomo R. Strong ions, weak acids and base excess: a simplified Fencl–Stewart approach. BJA 2004",
+     "url": "https://doi.org/10.1093/bja/aeh018"
+    },
+    {
+     "title": "Story DA. Acid–base analysis in the operating room: a bedside Stewart approach. Anesthesiology 2023",
+     "url": "https://emcrit.org/wp-content/uploads/2018/06/Acid–Base-Analysis-in-the-Operating-Room_-A-Bedside-Stewart-Approach.pdf"
+    },
+    {
+     "title": "Kaplan LJ, Frangos S. Clinical review: acid–base abnormalities in the ICU. Crit Care 2005",
+     "url": "https://doi.org/10.1186/cc2912"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-sampling-vbg-temperature",
+   "cat": "ABG",
+   "title": "VBG vs ABG, sampling errors, lactate & temperature (alpha-stat / pH-stat)",
+   "aliases": [
+    "VBG",
+    "venous blood gas",
+    "ABG vs VBG",
+    "air bubble",
+    "heparin dilution",
+    "sampling error",
+    "lactate",
+    "type A type B lactic acidosis",
+    "alpha-stat",
+    "pH-stat",
+    "temperature correction"
+   ],
+   "summary": "Practical points behind the numbers: when a venous gas is good enough, how a bad sample changes the result, how to read lactate, and how temperature changes blood gases on bypass.",
+   "sections": [
+    {
+     "h": "VBG compared with ABG",
+     "rows": [
+      [
+       "pH",
+       "Venous about 0.03–0.04 lower; good agreement, acceptable for most decisions"
+      ],
+      [
+       "PCO₂",
+       "Venous about 5–6 mmHg higher on average, but wide spread; a normal venous PCO₂ makes arterial hypercapnia unlikely"
+      ],
+      [
+       "HCO₃⁻",
+       "About 1–1.5 mmol/L different; acceptable"
+      ],
+      [
+       "Lactate",
+       "Agrees below 2; drifts apart above 2"
+      ],
+      [
+       "PO₂",
+       "Venous PO₂ cannot replace arterial; use SpO₂ or an ABG"
+      ]
+     ]
+    },
+    {
+     "h": "Sampling errors",
+     "rows": [
+      [
+       "Air bubble",
+       "PO₂ moves towards room air (rises on air, can fall if the patient is on high O₂); PCO₂ falls"
+      ],
+      [
+       "Delay at room temperature",
+       "Cells keep metabolising: PO₂ and glucose fall, PCO₂ and lactate rise (worse with very high white counts)"
+      ],
+      [
+       "Too much liquid heparin",
+       "Dilutes the sample: falsely low PCO₂ and HCO₃⁻"
+      ],
+      [
+       "Venous sample by mistake",
+       "Low PO₂ that does not fit the SpO₂"
+      ],
+      [
+       "Flush in the arterial line",
+       "Discard enough dead space first"
+      ]
+     ]
+    },
+    {
+     "h": "Lactate",
+     "items": [
+      "Normal under 2 mmol/L; ≥ 4 in sepsis marks high risk",
+      "Type A: poor tissue oxygen delivery (shock, hypoxia, severe anaemia, ischaemic gut)",
+      "Type B: no hypoperfusion (metformin, liver failure, adrenaline/salbutamol, thiamine deficiency, malignancy)",
+      "Lactate clearance over hours is a useful guide in resuscitation"
+     ]
+    },
+    {
+     "h": "Temperature: alpha-stat vs pH-stat",
+     "rows": [
+      [
+       "What happens when cold",
+       "Gases dissolve more, so measured partial pressures fall and pH rises"
+      ],
+      [
+       "Alpha-stat",
+       "Gases read at 37 °C and kept normal at 37 °C; protein charge (histidine \"alpha\") stays constant; keeps cerebral autoregulation; used in most adults"
+      ],
+      [
+       "pH-stat",
+       "Gases corrected to the actual cold temperature and kept normal, which needs added CO₂; more cerebral blood flow; often used for deep hypothermia in children"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Analysers measure at 37 °C; \"temperature-corrected\" values are calculated",
+      "Expel all air within 2 minutes and run the sample within about 10 minutes, or keep it on crushed ice (PO₂ fell within 20 min at room temperature in Biswas 1982)",
+      "A VBG is fine for DKA follow-up; get an ABG when you need PaO₂ or an accurate PaCO₂ in shock"
+     ]
+    }
+   ],
+   "pearl": "Air bubble: PO₂ drifts towards air, PCO₂ falls. Delay: PO₂ falls, PCO₂ and lactate rise.",
+   "refs": [
+    {
+     "title": "LITFL: VBG versus ABG",
+     "url": "https://litfl.com/vbg-versus-abg/"
+    },
+    {
+     "title": "Biswas CK et al. Blood gas analysis: effect of air bubbles in syringe and delay in estimation. BMJ 1982",
+     "url": "https://doi.org/10.1136/bmj.284.6320.923"
+    },
+    {
+     "title": "OpenAnesthesia: pH-stat vs alpha-stat",
+     "url": "https://www.openanesthesia.org/keywords/ph-stat-vs-alpha-stat/"
+    }
+   ],
+   "created": "2026-11-23",
+   "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "abg-systematic-approach-examples",
+   "cat": "ABG",
+   "title": "ABG systematic approach + 6 worked examples",
+   "aliases": [
+    "ABG approach",
+    "how to read ABG",
+    "ABG steps",
+    "ABG examples",
+    "ABG practice",
+    "mixed acid base examples"
+   ],
+   "summary": "One order to read every gas, then six fully worked examples covering the patterns most likely in the exam and in theatre. Each answer was calculated with the same rules as the other ABG notes.",
+   "sections": [
+    {
+     "h": "Steps",
+     "rows": [
+      [
+       "1",
+       "Look at the patient and the FiO₂; is the gas consistent (Henderson)?"
+      ],
+      [
+       "2",
+       "Oxygenation: PaO₂ for the FiO₂, A–a gradient or P/F"
+      ],
+      [
+       "3",
+       "pH: acidaemia, alkalaemia or normal"
+      ],
+      [
+       "4",
+       "Primary disorder: does PaCO₂ or HCO₃⁻ explain the pH?"
+      ],
+      [
+       "5",
+       "Compensation: Winter's / 0.7 rule / 1-4-2-5"
+      ],
+      [
+       "6",
+       "Anion gap (correct for albumin) if there is any metabolic acidosis"
+      ],
+      [
+       "7",
+       "Delta ratio if the gap is high; osmolar gap if a toxin is possible"
+      ],
+      [
+       "8",
+       "Put it together with the clinical story"
+      ]
+     ]
+    },
+    {
+     "h": "Examples 1–3",
+     "rows": [
+      [
+       "1. Abdominal pain, glucose 480",
+       "pH 7.22, PaCO₂ 20, HCO₃⁻ 8, Na 134, Cl 98 → metabolic acidosis; Winter's 20 ± 2: appropriate; AG 28, delta ratio 1.0 → pure HAGMA: DKA"
+      ],
+      [
+       "2. Week of vomiting",
+       "pH 7.53, PaCO₂ 47, HCO₃⁻ 38, Cl 86 → metabolic alkalosis; expected 46.6 ± 5: appropriate; low Cl⁻ → chloride-responsive: give saline + K⁺"
+      ],
+      [
+       "3. Severe COPD, stable",
+       "pH 7.35, PaCO₂ 60, HCO₃⁻ 32 → respiratory acidosis; chronic prediction 32 → chronic, compensated: his baseline"
+      ]
+     ]
+    },
+    {
+     "h": "Examples 4–6",
+     "rows": [
+      [
+       "4. PACU after morphine, air",
+       "pH 7.21, PaCO₂ 70, HCO₃⁻ 27, PaO₂ 52 → acute respiratory acidosis; A–a 10 (normal for age 60) → pure hypoventilation"
+      ],
+      [
+       "5. After 7 L of saline",
+       "pH 7.35, PaCO₂ 32, HCO₃⁻ 17, Na 141, Cl 113 → metabolic acidosis; Winter's 33.5 ± 2: appropriate; AG 11 → hyperchloraemic NAGMA"
+      ],
+      [
+       "6. Elderly, high-dose aspirin",
+       "pH 7.40, PaCO₂ 20, HCO₃⁻ 12, Na 140, Cl 104 → pH normal but both abnormal; AG 24 = HAGMA; Winter's 26 ± 2 yet PaCO₂ 20 → plus primary respiratory alkalosis: salicylate"
+      ]
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Say the steps out loud in the same order every time; examiners mark the method",
+      "Never call a gas \"normal\" until PaCO₂, HCO₃⁻ and the anion gap are all normal",
+      "Practise with the daily ABG flashcard in Academics: same rules, fresh numbers"
+     ]
+    }
+   ],
+   "pearl": "Patient → oxygen → pH → primary → compensation → gap → delta → story.",
+   "refs": [
+    {
+     "title": "Brandis K. Acid-base physiology: bedside rules for assessment of compensation",
+     "url": "https://med.libretexts.org/Bookshelves/Anatomy_and_Physiology/Book%3A_Acid-base_Physiology_(Brandis)/09%3A_Assessment_of_Acid-Base_Disorders/9.03%3A_Bedside_Rules_for_Assessment_of_Compensation"
+    },
+    {
+     "title": "LITFL: Blood gas interpretation",
+     "url": "https://litfl.com/acid-base-disorders/"
     }
    ],
    "created": "2026-11-23",

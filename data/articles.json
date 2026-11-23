@@ -3,6 +3,19 @@
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
   {
+   "id": "14665553",
+   "added": "2026-11-23",
+   "topic": "ABG interpretation",
+   "title": "Strong ions, weak acids and base excess: a simplified Fencl-Stewart approach to clinical acid-base disorders.",
+   "journal": "Br J Anaesth",
+   "year": 2004,
+   "type": "Other",
+   "why": "The anaesthesia paper behind bedside base-excess partitioning (Na−Cl−38, 0.25 × (42 − albumin)) used in the ABG notes.",
+   "doi": "10.1093/bja/aeh018",
+   "pmid": "14665553",
+   "url": "https://doi.org/10.1093/bja/aeh018"
+  },
+  {
    "id": "30165617",
    "added": "2026-11-23",
    "topic": "ECG criteria for MI",

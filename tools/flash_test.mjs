@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const src = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'index.html'), 'utf8');
-const code = src.match(/\/\* ---------- v5\.79[\s\S]*?function fcShow\(\)[^\n]*\n/)[0];
+const code = src.match(/\/\* ---------- v5\.79[\s\S]*?(?=\nfunction fcShow\(\))/)[0];
 const r1 = x => Math.round(x * 10) / 10;
 const { ABG_SC, abgMake } = new Function('D', 'state', 'esc', 'today', 'r1', code + '; return { ABG_SC, abgMake };')({}, { settings: {} }, String, () => '2026-11-23', r1);
 let bad = 0;
