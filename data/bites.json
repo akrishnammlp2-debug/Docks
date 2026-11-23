@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-23",
   "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
   "cats": [
     "Drugs",
@@ -21,7 +21,7 @@
     {
       "id": "mitral-stenosis-management",
       "cat": "Cardiac",
-      "title": "Mitral stenosis – management (medical, PBMV, repair, replacement)",
+      "title": "Mitral stenosis – management (medical, PBMV, repair, replacement) & haemodynamic goals",
       "aliases": [
         "MS management",
         "mitral stenosis",
@@ -32,7 +32,10 @@
         "closed mitral valvotomy",
         "open mitral commissurotomy",
         "MVR",
-        "Wilkins score"
+        "Wilkins score",
+        "preload in MS",
+        "MS haemodynamic goals",
+        "MS anaesthesia"
       ],
       "summary": "Medical therapy in mitral stenosis (MS) controls symptoms, rate and clot risk but does not fix the valve. Once MS is significant (MVA ≤1.5 cm²) and the patient has symptoms, the valve needs mechanical relief. Balloon valvotomy (PBMV/PMC) is first choice when anatomy is favourable; surgery is for those unsuitable for, or failed by, PBMV. Within surgery, a valve-sparing repair/open commissurotomy is preferred if the valve is pliable enough; replacement (MVR) is for valves too calcified, fibrosed or regurgitant to repair.",
       "sections": [
@@ -137,6 +140,19 @@
           ]
         },
         {
+          "h": "Why preload matters so much (haemodynamics / anaesthesia)",
+          "items": [
+            "The LV itself usually contracts normally – the problem is underfilling. Flow from LA to LV across the narrow valve depends on the LA–LV pressure gradient and on how long diastole lasts",
+            "Preload (venous return → LA pressure) is what keeps that gradient up; if preload falls the gradient collapses and stroke volume drops – a relatively 'fixed cardiac output' state",
+            "Normal hearts offset low filling with a faster HR; in MS tachycardia shortens diastole and reduces filling further – hypovolaemia + reflex tachycardia is the classic crash",
+            "Atrial kick contributes a larger share of LV filling across a stenotic valve; new AF (common, big LA) removes it and usually comes with a fast rate → sudden decompensation",
+            "Narrow window: LA pressure already near the pulmonary oedema threshold, so too little fluid = hypotension/low output, too much = pulmonary oedema (worse with pulmonary hypertension and a strained RV)",
+            "PCWP reflects LA pressure, not LVEDP – it overestimates LV filling in MS",
+            "Watch for preload drops: spinal/epidural sympatholysis (titrate slowly, epidural preferred over single-shot spinal), blood loss, aggressive diuresis, head-up position, positive pressure ventilation",
+            "Targets: euvolaemia, HR ~60–80 (treat tachycardia with β-blocker/esmolol), sinus rhythm (cardiovert unstable AF), maintain SVR (phenylephrine), avoid PVR rise (hypoxia, hypercarbia, acidosis, pain, N2O)"
+          ]
+        },
+        {
           "h": "Points for the exam / viva",
           "items": [
             "Algorithm: significant MS → symptoms? → PBMV-suitable anatomy (Wilkins ≤8, MR ≤ mild, no LA clot)? → PBMV; if not → surgery → repair/open commissurotomy if valve pliable, MVR if calcified/fibrosed/regurgitant",
@@ -144,7 +160,8 @@
             "Medical therapy does not change natural history – only relieves symptoms and prevents embolism",
             "Warfarin, not DOAC, for AF in rheumatic MS",
             "Pregnancy with severe symptomatic MS refractory to drugs → PBMV in 2nd trimester is preferred over surgery",
-            "Anaesthesia goals: slow HR, sinus rhythm, adequate preload but no fluid overload, maintain SVR, avoid rise in PVR (hypoxia, hypercarbia, acidosis, pain)"
+            "Anaesthesia goals: slow HR, sinus rhythm, adequate preload but no fluid overload, maintain SVR, avoid rise in PVR (hypoxia, hypercarbia, acidosis, pain)",
+            "Preload in MS = keeps the LA–LV gradient; slow HR = gives that gradient time to fill the LV. Both needed, because the LV cannot compensate by beating faster"
           ]
         }
       ],
@@ -161,11 +178,15 @@
         {
           "title": "StatPearls: Percutaneous mitral balloon valvotomy",
           "url": "https://www.ncbi.nlm.nih.gov/books/NBK538483"
+        },
+        {
+          "title": "Paul A, Das S. Valvular heart disease and anaesthesia. Indian J Anaesth 2017;61:721–7",
+          "url": "https://doi.org/10.4103/ija.IJA_378_17"
         }
       ],
       "created": "2026-11-21",
-      "updated": "2026-11-21",
-      "seen": 1
+      "updated": "2026-11-23",
+      "seen": 2
     },
     {
       "id": "asa-ps",
