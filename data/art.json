@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-23",
-    "title": "The Tortoise Trainer",
-    "artist": "Osman Hamdi Bey",
-    "artistLife": "Ottoman Turkish, 1842–1910",
-    "year": "1906",
+    "date": "2026-11-24",
+    "title": "The Gulf Stream",
+    "artist": "Winslow Homer",
+    "artistLife": "American, 1836–1910",
+    "year": "1899, reworked by 1906",
     "medium": "Oil on canvas",
-    "size": "221.5 × 120 cm (a tall canvas, taller than most doorways are wide)",
-    "where": "Pera Museum, Istanbul",
-    "movement": "Orientalist academic realism (Ottoman)",
-    "fame": "hidden gem",
+    "size": "71.4 × 124.8 cm (about the size of a large window pane)",
+    "where": "The Metropolitan Museum of Art, New York",
+    "movement": "American Realism, late 19th century",
+    "fame": "famous",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg",
-      "credit": "Pera Museum, public domain (image: Wikimedia Commons)",
-      "focus": "center 40%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg",
+      "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+      "focus": "center 55%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "An old man in a long red robe stands in a shabby, empty room, a small drum on his back and a reed flute (a ney) in his hand. Around his feet are five tortoises. They are meant to be his pupils, but they are ignoring him and nibbling green leaves. The room is peeling and worn, yet the walls still carry beautiful tilework and a line of Arabic writing above the window."
+        "p": "A man lies on the deck of a small fishing boat that has lost its mast and rudder, tossed on a deep blue-green sea. Sharks circle around the boat, a waterspout (a tornado over water) looms on one side, and a tiny ship sits far away on the horizon. It is a scene of danger, but also of a strange, held-breath stillness."
       },
       {
         "h": "The artist",
-        "p": "Osman Hamdi Bey was born in Istanbul in 1842 to a Grand Vizier's family. He went to Paris to study law, but turned to painting and trained under Jean-Léon Gérôme and Gustave Boulanger. Back home he became one of the Ottoman Empire's first archaeologists and the director of the Imperial Museum. He founded the Academy of Fine Arts in 1882 and pushed through a law that stopped ancient finds leaving the country. He led the dig at Sidon in Lebanon, where the famous carved sarcophagi were found."
+        "p": "Winslow Homer began as a magazine illustrator in Boston and New York, drawing scenes of the American Civil War. Later he became a painter and settled in a remote spot on the coast of Maine, where he spent years watching the sea. In the winter of 1898–99 he travelled to Nassau in the Bahamas and made watercolour studies, which he used for this oil painting."
       },
       {
         "h": "The time",
-        "p": "In 1906 the Ottoman Empire was under Sultan Abdülhamid II. Reforms had been promised for decades, but many felt they were slow or going nowhere, and pressure was growing from nationalist movements and foreign powers. Two years later the Young Turk Revolution ended the Sultan's autocratic rule. Hamdi painted this at a time when Ottoman artists were learning European oil painting and using it to look at their own society."
+        "p": "Homer painted it at the very end of the 1800s, a time when many Americans were still struggling with the legacy of slavery and its racial injustice. The Met reads the painting in that light, noting how the Gulf Stream current links the Caribbean and the Atlantic world of trade and empire. When it was shown in Philadelphia, one reviewer mocked it as 'Smiling Sharks', and it did not sell quickly. After Homer kept reworking it, the Met bought it in 1906."
       },
       {
         "h": "What's special",
-        "p": "The painting is in the polished, detailed style Hamdi learned in Paris, and it was shown at the 1906 Paris Salon. Its charm is the puzzle. Many people read it as a gentle joke about how slowly things change, with the patient old man and his unteachable tortoises standing in for reform. Others see a comment on Turkey caught between old and new, and historians still disagree about what the tortoises mean. Hamdi's own view of the painting is not recorded, so the meaning is open. A second, smaller version followed in 1907."
+        "p": "Homer was a master of watercolour, and you can feel it in the clear, fluid way he paints the water, even though this is oil. He never told the story outright. When a viewer asked what happens to the sailor, he was annoyed that the picture needed explaining, and said the man would be rescued and returned home. Yet the painting itself leaves the question open, which is exactly why people keep looking at it."
       },
       {
         "h": "Look for",
-        "p": "Count the five tortoises and notice how unbothered they are. Find the Arabic inscription above the pointed window, which speaks of the healing of hearts through meeting the beloved. Look at the man's drum and flute, and the worn floor and walls: a grand room that has seen better days."
+        "p": "Find the tiny ship at the far left; it is easy to miss, and it carries the hope of rescue. Notice the ropes and the broken mast lying across the deck, and the waterspout in the distance. Then look at how Homer paints the waves, with soft, thin patches of colour that look like watercolour."
       }
     ],
     "source": {
-      "title": "Wikimedia Commons: The Tortoise Trainer (Pera Museum)",
-      "url": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg"
+      "title": "The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/art/collection/search/11122"
     }
   },
   "history": [
+    {
+      "date": "2026-11-23",
+      "title": "The Tortoise Trainer",
+      "artist": "Osman Hamdi Bey",
+      "artistLife": "Ottoman Turkish, 1842–1910",
+      "year": "1906",
+      "medium": "Oil on canvas",
+      "size": "221.5 × 120 cm (a tall canvas, taller than most doorways are wide)",
+      "where": "Pera Museum, Istanbul",
+      "movement": "Orientalist academic realism (Ottoman)",
+      "fame": "hidden gem",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg",
+        "credit": "Pera Museum, public domain (image: Wikimedia Commons)",
+        "focus": "center 40%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "An old man in a long red robe stands in a shabby, empty room, a small drum on his back and a reed flute (a ney) in his hand. Around his feet are five tortoises. They are meant to be his pupils, but they are ignoring him and nibbling green leaves. The room is peeling and worn, yet the walls still carry beautiful tilework and a line of Arabic writing above the window."
+        },
+        {
+          "h": "The artist",
+          "p": "Osman Hamdi Bey was born in Istanbul in 1842 to a Grand Vizier's family. He went to Paris to study law, but turned to painting and trained under Jean-Léon Gérôme and Gustave Boulanger. Back home he became one of the Ottoman Empire's first archaeologists and the director of the Imperial Museum. He founded the Academy of Fine Arts in 1882 and pushed through a law that stopped ancient finds leaving the country. He led the dig at Sidon in Lebanon, where the famous carved sarcophagi were found."
+        },
+        {
+          "h": "The time",
+          "p": "In 1906 the Ottoman Empire was under Sultan Abdülhamid II. Reforms had been promised for decades, but many felt they were slow or going nowhere, and pressure was growing from nationalist movements and foreign powers. Two years later the Young Turk Revolution ended the Sultan's autocratic rule. Hamdi painted this at a time when Ottoman artists were learning European oil painting and using it to look at their own society."
+        },
+        {
+          "h": "What's special",
+          "p": "The painting is in the polished, detailed style Hamdi learned in Paris, and it was shown at the 1906 Paris Salon. Its charm is the puzzle. Many people read it as a gentle joke about how slowly things change, with the patient old man and his unteachable tortoises standing in for reform. Others see a comment on Turkey caught between old and new, and historians still disagree about what the tortoises mean. Hamdi's own view of the painting is not recorded, so the meaning is open. A second, smaller version followed in 1907."
+        },
+        {
+          "h": "Look for",
+          "p": "Count the five tortoises and notice how unbothered they are. Find the Arabic inscription above the pointed window, which speaks of the healing of hearts through meeting the beloved. Look at the man's drum and flute, and the worn floor and walls: a grand room that has seen better days."
+        }
+      ],
+      "source": {
+        "title": "Wikimedia Commons: The Tortoise Trainer (Pera Museum)",
+        "url": "https://commons.wikimedia.org/wiki/File:Osman_Hamdi_Bey_-_The_Tortoise_Trainer_-_Google_Art_Project.jpg"
+      }
+    },
     {
       "date": "2026-11-22",
       "title": "The Starry Night",
