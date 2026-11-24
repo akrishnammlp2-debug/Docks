@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23",
+ "updated": "2026-11-24",
  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
  "cats": [
   "Drugs",
@@ -3887,6 +3887,231 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
+   "seen": 1
+  },
+  {
+   "id": "pregnancy-physiology-cvs-resp",
+   "cat": "Obstetric",
+   "title": "Pregnancy physiology (1/2): CVS, respiratory & airway",
+   "aliases": [
+    "physiological changes in pregnancy",
+    "pregnancy changes cardiovascular",
+    "pregnancy respiratory changes",
+    "aortocaval compression",
+    "obstetric airway",
+    "parturient physiology"
+   ],
+   "summary": "Pregnancy drives the heart and lungs harder to meet a ~20% (rising to ~60% in labour) increase in oxygen demand. The heart pumps more into a dilated, low-resistance circulation, while the lungs breathe more against a smaller FRC. For the anaesthetist this means supine hypotension, fast desaturation, a harder airway and a mother who tolerates blood loss well until she suddenly doesn't.",
+   "sections": [
+    {
+     "h": "Cardiovascular – key numbers (at term)",
+     "rows": [
+      [
+       "Cardiac output",
+       "↑ 40–50% (HR ↑ 15–25%, SV ↑ 20–30%); rises a further ~40% in labour and peaks up to ~80% above pre-labour immediately after delivery (autotransfusion)"
+      ],
+      [
+       "SVR",
+       "↓ 20–30% from ~8 weeks (progesterone, oestrogen, NO, low-resistance placental bed)"
+      ],
+      [
+       "Blood pressure",
+       "Diastolic falls more than systolic; nadir mid-trimester, back to baseline by term"
+      ],
+      [
+       "CVP / PCWP",
+       "Unchanged despite bigger blood volume (vessels and ventricles dilate)"
+      ],
+      [
+       "Heart",
+       "Displaced up and left – left axis deviation on ECG, flow murmur and S3 can be normal; mild LV hypertrophy"
+      ]
+     ]
+    },
+    {
+     "h": "Aortocaval compression",
+     "items": [
+      "From ~20 weeks the supine uterus compresses the IVC (↓ preload, CO can fall ~25%) and the aorta (↓ uterine perfusion).",
+      "Supine hypotensive syndrome: hypotension, pallor, sweating, nausea, bradycardia in some; can be concealed – fetal distress may be the first sign.",
+      "Prevent: left lateral tilt ~15° or manual left uterine displacement for every supine parturient >20 weeks, including during CPR.",
+      "Worse after neuraxial or GA, because the sympathetic compensation (vasoconstriction of lower limbs) is lost."
+     ]
+    },
+    {
+     "h": "Respiratory – key numbers",
+     "rows": [
+      [
+       "O₂ consumption",
+       "↑ ~20% at term, up to ~60% in labour"
+      ],
+      [
+       "Minute ventilation",
+       "↑ 45–50% – mainly from tidal volume (↑ ~40%); RR changes little. Progesterone drives this"
+      ],
+      [
+       "FRC",
+       "↓ ~20% (diaphragm pushed up ~4 cm); may fall below closing capacity when supine → airway closure, shunt"
+      ],
+      [
+       "ABG",
+       "PaCO₂ ~30 mmHg (4 kPa), HCO₃⁻ ~20 mmol/L, pH ~7.44 – compensated respiratory alkalosis; PaO₂ slightly ↑"
+      ],
+      [
+       "Unchanged",
+       "FEV₁, FEV₁/FVC, vital capacity, compliance of lung (chest wall compliance ↓)"
+      ],
+      [
+       "P50",
+       "Rises (~30 mmHg) → right shift helps O₂ unloading to the fetus"
+      ]
+     ]
+    },
+    {
+     "h": "Airway & anaesthetic implications",
+     "items": [
+      "Capillary engorgement and oedema of nasal/oral mucosa and larynx (worse in pre-eclampsia and after prolonged pushing): use a smaller tube (6.0–7.0 mm), avoid nasal instrumentation (bleeding).",
+      "Breast enlargement and weight gain make laryngoscopy harder – use a short handle, ramp (head-elevated laryngoscopy position).",
+      "Failed tracheal intubation is roughly 1 in 390 obstetric GAs (≈8× general surgical); follow OAA/DAS obstetric difficult airway guideline.",
+      "Rapid desaturation at apnoea (↓FRC + ↑O₂ use): preoxygenate to EtO₂ ≥0.9, consider high-flow nasal O₂ and head-up.",
+      "Faster inhalational induction (↑ minute ventilation, ↓FRC) and MAC ↓ up to ~30%.",
+      "Lower PaCO₂ is the normal target under ventilation (~30–32 mmHg); hyperventilation below this causes uterine vasoconstriction and left-shifts maternal Hb."
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "CO rise is the reason high-risk cardiac lesions (MS, AS, pulmonary hypertension) decompensate – watch the 2nd trimester, labour and the immediate post-partum period.",
+      "Signs of hypovolaemia appear late: up to ~1000–1500 mL loss before tachycardia/hypotension.",
+      "Normal pregnancy ABG: PaCO₂ 30, HCO₃⁻ 20, pH 7.44 – a 'normal' PaCO₂ of 40 in a parturient is relative hypercapnia.",
+      "CO returns towards baseline over ~2 weeks and is near normal by 6 weeks; respiratory changes by 6–8 weeks post-partum."
+     ]
+    }
+   ],
+   "pearl": "Tilt left, pre-oxygenate well, small tube – the parturient desaturates fast and is harder to intubate.",
+   "refs": [
+    {
+     "title": "Bhatia P, Chhabra S. Physiological and anatomical changes of pregnancy: implications for anaesthesia. Indian J Anaesth 2018;62:651–7",
+     "url": "https://doi.org/10.4103/ija.IJA_458_18"
+    },
+    {
+     "title": "Bedson R, Riccoboni A. Physiology of pregnancy: clinical anaesthetic implications. CEACCP 2014;14:69–72",
+     "url": "https://doi.org/10.1093/bjaceaccp/mkt036"
+    },
+    {
+     "title": "Soma-Pillay P et al. Physiological changes in pregnancy. Cardiovasc J Afr 2016;27:89–94",
+     "url": "https://doi.org/10.5830/CVJA-2016-021"
+    }
+   ],
+   "created": "2026-11-24",
+   "updated": "2026-11-24",
+   "seen": 1
+  },
+  {
+   "id": "pregnancy-physiology-blood-gi-renal-drugs",
+   "cat": "Obstetric",
+   "title": "Pregnancy physiology (2/2): blood, GI, renal, CNS & drugs",
+   "aliases": [
+    "physiological changes in pregnancy",
+    "pregnancy haematology",
+    "pregnancy coagulation",
+    "aspiration risk pregnancy",
+    "MAC in pregnancy",
+    "local anaesthetic requirement pregnancy"
+   ],
+   "summary": "Pregnancy expands the plasma more than the red cells (dilutional anaemia), makes the blood hypercoagulable, loosens the gastro-oesophageal barrier and increases kidney filtration. Hormones and engorged epidural veins also make the mother more sensitive to anaesthetic drugs. These changes explain aspiration risk, VTE prophylaxis, reduced spinal/epidural doses and lower MAC.",
+   "sections": [
+    {
+     "h": "Blood & coagulation",
+     "rows": [
+      [
+       "Plasma volume",
+       "↑ 40–50%; red cell mass ↑ only 20–30% → dilutional (physiological) anaemia, Hb ~110–120 g/L"
+      ],
+      [
+       "Blood volume",
+       "↑ ~35–45% (≈ +1–1.5 L) – prepares for delivery blood loss"
+      ],
+      [
+       "Clotting factors",
+       "↑ fibrinogen (~4–6 g/L at term), VII, VIII, X, XII, vWF; ↓ XI, XIII, protein S; ↓ fibrinolysis → hypercoagulable"
+      ],
+      [
+       "Platelets",
+       "Slight fall; gestational thrombocytopenia (usually >70–100 ×10⁹/L) in ~5–8%"
+      ],
+      [
+       "WBC",
+       "Neutrophilia, up to ~15 ×10⁹/L, higher in labour"
+      ],
+      [
+       "VTE risk",
+       "Several-fold higher, highest in the first weeks post-partum"
+      ]
+     ]
+    },
+    {
+     "h": "Gastrointestinal & aspiration",
+     "items": [
+      "Progesterone relaxes the lower oesophageal sphincter; the uterus pushes the stomach up and changes the angle of the GO junction → reflux, heartburn.",
+      "Gastric emptying is normal in pregnancy but slows in labour, especially with systemic opioids.",
+      "Treat as 'full stomach' from about 18–20 weeks and in labour: antacid prophylaxis (H₂ blocker / PPI ± sodium citrate, metoclopramide) and RSI for GA.",
+      "Liver: albumin falls (↓ oncotic pressure, ↑ free fraction of bound drugs); ALP rises from placenta – normal; transaminases and bilirubin should stay normal."
+     ]
+    },
+    {
+     "h": "Renal",
+     "rows": [
+      [
+       "Renal plasma flow / GFR",
+       "↑ ~50% by the second trimester"
+      ],
+      [
+       "Creatinine & urea",
+       "Fall (creatinine ~45–70 µmol/L) – a 'normal' non-pregnant value may mean renal impairment"
+      ],
+      [
+       "Other",
+       "Glycosuria and mild proteinuria (<300 mg/day) can be normal; ureters and pelvis dilate (R > L) → UTI risk"
+      ]
+     ]
+    },
+    {
+     "h": "CNS, endocrine & drug effects",
+     "items": [
+      "MAC of volatile agents reduced by up to ~30% (progesterone, endorphins).",
+      "Neuraxial local anaesthetic requirement ↓ ~25–30%: engorged epidural veins reduce epidural/CSF space volume, lumbar lordosis aids cephalad spread and nerves are more sensitive.",
+      "Plasma cholinesterase ↓ ~25% – suxamethonium action barely prolonged clinically.",
+      "Thyroid: total T3/T4 ↑ with TBG, free levels normal. Insulin resistance in the 2nd/3rd trimester (gestational diabetes).",
+      "Larger volume of distribution and ↑ clearance alter drug levels; ionised (basic) drugs can 'trap' in the more acidic fetus (e.g. local anaesthetics in fetal acidosis)."
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Hypercoagulability is protective at delivery but makes VTE a leading cause of maternal death – think LMWH timing before neuraxial (12 h prophylactic, 24 h treatment dose).",
+      "Spinal dose is lower in the term parturient; volume/height matter less than in non-pregnant spinals.",
+      "Pregnancy itself is ASA II.",
+      "Recovery times post-partum: coagulation ~2 weeks (risk 6 weeks), renal ~4–6 weeks, GI changes within 1–2 days (but treat as full stomach for ~24–48 h)."
+     ]
+    }
+   ],
+   "pearl": "Lower MAC, lower spinal dose, full stomach from ~20 weeks, and a clot-prone patient until 6 weeks post-partum.",
+   "refs": [
+    {
+     "title": "Bhatia P, Chhabra S. Physiological and anatomical changes of pregnancy: implications for anaesthesia. Indian J Anaesth 2018;62:651–7",
+     "url": "https://doi.org/10.4103/ija.IJA_458_18"
+    },
+    {
+     "title": "Bedson R, Riccoboni A. Physiology of pregnancy: clinical anaesthetic implications. CEACCP 2014;14:69–72",
+     "url": "https://doi.org/10.1093/bjaceaccp/mkt036"
+    },
+    {
+     "title": "Soma-Pillay P et al. Physiological changes in pregnancy. Cardiovasc J Afr 2016;27:89–94",
+     "url": "https://doi.org/10.5830/CVJA-2016-021"
+    }
+   ],
+   "created": "2026-11-24",
+   "updated": "2026-11-24",
    "seen": 1
   }
  ]

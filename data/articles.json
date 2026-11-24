@@ -1,7 +1,20 @@
 {
- "updated": "2026-11-23",
+ "updated": "2026-11-24",
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
+  {
+   "id": "30237589",
+   "added": "2026-11-24",
+   "topic": "pregnancy physiology",
+   "title": "Physiological and anatomical changes of pregnancy: Implications for anaesthesia.",
+   "journal": "Indian J Anaesth",
+   "year": 2018,
+   "type": "Review",
+   "why": "System-by-system walk-through of pregnancy changes with the anaesthetic point for each – a good single read for the viva.",
+   "doi": "10.4103/ija.IJA_458_18",
+   "pmid": "30237589",
+   "url": "https://doi.org/10.4103/ija.IJA_458_18"
+  },
   {
    "id": "14665553",
    "added": "2026-11-23",
