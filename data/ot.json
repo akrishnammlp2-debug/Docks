@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23",
+ "updated": "2026-11-24",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -151,6 +151,56 @@
    "procedure": "Embolization (interventional radiology)",
    "unit": "RADIVR",
    "status": "Approved"
+  },
+  {
+   "id": "2026-11-25-01",
+   "date": "2026-11-25",
+   "order": 1,
+   "time": "07:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Arthroscopic meniscal repair (complex)",
+   "unit": "ORT005",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-25-02",
+   "date": "2026-11-25",
+   "order": 2,
+   "time": "06:00",
+   "ot": "KHSB-OR2",
+   "procedure": "Total knee replacement",
+   "unit": "SKR005",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-25-03",
+   "date": "2026-11-25",
+   "order": 3,
+   "time": "13:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Laparoscopic appendicectomy",
+   "unit": "SUR004",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-25-04",
+   "date": "2026-11-25",
+   "order": 4,
+   "time": "07:00",
+   "ot": "KHSB-OR4",
+   "procedure": "TURP (simple)",
+   "unit": "URO002",
+   "status": "Pending"
+  },
+  {
+   "id": "2026-11-25-05",
+   "date": "2026-11-25",
+   "order": 5,
+   "time": "09:00",
+   "ot": "khsbcathLab",
+   "procedure": "Carotid stenting",
+   "unit": "RADIVR",
+   "status": "Pending"
   }
  ]
 }
