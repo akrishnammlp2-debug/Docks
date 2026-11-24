@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,23 +64,40 @@
     }
   ],
   "today": {
-    "date": "2026-11-23",
-    "topic": "houseplants",
-    "topicName": "Houseplants",
+    "date": "2026-11-24",
+    "topic": "history",
+    "topicName": "History",
     "kind": "fact",
-    "title": "Why Swiss cheese plants have holes in their leaves",
-    "text": "Monstera, the \"Swiss cheese plant\", grows in the shady understory of tropical rainforests, where brief patches of sunlight called sunflecks supply a large share of a plant's daily energy. A 2013 model by biologist Christopher Muir in The American Naturalist suggests the holes may help here: leaves with gaps let some light fall through to lower leaves, which makes the plant's growth steadier from day to day. Steadier growth could mean better long-term fitness when light is patchy and unpredictable. It is still a testable hypothesis rather than a settled answer, which is part of the charm of a plant most of us keep on a windowsill.",
+    "title": "In 897, Rome put a dead pope on trial",
+    "text": "In 897, Pope Stephen VI had the body of his predecessor Formosus dug up, about nine months after Formosus died. The corpse was propped on a throne for a trial known as the Cadaver Synod, with a deacon appointed to answer the charges on its behalf. Formosus was accused of breaking church law, including moving from one bishopric to another, and was declared guilty. The body was later thrown into the Tiber. Stephen did not last long: he was imprisoned and probably strangled, and the verdict was soon overturned by later popes.",
     "source": {
-      "title": "Muir CD (2013), How did the swiss cheese plant get its holes? The American Naturalist 181(2):273-81 (PubMed)",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/23348781/"
+      "title": "Britannica: Cadaver Synod",
+      "url": "https://www.britannica.com/topic/Cadaver-Synod"
     },
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Monstera_deliciosa2.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Monstera_deliciosa2.jpg",
-      "credit": "See file page for author and licence (Wikimedia Commons)"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg",
+      "credit": "Jean-Paul Laurens (1870), public domain (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-23",
+      "topic": "houseplants",
+      "topicName": "Houseplants",
+      "kind": "fact",
+      "title": "Why Swiss cheese plants have holes in their leaves",
+      "text": "Monstera, the \"Swiss cheese plant\", grows in the shady understory of tropical rainforests, where brief patches of sunlight called sunflecks supply a large share of a plant's daily energy. A 2013 model by biologist Christopher Muir in The American Naturalist suggests the holes may help here: leaves with gaps let some light fall through to lower leaves, which makes the plant's growth steadier from day to day. Steadier growth could mean better long-term fitness when light is patchy and unpredictable. It is still a testable hypothesis rather than a settled answer, which is part of the charm of a plant most of us keep on a windowsill.",
+      "source": {
+        "title": "Muir CD (2013), How did the swiss cheese plant get its holes? The American Naturalist 181(2):273-81 (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/23348781/"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Monstera_deliciosa2.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:Monstera_deliciosa2.jpg",
+        "credit": "See file page for author and licence (Wikimedia Commons)"
+      }
+    },
     {
       "date": "2026-11-22",
       "topic": "superheroes",
