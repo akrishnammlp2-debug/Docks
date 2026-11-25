@@ -2012,7 +2012,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.86 · Thesis tracker & review of literature';
+const APP_VERSION = '5.87 · ECG & ABG of the day sync between devices';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -2069,7 +2069,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2078,7 +2078,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, thesisSteps: s.thesisSteps || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
@@ -4226,9 +4226,13 @@ function fcPick(k, ids) { const t = today();
   if (due.length) return due[0];
   const fresh = ids.filter(id => !fcRec(k, id)); if (fresh.length) return fresh[0];
   return ids.slice().sort((a, b) => (fcRec(k, a).last || '').localeCompare(fcRec(k, b).last || ''))[0]; }
-function fcDay() { const t = today(); let d = state.fcDay;
+/* v5.87: today's pick is shared across devices (state.fcPicks[date], synced) so phone and iPad show the same ECG/ABG of the day */
+function fcDay() { const t = today(); const P = state.fcPicks || (state.fcPicks = {}); let d = state.fcDay;
+  const sh = P[t]; if (sh && (sh.ecg || !ECGS().length)) { if (!d || d.date !== t || d.ecg !== sh.ecg || d.abg !== sh.abg) { d = state.fcDay = { date: t, ecg: sh.ecg, abg: sh.abg, seed: t }; save(); } return d; }
   if (!d || d.date !== t || (!d.ecg && ECGS().length)) { const E = ECGS().map(c => c.id);
-    d = state.fcDay = { date: t, ecg: E.length ? fcPick('ecg', E) : null, abg: fcPick('abg', ABG_SC.map(s => s.id)), seed: t }; save(); }
+    d = state.fcDay = { date: t, ecg: E.length ? fcPick('ecg', E) : null, abg: fcPick('abg', ABG_SC.map(s => s.id)), seed: t }; }
+  const old = addDays(t, -7); Object.keys(P).forEach(k => { if (k < old) delete P[k]; });
+  P[t] = { ecg: d.ecg, abg: d.abg }; if (save()) syncSoon();
   return d; }
 const fcDone = (k, id) => { const r = fcRec(k, id); return !!(r && r.last === today()); };
 function flashCard() { if (state.settings.flashOn === false) return ''; const d = fcDay();
@@ -5067,7 +5071,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
