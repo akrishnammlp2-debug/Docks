@@ -2097,7 +2097,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.91 · Wide layout for laptops';
+const APP_VERSION = '5.92 · Device sync fix (cat food reminder)';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -2454,7 +2454,7 @@ function notifSchedule() { const out = []; const t = today(); const nowMs = Date
     const cre = nOn('nCreatine') ? H.find(h => h.late) : null; const creMissed = cre && !done(cre);
     if (night.length || creMissed) push('night|' + day, day, 21, '🌙 Night routine', (creMissed ? '💪 Creatine (missed this morning)' + (night.length ? ' · ' : '') : '') + night.map(h => h.name).join(' · '), 'today');
     // cat food 10 AM
-    if (nOn('nCat')) { const due = catFoods().map(f => [f, catInfo(f)]).filter(([, x]) => x && Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5) < CAT_WARN && !((state.catOrdered || {})[x && f.id] >= addDays(day, -1)));
+    if (nOn('nCat')) { const due = catFoods().map(f => [f, catInfo(f)]).filter(([f, x]) => x && Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5) < CAT_WARN && !((state.catOrdered || {})[f.id] >= addDays(day, -1)));
       if (due.length) push('cat|' + day, day, 10, '🐈 Time to buy cat food', due.map(([f, x]) => { const n = Math.round((new Date(x.next + 'T12:00') - new Date(day + 'T12:00')) / 864e5); return f.name + (n <= 0 ? ': reorder now' : ': reorder in ' + plural(n, 'day')); }).join(' · '), 'reminders'); }
     // groceries: Saturday 9 AM if anything is due; any other day at 6 PM once 3+ staples are due
     if (nOn('nGroc')) { const g = grocDue(day); const sat = new Date(day + 'T12:00').getDay() === 6;
