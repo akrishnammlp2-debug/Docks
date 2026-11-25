@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-25",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -151,6 +151,126 @@
    "procedure": "Carotid stenting",
    "unit": "RADIVR",
    "status": "Pending"
+  },
+  {
+   "id": "2026-11-26-01",
+   "date": "2026-11-26",
+   "order": 1,
+   "time": "07:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Lipoma excision",
+   "unit": "SUR004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-02",
+   "date": "2026-11-26",
+   "order": 2,
+   "time": "12:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Hernioplasty, inguinal/femoral (unilateral)",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-03",
+   "date": "2026-11-26",
+   "order": 3,
+   "time": "14:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Laparoscopic cholecystectomy",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-04",
+   "date": "2026-11-26",
+   "order": 4,
+   "time": "06:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Robotic surgery (complex)",
+   "unit": "SUO001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-05",
+   "date": "2026-11-26",
+   "order": 5,
+   "time": "12:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Dermoid cyst excision",
+   "unit": "PDS003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-06",
+   "date": "2026-11-26",
+   "order": 6,
+   "time": "14:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Haemorrhoidectomy",
+   "unit": "SUR001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-07",
+   "date": "2026-11-26",
+   "order": 7,
+   "time": "09:00",
+   "ot": "khsbcathLab",
+   "procedure": "Percutaneous transhepatic biliary drainage (PTBD)",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-08",
+   "date": "2026-11-26",
+   "order": 8,
+   "time": "11:00",
+   "ot": "khsbcathLab",
+   "procedure": "Stenting",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-09",
+   "date": "2026-11-26",
+   "order": 9,
+   "time": "14:00",
+   "ot": "khsbcathLab",
+   "procedure": "Stenting",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-10",
+   "date": "2026-11-26",
+   "order": 10,
+   "time": "08:00",
+   "ot": "KHSBGEC",
+   "procedure": "Upper GI endoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-11",
+   "date": "2026-11-26",
+   "order": 11,
+   "time": "09:30",
+   "ot": "KHSBGEC",
+   "procedure": "Oesophagogastroduodenoscopy (OGD)",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-26-12",
+   "date": "2026-11-26",
+   "order": 12,
+   "time": "11:30",
+   "ot": "KHSBGEC",
+   "procedure": "Upper GI endoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
   }
  ]
 }
