@@ -1,7 +1,75 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-25",
   "note": "Recent papers in anaesthesia and critical care from PubMed, summarised in plain words. Read the original before changing practice.",
   "items": [
+    {
+      "pmid": "43076208",
+      "doi": "10.1001/jama.2026.25614",
+      "added": "2026-11-25",
+      "date": "2026-11-24",
+      "title": "Prehospital Fluid Resuscitation for Patients With Suspected Sepsis: The PITSTOP-Fluids Factorial Randomized Clinical Trial.",
+      "journal": "JAMA",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis",
+        "Fluids",
+        "Resuscitation"
+      ],
+      "summary": "About 1,650 adults (median age 76) with suspected sepsis and low blood pressure were treated by paramedics in Ontario with either liberal saline (up to 2 L whatever the pressure) or usual care (fluid only if systolic pressure fell below 90). The liberal group received much more fluid (median 1,500 vs 500 mL), but hospital death was the same (18.0% vs 18.3%), with no difference in the 17 secondary outcomes and few adverse events.",
+      "why": "Adds to the evidence that bigger early fluid loads do not save lives in sepsis, which supports giving fluids in measured boluses with reassessment and early vasopressors rather than fixed large volumes, a common viva topic."
+    },
+    {
+      "pmid": "43076168",
+      "doi": "10.1001/jama.2026.25627",
+      "added": "2026-11-25",
+      "date": "2026-11-24",
+      "title": "Prehospital Antibiotics for Patients With Suspected Sepsis: The PITSTOP-Antibiotics Factorial Randomized Clinical Trial.",
+      "journal": "JAMA",
+      "type": "RCT",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis",
+        "Infection",
+        "Pharmacology"
+      ],
+      "summary": "In the same Ontario trial, about 2,050 adults with suspected sepsis were given either 1 g intramuscular ceftriaxone or placebo in the ambulance, about 37 minutes after paramedics reached them; hospital antibiotics were given roughly 4 hours later in most patients. Hospital death was 18.0% with ceftriaxone and 18.4% with placebo, and the 17 secondary outcomes were also similar.",
+      "why": "Questions the idea that every minute of delay in antibiotics changes survival once the patient is reaching hospital within a few hours; useful context for 'hour-1 bundle' discussions, though speed still matters in shock and in settings with long transfer times."
+    },
+    {
+      "pmid": "43074020",
+      "doi": "10.1186/s13054-026-06393-z",
+      "added": "2026-11-25",
+      "date": "2026-11-17",
+      "title": "The sepsis trial landscape: a domain-specific systematic review and meta-analysis of adult sepsis randomized controlled trials.",
+      "journal": "Crit Care",
+      "type": "Meta-analysis",
+      "area": "Critical care",
+      "tags": [
+        "Sepsis",
+        "Fluids",
+        "Resuscitation"
+      ],
+      "summary": "The authors pooled 62 randomised trials (about 36,700 adults) from 2000 to 2025 across six sepsis treatment areas: early resuscitation, fluid amount, fluid type, vasopressors, corticosteroids and vitamin C. None showed a clear mortality benefit (for example corticosteroids RR 0.92, 95% CI 0.84 to 1.00), and larger trials sat closer to no effect than small ones. They also list recurring design problems such as late treatment and patient heterogeneity.",
+      "why": "A good summary for exams and journal clubs of why sepsis trials so often turn out neutral, and a reminder to treat small positive trials with caution."
+    },
+    {
+      "pmid": "43070801",
+      "doi": "10.1213/ANE.0000000000008395",
+      "added": "2026-11-25",
+      "date": "2026-11-17",
+      "title": "Anesthetic Technique and Hospital Length of Stay in Modern Transcatheter Aortic Valve Replacement: A Randomized Controlled Trial.",
+      "journal": "Anesth Analg",
+      "type": "RCT",
+      "area": "Anaesthesia",
+      "tags": [
+        "Cardiac",
+        "Sedation",
+        "Perioperative medicine"
+      ],
+      "summary": "170 adults having elective transfemoral TAVR at one centre were randomised to monitored anaesthesia care or general anaesthesia with TOE. Hospital stay did not differ (median difference 0.02 days), and there were no 30-day deaths, similar ICU admission, paravalvular leak, procedure time and theatre time in the two groups.",
+      "why": "Shows that choosing sedation over general anaesthesia for TAVR does not by itself shorten stay in a modern programme, so the technique can be tailored to the patient (airway, TOE need, anxiety) rather than to throughput."
+    },
     {
       "pmid": "43065122",
       "doi": "10.1111/anae.70462",
