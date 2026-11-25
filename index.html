@@ -822,7 +822,8 @@ body{background:var(--bg)}
 .readc{background:var(--t-peach)!important}.readc .c-lab,.readc .c-m{color:var(--t-peach-i)!important}
 .read-i{background:var(--card-soft)!important;border-radius:16px!important}.read-i small{color:var(--t-peach-i)!important}
 .card[style*="k-exam"]{background:var(--t-lav)!important}.card[style*="k-exam"] .c-lab{color:var(--t-lav-i)!important}
-.wx,.card:has(.wx-acts){background:var(--t-sky)!important}.card:has(.wx-acts) .c-lab{color:var(--t-sky-i)!important}
+/* .wx sits on its card: no band of its own (v5.89: the dark-mode band hid the temperature in the weather sheet) */
+.wx{background:none!important}.card:has(.wx-acts){background:var(--t-sky)!important}.card:has(.wx-acts) .c-lab{color:var(--t-sky-i)!important}
 .stats .stat,.stats .stat:nth-child(n){background:var(--surface-2)!important;border-radius:16px!important;color:var(--fg)!important}
 .group{border-radius:22px!important;overflow:hidden;box-shadow:var(--tile-shadow)!important;border:0!important}
 .check.on{background:var(--accent)!important;border-color:var(--accent)!important}
@@ -2053,7 +2054,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.88 · Thesis recruitment calendar and thesis card';
+const APP_VERSION = '5.89 · Weather sheet readable in dark mode';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
