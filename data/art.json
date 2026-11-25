@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-24",
-    "title": "The Gulf Stream",
-    "artist": "Winslow Homer",
-    "artistLife": "American, 1836–1910",
-    "year": "1899, reworked by 1906",
-    "medium": "Oil on canvas",
-    "size": "71.4 × 124.8 cm (about the size of a large window pane)",
-    "where": "The Metropolitan Museum of Art, New York",
-    "movement": "American Realism, late 19th century",
-    "fame": "famous",
+    "date": "2026-11-25",
+    "title": "Lemminkäinen's Mother",
+    "artist": "Akseli Gallen-Kallela",
+    "artistLife": "Finnish, 1865–1931",
+    "year": "1897",
+    "medium": "Tempera on canvas",
+    "size": "85.5 × 108.5 cm (a bit bigger than a cabin-bag suitcase laid flat)",
+    "where": "Ateneum Art Museum, Helsinki",
+    "movement": "Symbolism, with Finnish national romantic roots",
+    "fame": "hidden gem",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg",
-      "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
-      "focus": "center 55%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg",
+      "credit": "Ateneum Art Museum (Finnish National Gallery), public domain (image: Wikimedia Commons)",
+      "focus": "center 40%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A man lies on the deck of a small fishing boat that has lost its mast and rudder, tossed on a deep blue-green sea. Sharks circle around the boat, a waterspout (a tornado over water) looms on one side, and a tiny ship sits far away on the horizon. It is a scene of danger, but also of a strange, held-breath stillness."
+        "p": "A mother kneels in a dark, hushed place, holding her dead son across her lap, almost like a pietà. She has pulled him, piece by piece, out of a black river and put him back together. The scene is flat and stylised, with little sense of depth, so it feels like a moment outside ordinary time."
       },
       {
         "h": "The artist",
-        "p": "Winslow Homer began as a magazine illustrator in Boston and New York, drawing scenes of the American Civil War. Later he became a painter and settled in a remote spot on the coast of Maine, where he spent years watching the sea. In the winter of 1898–99 he travelled to Nassau in the Bahamas and made watercolour studies, which he used for this oil painting."
+        "p": "Akseli Gallen-Kallela was born in Pori, Finland, in 1865 and was born with the name Axel Gallén, which he later changed to a Finnish form. He became the painter most closely linked with the Kalevala, Finland's national epic, and returned to its stories again and again. For this picture he is said to have used his own mother as the model."
       },
       {
         "h": "The time",
-        "p": "Homer painted it at the very end of the 1800s, a time when many Americans were still struggling with the legacy of slavery and its racial injustice. The Met reads the painting in that light, noting how the Gulf Stream current links the Caribbean and the Atlantic world of trade and empire. When it was shown in Philadelphia, one reviewer mocked it as 'Smiling Sharks', and it did not sell quickly. After Homer kept reworking it, the Met bought it in 1906."
+        "p": "In 1897 Finland was a Grand Duchy inside the Russian Empire, and artists and writers were busy building a sense of Finnish identity. The Kalevala, gathered from old folk poems by Elias Lönnrot in the 1800s, was a big part of that. Gallen-Kallela took its myths and gave them a fresh, modern look, in the new Symbolist spirit of the 1890s."
       },
       {
         "h": "What's special",
-        "p": "Homer was a master of watercolour, and you can feel it in the clear, fluid way he paints the water, even though this is oil. He never told the story outright. When a viewer asked what happens to the sailor, he was annoyed that the picture needed explaining, and said the man would be rescued and returned home. Yet the painting itself leaves the question open, which is exactly why people keep looking at it."
+        "p": "The story comes from the Kalevala: the hero Lemminkäinen dies in the land of the dead, and his mother rakes the river of Tuonela to recover him. Gallen-Kallela used tempera, which dries matte and chalky rather than glossy like oil, and kept the forms simple. That helps the scene feel like something from the other side of death, while the mother herself is painted more naturally. Many people read it as a picture of a mother's love."
       },
       {
         "h": "Look for",
-        "p": "Find the tiny ship at the far left; it is easy to miss, and it carries the hope of rescue. Notice the ropes and the broken mast lying across the deck, and the waterspout in the distance. Then look at how Homer paints the waves, with soft, thin patches of colour that look like watercolour."
+        "p": "Notice the mother's face and hands: they are the most lifelike part of the painting. Then look at the dark water and the stylised, matte surfaces around her, and see how different they feel."
       }
     ],
     "source": {
-      "title": "The Metropolitan Museum of Art",
-      "url": "https://www.metmuseum.org/art/collection/search/11122"
+      "title": "Wikimedia Commons (Ateneum Art Museum, inv. A I 640)",
+      "url": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg"
     }
   },
   "history": [
+    {
+      "date": "2026-11-24",
+      "title": "The Gulf Stream",
+      "artist": "Winslow Homer",
+      "artistLife": "American, 1836–1910",
+      "year": "1899, reworked by 1906",
+      "medium": "Oil on canvas",
+      "size": "71.4 × 124.8 cm (about the size of a large window pane)",
+      "where": "The Metropolitan Museum of Art, New York",
+      "movement": "American Realism, late 19th century",
+      "fame": "famous",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Winslow_Homer_-_The_Gulf_Stream_-_Metropolitan_Museum_of_Art.jpg",
+        "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+        "focus": "center 55%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A man lies on the deck of a small fishing boat that has lost its mast and rudder, tossed on a deep blue-green sea. Sharks circle around the boat, a waterspout (a tornado over water) looms on one side, and a tiny ship sits far away on the horizon. It is a scene of danger, but also of a strange, held-breath stillness."
+        },
+        {
+          "h": "The artist",
+          "p": "Winslow Homer began as a magazine illustrator in Boston and New York, drawing scenes of the American Civil War. Later he became a painter and settled in a remote spot on the coast of Maine, where he spent years watching the sea. In the winter of 1898–99 he travelled to Nassau in the Bahamas and made watercolour studies, which he used for this oil painting."
+        },
+        {
+          "h": "The time",
+          "p": "Homer painted it at the very end of the 1800s, a time when many Americans were still struggling with the legacy of slavery and its racial injustice. The Met reads the painting in that light, noting how the Gulf Stream current links the Caribbean and the Atlantic world of trade and empire. When it was shown in Philadelphia, one reviewer mocked it as 'Smiling Sharks', and it did not sell quickly. After Homer kept reworking it, the Met bought it in 1906."
+        },
+        {
+          "h": "What's special",
+          "p": "Homer was a master of watercolour, and you can feel it in the clear, fluid way he paints the water, even though this is oil. He never told the story outright. When a viewer asked what happens to the sailor, he was annoyed that the picture needed explaining, and said the man would be rescued and returned home. Yet the painting itself leaves the question open, which is exactly why people keep looking at it."
+        },
+        {
+          "h": "Look for",
+          "p": "Find the tiny ship at the far left; it is easy to miss, and it carries the hope of rescue. Notice the ropes and the broken mast lying across the deck, and the waterspout in the distance. Then look at how Homer paints the waves, with soft, thin patches of colour that look like watercolour."
+        }
+      ],
+      "source": {
+        "title": "The Metropolitan Museum of Art",
+        "url": "https://www.metmuseum.org/art/collection/search/11122"
+      }
+    },
     {
       "date": "2026-11-23",
       "title": "The Tortoise Trainer",
