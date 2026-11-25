@@ -2097,7 +2097,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.93 · Backup saves to Downloads on laptops';
+const APP_VERSION = '5.94 · Habit plant is now a sunflower';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -3682,7 +3682,7 @@ function syncCard() {
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
     it('thesis', '🧪 Thesis tracker', ['Send Claude your urology list in chat (say “urology list”, separate from the OT list). Claude picks every case with TURP in it (not TURBT) and adds it here with the date and all its details.', 'Each case gets the next number from your random sequence (dashed box = waiting). Mark it Recruited or Not recruited; once recruited, mark Done or Not done in OT.', 'A number is used up only when the case is recruited and done (green box). Recruited but not done in OT: the case comes off the list (kept under the Not done filter, tap again to undo) and its number passes to the next patient. Not recruited cases get no number.', 'The ring counts patients recruited and done out of the whole sequence, including the ones before the tracker. The sequence and names stay locked to your paired devices. Thesis cases are never removed.', 'Marking Not recruited or Not done asks for a reason (you can skip it and add it later from the Reason column). The reasons feed the CONSORT counts under the list. Export list for Excel saves every case with its number, outcome and reason as a file Excel opens.', 'Recruitment calendar: each month shows your TURP cases as coloured dots (green = recruited and done, blue = recruited and still to mark, amber = not decided, red = not done in OT, grey = not recruited). Days with a recruited patient get a soft green circle. Tap a day to see that day\'s patients just below the calendar.', 'Thesis card (bottom of the Cases tab): your name, thesis title and guides. Tap it to flip for the IEC number, CTRI numbers, approval dates and the next IEC continuation date. ⧉ copies a single number; Copy all thesis details copies everything.', 'Review of literature (second tab): papers checked on PubMed, grouped by topic, each with what it found and where to use it in your thesis. Mark papers read and tick the writing steps as you go. A reminder on Today shows when a TURP case today or tomorrow still needs marking (switch it off in Settings).']),
-    it('plant', '🪴 Habit plant', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows the plant: seed, sprout, leaves, a bushy plant, a bud, and a flower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
+    it('plant', '🌻 Habit sunflower', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows your sunflower: seed, sprout, leaves, a bushy plant, a sunflower bud, and a full sunflower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
     it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette with a drawn strip and one ABG. Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
     it('viva', '🎤 Viva round', ['Five flashcards from the “Points for the exam / viva” in your bite-size notes. Say the points out loud, tap to check, then Knew it or Again tomorrow. It shares the same spacing as the daily bite revision.']),
@@ -4565,7 +4565,7 @@ function popApply() { if (!popWant || Date.now() - popWant.t > 900) return; cons
 /* ---------- v5.70: the habit plant. A day "counts" when you do at least 75% of that day's habits.
    Every-few-days habits count only when done (a bonus, never a penalty). The plant never wilts: a missed day just doesn't grow it. ---------- */
 const PLANT_AT = [0, 1, 3, 6, 10, 15, 21]; /* good days needed for: seed, sprout, leaves, more leaves, bushy, bud, flower */
-const PLANT_NAMES = ['a seed', 'a sprout', 'first leaves', 'a young plant', 'a bushy plant', 'a bud', 'in flower'];
+const PLANT_NAMES = ['a seed', 'a sprout', 'first leaves', 'a young plant', 'a bushy plant', 'a sunflower bud', 'a sunflower'];
 function dayScore(day) { let due = 0, done = 0; HABITS().forEach(h => { const d = !!state.habitDone[habitKey(h, day)]; if (h.every > 1) { if (d) { due++; done++; } } else { due++; if (d) done++; } }); return { due, done, ok: due > 0 && done / due >= 0.75 }; }
 function plantInfo() { const S = state.settings; if (!S.plantStart) { S.plantStart = today(); if (save()) syncSoon(); }
   let g = 0; for (let d = S.plantStart; d <= today(); d = addDays(d, 1)) if (dayScore(d).ok) g++;
@@ -4582,14 +4582,18 @@ function plantSVG(stage, size, seen) { const top = [56, 49, 42, 35, 28, 22, 20][
     <g fill="#8CCB97">${part(1, leaf(26, 48.5, 4, 2.2, -25) + leaf(34, 48.5, 4, 2.2, 25))}</g>
     <g fill="#6FAF7F">${part(2, leaf(23, 42, 7, 3, -25) + leaf(37, 42, 7, 3, 25))}${part(3, leaf(22, 35.5, 8, 3.4, -20) + leaf(38, 35.5, 8, 3.4, 20))}</g>
     <g fill="#5A9C6C">${part(4, leaf(23.5, 29, 7, 3, -30) + leaf(36.5, 29, 7, 3, 30))}</g>
-    ${part(5, stage === 5 ? '<path d="M27.5 23.5q2.5 -2 5 0" stroke="#5A9C6C" stroke-width="1.6" fill="none"/><ellipse cx="30" cy="20.5" rx="3.2" ry="4.4" fill="#E89BB0"/>' : '')}
-    ${part(6, [0, 72, 144, 216, 288].map(a => `<circle cx="${(30 + 4.6 * Math.sin(a * Math.PI / 180)).toFixed(2)}" cy="${(19 - 4.6 * Math.cos(a * Math.PI / 180)).toFixed(2)}" r="3.9" fill="#F4A7BE"/>`).join('') + '<circle cx="30" cy="19" r="2.7" fill="#E0A526"/>')}
+    ${part(5, stage === 5 ? '<circle cx="30" cy="20" r="4.6" fill="#5A9C6C"/>' + [0, 45, 90, 135, 180, 225, 270, 315].map(a => `<ellipse cx="30" cy="14.6" rx="1.3" ry="2.4" fill="#F2C230" transform="rotate(${a} 30 20)"/>`).join('') + '<circle cx="30" cy="20" r="3.4" fill="#6FAF7F"/>' : '')}
+    ${part(6, /* sunflower (Apoorva, 25 Nov 2026): two rings of pointed golden petals, brown seed head */
+      Array.from({ length: 14 }, (_, i) => `<path d="M30 13.4Q32.6 9.6 30 5.2Q27.4 9.6 30 13.4Z" fill="#E39A12" transform="rotate(${i * 360 / 14 + 360 / 28} 30 18)"/>`).join('') +
+      Array.from({ length: 14 }, (_, i) => `<path d="M30 13.6Q32.4 10 30 6Q27.6 10 30 13.6Z" fill="#FBC92E" transform="rotate(${i * 360 / 14} 30 18)"/>`).join('') +
+      '<circle cx="30" cy="18" r="5.6" fill="#7A4B22"/><circle cx="30" cy="18" r="4" fill="#53311A"/>' +
+      [[28.3, 16.5], [31.7, 16.5], [30, 20.1], [27.6, 18.9], [32.4, 18.9], [30, 15.4], [30, 18]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".5" fill="#B07D45"/>`).join(''))}
     <rect x="14" y="56" width="32" height="6" rx="2" fill="#B5653C"/><path d="M16 62h28l-3 16H19z" fill="#C9774B"/><ellipse cx="30" cy="57.4" rx="13" ry="1.6" fill="#5A3E2B" opacity=".55"/></svg>`; }
 function plantLine(P, compact) { const t = P.today.ok ? '<b class="pl-ok">Today counts ✓</b>' : P.need ? `${P.need} more ${P.need === 1 ? 'habit' : 'habits'} today to grow it` : 'Tick your habits to grow it';
-  return compact ? `<span class="pl-t">${t}</span>` : `<span class="pl-t"><b>${P.stage === 6 ? 'In flower 🌸' : 'Your plant: ' + PLANT_NAMES[P.stage]}</b><span>${t}</span><span>${P.stage === 6 ? 'A new seed starts tomorrow' : plural(P.toNext, 'more good day') + ' to the next stage'}${P.grown ? ' · ' + plural(P.grown, 'plant') + ' grown' : ''}</span></span>`; }
+  return compact ? `<span class="pl-t">${t}</span>` : `<span class="pl-t"><b>${P.stage === 6 ? 'Your sunflower is in bloom 🌻' : 'Your sunflower: ' + PLANT_NAMES[P.stage]}</b><span>${t}</span><span>${P.stage === 6 ? 'A new seed starts tomorrow' : plural(P.toNext, 'more good day') + ' to the next stage'}${P.grown ? ' · ' + plural(P.grown, 'sunflower') + ' grown' : ''}</span></span>`; }
 function plantBlock(compact) { if (state.settings.plantOn === false || !HABITS().length) return ''; const P = plantInfo(); const seen = state.settings.plantSeen;
   const html = `<div class="pl-w${compact ? ' pl-c' : ''}">${plantSVG(P.stage, compact ? 30 : 54, seen == null || seen === P.stage ? null : Math.min(seen, P.stage))}${plantLine(P, compact)}</div>`;
-  if (seen !== P.stage) { const grew = seen != null && P.stage > seen; state.settings.plantSeen = P.stage; if (save()) syncSoon(); if (grew) setTimeout(() => toast(P.stage === 6 ? 'Your plant flowered 🌸' : 'Your plant grew 🌱'), 300); }
+  if (seen !== P.stage) { const grew = seen != null && P.stage > seen; state.settings.plantSeen = P.stage; if (save()) syncSoon(); if (grew) setTimeout(() => toast(P.stage === 6 ? 'Your sunflower bloomed 🌻' : 'Your sunflower grew 🌱'), 300); }
   return html; }
 
 /* ---------- v5.70 animations: helpers ---------- */
