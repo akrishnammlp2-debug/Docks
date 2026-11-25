@@ -20,7 +20,7 @@ import { execFileSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUB = join(ROOT, 'data', 'thesis.json');
-export const isTurp = p => /\bTURP\b|trans\s*-?\s*urethral\s+resection\s+of\s+(the\s+)?prostate/i.test(p || '') && !/\bTURBT\b|bladder\s+tumou?r/i.test(p || '');
+export const isTurp = p => /\bTURP\b|trans\s*-?\s*urethral\s+resection\s+of\s+(the\s+)?prostate/i.test(p || '') && !/\bTURBT\b|bladder\s+tumou?r|ha?emorrh?oid/i.test(p || '');
 
 const [cmd, file, flag] = process.argv.slice(2);
 if (cmd !== 'add' || !file) { console.log('usage: node tools/thesis.mjs add <plain.json> [--replace]'); process.exit(1); }

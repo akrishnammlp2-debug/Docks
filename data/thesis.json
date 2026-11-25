@@ -1,6 +1,37 @@
 {
  "updated": "2026-11-25",
  "note": "Thesis: TURP cases picked from urology lists (not TURBT). No patient names, ages, sex or hospital numbers here; those live in data/private/thesis-YYYY-MM-DD.enc.json. Never pruned.",
- "rule": "Only cases whose procedure says TURP (or transurethral resection of prostate). Exclude TURBT / bladder tumour.",
- "items": []
+ "rule": "Only cases whose procedure says TURP (or transurethral resection of prostate). Exclude TURBT / bladder tumour and combined procedures (e.g. TURP + hemorrhoidectomy).",
+ "items": [
+  {
+   "id": "th-2026-11-26-01",
+   "date": "2026-11-26",
+   "order": 1,
+   "ot": "Uro OT B",
+   "procedure": "TURP (SA)",
+   "unit": "URO 3",
+   "surgeon": "Dr. Laxmi Shenoy / Kartikey",
+   "notes": "BPH (33 cc) · Ward MM4 · Case 1"
+  },
+  {
+   "id": "th-2026-11-26-02",
+   "date": "2026-11-26",
+   "order": 2,
+   "ot": "Uro OT B",
+   "procedure": "TURP / BNI",
+   "unit": "URO 3",
+   "surgeon": "Dr. Laxmi Shenoy / Kartikey",
+   "notes": "BPE · Ward KHSB 3FA · Case 5"
+  },
+  {
+   "id": "th-2026-11-26-03",
+   "date": "2026-11-26",
+   "order": 3,
+   "ot": "Laser OT",
+   "procedure": "TURP",
+   "unit": "URO 3",
+   "surgeon": "Dr. Shwetha / Sujith",
+   "notes": "BPE (90 cc) · Ward MM4 · Case 4"
+  }
+ ]
 }
