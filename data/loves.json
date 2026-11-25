@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,23 +64,40 @@
     }
   ],
   "today": {
-    "date": "2026-11-24",
-    "topic": "history",
-    "topicName": "History",
+    "date": "2026-11-25",
+    "topic": "superheroes",
+    "topicName": "Superheroes (DC & Marvel)",
     "kind": "fact",
-    "title": "In 897, Rome put a dead pope on trial",
-    "text": "In 897, Pope Stephen VI had the body of his predecessor Formosus dug up, about nine months after Formosus died. The corpse was propped on a throne for a trial known as the Cadaver Synod, with a deacon appointed to answer the charges on its behalf. Formosus was accused of breaking church law, including moving from one bishopric to another, and was declared guilty. The body was later thrown into the Tiber. Stephen did not last long: he was imprisoned and probably strangled, and the verdict was soon overturned by later popes.",
+    "title": "Wonder Woman's creator helped invent the lie detector",
+    "text": "William Moulton Marston, the psychologist who wrote Wonder Woman, finished a Harvard psychology PhD in 1921 on detecting deception through the body. His lab work centred on systolic blood pressure, which rises when people lie, and he is credited with one of the earliest lie detector tests. That science is often cited as the inspiration for her Lasso of Truth. When Wonder Woman debuted in All-Star Comics in 1941, Marston wrote every issue until his death in 1947.",
     "source": {
-      "title": "Britannica: Cadaver Synod",
-      "url": "https://www.britannica.com/topic/Cadaver-Synod"
+      "title": "Wonder Woman's Secret Roots in Psychological Science (APS Observer)",
+      "url": "https://www.psychologicalscience.org/publications/observer/obsonline/wonder-womans-secret-roots-in-psychological-science.html"
     },
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg",
-      "credit": "Jean-Paul Laurens (1870), public domain (Wikimedia Commons)"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg",
+      "credit": "Wellcome Collection, CC BY 4.0 (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-24",
+      "topic": "history",
+      "topicName": "History",
+      "kind": "fact",
+      "title": "In 897, Rome put a dead pope on trial",
+      "text": "In 897, Pope Stephen VI had the body of his predecessor Formosus dug up, about nine months after Formosus died. The corpse was propped on a throne for a trial known as the Cadaver Synod, with a deacon appointed to answer the charges on its behalf. Formosus was accused of breaking church law, including moving from one bishopric to another, and was declared guilty. The body was later thrown into the Tiber. Stephen did not last long: he was imprisoned and probably strangled, and the verdict was soon overturned by later popes.",
+      "source": {
+        "title": "Britannica: Cadaver Synod",
+        "url": "https://www.britannica.com/topic/Cadaver-Synod"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:Jean_Paul_Laurens_Le_Pape_Formose_et_Etienne_VI_1870.jpg",
+        "credit": "Jean-Paul Laurens (1870), public domain (Wikimedia Commons)"
+      }
+    },
     {
       "date": "2026-11-23",
       "topic": "houseplants",
