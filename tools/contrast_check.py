@@ -7,7 +7,7 @@ def open(p,*a):
   import io
   return _open(p,*a) if a or os.path.exists(p) else io.StringIO('')
 from playwright.async_api import async_playwright
-S=sys.argv[1]; TABS=['today','reminders','study','todos','calendar','advances','ot','roster','cases','music','nba','dota','backup','others']
+S=sys.argv[1]; TABS=['today','reminders','study','todos','calendar','advances','ot','roster','cases','music','nba','dota','backup','others','thesis']
 JS=r"""()=>{
 const parse=c=>{const m=c.match(/rgba?\(([^)]+)\)/);if(!m)return null;const p=m[1].split(',').map(x=>parseFloat(x));return {r:p[0],g:p[1],b:p[2],a:p.length>3?p[3]:1};};
 const lum=c=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(c.r)+.7152*f(c.g)+.0722*f(c.b);};

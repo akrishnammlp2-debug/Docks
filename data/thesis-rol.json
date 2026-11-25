@@ -1,0 +1,463 @@
+{
+ "updated": "2026-11-25",
+ "note": "Review of literature for the thesis. Every article verified on PubMed (25 Nov 2026); findings paraphrased from the abstracts. Drive links point to her Thesis Work folder.",
+ "gap": "A PubMed search on 25 Nov 2026 found no trial comparing intrathecal fentanyl with buprenorphine as adjuvants to hyperbaric (heavy) levobupivacaine in elderly TURP. The closest are Khan 2006 (fentanyl vs buprenorphine with hyperbaric bupivacaine in elderly TURP) and Ture 2019 (buprenorphine with isobaric levobupivacaine, not TURP). Pöpping 2012 found too few data on intrathecal buprenorphine to draw conclusions.",
+ "searches": [
+  "intrathecal buprenorphine fentanyl spinal anaesthesia",
+  "intrathecal buprenorphine transurethral resection prostate",
+  "hyperbaric levobupivacaine fentanyl spinal elderly",
+  "levobupivacaine transurethral resection spinal",
+  "intrathecal buprenorphine review",
+  "buprenorphine levobupivacaine intrathecal",
+  "intrathecal fentanyl bupivacaine transurethral resection prostate elderly"
+ ],
+ "drive": [
+  {
+   "title": "Basic Physiology in Spinal Anaesthesia",
+   "url": "https://drive.google.com/file/d/1rBH08lM66Tk_A56ovKc-_nZf4sRxL9MJ/view"
+  }
+ ],
+ "themes": [
+  {
+   "id": "cmp",
+   "title": "Fentanyl vs buprenorphine: direct comparisons"
+  },
+  {
+   "id": "bup",
+   "title": "Intrathecal buprenorphine"
+  },
+  {
+   "id": "fen",
+   "title": "Intrathecal fentanyl"
+  },
+  {
+   "id": "levo",
+   "title": "Levobupivacaine in spinal anaesthesia and TURP"
+  },
+  {
+   "id": "turp",
+   "title": "TURP and the elderly patient"
+  },
+  {
+   "id": "meth",
+   "title": "Methods and reporting"
+  }
+ ],
+ "items": [
+  {
+   "theme": "cmp",
+   "pmid": "16827252",
+   "cite": "Khan FA, Hamdani GA. Comparison of intrathecal fentanyl and buprenorphine in urological surgery. J Pak Med Assoc. 2006;56(6):277-81.",
+   "design": "RCT · 60 men ≥60 y · TURP",
+   "finding": "Hyperbaric bupivacaine alone vs + fentanyl vs + buprenorphine. Fentanyl reached T10 fastest; buprenorphine gave the longest sensory block and fewer patients needing analgesia, but more nausea and vomiting. Blood pressure stayed within 20% of baseline in all groups. The PubMed record carries a dose correction, so take doses from the full text.",
+   "use": "The closest study to yours (same population, same two opioids). Core of your Review and the first study you compare with in the Discussion.",
+   "drive": "https://drive.google.com/file/d/1eZGTZhc1nQcaihpdQJ1S4GAggnh01cWf/view",
+   "key": true,
+   "id": "r16827252",
+   "title": "Comparison of intrathecal fentanyl and buprenorphine in urological surgery"
+  },
+  {
+   "theme": "cmp",
+   "pmid": "34667359",
+   "doi": "10.4103/aer.aer_59_21",
+   "cite": "Dhawale TA, Sivashankar KR. Comparison of intrathecal fentanyl and buprenorphine as an adjuvant to 0.5% hyperbaric bupivacaine for spinal anesthesia. Anesth Essays Res. 2021;15(1):126-32.",
+   "design": "Prospective observational · 90 adults 16–60 y",
+   "finding": "Bupivacaine 15 mg with saline, fentanyl 25 µg or buprenorphine 150 µg. Fentanyl gave the fastest sensory onset; buprenorphine gave faster motor onset, the longest two-segment regression and the longest analgesia (about 412 min).",
+   "use": "Recent Indian comparison of the same two adjuvants. Note it is observational and in younger adults, a limitation you can point out.",
+   "key": true,
+   "id": "r34667359",
+   "title": "Comparison of intrathecal fentanyl and buprenorphine as an adjuvant to 0.5% hyperbaric bupivacaine for spinal anesthesia"
+  },
+  {
+   "theme": "cmp",
+   "pmid": "27275055",
+   "doi": "10.4103/0970-9185.182107",
+   "cite": "Singh AP, Kaur R, Gupta R, Kumari A. Intrathecal buprenorphine versus fentanyl as adjuvant to 0.75% ropivacaine in lower limb surgeries. J Anaesthesiol Clin Pharmacol. 2016;32(2):229-33.",
+   "design": "Double-blind RCT · 90 ASA I–II",
+   "finding": "Buprenorphine 60 µg and fentanyl 10 µg both prolonged sensory block and time to first analgesic vs ropivacaine alone; sensory block was longest with buprenorphine. Motor block, haemodynamics and side effects were similar.",
+   "use": "Same comparison with a different local anaesthetic: shows the opioid effect holds beyond bupivacaine.",
+   "key": true,
+   "id": "r27275055",
+   "title": "Intrathecal buprenorphine versus fentanyl as adjuvant to 0.75% ropivacaine in lower limb surgeries"
+  },
+  {
+   "theme": "cmp",
+   "pmid": "42813987",
+   "doi": "10.4103/aam.aam_531_26",
+   "cite": "Kavya KJ, Shetty KR, Sinha S, Podder S, Shetty D, Devalla AR, et al. Perioperative hemodynamic events following intrathecal fentanyl versus buprenorphine as adjuvants to hyperbaric bupivacaine in infraumbilical surgery: a prospective observational study. Ann Afr Med. 2026.",
+   "design": "Prospective observational · 192 adults · KMC Manipal",
+   "finding": "Fentanyl 25 µg vs buprenorphine 60 µg with hyperbaric bupivacaine. Hypotension 61.5% vs 52.1%, not significantly different; time to hypotension and bradycardia also similar.",
+   "use": "From your own department. Use for the haemodynamic part of your Discussion.",
+   "key": true,
+   "id": "r42813987",
+   "title": "Perioperative hemodynamic events following intrathecal fentanyl versus buprenorphine as adjuvants to hyperbaric bupivacaine in infraumbilical surgery: a prospective observational study"
+  },
+  {
+   "theme": "bup",
+   "pmid": "29284844",
+   "doi": "10.4103/aer.AER_163_17",
+   "cite": "Kaur N, Goneppanavar U, Venkateswaran R, Iyer SS. Comparative effects of buprenorphine and dexmedetomidine as adjuvants to bupivacaine spinal anaesthesia in elderly male patients undergoing transurethral resection of prostate: a randomized prospective study. Anesth Essays Res. 2017;11(4):886-91.",
+   "design": "RCT · 60 elderly men · TURP",
+   "finding": "Low-dose hyperbaric bupivacaine (1.8 mL) with water, buprenorphine 60 µg or dexmedetomidine 5 µg. Both adjuvants prolonged time to first analgesic request; motor recovery took longer with either adjuvant.",
+   "use": "Buprenorphine in elderly TURP, the exact setting of your thesis.",
+   "key": true,
+   "id": "r29284844",
+   "title": "Comparative effects of buprenorphine and dexmedetomidine as adjuvants to bupivacaine spinal anaesthesia in elderly male patients undergoing transurethral resection of prostate: a randomized prospective study"
+  },
+  {
+   "theme": "bup",
+   "pmid": "3354808",
+   "doi": "10.1111/j.1365-2044.1988.tb05482.x",
+   "cite": "Capogna G, Celleno D, Tagariello V, Loffreda-Mancinelli C. Intrathecal buprenorphine for postoperative analgesia in the elderly patient. Anaesthesia. 1988;43(2):128-30.",
+   "design": "RCT · 90 patients aged 56–85 · suprapubic prostatectomy",
+   "finding": "Bupivacaine alone vs + buprenorphine 30 µg or 45 µg. Buprenorphine gave prolonged analgesia with comfortable breathing and little sedation; the higher dose was better. The only side effect was nausea and vomiting.",
+   "use": "A classic early paper for the history of intrathecal buprenorphine in the elderly.",
+   "id": "r3354808",
+   "title": "Intrathecal buprenorphine for postoperative analgesia in the elderly patient"
+  },
+  {
+   "theme": "bup",
+   "pmid": "39255864",
+   "doi": "10.1016/j.bjane.2024.844557",
+   "cite": "Cansian JM, D'Angelo Giampaoli AZ, Immich LC, Schmidt AP, Dias AS. The efficacy of buprenorphine compared with dexmedetomidine in spinal anesthesia: a systematic review and meta-analysis. Braz J Anesthesiol. 2024;74(6):844557.",
+   "design": "Systematic review + meta-analysis · 8 RCTs, 604 patients",
+   "finding": "Compared with dexmedetomidine, buprenorphine gave shorter sensory and motor blocks, slightly slower sensory onset and more postoperative nausea and vomiting; duration of analgesia, hypotension and bradycardia were similar.",
+   "use": "Highest-level evidence on intrathecal buprenorphine. Good for \"nausea and vomiting\" in your Discussion.",
+   "id": "r39255864",
+   "title": "The efficacy of buprenorphine compared with dexmedetomidine in spinal anesthesia: a systematic review and meta-analysis"
+  },
+  {
+   "theme": "bup",
+   "pmid": "42147575",
+   "doi": "10.7759/cureus.107092",
+   "cite": "Corriveau LG. Efficacy and safety of intrathecal buprenorphine for postoperative analgesia in cesarean delivery: a systematic review of randomized controlled trials. Cureus. 2026;18(4):e107092.",
+   "design": "Systematic review · 5 RCTs, 727 patients",
+   "finding": "Intrathecal buprenorphine prolonged analgesia in a dose-related way (lower doses ≤60 µg shorter, ≥100 µg longer). Side effects were mild (nausea, vomiting, pruritus, sedation); no clinically significant respiratory depression was reported.",
+   "use": "Recent review for buprenorphine dose–response and safety.",
+   "id": "r42147575",
+   "title": "Efficacy and safety of intrathecal buprenorphine for postoperative analgesia in cesarean delivery: a systematic review of randomized controlled trials"
+  },
+  {
+   "theme": "bup",
+   "pmid": "30745613",
+   "doi": "10.4103/ija.IJA_667_17",
+   "cite": "Ture P, Ramaswamy AH, Shaikh SI, Alur JB, Ture AV. Comparative evaluation of anaesthetic efficacy and haemodynamic effects of a combination of isobaric bupivacaine with buprenorphine vs. isobaric levobupivacaine with buprenorphine for spinal anaesthesia: a double blinded randomised clinical trial. Indian J Anaesth. 2019;63(1):49-54.",
+   "design": "Double-blind RCT",
+   "finding": "Buprenorphine added to isobaric bupivacaine vs isobaric levobupivacaine; onset of sensory block was similar between the two.",
+   "use": "The only PubMed trial pairing intrathecal buprenorphine with levobupivacaine (isobaric, not TURP). Helps show your gap.",
+   "drive": "https://drive.google.com/file/d/1A152P_NlIfoGFZvJ6nYzwbl6yvD_nVd8/view",
+   "key": true,
+   "id": "r30745613",
+   "title": "Comparative evaluation of anaesthetic efficacy and haemodynamic effects of a combination of isobaric bupivacaine with buprenorphine vs. isobaric levobupivacaine with buprenorphine for spinal anaesthesia: a double blinded randomised clinical trial"
+  },
+  {
+   "theme": "bup",
+   "pmid": "26672499",
+   "doi": "10.2147/JPR.S85951",
+   "cite": "Khanna IK, Pillarisetti S. Buprenorphine – an attractive opioid with underutilized potential in treatment of chronic pain. J Pain Res. 2015;8:859-70.",
+   "design": "Review",
+   "finding": "Explains buprenorphine's unusual receptor pharmacology (partial µ agonist, high affinity, slow dissociation) and its safety profile, including the ceiling effect on respiratory depression.",
+   "use": "Use for the pharmacology of buprenorphine chapter.",
+   "id": "r26672499",
+   "title": "Buprenorphine – an attractive opioid with underutilized potential in treatment of chronic pain"
+  },
+  {
+   "theme": "fen",
+   "pmid": "22230804",
+   "doi": "10.1016/j.pain.2011.11.028",
+   "cite": "Pöpping DM, Elia N, Marret E, Wenk M, Tramèr MR. Opioids added to local anesthetics for single-shot intrathecal anesthesia in patients undergoing minor surgery: a meta-analysis of randomized trials. Pain. 2012;153(4):784-93.",
+   "design": "Meta-analysis · 65 RCTs, 3338 patients",
+   "finding": "Fentanyl 10–50 µg prolonged postoperative analgesia by about 114 min and increased pruritus, without a significant increase in respiratory depression. There were not enough data on intrathecal buprenorphine for meaningful conclusions.",
+   "use": "Key meta-analysis for fentanyl, and it states that buprenorphine data were too few: supports why your study is needed.",
+   "key": true,
+   "id": "r22230804",
+   "title": "Opioids added to local anesthetics for single-shot intrathecal anesthesia in patients undergoing minor surgery: a meta-analysis of randomized trials"
+  },
+  {
+   "theme": "fen",
+   "pmid": "9296409",
+   "doi": "10.1097/00000539-199709000-00014",
+   "cite": "Ben-David B, Solomon E, Levin H, Admoni H, Goldik Z. Intrathecal fentanyl with small-dose dilute bupivacaine: better anesthesia without prolonging recovery. Anesth Analg. 1997;85(3):560-5.",
+   "design": "RCT · 50 ambulatory arthroscopy",
+   "finding": "Small-dose bupivacaine alone was not enough, but adding fentanyl made the block reliable without prolonging motor block or recovery.",
+   "use": "Classic paper showing fentanyl lets you reduce the local anaesthetic dose.",
+   "id": "r9296409",
+   "title": "Intrathecal fentanyl with small-dose dilute bupivacaine: better anesthesia without prolonging recovery"
+  },
+  {
+   "theme": "fen",
+   "pmid": "8214756",
+   "doi": "10.1097/00000542-199310000-00019",
+   "cite": "Wang C, Chakrabarti MK, Whitwam JG. Specific enhancement by fentanyl of the effects of intrathecal bupivacaine on nociceptive afferent but not on sympathetic efferent pathways in dogs. Anesthesiology. 1993;79(4):766-73.",
+   "design": "Animal study",
+   "finding": "Fentanyl enhanced the effect of intrathecal bupivacaine on pain (afferent) pathways but not on sympathetic (efferent) pathways.",
+   "use": "Mechanism: why opioids improve sensory block without worsening hypotension.",
+   "id": "r8214756",
+   "title": "Specific enhancement by fentanyl of the effects of intrathecal bupivacaine on nociceptive afferent but not on sympathetic efferent pathways in dogs"
+  },
+  {
+   "theme": "fen",
+   "pmid": "12846615",
+   "doi": "10.1046/j.1365-2044.2003.03153.x",
+   "cite": "Kararmaz A, Kaya S, Turhanoglu S, Ozyilmaz MA. Low-dose bupivacaine-fentanyl spinal anaesthesia for transurethral prostatectomy. Anaesthesia. 2003;58(6):526-30.",
+   "design": "RCT · elderly TURP",
+   "finding": "Bupivacaine 4 mg + fentanyl 25 µg gave adequate anaesthesia for TURP with less motor block, less hypotension and less shivering than bupivacaine 7.5 mg alone.",
+   "use": "Fentanyl in elderly TURP.",
+   "id": "r12846615",
+   "title": "Low-dose bupivacaine-fentanyl spinal anaesthesia for transurethral prostatectomy"
+  },
+  {
+   "theme": "fen",
+   "pmid": "19797249",
+   "doi": "10.1093/bja/aep263",
+   "cite": "Kim SY, Cho JE, Hong JY, Koo BN, Kim JM, Kil HK. Comparison of intrathecal fentanyl and sufentanil in low-dose dilute bupivacaine spinal anaesthesia for transurethral prostatectomy. Br J Anaesth. 2009;103(5):750-4.",
+   "design": "RCT · 70 elderly TURP",
+   "finding": "Low-dose dilute bupivacaine with fentanyl 25 µg or sufentanil 5 µg both gave adequate anaesthesia without haemodynamic instability; sufentanil gave a better quality block.",
+   "use": "BJA paper on opioid adjuvants in elderly TURP.",
+   "id": "r19797249",
+   "title": "Comparison of intrathecal fentanyl and sufentanil in low-dose dilute bupivacaine spinal anaesthesia for transurethral prostatectomy"
+  },
+  {
+   "theme": "fen",
+   "pmid": "26417124",
+   "doi": "10.4103/0259-1162.152148",
+   "cite": "Attri JP, Kaur G, Kaur S, Kaur R, Mohan B, Kashyap K. Comparison of levobupivacaine and levobupivacaine with fentanyl in infraumbilical surgeries under spinal anaesthesia. Anesth Essays Res. 2015;9(2):178-84.",
+   "design": "Double-blind RCT · 100 adults",
+   "finding": "Adding fentanyl 25 µg to isobaric levobupivacaine 10 mg gave faster onset and longer sensory block, motor block and analgesia, with stable haemodynamics; pruritus was more common with fentanyl.",
+   "use": "Fentanyl with levobupivacaine. Its reference list is a good source of more TURP–levobupivacaine papers.",
+   "drive": "https://drive.google.com/file/d/1KKgsRsI7EsJaypYaKWemCaUeVZjuK88V/view",
+   "id": "r26417124",
+   "title": "Comparison of levobupivacaine and levobupivacaine with fentanyl in infraumbilical surgeries under spinal anaesthesia"
+  },
+  {
+   "theme": "levo",
+   "pmid": "10776835",
+   "doi": "10.2165/00003495-200059030-00013",
+   "cite": "Foster RH, Markham A. Levobupivacaine: a review of its pharmacology and use as a local anaesthetic. Drugs. 2000;59(3):551-79.",
+   "design": "Review",
+   "finding": "Levobupivacaine (the S-enantiomer of bupivacaine) behaves clinically much like bupivacaine, with preclinical data showing less cardiac and CNS toxicity.",
+   "use": "Main reference for the pharmacology of levobupivacaine chapter.",
+   "key": true,
+   "id": "r10776835",
+   "title": "Levobupivacaine: a review of its pharmacology and use as a local anaesthetic"
+  },
+  {
+   "theme": "levo",
+   "pmid": "19686477",
+   "doi": "10.1111/j.1365-2044.2009.05995.x",
+   "cite": "Erdil F, Bulut S, Demirbilek S, Gedik E, Gulhas N, Ersoy MO. The effects of intrathecal levobupivacaine and bupivacaine in the elderly. Anaesthesia. 2009;64(9):942-6.",
+   "design": "RCT · 80 elderly · transurethral prostate surgery",
+   "finding": "Both with fentanyl 15 µg. Levobupivacaine gave slower onset and a lower peak block, but better haemodynamic stability with less hypotension and nausea than bupivacaine.",
+   "use": "Why levobupivacaine suits elderly TURP patients: the rationale for your choice of drug.",
+   "key": true,
+   "id": "r19686477",
+   "title": "The effects of intrathecal levobupivacaine and bupivacaine in the elderly"
+  },
+  {
+   "theme": "levo",
+   "pmid": "21178911",
+   "cite": "Erbay RH, Ermumcu O, Hanci V, Atalay H. A comparison of spinal anesthesia with low-dose hyperbaric levobupivacaine and hyperbaric bupivacaine for transurethral surgery: a randomized controlled trial. Minerva Anestesiol. 2010;76(12):992-1001.",
+   "design": "Double-blind RCT · 60 · transurethral surgery",
+   "finding": "Hyperbaric levobupivacaine 7.5 mg vs hyperbaric bupivacaine 7.5 mg, both with fentanyl 25 µg. Levobupivacaine gave shorter motor block, longer sensory block and a later first analgesic request.",
+   "use": "Hyperbaric (heavy) levobupivacaine + fentanyl in transurethral surgery: very close to your fentanyl arm.",
+   "key": true,
+   "id": "r21178911",
+   "title": "A comparison of spinal anesthesia with low-dose hyperbaric levobupivacaine and hyperbaric bupivacaine for transurethral surgery: a randomized controlled trial"
+  },
+  {
+   "theme": "levo",
+   "pmid": "20125070",
+   "cite": "Sen H, Purtuloglu T, Sizlan A, Yanarates O, Ates F, Gundu I, et al. Comparison of intrathecal hyperbaric and isobaric levobupivacaine in urological surgery. Minerva Anestesiol. 2010;76(1):24-8.",
+   "design": "RCT · transurethral resection",
+   "finding": "Hyperbaric levobupivacaine was clinically more effective than the isobaric form for spinal anaesthesia in transurethral resection.",
+   "use": "Justifies using the heavy (hyperbaric) preparation in your study.",
+   "id": "r20125070",
+   "title": "Comparison of intrathecal hyperbaric and isobaric levobupivacaine in urological surgery"
+  },
+  {
+   "theme": "levo",
+   "pmid": "24174940",
+   "cite": "Akan B, Yagan O, Bilal B, Erdem D, Gogus N. Comparison of levobupivacaine alone and in combination with fentanyl and sufentanil in patients undergoing transurethral resection of the prostate. J Res Med Sci. 2013;18(5):378-82.",
+   "design": "Double-blind RCT · 60 · TURP",
+   "finding": "Lower-dose levobupivacaine with fentanyl or sufentanil gave faster sensory onset, less and shorter motor block and longer analgesia than levobupivacaine 10 mg alone.",
+   "use": "Levobupivacaine + fentanyl in TURP.",
+   "id": "r24174940",
+   "title": "Comparison of levobupivacaine alone and in combination with fentanyl and sufentanil in patients undergoing transurethral resection of the prostate"
+  },
+  {
+   "theme": "levo",
+   "pmid": "21448386",
+   "cite": "Akcaboy EY, Akcaboy ZN, Gogus N. Low dose levobupivacaine 0.5% with fentanyl in spinal anaesthesia for transurethral resection of prostate surgery. J Res Med Sci. 2011;16(1):68-73.",
+   "design": "RCT · TURP",
+   "finding": "Levobupivacaine 5 mg + fentanyl 25 µg gave stable haemodynamics, effective sensory block and less motor block for TURP.",
+   "use": "Levobupivacaine + fentanyl in TURP.",
+   "id": "r21448386",
+   "title": "Low dose levobupivacaine 0.5% with fentanyl in spinal anaesthesia for transurethral resection of prostate surgery"
+  },
+  {
+   "theme": "levo",
+   "pmid": "20394252",
+   "cite": "Cuvas O, Basar H, Yeygel A, Turkyilmaz E, Sunay MM. Spinal anesthesia for transurethral resection operations: levobupivacaine with or without fentanyl. Middle East J Anaesthesiol. 2010;20(4):547-52.",
+   "design": "RCT · transurethral resection",
+   "finding": "Both regimens worked; adding fentanyl to levobupivacaine shortened motor block.",
+   "use": "Levobupivacaine ± fentanyl in transurethral surgery.",
+   "id": "r20394252",
+   "title": "Spinal anesthesia for transurethral resection operations: levobupivacaine with or without fentanyl"
+  },
+  {
+   "theme": "levo",
+   "pmid": "25610173",
+   "doi": "10.5152/eajm.2011.23",
+   "cite": "Dizman S, Turker G, Gurbet A, Mogol EB, Turkcan S, Karakuzu Z. Comparison of two different doses of intrathecal levobupivacaine for transurethral endoscopic surgery. Eurasian J Med. 2011;43(2):103-8.",
+   "design": "RCT · transurethral surgery",
+   "finding": "The minimum effective dose of isobaric levobupivacaine for transurethral surgery was 10 mg.",
+   "use": "Dose of levobupivacaine for TURP (Methods / Discussion).",
+   "id": "r25610173",
+   "title": "Comparison of two different doses of intrathecal levobupivacaine for transurethral endoscopic surgery"
+  },
+  {
+   "theme": "levo",
+   "pmid": "16318658",
+   "doi": "10.1017/S0265021505001523",
+   "cite": "Lee YY, Muchhal K, Chan CK, Cheung AS. Levobupivacaine and fentanyl for spinal anaesthesia: a randomized trial. Eur J Anaesthesiol. 2005;22(12):899-903.",
+   "design": "RCT · urological surgery",
+   "finding": "Levobupivacaine 2.3 mL with fentanyl 15 µg was as effective as levobupivacaine 2.6 mL alone for urological surgery.",
+   "use": "Fentanyl allows a lower levobupivacaine dose.",
+   "id": "r16318658",
+   "title": "Levobupivacaine and fentanyl for spinal anaesthesia: a randomized trial"
+  },
+  {
+   "theme": "levo",
+   "pmid": "43034043",
+   "doi": "10.1016/j.redare.2026.502237",
+   "cite": "Muthyala H, Jonnavithula N, Pathy A, Medoji SC, Geetha S, Ravula R. Comparison of subarachnoid block using hyperbaric levobupivacaine plus fentanyl versus hyperbaric bupivacaine plus fentanyl in elective lower limb orthopaedic procedures: a randomized controlled study. Rev Esp Anestesiol Reanim. 2026:502237.",
+   "design": "RCT · 80 adults",
+   "finding": "Hyperbaric levobupivacaine 12.5 mg + fentanyl 25 µg vs hyperbaric bupivacaine + fentanyl: similar duration of analgesia, slower onset but faster motor recovery with levobupivacaine.",
+   "use": "Very recent Indian trial with hyperbaric levobupivacaine + fentanyl.",
+   "id": "r43034043",
+   "title": "Comparison of subarachnoid block using hyperbaric levobupivacaine plus fentanyl versus hyperbaric bupivacaine plus fentanyl in elective lower limb orthopaedic procedures: a randomized controlled study"
+  },
+  {
+   "theme": "turp",
+   "pmid": "16317031",
+   "doi": "10.1093/bja/aei279",
+   "cite": "Hahn RG. Fluid absorption in endoscopic surgery. Br J Anaesth. 2006;96(1):8-20.",
+   "design": "Review (BJA)",
+   "finding": "Reviews irrigating-fluid absorption (TURP syndrome): recognising symptoms, and treating with hypertonic saline rather than diuretics.",
+   "use": "For the TURP and TURP syndrome chapter.",
+   "key": true,
+   "id": "r16317031",
+   "title": "Fluid absorption in endoscopic surgery"
+  },
+  {
+   "theme": "turp",
+   "pmid": "19821694",
+   "doi": "10.1089/end.2009.0129",
+   "cite": "Hawary A, Mukhtar K, Sinclair A, Pearce I. Transurethral resection of the prostate syndrome: almost gone but not forgotten. J Endourol. 2009;23(12):2013-20.",
+   "design": "Review",
+   "finding": "TURP syndrome is now less common but unpredictable; it needs vigilance, a high index of suspicion and close monitoring.",
+   "use": "TURP syndrome background.",
+   "id": "r19821694",
+   "title": "Transurethral resection of the prostate syndrome: almost gone but not forgotten"
+  },
+  {
+   "theme": "turp",
+   "pmid": "11094696",
+   "doi": "10.1016/s0889-8537(05)70200-5",
+   "cite": "Malhotra V. Transurethral resection of the prostate. Anesthesiol Clin North Am. 2000;18(4):883-97.",
+   "design": "Review",
+   "finding": "Anaesthetic overview of TURP, including procedure-specific complications (TURP syndrome, bladder perforation, fibrinolysis, bacteraemia).",
+   "use": "Why regional anaesthesia is preferred for TURP; for the Introduction.",
+   "id": "r11094696",
+   "title": "Transurethral resection of the prostate"
+  },
+  {
+   "theme": "turp",
+   "pmid": "24782656",
+   "doi": "10.1186/1471-2253-14-30",
+   "cite": "Nakahira J, Sawai T, Fujiwara A, Minami T. Transurethral resection syndrome in elderly patients: a retrospective observational study. BMC Anesthesiol. 2014;14:30.",
+   "design": "Retrospective observational · 98 men ≥70 y",
+   "finding": "98 men aged ≥70 having TURP under regional anaesthesia; 23.5% developed TURP syndrome. Plasma substitute ≥500 mL, continuous suprapubic irrigation and resected weight >45 g were independent risk factors.",
+   "use": "TURP syndrome in the elderly.",
+   "id": "r24782656",
+   "title": "Transurethral resection syndrome in elderly patients: a retrospective observational study"
+  },
+  {
+   "theme": "meth",
+   "pmid": "20332509",
+   "doi": "10.1136/bmj.c332",
+   "cite": "Schulz KF, Altman DG, Moher D; CONSORT Group. CONSORT 2010 statement: updated guidelines for reporting parallel group randomised trials. BMJ. 2010;340:c332.",
+   "design": "Reporting guideline",
+   "finding": "The checklist and flow diagram for reporting randomised trials.",
+   "use": "Follow it for your Methods and Results; the CONSORT counts in your app feed the flow diagram.",
+   "key": true,
+   "id": "r20332509",
+   "title": "CONSORT 2010 statement: updated guidelines for reporting parallel group randomised trials"
+  }
+ ],
+ "guide": [
+  {
+   "id": "g1",
+   "title": "Make your Review headings",
+   "body": [
+    "Write the Review by topic, not one article after another. Suggested chapters: history of spinal anaesthesia; anatomy and physiology of the subarachnoid block; pharmacology of levobupivacaine; pharmacology of fentanyl; pharmacology of buprenorphine; TURP and the elderly patient (including TURP syndrome); previous studies on intrathecal opioid adjuvants.",
+    "Your university's thesis guidelines decide the chapter order and word limits, so check them and your guide's preference first."
+   ]
+  },
+  {
+   "id": "g2",
+   "title": "Search and save the papers",
+   "body": [
+    "Search PubMed with the terms listed at the bottom of this page, and note the date of each search for your Methods.",
+    "Keep every paper in a reference manager (Zotero or Mendeley are free) set to Vancouver style. Tap the title of any article below to open it; the ones marked “In your Drive” are already in your Thesis Work folder."
+   ]
+  },
+  {
+   "id": "g3",
+   "title": "Fill an extraction table",
+   "body": [
+    "For every study in “Previous studies”, note: author and year, design, number and age of patients, surgery, local anaesthetic and dose, opioid and dose, main results (onset, duration of sensory and motor block, time to first rescue analgesic, hypotension, bradycardia, nausea/vomiting, pruritus).",
+    "This table becomes the comparison table in your Discussion."
+   ]
+  },
+  {
+   "id": "g4",
+   "title": "Write each Review chapter",
+   "body": [
+    "Start each chapter broad, narrow it down, and end with what is still unknown.",
+    "Paraphrase in your own words and cite every claim. End the Review with the gap shown at the top of this page; that leads straight into your Aims."
+   ]
+  },
+  {
+   "id": "g5",
+   "title": "Introduction and Aims",
+   "body": [
+    "Funnel shape: why spinal anaesthesia for TURP in the elderly → why add an opioid → fentanyl vs buprenorphine → the gap → your aim and objectives (primary and secondary outcomes, exactly as in your approved synopsis)."
+   ]
+  },
+  {
+   "id": "g6",
+   "title": "Methods (follow CONSORT 2010)",
+   "body": [
+    "Cover: design, setting, ethics approval and trial registration, inclusion and exclusion criteria, sample size calculation, randomisation (your random number sequence) and allocation concealment, blinding, drug doses and preparation, how each outcome was measured (e.g. pinprick for sensory level, modified Bromage scale for motor block) and the statistical tests.",
+    "Write it to match your approved protocol, not from memory."
+   ]
+  },
+  {
+   "id": "g7",
+   "title": "Results",
+   "body": [
+    "Start with the CONSORT flow diagram: the counts are on the Cases tab (assessed, not recruited with reasons, recruited, not done in OT with reasons, analysed).",
+    "Then the demographic table, then each outcome in the order of your objectives. Report numbers and P values; save interpretation for the Discussion."
+   ]
+  },
+  {
+   "id": "g8",
+   "title": "Discussion, conclusion and references",
+   "body": [
+    "Compare each main result with the closest studies first (Khan 2006, Kaur 2017, Dhawale 2021, Erbay 2010, Erdil 2009), then explain agreements and differences (dose, baricity, age, surgery).",
+    "Add limitations, a short conclusion that answers your aim, and check every reference against PubMed before submitting."
+   ]
+  }
+ ]
+}

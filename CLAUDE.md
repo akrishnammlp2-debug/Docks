@@ -41,6 +41,15 @@ It is built only for her and will never be monetised.
 - Never remove SLCM records or any academic data (bites, topics, schedule).
 - NBA and Dota 2 feeds update only when she pulls down to refresh — no scheduled background runs. Dota 2: tier 1 matches and patch updates only.
 
+## Thesis tracker (Academics › Thesis, v5.85)
+- Thesis: intrathecal fentanyl vs buprenorphine as adjuvant to 0.5% levobupivacaine heavy, spinal anaesthesia, elderly TURP. One of the most important things for her MD exams.
+- She sends a **"urology list"** in chat. It is separate from the OT list: never put it into `data/ot.json`, never confuse the two.
+- From the urology list take **only cases with TURP** in the procedure (also "transurethral resection of prostate"). **Not TURBT**, not bladder tumour. Keep every detail of each case and its date.
+- Add them with `node tools/thesis.mjs add <plain.json>` (plain file outside the repo; the tool writes public rows to `data/thesis.json` and locks name · age sex · UHID into `data/private/thesis-<date>.enc.json`). A date already there needs `--replace`.
+- Recruited / Not recruited, then (for recruited cases only) Done / Not done in OT, are her own choices in the app (`state.thesisRec` 'y'/'n'; `state.thesisDone` date = done, 'no' = not done, '' = not marked), synced between devices. Never set them for her. Recruited cases are sometimes not done in OT, so both options stay.
+- Random sequence: private file `thesis-seq` (70 numbers = rows 2–36 of her random_sequence.xlsx read row by row, ending 10, 19; first 34 used before the tracker, so the tracker starts at 27, 66, 13, 63 …). Keep it private (allocation concealment). The app gives each open case the next free number in date order; a number is used up only when the case is recruited AND done (`state.thesisNo` locks it). Recruited but not done in OT: the case comes off the list and its number passes to the next patient. Not recruited: no number, the case stays on the list greyed out with all its details. Never hand-assign numbers in data files.
+- Thesis data is never pruned.
+
 ## Academic content
 - Always double-check academic facts against sources before writing them. Never invent an article, DOI or PMID.
 - **Bite-size notes** (`data/bites.json`): one note per topic, in her own-words revision style (summary, 3–6 sections, "Points for the exam / viva", pearl, real refs). Asking again updates the same note. A message ending in "BS" means: answer, then save the bite.

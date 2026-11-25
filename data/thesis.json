@@ -1,0 +1,6 @@
+{
+ "updated": "2026-11-25",
+ "note": "Thesis: TURP cases picked from urology lists (not TURBT). No patient names, ages, sex or hospital numbers here; those live in data/private/thesis-YYYY-MM-DD.enc.json. Never pruned.",
+ "rule": "Only cases whose procedure says TURP (or transurethral resection of prostate). Exclude TURBT / bladder tumour.",
+ "items": []
+}

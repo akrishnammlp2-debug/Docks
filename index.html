@@ -29,6 +29,7 @@
   --f-calendar:#14a5e2;--i-calendar:#06628c;--s-calendar:#d8f0fb;
   --f-ot:#ff4b55;--i-ot:#b0121d;--s-ot:#ffe0e2;
   --f-roster:#a47cc4;--i-roster:#5d3a7c;--s-roster:#efe5f7;
+  --f-thesis:#e4799f;
   --f-cases:#5fbd47;--i-cases:#2d6a1e;--s-cases:#e0f3d9;
   --f-nba:#ff8a1f;--i-nba:#a54b00;--s-nba:#ffe8d2;
   --f-backup:#d9dce1;--i-backup:#3b3e45;--s-backup:#e9ebee;
@@ -306,6 +307,49 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 .otbl .c-mono{font-family:var(--font-mono);font-size:13px}
 .otbl tr.done>*{background:var(--good-soft)}
 .otbl tr.done .c-proc button{text-decoration:line-through;color:var(--fg-3)}
+.thbl .c-name{position:sticky;left:0;z-index:2;min-width:140px;max-width:180px;white-space:normal;font-weight:600;box-shadow:8px 0 8px -8px rgba(0,0,0,.35)}
+.thbl .c-rec,.thbl .c-dn{text-align:center}
+.thbl tr.done .c-name{color:var(--fg-3)}
+.thout{display:inline-flex;gap:6px}
+.thdn,.thno{font:inherit;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg-2);white-space:nowrap}
+.thdn.on{background:#D8EFDF;color:#2F6B4F;border-color:transparent}
+.thno.on{background:#FBE6E6;color:#9B2C2C;border-color:transparent}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thdn.on{background:#1F3A2C;color:#9FD0B2}:root:not([data-theme="light"]) .thno.on{background:#3E2222;color:#F4AFAF}}
+:root[data-theme="dark"] .thdn.on{background:#1F3A2C;color:#9FD0B2}:root[data-theme="dark"] .thno.on{background:#3E2222;color:#F4AFAF}
+.thbl tr.nodone .c-name,.thbl tr.norec .c-name{color:var(--fg-3)}
+.thrn{font:inherit;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg-2);white-space:nowrap}
+.thrn.on{background:#E9E3E7;color:#4A3F47;border-color:transparent}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thrn.on{background:#3A3238;color:#EDE3EA}}
+:root[data-theme="dark"] .thrn.on{background:#3A3238;color:#EDE3EA}
+.thbl .c-no{text-align:center;min-width:52px}
+.thnum{display:inline-block;min-width:34px;padding:3px 8px;border-radius:8px;font-family:var(--font-mono);font-weight:600;font-size:14px;border:1.5px dashed var(--line);color:var(--fg)}
+.thnum.used{border:1.5px solid transparent;background:#D8EFDF;color:#2F6B4F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thnum.used{background:#1F3A2C;color:#9FD0B2}}
+:root[data-theme="dark"] .thnum.used{background:#1F3A2C;color:#9FD0B2}
+.cs .cs-line{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:.5px solid var(--sep);font-size:14px}
+.cs .cs-line:first-of-type{margin-top:8px}
+.cs .cs-sub{display:flex;justify-content:space-between;gap:10px;padding:2px 0 2px 16px;font-size:13px;color:var(--fg-2)}
+.th-why{font:inherit;font-size:13px;color:var(--fg-2);text-align:left;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.th-opt{display:flex;align-items:center;gap:10px}
+.th-opt input{width:20px;height:20px;accent-color:var(--accent)}
+.rol h3{margin:4px 0;font-size:16px;line-height:1.3}
+.rol h3 a{color:var(--fg);text-decoration:none}
+.rol.read{opacity:.72}
+.rol .why{font-size:13px;color:var(--fg-2)}
+.rol-cite summary{font-size:13px;color:var(--fg-3);cursor:pointer}
+.rol-step summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;width:100%}
+.rol-step{display:block!important}
+.cs>summary,.rol-srch>summary{display:flex;align-items:center;gap:10px;list-style:none;cursor:pointer}
+.cs>summary::-webkit-details-marker,.rol-srch>summary::-webkit-details-marker{display:none}
+.cs>summary .cat-tx,.rol-srch>summary .cat-tx{flex:1}
+details[open]>summary .lv-chev{transform:rotate(90deg)}
+.rol-step summary::-webkit-details-marker{display:none}
+.rol-st-t{flex:1;display:flex;flex-direction:column;font-weight:600}
+.rol-st-t small{font-weight:500;font-size:11px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.05em}
+.rol-step.done .rol-st-t{color:var(--fg-3)}
+.rol-b{padding:6px 0 4px 44px}
+.rol-st{align-items:flex-start}
+.thtitle{font-size:14px;line-height:1.4;color:var(--fg-2);margin:0}
 .prog-row{display:flex;align-items:center;gap:16px}
 .prog-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .ring{position:relative;width:var(--sz);height:var(--sz);flex:none}
@@ -1688,7 +1732,7 @@ a.dota-n .r-main{gap:3px}
 /* 2: each section carries its colour from the side menu */
 body{--sec:var(--t-sage);--sec-i:var(--t-sage-i)}
 body[data-sec="today"]{--sec:var(--t-butter);--sec-i:var(--t-butter-i)}
-body[data-sec="study"],body[data-sec="todos"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
+body[data-sec="study"],body[data-sec="todos"],body[data-sec="thesis"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
 body[data-sec="calendar"],body[data-sec="advances"],body[data-sec="others"],body[data-sec="music"],body[data-sec="nba"],body[data-sec="dota"]{--sec:var(--t-lav);--sec-i:var(--t-lav-i)}
 body[data-sec="ot"],body[data-sec="roster"],body[data-sec="cases"],body[data-sec="calc"]{--sec:var(--t-sky);--sec-i:var(--t-sky-i)}
 body[data-sec="reminders"],body[data-sec="backup"],body[data-sec="orders"]{--sec:var(--t-rose);--sec-i:var(--t-rose-i)}
@@ -1968,9 +2012,9 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.84 · Menu scroll fix';
+const APP_VERSION = '5.86 · Thesis tracker & review of literature';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -1992,7 +2036,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   calc: 'OT calculators', today: 'Today', study: 'Academics', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders', thesis: 'Thesis'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -2025,7 +2069,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcDay: null,
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2034,7 +2078,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcDay: s.fcDay || null,
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
@@ -2639,6 +2683,7 @@ function pageToday() {
   add(siren, 64);
   add(weekCard(), 72);
   add(catTodayCard(), 56);
+  add(thesisTodayCard(), by({ morning: 86, day: 80, evening: 78, night: 60, all: 70 }));
   add(battCard(), battLow() || state.settings.battAlways ? 78 : -1); /* full levels only when something is low; otherwise under More today */
   add(bkNudge(), 30);
   // glance tiles: one block, no repeats of what a card above already says
@@ -3097,6 +3142,160 @@ function pageOt() {
   return h;
 }
 
+/* ---------- Thesis tracker (25 Nov 2026) ----------
+   Fentanyl vs buprenorphine with 0.5% levobupivacaine heavy, elderly TURP. Claude picks TURP cases (not TURBT) from the
+   urology list she sends and adds them to data/thesis.json (no names). Name · age sex · UHID come from private
+   thesis-YYYY-MM-DD files; the randomisation sequence comes from the private thesis-seq file (kept off the public site).
+   Her choices, synced between devices, are kept and never deleted so a change can't be lost in sync:
+     state.thesisRec  'y' recruited · 'n' not recruited · unset = not decided yet
+     state.thesisDone date = done in OT · 'no' = recruited but not done in OT · '' = not marked (only counts when recruited)
+     state.thesisNo   the sequence number locked to a case when it is marked done ('' = none)
+   Numbers: the first `usedBefore` numbers were used before the tracker. Every open case (not decided, or recruited and
+   not yet marked) gets the next free number in date order. A number is used up only when the case is recruited AND done.
+   Recruited but not done in OT: the case leaves the list (still under the "Not done" filter, to undo) and its number
+   passes to the next case. Not recruited: no number. Thesis data is never pruned. */
+const THESIS_TITLE = 'Comparison of intrathecal fentanyl versus buprenorphine as an adjuvant to 0.5% levobupivacaine heavy for spinal anaesthesia in elderly patients undergoing transurethral resection of prostate';
+const THL = () => (D.thesis && D.thesis.items) || [];
+const THSEQ = () => (state.private && state.private.thesisSeq) || null;
+function thInfo(id) {
+  const v = state.private && state.private.thesis && state.private.thesis[id];
+  if (!v) return {};
+  if (typeof v === 'string') { const p = v.split(' · '); return { patient: p[0] || '', age: p[1] || '', uhid: p[2] || '' }; }
+  return v;
+}
+const thRecV = id => state.thesisRec[id] === 'y' ? 'y' : state.thesisRec[id] === 'n' ? 'n' : '';
+const thRec = id => thRecV(id) === 'y';
+const thOut = id => { if (!thRec(id)) return ''; const v = state.thesisDone[id]; return !v ? '' : v === 'no' ? 'no' : 'done'; };
+const thDone = id => thOut(id) === 'done';
+const thNo = id => thOut(id) === 'no';
+const thOpen = id => thRecV(id) !== 'n' && !thOut(id);
+const thByDate = () => THL().slice().sort((a, b) => a.date.localeCompare(b.date) || (a.order || 0) - (b.order || 0));
+function thNumbers() {
+  const S = THSEQ(); const map = {};
+  if (!S || !Array.isArray(S.numbers)) return { map, ok: false };
+  const before = S.usedBefore || 0; const avail = S.numbers.slice(before); const rows = thByDate(); const taken = new Set();
+  rows.forEach(r => { const n = state.thesisNo[r.id]; if (thDone(r.id) && n !== '' && n != null && avail.includes(+n) && !taken.has(+n)) { map[r.id] = { n: +n, used: true }; taken.add(+n); } });
+  let free = avail.filter(n => !taken.has(n));
+  rows.forEach(r => { if (thDone(r.id) && !map[r.id] && free.length) { map[r.id] = { n: free.shift(), used: true }; } });
+  const nextFree = free[0];
+  rows.forEach(r => { if (thOpen(r.id) && free.length) map[r.id] = { n: free.shift(), used: false }; });
+  const used = before + rows.filter(r => thDone(r.id)).length;
+  return { map, ok: true, total: before + avail.length, used, next: nextFree, left: avail.length - rows.filter(r => thDone(r.id)).length };
+}
+const thToDo = () => THL().filter(r => thRec(r.id) && !thOut(r.id)).length;
+let thFilter = 'all';
+function pageThesis() {
+  const all = THL().slice().sort((a, b) => b.date.localeCompare(a.date) || (a.order || 0) - (b.order || 0));
+  const N = thNumbers();
+  const listed = all.filter(r => !thNo(r.id));
+  const rec = all.filter(r => thRec(r.id)), done = rec.filter(r => thDone(r.id)), nod = rec.filter(r => thNo(r.id)), todo = rec.filter(r => !thOut(r.id));
+  let h = head('Thesis', all.length ? plural(listed.length, 'TURP case') + ' on the list' : 'TURP cases from urology lists', 'Academics');
+  h += thSeg();
+  if (thSub === 'rol') return h + `<div class="card"><span class="c-lab">My thesis</span><p class="thtitle">${esc(THESIS_TITLE)}</p></div>` + pageRol();
+  if (N.ok) {
+    const fin = N.used >= N.total;
+    h += `<div class="card"><div class="prog-row">${ring(N.used, N.total, 72, 'thesis')}<div class="prog-txt"><span class="c-lab">Patients recruited and done</span><span class="c-t">${fin ? 'All ' + N.total + ' done' : N.used + ' of ' + N.total}</span><span class="c-m">${fin ? 'Every number in the sequence is used.' : 'Next number: <b>' + esc(String(N.next)) + '</b> · ' + plural(N.left, 'number') + ' left'}</span></div></div></div>`;
+  } else h += `<div class="card"><span class="c-lab">Random sequence</span><span class="c-s">The sequence numbers are kept private. Turn on Private sync on this device (Backup & settings) to see them.</span></div>`;
+  if (!all.length) return h + `<div class="card"><span class="c-s">No TURP cases yet. Send Claude the urology list in chat and the TURP cases appear here.</span></div>`;
+  h += `<div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))">${stat('Recruited', rec.length, `<span class="s-m">${all.filter(r => thRecV(r.id) === 'n').length} not recruited</span>`)}${stat('To mark', todo.length, '<span class="s-m">Done or not done?</span>')}${stat('Done', done.length, '<span class="s-m">In OT, from this list</span>')}${stat('Not done', nod.length, '<span class="s-m">Taken off the list</span>')}</div>`;
+  const F = { all: ['All', listed], rec: ['Recruited', listed.filter(r => thRec(r.id))], no: ['Not recruited', all.filter(r => thRecV(r.id) === 'n')], todo: ['To mark', todo], nod: ['Not done', nod] };
+  if (!F[thFilter]) thFilter = 'all';
+  h += `<div class="strip">${Object.keys(F).map(k => `<button type="button" data-act="thf" data-f="${k}" aria-pressed="${thFilter === k}">${F[k][0]}</button>`).join('')}</div>`;
+  const list = F[thFilter][1]; const fin = r => thOut(r.id) || thRecV(r.id) === 'n'; const rows = list.filter(r => !fin(r)).concat(list.filter(fin));
+  if (!rows.length) return h + `<div class="group"><div class="row empty">Nothing here for this filter.</div></div>`;
+  h += `<div class="sec"><h2 class="sh">Cases</h2>${thTable(moreCut('th|' + thFilter, rows, 5), N)}${moreBtn('th|' + thFilter, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
+  if (thFilter === 'nod') h += `<p class="foot">Recruited, but not done in OT. Their numbers went to the next patients. Tap “Not done” again to bring a case back.</p>`;
+  h += `<div class="sec">${thConsort(all, N)}</div>`;
+  h += `<div class="sec"><button type="button" class="btn ghost wide" data-act="th-export">⬇︎ Export list for Excel</button></div>`;
+  h += `<div class="card"><span class="c-lab">My thesis</span><p class="thtitle">${esc(THESIS_TITLE)}</p></div>`;
+  return h;
+}
+function thTable(rows, N) {
+  const full = rows.map(r => ({ ...r, ...thInfo(r.id) }));
+  const has = k => full.some(r => r[k] != null && String(r[k]).trim() !== '');
+  const extra = [['age', 'Age / sex'], ['uhid', 'Hospital no.', 'c-mono'], ['procedure', 'Procedure', 'c-wrap'], ['time', 'Time', 'c-mono'], ['unit', 'Unit'], ['ot', 'OT'], ['surgeon', 'Surgeon'], ['notes', 'Notes', 'c-wrap']].filter(c => has(c[0]));
+  const yn = (act, id, v, on, label, cls) => `<button type="button" class="${cls}${on ? ' on' : ''}" data-act="${act}" data-v="${v}" data-id="${esc(id)}" aria-pressed="${on}">${label}</button>`;
+  return `<div class="tblwrap"><table class="otbl thbl"><thead><tr><th class="c-name">Patient</th><th class="c-no">No.</th><th class="c-rec">Recruited?</th><th class="c-dn">Done in OT?</th><th>Reason</th><th>Date</th>${extra.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${full.map(r => {
+    const rv = thRecV(r.id), o = thOut(r.id), dn = o === 'done'; const name = r.patient || 'Case · ' + dShort(r.date);
+    const num = N.map[r.id]; const numTxt = num ? `<span class="thnum${num.used ? ' used' : ''}">${num.n}</span>` : '<span class="muted">—</span>';
+    return `<tr class="${dn ? 'done' : o === 'no' ? 'nodone' : rv === 'n' ? 'norec' : ''}"><td class="c-name">${esc(name)}</td><td class="c-no">${numTxt}</td><td class="c-rec"><span class="thout">${yn('th-rec', r.id, 'y', rv === 'y', (rv === 'y' ? '✓ ' : '') + 'Recruited', 'thdn')}${yn('th-rec', r.id, 'n', rv === 'n', 'Not recruited', 'thrn')}</span></td><td class="c-dn">${rv === 'y' ? `<span class="thout">${yn('th-out', r.id, 'done', dn, (dn ? '✓ ' : '') + 'Done', 'thdn')}${yn('th-out', r.id, 'no', o === 'no', (o === 'no' ? '✕ ' : '') + 'Not done', 'thno')}</span>` : '<span class="muted">—</span>'}</td><td class="c-wrap">${rv === 'n' || o === 'no' ? `<button type="button" class="th-why" data-act="th-why" data-k="${rv === 'n' ? 'r' : 'o'}" data-id="${esc(r.id)}">${esc(thWhy(r.id, rv === 'n' ? 'r' : 'o') || 'Add reason')}</button>` : '<span class="muted">—</span>'}</td><td class="c-mono">${esc(dShort(r.date) + ' ' + r.date.slice(0, 4))}</td>${extra.map(c => `<td class="${c[2] || ''}">${esc(r[c[0]] ?? '')}</td>`).join('')}</tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+/* ---------- Thesis extras (25 Nov 2026): reasons, CONSORT counts, export, Review of literature ---------- */
+const TH_NR = ['Refused consent', 'Did not meet inclusion criteria', 'Met an exclusion criterion', 'Contraindication to spinal', 'Planned for general anaesthesia', 'Other'];
+const TH_ND = ['Surgery cancelled', 'Postponed to another day', 'Converted to general anaesthesia', 'Inadequate or failed spinal', 'Protocol deviation', 'Other'];
+const thWhy = (id, k) => (state.thesisWhy && state.thesisWhy[id + '~' + k]) || '';
+let thSub = (() => { try { return localStorage.getItem('studydesk.thSub') === 'rol' ? 'rol' : 'cases'; } catch (_) { return 'cases'; } })();
+const thSeg = () => `<div class="seg"><button type="button" data-act="thsub" data-s="cases" aria-pressed="${thSub !== 'rol'}">Cases</button><button type="button" data-act="thsub" data-s="rol" aria-pressed="${thSub === 'rol'}">Review of literature</button></div>`;
+function thWhySheet(id, k) {
+  const list = k === 'r' ? TH_NR : TH_ND; const cur = thWhy(id, k); const [pick, ...rest] = cur.split(' · '); const note = rest.join(' · ');
+  const name = thInfo(id).patient || 'This case';
+  openSheet(`<form data-form="th-why" class="sheet-in" autocomplete="off"><input type="hidden" name="id" value="${esc(id)}"><input type="hidden" name="k" value="${k}"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${k === 'r' ? 'Why not recruited?' : 'Why not done in OT?'}</h2><button type="submit" class="link strong">Save</button></div>
+    <p class="c-s" style="margin:4px 2px 10px">${esc(name)}. The reason goes into your CONSORT counts. You can skip it and add it later from the Reason column.</p>
+    <div class="group">${list.map(r => `<label class="row th-opt"><input type="radio" name="why" value="${esc(r)}"${pick === r ? ' checked' : ''}><span>${esc(r)}</span></label>`).join('')}</div>
+    <div class="group"><label class="row field"><span class="f-l">Note</span><input name="note" maxlength="120" placeholder="Optional, e.g. high INR" value="${esc(note)}"></label></div></form>`);
+}
+function thConsort(all, N) {
+  const nr = all.filter(r => thRecV(r.id) === 'n'), und = all.filter(r => !thRecV(r.id)), rec = all.filter(r => thRec(r.id));
+  const nod = rec.filter(r => thNo(r.id)), done = rec.filter(r => thDone(r.id)), todo = rec.filter(r => !thOut(r.id));
+  const tally = (rows, k) => { const m = {}; rows.forEach(r => { const w = thWhy(r.id, k).split(' · ')[0] || 'No reason added'; m[w] = (m[w] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+  const sub = rows => rows.map(([w, n]) => `<div class="cs-sub"><span>${esc(w)}</span><b>${n}</b></div>`).join('');
+  const line = (t, n) => `<div class="cs-line"><span>${t}</span><b>${n}</b></div>`;
+  return `<details class="card cs"><summary><span class="cat-tx"><b>CONSORT counts</b><span>For the flow diagram in your Results</span></span><span class="lv-chev" aria-hidden="true">›</span></summary>
+    ${line('TURP cases assessed (in this tracker)', all.length)}${line('Not recruited', nr.length)}${sub(tally(nr, 'r'))}${und.length ? line('Not decided yet', und.length) : ''}
+    ${line('Recruited (randomised)', rec.length)}${line('Not done in OT after recruitment', nod.length)}${sub(tally(nod, 'o'))}${todo.length ? line('Recruited, not marked yet', todo.length) : ''}
+    ${line('Recruited and done (this tracker)', done.length)}${N.ok ? line('Recruited and done before the tracker', THSEQ().usedBefore || 0) + line('<b>Total recruited and done</b>', N.used + ' of ' + N.total) : ''}
+    <p class="foot" style="margin:8px 0 0">Patients from before the tracker aren't in the screening counts above; add those from your register.</p></details>`;
+}
+function thExport() {
+  const N = thNumbers(); const rows = thByDate();
+  const q = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const head = ['Sequence no.', 'Date', 'Patient', 'Age / sex', 'Hospital no.', 'Procedure', 'Recruited', 'Not recruited reason', 'Done in OT', 'Not done reason', 'Time', 'OT', 'Unit', 'Surgeon', 'Notes'];
+  const body = rows.map(r => { const i = thInfo(r.id), rv = thRecV(r.id), o = thOut(r.id), n = N.map[r.id];
+    return [n && n.used ? n.n : '', r.date, i.patient || '', i.age || '', i.uhid || '', r.procedure || '', rv === 'y' ? 'Yes' : rv === 'n' ? 'No' : 'Not decided', rv === 'n' ? thWhy(r.id, 'r') : '', o === 'done' ? 'Yes' : o === 'no' ? 'No' : '', o === 'no' ? thWhy(r.id, 'o') : '', r.time || '', r.ot || '', r.unit || '', r.surgeon || '', r.notes || ''].map(q).join(','); });
+  const csv = '﻿' + [head.join(',')].concat(body).join('\r\n');
+  try { const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = 'thesis-cases-' + today() + '.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000); toast('Thesis list saved · opens in Excel'); }
+  catch (e) { toast("Couldn't make the file on this device (" + ((e && e.message) || 'unknown') + ')'); }
+}
+function thesisTodayCard() {
+  if (state.settings.thesisToday === false) return '';
+  const t = today(), tm = addDays(t, 1); const rows = THL().filter(r => (r.date === t || r.date === tm) && thOpen(r.id)); if (!rows.length) return '';
+  const nt = rows.filter(r => r.date === t).length, nm = rows.length - nt;
+  const bits = [nt ? plural(nt, 'TURP case') + ' today' : '', nm ? plural(nm, 'TURP case') + ' tomorrow' : ''].filter(Boolean).join(' · ');
+  return `<div class="sec"><button type="button" class="card cat-due" data-act="goto" data-tab="thesis"><span class="cat-due-i" aria-hidden="true">🧪</span><span class="cat-tx"><b>Thesis: mark these cases</b><span>${bits}</span><span>Recruited? Done in OT?</span></span><span class="lv-chev" aria-hidden="true">›</span></button></div>`;
+}
+/* Review of literature: data/thesis-rol.json (articles verified on PubMed). Read ticks and writing steps are hers, synced. */
+const ROL = () => D['thesis-rol'] || null;
+function pageRol() {
+  const R = ROL(); let h = '';
+  if (!R) return h + `<div class="card"><span class="c-s">The review list hasn't loaded yet. Check your connection and pull down to refresh.</span></div>`;
+  const items = R.items || [], G = R.guide || [];
+  const nRead = items.filter(a => state.thesisRead[a.id]).length, nStep = G.filter(g => state.thesisSteps[g.id]).length;
+  h += `<div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="stat rol-st">${ring(nRead, items.length, 56, 'rol-read')}<span class="s-l">Papers read</span><span class="s-m">${nRead} of ${items.length}</span></div><div class="stat rol-st">${ring(nStep, G.length, 56, 'rol-steps')}<span class="s-l">Writing steps</span><span class="s-m">${nStep} of ${G.length}</span></div></div>`;
+  if (R.gap) h += `<div class="card"><span class="c-lab">Your study's gap</span><p class="thtitle">${esc(R.gap)}</p></div>`;
+  h += `<div class="sec"><h2 class="sh">How to write it</h2><div class="group">${G.map((g, i) => { const on = !!state.thesisSteps[g.id];
+    return `<details class="row rol-step${on ? ' done' : ''}"><summary><button class="check${on ? ' on' : ''}" type="button" data-act="rol-step" data-id="${esc(g.id)}" aria-label="${on ? 'Mark not done' : 'Mark done'}: ${esc(g.title)}"></button><span class="rol-st-t"><small>Step ${i + 1}</small>${esc(g.title)}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="rol-b">${g.body.map(p => `<p class="c-s">${esc(p)}</p>`).join('')}</div></details>`; }).join('')}</div></div>`;
+  (R.themes || []).forEach(th => {
+    const list = items.filter(a => a.theme === th.id); if (!list.length) return;
+    const sorted = list.filter(a => !state.thesisRead[a.id]).concat(list.filter(a => state.thesisRead[a.id]));
+    h += `<div class="sec"><h2 class="sh">${esc(th.title)}</h2>${moreCut('rol|' + th.id, sorted, 3).map(rolCard).join('')}${moreBtn('rol|' + th.id, list.length, 3, 'paper', 'btn ghost wide')}</div>`;
+  });
+  if ((R.drive || []).length) h += `<div class="sec"><h2 class="sh">Also in your Drive</h2><div class="group">${R.drive.map(f => `<a class="row" href="${esc(f.url)}" target="_blank" rel="noopener" style="text-decoration:none"><span>📄 ${esc(f.title)}</span>${CHEV}</a>`).join('')}</div></div>`;
+  if ((R.searches || []).length) h += `<details class="card rol-srch"><summary><span class="cat-tx"><b>PubMed searches used</b><span>Searched ${esc(dShort(R.updated))} ${esc((R.updated || '').slice(0, 4))}, for your search strategy</span></span><span class="lv-chev" aria-hidden="true">›</span></summary>${R.searches.map(s => `<p class="c-s c-mono" style="margin:6px 0 0">${esc(s)}</p>`).join('')}</details>`;
+  return h + `<p class="foot">Articles checked on PubMed (NCBI). Findings are summarised from the abstracts; read the full text before you cite a number.</p>`;
+}
+function rolCard(a) {
+  const on = !!state.thesisRead[a.id]; const url = a.doi ? 'https://doi.org/' + a.doi : 'https://pubmed.ncbi.nlm.nih.gov/' + a.pmid + '/';
+  const title = a.title || a.cite;
+  return `<article class="card rol${on ? ' read' : ''}"><div class="pills">${a.key ? '<span class="pill acc">Key paper</span>' : ''}<span class="pill" style="background:var(--surface-2);color:var(--fg-2)">${esc(a.design)}</span>${a.drive ? '<span class="pill good">In your Drive</span>' : ''}</div>
+    <h3><a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a></h3>
+    <p class="c-s" style="margin:0">${esc(a.finding)}</p>
+    <div class="why"><b>Use it for:</b> ${esc(a.use)}</div>
+    <details class="rol-cite"><summary>Vancouver reference</summary><p class="c-s c-mono">${esc(a.cite)}${a.doi ? ' doi:' + esc(a.doi) : ''} PMID: ${esc(a.pmid)}</p></details>
+    <div class="acts"><button class="btn small ghost" type="button" data-act="rol-read" data-id="${esc(a.id)}" aria-pressed="${on}">${on ? '✓ Read' : 'Mark read'}</button><a class="btn small ghost" href="${esc(url)}" target="_blank" rel="noopener" style="text-decoration:none">Open</a>${a.drive ? `<a class="btn small ghost" href="${esc(a.drive)}" target="_blank" rel="noopener" style="text-decoration:none">Drive PDF</a>` : ''}<button class="btn small ghost" type="button" data-act="rol-copy" data-id="${esc(a.id)}">Copy ref</button></div></article>`;
+}
+
 function pageRoster() {
   let h = head('Duty roster', 'Emergency duty, Department of Anaesthesiology');
   if (!ROSTER().length) return h + `<div class="card"><span class="c-lab">Kept private</span><span class="c-s">The roster lists your colleagues, so it isn't on the website. Load your private file (Backup & settings → Private file) and it appears here, on this phone only.</span><button class="btn ghost" type="button" data-act="goto" data-tab="backup" style="align-self:flex-start;margin-top:6px">Open Backup & settings</button></div>`;
@@ -3333,6 +3532,7 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
+    it('thesis', '🧪 Thesis tracker', ['Send Claude your urology list in chat (say “urology list”, separate from the OT list). Claude picks every case with TURP in it (not TURBT) and adds it here with the date and all its details.', 'Each case gets the next number from your random sequence (dashed box = waiting). Mark it Recruited or Not recruited; once recruited, mark Done or Not done in OT.', 'A number is used up only when the case is recruited and done (green box). Recruited but not done in OT: the case comes off the list (kept under the Not done filter, tap again to undo) and its number passes to the next patient. Not recruited cases get no number.', 'The ring counts patients recruited and done out of the whole sequence, including the ones before the tracker. The sequence and names stay locked to your paired devices. Thesis cases are never removed.', 'Marking Not recruited or Not done asks for a reason (you can skip it and add it later from the Reason column). The reasons feed the CONSORT counts under the list. Export list for Excel saves every case with its number, outcome and reason as a file Excel opens.', 'Review of literature (second tab): papers checked on PubMed, grouped by topic, each with what it found and where to use it in your thesis. Mark papers read and tick the writing steps as you go. A reminder on Today shows when a TURP case today or tomorrow still needs marking (switch it off in Settings).']),
     it('plant', '🪴 Habit plant', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows the plant: seed, sprout, leaves, a bushy plant, a bud, and a flower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
     it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette with a drawn strip and one ABG. Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
@@ -3387,6 +3587,7 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Exam</span><input class="left" type="text" maxlength="40" data-setting="examLabel" value="${esc(S.examLabel)}"></label>
     <label class="row field"><span class="f-l">Exam date</span><input type="date" data-setting="examDate" value="${esc(S.examDate)}"></label>
     <label class="row toggle"><span>Red alert on Today for to-dos older than a week</span><input type="checkbox" data-setting="todoSirenOn" ${S.todoSirenOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Thesis cases to mark on Today</span><input type="checkbox" data-setting="thesisToday" ${S.thesisToday !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Days off Instagram on Today</span><input type="checkbox" data-setting="igOn" ${S.igOn !== false ? 'checked' : ''}></label>
     <label class="row field"><span class="f-l">Off Instagram since</span><input type="date" data-setting="igSince" max="${today()}" value="${esc(S.igSince || '')}"></label>
     <label class="row toggle"><span>Revision schedule</span><input type="checkbox" data-setting="revisionsOn" ${S.revisionsOn ? 'checked' : ''}></label>
@@ -3414,7 +3615,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders };
+const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders, thesis: pageThesis };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -3726,6 +3927,7 @@ function renderTabbar() {
     b('calendar', 'Calendar') + b('others', 'Off duty');
 }
 const MENU_LINE = {
+  thesis: '<path d="M9.5 3.5h5M10.5 3.5v6L5.2 18.4A1.4 1.4 0 006.4 20.5h11.2a1.4 1.4 0 001.2-2.1L13.5 9.5v-6"/><path d="M7.8 14.5h8.4"/>',
   today: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
   reminders: '<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 004 0"/>',
   study: '<path d="M3 6.5C5.5 5 8.5 5 12 7c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 7v12.5"/>',
@@ -3762,7 +3964,7 @@ function renderDrawer() {
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
-    <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
+    <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${NAP_CAT}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
@@ -4641,6 +4843,23 @@ document.addEventListener('click', e => {
       const all = b && bookStats(b).d === b.chapters.length && before < b.chapters.length;
       if (all) otJustDone = 'bk-' + bid;
       commit(all ? 'Book finished 🎉' : null); otJustDone = null; if (sheetOpen()) { const sh = $('sheet'), y = sh.scrollTop; bookSheet(bid); sh.scrollTop = y; } break; }
+    case 'thf': thFilter = b.dataset.f; render(); break;
+    case 'thsub': thSub = b.dataset.s === 'rol' ? 'rol' : 'cases'; try { localStorage.setItem('studydesk.thSub', thSub); } catch (_) {} render(); window.scrollTo(0, 0); break;
+    case 'th-why': thWhySheet(id, b.dataset.k === 'o' ? 'o' : 'r'); break;
+    case 'th-export': thExport(); break;
+    case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
+    case 'rol-step': { const on = !!state.thesisSteps[id]; state.thesisSteps[id] = on ? '' : nowISO(); commit(on ? null : 'Step done ✓'); break; }
+    case 'rol-copy': { const a = ((ROL() || {}).items || []).find(x => x.id === id); if (!a) break; const t = a.cite + (a.doi ? ' doi:' + a.doi : '');
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Reference copied ✓'), () => toast("Couldn't copy. Open “Vancouver reference” and select it.")); break; }
+    case 'th-rec': { const v = b.dataset.v; const cur = thRecV(id); const nv = cur === v ? '' : v;
+      if (nv !== 'y') state.thesisNo[id] = '';
+      state.thesisRec[id] = nv; commit(nv === 'y' ? 'Recruited ✓' : nv === 'n' ? 'Marked not recruited' : 'Cleared'); if (nv === 'n') thWhySheet(id, 'r'); break; }
+    case 'th-out': { const v = b.dataset.v; const cur = thOut(id); const N0 = thNumbers(); const shown = N0.map[id];
+      const clear = cur === v;
+      state.thesisDone[id] = clear ? '' : v === 'no' ? 'no' : nowISO();
+      state.thesisNo[id] = !clear && v === 'done' && shown ? shown.n : '';
+      const N1 = thNumbers(); otJustDone = N1.ok && N1.used >= N1.total && N0.used < N0.total ? 'thesis' : null;
+      commit(otJustDone ? 'All patients done 🎉' : clear ? 'Cleared' : v === 'no' ? 'Not done in OT · taken off the list, number passed on' : 'Done ✓' + (shown ? ' · No. ' + shown.n + ' used' : '')); otJustDone = null; if (!clear && v === 'no') thWhySheet(id, 'o'); break; }
     case 'ot-tick': {
       const day = (OTL().find(r => r.id === id) || {}).date; const rows = otRows(day);
       const before = rows.filter(r => state.otDone[r.id]).length;
@@ -4758,6 +4977,8 @@ document.addEventListener('submit', e => {
     case 'media-link': { const m = (state.media || []).find(x => x.id === fd.get('id')); let u = (fd.get('url') || '').trim(); if (!m || !/^https:\/\//i.test(u)) { toast('Please paste a link starting with https://'); break; } m.cover = u; m.coverImg = ''; m.coverOwn = true; m.updated = nowISO(); commit('Cover set'); mediaSheet(m.id); break; }
     case 'media-rename': { const m = (state.media || []).find(x => x.id === fd.get('id')); const t = (fd.get('title') || '').trim(); if (!m || !t) break; const changed = t !== m.title || (fd.get('author') || '').trim() !== (m.author || ''); m.title = t; m.author = (fd.get('author') || '').trim(); if (changed) { m.cover = ''; m.coverPick = 0; } m.updated = nowISO(); commit('Saved'); mediaSheet(m.id); if (changed) mediaCover(m.id); break; }
     case 'love': { const nm = (fd.get('n') || '').trim().slice(0, 60); if (!nm) break; state.loveMine = state.loveMine || {}; state.loveMine['lv-' + uid()] = { name: nm, emoji: (fd.get('e') || '✨').trim() || '✨' }; closeSheet(); commit('Added ✓'); break; }
+    case 'th-why': { const tid = fd.get('id'), k = fd.get('k') === 'o' ? 'o' : 'r'; const w = (fd.get('why') || '').trim(), n = (fd.get('note') || '').trim();
+      state.thesisWhy[tid + '~' + k] = [w || (n ? 'Other' : ''), n].filter(Boolean).join(' · '); closeSheet(); commit(w || n ? 'Reason saved' : null); break; }
     case 'habits': {
       const n = +fd.get('count'); const out = []; const old = HABITS();
       for (let i = 0; i < n; i++) { const nm = (fd.get('n' + i) || '').trim(); const id = fd.get('id' + i); if (!nm || fd.get('x' + i)) { const o = old.find(x => x.id === id); if (o) out.push({ ...o, deleted: true }); continue; }
@@ -4846,7 +5067,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -5042,6 +5263,8 @@ function mergePrivate(prev, data) {
   if (data.personal) next.personal = data.personal;
   if (data.gcal) next.gcal = data.gcal;
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
+  if (data.thesisSeq) next.thesisSeq = data.thesisSeq;
+  if (data.thesis) next.thesis = { ...(cur.thesis || {}), ...data.thesis }; /* thesis names: never pruned */
   if (data.ot) {
     const keepFrom = addDays(today(), -(KEEP_DAYS.ot - 1)); const ot = { ...(cur.ot || {}), ...data.ot };
     Object.keys(ot).forEach(id => { if (id.slice(0, 10) < keepFrom) delete ot[id]; });
