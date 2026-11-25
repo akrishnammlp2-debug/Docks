@@ -725,6 +725,10 @@ mark{background:#DAF1DE!important}
 .bkt{display:flex!important;flex-direction:row!important;align-items:center;gap:14px;text-align:left}
 .bkt .bk-info small{font-size:12.5px;color:var(--fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sheet-head h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}
+/* v5.90: long titles must never squeeze Cancel / Done into a vertical column (Apoorva, 25 Nov 2026) */
+.sheet-head{grid-template-columns:minmax(min-content,1fr) minmax(0,auto) minmax(min-content,1fr)}
+.sheet-head>:not(h2){white-space:nowrap}
+.sheet-head>:last-child{justify-self:end}
 .bk-sum{display:flex;align-items:center;gap:14px;padding:4px 4px 12px}
 .bk-sum .bk-info b{font-size:16px}
 .bk{padding:0;overflow:hidden}
@@ -2054,7 +2058,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.89 · Weather sheet readable in dark mode';
+const APP_VERSION = '5.90 · Sheet buttons stay on one line with long titles';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
