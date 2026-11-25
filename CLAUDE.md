@@ -30,6 +30,7 @@ It is built only for her and will never be monetised.
 - **Never jump back to the top** when a sheet grows in place (next step, show answer, reveal more): call `openSheet(html, true)` so the scroll position stays, then bring the newly shown part into view. Only a brand-new sheet starts at the top (23 Nov 2026).
 - Music, NBA and Dota 2 live inside Off duty (tabs at the top); the side menu groups are Daily, Academics, Hospital, Life, App.
 - To-dos and due reminders can be swiped right to finish (`data-swipe` + `data-swipe-act`). OT rows are not swipeable (the table scrolls sideways).
+- **Wide layout (v5.91):** on screens ≥1180 px (laptop, iPad landscape) `body.wide` is set (`isWide()`, switch: `settings.wideOn`). Page widens to 1180 px, bottom tab bar hides (side menu has everything), `.w2` wrappers go two columns (calendar | day details; CONSORT | thesis card), the Today Now stack (`.now-stack`) flows in 2 columns, card lists (`article.card` / `a.card`) grid 2 across, `moreCut` shows 10 where phones show 5, sheets open as a centred panel. Esc closes sheets, ← → change month, Enter/Space flips the thesis card. Phone and iPad portrait must stay exactly as they are; test at 1440, 1280, 1180 and 390 px.
 - **Any colour or theme change:** check that all text is readable in BOTH light and dark mode (`tools/contrast_check.py`) before pushing.
 
 ## Privacy

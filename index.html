@@ -1199,6 +1199,45 @@ body.locked .tabbar{transform:translate(-50%,170%);opacity:0}
 .tb-empty{align-items:center;text-align:center;padding:34px 18px!important;gap:6px}
 .tb-empty-i{font-size:30px;line-height:1}
 @media (min-width:900px){.tabbar{left:calc(50% + var(--side) / 2)}}
+
+/* ==========================================================================
+   v5.91 Wide layout (laptop ≥1180 px, body.wide). Phones and iPad portrait are untouched.
+   ========================================================================== */
+.w2,.now-stack{display:flex;flex-direction:column;gap:22px}
+body.wide .page,body.wide .nb-in,body.wide #banner{max-width:1180px}
+body.wide .tabbar{display:none!important}
+body.wide .page,body.wide #page{padding-bottom:56px!important}
+body.wide #toast{bottom:30px!important}
+body.wide .w2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:start}
+body.wide .w2.w2-even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+body.wide .w2-side{position:sticky;top:72px;max-height:calc(100vh - 96px);overflow-y:auto;overscroll-behavior:contain}
+body.wide .now-stack{display:block;column-count:2;column-gap:24px}
+body.wide .now-stack>*{break-inside:avoid;page-break-inside:avoid;margin:0 0 22px;width:100%}
+body.wide .sec:not(.w2-side):has(>article.card~article.card){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+body.wide .sec:not(.w2-side):has(>article.card~article.card)>:not(article.card){grid-column:1/-1}
+body.wide .sec:not(.w2-side):has(>article.card~article.card)>article.card{margin:0}
+body.wide .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+body.wide .sec:not(.w2-side):has(>a.card~a.card){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+body.wide .sec:not(.w2-side):has(>a.card~a.card)>:not(a.card){grid-column:1/-1}
+body.wide .sec:not(.w2-side):has(>a.card~a.card)>a.card{margin:0}
+body.wide[data-sec="advances"] #page{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 18px;align-items:start}
+body.wide[data-sec="advances"] #page>:not(article.card){grid-column:1/-1}
+body.wide[data-sec="advances"] #page>article.card{margin:0;height:100%}
+body.wide .thcard{max-width:none}
+/* sheets become a centred panel */
+body.wide #sheet{left:var(--side);right:0;top:50%;bottom:auto;max-width:760px;max-height:86vh;border-radius:20px;padding-bottom:24px;transform:translateY(-46%) scale(.98);opacity:0;transition:transform .22s ease,opacity .22s ease,visibility 0s linear .22s!important;box-shadow:0 24px 60px rgba(25,0,25,.28)}
+body.wide #sheet.open{transform:translateY(-50%);opacity:1;transition:transform .22s ease,opacity .22s ease,visibility 0s!important}
+body.wide .sheet .grab{display:none}
+body.wide .sheet .note-ul li,body.wide .sheet.note p,body.wide .sheet .note p{font-size:17px;line-height:1.6}
+/* mouse */
+@media (hover:hover) and (pointer:fine){
+  .group .row:hover,.group button.row:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)!important}
+  .dc:hover:not(.sel) .n{background:color-mix(in srgb,var(--fg) 8%,transparent)}
+  button.card:hover,.btn:hover,.strip button:hover,.seg button:hover{filter:brightness(.97)}
+  .thcard:hover .thc-f{box-shadow:0 14px 30px rgba(58,29,74,.34),inset 0 0 0 1px rgba(255,255,255,.16)}
+  .thc-cp:hover{background:rgba(255,255,255,.3)}
+  .thcard,.dc,.row,button{cursor:pointer}
+}
 @media print{.tabbar{display:none}}
 
 /* ==========================================================================
@@ -2058,7 +2097,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.90 · Sheet buttons stay on one line with long titles';
+const APP_VERSION = '5.91 · Wide layout for laptops';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -2294,9 +2333,10 @@ const collapsed = new Set();
 /* v5.57 long lists: show the first few, then "More" (key → open) */
 const moreOpen = new Set();
 /* never hide just one item: a "More · 1" row takes the same space as the item itself */
-const moreCut = (key, arr, n) => arr.length > n + 1 && !moreOpen.has(key) ? arr.slice(0, n) : arr;
+const moreN = n => n >= 5 && document.body.classList.contains('wide') ? 10 : n; /* v5.91: wide layout shows 10 rows where phones show 5 */
+const moreCut = (key, arr, n0, n = moreN(n0)) => arr.length > n + 1 && !moreOpen.has(key) ? arr.slice(0, n) : arr;
 const morePl = (k, w) => k + ' ' + (k === 1 ? w : /(ch|sh|s|x)$/.test(w) ? w + 'es' : w + 's');
-const moreBtn = (key, total, n, noun, cls) => total <= n + 1 ? '' : `<button class="${cls || 'row'} more-row" type="button" data-act="more" data-k="${esc(key)}">${moreOpen.has(key) ? 'Show less ▴' : 'More · ' + morePl(total - n, noun) + ' ▾'}</button>`;
+const moreBtn = (key, total, n0, noun, cls, n = moreN(n0)) => total <= n + 1 ? '' : `<button class="${cls || 'row'} more-row" type="button" data-act="more" data-k="${esc(key)}">${moreOpen.has(key) ? 'Show less ▴' : 'More · ' + morePl(total - n, noun) + ' ▾'}</button>`;
 let caseLogAll = false; /* case log shows 5 recent until expanded (v5.54) */
 const moreTopics = new Set(); /* subjects showing all topics (v5.54) */
 
@@ -2752,10 +2792,10 @@ function pageToday() {
   const cap = Math.max(2, Math.min(12, +S.homeCap || 5));
   const ranked = C.map((c, i) => ({ ...c, i })).sort((a, b) => b.score - a.score || a.i - b.i);
   const pos = ranked.filter(c => c.score >= 0); const shown = pos.slice(0, pos.length === cap + 1 ? cap + 1 : cap), rest = ranked.filter(c => !shown.includes(c)); /* never hide just one card */
-  h += shown.map(c => c.html).join('');
+  h += `<div class="now-stack">${shown.map(c => c.html).join('')}</div>`;
   if (rest.length) { const openM = moreOpen.has('home');
     h += `<div class="sec home-more"><button type="button" class="btn ghost wide more-row" data-act="more" data-k="home">${openM ? 'Show less ▴' : 'More today · ' + rest.length + ' ▾'}</button></div>`;
-    if (openM) h += `<div class="home-rest">${rest.sort((a, b) => a.i - b.i).map(c => c.html).join('')}</div>`; }
+    if (openM) h += `<div class="home-rest now-stack">${rest.sort((a, b) => a.i - b.i).map(c => c.html).join('')}</div>`; }
   if (!shown.length) h += `<div class="card">${napLine('All quiet. Nothing needs you right now.')}</div>`;
   return h + `<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`;
 }
@@ -2854,10 +2894,10 @@ function pageCalendar() {
     const kinds = [...new Set(its.map(i => i.kind))].slice(0, 3); const wd = (offset + d - 1) % 7;
     g += `<button type="button" class="dc${k === t ? ' today' : ''}${k === sel ? ' sel' : ''}${wd > 4 ? ' wk' : ''}" data-act="day" data-k="${k}" aria-label="${esc(dLong(k))}, ${plural(its.length, 'item')}"><span class="n">${d}</span><span class="dots">${kinds.map(kd => `<i style="--c:${(KINDS[kd] || KINDS.acad).color}"></i>`).join('')}</span></button>`;
   }
-  h += `<div class="sec"><div class="cal-head"><h2>${MONTHS[m]} <span>${y}</span></h2><div class="cal-nav"><button type="button" data-act="month" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-act="month" data-d="1" aria-label="Next month">›</button></div></div>
+  h += `<div class="w2"><div class="sec"><div class="cal-head"><h2>${MONTHS[m]} <span>${y}</span></h2><div class="cal-nav"><button type="button" data-act="month" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-act="month" data-d="1" aria-label="Next month">›</button></div></div>
     <div class="calbox"><div class="mcal">${g}</div><div class="legend">${['case','acad','exam','posting','duty'].map(k => `<span style="--c:${KINDS[k].color}"><i></i>${KINDS[k].label}</span>`).join('')}</div></div></div>`;
   const its = itemsFor(sel);
-  h += `<div class="sec"><h2 class="sh">${sel === t ? 'Today · ' : ''}${esc(dLong(sel))}</h2><div class="group">${its.length ? its.map(i => rowHTML(i)).join('') : '<button class="row empty" type="button" data-act="add">Nothing on this day. Tap to add an entry.</button>'}</div></div>`;
+  h += `<div class="sec w2-side"><h2 class="sh">${sel === t ? 'Today · ' : ''}${esc(dLong(sel))}</h2><div class="group">${its.length ? its.map(i => rowHTML(i)).join('') : '<button class="row empty" type="button" data-act="add">Nothing on this day. Tap to add an entry.</button>'}</div></div></div>`;
   const all = []; for (let d = 1; d <= last; d++) itemsFor(`${y}-${pad(m + 1)}-${pad(d)}`).forEach(i => all.push(i));
   h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? moreCut('month|' + y + m, all, 5).map(i => rowHTML(i, true)).join('') + moreBtn('month|' + y + m, all.length, 5, 'item') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`;
   return h;
@@ -3252,9 +3292,8 @@ function pageThesis() {
   if (!rows.length) return h + `<div class="group"><div class="row empty">Nothing here for this filter.</div></div>`;
   h += `<div class="sec"><h2 class="sh">Cases</h2>${thTable(moreCut('th|' + thFilter, rows, 5), N)}${moreBtn('th|' + thFilter, rows.length, 5, 'case', 'btn ghost wide')}</div>`;
   if (thFilter === 'nod') h += `<p class="foot">Recruited, but not done in OT. Their numbers went to the next patients. Tap “Not done” again to bring a case back.</p>`;
-  h += `<div class="sec">${thConsort(all, N)}</div>`;
   h += `<div class="sec"><button type="button" class="btn ghost wide" data-act="th-export">⬇︎ Export list for Excel</button></div>`;
-  h += thIdCard(N);
+  h += `<div class="w2 w2-even"><div class="sec">${thConsort(all, N)}</div>${thIdCard(N)}</div>`;
   return h;
 }
 /* Recruitment calendar (25 Nov 2026): a month view of thesis cases. Days with a recruited case get a soft green
@@ -3276,11 +3315,11 @@ function thCal(all, N) {
     g += `<button type="button" class="dc${k === t ? ' today' : ''}${k === thSel ? ' sel' : ''}${wd > 4 ? ' wk' : ''}${recN ? ' threc' : ''}" data-act="th-day" data-k="${k}" aria-label="${esc(dLong(k))}${its.length ? ', ' + plural(its.length, 'TURP case') + (recN ? ', ' + recN + ' recruited' : '') : ''}"><span class="n">${d}</span><span class="dots">${its.slice(0, 4).map(r => `<i style="--c:${TH_ST[thSt(r.id)][0]}"></i>`).join('')}</span></button>`;
   }
   const mon = all.filter(r => r.date.startsWith(pre)); const monRec = mon.filter(r => thRec(r.id)).length, monDone = mon.filter(r => thDone(r.id)).length;
-  let h = `<div class="sec"><h2 class="sh">Recruitment calendar</h2><div class="cal-head"><h2>${MONTHS[m]} <span>${y}</span></h2><div class="cal-nav"><button type="button" data-act="th-month" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-act="th-month" data-d="1" aria-label="Next month">›</button></div></div>
+  let h = `<div class="w2"><div class="sec"><h2 class="sh">Recruitment calendar</h2><div class="cal-head"><h2>${MONTHS[m]} <span>${y}</span></h2><div class="cal-nav"><button type="button" data-act="th-month" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-act="th-month" data-d="1" aria-label="Next month">›</button></div></div>
     <div class="calbox"><div class="mcal">${g}</div><div class="legend">${Object.keys(TH_ST).map(k => `<span style="--c:${TH_ST[k][0]}"><i></i>${TH_ST[k][1]}</span>`).join('')}</div></div>
     <p class="foot" style="margin:8px 2px 0">${mon.length ? `${MONTHS[m]}: ${plural(mon.length, 'TURP case')} · ${monRec} recruited · ${monDone} done` : `No TURP cases in ${MONTHS[m]} in the tracker.`}</p></div>`;
   const day = byDay[thSel] || [];
-  h += `<div class="sec th-dayinfo"><h2 class="sh">${thSel === t ? 'Today · ' : ''}${esc(dLong(thSel))}</h2>${day.length ? day.map(r => thDayCard(r, N)).join('') : '<div class="group"><div class="row empty">No TURP cases on this day.</div></div>'}</div>`;
+  h += `<div class="sec th-dayinfo w2-side"><h2 class="sh">${thSel === t ? 'Today · ' : ''}${esc(dLong(thSel))}</h2>${day.length ? day.map(r => thDayCard(r, N)).join('') : '<div class="group"><div class="row empty">No TURP cases on this day.</div></div>'}</div></div>`;
   return h;
 }
 function thDayCard(r, N) {
@@ -3682,6 +3721,7 @@ function pageBackup() {
     <label class="row field"><span class="f-l">Cards on Today</span><select data-setting="homeCap">${[3, 4, 5, 6, 7, 8].map(n => `<option value="${n}"${(+S.homeCap || 5) === n ? ' selected' : ''}>${n}${n === 5 ? ' (default)' : ''}</option>`).join('')}</select></label>
     <label class="row toggle"><span>Quiet morning on Today after a duty (from your roster)</span><input type="checkbox" data-setting="quietOn" ${S.quietOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="quiet-on"><span>Quiet Today until tomorrow (one-off)</span>${CHEV}</button>
+    <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Animations (off also when iPhone Reduce Motion is on)</span><input type="checkbox" data-setting="animOn" ${S.animOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Habit plant (grows on days you do 75% of your habits)</span><input type="checkbox" data-setting="plantOn" ${S.plantOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Warmer, dimmer screen after 10 PM and on quiet mornings</span><input type="checkbox" data-setting="nightTintOn" ${S.nightTintOn !== false ? 'checked' : ''}></label>
@@ -3976,9 +4016,15 @@ function loveHistSheet(id) { const L = LOVES(); const all = [L.today, ...(L.hist
 function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>Something I love</h2><button type="submit" class="link strong">Add</button></div>
   <div class="group"><div class="row field hab-ed"><input name="e" placeholder="✨" maxlength="4" aria-label="Emoji"><input class="left" name="n" placeholder="e.g. Studio Ghibli, space, F1" aria-label="Topic" required></div></div>
   <p class="foot">The more specific, the better the facts. It joins the daily draw once your devices sync.</p></form>`); setTimeout(() => { const i = document.querySelector('#sheet input[name=n]'); if (i) i.focus(); }, 350); }
+/* v5.91 wide layout (Apoorva, 25 Nov 2026): on a laptop (≥1180 px) the page widens, the bottom tab bar hides (the side menu has it all),
+   some pages go two columns and sheets open as a centred panel. Settings › Wide layout on big screens switches it off. */
+const WIDE_MQ = matchMedia('(min-width:1180px)');
+const isWide = () => state.settings.wideOn !== false && WIDE_MQ.matches;
+try { WIDE_MQ.addEventListener('change', () => render()); } catch (_) {}
 function render() {
   { const ae = document.activeElement; if (render.lastTab === tab && ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae)) { render.pending = true; return; } render.pending = false; }
   document.body.classList.toggle('sketchy', sketchNow());
+  document.body.classList.toggle('wide', isWide());
   REG = [];
   document.body.dataset.sec = tab;
   { const nt = $('nb-title'), alt = tab === 'today' ? festTitle() : ''; const k = SECS[tab] + '|' + alt; if (nt.dataset.k !== k) { nt.dataset.k = k; nt.classList.remove('alt'); nt.innerHTML = alt ? `<span class="nbt-a">${esc(SECS[tab])}</span><span class="nbt-b" aria-hidden="true">${esc(alt)}</span>` : esc(SECS[tab]); } }
@@ -4801,6 +4847,13 @@ document.addEventListener('focusout', () => { if (render.pending) setTimeout(() 
   document.addEventListener('touchmove', e => { if (y0 === null) return; pulled = e.touches[0].clientY - y0; const p = $('ptr'); if (p) { p.style.height = Math.min(70, Math.max(0, pulled / 2.2)) + 34 + 'px'; p.classList.toggle('ready', pulled > 110); if (pulled > 110) p.textContent = 'Let go to refresh'; } }, { passive: true });
   document.addEventListener('touchend', () => { if (y0 === null) return; const p = $('ptr'); if (p) { p.style.height = ''; p.classList.remove('ready'); } if (pulled > 110) { if (tab === 'dota') dotaRefresh(); else nbaRefresh(); } y0 = null; pulled = 0; }, { passive: true });
 })();
+document.addEventListener('keydown', e => {
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if (e.key === 'Escape' && $('sheet').classList.contains('open')) { e.preventDefault(); closeSheet(); return; }
+  if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.classList.contains('thcard')) { e.preventDefault(); document.activeElement.click(); return; }
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !typing && !sheetOpen() && !(document.activeElement && document.activeElement.closest('.strip,.tblwrap,.cf'))) {
+    const b = $('page').querySelector(`[data-act="th-month"][data-d="${e.key === 'ArrowRight' ? 1 : -1}"],[data-act="month"][data-d="${e.key === 'ArrowRight' ? 1 : -1}"]`); if (b) { e.preventDefault(); b.click(); return; } }
+});
 document.addEventListener('keydown', e => { if (e.key === '/' && !sheetOpen() && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); searchSheet(); } });
 
 /* ---------- actions ---------- */
@@ -4960,7 +5013,7 @@ document.addEventListener('click', e => {
     case 'thf': thFilter = b.dataset.f; render(); break;
     case 'th-copy': { const c = (D.thesis && D.thesis.card) || {}; let v = b.dataset.v, l = b.dataset.l || 'Details';
       if (b.dataset.k === 'all') { l = 'Thesis details'; v = ['Title: ' + THESIS_TITLE, 'Principal Investigator: ' + c.name, 'Guide: ' + c.guide, 'Co-guide: ' + c.coguide, 'Institution: ' + c.dept, 'IEC number: ' + c.iec + ' (' + c.iecBody + ', ' + c.iecReg + ')', 'IEC decision: ' + c.decision + ' till ' + fmtD(c.validTill), 'IEC approval date: ' + fmtD(c.approved), 'CTRI number: ' + c.ctri, 'CTRI reference: ' + c.ctriRef].join('\n'); }
-      (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(l + ' copied ✓'), () => toast("Couldn't copy here. Long-press the number to copy it instead.")); break; }
+      (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(l + ' copied ✓'), () => toast("Couldn't copy here. Select the number and copy it instead.")); break; }
     case 'th-flip': { const on = !b.classList.contains('flip'); b.classList.toggle('flip', on); b.setAttribute('aria-pressed', on); break; }
     case 'th-day': { const y0 = window.scrollY; thSel = b.dataset.k; render(); window.scrollTo(0, y0); const el = document.querySelector('.th-dayinfo'); if (el) { const rc = el.getBoundingClientRect(); if (rc.top > innerHeight - 120) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } break; }
     case 'th-month': { const y0 = window.scrollY; thView.m += +b.dataset.d; if (thView.m < 0) { thView.m = 11; thView.y--; } if (thView.m > 11) { thView.m = 0; thView.y++; } render(); window.scrollTo(0, y0); break; }
