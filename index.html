@@ -2097,7 +2097,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.92 · Device sync fix (cat food reminder)';
+const APP_VERSION = '5.93 · Backup saves to Downloads on laptops';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -5390,12 +5390,18 @@ async function exportData() {
   const json = JSON.stringify({ app: 'study-desk', exportedAt: nowISO(), ...exportable }, null, 1);
   try {
     const file = new File([json], name, { type: 'application/json' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: name });
-    else { const url = URL.createObjectURL(file); const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 5000); }
-    state.meta.lastExport = nowISO(); commit('Backup file ready ✓');
+    const download = () => { const url = URL.createObjectURL(file); const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 5000); };
+    /* v5.93: laptops save straight to Downloads; phones/iPad use the share sheet, and fall back to a download if sharing isn't allowed */
+    const phone = matchMedia('(pointer:coarse)').matches || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    let how = 'saved';
+    if (phone && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: name }); how = 'shared'; }
+      catch (e) { if (e && e.name === 'AbortError') throw e; download(); }
+    } else download();
+    state.meta.lastExport = nowISO(); commit(how === 'saved' ? 'Backup saved to your Downloads ✓' : 'Backup file ready ✓');
   } catch (e) {
     if (e && e.name === 'AbortError') toast('Backup cancelled. No file was made.');
-    else { banners.info = "Couldn't create the backup file (" + ((e && e.message) || 'unknown error') + '). Nothing on the phone was changed.'; renderBanner(); }
+    else { banners.info = "Couldn't create the backup file (" + ((e && e.message) || 'unknown error') + '). Nothing on this device was changed.'; renderBanner(); }
   }
 }
 async function readJsonFile(input) {
