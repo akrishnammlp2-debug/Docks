@@ -323,6 +323,47 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 :root[data-theme="dark"] .thrn.on{background:#3A3238;color:#EDE3EA}
 .thbl .c-no{text-align:center;min-width:52px}
 .thnum{display:inline-block;min-width:34px;padding:3px 8px;border-radius:8px;font-family:var(--font-mono);font-weight:600;font-size:14px;border:1.5px dashed var(--line);color:var(--fg)}
+.dc.threc .n{background:#D8EFDF;color:#2F6B4F;font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dc.threc .n{background:#1F3A2C;color:#9FD0B2}}
+:root[data-theme="dark"] .dc.threc .n{background:#1F3A2C;color:#9FD0B2}
+.dc.threc.sel .n{background:var(--fg);color:var(--bg)}
+.dc.threc.sel.today .n{background:var(--label);color:var(--on-label)}
+.thday{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.thday-h{display:flex;align-items:center;gap:10px}
+.thday-dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.thday-t{display:flex;flex-direction:column;min-width:0;flex:1}
+.thday-t b{font-size:16px}
+.thday-b{display:flex;flex-direction:column;gap:3px;padding-left:20px}
+.thcard{display:block;width:100%;max-width:440px;margin:0 auto;padding:0;background:none;border:0;perspective:1200px;text-align:left;color:#fff;-webkit-tap-highlight-color:transparent}
+.thc-in{display:grid;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.thcard.flip .thc-in{transform:rotateY(180deg)}
+.thc-f{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:16px 18px 14px;display:flex;flex-direction:column;gap:10px;min-height:220px;
+  background:linear-gradient(135deg,#3a1d4a 0%,#6b2b5a 55%,#8e3860 100%);box-shadow:0 10px 24px rgba(58,29,74,.28),inset 0 0 0 1px rgba(255,255,255,.12);position:relative;overflow:hidden}
+.thc-f::after{content:"";position:absolute;right:-60px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);pointer-events:none}
+.thc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#2b2140 0%,#4a2a55 55%,#6b2b5a 100%)}
+.thc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.thc-chip{width:38px;height:28px;border-radius:6px;background:linear-gradient(135deg,#f3d58a,#c99a3c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.thc-kind{font-size:11px;font-weight:700;letter-spacing:.14em;color:#fff}
+.thc-ok{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.18);color:#fff}
+.thc-title{margin:0;font-size:13.5px;line-height:1.35;color:#fff}
+.thc-name{font-family:var(--font-display);font-size:21px;font-weight:700;color:#fff;display:flex;flex-direction:column;letter-spacing:.01em}
+.thc-name small{font-family:var(--font-body,inherit);font-size:12px;font-weight:500;color:#f1e4ee;letter-spacing:0}
+.thc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
+.thc-r{display:flex;flex-direction:column;min-width:0}
+.thc-r span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#f1e4ee}
+.thc-r b{font-size:14px;font-weight:600;color:#fff;overflow-wrap:anywhere}
+.thc-dec{margin:0;font-size:13px;color:#fff}
+.thc-due{display:flex;flex-direction:column;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.14)}
+.thc-due span{font-size:11px;color:#f1e4ee}.thc-due b{font-size:14px;color:#fff}
+.thc-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;font-size:11px;color:#f1e4ee;line-height:1.3}
+.thc-foot b{font-size:15px;color:#fff;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.thc-in{transition:none}}
+body.no-anim .thc-in{transition:none}
+.thc-cp{display:inline-grid;place-items:center;width:26px;height:26px;margin-left:6px;vertical-align:middle;border-radius:7px;background:rgba(255,255,255,.18);color:#fff;font-size:14px;line-height:1;flex:none}
+.thc-r.cp{grid-column:1/-1}.thc-r.cp b{display:flex;align-items:center;justify-content:space-between;gap:10px}.thc-r b em{font-style:normal;min-width:0}
+.thc-cp:active{background:rgba(255,255,255,.32)}
+.thc-r b,.thc-foot .c-mono{user-select:text;-webkit-user-select:text}
+.thcard:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:18px}
 .thnum.used{border:1.5px solid transparent;background:#D8EFDF;color:#2F6B4F}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thnum.used{background:#1F3A2C;color:#9FD0B2}}
 :root[data-theme="dark"] .thnum.used{background:#1F3A2C;color:#9FD0B2}
@@ -2012,7 +2053,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.87 · ECG & ABG of the day sync between devices';
+const APP_VERSION = '5.88 · Thesis recruitment calendar and thesis card';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -3196,8 +3237,9 @@ function pageThesis() {
     const fin = N.used >= N.total;
     h += `<div class="card"><div class="prog-row">${ring(N.used, N.total, 72, 'thesis')}<div class="prog-txt"><span class="c-lab">Patients recruited and done</span><span class="c-t">${fin ? 'All ' + N.total + ' done' : N.used + ' of ' + N.total}</span><span class="c-m">${fin ? 'Every number in the sequence is used.' : 'Next number: <b>' + esc(String(N.next)) + '</b> · ' + plural(N.left, 'number') + ' left'}</span></div></div></div>`;
   } else h += `<div class="card"><span class="c-lab">Random sequence</span><span class="c-s">The sequence numbers are kept private. Turn on Private sync on this device (Backup & settings) to see them.</span></div>`;
-  if (!all.length) return h + `<div class="card"><span class="c-s">No TURP cases yet. Send Claude the urology list in chat and the TURP cases appear here.</span></div>`;
+  if (!all.length) return h + thIdCard(N) + `<div class="card"><span class="c-s">No TURP cases yet. Send Claude the urology list in chat and the TURP cases appear here.</span></div>`;
   h += `<div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))">${stat('Recruited', rec.length, `<span class="s-m">${all.filter(r => thRecV(r.id) === 'n').length} not recruited</span>`)}${stat('To mark', todo.length, '<span class="s-m">Done or not done?</span>')}${stat('Done', done.length, '<span class="s-m">In OT, from this list</span>')}${stat('Not done', nod.length, '<span class="s-m">Taken off the list</span>')}</div>`;
+  h += thCal(all, N);
   const F = { all: ['All', listed], rec: ['Recruited', listed.filter(r => thRec(r.id))], no: ['Not recruited', all.filter(r => thRecV(r.id) === 'n')], todo: ['To mark', todo], nod: ['Not done', nod] };
   if (!F[thFilter]) thFilter = 'all';
   h += `<div class="strip">${Object.keys(F).map(k => `<button type="button" data-act="thf" data-f="${k}" aria-pressed="${thFilter === k}">${F[k][0]}</button>`).join('')}</div>`;
@@ -3207,8 +3249,71 @@ function pageThesis() {
   if (thFilter === 'nod') h += `<p class="foot">Recruited, but not done in OT. Their numbers went to the next patients. Tap “Not done” again to bring a case back.</p>`;
   h += `<div class="sec">${thConsort(all, N)}</div>`;
   h += `<div class="sec"><button type="button" class="btn ghost wide" data-act="th-export">⬇︎ Export list for Excel</button></div>`;
-  h += `<div class="card"><span class="c-lab">My thesis</span><p class="thtitle">${esc(THESIS_TITLE)}</p></div>`;
+  h += thIdCard(N);
   return h;
+}
+/* Recruitment calendar (25 Nov 2026): a month view of thesis cases. Days with a recruited case get a soft green
+   circle; a dot per case shows its status. Tapping a day shows that day's patients just below the calendar. */
+let thView = (() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; })();
+let thSel = today();
+const TH_ST = { done: ['var(--st-done)', 'Recruited · done'], rec: ['var(--st-info-fg)', 'Recruited · to mark'], open: ['var(--st-soon)', 'Not decided'], no: ['var(--st-over-fg)', 'Not done in OT'], nr: ['var(--fg-3)', 'Not recruited'] };
+const thSt = id => thDone(id) ? 'done' : thNo(id) ? 'no' : thRec(id) ? 'rec' : thRecV(id) === 'n' ? 'nr' : 'open';
+function thCal(all, N) {
+  const { y, m } = thView; const t = today(); const pre = `${y}-${pad(m + 1)}-`;
+  const byDay = {}; all.forEach(r => { (byDay[r.date] = byDay[r.date] || []).push(r); });
+  Object.values(byDay).forEach(a => a.sort((p, q) => (p.order || 0) - (q.order || 0)));
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7; const last = new Date(y, m + 1, 0).getDate();
+  let g = ['M','T','W','T','F','S','S'].map(d => `<div class="dw">${d}</div>`).join('');
+  for (let i = 0; i < offset; i++) g += '<div></div>';
+  for (let d = 1; d <= last; d++) {
+    const k = pre + pad(d); const its = byDay[k] || []; const wd = (offset + d - 1) % 7;
+    const recN = its.filter(r => thRec(r.id)).length;
+    g += `<button type="button" class="dc${k === t ? ' today' : ''}${k === thSel ? ' sel' : ''}${wd > 4 ? ' wk' : ''}${recN ? ' threc' : ''}" data-act="th-day" data-k="${k}" aria-label="${esc(dLong(k))}${its.length ? ', ' + plural(its.length, 'TURP case') + (recN ? ', ' + recN + ' recruited' : '') : ''}"><span class="n">${d}</span><span class="dots">${its.slice(0, 4).map(r => `<i style="--c:${TH_ST[thSt(r.id)][0]}"></i>`).join('')}</span></button>`;
+  }
+  const mon = all.filter(r => r.date.startsWith(pre)); const monRec = mon.filter(r => thRec(r.id)).length, monDone = mon.filter(r => thDone(r.id)).length;
+  let h = `<div class="sec"><h2 class="sh">Recruitment calendar</h2><div class="cal-head"><h2>${MONTHS[m]} <span>${y}</span></h2><div class="cal-nav"><button type="button" data-act="th-month" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-act="th-month" data-d="1" aria-label="Next month">›</button></div></div>
+    <div class="calbox"><div class="mcal">${g}</div><div class="legend">${Object.keys(TH_ST).map(k => `<span style="--c:${TH_ST[k][0]}"><i></i>${TH_ST[k][1]}</span>`).join('')}</div></div>
+    <p class="foot" style="margin:8px 2px 0">${mon.length ? `${MONTHS[m]}: ${plural(mon.length, 'TURP case')} · ${monRec} recruited · ${monDone} done` : `No TURP cases in ${MONTHS[m]} in the tracker.`}</p></div>`;
+  const day = byDay[thSel] || [];
+  h += `<div class="sec th-dayinfo"><h2 class="sh">${thSel === t ? 'Today · ' : ''}${esc(dLong(thSel))}</h2>${day.length ? day.map(r => thDayCard(r, N)).join('') : '<div class="group"><div class="row empty">No TURP cases on this day.</div></div>'}</div>`;
+  return h;
+}
+function thDayCard(r, N) {
+  const i = thInfo(r.id); const st = thSt(r.id); const num = N.map[r.id];
+  const name = i.patient || 'Case ' + (r.order || '');
+  const meta = [i.age, i.uhid].filter(Boolean).join(' · ');
+  const where = [r.ot, r.time, r.unit, r.surgeon].filter(Boolean).join(' · ');
+  const why = st === 'nr' ? thWhy(r.id, 'r') : st === 'no' ? thWhy(r.id, 'o') : '';
+  return `<article class="card thday"><div class="thday-h"><span class="thday-dot" style="--c:${TH_ST[st][0]}"></span><div class="thday-t"><b>${esc(name)}</b>${meta ? `<span class="c-s c-mono">${esc(meta)}</span>` : ''}</div>${num ? `<span class="thnum${num.used ? ' used' : ''}">${num.n}</span>` : ''}</div>
+    <div class="thday-b"><span class="c-s"><b>${esc(TH_ST[st][1])}</b>${why ? ' · ' + esc(why) : ''}</span>${r.procedure ? `<span class="c-s">${esc(r.procedure)}</span>` : ''}${where ? `<span class="c-s">${esc(where)}</span>` : ''}${r.notes ? `<span class="c-s">${esc(r.notes)}</span>` : ''}</div></article>`;
+}
+/* Thesis ID card (25 Nov 2026): credit-card style card at the foot of Thesis. Front: who, what, guides. Tap to flip:
+   ethics approval, CTRI numbers and the next IEC continuation date. Details in data/thesis.json "card" (from her IEC letter). */
+const fmtD = d => { if (!d) return ''; const x = dt(d); return x.getDate() + ' ' + MONTHS[x.getMonth()].slice(0, 3) + ' ' + x.getFullYear(); };
+function thIdCard(N) {
+  const c = D.thesis && D.thesis.card; if (!c) return `<div class="card"><span class="c-lab">My thesis</span><p class="thtitle">${esc(THESIS_TITLE)}</p></div>`;
+  const t = today(); const nx = (c.renewals || []).find(d => d >= t); const left = nx ? dIn(nx) : null;
+  const prog = N && N.ok ? `${N.used} / ${N.total}` : (c.target ? '— / ' + c.target : '');
+  const cp = (v, label) => `<button type="button" class="thc-cp" data-act="th-copy" data-v="${esc(v)}" data-l="${esc(label)}" aria-label="Copy ${esc(label)}">⧉</button>`;
+  const row = (k, v, mono, copy) => v ? `<div class="thc-r${copy ? ' cp' : ''}"><span>${esc(k)}</span><b${mono ? ' class="c-mono"' : ''}><em>${esc(v)}</em>${copy ? cp(v, k) : ''}</b></div>` : '';
+  return `<div class="sec"><div class="thcard" role="button" tabindex="0" data-act="th-flip" aria-pressed="false" aria-label="Thesis card. Tap to flip for ethics and CTRI details">
+    <div class="thc-in">
+      <div class="thc-f thc-front">
+        <div class="thc-top"><span class="thc-chip" aria-hidden="true"></span><span class="thc-kind">MD THESIS</span></div>
+        <p class="thc-title">${esc(THESIS_TITLE)}${cp(THESIS_TITLE, 'Thesis title')}</p>
+        <div class="thc-name">${esc(c.name)}<small>${esc(c.role)} · ${esc(c.course)}</small></div>
+        <div class="thc-grid">${row('Guide', c.guide)}${row('Co-guide', c.coguide)}</div>
+        <div class="thc-foot"><span>${esc(c.dept)}</span>${prog ? `<b class="c-mono">${esc(prog)}</b>` : ''}</div>
+      </div>
+      <div class="thc-f thc-back">
+        <div class="thc-top"><span class="thc-kind">ETHICS & REGISTRATION</span><span class="thc-ok">✓ ${esc(c.decision.split(' ')[0])}</span></div>
+        <div class="thc-grid">${row('IEC number', c.iec, true, 1)}${row('CTRI number', c.ctri, true, 1)}${row('CTRI reference', c.ctriRef, true, 1)}${row('IEC approval date', fmtD(c.approved))}${row('Reviewed', fmtD(c.reviewed))}</div>
+        <p class="thc-dec">${esc(c.decision)} till ${esc(fmtD(c.validTill))}</p>
+        ${nx ? `<div class="thc-due"><span>Next IEC continuation endorsement</span><b>${esc(fmtD(nx))} · ${esc(inWords(left))}</b></div>` : ''}
+        <div class="thc-foot"><span>${esc(c.iecBody)}<br><span class="c-mono">Reg. ${esc(c.iecReg)}</span></span>${cp(c.iecReg, 'IEC registration')}</div>
+      </div>
+    </div></div><p class="foot" style="text-align:center;margin-top:6px">Tap the card to flip it · ⧉ copies a number</p>
+    <button type="button" class="btn ghost wide" data-act="th-copy" data-k="all" style="margin-top:8px">⧉ Copy all thesis details</button></div>`;
 }
 function thTable(rows, N) {
   const full = rows.map(r => ({ ...r, ...thInfo(r.id) }));
@@ -3532,7 +3637,7 @@ function syncCard() {
 /* every panel's "how it works" lives here, under Settings, so the panels stay clean */
 function howSection() { const P = state.private || {}; const it = (k, t, lines) => `<details class="in-how" data-how="${k}"><summary>${t}</summary><div class="in-how-b">${lines.map(x => `<p class="c-s">${x}</p>`).join('')}</div></details>`;
   const body = [battHow(),
-    it('thesis', '🧪 Thesis tracker', ['Send Claude your urology list in chat (say “urology list”, separate from the OT list). Claude picks every case with TURP in it (not TURBT) and adds it here with the date and all its details.', 'Each case gets the next number from your random sequence (dashed box = waiting). Mark it Recruited or Not recruited; once recruited, mark Done or Not done in OT.', 'A number is used up only when the case is recruited and done (green box). Recruited but not done in OT: the case comes off the list (kept under the Not done filter, tap again to undo) and its number passes to the next patient. Not recruited cases get no number.', 'The ring counts patients recruited and done out of the whole sequence, including the ones before the tracker. The sequence and names stay locked to your paired devices. Thesis cases are never removed.', 'Marking Not recruited or Not done asks for a reason (you can skip it and add it later from the Reason column). The reasons feed the CONSORT counts under the list. Export list for Excel saves every case with its number, outcome and reason as a file Excel opens.', 'Review of literature (second tab): papers checked on PubMed, grouped by topic, each with what it found and where to use it in your thesis. Mark papers read and tick the writing steps as you go. A reminder on Today shows when a TURP case today or tomorrow still needs marking (switch it off in Settings).']),
+    it('thesis', '🧪 Thesis tracker', ['Send Claude your urology list in chat (say “urology list”, separate from the OT list). Claude picks every case with TURP in it (not TURBT) and adds it here with the date and all its details.', 'Each case gets the next number from your random sequence (dashed box = waiting). Mark it Recruited or Not recruited; once recruited, mark Done or Not done in OT.', 'A number is used up only when the case is recruited and done (green box). Recruited but not done in OT: the case comes off the list (kept under the Not done filter, tap again to undo) and its number passes to the next patient. Not recruited cases get no number.', 'The ring counts patients recruited and done out of the whole sequence, including the ones before the tracker. The sequence and names stay locked to your paired devices. Thesis cases are never removed.', 'Marking Not recruited or Not done asks for a reason (you can skip it and add it later from the Reason column). The reasons feed the CONSORT counts under the list. Export list for Excel saves every case with its number, outcome and reason as a file Excel opens.', 'Recruitment calendar: each month shows your TURP cases as coloured dots (green = recruited and done, blue = recruited and still to mark, amber = not decided, red = not done in OT, grey = not recruited). Days with a recruited patient get a soft green circle. Tap a day to see that day\'s patients just below the calendar.', 'Thesis card (bottom of the Cases tab): your name, thesis title and guides. Tap it to flip for the IEC number, CTRI numbers, approval dates and the next IEC continuation date. ⧉ copies a single number; Copy all thesis details copies everything.', 'Review of literature (second tab): papers checked on PubMed, grouped by topic, each with what it found and where to use it in your thesis. Mark papers read and tick the writing steps as you go. A reminder on Today shows when a TURP case today or tomorrow still needs marking (switch it off in Settings).']),
     it('plant', '🪴 Habit plant', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows the plant: seed, sprout, leaves, a bushy plant, a bud, and a flower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
     it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette with a drawn strip and one ABG. Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
@@ -4848,6 +4953,12 @@ document.addEventListener('click', e => {
       if (all) otJustDone = 'bk-' + bid;
       commit(all ? 'Book finished 🎉' : null); otJustDone = null; if (sheetOpen()) { const sh = $('sheet'), y = sh.scrollTop; bookSheet(bid); sh.scrollTop = y; } break; }
     case 'thf': thFilter = b.dataset.f; render(); break;
+    case 'th-copy': { const c = (D.thesis && D.thesis.card) || {}; let v = b.dataset.v, l = b.dataset.l || 'Details';
+      if (b.dataset.k === 'all') { l = 'Thesis details'; v = ['Title: ' + THESIS_TITLE, 'Principal Investigator: ' + c.name, 'Guide: ' + c.guide, 'Co-guide: ' + c.coguide, 'Institution: ' + c.dept, 'IEC number: ' + c.iec + ' (' + c.iecBody + ', ' + c.iecReg + ')', 'IEC decision: ' + c.decision + ' till ' + fmtD(c.validTill), 'IEC approval date: ' + fmtD(c.approved), 'CTRI number: ' + c.ctri, 'CTRI reference: ' + c.ctriRef].join('\n'); }
+      (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(l + ' copied ✓'), () => toast("Couldn't copy here. Long-press the number to copy it instead.")); break; }
+    case 'th-flip': { const on = !b.classList.contains('flip'); b.classList.toggle('flip', on); b.setAttribute('aria-pressed', on); break; }
+    case 'th-day': { const y0 = window.scrollY; thSel = b.dataset.k; render(); window.scrollTo(0, y0); const el = document.querySelector('.th-dayinfo'); if (el) { const rc = el.getBoundingClientRect(); if (rc.top > innerHeight - 120) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } break; }
+    case 'th-month': { const y0 = window.scrollY; thView.m += +b.dataset.d; if (thView.m < 0) { thView.m = 11; thView.y--; } if (thView.m > 11) { thView.m = 0; thView.y++; } render(); window.scrollTo(0, y0); break; }
     case 'thsub': thSub = b.dataset.s === 'rol' ? 'rol' : 'cases'; try { localStorage.setItem('studydesk.thSub', thSub); } catch (_) {} render(); window.scrollTo(0, 0); break;
     case 'th-why': thWhySheet(id, b.dataset.k === 'o' ? 'o' : 'r'); break;
     case 'th-export': thExport(); break;
