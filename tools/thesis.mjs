@@ -30,6 +30,8 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) throw new Error('date must be YYYY-
 const cases = (plain.cases || []);
 const bad = cases.filter(c => !isTurp(c.procedure));
 if (bad.length) throw new Error('not TURP: ' + bad.map(c => c.procedure).join(' | '));
+const khsb = cases.filter(c => /\bKHS/i.test([c.ward, c.notes].join(' ')));
+if (khsb.length) throw new Error('KHSB ward cases are not added to the thesis: ' + khsb.map(c => c.procedure).join(' | '));
 if (!cases.length) { console.log('no TURP cases; nothing added'); process.exit(0); }
 
 const pub = JSON.parse(readFileSync(PUB, 'utf8'));
