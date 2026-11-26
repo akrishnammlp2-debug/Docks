@@ -2117,7 +2117,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.97 · Post-call mode, Fudge corner, Sunday recap, pen shelf';
+const APP_VERSION = '5.98 · Post-call only when you turn it on';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens'];
 
@@ -2187,6 +2187,8 @@ function normalise(s) {
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   /* v5.97: Fudge's care dates as she told Claude on 26 Nov 2026 (vaccine a year ago, deworming 6 months ago; grooming counted from that day). Seeded once. */
+  /* v5.98: post-call is hers to turn on (26 Nov 2026), so the automatic quiet morning after a rostered duty is switched off once. She can turn it back on in Settings. */
+  if (!n.settings.quietAutoOff) { n.settings.quietOn = false; n.settings.quietAutoOff = 1; }
   if (!n.settings.careSeed) { n.catCare = { deworm: '2026-05-26', vet: '2025-11-26', groom: '2026-11-26', ...n.catCare }; n.settings.careSeed = 1; }
   if (!n.settings.igFix6) { if (n.settings.igSince === '2026-11-13') n.settings.igSince = '2026-11-06'; n.settings.igFix6 = 1; }
   return n;
@@ -3753,7 +3755,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('dota', '⚔️ Dota 2', ['Only tier 1 tournaments are followed, using Liquipedia’s tiers. Tier 2 and 3 events are left out.', 'Matches shows series that are live, coming up (in your time) and results from the last 7 days. Events keeps a finished tournament and its winner for 30 days.', 'Patch & news has the live gameplay patch and Dota updates from the last 30 days. Pull down on Matches to get the latest results.']),
     it('brev', '🧠 Daily bite revision', ['Today shows up to 3 Bite-size notes a day to revise, starting the day after a note is added. Open one, read it, then tap Got it or Again tomorrow.', 'Got it spaces it out: back in 3 days, then 7, 21, 60 and 120 days. Again tomorrow starts it over. Oldest due notes come first.', 'Your revision progress syncs between iPhone and iPad and is in your backup. Switch it off in More settings.']),
     it('week', '🗓️ Sunday round-up', ['From 5 PM on Sunday (and through Monday), Today shows what you got done in the last 7 days: notes added and revised, cases logged, thesis patients done in OT, topics studied, to-dos done, academic sessions, articles added, days off Instagram, and anything Fudge needs. Facts only. Tap Got it to hide it until next Sunday.']),
-    it('pc', '🌙 Post-call mode', ['After a call night, tap the 🌙 Post-call chip under the Today banner (it shows between 5 AM and 6 PM). Today then shows only rest: sleep, eat, hydrate, and one tiny optional thing. Everything else waits under More today.', 'It ends by itself at midnight, or tap Turn off. Separately, the quiet morning after a rostered duty still works from your roster (switch above).']),
+    it('pc', '🌙 Post-call mode', ['After a call night, tap the 🌙 Post-call chip under the Today banner (it shows between 5 AM and 6 PM). Today then shows only rest: sleep, eat, hydrate, and one tiny optional thing. Everything else waits under More today.', 'It ends by itself at midnight, or tap Turn off. The automatic quiet morning after a rostered duty is off; you can turn it back on with the switch above.']),
     it('fudge', '🐈 Fudge corner', ['Food reorders come from the scanned Amazon orders. Care reminders: deworming every 3 months, a yearly vet check (the vet decides which vaccines are due), and grooming every week or every 2 weeks (your choice).', 'Tap Done today on any of them and its countdown starts again. Today shows Fudge only when something is due within 3 days.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
@@ -4544,9 +4546,9 @@ function emapSheet(name) { const x = examMap().find(o => o.name === name); if (!
     ${B.length ? `<h3 class="sh">Notes</h3><div class="group">${B.map(b => `<button type="button" class="row" data-act="bite" data-id="${esc(b.id)}"><span class="r-main"><span class="r-t">${esc(b.title)}</span><span class="r-s">${brecOf(b.id) ? 'revised ' + plural(brecOf(b.id).n || 1, 'time') : 'not revised yet'}</span></span>${CHEV}</button>`).join('')}</div>` : ''}</div>`); }
 
 /* ---------- v5.67: after-duty quiet mode (from the duty roster) ---------- */
-function quietNow() { const S = state.settings; if (S.quietOn === false) return null; const hr = new Date().getHours(); const t = today();
-  if (S.quietDay === t) return { why: 'post-call', until: 'midnight', pc: true };
-  if (S.quietOff === t) return null;
+function quietNow() { const S = state.settings; const hr = new Date().getHours(); const t = today();
+  if (S.quietDay === t) return { why: 'post-call', until: 'midnight', pc: true }; /* her own post-call switch works even with the automatic one off */
+  if (S.quietOn === false || S.quietOff === t) return null;
   const y = addDays(t, -1); const d = dutiesFor(y); const untilHr = +S.quietUntil || 14;
   if (d.length && hr < untilHr) return { why: 'after yesterday\'s ' + d[0].toLowerCase() + ' duty', until: (untilHr > 12 ? untilHr - 12 + ' PM' : untilHr + ' AM') };
   return null; }
