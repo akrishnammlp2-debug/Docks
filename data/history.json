@@ -1,0 +1,17 @@
+{
+  "rule": "Anaesthesia history 'on this day' (v6.01). Only dates verified against the named source. Never add a date without a source. md = MM-DD.",
+  "items": [
+    { "md": "01-13", "year": 1947, "t": "First lumbar epidural catheter", "x": "Cuban anaesthesiologist Manuel Martínez Curbelo placed the first described continuous lumbar epidural catheter.", "src": "https://en.wikipedia.org/wiki/History_of_neuraxial_anesthesia" },
+    { "md": "01-23", "year": 1942, "t": "Curare enters the operating room", "x": "Harold Griffith and his resident Enid Johnson gave curare (Intocostrin) during cyclopropane anaesthesia for an appendicectomy in Montreal: the start of muscle relaxants in anaesthesia.", "src": "https://www.cas.ca/en/About-CAS/History/Important-Contributors/Contributors/Dr-Harold-Randall-Griffith,-MD,-CM,-OC" },
+    { "md": "03-30", "year": 1842, "t": "Crawford Long's ether", "x": "In Jefferson, Georgia, Crawford Long used ether to remove a small neck tumour from James Venable. He did not publish until 1849.", "src": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8660316/" },
+    { "md": "04-07", "year": 1853, "t": "Chloroform for a queen", "x": "John Snow gave chloroform to Queen Victoria for the birth of Prince Leopold, which did much for the acceptance of pain relief in labour.", "src": "https://www.rcpe.ac.uk/node/3923" },
+    { "md": "04-14", "year": 1857, "t": "Snow's second royal anaesthetic", "x": "John Snow again gave chloroform to Queen Victoria, this time for the birth of Princess Beatrice.", "src": "https://litfl.com/john-snow/" },
+    { "md": "04-22", "year": 1908, "t": "The Bier block is shown", "x": "August Bier demonstrated intravenous regional anaesthesia at the German Surgical Society congress in Berlin, with a lower-limb amputation and an elbow resection.", "src": "https://litfl.com/august-karl-gustav-bier/" },
+    { "md": "08-16", "year": 1898, "t": "The first spinal anaesthetic", "x": "In Kiel, August Bier performed surgery under spinal anaesthesia with cocaine. He and his assistant Hildebrandt later tried it on each other.", "src": "https://litfl.com/otd/08-16/" },
+    { "md": "09-30", "year": 1846, "t": "Morton's first ether extraction", "x": "William Morton extracted a tooth under ether in Boston, two weeks before the public demonstration.", "src": "https://www.mcgill.ca/oss/node/2263" },
+    { "md": "10-16", "year": 1846, "t": "Ether Day", "x": "William Morton anaesthetised Gilbert Abbott with ether at Massachusetts General Hospital for removal of a neck tumour: the first public demonstration of surgical anaesthesia. Now World Anaesthesia Day.", "src": "https://www.mcgill.ca/oss/node/2342" },
+    { "md": "11-04", "year": 1847, "t": "Simpson finds chloroform", "x": "James Young Simpson and his friends Keith and Duncan inhaled chloroform after dinner in Edinburgh and woke up under the table.", "src": "https://www.mcgill.ca/oss/node/2018" },
+    { "md": "11-08", "year": 1847, "t": "First chloroform in labour", "x": "James Young Simpson used chloroform in obstetrics for the first time.", "src": "https://www.rcpe.ac.uk/node/3923" },
+    { "md": "12-11", "year": 1844, "t": "Horace Wells and nitrous oxide", "x": "The day after seeing a laughing-gas show, Hartford dentist Horace Wells had his own tooth pulled under nitrous oxide.", "src": "https://blog.oup.com/2015/10/anaesthesia-day-history/" }
+  ]
+}

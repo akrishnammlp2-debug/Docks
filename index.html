@@ -2099,6 +2099,18 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .fudge-hero{display:flex;align-items:center;gap:12px}
 .fudge-row{display:flex;align-items:center;gap:12px}.fudge-row.off .cat-tx span{color:var(--fg-2)}
 .fudge-e{font-size:22px;width:30px;text-align:center}
+.dose-g{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);padding-top:14px!important}
+.dose-r{display:block!important}
+.dose-r summary{display:flex;align-items:center;gap:10px;list-style:none;cursor:pointer}.dose-r summary::-webkit-details-marker{display:none}
+.dose-r .cat-tx{flex:1;min-width:0}
+.dose-v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:flex-end}
+.dose-v small{font-weight:400;font-size:12px;color:var(--fg-2)}
+.dose-n{margin:6px 0 0;font-size:13px;color:var(--fg-2)}
+.hist-r{display:flex;gap:12px;align-items:flex-start}
+.hist-d{flex:none;width:52px;font-weight:700;font-size:14px;display:flex;flex-direction:column}.hist-d small{font-weight:400;color:var(--fg-2)}
+.hist-r.now{background:color-mix(in srgb,var(--amber) 14%,transparent)}
+.hist-s{font-size:12px;margin-top:2px}
+.hist-link{display:block;margin:10px 2px 0;font-size:14px}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2140,9 +2152,9 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.00 · Thesis finish line, warmer exam map, Fudge\'s collection';
+const APP_VERSION = '6.01 · Drug doses by weight, anaesthesia history';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2814,6 +2826,7 @@ function pageToday() {
   add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
   add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }));
   add(siren, 64);
+  add(histToday(), by({ morning: 58, all: 50 }));
   add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
   add(catTodayCard(), 56);
@@ -3798,6 +3811,8 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('thfin', '🏁 Thesis finish line', ['Under your patient ring: a finish date worked out from the cases you mark done (it waits until there are 3 over at least a week), this week\'s writing step from Review of literature, and Copy reference list, which copies every Review paper as a numbered Vancouver list to paste into Word.']),
     it('emwarm', '🗺️ Exam map warmth', ['Each area\'s tile is warm if you added, updated or revised something there in the last 2 weeks, mild up to a month, and cool after that. The two coolest areas are named under the map.']),
     it('fudgec', '🐾 Fudge\'s collection', ['Fudge at the foot of the side menu collects small things at milestones: 50 and 100 bite-size notes, 30 and 60 days off Instagram, 50 and all 70 thesis patients. Tap him to see what he has and what is next.']),
+    it('dose', '💉 Drug doses by weight', ['In OT calculators, under Paediatric numbers. It uses the weight, height and age you enter at the top: children\'s doses under 12 years (or under 40 kg if no age), and lean or ideal weight for BMI 30 and over where the source says so. Each drug shows the dose, the volume for the stated ampoule, and (tap it) its notes and source. Ranges and limits, not targets.']),
+    it('hist', '📜 Anaesthesia history', ['On a day when something happened in anaesthesia history, Today shows a small card. Academics › Exam map has the whole timeline, each date with its source.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3820,6 +3835,8 @@ function pageBackup() {
     <label class="row toggle"><span>Today's case read (evening card for a case you logged today)</span><input type="checkbox" data-setting="caseReadOn" ${S.caseReadOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>My gallery (♡ on paintings of the day)</span><input type="checkbox" data-setting="galOn" ${S.galOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's collection (small things at milestones, side menu)</span><input type="checkbox" data-setting="fudgeOn" ${S.fudgeOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Drug doses by weight (OT calculators)</span><input type="checkbox" data-setting="doseOn" ${S.doseOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Anaesthesia history on this day</span><input type="checkbox" data-setting="histOn" ${S.histOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -4614,7 +4631,7 @@ function emCool(M) { const c = M.filter(x => emWarm(x) === 'cool').sort((a, b) =
   return `<p class="em-coolest">Coolest right now: <b>${c.map(x => esc(x.name)).join(', ')}</b>. Maybe one note this week?</p>`; }
 const emWarm = x => { if (!x.last) return 'cool'; const d = (new Date(today() + 'T12:00') - new Date(x.last + 'T12:00')) / 864e5; return d <= 14 ? 'warm' : d <= 30 ? 'mild' : 'cool'; };
 function examMapSection() { if (state.settings.examMapOn === false) return ''; const M = examMap(); const thin = M.filter(x => !x.n);
-  return `<div class="sec"><h2 class="sh"><span>🗺️ Exam map</span><span>${thin.length ? thin.length + ' still empty' : 'every area started'}</span></h2><div class="emap">${M.map(x => `<button type="button" class="emap-t${x.n ? '' : ' thin'} em-${emWarm(x)}" data-act="emap" data-c="${esc(x.name)}">${x.n ? ring(x.d, x.n, 46, 'em-' + x.name) : `<span class="emap-0" aria-hidden="true">${BCAT_ICON[x.name] || '•'}</span>`}<b>${esc(x.name)}</b><span>${x.n ? x.d + '/' + x.n + ' done' : 'nothing yet'}</span></button>`).join('')}</div>${emCool(M)}</div>`; }
+  return `<div class="sec"><h2 class="sh"><span>🗺️ Exam map</span><span>${thin.length ? thin.length + ' still empty' : 'every area started'}</span></h2><div class="emap">${M.map(x => `<button type="button" class="emap-t${x.n ? '' : ' thin'} em-${emWarm(x)}" data-act="emap" data-c="${esc(x.name)}">${x.n ? ring(x.d, x.n, 46, 'em-' + x.name) : `<span class="emap-0" aria-hidden="true">${BCAT_ICON[x.name] || '•'}</span>`}<b>${esc(x.name)}</b><span>${x.n ? x.d + '/' + x.n + ' done' : 'nothing yet'}</span></button>`).join('')}</div>${emCool(M)}${state.settings.histOn !== false && HIST().length ? `<button type="button" class="link hist-link" data-act="hist-open">📜 Anaesthesia history · next: ${esc(histNext().t)}</button>` : ''}</div>`; }
 function emapSheet(name) { const x = examMap().find(o => o.name === name); if (!x) return;
   const B = BITES().filter(b => b.cat === name);
   openSheet(`<div class="sheet-in">${sheetHead((BCAT_ICON[name] || '') + ' ' + name)}
@@ -4656,6 +4673,51 @@ function calcBody() { const V = calcV, sex = V.sex === 'f' ? 'f' : 'm', ht = cNu
   return out; }
 const cIn = (k, label, unit, attrs) => `<label class="row field calc-f"><span class="f-l">${label}</span><input type="text" inputmode="decimal" data-calc="${k}" value="${esc(calcV[k] ?? '')}" ${attrs || ''}><span class="calc-u">${unit}</span></label>`;
 const cOut = (label, val, note) => `<div class="row kv calc-o"><span class="r-l">${label}${note ? `<small>${note}</small>` : ''}</span><b class="r-v">${val}</b></div>`;
+/* v6.01 Drug doses by weight (Apoorva, 26 Nov 2026). Every number is from the source in DOSE_SRC; never change one without re-checking it.
+   Obesity (BMI ≥ 30) uses the Ingrande & Lemmens weight scalars already cited on this page. Upper limits and ranges, not targets. */
+const DOSE_SRC = [['Propofol 1% SmPC (emc)', 'https://www.medicines.org.uk/emc/medicine/2275/spc'], ['WFSA tutorial: IV induction agents (thiopental)', 'https://resources.wfsahq.org/?p=10965'],
+  ['Ketamine SmPC (emc)', 'https://www.medicines.org.uk/emc/product/100751/smpc'], ['Hypnomidate (etomidate) SmPC (emc)', 'https://www.medicines.org.uk/emc/product/9777/smpc'],
+  ['Fentanyl SmPC (emc)', 'https://www.medicines.org.uk/emc/product/6617/smpc'], ['Suxamethonium SmPC (emc)', 'https://www.medicines.org.uk/emc/product/3401/smpc'],
+  ['Fawcett WJ. Suxamethonium or rocuronium for RSI? BJA Educ 2019', 'https://doi.org/10.1016/j.bjae.2019.09.001'], ['Robinul-Neostigmine SmPC (emc)', 'https://www.medicines.org.uk/emc/product/6599/smpc'],
+  ['Bridion (sugammadex) prescribing information (FDA) and EMA SmPC', 'https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/022225Orig1s012lbl.pdf'], ['Resuscitation Council UK Paediatric ALS 2025', 'https://www.resus.org.uk/sites/default/files/2025-10/Paediatric%20advanced%20life%20support%20algorithm%202025.pdf'],
+  ['MSD Manual: Medications commonly used for resuscitation', 'https://www.msdmanuals.com/professional/multimedia/table/medications-commonly-used-for-resuscitation'], ['MHAUS: dantrolene', 'https://www.mhaus.org/faqs/category/frequently-asked-questions-about/dantrolene/'],
+  ['AAGBI: Management of severe local anaesthetic toxicity', 'https://rcoa.ac.uk/media/7791']];
+/* k: weight used (tbw total, lbw lean, ibw ideal) when BMI ≥ 30. u: 'mg' | 'mcg'. c: concentration per mL in the same unit. */
+const DOSE_TBL = [
+  { g: 'Induction', n: 'Propofol', u: 'mg', a: [1.5, 2.5], ch: w => w.age !== null && w.age < 3 ? [2.5, 4] : [2.5, 2.5], c: 10, ct: '1% = 10 mg/mL', k: 'lbw', s: 0, note: 'Adults under 55; less over 55 and in ASA 3–4. Children 1 month–3 years may need 2.5–4 mg/kg.' },
+  { g: 'Induction', n: 'Thiopental', u: 'mg', a: [4, 5], c: 25, ct: '2.5% = 25 mg/mL', k: 'lbw', s: 1, adultOnly: true },
+  { g: 'Induction', n: 'Ketamine IV', u: 'mg', a: [1, 2], c: 50, ct: '50 mg/mL', k: 'tbw', s: 2, note: 'Label range 1–4.5 mg/kg; 2 mg/kg is the average for 5–10 minutes of anaesthesia.' },
+  { g: 'Induction', n: 'Etomidate', u: 'mg', a: [0.3, 0.3], c: 2, ct: '2 mg/mL', k: 'tbw', s: 3, max: 60, adultOnly: true, note: 'Elderly 0.15–0.2 mg/kg. Do not exceed 3 ampoules (60 mg) per procedure.' },
+  { g: 'Induction', n: 'Fentanyl (children)', u: 'mcg', ch: () => [1, 3], c: 50, ct: '50 mcg/mL', k: 'lbw', s: 4, childOnly: true, note: 'Spontaneous breathing. Adults: the label gives fixed doses, 50–200 mcg initially when breathing spontaneously.' },
+  { g: 'Relaxants', n: 'Suxamethonium', u: 'mg', a: [1, 1], ch: w => w.age !== null && w.age < 1 ? [2, 2] : [1, 2], c: 50, ct: '50 mg/mL', k: 'tbw', s: 5, max: 500, note: 'Infants under 1 year 2 mg/kg; children 1–12 years 1–2 mg/kg.' },
+  { g: 'Relaxants', n: 'Rocuronium, intubation', u: 'mg', a: [0.6, 0.6], c: 10, ct: '10 mg/mL', k: 'ibw', s: 6 },
+  { g: 'Relaxants', n: 'Rocuronium, RSI', u: 'mg', a: [1.2, 1.2], c: 10, ct: '10 mg/mL', k: 'ibw', s: 6, adultOnly: true },
+  { g: 'Reversal', n: 'Neostigmine', u: 'mg', a: [0.05, 0.05], c: 2.5, ct: '2.5 mg/mL', k: 'tbw', s: 7, max: 5, note: 'With glycopyrrolate 10 mcg/kg (0.01 mg/kg). Combined ampoule: 0.02 mL/kg.' },
+  { g: 'Reversal', n: 'Glycopyrrolate (with neostigmine)', u: 'mcg', a: [10, 10], c: 200, ct: '0.2 mg/mL', k: 'tbw', s: 7, max: 1000 },
+  { g: 'Reversal', n: 'Sugammadex, T2 back', u: 'mg', a: [2, 2], c: 100, ct: '100 mg/mL', k: 'tbw', s: 8 },
+  { g: 'Reversal', n: 'Sugammadex, 1–2 PTC', u: 'mg', a: [4, 4], c: 100, ct: '100 mg/mL', k: 'tbw', s: 8 },
+  { g: 'Reversal', n: 'Sugammadex, immediate', u: 'mg', a: [16, 16], c: 100, ct: '100 mg/mL', k: 'tbw', s: 8, adultOnly: true, note: 'About 3 minutes after rocuronium 1.2 mg/kg. Not studied in children.' },
+  { g: 'Emergency', n: 'Adrenaline, cardiac arrest', u: 'mcg', a: () => [1000, 1000], ch: () => [10, 10], c: 100, ct: '1:10,000 = 100 mcg/mL', k: 'tbw', s: 9, max: 1000, note: 'Children 10 mcg/kg (0.1 mL/kg of 1:10,000), max 1 mg; adults 1 mg. Every 3–5 min.' },
+  { g: 'Emergency', n: 'Amiodarone, VF/pVT (children)', u: 'mg', ch: () => [5, 5], c: 50, ct: '50 mg/mL', k: 'tbw', s: 9, max: 300, childOnly: true, note: 'After the 3rd shock; once more after the 5th. Max 300 mg per dose.' },
+  { g: 'Emergency', n: 'Atropine, bradycardia', u: 'mcg', a: () => [1000, 1000], ch: () => [20, 20], c: 600, ct: '0.6 mg/mL', k: 'tbw', s: 10, min: 100, note: 'Children 20 mcg/kg, minimum 100 mcg. Adults 1 mg, repeat every 3–5 min to 3 mg total, minimum 0.5 mg.' },
+  { g: 'Emergency', n: 'Dantrolene, malignant hyperthermia', u: 'mg', a: [2.5, 2.5], c: 20 / 60, ct: '20 mg vial in 60 mL water', k: 'tbw', s: 11, vial: 20, note: 'Repeat until signs settle. Rethink the diagnosis past 10 mg/kg in total.' },
+  { g: 'Emergency', n: 'Lipid emulsion 20%, LAST', u: 'mL', a: [1.5, 1.5], k: 'tbw', s: 12, note: 'Bolus over 1 min, then infusion 15 mL/kg/h. Up to 2 more boluses 5 min apart; double the rate to 30 mL/kg/h if needed. Max 12 mL/kg in total.' }];
+function doseRows() { const wt = cNum('wt'); if (!wt) return '<div class="row empty">Enter weight above (and age in years for children).</div>';
+  const W = calcBody(), age = cNum('age'); const child = age !== null ? age < 12 : wt < 40; const obese = W.bmi >= 30;
+  const fmt = (v, u) => u === 'mcg' ? (v >= 1000 ? r1(v / 1000) + ' mg' : r0(v) + ' mcg') : u === 'mL' ? r0(v) + ' mL' : (v >= 10 ? r0(v) : r1(v)) + ' mg';
+  let h = `<p class="foot">${child ? '🧒 Child doses' + (age === null ? ' (under 40 kg; enter age to be sure)' : '') : '🧑 Adult doses'}${obese ? ' · BMI ≥ 30: lean or ideal weight used where the source says so' : ''}.</p>`;
+  let last = '';
+  DOSE_TBL.forEach(d => { if (child && d.adultOnly) return; if (!child && d.childOnly) return;
+    const fix = typeof d.a === 'function' && !child; const rng = child ? (d.ch ? d.ch({ age }) : d.a) : (typeof d.a === 'function' ? d.a() : d.a); if (!rng) return;
+    const kg = obese ? (d.k === 'lbw' ? W.lbw : d.k === 'ibw' ? W.ibw : wt) : wt;
+    let lo = fix ? rng[0] : rng[0] * kg, hi = fix ? rng[1] : rng[1] * kg; let capped = false;
+    if (d.max && hi > d.max) { hi = d.max; lo = Math.min(lo, d.max); capped = true; } if (d.min && lo < d.min && child) { lo = Math.max(lo, d.min); hi = Math.max(hi, d.min); }
+    const fl = fmt(lo, d.u), fh = fmt(hi, d.u), ul = fl.split(' ')[1], uh = fh.split(' ')[1]; const dose = lo === hi ? fh : ul === uh ? fl.split(' ')[0] + '–' + fh : fl + '–' + fh;
+    const vol = d.c ? (lo === hi ? r1(lo / d.c) : r1(lo / d.c) + '–' + r1(hi / d.c)) + ' mL' : '';
+    const how = fix ? 'fixed adult dose' : `${rng[0] === rng[1] ? rng[0] : rng[0] + '–' + rng[1]} ${d.u === 'mL' ? 'mL' : d.u}/kg × ${r1(kg)} kg${obese && d.k !== 'tbw' ? (d.k === 'lbw' ? ' lean' : ' ideal') : ''}${capped ? ' · capped at max' : ''}`;
+    if (d.g !== last) { h += `<div class="row dose-g">${esc(d.g)}</div>`; last = d.g; }
+    h += `<details class="row dose-r"><summary><span class="cat-tx"><b>${esc(d.n)}</b><span>${esc(how)}</span></span><span class="dose-v">${esc(dose)}${vol ? `<small>${esc(vol)} of ${esc(d.ct)}</small>` : ''}${d.vial ? `<small>${plural(Math.ceil(hi / d.vial), 'vial')}</small>` : ''}</span></summary>${d.note ? `<p class="dose-n">${esc(d.note)}</p>` : ''}<p class="dose-n"><a href="${DOSE_SRC[d.s][1]}" target="_blank" rel="noopener">${esc(DOSE_SRC[d.s][0])}</a></p></details>`; });
+  return h; }
 function calcResults() { const V = calcV, W = calcBody(), wt = cNum('wt'); const R = {};
   R.body = W.bmi ? cOut('BMI', r1(W.bmi) + ' kg/m²') + cOut('Ideal body weight', r1(W.ibw) + ' kg', 'Devine') + cOut('Lean body weight', r1(W.lbw) + ' kg', 'Janmahasatian') + cOut('Adjusted body weight', r1(W.abw) + ' kg', 'IBW + 0.4 × (TBW − IBW)') : '<div class="row empty">Enter height and weight.</div>';
   const k = EBV_K.find(e => e[0] === (V.ebvg || ebvDefault())); const mlkg = cNum('ebvk') || k[2]; const hi = cNum('hi'), hf = cNum('hf');
@@ -4669,6 +4731,7 @@ function calcResults() { const V = calcV, W = calcBody(), wt = cNum('wt'); const
   if (wt) { const mf = wt <= 10 ? 4 * wt : wt <= 20 ? 40 + 2 * (wt - 10) : 60 + (wt - 20); R.paed = cOut('Maintenance fluid', r0(mf) + ' mL/h', '4-2-1 rule') + cOut('Lipid emulsion 20% bolus', r1(1.5 * wt) + ' mL', '1.5 mL/kg, then 0.25 mL/kg/min = ' + r1(0.25 * wt) + ' mL/min');
     if (age !== null && age >= 2) R.paed += cOut('Tube size, cuffed', (Math.round((age / 4 + 3.5) * 2) / 2).toFixed(1) + ' mm ID', 'age/4 + 3.5') + cOut('Tube size, uncuffed', (Math.round((age / 4 + 4) * 2) / 2).toFixed(1) + ' mm ID', 'age/4 + 4') + cOut('Oral tube length', r1(age / 2 + 12) + ' cm at lips', 'age/2 + 12'); }
   else R.paed = '<div class="row empty">Enter weight above (and age in years for tube sizes).</div>';
+  R.dose = doseRows();
   return R; }
 function pageCalc() { const V = calcV, R = calcResults();
   let h = head('OT calculators', 'Quick numbers with their formulas. Check against your department’s chart.', 'Hospital');
@@ -4678,15 +4741,17 @@ function pageCalc() { const V = calcV, R = calcResults();
   h += `<div class="sec"><h2 class="sh">Local anaesthetic maximum dose</h2><div class="group"><label class="row field calc-f"><span class="f-l">Drug</span><select data-calc="la">${LA_DRUGS.map(d => `<option value="${d[0]}"${(V.la || 'lido') === d[0] ? ' selected' : ''}>${d[1]} (${d[2]}${d[3] !== d[2] ? ' / ' + d[3] + ' with adrenaline' : ''} mg/kg)</option>`).join('')}</select></label><label class="row toggle"><span>With adrenaline</span><input type="checkbox" data-calc="adr" ${V.adr ? 'checked' : ''}></label>${cIn('conc', 'Strength', '%')}</div><div class="group" id="calc-la" style="margin-top:8px">${R.la}</div>
     <p class="foot">Upper limits, not targets. Reduce in the elderly, frail, pregnant and in heart, liver or kidney disease, and for vascular sites. North American sources allow more plain lidocaine (4.5–5 mg/kg). Doses add up when you mix drugs.</p></div>`;
   h += `<div class="sec"><h2 class="sh">Paediatric numbers</h2><div class="group" id="calc-paed">${R.paed}</div></div>`;
+  if (state.settings.doseOn !== false) h += `<div class="sec"><h2 class="sh">Drug doses by weight</h2><div class="group" id="calc-dose">${R.dose}</div><p class="foot">Ranges and upper limits from the labels and guidelines below, not targets. Titrate to effect, reduce in the elderly and unstable, and check your department's chart and the ampoule in your hand. Tap a drug for notes and its source.</p></div>`;
   h += `<div class="sec"><h2 class="sh">Sources</h2><div class="card calc-src"><ol class="note-refs">
     <li><a href="https://doi.org/10.1093/bja/aeq312" target="_blank" rel="noopener">Ingrande J, Lemmens HJM. Dose adjustment of anaesthetics in the morbidly obese. Br J Anaesth 2010</a> (IBW, LBW, ABW)</li>
     <li><a href="https://doi.org/10.1016/j.bjae.2019.10.002" target="_blank" rel="noopener">Taylor A, McLeod G. Basic pharmacology of local anaesthetics. BJA Educ 2020</a> (bupivacaine, levobupivacaine, ropivacaine)</li>
     <li><a href="https://doi.org/10.1503/cmaj.220835" target="_blank" rel="noopener">Local anesthetic systemic toxicity. CMAJ 2022</a> (prilocaine, lidocaine with adrenaline, lipid emulsion)</li>
     <li><a href="https://gme.medicine.uiowa.edu/iowaprotocols/maximum-allowable-blood-loss" target="_blank" rel="noopener">Iowa Head and Neck Protocols: Maximum allowable blood loss</a> (blood volume by age)</li>
-    <li>Paediatric tube size, tube length and 4-2-1 fluids: standard APLS formulae.</li></ol></div></div>`;
+    <li>Paediatric tube size, tube length and 4-2-1 fluids: standard APLS formulae.</li>
+    ${DOSE_SRC.map(x => `<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])}</a> (drug doses)</li>`).join('')}</ol></div></div>`;
   return h; }
 function calcRefresh() { try { localStorage.setItem('studydesk.calc', JSON.stringify(calcV)); } catch (_) {} const R = calcResults();
-  [['calc-body', 'body'], ['calc-mabl', 'mabl'], ['calc-la', 'la'], ['calc-paed', 'paed']].forEach(([id, k]) => { const el = $(id); if (el) el.innerHTML = R[k]; }); }
+  [['calc-body', 'body'], ['calc-mabl', 'mabl'], ['calc-la', 'la'], ['calc-paed', 'paed'], ['calc-dose', 'dose']].forEach(([id, k]) => { const el = $(id); if (el) el.innerHTML = R[k]; }); }
 function calcRun() {}
 document.addEventListener('input', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); });
 document.addEventListener('change', e => { const k = e.target.dataset && e.target.dataset.calc; if (!k) return; calcV[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; calcRefresh(); if (k === 'la' || k === 'ebvg' || (k === 'age' && !calcV.ebvg)) render(); });
@@ -4712,6 +4777,16 @@ function fudgeSheet() { const g = fudgeHas();
     <div class="card fudge-hero">${NAP_CAT}<span class="c-s">He collects a small thing each time you reach a milestone.</span></div>
     <div class="group">${FUDGE_ITEMS.map(it => { let v = 0; try { v = it.n(); } catch (_) {} const on = !!g[it.id];
       return `<div class="row fudge-row${on ? '' : ' off'}"><span class="fudge-e" aria-hidden="true">${on ? it.e : '❔'}</span><span class="cat-tx"><b>${on ? esc(it.name[0].toUpperCase() + it.name.slice(1)) : 'Something at ' + esc(it.at)}</b><span>${on ? 'Found ' + catDate(g[it.id]) + ' · ' + esc(it.at) : Math.min(v, it.need) + ' of ' + it.need}</span></span></div>`; }).join('')}</div></div>`); }
+/* v6.01 Anaesthesia history on this day: data/history.json (verified dates only). Today card on the day; full timeline in a sheet from Academics. */
+const HIST = () => ((D.history || {}).items || []);
+function histToday() { if (state.settings.histOn === false) return ''; const md = today().slice(5); const H = HIST().filter(x => x.md === md); if (!H.length) return '';
+  const x = H[0]; const yrs = +today().slice(0, 4) - x.year;
+  return `<div class="sec"><button type="button" class="card calc-link" data-act="hist-open"><span class="cat-due-i" aria-hidden="true">📜</span><span class="cat-tx"><b>On this day, ${yrs} years ago</b><span>${esc(x.t)} (${x.year})</span></span>${CHEV}</button></div>`; }
+function histNext() { const md = today().slice(5); const H = HIST().slice().sort((a, b) => a.md.localeCompare(b.md)); return H.find(x => x.md >= md) || H[0]; }
+function histSheet() { const md = today().slice(5); const H = HIST().slice().sort((a, b) => a.md.localeCompare(b.md)); const nx = histNext();
+  const dt = m => { const d = new Date('2000-' + m + 'T12:00'); return d.getDate() + ' ' + d.toLocaleString('en-GB', { month: 'short' }); };
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Anaesthesia history</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <div class="group">${H.map(x => `<div class="row hist-r${x.md === md ? ' now' : x === nx ? ' next' : ''}"><span class="hist-d">${dt(x.md)}<small>${x.year}</small></span><span class="cat-tx"><b>${esc(x.t)}${x.md === md ? ' · today' : x === nx ? ' · next' : ''}</b><span>${esc(x.x)}</span><a href="${esc(x.src)}" target="_blank" rel="noopener" class="hist-s">Source</a></span></div>`).join('')}</div></div>`); }
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
 const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
@@ -5209,6 +5284,7 @@ document.addEventListener('click', e => {
     case 'th-export': thExport(); break;
     case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
     case 'fudge-open': fudgeSheet(); break;
+    case 'hist-open': histSheet(); break;
     case 'th-refs': { const R = D['thesis-rol']; const L = ((R && R.items) || []).filter(a => a.cite); if (!L.length) break;
       const txt = L.map((a, i) => (i + 1) + '. ' + a.cite).join('\n');
       (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied ' + plural(L.length, 'reference') + ' ✓ Paste into Word'), () => toast("Couldn't copy here. Try again from the Review tab"));
