@@ -2111,6 +2111,13 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .hist-r.now{background:color-mix(in srgb,var(--amber) 14%,transparent)}
 .hist-s{font-size:12px;margin-top:2px}
 .hist-link{display:block;margin:10px 2px 0;font-size:14px}
+.vs-ta-w{display:block!important}.vs-ta{width:100%;min-height:96px;border:0;background:transparent;color:var(--fg);font:inherit;font-size:16px;resize:vertical;outline:none}
+.pres-card{display:flex;flex-direction:column;gap:10px}.pres-top{display:flex;align-items:center;gap:12px}
+.pres-st{display:flex;align-items:center;gap:10px}
+.pf-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 2px 8px}.pf-chip{font-size:13px;padding:4px 10px;border-radius:999px;border:1px solid var(--sep);color:var(--fg)}
+.cat-badge.soon{color:var(--fg);background:color-mix(in srgb,var(--st-soon) 26%,var(--surface))}
+.pen-q{margin:6px 0;padding:10px 14px;border-left:3px solid var(--amber);font-style:italic;font-size:15px;line-height:1.45;color:var(--fg)}
+.btn.on{border-color:var(--st-done);background:color-mix(in srgb,var(--st-done) 18%,var(--surface))}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2152,7 +2159,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.01 · Drug doses by weight, anaesthesia history';
+const APP_VERSION = '6.02 · Viva stories, presenting soon, portfolio, pen prompt';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history'];
 
@@ -2209,7 +2216,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {}, vstory: {}, presenting: {}, presPrep: {}, portfolio: {}, penDone: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2218,7 +2225,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, thesisSteps: s.thesisSteps || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, vstory: s.vstory || {}, presenting: s.presenting || {}, presPrep: s.presPrep || {}, portfolio: s.portfolio || {}, penDone: s.penDone || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   /* v5.97: Fudge's care dates as she told Claude on 26 Nov 2026 (vaccine a year ago, deworming 6 months ago; grooming counted from that day). Seeded once. */
@@ -2826,6 +2833,9 @@ function pageToday() {
   add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
   add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }));
   add(siren, 64);
+  add(presCard(), by({ morning: 92, evening: 88, all: 80 }));
+  add(pfTodayCard(), 64);
+  add(penPrompt(), by({ evening: 62, all: 48 }));
   add(histToday(), by({ morning: 58, all: 50 }));
   add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
@@ -2888,6 +2898,8 @@ function pageStudy() {
   let h = head('Academics', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
   h += timerCard();
   h += examMapSection();
+  h += vsSection();
+  h += pfSection();
   h += booksSection();
   h += bitesSection();
   h += flashSection();
@@ -3813,6 +3825,10 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('fudgec', '🐾 Fudge\'s collection', ['Fudge at the foot of the side menu collects small things at milestones: 50 and 100 bite-size notes, 30 and 60 days off Instagram, 50 and all 70 thesis patients. Tap him to see what he has and what is next.']),
     it('dose', '💉 Drug doses by weight', ['In OT calculators, under Paediatric numbers. It uses the weight, height and age you enter at the top: children\'s doses under 12 years (or under 40 kg if no age), and lean or ideal weight for BMI 30 and over where the source says so. Each drug shows the dose, the volume for the stated ampoule, and (tap it) its notes and source. Ranges and limits, not targets.']),
     it('hist', '📜 Anaesthesia history', ['On a day when something happened in anaesthesia history, Today shows a small card. Academics › Exam map has the whole timeline, each date with its source.']),
+    it('vs', '⭐ Viva stories', ['Open a case in My cases and tap Save as a viva story. Add one line on what happened and what you learned. Academics keeps the list for "tell me about a case you managed".']),
+    it('pres', '🎤 Presenting soon', ['Open a session in the calendar and tap I\'m presenting this (or it is picked up when your name is in the presenters list). From 7 days before, Today shows a countdown with four prep steps and the session\'s read-before articles.']),
+    it('pf', '🎓 Portfolio', ['Academics › Portfolio holds certificates (with expiry), conferences, posters, papers, presentations, CME and awards. Today reminds you 30 days before a certificate expires.']),
+    it('penp', '🖋️ Pen & ink prompt', ['On Saturdays and Sundays, Today shows one exam pearl from your bite-size notes to copy by hand, with one of your pens once the shelf has them. Tap Written to hide it until next weekend.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3837,6 +3853,10 @@ function pageBackup() {
     <label class="row toggle"><span>Fudge's collection (small things at milestones, side menu)</span><input type="checkbox" data-setting="fudgeOn" ${S.fudgeOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Drug doses by weight (OT calculators)</span><input type="checkbox" data-setting="doseOn" ${S.doseOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Anaesthesia history on this day</span><input type="checkbox" data-setting="histOn" ${S.histOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Viva stories (star cases in My cases)</span><input type="checkbox" data-setting="vsOn" ${S.vsOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Presenting soon (7-day countdown and prep list)</span><input type="checkbox" data-setting="presOn" ${S.presOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Academic portfolio and expiry reminders</span><input type="checkbox" data-setting="pfOn" ${S.pfOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Pen &amp; ink prompt on weekends</span><input type="checkbox" data-setting="penPromptOn" ${S.penPromptOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -4787,6 +4807,53 @@ function histSheet() { const md = today().slice(5); const H = HIST().slice().sor
   const dt = m => { const d = new Date('2000-' + m + 'T12:00'); return d.getDate() + ' ' + d.toLocaleString('en-GB', { month: 'short' }); };
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Anaesthesia history</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <div class="group">${H.map(x => `<div class="row hist-r${x.md === md ? ' now' : x === nx ? ' next' : ''}"><span class="hist-d">${dt(x.md)}<small>${x.year}</small></span><span class="cat-tx"><b>${esc(x.t)}${x.md === md ? ' · today' : x === nx ? ' · next' : ''}</b><span>${esc(x.x)}</span><a href="${esc(x.src)}" target="_blank" rel="noopener" class="hist-s">Source</a></span></div>`).join('')}</div></div>`); }
+/* ---------- v6.02 Viva stories: star a logged case + one line on what she learned (state.vstory, keyed by myCase id) ---------- */
+const VS = () => Object.entries(state.vstory || {}).map(([id, v]) => ({ id, ...v, c: (state.myCases || {})[id] })).filter(x => x.c).sort((a, b) => b.c.date.localeCompare(a.c.date));
+function vsSheet(id) { const c = (state.myCases || {})[id]; if (!c) return; const v = (state.vstory || {})[id] || {};
+  openSheet(`<form data-form="vstory" data-id="${esc(id)}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>⭐ Viva story</h2><button type="submit" class="link strong">Save</button></div>
+    <div class="card"><span class="c-lab">${esc(dShort(c.date))} ${c.date.slice(0, 4)}</span><b>${esc(c.procedure)}</b>${c.mgmt || c.diagnosis ? `<span class="c-s">${esc([c.diagnosis, c.mgmt, c.asa ? 'ASA ' + c.asa : ''].filter(Boolean).join(' · '))}</span>` : ''}</div>
+    <h3 class="sh">What happened, what you learned</h3><div class="group"><label class="row vs-ta-w"><textarea class="vs-ta" name="lesson" rows="4" aria-label="What happened, what you learned" placeholder="e.g. Anticipated difficult airway, awake fibreoptic, learned to topicalise properly">${esc(v.lesson || '')}</textarea></label></div>
+    ${v.at ? `<button class="btn ghost danger" type="button" data-act="vs-del" data-id="${esc(id)}">Remove star</button>` : ''}
+    <p class="foot">Just a line. Before your exam this becomes your list for "tell me about a case you managed".</p></form>`); }
+function vsSection() { if (state.settings.vsOn === false) return ''; const L = VS();
+  if (!L.length) return `<div class="sec"><h2 class="sh">⭐ Viva stories</h2><div class="card"><span class="c-s">Open any case in My cases and tap ⭐ Viva story to keep it for your exam.</span></div></div>`;
+  return `<div class="sec"><h2 class="sh"><span>⭐ Viva stories</span><span>${L.length}</span></h2><div class="group">${moreCut('vs', L, 3).map(x => `<button type="button" class="row vs-r" data-act="vs-open" data-id="${esc(x.id)}"><span class="cat-tx"><b>${esc(x.c.procedure)}</b><span>${esc(x.lesson || 'Add what you learned')}</span></span><span class="c-m">${esc(dShort(x.c.date))}</span></button>`).join('')}</div>${moreBtn('vs', L.length, 3, 'story', 'btn ghost wide')}</div>`; }
+/* ---------- v6.02 Presenting soon: a session she presents (her tap, or her name in the presenters list) gets a 7-day countdown and a prep checklist ---------- */
+const presKey = x => x.date + '|' + x.session;
+const isPres = x => !!(state.presenting || {})[presKey(x)] || /apoorva/i.test(presenters(x.date) || '');
+const PRES_STEPS = [['topic', 'Topic and outline'], ['read', 'Read the key articles'], ['slides', 'Slides made'], ['rehearse', 'Run through it once']];
+function presCard() { if (state.settings.presOn === false) return ''; const t = today(), lim = addDays(t, 7);
+  const x = SCHED().filter(s => s.date >= t && s.date <= lim && isPres(s)).sort((a, b) => a.date.localeCompare(b.date))[0]; if (!x) return '';
+  const k = presKey(x), P = (state.presPrep || {})[k] || {}; const n = Math.round((new Date(x.date + 'T12:00') - new Date(t + 'T12:00')) / 864e5); const done = PRES_STEPS.filter(s => P[s[0]]).length;
+  return `<div class="sec"><div class="card pres-card"><div class="pres-top">${ring(done, PRES_STEPS.length, 46, 'pres')}<span class="cat-tx"><b>🎤 You're presenting ${n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'}</b><span>${esc(x.session)}${x.topic ? ' · ' + esc(x.topic) : ''}</span></span></div>
+    <div class="group">${PRES_STEPS.map(([id, l]) => `<div class="row pres-st"><button class="check${P[id] ? ' on' : ''}" type="button" data-act="pres-step" data-id="${esc(k)}" data-s="${id}" aria-label="${P[id] ? 'Undo' : 'Done'}: ${l}"></button><span>${l}</span></div>`).join('')}</div>
+    ${Array.isArray(x.read) && x.read.length ? `<span class="c-m">Read before: ${x.read.slice(0, 2).map(r => `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>`).join(' · ')}</span>` : ''}</div></div>`; }
+/* ---------- v6.02 Academic portfolio (Academics): certificates with expiry, conferences, posters, papers, presentations, CME, awards ---------- */
+const PF_KINDS = [['cert', '🪪', 'Certificate'], ['conf', '🏛️', 'Conference'], ['poster', '🖼️', 'Poster'], ['paper', '📄', 'Paper'], ['pres', '🎤', 'Presentation'], ['cme', '📚', 'CME'], ['award', '🏆', 'Award']];
+const PF = () => Object.values(state.portfolio || {}).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+const pfDays = x => x.expires ? Math.round((new Date(x.expires + 'T12:00') - new Date(today() + 'T12:00')) / 864e5) : null;
+function pfSection() { if (state.settings.pfOn === false) return ''; const L = PF(); const kc = PF_KINDS.map(k => [k, L.filter(x => x.kind === k[0]).length]).filter(([, n]) => n);
+  return `<div class="sec"><h2 class="sh"><span>🎓 Portfolio</span><button type="button" class="link" data-act="pf-open">Add</button></h2>
+    ${L.length ? `<div class="pf-chips">${kc.map(([k, n]) => `<span class="pf-chip">${k[1]} ${n} ${esc(k[2].toLowerCase())}${n > 1 ? 's' : ''}</span>`).join('')}</div>
+    <div class="group">${moreCut('pf', L, 3).map(x => { const k = PF_KINDS.find(z => z[0] === x.kind) || PF_KINDS[0]; const d = pfDays(x);
+      return `<button type="button" class="row" data-act="pf-open" data-id="${esc(x.id)}"><span class="cat-tx"><b>${k[1]} ${esc(x.title)}</b><span>${esc([x.date ? dShort(x.date) + ' ' + x.date.slice(0, 4) : '', x.note].filter(Boolean).join(' · '))}</span></span>${d !== null ? `<span class="cat-badge${d <= 60 ? ' soon' : ''}">${d < 0 ? 'expired' : d <= 60 ? 'expires in ' + plural(d, 'day') : 'until ' + dShort(x.expires) + ' ' + x.expires.slice(2, 4)}</span>` : ''}</button>`; }).join('')}</div>${moreBtn('pf', L.length, 3, 'item', 'btn ghost wide')}`
+    : `<div class="card"><span class="c-s">Add BLS, ACLS, conferences, posters, papers and presentations here, so your CV is ready when you need it.</span></div>`}</div>`; }
+function pfSheet(id) { const x = id ? (state.portfolio || {})[id] : null; const v = x || { kind: 'cert', title: '', date: '', expires: '', note: '' };
+  openSheet(`<form data-form="pf" data-id="${esc(id || '')}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>${x ? 'Portfolio item' : 'Add to portfolio'}</h2><button type="submit" class="link strong">Save</button></div>
+    <div class="group"><label class="row field"><span class="f-l">Type</span><select name="kind">${PF_KINDS.map(k => `<option value="${k[0]}"${k[0] === v.kind ? ' selected' : ''}>${k[1]} ${k[2]}</option>`).join('')}</select></label>
+      <label class="row field"><span class="f-l">Title</span><input class="left" name="title" value="${esc(v.title)}" placeholder="e.g. ACLS provider course" required></label>
+      <label class="row field"><span class="f-l">Date</span><input name="date" type="date" value="${esc(v.date)}"></label>
+      <label class="row field"><span class="f-l">Expires</span><input name="expires" type="date" value="${esc(v.expires)}"></label>
+      <label class="row field"><span class="f-l">Note</span><input class="left" name="note" value="${esc(v.note)}" placeholder="Where, role, journal, CME credits"></label></div>
+    <p class="foot">Expiry is optional (BLS, ACLS). Today reminds you 30 days before something expires.</p>
+    ${x ? `<button class="btn ghost danger" type="button" data-act="pf-del" data-id="${esc(id)}">Remove</button>` : ''}</form>`); focusFirst(); }
+function pfTodayCard() { if (state.settings.pfOn === false) return ''; const L = PF().filter(x => { const d = pfDays(x); return d !== null && d <= 30 && d >= -14; }); if (!L.length) return '';
+  return `<div class="sec"><button type="button" class="card cat-due" data-act="pf-open" data-id="${esc(L[0].id)}"><span class="cat-due-i" aria-hidden="true">🪪</span><span class="cat-tx"><b>Renew soon</b>${L.map(x => { const d = pfDays(x); return `<span>${esc(x.title)}: ${d < 0 ? 'expired ' + plural(-d, 'day') + ' ago' : d === 0 ? 'expires today' : 'expires in ' + plural(d, 'day')}</span>`; }).join('')}</span>${CHEV}</button></div>`; }
+/* ---------- v6.02 Pen & ink prompt: on weekends, copy one exam pearl by hand (pearl and pen picked by the week, so they stay the same all weekend) ---------- */
+const wkKey = () => { const d = new Date(); const sat = new Date(d); sat.setDate(d.getDate() - ((d.getDay() + 1) % 7)); return sat.toISOString().slice(0, 10); };
+function penPrompt() { if (state.settings.penPromptOn === false) return ''; const wd = new Date().getDay(); if (wd !== 6 && wd !== 0) return ''; const k = wkKey(); if ((state.penDone || {})[k]) return '';
+  const B = BITES().filter(b => b.pearl); if (!B.length) return ''; const seed = [...k].reduce((a, c) => a + c.charCodeAt(0), 0); const b = B[seed % B.length]; const P = PENS(); const pen = P.length ? P[seed % P.length] : null;
+  return `<div class="sec"><div class="card pen-pr"><span class="c-lab">🖋️ Pen &amp; ink</span><span class="c-s">Copy this by hand${pen ? ` with your <b>${esc(pen.name)}</b>${pen.ink ? ' (' + esc(pen.ink) + ')' : ''}` : ''}:</span><blockquote class="pen-q">${esc(b.pearl)}</blockquote><span class="c-m">From: ${esc(b.title)}</span><div class="btns"><button type="button" class="btn small" data-act="pen-done">Written ✓</button></div></div></div>`; }
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
 const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
@@ -4900,7 +4967,8 @@ function addEventSheet() {
     <p class="foot">Entries you add stay on this phone and are included in your backup.</p></form>`);
   focusFirst();
 }
-function itemSheet(it) {
+let lastItem = null;
+function itemSheet(it, keep) { lastItem = it;
   if (it.kind === 'case') return caseSheet(it.caseN);
   let rows = kv('Date', esc(dLong(it.date)) + `<br><span class="muted" style="font-size:13px">${relDay(it.date)}</span>`);
   if (it.src === 'Department program' && SESSION_TIME()) rows += kv('Time', esc(SESSION_TIME()));
@@ -4911,7 +4979,8 @@ function itemSheet(it) {
   rows += kv('Source', it.evId ? 'Added by you' : esc(it.src || ''));
   const sc = it.src === 'Department program' ? SCHED().find(x => x.date === it.date && x.session === it.title) : null;
   const rd = sc && Array.isArray(sc.read) && sc.read.length && state.settings.readOn !== false ? `<div class="card readc"><div class="c-top"><span class="c-lab">Read before class</span></div>${sc.read.map(r => `<a class="read-i" href="${esc(r.url)}" target="_blank" rel="noopener"><b>${esc(r.title)}</b><small>${esc(r.journal)}${r.year ? ' · ' + esc(String(r.year)) : ''}</small>${r.why ? `<span>${esc(r.why)}</span>` : ''}</a>`).join('')}</div>` : '';
-  openSheet(`${sheetHead('Details')}<div class="sheet-title"><h3>${esc(it.title)}</h3>${it.topic ? `<span class="c-s">${esc(it.topic)}</span>` : ''}</div><div class="group">${rows}</div>${rd}${it.evId ? `<button class="btn danger wide" type="button" data-act="del-event" data-id="${it.evId}">Delete entry</button>` : ''}`);
+  const pr = sc && state.settings.presOn !== false ? `<button type="button" class="btn ghost wide${isPres(sc) ? ' on' : ''}" data-act="pres-tog" data-id="${esc(presKey(sc))}">${isPres(sc) ? '🎤 You\'re presenting this · tap to undo' : '🎤 I\'m presenting this'}</button>` : '';
+  openSheet(`${sheetHead('Details')}<div class="sheet-title"><h3>${esc(it.title)}</h3>${it.topic ? `<span class="c-s">${esc(it.topic)}</span>` : ''}</div><div class="group">${rows}</div>${pr}${rd}${it.evId ? `<button class="btn danger wide" type="button" data-act="del-event" data-id="${it.evId}">Delete entry</button>` : ''}`, keep);
 }
 /* ---------- my cases: log from the OT list, handed to Claude via the private sync repo ---------- */
 const SPEC = { GYN: 'Obstetrics & Gynaecology', OBG: 'Obstetrics & Gynaecology', SUR: 'General Surgery', GEN: 'General Surgery', ENT: 'ENT', ORT: 'Orthopaedics', ORTH: 'Orthopaedics', URO: 'Urology', NEU: 'Neurosurgery', NSU: 'Neurosurgery', CTV: 'Cardiothoracic', CVT: 'Cardiothoracic', PED: 'Paediatric Surgery', PAE: 'Paediatric Surgery', PLA: 'Plastic Surgery', PLS: 'Plastic Surgery', OPH: 'Ophthalmology', EYE: 'Ophthalmology', DEN: 'Dental / OMFS', OMF: 'Dental / OMFS', SGE: 'Surgical Gastroenterology', GAS: 'Surgical Gastroenterology', ONC: 'Surgical Oncology', SON: 'Surgical Oncology', VAS: 'Vascular Surgery' };
@@ -4965,6 +5034,7 @@ function mcSheet(id, otId) {
       <label class="row field"><span class="f-l">Procedure</span><input class="left" name="procedure" value="${esc(c.procedure)}" required></label>
     </div></details>
     <datalist id="mc-loc">${[...SL_LOC, ...SL_REMOTE].map(x => `<option value="${esc(x)}">`).join('')}</datalist>
+    ${c.id && state.settings.vsOn !== false ? `<button class="btn ghost wide" type="button" data-act="vs-open" data-id="${esc(c.id)}">${(state.vstory || {})[c.id] ? '⭐ Edit viva story' : '☆ Save as a viva story'}</button>` : ''}
     ${c.id ? `<button class="btn ghost danger" type="button" data-act="mc-del" data-id="${esc(c.id)}">Remove this case</button>` : ''}
     <p class="foot">Saved on this phone and synced to your iPad. ${syncCfg().token ? 'It is only logged here. Nothing goes to the SLCM portal until you sign in to SLCM in Claude\'s browser and say "sync SLCM" (end of the day or week).' : 'Connect device sync (Backup & settings) so Claude can pick it up for the logbook and SLCM.'} The hospital number and faculty names never go on the website.</p></form>`);
 }
@@ -5285,6 +5355,13 @@ document.addEventListener('click', e => {
     case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
     case 'fudge-open': fudgeSheet(); break;
     case 'hist-open': histSheet(); break;
+    case 'vs-open': vsSheet(id); break;
+    case 'vs-del': { const V = { ...(state.vstory || {}) }; delete V[id]; state.vstory = V; commit('Star removed'); closeSheet(); break; }
+    case 'pres-tog': { const P = { ...(state.presenting || {}) }; if (P[id]) delete P[id]; else P[id] = today(); state.presenting = P; commit(P[id] ? '🎤 Countdown starts 7 days before' : 'Removed'); if (lastItem) itemSheet(lastItem, true); break; }
+    case 'pres-step': { const s0 = b.dataset.s; const P = { ...((state.presPrep || {})[id] || {}) }; P[s0] = P[s0] ? '' : today(); state.presPrep = { ...(state.presPrep || {}), [id]: P }; commit(P[s0] ? '✓' : ''); break; }
+    case 'pf-open': pfSheet(id); break;
+    case 'pf-del': { const P = { ...(state.portfolio || {}) }; delete P[id]; state.portfolio = P; commit('Removed'); closeSheet(); break; }
+    case 'pen-done': state.penDone = { ...(state.penDone || {}), [wkKey()]: today() }; commit('Beautiful ✍️'); break;
     case 'th-refs': { const R = D['thesis-rol']; const L = ((R && R.items) || []).filter(a => a.cite); if (!L.length) break;
       const txt = L.map((a, i) => (i + 1) + '. ' + a.cite).join('\n');
       (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied ' + plural(L.length, 'reference') + ' ✓ Paste into Word'), () => toast("Couldn't copy here. Try again from the Review tab"));
@@ -5406,6 +5483,10 @@ document.addEventListener('submit', e => {
       if (!token) { toast('Paste the access key first'); return; }
       try { localStorage.setItem(SYNC_REPO_KEY, repo); localStorage.setItem(SYNC_TOKEN_KEY, token); } catch (_) { toast("Couldn't store the key on this device"); return; }
       devSync = { status: 'busy' }; render(); deviceSync(true); break; }
+    case 'vstory': { const c = (state.myCases || {})[id]; if (!c) break; const lesson = (fd.get('lesson') || '').trim();
+      state.vstory = { ...(state.vstory || {}), [id]: { lesson, at: ((state.vstory || {})[id] || {}).at || today() } }; commit('⭐ Saved as a viva story'); closeSheet(); break; }
+    case 'pf': { const title = (fd.get('title') || '').trim(); if (!title) { toast('Add a title'); return; } const nid = id || uid();
+      state.portfolio = { ...(state.portfolio || {}), [nid]: { id: nid, kind: fd.get('kind') || 'cert', title, date: fd.get('date') || '', expires: fd.get('expires') || '', note: (fd.get('note') || '').trim() } }; commit(id ? 'Saved' : 'Added to your portfolio 🎓'); closeSheet(); break; }
     case 'mycase': {
       const v = k => (fd.get(k) || '').trim(); if (!v('procedure') || !v('date')) { toast('Add the date and procedure'); return; }
       const mid = id || 'mc-' + uid(); const old = state.myCases[mid] || {};
@@ -5508,7 +5589,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav', 'vstory', 'presenting', 'presPrep', 'portfolio', 'penDone'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
