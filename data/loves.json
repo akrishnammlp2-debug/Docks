@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,23 +64,40 @@
     }
   ],
   "today": {
-    "date": "2026-11-25",
-    "topic": "superheroes",
-    "topicName": "Superheroes (DC & Marvel)",
-    "kind": "fact",
-    "title": "Wonder Woman's creator helped invent the lie detector",
-    "text": "William Moulton Marston, the psychologist who wrote Wonder Woman, finished a Harvard psychology PhD in 1921 on detecting deception through the body. His lab work centred on systolic blood pressure, which rises when people lie, and he is credited with one of the earliest lie detector tests. That science is often cited as the inspiration for her Lasso of Truth. When Wonder Woman debuted in All-Star Comics in 1941, Marston wrote every issue until his death in 1947.",
+    "date": "2026-11-26",
+    "topic": "finance",
+    "topicName": "Personal finance",
+    "kind": "article",
+    "title": "Tulip mania may not have been the crash we think",
+    "text": "The famous tale of Dutch tulip mania in 1637, with sailors jailed for eating a bulb and fortunes lost overnight, mostly traces back to Charles Mackay's 1841 book. Historian Anne Goldgar searched the Dutch records and said she could not find anyone who went bankrupt. Not many people were involved, and the economic fallout was small. When buyers refused to honour their contracts, the courts would not step in, so trust in the market fell apart without a wider collapse. Some of the scary stories may even come from pamphlets written by worried Dutch moralists.",
     "source": {
-      "title": "Wonder Woman's Secret Roots in Psychological Science (APS Observer)",
-      "url": "https://www.psychologicalscience.org/publications/observer/obsonline/wonder-womans-secret-roots-in-psychological-science.html"
+      "title": "Smithsonian Magazine: There Never Was Real Tulip Fever",
+      "url": "https://www.smithsonianmag.com/history/there-never-was-real-tulip-fever-180964915/"
     },
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg",
-      "credit": "Wellcome Collection, CC BY 4.0 (Wikimedia Commons)"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Semper_Augustus_Tulip_17th_century.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Semper_Augustus_Tulip_17th_century.jpg",
+      "credit": "Unknown 17th-century artist, public domain (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-25",
+      "topic": "superheroes",
+      "topicName": "Superheroes (DC & Marvel)",
+      "kind": "fact",
+      "title": "Wonder Woman's creator helped invent the lie detector",
+      "text": "William Moulton Marston, the psychologist who wrote Wonder Woman, finished a Harvard psychology PhD in 1921 on detecting deception through the body. His lab work centred on systolic blood pressure, which rises when people lie, and he is credited with one of the earliest lie detector tests. That science is often cited as the inspiration for her Lasso of Truth. When Wonder Woman debuted in All-Star Comics in 1941, Marston wrote every issue until his death in 1947.",
+      "source": {
+        "title": "Wonder Woman's Secret Roots in Psychological Science (APS Observer)",
+        "url": "https://www.psychologicalscience.org/publications/observer/obsonline/wonder-womans-secret-roots-in-psychological-science.html"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:%22Baumanometer%22;_instrument_for_measuring_blood_pressure._Wellcome_L0011955.jpg",
+        "credit": "Wellcome Collection, CC BY 4.0 (Wikimedia Commons)"
+      }
+    },
     {
       "date": "2026-11-24",
       "topic": "history",
