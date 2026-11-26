@@ -2136,6 +2136,15 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .hero-r,.hero-r *{text-decoration:none!important;color:var(--fg)}.hero-r .cat-tx span,.hero-r .c-m{color:var(--fg-2)}
 .pack-top{display:flex!important;align-items:center;gap:12px}
 .pack-i{display:flex;align-items:center;gap:10px}.pack-t{flex:1}.pack-t.done{text-decoration:line-through;color:var(--fg-2)}.pack-x{font-size:14px;color:var(--fg-2)}
+.wrap-in{padding-bottom:12px}
+.wrap-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 8px}
+.wrap-track::-webkit-scrollbar{display:none}
+.wrap-s{flex:0 0 100%;scroll-snap-align:center;min-height:56vh;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:28px 22px;position:relative;color:#1E1530}
+.wrap-c0{background:linear-gradient(160deg,#F6C9B8,#E7A6C1)}.wrap-c1{background:linear-gradient(160deg,#CFC2F2,#F2B9C8)}.wrap-c2{background:linear-gradient(160deg,#F7D9A8,#F2A99A)}.wrap-c3{background:linear-gradient(160deg,#BFE0D2,#CBC6F0)}.wrap-c4{background:linear-gradient(160deg,#F3C4D9,#F9DDB6)}
+.wrap-e{font-size:44px;line-height:1}.wrap-big{font-size:64px;line-height:1;font-weight:800;letter-spacing:-.02em;color:#1E1530}
+.wrap-t{font-size:20px;font-weight:700;color:#1E1530}.wrap-x{font-size:15px;color:#3A2E4A;max-width:30ch}
+.wrap-n{position:absolute;bottom:12px;font-size:12px;color:#3A2E4A}
+body.wide .wrap-s{flex-basis:60%}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2177,7 +2186,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.04 · Sixers, hero countdown, packing lists, Siri shortcut';
+const APP_VERSION = '6.05 · Inemuri Wrapped';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2854,6 +2863,7 @@ function pageToday() {
   add(presCard(), by({ morning: 92, evening: 88, all: 80 }));
   add(pfTodayCard(), 64);
   add(penPrompt(), by({ evening: 62, all: 48 }));
+  add(wrapToday(), 95);
   { const g = sixersNext()[0]; const hh = g ? (new Date(g.start).getTime() - Date.now()) / 3600e3 : 99; add(sixersCard(), hh < 6 ? 86 : by({ morning: 70, all: 55 })); }
   add(heroToday(), 52);
   add(histToday(), by({ morning: 58, all: 50 }));
@@ -3874,6 +3884,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('hero', '🦸 Marvel & DC', ['Off duty lists upcoming Marvel and DC films and series with a day count; each date comes from the linked article and past ones drop off. Today shows a card 3 days before a release.']),
     it('pack', '🧳 Packing lists', ['Calendar › Personal has reusable packing lists (Conference, Going home, Night duty bag to start). Tick as you pack, add or remove items, and Untick all for the next trip.']),
     it('siri', '🗣️ Siri and the Action button', ['Make an iPhone Shortcut: Shortcuts app → + → Add Action → Ask for Input (Text) → then Open URLs with: https://akrishnammlp2-debug.github.io/Docks/?add= followed by Provided Input. Name it "Add to Inemuri". Now say "Hey Siri, add to Inemuri" or put it on the Action button. Whatever you say goes through the Brain dump box: "buy cat litter" lands in To buy, "todo …" in To-do, anything else in Brain dump.']),
+    it('wrap', '🎁 Inemuri Wrapped', ['From 24 December to 7 January, Today offers your year as swipeable cards: cases and the procedures you did most, your most common anaesthetic, bite-size notes and revisions, thesis patients, viva stories, to-dos, days off Instagram, saved paintings and Fudge\'s collection. Only real counts from the app. Preview it any time from Settings.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3907,6 +3918,8 @@ function pageBackup() {
     <label class="row toggle"><span>Sixers on Today and in NBA</span><input type="checkbox" data-setting="sixersOn" ${S.sixersOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Marvel &amp; DC countdown</span><input type="checkbox" data-setting="heroOn" ${S.heroOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Packing lists (Calendar › Personal)</span><input type="checkbox" data-setting="packOn" ${S.packOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Inemuri Wrapped (24 Dec – 7 Jan)</span><input type="checkbox" data-setting="wrapOn" ${S.wrapOn !== false ? 'checked' : ''}></label>
+    <button type="button" class="row" data-act="wrap-preview"><span>Preview this year's Wrapped</span>${CHEV}</button>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -4950,6 +4963,38 @@ function packSheet(id, keep) { const x = (state.packs || {})[id]; if (!x) return
     <div class="group">${x.items.map(i => `<div class="row pack-i"><button class="check${i.on ? ' on' : ''}" type="button" data-act="pack-tick" data-id="${esc(id)}" data-s="${esc(i.id)}" aria-label="${i.on ? 'Unpack' : 'Packed'}: ${esc(i.t)}"></button><span class="pack-t${i.on ? ' done' : ''}">${esc(i.t)}</span><button type="button" class="link pack-x" data-act="pack-del" data-id="${esc(id)}" data-s="${esc(i.id)}" aria-label="Remove ${esc(i.t)}">✕</button></div>`).join('')}</div>
     <form data-form="pack-add" data-id="${esc(id)}" class="dump-f" autocomplete="off"><input name="text" maxlength="80" placeholder="Add an item" aria-label="Add an item"><button type="submit" class="dump-add" aria-label="Add">+</button></form>
     <div class="btns"><button type="button" class="btn ghost" data-act="pack-reset" data-id="${esc(id)}">Untick all for next trip</button><button type="button" class="btn ghost danger" data-act="pack-rm" data-id="${esc(id)}">Delete list</button></div></div>`, keep); }
+/* ---------- v6.05 Inemuri Wrapped: the year as swipeable cards. On Today from 24 Dec to 7 Jan (for the year just ending); preview any time from Settings. Facts only. ---------- */
+function wrapYear() { const d = new Date(); return d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear(); }
+function wrapStats(y) { const Y = String(y); const inY = v => typeof v === 'string' && v.startsWith(Y);
+  const cs = CASES().filter(c => inY(c.date)).concat(mcNew().filter(c => inY(c.date)));
+  const procs = {}; cs.forEach(c => { const k = (c.procedure || '').replace(/\s*\(.*?\)/g, '').trim(); if (k) procs[k] = (procs[k] || 0) + 1; });
+  const topP = Object.entries(procs).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const plans = {}; cs.forEach(c => { const k = c.plan || c.mgmt || c.type || ''; if (k) plans[k] = (plans[k] || 0) + 1; }); const topPlan = Object.entries(plans).sort((a, b) => b[1] - a[1])[0];
+  const bites = BITES().filter(b => inY(b.created)).length; const revs = Object.values(state.biteRev || {}).reduce((a, r) => a + (inY(r.last) ? (r.n || 1) : 0), 0);
+  const M = examMap().filter(x => x.n).sort((a, b) => b.d / b.n - a.d / a.n || b.n - a.n); const topArea = M[0] ? M[0].name : '';
+  const thesis = Object.values(state.thesisDone || {}).filter(inY).length; const vs = VS().filter(x => inY(x.c.date)).length;
+  const art = Object.values(state.artFav || {}).filter(a => inY(a.saved || a.date)); const todos = (state.todos || []).filter(t => t.done && inY(t.doneAt)).length;
+  const ig = igDays(); const fudge = FUDGE_ITEMS.filter(i => fudgeHas()[i.id]); const pens = PENS().length;
+  return { y, cases: cs.length, topP, topPlan, bites, revs, topArea, thesis, vs, art, todos, ig, fudge, pens }; }
+function wrapSlides(w) { const S = [];
+  S.push({ e: '🌙', big: String(w.y), t: 'Your year in Inemuri', x: 'A little look back at what you did. Swipe →' });
+  if (w.cases) S.push({ e: '📋', big: w.cases, t: plural(w.cases, 'case').replace(/^\d+ /, '') + ' logged', x: w.topP.length ? 'Most often: ' + w.topP.map(([p, n]) => p + ' (' + n + ')').join(', ') : '' });
+  if (w.topPlan) S.push({ e: '💉', big: w.topPlan[1], t: 'times ' + w.topPlan[0], x: 'Your most common anaesthetic of the year.' });
+  if (w.bites || w.revs) S.push({ e: '📚', big: w.bites, t: 'bite-size notes written', x: w.revs ? plural(w.revs, 'revision') + ' done' + (w.topArea ? ' · strongest area: ' + w.topArea : '') : '' });
+  if (w.thesis) S.push({ e: '🧪', big: w.thesis, t: 'thesis patients done in OT', x: 'Every one of them counts towards 70.' });
+  if (w.vs) S.push({ e: '⭐', big: w.vs, t: plural(w.vs, 'viva story').replace(/^\d+ /, ''), x: 'Ready for "tell me about a case".' });
+  if (w.todos) S.push({ e: '✅', big: w.todos, t: 'to-dos finished', x: '' });
+  if (w.ig > 0) S.push({ e: '🌱', big: w.ig, t: 'days off Instagram', x: 'And counting.' });
+  if (w.art.length) S.push({ e: '🖼️', big: w.art.length, t: plural(w.art.length, 'painting').replace(/^\d+ /, '') + ' saved', x: w.art.slice(0, 2).map(a => a.title + ', ' + a.artist).join(' · ') });
+  if (w.fudge.length) S.push({ e: w.fudge.map(i => i.e).join(''), big: w.fudge.length, t: 'things in Fudge\'s collection', x: 'He is very proud of you.' });
+  S.push({ e: '💛', big: '', t: 'See you in ' + (w.y + 1), x: 'Rest well, Apoorva.' });
+  return S; }
+function wrapSheet(y) { const w = wrapStats(y || wrapYear()); const S = wrapSlides(w);
+  openSheet(`<div class="sheet-in wrap-in"><div class="sheet-head"><span></span><h2>Inemuri Wrapped ${w.y}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <div class="wrap-track" id="wrap-track">${S.map((x, i) => `<section class="wrap-s wrap-c${i % 5}"><span class="wrap-e" aria-hidden="true">${x.e}</span>${x.big !== '' ? `<b class="wrap-big"${typeof x.big === 'number' ? ` data-count="${x.big}"` : ''}>${esc(String(x.big))}</b>` : ''}<span class="wrap-t">${esc(x.t)}</span>${x.x ? `<span class="wrap-x">${esc(x.x)}</span>` : ''}<span class="wrap-n">${i + 1} / ${S.length}</span></section>`).join('')}</div></div>`);
+  setTimeout(() => { const tr = $('wrap-track'); if (tr) countUp(tr); }, 200); }
+function wrapToday() { if (state.settings.wrapOn === false) return ''; const d = new Date(), m = d.getMonth(), dd = d.getDate(); if (!((m === 11 && dd >= 24) || (m === 0 && dd <= 7))) return ''; const y = wrapYear(); if ((state.settings.wrapSeen || '') === String(y)) return '';
+  return `<div class="sec"><button type="button" class="card wrap-card" data-act="wrap-open"><span class="cat-due-i" aria-hidden="true">🎁</span><span class="cat-tx"><b>Your ${y} Wrapped is ready</b><span>Cases, notes, thesis, Fudge and more</span></span>${CHEV}</button></div>`; }
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
 const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
@@ -5451,6 +5496,8 @@ document.addEventListener('click', e => {
     case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
     case 'fudge-open': fudgeSheet(); break;
     case 'hist-open': histSheet(); break;
+    case 'wrap-open': state.settings.wrapSeen = String(wrapYear()); save(); wrapSheet(); break;
+    case 'wrap-preview': wrapSheet(new Date().getFullYear()); break;
     case 'pack-open': packSheet(id); break;
     case 'pack-new': { const nid = 'p' + uid(); state.packs = { ...(state.packs || {}), [nid]: { id: nid, name: 'New list', items: [] } }; commit(); packRename(nid); break; }
     case 'pack-tick': { const x = (state.packs || {})[id]; if (!x) break; x.items = x.items.map(i => i.id === b.dataset.s ? { ...i, on: i.on ? 0 : 1 } : i); state.packs = { ...state.packs, [id]: { ...x } }; commit(); packSheet(id, true); break; }
