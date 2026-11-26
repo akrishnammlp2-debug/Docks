@@ -2097,7 +2097,7 @@ body{background:var(--bg)!important}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.94 · Habit plant is now a sunflower';
+const APP_VERSION = '5.95 · Amazon orders in My orders';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol'];
 
@@ -3973,12 +3973,12 @@ function shopBody(key) { const S = SHOP().stores || {}; const keys = Object.keys
   const units = O.reduce((n, o) => n + o.items.reduce((m, i) => m + (i.q || 1), 0), 0); const spent = O.reduce((n, o) => n + (+o.total || 0), 0);
   const cnt = {}; O.forEach(o => o.items.forEach(i => { if (!i.p) return; const nm = i.n.replace(/\s*\(free\)/i, ''); cnt[nm] = (cnt[nm] || 0) + 1; }));
   const again = Object.entries(cnt).filter(([, c]) => c > 1).sort((a, b) => b[1] - a[1]);
-  if (!keys.length) return `<div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🛍️</span><span class="c-t">No orders yet</span><span class="c-s">Your Nykaa orders appear here once they're synced to this device.</span></div>`;
+  if (!keys.length) return `<div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">🛍️</span><span class="c-t">No orders yet</span><span class="c-s">Your Nykaa and Amazon orders appear here once they're synced to this device.</span></div>`;
   return `<div class="shop-tabs">${keys.map(x => `<button type="button" data-act="shop-open" data-id="${esc(x)}"${x === k ? ' aria-pressed="true" class="on"' : ''}>${esc(S[x].name)}</button>`).join('')}</div>
     <div class="shop-stats"><div><b>${O.length}</b><span>orders</span></div><div><b>${units}</b><span>items</span></div><div><b>${inr(spent)}</b><span>spent</span></div></div>
     ${again.length ? `<div class="card shop-again"><span class="cat-hh">Bought more than once</span>${again.map(([n, c]) => `<span>${esc(n)} <b>×${c}</b></span>`).join('')}</div>` : ''}
     ${O.map((o, j) => `<details class="card shop-order"${j === 0 ? ' open' : ''}><summary><span class="cat-tx"><b>${catDate(o.date)}</b><span>${plural(o.items.reduce((m, i) => m + (i.q || 1), 0), 'item')} · ${inr(o.total)}${o.delivered ? ' · delivered ' + catDate(o.delivered) : ''}</span></span><span class="lv-chev" aria-hidden="true">›</span></summary>
-      <div class="shop-items">${o.items.map(i => `<div class="shop-it"><span class="shop-n">${esc(i.n)}${i.s ? ` <em>${esc(i.s)}</em>` : ''}</span><span class="shop-p">${i.q > 1 ? i.q + ' × ' : ''}${i.p ? inr(i.p) : 'Free'}</span></div>`).join('')}</div>
+      <div class="shop-items">${o.items.map(i => `<div class="shop-it"><span class="shop-n">${esc(i.n)}${i.s ? ` <em>${esc(i.s)}</em>` : ''}</span><span class="shop-p">${i.q > 1 ? i.q + ' × ' : ''}${i.p ? inr(i.p) : (i.p === 0 ? 'Free' : '')}</span></div>`).join('')}</div>
       <span class="shop-no">Order ${esc(o.no)}</span></details>`).join('')}`; }
 let shopKey = null;
 function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0, 4), 'Personal') + `<div class="sec shop-page">${shopBody(shopKey)}</div>`; }
