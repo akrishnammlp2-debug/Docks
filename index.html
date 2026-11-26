@@ -2076,6 +2076,17 @@ body{background:var(--bg)!important}
 .pc-b{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:14px;border:1px solid var(--sep);background:var(--surface);color:var(--fg);font:inherit;font-size:13px}
 .pc-b span{font-size:20px;line-height:1.2}
 .pc-b.on{background:color-mix(in srgb,var(--st-done) 22%,var(--surface));border-color:var(--st-done)}
+.art-fav{display:inline-flex;align-items:center;gap:6px;margin:8px 0 4px;padding:7px 14px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:14px}
+.art-fav.on{background:color-mix(in srgb,var(--st-over) 18%,var(--surface));border-color:var(--st-over);font-weight:600}
+#sheet .art-fav{color:#1C2621!important;border-color:rgba(28,38,33,.28)}#sheet .art-fav.on{background:#F6D5DA;border-color:#C9577A}
+.gal-pat{margin:0 2px 8px;font-size:14px;color:var(--fg-2)}
+.gal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
+.gal-it{display:flex;flex-direction:column;gap:3px;text-align:left;background:none;border:0;padding:0;color:var(--fg);font:inherit;cursor:pointer}
+.gal-im{display:grid;place-items:center;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--sep);font-size:28px}
+.gal-im img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-t{font-size:13px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gal-a{font-size:12px;color:var(--fg-2)}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2117,7 +2128,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.98 · Post-call only when you turn it on';
+const APP_VERSION = '5.99 · Today\'s case read, painting gallery';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens'];
 
@@ -2174,7 +2185,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2183,7 +2194,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, thesisSteps: s.thesisSteps || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   /* v5.97: Fudge's care dates as she told Claude on 26 Nov 2026 (vaccine a year ago, deworming 6 months ago; grooming counted from that day). Seeded once. */
@@ -2791,6 +2802,7 @@ function pageToday() {
   add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
   add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }));
   add(siren, 64);
+  add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
   add(catTodayCard(), 56);
   add(thesisTodayCard(), by({ morning: 86, day: 80, evening: 78, night: 60, all: 70 }));
@@ -3757,6 +3769,8 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('week', '🗓️ Sunday round-up', ['From 5 PM on Sunday (and through Monday), Today shows what you got done in the last 7 days: notes added and revised, cases logged, thesis patients done in OT, topics studied, to-dos done, academic sessions, articles added, days off Instagram, and anything Fudge needs. Facts only. Tap Got it to hide it until next Sunday.']),
     it('pc', '🌙 Post-call mode', ['After a call night, tap the 🌙 Post-call chip under the Today banner (it shows between 5 AM and 6 PM). Today then shows only rest: sleep, eat, hydrate, and one tiny optional thing. Everything else waits under More today.', 'It ends by itself at midnight, or tap Turn off. The automatic quiet morning after a rostered duty is off; you can turn it back on with the switch above.']),
     it('fudge', '🐈 Fudge corner', ['Food reorders come from the scanned Amazon orders. Care reminders: deworming every 3 months, a yearly vet check (the vet decides which vaccines are due), and grooming every week or every 2 weeks (your choice).', 'Tap Done today on any of them and its countdown starts again. Today shows Fudge only when something is due within 3 days.']),
+    it('cread', '📖 Today\'s case read', ['From 4 PM, if you logged a case today and Case prep has notes for that kind of operation, Today shows one card: tap it for the anaesthetic points, your bite-size notes and a read. Opening it hides the card for the day. Cases with no Case prep yet get no card.']),
+    it('gal', '♥ My gallery', ['Tap ♡ Save to my gallery on any painting of the day. Saved paintings stay in Off duty for good, even after the 15-day tidy. Once you have 3 or more, the gallery shows what you keep coming back to (movement and artist).']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3776,6 +3790,8 @@ function pageBackup() {
     <label class="row toggle"><span>Quiet morning on Today after a duty (from your roster)</span><input type="checkbox" data-setting="quietOn" ${S.quietOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Post-call moon on Today (tap it after a call night; rest-only Today until midnight)</span><input type="checkbox" data-setting="pcOn" ${S.pcOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="quiet-on"><span>Post-call mode now (until midnight)</span>${CHEV}</button>
+    <label class="row toggle"><span>Today's case read (evening card for a case you logged today)</span><input type="checkbox" data-setting="caseReadOn" ${S.caseReadOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>My gallery (♡ on paintings of the day)</span><input type="checkbox" data-setting="galOn" ${S.galOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -3843,6 +3859,7 @@ function pageOthers() {
   { const tp = pick ? ((L.topics || []).find(t => t.id === pick.topic) || {}) : {}; const em = tp.emoji || '💛';
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(bannerSrc(pick.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
+  h += galShelf();
   h += mediaShelf();
   h += penShelf();
   return h; }
@@ -4063,13 +4080,33 @@ function artBody(a) { if (!a) return '';
   const kv = [['Artist', a.artist + (a.artistLife ? ' (' + a.artistLife + ')' : '')], ['Year', a.year], ['Medium', a.medium], ['Size', a.size], ['Movement', a.movement], ['Where', a.where]].filter(x => x[1]);
   return `<div class="art-wrap">${a.image ? `<a class="art-img" href="${esc(a.image.full || a.image.url)}" target="_blank" rel="noopener"><img src="${esc(a.image.url)}" alt="${esc(a.title + ' by ' + a.artist)}" decoding="async" onerror="this.parentNode.outerHTML='<a class=&quot;art-miss&quot; href=&quot;${esc(a.source && a.source.url || '#')}&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>🖼️ The picture could not load here. See it at the museum ↗</a>'"></a><span class="art-cr"${a.image.credit ? '' : ` data-cc="${esc(a.image.page || '')}"`}>${esc(a.image.credit || 'Image: Wikimedia Commons')}</span>` : ''}
     <h3 class="art-t">${esc(a.title)}</h3><span class="art-by">${esc(a.artist)}${a.year ? ' · ' + esc(a.year) : ''}</span>
+    ${a.date && state.settings.galOn !== false ? `<button type="button" class="art-fav${(state.artFav || {})[a.date] ? ' on' : ''}" data-act="art-fav" data-id="${esc(a.date)}" aria-pressed="${!!(state.artFav || {})[a.date]}">${(state.artFav || {})[a.date] ? '♥ In my gallery' : '♡ Save to my gallery'}</button>` : ''}
     <div class="group art-kv">${kv.map(([l, v]) => `<div class="row kv"><span class="r-l">${l}</span><span class="r-v">${esc(v)}</span></div>`).join('')}</div>
     ${(a.sections || []).map(sc => `<div class="art-sec"><h4>${esc(sc.h)}</h4><p>${esc(sc.p)}</p></div>`).join('')}
     ${a.source && a.source.url ? `<a class="lv-src" href="${esc(a.source.url)}" target="_blank" rel="noopener">More at ${esc(a.source.title || 'the museum')} ↗</a>` : ''}</div>`; }
-function artSheet(i) { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean).filter((x, j, arr) => arr.findIndex(y => y.date === x.date) === j); const a = all[i || 0];
+let artCtx = null;
+function reopenArt() { if (!artCtx) return; artCtx.k === 'fav' ? galSheet(artCtx.d, true) : artSheet(artCtx.i, true); }
+function artSheet(i, keep) { artCtx = { k: 'day', i }; const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean).filter((x, j, arr) => arr.findIndex(y => y.date === x.date) === j); const a = all[i || 0];
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>${i ? esc(fmtShort(a.date)) : 'Painting of the day'}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     ${a ? artBody(a) : '<div class="card"><span class="c-s">Your first painting arrives tomorrow morning.</span></div>'}
-    ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.thumb || x.image.url)}" alt="" loading="lazy" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`); }
+    ${all.length > 1 ? `<details class="card lv-more"><summary><span class="lv-mt">Earlier paintings · ${all.length - 1}</span><span class="lv-chev" aria-hidden="true">›</span></summary><div class="group">${all.map((x, j) => j === (i || 0) ? '' : `<button type="button" class="row art-row" data-act="art-past" data-i="${j}"><span class="art-th sm">${x.image ? `<img src="${esc(x.image.thumb || x.image.url)}" alt="" loading="lazy" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="lv-tx"><b>${esc(x.title)}</b><span class="lv-eb">${esc(x.artist)} · ${esc(fmtShort(x.date))}</span></span></button>`).join('')}</div></details>` : ''}</div>`, keep); }
+/* v5.99 My gallery (Off duty): paintings she hearts are copied into state.artFav, so they stay after the 15-day tidy. Patterns come from the
+   movement and artist written on each painting (taken from its museum/Wikimedia source when the painting was added). */
+const GAL_MOV = [['Post-Impressionis', 'Post-Impressionist'], ['Impressionis', 'Impressionist'], ['Symbolis', 'Symbolist'], ['Romantic', 'Romantic'], ['Baroque', 'Baroque'], ['Renaissance', 'Renaissance'], ['ukiyo-e', 'ukiyo-e'], ['Realis', 'Realist'], ['Expressionis', 'Expressionist'], ['Art Nouveau', 'Art Nouveau'], ['Cubis', 'Cubist'], ['Surrealis', 'Surrealist'], ['Pre-Raphaelite', 'Pre-Raphaelite'], ['Rococo', 'Rococo'], ['Mughal', 'Mughal'], ['Bengal School', 'Bengal School'], ['Golden Age', 'Dutch Golden Age']];
+const GAL = () => Object.values(state.artFav || {}).sort((a, b) => (b.saved || b.date || '').localeCompare(a.saved || a.date || ''));
+function galPatterns(G) { if (G.length < 3) return ''; const out = [];
+  const mc = {}; G.forEach(a => { const m = GAL_MOV.find(([k]) => (a.movement || '').toLowerCase().includes(k.toLowerCase())); if (m) mc[m[1]] = (mc[m[1]] || 0) + 1; });
+  Object.entries(mc).filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, 2).forEach(([m, n]) => out.push(`You've saved ${n} ${m} paintings 🎨`));
+  const ac = {}; G.forEach(a => { if (a.artist) ac[a.artist] = (ac[a.artist] || 0) + 1; });
+  Object.entries(ac).filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, 1).forEach(([n, c]) => out.push(`${n.split(' ').slice(-1)[0]} ${c === 2 ? 'twice' : c + ' times'}`));
+  return out.join(' · '); }
+function galShelf() { if (state.settings.galOn === false) return ''; const G = GAL();
+  let h = `<div class="sec"><div class="cf-head"><h2 class="sh">♥ My gallery</h2>${G.length ? `<span class="c-m">${plural(G.length, 'painting')}</span>` : ''}</div>`;
+  if (!G.length) return h + `<div class="card"><span class="c-s">Tap ♡ on a painting of the day to keep it here for good.</span></div></div>`;
+  const pat = galPatterns(G); const n = 4;
+  return h + (pat ? `<p class="gal-pat">${esc(pat)}</p>` : G.length < 3 ? `<p class="gal-pat">Save a few more and you'll see what you're drawn to.</p>` : '') + `<div class="gal-grid">${moreCut('gal', G, n).map(a => `<button type="button" class="gal-it" data-act="gal-open" data-id="${esc(a.date)}" aria-label="${esc(a.title + ' by ' + a.artist)}"><span class="gal-im">${a.image ? `<img src="${esc(a.image.thumb || a.image.url)}" alt="" loading="lazy" onerror="this.replaceWith('🖼️')">` : '🖼️'}</span><span class="gal-t">${esc(a.title)}</span><span class="gal-a">${esc(a.artist)}</span></button>`).join('')}</div>${moreBtn('gal', G.length, n, 'painting', 'btn ghost wide')}</div>`; }
+function galSheet(d, keep) { const a = (state.artFav || {})[d]; if (!a) { closeSheet(); return; } artCtx = { k: 'fav', d };
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>My gallery</h2><button type="button" class="link strong" data-act="close">Done</button></div>${artBody(a)}</div>`, keep); }
 function loveSheet() {
   const L = LOVES(); const T = loveTopics(); const pick = L.today; const hist = (L.history || []).filter(h => !pick || h.date !== pick.date);
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Things I love</h2><button type="button" class="link strong" data-act="close">Done</button></div>
@@ -4232,6 +4269,12 @@ document.addEventListener('input', e => { if (e.target.id !== 'set-q') return; c
 /* ---------- v5.67: Prep for today's cases (data/caseprep.json) ---------- */
 const PREP = () => (D.caseprep && D.caseprep.items) || [];
 const prepRx = new Map(); const prepTest = (m, txt) => { let r = prepRx.get(m); if (!r) { try { r = new RegExp(m, 'i'); } catch (_) { r = /$^/; } prepRx.set(m, r); } return r.test(txt); };
+/* v5.99 Today's case → today's read (Apoorva, 26 Nov 2026): from 4 PM, the most recent case she logged today that matches a Case prep group
+   gets one small card on Today. Opening it marks the day as read (state.crSeen) and the card goes. No match → no card. */
+function caseReadPick() { if (state.settings.caseReadOn === false) return null; const t = today(); if ((state.crSeen || {})[t]) return null;
+  for (const c of MC_LIST().filter(x => x.date === t)) { const g = prepFor(c.procedure)[0]; if (g) return { c, g }; } return null; }
+function caseReadCard() { if (new Date().getHours() < 16) return ''; const x = caseReadPick(); if (!x) return '';
+  return `<div class="sec"><button type="button" class="card calc-link" data-act="cr-open" data-id="${esc(x.g.id)}"><span class="cat-due-i" aria-hidden="true">📖</span><span class="cat-tx"><b>You did ${esc(x.c.procedure.length > 48 ? x.c.procedure.slice(0, 46) + '…' : x.c.procedure)} today</b><span>5-minute read: ${esc(x.g.title)}</span></span>${CHEV}</button></div>`; }
 const prepFor = proc => PREP().filter(c => (c.match || []).some(m => prepTest(m, proc || '')));
 function prepGroups(rows) { const g = new Map(); rows.forEach(r => prepFor(r.procedure).forEach(c => { const x = g.get(c.id) || { c, n: 0, procs: new Set() }; x.n++; x.procs.add(r.procedure); g.set(c.id, x); })); return [...g.values()].sort((a, b) => b.n - a.n); }
 function prepSection(rows) { if (state.settings.prepOn === false) return ''; const G = prepGroups(rows); if (!G.length) return '';
@@ -5084,6 +5127,12 @@ document.addEventListener('click', e => {
     case 'groom-every': { state.settings.groomEvery = +id; commit('Grooming every ' + (+id === 7 ? 'week' : '2 weeks')); catSheet(true); break; }
     case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(true); break; }
     case 'art-open': artSheet(0); break;
+    case 'cr-open': state.crSeen = { ...(state.crSeen || {}), [today()]: 1 }; commit(); prepSheet(id); break;
+    case 'art-fav': { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean); const a = all.find(x => x.date === id) || (state.artFav || {})[id]; if (!a) break;
+      const F = { ...(state.artFav || {}) }; if (F[id]) { delete F[id]; state.artFav = F; commit('Removed from your gallery'); }
+      else { F[id] = { date: a.date, title: a.title, artist: a.artist, artistLife: a.artistLife, year: a.year, medium: a.medium, size: a.size, movement: a.movement, where: a.where, image: a.image, source: a.source, sections: a.sections, saved: today() }; state.artFav = F; commit('♥ Saved to your gallery'); }
+      reopenArt(); break; }
+    case 'gal-open': galSheet(id); break;
     case 'art-past': artSheet(+b.dataset.i); break;
     case 'love-topic': loveHistSheet(id); break;
     case 'love-add': loveAddSheet(); break;
@@ -5327,7 +5376,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
