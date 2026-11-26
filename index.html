@@ -2087,6 +2087,18 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .gal-im img{width:100%;height:100%;object-fit:cover;display:block}
 .gal-t{font-size:13px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .gal-a{font-size:12px;color:var(--fg-2)}
+.th-fin{display:flex;flex-direction:column;gap:10px}
+.th-step{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--sep)}
+.th-step .cat-tx{flex:1}
+.emap-t.em-warm{background:color-mix(in srgb,#E8875F 20%,var(--surface))}
+.emap-t.em-mild{background:color-mix(in srgb,#E8B86A 13%,var(--surface))}
+.emap-t.em-cool{background:color-mix(in srgb,#7FA8C9 14%,var(--surface))}
+.em-coolest{margin:8px 2px 0;font-size:14px;color:var(--fg-2)}
+.fudge-foot{position:relative;background:none;border:0;padding:0;color:inherit;cursor:pointer;display:inline-flex;align-items:flex-end;gap:2px}
+.fudge-items{font-size:13px;line-height:1;letter-spacing:1px;margin-bottom:4px}
+.fudge-hero{display:flex;align-items:center;gap:12px}
+.fudge-row{display:flex;align-items:center;gap:12px}.fudge-row.off .cat-tx span{color:var(--fg-2)}
+.fudge-e{font-size:22px;width:30px;text-align:center}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2128,7 +2140,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '5.99 · Today\'s case read, painting gallery';
+const APP_VERSION = '6.00 · Thesis finish line, warmer exam map, Fudge\'s collection';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens'];
 
@@ -3333,6 +3345,17 @@ function thNumbers() {
 }
 const thToDo = () => THL().filter(r => thRec(r.id) && !thOut(r.id)).length;
 let thFilter = 'all';
+/* v6.00 Thesis finish line: pace from the cases she marked done in the tracker (state.thesisDone dates), this week's writing step
+   (first unticked step of the Review of literature guide), and a Vancouver reference list to copy. Never guesses with too little data. */
+function thPace() { const d = Object.values(state.thesisDone || {}).filter(v => /^\d{4}-\d{2}-\d{2}/.test(v || '')).map(v => v.slice(0, 10)).sort();
+  if (d.length < 3) return null; const span = (new Date(today() + 'T12:00') - new Date(d[0] + 'T12:00')) / 864e5; if (span < 7) return null;
+  return d.length / span * 7; }
+function thFinishCard(N) { const pw = thPace(); const R = D['thesis-rol']; const G = (R && R.guide) || []; const step = G.find(g => !state.thesisSteps[g.id]); const si = step ? G.indexOf(step) + 1 : 0;
+  const eta = pw ? addDays(today(), Math.ceil(N.left / pw * 7)) : '';
+  const etaTx = pw ? `At your pace (about ${pw < 1 ? 'one every ' + Math.round(7 / pw) + ' days' : (Math.round(pw * 10) / 10) + ' a week'}), you'll reach ${N.total} around <b>${fmtShort(eta)} ${eta.slice(0, 4)}</b>.` : 'Not enough cases marked done yet to estimate a finish date. It appears after 3 done cases over at least a week.';
+  return `<div class="card th-fin"><span class="c-lab">🏁 Finish line</span><span class="c-s">${etaTx}</span>
+    ${step ? `<div class="th-step"><button class="check" type="button" data-act="rol-step" data-id="${esc(step.id)}" aria-label="Mark done: ${esc(step.title)}"></button><span class="cat-tx"><b>This week's writing step</b><span>Step ${si} of ${G.length}: ${esc(step.title)}</span></span><button type="button" class="link" data-act="thsub" data-s="rol">Open</button></div>` : G.length ? `<span class="c-m">Every writing step is ticked 🎉</span>` : ''}
+    ${R && (R.items || []).length ? `<button type="button" class="btn ghost wide" data-act="th-refs">📋 Copy reference list (Vancouver, ${(R.items || []).length})</button>` : ''}</div>`; }
 function pageThesis() {
   const all = THL().slice().sort((a, b) => b.date.localeCompare(a.date) || (a.order || 0) - (b.order || 0));
   const N = thNumbers();
@@ -3344,6 +3367,7 @@ function pageThesis() {
   if (N.ok) {
     const fin = N.used >= N.total;
     h += `<div class="card"><div class="prog-row">${ring(N.used, N.total, 72, 'thesis')}<div class="prog-txt"><span class="c-lab">Patients recruited and done</span><span class="c-t">${fin ? 'All ' + N.total + ' done' : N.used + ' of ' + N.total}</span><span class="c-m">${fin ? 'Every number in the sequence is used.' : 'Next number: <b>' + esc(String(N.next)) + '</b> · ' + plural(N.left, 'number') + ' left'}</span></div></div></div>`;
+    if (!fin) h += thFinishCard(N);
   } else h += `<div class="card"><span class="c-lab">Random sequence</span><span class="c-s">The sequence numbers are kept private. Turn on Private sync on this device (Backup & settings) to see them.</span></div>`;
   if (!all.length) return h + thIdCard(N) + `<div class="card"><span class="c-s">No TURP cases yet. Send Claude the urology list in chat and the TURP cases appear here.</span></div>`;
   h += `<div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))">${stat('Recruited', rec.length, `<span class="s-m">${all.filter(r => thRecV(r.id) === 'n').length} not recruited</span>`)}${stat('To mark', todo.length, '<span class="s-m">Done or not done?</span>')}${stat('Done', done.length, '<span class="s-m">In OT, from this list</span>')}${stat('Not done', nod.length, '<span class="s-m">Taken off the list</span>')}</div>`;
@@ -3771,6 +3795,9 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('fudge', '🐈 Fudge corner', ['Food reorders come from the scanned Amazon orders. Care reminders: deworming every 3 months, a yearly vet check (the vet decides which vaccines are due), and grooming every week or every 2 weeks (your choice).', 'Tap Done today on any of them and its countdown starts again. Today shows Fudge only when something is due within 3 days.']),
     it('cread', '📖 Today\'s case read', ['From 4 PM, if you logged a case today and Case prep has notes for that kind of operation, Today shows one card: tap it for the anaesthetic points, your bite-size notes and a read. Opening it hides the card for the day. Cases with no Case prep yet get no card.']),
     it('gal', '♥ My gallery', ['Tap ♡ Save to my gallery on any painting of the day. Saved paintings stay in Off duty for good, even after the 15-day tidy. Once you have 3 or more, the gallery shows what you keep coming back to (movement and artist).']),
+    it('thfin', '🏁 Thesis finish line', ['Under your patient ring: a finish date worked out from the cases you mark done (it waits until there are 3 over at least a week), this week\'s writing step from Review of literature, and Copy reference list, which copies every Review paper as a numbered Vancouver list to paste into Word.']),
+    it('emwarm', '🗺️ Exam map warmth', ['Each area\'s tile is warm if you added, updated or revised something there in the last 2 weeks, mild up to a month, and cool after that. The two coolest areas are named under the map.']),
+    it('fudgec', '🐾 Fudge\'s collection', ['Fudge at the foot of the side menu collects small things at milestones: 50 and 100 bite-size notes, 30 and 60 days off Instagram, 50 and all 70 thesis patients. Tap him to see what he has and what is next.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3792,6 +3819,7 @@ function pageBackup() {
     <button type="button" class="row" data-act="quiet-on"><span>Post-call mode now (until midnight)</span>${CHEV}</button>
     <label class="row toggle"><span>Today's case read (evening card for a case you logged today)</span><input type="checkbox" data-setting="caseReadOn" ${S.caseReadOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>My gallery (♡ on paintings of the day)</span><input type="checkbox" data-setting="galOn" ${S.galOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Fudge's collection (small things at milestones, side menu)</span><input type="checkbox" data-setting="fudgeOn" ${S.fudgeOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -4128,7 +4156,7 @@ function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" aut
 const WIDE_MQ = matchMedia('(min-width:1180px)');
 const isWide = () => state.settings.wideOn !== false && WIDE_MQ.matches;
 try { WIDE_MQ.addEventListener('change', () => render()); } catch (_) {}
-function render() {
+function render() { try { fudgeCheck(); } catch (_) {}
   { const ae = document.activeElement; if (render.lastTab === tab && ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae)) { render.pending = true; return; } render.pending = false; }
   document.body.classList.toggle('sketchy', sketchNow());
   document.body.classList.toggle('wide', isWide());
@@ -4230,7 +4258,7 @@ function renderDrawer() {
     <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
-    <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${NAP_CAT}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
+    <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${fudgeFoot()}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
 }
 function renderBanner() {
   let h = '';
@@ -4574,14 +4602,19 @@ function vivaMark(ok) { if (!viva) return; const id = viva.ids[viva.i]; const r 
 
 /* ---------- v5.67: Exam map — how much of each domain you've touched ---------- */
 const DOMAINS = [['Drugs', /pharm|drug|anaesthetic agent|opioid|relaxant/i], ['Ventilation', /venti|respir|lung|oxygen/i], ['Physiology', /physio/i], ['Airway', /airway|intubat/i], ['Regional', /regional|block|neurax|spinal|epidural|caudal|local anaes/i], ['Obstetric', /obstet|obg|labou?r|pregnan|caesar/i], ['Paediatric', /paed|pediat|neonat|child|infant/i], ['Cardiac', /cardi|heart|valv|coronary/i], ['Neuro', /neuro|brain|cerebr|spine surgery/i], ['ICU', /icu|critical|sepsis|intensive/i], ['Monitoring & equipment', /monitor|equipment|physics|machine/i], ['Preop & scoring', /preop|pre-op|assessment|scor|asa\b/i]];
-function examMap() { const B = BITES(); const out = DOMAINS.map(([name]) => ({ name, n: 0, d: 0, notes: 0, other: 0 }));
-  const add = (name, done, isNote) => { const x = out.find(o => o.name === name); if (!x) return; x.n++; if (done) x.d++; if (isNote) x.notes++; else x.other++; };
-  B.forEach(b => add(b.cat, !!brecOf(b.id), true));
-  state.topics.forEach(t => { const subj = byId(state.subjects || [], t.subjectId); const txt = t.name + ' ' + (subj ? subj.name : ''); const dm = DOMAINS.find(([, rx]) => rx.test(txt)); if (dm) add(dm[0], state.log.some(l => l.topicId === t.id), false); });
-  BOOKS().forEach(bk => bk.chapters.forEach(c => { const txt = (c.part || '') + ' ' + c.title + ' ' + bk.title; const dm = /physiolog/i.test(bk.title) ? DOMAINS.find(([n]) => n === 'Physiology') : DOMAINS.find(([, rx]) => rx.test((c.part || '') + ' ' + c.title)); if (dm) add(dm[0], !!state.bookDone[bk.id + '|' + c.n], false); }));
+function examMap() { const B = BITES(); const out = DOMAINS.map(([name]) => ({ name, n: 0, d: 0, notes: 0, other: 0, last: '' }));
+  const add = (name, done, isNote, when) => { const x = out.find(o => o.name === name); if (!x) return; x.n++; if (done) x.d++; if (isNote) x.notes++; else x.other++; const w = (when || '').slice(0, 10); if (/^\d{4}-/.test(w) && w > x.last) x.last = w; };
+  B.forEach(b => { const r = brecOf(b.id); add(b.cat, !!r, true, [r && r.last, b.updated, b.created].filter(Boolean).sort().pop()); });
+  state.topics.forEach(t => { const subj = byId(state.subjects || [], t.subjectId); const txt = t.name + ' ' + (subj ? subj.name : ''); const dm = DOMAINS.find(([, rx]) => rx.test(txt)); if (dm) { const L = state.log.filter(l => l.topicId === t.id).map(l => l.date).sort(); add(dm[0], L.length > 0, false, L.pop()); } });
+  BOOKS().forEach(bk => bk.chapters.forEach(c => { const txt = (c.part || '') + ' ' + c.title + ' ' + bk.title; const dm = /physiolog/i.test(bk.title) ? DOMAINS.find(([n]) => n === 'Physiology') : DOMAINS.find(([, rx]) => rx.test((c.part || '') + ' ' + c.title)); const v = state.bookDone[bk.id + '|' + c.n]; if (dm) add(dm[0], !!v, false, typeof v === 'string' ? v : ''); }));
   return out; }
+/* v6.00: warmth = how recently she touched an area (≤14 days warm, ≤30 mild, older or never cool) */
+function emCool(M) { const c = M.filter(x => emWarm(x) === 'cool').sort((a, b) => (a.last || '').localeCompare(b.last || '') || a.n - b.n).slice(0, 2);
+  if (!c.length) return `<p class="em-coolest">Every area touched this month 🔥</p>`;
+  return `<p class="em-coolest">Coolest right now: <b>${c.map(x => esc(x.name)).join(', ')}</b>. Maybe one note this week?</p>`; }
+const emWarm = x => { if (!x.last) return 'cool'; const d = (new Date(today() + 'T12:00') - new Date(x.last + 'T12:00')) / 864e5; return d <= 14 ? 'warm' : d <= 30 ? 'mild' : 'cool'; };
 function examMapSection() { if (state.settings.examMapOn === false) return ''; const M = examMap(); const thin = M.filter(x => !x.n);
-  return `<div class="sec"><h2 class="sh"><span>🗺️ Exam map</span><span>${thin.length ? thin.length + ' still empty' : 'every area started'}</span></h2><div class="emap">${M.map(x => `<button type="button" class="emap-t${x.n ? '' : ' thin'}" data-act="emap" data-c="${esc(x.name)}">${x.n ? ring(x.d, x.n, 46, 'em-' + x.name) : `<span class="emap-0" aria-hidden="true">${BCAT_ICON[x.name] || '•'}</span>`}<b>${esc(x.name)}</b><span>${x.n ? x.d + '/' + x.n + ' done' : 'nothing yet'}</span></button>`).join('')}</div></div>`; }
+  return `<div class="sec"><h2 class="sh"><span>🗺️ Exam map</span><span>${thin.length ? thin.length + ' still empty' : 'every area started'}</span></h2><div class="emap">${M.map(x => `<button type="button" class="emap-t${x.n ? '' : ' thin'} em-${emWarm(x)}" data-act="emap" data-c="${esc(x.name)}">${x.n ? ring(x.d, x.n, 46, 'em-' + x.name) : `<span class="emap-0" aria-hidden="true">${BCAT_ICON[x.name] || '•'}</span>`}<b>${esc(x.name)}</b><span>${x.n ? x.d + '/' + x.n + ' done' : 'nothing yet'}</span></button>`).join('')}</div>${emCool(M)}</div>`; }
 function emapSheet(name) { const x = examMap().find(o => o.name === name); if (!x) return;
   const B = BITES().filter(b => b.cat === name);
   openSheet(`<div class="sheet-in">${sheetHead((BCAT_ICON[name] || '') + ' ' + name)}
@@ -4661,6 +4694,24 @@ document.addEventListener('change', e => { const k = e.target.dataset && e.targe
 /* ---------- v5.68 appearance helpers ---------- */
 /* 10: Fudge, Apoorva's cat: cream-peach long-haired Persian, fluffy ruff, tufted ears, round amber eyes (drawn from her photo, 22 Nov 2026) */
 const NAP_CAT = `<svg class="nap-cat" viewBox="0 0 64 40" aria-hidden="true"><path d="M58.5 29.5 Q59.3 30.9 57.6 31.8 Q57.5 33.4 55.2 33.5 Q54.1 35.0 52.0 34.1 Q49.9 35.0 48.8 33.5 Q46.5 33.4 46.4 31.8 Q44.7 30.9 45.5 29.5 Q44.7 28.1 46.4 27.2 Q46.5 25.6 48.8 25.5 Q49.9 24.0 52.0 24.9 Q54.1 24.0 55.2 25.5 Q57.5 25.6 57.6 27.2 Q59.3 28.1 58.5 29.5 Z" fill="#D3A574"/><path d="M50.5 25.5 Q51.6 27.0 49.7 28.3 Q49.9 29.9 47.2 30.9 Q46.7 32.6 43.4 33.1 Q42.2 34.1 38.5 33.5 Q35.7 33.5 32.9 33.5 Q30.0 33.5 27.1 33.5 Q24.3 33.5 21.5 33.5 Q17.8 34.1 16.6 33.1 Q13.3 32.6 12.8 30.9 Q10.1 29.9 10.3 28.3 Q8.4 27.0 9.5 25.5 Q8.4 24.0 10.3 22.7 Q10.1 21.1 12.8 20.1 Q13.3 18.4 16.6 17.9 Q17.8 16.3 21.5 16.4 Q23.5 14.7 27.1 15.6 Q30.0 14.1 32.9 15.6 Q36.5 14.7 38.5 16.4 Q42.2 16.3 43.4 17.9 Q46.7 18.4 47.2 20.1 Q49.9 21.1 49.7 22.7 Q51.6 24.0 50.5 25.5 Z" fill="#E6BE93"/><path d="M20 17.5q10 -4.5 21 .5M27 16q5 -1 9 .4" fill="none" stroke="#D3A574" stroke-width="1.3" stroke-linecap="round" opacity=".8"/><ellipse cx="26" cy="33" rx="4" ry="2.2" fill="#F5E0C6"/><ellipse cx="33" cy="33.2" rx="3.6" ry="2" fill="#F5E0C6"/><path d="M27.6 27.7 Q28.8 29.4 27.0 30.6 Q27.4 32.6 25.1 33.2 Q24.8 35.2 22.3 35.1 Q21.2 37.0 18.8 36.2 Q17.0 37.7 15.2 36.2 Q12.8 37.0 11.7 35.1 Q9.2 35.2 8.9 33.2 Q6.6 32.6 7.0 30.6 Q5.2 29.4 6.4 27.7 Q5.2 26.0 7.0 24.8 Q6.6 22.8 8.9 22.2 Q9.2 20.2 11.7 20.3 Q12.8 18.4 15.2 19.2 Q17.0 17.7 18.8 19.2 Q21.2 18.4 22.3 20.3 Q24.8 20.2 25.1 22.2 Q27.4 22.8 27.0 24.8 Q28.8 26.0 27.6 27.7 Z" fill="#F5E0C6"/><path d="M9.6 20.3L9.4 12.7L15 17.5Z M24.4 20.3L24.6 12.7L19 17.5Z" fill="#E6BE93"/><path d="M10.6 18.9L10.6 14.7L13.6 17.3Z M23.4 18.9L23.4 14.7L20.4 17.3Z" fill="#EDB3A8"/><path d="M10.4 17.0l-1.2-1.4M23.6 17.0l1.2-1.4" stroke="#F5E0C6" stroke-width=".8" stroke-linecap="round"/><path d="M25.6 24.5 Q26.4 26.3 24.9 27.6 Q24.9 29.6 23.1 30.3 Q22.3 32.1 20.3 32.1 Q18.9 33.5 17.0 32.7 Q15.1 33.5 13.7 32.1 Q11.7 32.1 10.9 30.3 Q9.1 29.6 9.1 27.6 Q7.6 26.3 8.4 24.5 Q7.6 22.7 9.1 21.4 Q9.1 19.4 10.9 18.7 Q11.7 16.9 13.7 16.9 Q15.1 15.5 17.0 16.3 Q18.9 15.5 20.3 16.9 Q22.3 16.9 23.1 18.7 Q24.9 19.4 24.9 21.4 Q26.4 22.7 25.6 24.5 Z" fill="#E6BE93"/><ellipse cx="17" cy="28.1" rx="4.6" ry="3.2" fill="#F5E0C6"/><path d="M15.9 26.7h2.2l-1.1 1.2z" fill="#D49C99"/><path d="M17 27.9v.9M17 28.8q-1 .9 -1.9 .2M17 28.8q1 .9 1.9 .2" fill="none" stroke="#7A5638" stroke-width=".55" stroke-linecap="round"/><path d="M13 28.1l-6 -.6M13 29.0l-5.8 .8M21 28.1l6 -.6M21 29.0l5.8 .8" stroke="#FFF8EE" stroke-width=".4" stroke-linecap="round" opacity=".9"/><path d="M12.3 24.2q1.6 1.3 3.2 0M18.5 24.2q1.6 1.3 3.2 0" fill="none" stroke="#7A5638" stroke-width="1.05" stroke-linecap="round"/><text class="z" x="29" y="10">z</text><text class="z z2" x="35" y="5.5">z</text></svg>`;
+/* v6.00 Fudge grows with her (26 Nov 2026): small things he collects at milestones; shown beside the sleeping Fudge at the foot of the side menu. */
+const FUDGE_ITEMS = [{ id: 'book', e: '📖', name: 'a book pillow', at: '50 bite-size notes', n: () => BITES().length, need: 50 },
+  { id: 'plant', e: '🌿', name: 'a little plant', at: '30 days off Instagram', n: () => Math.max(0, igDays()), need: 30 },
+  { id: 'flower', e: '🌸', name: 'a flower', at: '60 days off Instagram', n: () => Math.max(0, igDays()), need: 60 },
+  { id: 'cap', e: '🎓', name: 'a tiny graduation cap', at: '50 thesis patients', n: () => { const N = thNumbers(); return N.ok ? N.used : 0; }, need: 50 },
+  { id: 'star', e: '⭐', name: 'a star', at: 'all 70 thesis patients', n: () => { const N = thNumbers(); return N.ok ? N.used : 0; }, need: 70 },
+  { id: 'yarn', e: '🧶', name: 'a yarn ball', at: '100 bite-size notes', n: () => BITES().length, need: 100 }];
+const fudgeHas = () => (state.settings.fudgeGot || {});
+function fudgeCheck() { if (state.settings.fudgeOn === false) return; const got = { ...fudgeHas() }; let nw = null;
+  FUDGE_ITEMS.forEach(it => { if (!got[it.id]) { let v = 0; try { v = it.n(); } catch (_) {} if (v >= it.need) { got[it.id] = today(); nw = it; } } });
+  if (nw) { state.settings.fudgeGot = got; save(); setTimeout(() => toast(`Fudge found ${nw.name} ${nw.e}`), 900); } }
+function fudgeFoot() { if (state.settings.fudgeOn === false) return NAP_CAT; const g = fudgeHas(); const have = FUDGE_ITEMS.filter(i => g[i.id]);
+  return `<button type="button" class="fudge-foot" data-act="fudge-open" aria-label="Fudge's collection">${NAP_CAT}${have.length ? `<span class="fudge-items" aria-hidden="true">${have.map(i => i.e).join('')}</span>` : ''}</button>`; }
+function fudgeSheet() { const g = fudgeHas();
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Fudge's collection</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <div class="card fudge-hero">${NAP_CAT}<span class="c-s">He collects a small thing each time you reach a milestone.</span></div>
+    <div class="group">${FUDGE_ITEMS.map(it => { let v = 0; try { v = it.n(); } catch (_) {} const on = !!g[it.id];
+      return `<div class="row fudge-row${on ? '' : ' off'}"><span class="fudge-e" aria-hidden="true">${on ? it.e : '❔'}</span><span class="cat-tx"><b>${on ? esc(it.name[0].toUpperCase() + it.name.slice(1)) : 'Something at ' + esc(it.at)}</b><span>${on ? 'Found ' + catDate(g[it.id]) + ' · ' + esc(it.at) : Math.min(v, it.need) + ' of ' + it.need}</span></span></div>`; }).join('')}</div></div>`); }
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
 const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
@@ -5157,6 +5208,11 @@ document.addEventListener('click', e => {
     case 'th-why': thWhySheet(id, b.dataset.k === 'o' ? 'o' : 'r'); break;
     case 'th-export': thExport(); break;
     case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
+    case 'fudge-open': fudgeSheet(); break;
+    case 'th-refs': { const R = D['thesis-rol']; const L = ((R && R.items) || []).filter(a => a.cite); if (!L.length) break;
+      const txt = L.map((a, i) => (i + 1) + '. ' + a.cite).join('\n');
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied ' + plural(L.length, 'reference') + ' ✓ Paste into Word'), () => toast("Couldn't copy here. Try again from the Review tab"));
+      break; }
     case 'rol-step': { const on = !!state.thesisSteps[id]; state.thesisSteps[id] = on ? '' : nowISO(); commit(on ? null : 'Step done ✓'); break; }
     case 'rol-copy': { const a = ((ROL() || {}).items || []).find(x => x.id === id); if (!a) break; const t = a.cite + (a.doi ? ' doi:' + a.doi : '');
       (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Reference copied ✓'), () => toast("Couldn't copy. Open “Vancouver reference” and select it.")); break; }
