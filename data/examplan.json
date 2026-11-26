@@ -1,0 +1,13 @@
+{
+  "rule": "Road to MD (v6.03). Exam 20 Dec 2027; thesis submission 18 Jun 2027 (both from Apoorva, 26 Nov 2026). Phases are Claude's suggested plan; change them when she asks. Round 1 rotates the Exam map areas two weeks each from roundStart.",
+  "exam": "2027-12-20",
+  "milestones": [ { "d": "2027-06-18", "t": "Thesis submission", "e": "📕" }, { "d": "2027-12-20", "t": "MD final exam", "e": "🎓" } ],
+  "roundStart": "2026-12-01",
+  "phases": [
+    { "from": "2026-11-26", "to": "2027-03-31", "t": "Round 1: system by system", "x": "Two weeks per area, plus thesis recruitment to 70." },
+    { "from": "2027-04-01", "to": "2027-06-18", "t": "Thesis writing and submission", "x": "Results, discussion, final draft. Keep one bite-size note a day going." },
+    { "from": "2027-06-19", "to": "2027-09-30", "t": "Round 2: revision + table viva", "x": "Revise every area again; equipment, drugs and X-ray stations." },
+    { "from": "2027-10-01", "to": "2027-11-30", "t": "Mocks and cases", "x": "Mock papers, long and short cases, viva stories." },
+    { "from": "2027-12-01", "to": "2027-12-20", "t": "Final stretch", "x": "Light revision, pearls, sleep. You've got this." }
+  ]
+}
