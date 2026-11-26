@@ -65,3 +65,10 @@ It is built only for her and will never be monetised.
 - **OT calculators** (`pageCalc` in index.html): formulas and limits are sourced on the page. Never change a dose or formula without checking a primary source and re-running the worked examples.
 - **ECG & ABG flashcards** (v5.79): one ECG + one ABG a day on Today and in Academics. ECG cases live in `data/ecg.json` (vignette, drawn strip settings in `leads`, findings, management, pearl, `src`); check every fact against the named source before adding, never remove cases. ABGs are generated from `ABG_SC` in index.html and explained by `abgRead()`; after changing either, run `node tools/flash_test.mjs`.
 - **Academic schedule** (`data/schedule.json`): whenever sessions are added, every session that has a topic gets a `read` list of 1–3 verified articles (BJA Education preferred). Skip sessions with no topic (Clancon, OSCE, open journal club). See the `rule` field in that file.
+
+## Added 26 Nov 2026 (v5.97–6.05)
+- **Drug doses by weight** (`DOSE_TBL` / `DOSE_SRC` in index.html, OT calculators): every number is from its listed source (SmPC/FDA label, RCUK, AAGBI, MHAUS, BJA Educ). Never change a dose, max or concentration without re-checking the source and re-running a 70 kg adult, 120 kg obese, 20 kg child and 8 kg infant.
+- **Verified-only data files** (each has a `rule` field): `data/history.json` (anaesthesia history on this day), `data/stations.json` (table viva of the day), `data/heroes.json` (Marvel & DC dates), `data/examplan.json` (Road to MD; exam 20 Dec 2027, thesis submission 18 Jun 2027; phases are a suggested plan she can change). Never add an entry without a source.
+- Her NBA team is the **Philadelphia 76ers**: schedule fetched from ESPN on pull-to-refresh only.
+- Weekly scheduled task "Inemuri: weekly Drive backup" uploads the encrypted sync + data/private files to Drive › Inemuri backups (keeps 8).
+- Fudge is **male** ("he").
