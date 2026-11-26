@@ -1,0 +1,12 @@
+{
+  "rule": "Marvel & DC countdown (v6.04). Only dates from the named source; release dates move, so re-check when updating. Past releases drop off by themselves.",
+  "items": [
+    { "d": "2026-12-18", "t": "Avengers: Doomsday", "u": "Marvel", "k": "Film", "src": "https://www.gamesradar.com/au/flash-s120-trap-review" },
+    { "d": "2027-01-13", "t": "Your Friendly Neighborhood Spider-Man, season 2", "u": "Marvel", "k": "Series", "src": "https://slashfilm.com/2308020/marvel-movies-tv-shows-2027-release-schedule-explained/" },
+    { "d": "2027-06-18", "t": "Spider-Man: Beyond the Spider-Verse", "u": "Marvel", "k": "Film", "src": "https://www.gamesradar.com/uk/green-lantern-tv-show-hbo-max" },
+    { "d": "2027-07-09", "t": "Man of Tomorrow", "u": "DC", "k": "Film", "src": "https://www.gamesradar.com/uk/green-lantern-tv-show-hbo-max" },
+    { "d": "2027-12-17", "t": "Avengers: Secret Wars", "u": "Marvel", "k": "Film", "src": "https://www.gamesradar.com/uk/green-lantern-tv-show-hbo-max" },
+    { "d": "2028-02-18", "t": "The Batman Part II", "u": "DC", "k": "Film", "src": "https://www.gamesradar.com/uk/green-lantern-tv-show-hbo-max" },
+    { "d": "2028-06-30", "t": "Dynamic Duo", "u": "DC", "k": "Film", "src": "https://www.gamesradar.com/uk/flash-s120-trap-review" }
+  ]
+}

@@ -2127,6 +2127,15 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .stn{display:flex!important;flex-direction:column;gap:6px}
 .stn-pts{margin:4px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--fg)}
 .stn-pearl{font-size:14px;color:var(--fg)}
+.sixers{display:flex!important;flex-direction:column;gap:8px;margin-bottom:12px;border-left:4px solid #006BB6}
+.sx-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sx-row{display:flex;gap:6px;flex-wrap:wrap}.sx-g{font-size:13px;padding:3px 9px;border-radius:999px;border:1px solid var(--sep);color:var(--fg)}
+.sx-g.w{border-color:var(--st-done);background:color-mix(in srgb,var(--st-done) 18%,var(--surface))}.sx-g.l{border-color:var(--st-over);background:color-mix(in srgb,var(--st-over) 12%,var(--surface))}
+.sx-next{display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--fg)}
+.hero-u{flex:none;font-size:11px;font-weight:800;letter-spacing:.04em;padding:3px 7px;border-radius:6px;color:#fff!important}.hero-u.mv{background:#B5121B}.hero-u.dc{background:#0476F2}
+.hero-r,.hero-r *{text-decoration:none!important;color:var(--fg)}.hero-r .cat-tx span,.hero-r .c-m{color:var(--fg-2)}
+.pack-top{display:flex!important;align-items:center;gap:12px}
+.pack-i{display:flex;align-items:center;gap:10px}.pack-t{flex:1}.pack-t.done{text-decoration:line-through;color:var(--fg-2)}.pack-x{font-size:14px;color:var(--fg-2)}
 .care-seg{display:flex;gap:6px;margin:4px 0}.care-seg button{flex:1;padding:7px 8px;border-radius:999px;border:1px solid var(--sep);background:transparent;color:var(--fg);font:inherit;font-size:13px}.care-seg button.on{background:color-mix(in srgb,var(--st-done) 24%,var(--surface));border-color:var(--st-done);font-weight:600}
 .pc-chip{border:1px solid var(--sep);font:inherit;font-size:13px;cursor:pointer}
 .pen-empty{display:flex!important;flex-direction:row!important;align-items:center;gap:6px}
@@ -2168,9 +2177,9 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.03 · Road to MD, table viva station';
+const APP_VERSION = '6.04 · Sixers, hero countdown, packing lists, Siri shortcut';
 const KEY = 'studydesk.v1';
-const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan'];
+const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
 /* ---------- icons ---------- */
 const IC = {
@@ -2225,7 +2234,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {}, vstory: {}, presenting: {}, presPrep: {}, portfolio: {}, penDone: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {}, vstory: {}, presenting: {}, presPrep: {}, portfolio: {}, penDone: {}, packs: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2234,7 +2243,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, vstory: s.vstory || {}, presenting: s.presenting || {}, presPrep: s.presPrep || {}, portfolio: s.portfolio || {}, penDone: s.penDone || {}, thesisSteps: s.thesisSteps || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, vstory: s.vstory || {}, presenting: s.presenting || {}, presPrep: s.presPrep || {}, portfolio: s.portfolio || {}, penDone: s.penDone || {}, packs: s.packs || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   /* v5.97: Fudge's care dates as she told Claude on 26 Nov 2026 (vaccine a year ago, deworming 6 months ago; grooming counted from that day). Seeded once. */
@@ -2845,6 +2854,8 @@ function pageToday() {
   add(presCard(), by({ morning: 92, evening: 88, all: 80 }));
   add(pfTodayCard(), 64);
   add(penPrompt(), by({ evening: 62, all: 48 }));
+  { const g = sixersNext()[0]; const hh = g ? (new Date(g.start).getTime() - Date.now()) / 3600e3 : 99; add(sixersCard(), hh < 6 ? 86 : by({ morning: 70, all: 55 })); }
+  add(heroToday(), 52);
   add(histToday(), by({ morning: 58, all: 50 }));
   add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
@@ -3066,6 +3077,7 @@ function personalCal() { const t = today(); const P = PERS(); const tr = P.trave
   h += `<div class="sec"><h2 class="sh">📦 On the way</h2>${dv.filter(x => x.status !== 'delivered').length ? `<div class="group">${dv.filter(x => x.status !== 'delivered').map(x => `<div class="row pc-row"><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.date ? ' · expected ' + esc(pDate(x.date)) : ''}${x.status ? ' · ' + esc(x.status) : ''}</span></span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">Nothing on its way right now. Shipments from your email and your scanned orders show up here.</span></div>'}</div>`;
   const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
+  h += packSection();
   { const B = bdays(); h += `<div class="sec"><h2 class="sh"><span>🎂 Birthdays</span><span>${B.length ? plural(B.length, 'person') : ''}</span></h2>${B.length ? `<div class="group">${moreCut('bdays', B, 4).map(b => `<div class="row pc-row pc-bday"><span class="pc-e" aria-hidden="true">🎂</span><span class="cat-tx"><b>${esc(b.name)}</b><span>${esc(pDate(b.d))}</span></span><span class="pc-when">${esc(inWords(dIn(b.d)))}</span></div>`).join('')}${moreBtn('bdays', B.length, 4, 'birthday')}</div>` : '<div class="card"><span class="c-s">Birthdays from your Google Calendar show up here.</span></div>'}</div>`; }
   const months = {}; FESTS().filter(f => dIn(f.date) >= 0).forEach(f => { const k = f.date.slice(0, 7); (months[k] = months[k] || []).push(f); });
   h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}</div>`;
@@ -3639,6 +3651,20 @@ async function nbaExtras() { const out = {};
     if (L.Points && L.Points.length) out.leaders = { Points: L.Points || [], Rebounds: L.Rebounds || [], Assists: L.Assists || [] }; } catch (_) {}
   return out; }
 const nbaStale = () => !nbaLive || !nbaLive.east || Date.now() - new Date(nbaLive.at) > 15 * 60e3;
+/* v6.04 her team: Philadelphia 76ers. Schedule comes from ESPN on pull-to-refresh only (no background runs), kept on the phone. */
+async function sixersSched() { try { const r = await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule', { cache: 'no-store' }); if (!r.ok) return null; const j = await r.json();
+  return (j.events || []).map(ev => { const c = (ev.competitions || [])[0] || {}; const cs = c.competitors || []; const us = cs.find(x => ((x.team || {}).abbreviation || '').toUpperCase() === 'PHI') || {}; const op = cs.find(x => x !== us) || {};
+    const sc = x => x.score && typeof x.score === 'object' ? +x.score.value || 0 : +x.score || 0; const st = ((c.status || ev.status || {}).type || {});
+    return { start: ev.date, home: us.homeAway === 'home', opp: (op.team || {}).displayName || (op.team || {}).abbreviation || '', oab: ((op.team || {}).abbreviation || '').toUpperCase(), done: !!st.completed, us: sc(us), them: sc(op) }; }).filter(g => g.start); } catch (_) { return null; } }
+const istTime = iso => new Date(iso).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', weekday: 'short', hour: 'numeric', minute: '2-digit' });
+function sixersNext() { const L = (nbaLive && nbaLive.phi) || []; const now = Date.now(); return L.filter(g => !g.done && new Date(g.start).getTime() > now - 3 * 3600e3).sort((a, b) => a.start.localeCompare(b.start)); }
+function sixersCard() { if (state.settings.sixersOn === false) return ''; const g = sixersNext()[0]; if (!g) return ''; const h = (new Date(g.start).getTime() - Date.now()) / 3600e3; if (h > 20) return '';
+  return `<div class="sec"><button type="button" class="card calc-link" data-act="goto" data-tab="nba"><span class="cat-due-i" aria-hidden="true">🏀</span><span class="cat-tx"><b>Sixers ${g.home ? 'vs' : '@'} ${esc(g.opp)}</b><span>${h < 0 ? 'On now' : esc(istTime(g.start)) + ' your time'}</span></span>${CHEV}</button></div>`; }
+function sixersPin(SD, nm) { if (state.settings.sixersOn === false) return ''; const st = (SD.east || []).find(x => x[0] === 'PHI'); const rank = st ? (SD.east || []).indexOf(st) + 1 : 0;
+  const L = (nbaLive && nbaLive.phi) || []; const last = L.filter(g => g.done).slice(-3).reverse(); const nx = sixersNext().slice(0, 3);
+  return `<div class="card sixers"><div class="sx-top"><b>🏀 Philadelphia 76ers</b>${st ? `<span class="c-m">${st[1]}–${st[2]} · ${rank}${['th', 'st', 'nd', 'rd'][rank % 10 > 3 || ~~(rank / 10) === 1 ? 0 : rank % 10]} in the East</span>` : ''}</div>
+    ${last.length ? `<div class="sx-row">${last.map(g => `<span class="sx-g ${g.us > g.them ? 'w' : 'l'}">${g.us > g.them ? 'W' : 'L'} ${g.us}–${g.them} ${g.home ? 'vs' : '@'} ${esc(g.oab)}</span>`).join('')}</div>` : ''}
+    ${nx.length ? `<div class="sx-next">${nx.map(g => `<span>${g.home ? 'vs' : '@'} ${esc(g.opp)} · ${esc(istTime(g.start))}</span>`).join('')}</div>` : `<span class="c-m">Pull down to load their schedule.</span>`}</div>`; }
 async function nbaRefresh(quiet) {
   if (nbaBusy) return; nbaBusy = true; render();
   try {
@@ -3653,7 +3679,8 @@ async function nbaRefresh(quiet) {
     }
     const seen = new Set(); const uniq = games.filter(g => { const k = g.day + g.away + g.home; if (seen.has(k)) return false; seen.add(k); return true; });
     games.length = 0; games.push(...uniq);
-    nbaLive = { at: nowISO(), games, ...ext }; try { localStorage.setItem('studydesk.nbalive', JSON.stringify(nbaLive)); } catch (_) {}
+    const phi = await sixersSched();
+    nbaLive = { at: nowISO(), games, ...ext, phi: phi || (nbaLive && nbaLive.phi) || null }; try { localStorage.setItem('studydesk.nbalive', JSON.stringify(nbaLive)); } catch (_) {}
     const live = games.filter(g => g.state === 'in').length;
     if (!quiet) toast(games.length ? 'Scores and standings updated' + (live ? ' · ' + live + ' live' : '') + ' ✓' : 'Standings updated · no games today');
     const liveG = games.find(g => g.state === 'in'); const todayK = usDay(new Date().toISOString()); const lastDone = games.filter(g => g.state === 'post').pop();
@@ -3766,6 +3793,7 @@ function pageNba() {
   const ord = d => { const [m, n] = d.split(' '); const mi = MI[m]; return (mi >= 9 ? mi : mi + 12) * 100 + +n; };
   const ds = [...new Set(G.map(g => g.day))].sort((a, b) => ord(a) - ord(b)); if (!nbaDay || !ds.includes(nbaDay)) { const k = MON[new Date().getMonth()] + ' ' + new Date().getDate(); nbaDay = ds.includes(k) ? k : ds[ds.length - 1]; }
   h += `<div class="ptr" id="ptr">${nbaBusy ? 'Refreshing scores…' : nbaLive ? 'Pull down to refresh · updated ' + esc(ago(nbaLive.at)) : 'Pull down to refresh scores'}</div>`;
+  h += sixersPin(LV || N || {}, null);
   h += `<div class="seg">${[['scores', 'Scores'], ['standings', 'Standings'], ['stats', 'Leaders']].map(([k, l]) => `<button type="button" data-act="nsub" data-s="${k}" aria-pressed="${nbaSub === k}">${l}</button>`).join('')}</div>`;
   const nm = ab => ((N || {}).names || {})[ab] || ab; const SD = LV || N;
   const split = ab => { const s = nm(ab), k = /(Trail Blazers|76ers)$/.test(s) ? 2 : 1, w = s.split(' '); return [w.slice(0, w.length - k).join(' '), w.slice(w.length - k).join(' ')]; };
@@ -3842,6 +3870,10 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('penp', '🖋️ Pen & ink prompt', ['On Saturdays and Sundays, Today shows one exam pearl from your bite-size notes to copy by hand, with one of your pens once the shelf has them. Tap Written to hide it until next weekend.']),
     it('plan', '🗓️ Road to MD', ['Top of Academics: days to your thesis submission (18 Jun 2027) and your MD exam (20 Dec 2027), the phase you are in now, and in Round 1 the area for this fortnight (two weeks per Exam map area from 1 Dec). The phases are a suggested plan; ask Claude to change them.']),
     it('stn', '🔧 Table viva of the day', ['One equipment or drug station a day in Academics: think of your answer, then tap Show answer for the key points, a pearl and the source.']),
+    it('sixers', '🏀 Sixers', ['NBA shows a pinned 76ers card: record, East rank, last three results and the next three games in Indian time. Their schedule loads when you pull down to refresh NBA (no background updates). On a game day Today shows the next tip-off.']),
+    it('hero', '🦸 Marvel & DC', ['Off duty lists upcoming Marvel and DC films and series with a day count; each date comes from the linked article and past ones drop off. Today shows a card 3 days before a release.']),
+    it('pack', '🧳 Packing lists', ['Calendar › Personal has reusable packing lists (Conference, Going home, Night duty bag to start). Tick as you pack, add or remove items, and Untick all for the next trip.']),
+    it('siri', '🗣️ Siri and the Action button', ['Make an iPhone Shortcut: Shortcuts app → + → Add Action → Ask for Input (Text) → then Open URLs with: https://akrishnammlp2-debug.github.io/Docks/?add= followed by Provided Input. Name it "Add to Inemuri". Now say "Hey Siri, add to Inemuri" or put it on the Action button. Whatever you say goes through the Brain dump box: "buy cat litter" lands in To buy, "todo …" in To-do, anything else in Brain dump.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
@@ -3872,6 +3904,9 @@ function pageBackup() {
     <label class="row toggle"><span>Pen &amp; ink prompt on weekends</span><input type="checkbox" data-setting="penPromptOn" ${S.penPromptOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Road to MD (Academics)</span><input type="checkbox" data-setting="planOn" ${S.planOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Table viva of the day (Academics)</span><input type="checkbox" data-setting="stationOn" ${S.stationOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Sixers on Today and in NBA</span><input type="checkbox" data-setting="sixersOn" ${S.sixersOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Marvel &amp; DC countdown</span><input type="checkbox" data-setting="heroOn" ${S.heroOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Packing lists (Calendar › Personal)</span><input type="checkbox" data-setting="packOn" ${S.packOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -3940,6 +3975,7 @@ function pageOthers() {
     h += `<div class="sec"><button type="button" class="art-hero lv-hero${pick && pick.image ? '' : ' lv-noimg'}" data-act="love-open" style="--lvh:${(tp.id || 'x').split('').reduce((n, c) => n + c.charCodeAt(0), 0) % 360}">${pick && pick.image ? `<img class="art-bg" src="${esc(bannerSrc(pick.image.url))}" alt="" decoding="async" fetchpriority="high" style="object-position:${esc(pick.image.focus || 'center 40%')}" onerror="this.parentNode.classList.add('lv-noimg');this.remove()">` : ''}<span class="lv-bigem" aria-hidden="true">${esc(em)}</span><span class="art-shade" aria-hidden="true"></span><span class="art-cap"><span class="art-eb">${esc(em)} ${pick ? (pick.kind === 'article' ? 'Read today' : 'Fact of the day') + ' · ' + esc(pick.topicName || '') : 'Things I love'}</span><b>${esc(pick ? pick.title : 'Your first fact arrives tomorrow morning')}</b><span>Tap to read</span></span><span class="art-go" aria-hidden="true">›</span></button></div>`; }
   h += artTile();
   h += galShelf();
+  h += heroShelf();
   h += mediaShelf();
   h += penShelf();
   return h; }
@@ -4208,7 +4244,13 @@ function loveAddSheet() { openSheet(`<form data-form="love" class="sheet-in" aut
 const WIDE_MQ = matchMedia('(min-width:1180px)');
 const isWide = () => state.settings.wideOn !== false && WIDE_MQ.matches;
 try { WIDE_MQ.addEventListener('change', () => render()); } catch (_) {}
-function render() { try { fudgeCheck(); } catch (_) {}
+/* v6.04 iPhone Shortcut / Action button: open …/Docks/?add=<text> and it goes through the same capture box as Brain dump (buy …, todo …, ideas) */
+let addParamDone = false;
+function addParam() { if (addParamDone) return; addParamDone = true; let q = ''; try { q = new URLSearchParams(location.search).get('add') || ''; } catch (_) {} q = q.trim(); if (!q) return;
+  try { history.replaceState(null, '', location.pathname + location.hash); } catch (_) {}
+  setTimeout(() => { const f = document.createElement('form'); f.dataset.form = 'dump'; f.hidden = true; f.innerHTML = '<input name="text">'; f.querySelector('input').value = q.slice(0, 400); document.body.appendChild(f);
+    try { f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); } finally { setTimeout(() => f.remove(), 50); } }, 400); }
+function render() { try { fudgeCheck(); } catch (_) {} try { addParam(); } catch (_) {}
   { const ae = document.activeElement; if (render.lastTab === tab && ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae)) { render.pending = true; return; } render.pending = false; }
   document.body.classList.toggle('sketchy', sketchNow());
   document.body.classList.toggle('wide', isWide());
@@ -4887,6 +4929,27 @@ let stnShow = false;
 function stationCard() { if (state.settings.stationOn === false) return ''; const L = STN(); if (!L.length) return ''; const n = Math.floor(new Date(today() + 'T12:00').getTime() / 864e5); const x = L[n % L.length];
   return `<div class="sec"><div class="card stn" id="stn-card"><span class="c-lab">🔧 Table viva of the day</span><b>${esc(x.t)}</b><span class="c-s">${esc(x.q)}</span>
     ${stnShow ? `<ul class="stn-pts">${x.pts.map(p => `<li>${esc(p)}</li>`).join('')}</ul><span class="stn-pearl">💡 ${esc(x.pearl)}</span><a class="c-m" href="${esc(x.src)}" target="_blank" rel="noopener">${esc(x.srcT)}</a>` : `<div class="btns"><button type="button" class="btn small" data-act="stn-show">Show answer</button></div>`}</div></div>`; }
+/* ---------- v6.04 Marvel & DC countdown (Off duty), from data/heroes.json (sourced dates; past ones drop off) ---------- */
+const HEROES = () => ((D.heroes || {}).items || []).filter(x => x.d >= today()).sort((a, b) => a.d.localeCompare(b.d));
+function heroShelf() { if (state.settings.heroOn === false) return ''; const L = HEROES(); if (!L.length) return '';
+  return `<div class="sec"><h2 class="sh"><span>🦸 Marvel &amp; DC</span><span>${esc(L[0].t.split(':')[0])} in ${plural(daysTo(L[0].d), 'day')}</span></h2><div class="group">${moreCut('hero', L, 3).map(x => `<a class="row hero-r" href="${esc(x.src)}" target="_blank" rel="noopener"><span class="hero-u ${x.u === 'DC' ? 'dc' : 'mv'}">${esc(x.u)}</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${esc(x.k)} · ${esc(dShort(x.d))} ${x.d.slice(0, 4)}</span></span><span class="c-m">${daysTo(x.d) === 0 ? 'today!' : plural(daysTo(x.d), 'day')}</span></a>`).join('')}</div>${moreBtn('hero', L.length, 3, 'release', 'btn ghost wide')}</div>`; }
+function heroToday() { if (state.settings.heroOn === false) return ''; const x = HEROES()[0]; if (!x || daysTo(x.d) > 3) return '';
+  return `<div class="sec"><button type="button" class="card calc-link" data-act="goto" data-tab="others"><span class="cat-due-i" aria-hidden="true">🦸</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${daysTo(x.d) === 0 ? 'Out today 🍿' : 'Out in ' + plural(daysTo(x.d), 'day')}</span></span>${CHEV}</button></div>`; }
+/* ---------- v6.04 Packing lists (Calendar › Personal): reusable lists with ticks; starter lists she can edit ---------- */
+const PACK_SEED = { conf: ['Conference', ['Registration email / ID card', 'Poster or slides (and a pen drive)', 'Laptop and charger', 'Phone charger and power bank', 'Formal clothes', 'Notebook and fountain pen', 'Toiletries', 'Medicines']], home: ['Going home', ['Phone charger and power bank', 'Clothes', 'Toiletries', 'Medicines', 'Book or iPad for studying', 'Gifts', 'House keys']], night: ['Night duty bag', ['Scrubs', 'Water bottle', 'Snacks', 'Phone charger', 'Power bank', 'Toothbrush', 'Cardigan', 'Notes for the quiet hours']] };
+function packsAll() { const P = { ...(state.packs || {}) }; if (!state.settings.packSeed) { Object.entries(PACK_SEED).forEach(([id, [name, items]]) => { if (!P[id]) P[id] = { id, name, items: items.map((t, i) => ({ id: id + i, t, on: 0 })) }; }); state.packs = P; state.settings.packSeed = 1; save(); }
+  return Object.values(state.packs || {}); }
+function packSection() { if (state.settings.packOn === false) return ''; const L = packsAll();
+  return `<div class="sec"><h2 class="sh"><span>🧳 Packing lists</span><button type="button" class="link" data-act="pack-new">New list</button></h2><div class="group">${L.map(x => { const d = x.items.filter(i => i.on).length;
+    return `<button type="button" class="row" data-act="pack-open" data-id="${esc(x.id)}"><span class="cat-tx"><b>${esc(x.name)}</b><span>${d ? d + ' of ' + x.items.length + ' packed' : plural(x.items.length, 'item')}</span></span>${CHEV}</button>`; }).join('')}</div></div>`; }
+function packRename(id) { const x = (state.packs || {})[id]; if (!x) return;
+  openSheet(`<form data-form="pack-name" data-id="${esc(id)}" class="sheet-in" autocomplete="off"><div class="sheet-head"><button type="button" class="link" data-act="close">Cancel</button><h2>New packing list</h2><button type="submit" class="link strong">Next</button></div><div class="group"><label class="row field"><span class="f-l">Name</span><input class="left" name="name" placeholder="e.g. Goa trip" required></label></div></form>`); focusFirst(); }
+function packSheet(id, keep) { const x = (state.packs || {})[id]; if (!x) return; const d = x.items.filter(i => i.on).length;
+  openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>${esc(x.name)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
+    <div class="card pack-top">${ring(d, x.items.length, 46, 'pack')}<span class="c-s">${d === x.items.length && d ? 'All packed. Safe travels 💛' : d + ' of ' + x.items.length + ' packed'}</span></div>
+    <div class="group">${x.items.map(i => `<div class="row pack-i"><button class="check${i.on ? ' on' : ''}" type="button" data-act="pack-tick" data-id="${esc(id)}" data-s="${esc(i.id)}" aria-label="${i.on ? 'Unpack' : 'Packed'}: ${esc(i.t)}"></button><span class="pack-t${i.on ? ' done' : ''}">${esc(i.t)}</span><button type="button" class="link pack-x" data-act="pack-del" data-id="${esc(id)}" data-s="${esc(i.id)}" aria-label="Remove ${esc(i.t)}">✕</button></div>`).join('')}</div>
+    <form data-form="pack-add" data-id="${esc(id)}" class="dump-f" autocomplete="off"><input name="text" maxlength="80" placeholder="Add an item" aria-label="Add an item"><button type="submit" class="dump-add" aria-label="Add">+</button></form>
+    <div class="btns"><button type="button" class="btn ghost" data-act="pack-reset" data-id="${esc(id)}">Untick all for next trip</button><button type="button" class="btn ghost danger" data-act="pack-rm" data-id="${esc(id)}">Delete list</button></div></div>`, keep); }
 const napLine = txt => `<div class="nap">${NAP_CAT}<span class="c-s">${txt}</span></div>`;
 /* 11: line icons for section headings */
 const SH_ICO = { '🫀': '<path d="M3 12h4l2-5 3 10 2-5h7"/>', '🧠': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0012 3z"/>',
@@ -5388,6 +5451,12 @@ document.addEventListener('click', e => {
     case 'rol-read': { const on = !!state.thesisRead[id]; state.thesisRead[id] = on ? '' : nowISO(); commit(on ? null : 'Marked read ✓'); break; }
     case 'fudge-open': fudgeSheet(); break;
     case 'hist-open': histSheet(); break;
+    case 'pack-open': packSheet(id); break;
+    case 'pack-new': { const nid = 'p' + uid(); state.packs = { ...(state.packs || {}), [nid]: { id: nid, name: 'New list', items: [] } }; commit(); packRename(nid); break; }
+    case 'pack-tick': { const x = (state.packs || {})[id]; if (!x) break; x.items = x.items.map(i => i.id === b.dataset.s ? { ...i, on: i.on ? 0 : 1 } : i); state.packs = { ...state.packs, [id]: { ...x } }; commit(); packSheet(id, true); break; }
+    case 'pack-del': { const x = (state.packs || {})[id]; if (!x) break; x.items = x.items.filter(i => i.id !== b.dataset.s); state.packs = { ...state.packs, [id]: { ...x } }; commit(); packSheet(id, true); break; }
+    case 'pack-reset': { const x = (state.packs || {})[id]; if (!x) break; x.items = x.items.map(i => ({ ...i, on: 0 })); state.packs = { ...state.packs, [id]: { ...x } }; commit('Ready for the next trip'); packSheet(id, true); break; }
+    case 'pack-rm': { const P = { ...(state.packs || {}) }; delete P[id]; state.packs = P; commit('List deleted'); closeSheet(); break; }
     case 'stn-show': { stnShow = true; const el = $('stn-card'); if (el) { const y = window.scrollY; el.parentElement.outerHTML = stationCard(); window.scrollTo(0, y); const n = $('stn-card'); if (n) n.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } break; }
     case 'vs-open': vsSheet(id); break;
     case 'vs-del': { const V = { ...(state.vstory || {}) }; delete V[id]; state.vstory = V; commit('Star removed'); closeSheet(); break; }
@@ -5517,6 +5586,8 @@ document.addEventListener('submit', e => {
       if (!token) { toast('Paste the access key first'); return; }
       try { localStorage.setItem(SYNC_REPO_KEY, repo); localStorage.setItem(SYNC_TOKEN_KEY, token); } catch (_) { toast("Couldn't store the key on this device"); return; }
       devSync = { status: 'busy' }; render(); deviceSync(true); break; }
+    case 'pack-add': { const x = (state.packs || {})[id]; const t = (fd.get('text') || '').trim(); if (!x || !t) return; x.items = x.items.concat([{ id: uid(), t, on: 0 }]); state.packs = { ...state.packs, [id]: { ...x } }; commit(); packSheet(id, true); setTimeout(() => { const i = document.querySelector('#sheet form[data-form=pack-add] input'); if (i) i.focus(); }, 60); break; }
+    case 'pack-name': { const x = (state.packs || {})[id]; const t = (fd.get('name') || '').trim(); if (!x || !t) return; state.packs = { ...state.packs, [id]: { ...x, name: t } }; commit(); packSheet(id); break; }
     case 'vstory': { const c = (state.myCases || {})[id]; if (!c) break; const lesson = (fd.get('lesson') || '').trim();
       state.vstory = { ...(state.vstory || {}), [id]: { lesson, at: ((state.vstory || {})[id] || {}).at || today() } }; commit('⭐ Saved as a viva story'); closeSheet(); break; }
     case 'pf': { const title = (fd.get('title') || '').trim(); if (!title) { toast('Add a title'); return; } const nid = id || uid();
@@ -5623,7 +5694,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav', 'vstory', 'presenting', 'presPrep', 'portfolio', 'penDone'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav', 'vstory', 'presenting', 'presPrep', 'portfolio', 'penDone', 'packs'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
