@@ -33,6 +33,10 @@ It is built only for her and will never be monetised.
 - **Wide layout (v5.91):** on screens ≥1180 px (laptop, iPad landscape) `body.wide` is set (`isWide()`, switch: `settings.wideOn`). Page widens to 1180 px, bottom tab bar hides (side menu has everything), `.w2` wrappers go two columns (calendar | day details; CONSORT | thesis card), the Today Now stack (`.now-stack`) flows in 2 columns, card lists (`article.card` / `a.card`) grid 2 across, `moreCut` shows 10 where phones show 5, sheets open as a centred panel. Esc closes sheets, ← → change month, Enter/Space flips the thesis card. Phone and iPad portrait must stay exactly as they are; test at 1440, 1280, 1180 and 390 px.
 - **Any colour or theme change:** check that all text is readable in BOTH light and dark mode (`tools/contrast_check.py`) before pushing.
 
+## Deliveries (26 Nov 2026)
+- **Any delivery found anywhere goes on the calendar.** Whenever an order is scanned from any store (Amazon, Nykaa, email, anything new) and it is not delivered yet, save its expected date as `eta` (YYYY-MM-DD) and `status` on the order in My orders (`shop.stores.<store>.orders[]`). `allDeliveries()` in index.html merges these with the email deliveries for the Personal calendar's "On the way" list and the "📦 Arriving today" reminder; it skips duplicates (same store + same date). Once an order is delivered, set `delivered` so it drops off.
+- **Amazon:** scan the Amazon.in website in her Chrome (Claude in Chrome), never Gmail. The account is Jesal's (shared); "her orders" are those shipped/delivered to Apoorva Krishna. Lock them with `node tools/lock.mjs lock <plain.json> orders-amazon` (`shop.stores.amazon`), keeping every order from this year.
+
 ## Privacy
 - Never commit patient names, hospital numbers (UHID) or anything identifying in plain text.
 - Private data goes only through `tools/lock.mjs` into `data/private/*.enc.json`. Unlocked private files must never be committed.
