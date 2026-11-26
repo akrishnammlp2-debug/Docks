@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-25",
-    "title": "Lemminkäinen's Mother",
-    "artist": "Akseli Gallen-Kallela",
-    "artistLife": "Finnish, 1865–1931",
-    "year": "1897",
-    "medium": "Tempera on canvas",
-    "size": "85.5 × 108.5 cm (a bit bigger than a cabin-bag suitcase laid flat)",
-    "where": "Ateneum Art Museum, Helsinki",
-    "movement": "Symbolism, with Finnish national romantic roots",
-    "fame": "hidden gem",
+    "date": "2026-11-26",
+    "title": "Under the Wave off Kanagawa (The Great Wave)",
+    "artist": "Katsushika Hokusai",
+    "artistLife": "Japanese, 1760–1849",
+    "year": "c. 1830–32",
+    "medium": "Woodblock print; ink and colour on paper",
+    "size": "25.7 × 37.9 cm (about the size of a sheet of landscape-format notepaper)",
+    "where": "The Metropolitan Museum of Art, New York",
+    "movement": "Edo period, ukiyo-e",
+    "fame": "famous",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg",
-      "credit": "Ateneum Art Museum (Finnish National Gallery), public domain (image: Wikimedia Commons)",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Great_Wave_off_Kanagawa2.jpg",
+      "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
       "focus": "center 40%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A mother kneels in a dark, hushed place, holding her dead son across her lap, almost like a pietà. She has pulled him, piece by piece, out of a black river and put him back together. The scene is flat and stylised, with little sense of depth, so it feels like a moment outside ordinary time."
+        "p": "A huge blue wave curls up like a claw over three small boats, with the tiny, calm shape of Mount Fuji sitting far away beneath it. The foam breaks into little white fingers that seem to reach for the boats. It is technically a print rather than a painting, made from carved wooden blocks."
       },
       {
         "h": "The artist",
-        "p": "Akseli Gallen-Kallela was born in Pori, Finland, in 1865 and was born with the name Axel Gallén, which he later changed to a Finnish form. He became the painter most closely linked with the Kalevala, Finland's national epic, and returned to its stories again and again. For this picture he is said to have used his own mother as the model."
+        "p": "Hokusai worked for more than seventy years, making woodblock designs, illustrated books and paintings. He was around 70 when this print appeared, and he kept improving until the end of his long life. He is said to have hoped to get even better if he lived to be a hundred."
       },
       {
         "h": "The time",
-        "p": "In 1897 Finland was a Grand Duchy inside the Russian Empire, and artists and writers were busy building a sense of Finnish identity. The Kalevala, gathered from old folk poems by Elias Lönnrot in the 1800s, was a big part of that. Gallen-Kallela took its myths and gave them a fresh, modern look, in the new Symbolist spirit of the 1890s."
+        "p": "Japan in the early 1830s was in the Edo period, a long era of peace in which townspeople in cities like Edo (now Tokyo) had money to spend on art and travel. Prints were affordable, and views of famous places were popular. The Great Wave is one of the Thirty-six Views of Mount Fuji, a series made at this time."
       },
       {
         "h": "What's special",
-        "p": "The story comes from the Kalevala: the hero Lemminkäinen dies in the land of the dead, and his mother rakes the river of Tuonela to recover him. Gallen-Kallela used tempera, which dries matte and chalky rather than glossy like oil, and kept the forms simple. That helps the scene feel like something from the other side of death, while the mother herself is painted more naturally. Many people read it as a picture of a mother's love."
+        "p": "The series is known for its blues. Prussian blue, a new pigment then imported from Europe, was fashionable, and scientific tests found it was used together with traditional indigo to make the shades of the sea. Hokusai also plays with perspective: the giant wave dominates, and mighty Fuji looks small. The Met keeps rotating its impressions out of view to protect them from fading."
       },
       {
         "h": "Look for",
-        "p": "Notice the mother's face and hands: they are the most lifelike part of the painting. Then look at the dark water and the stylised, matte surfaces around her, and see how different they feel."
+        "p": "Find tiny Fuji under the wave's arch. Then look at the boats and the foam's finger-like tips, and notice how the curve of the wave echoes Fuji's shape."
       }
     ],
     "source": {
-      "title": "Wikimedia Commons (Ateneum Art Museum, inv. A I 640)",
-      "url": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg"
+      "title": "The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/art/collection/search/45434"
     }
   },
   "history": [
+    {
+      "date": "2026-11-25",
+      "title": "Lemminkäinen's Mother",
+      "artist": "Akseli Gallen-Kallela",
+      "artistLife": "Finnish, 1865–1931",
+      "year": "1897",
+      "medium": "Tempera on canvas",
+      "size": "85.5 × 108.5 cm (a bit bigger than a cabin-bag suitcase laid flat)",
+      "where": "Ateneum Art Museum, Helsinki",
+      "movement": "Symbolism, with Finnish national romantic roots",
+      "fame": "hidden gem",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg",
+        "credit": "Ateneum Art Museum (Finnish National Gallery), public domain (image: Wikimedia Commons)",
+        "focus": "center 40%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A mother kneels in a dark, hushed place, holding her dead son across her lap, almost like a pietà. She has pulled him, piece by piece, out of a black river and put him back together. The scene is flat and stylised, with little sense of depth, so it feels like a moment outside ordinary time."
+        },
+        {
+          "h": "The artist",
+          "p": "Akseli Gallen-Kallela was born in Pori, Finland, in 1865 and was born with the name Axel Gallén, which he later changed to a Finnish form. He became the painter most closely linked with the Kalevala, Finland's national epic, and returned to its stories again and again. For this picture he is said to have used his own mother as the model."
+        },
+        {
+          "h": "The time",
+          "p": "In 1897 Finland was a Grand Duchy inside the Russian Empire, and artists and writers were busy building a sense of Finnish identity. The Kalevala, gathered from old folk poems by Elias Lönnrot in the 1800s, was a big part of that. Gallen-Kallela took its myths and gave them a fresh, modern look, in the new Symbolist spirit of the 1890s."
+        },
+        {
+          "h": "What's special",
+          "p": "The story comes from the Kalevala: the hero Lemminkäinen dies in the land of the dead, and his mother rakes the river of Tuonela to recover him. Gallen-Kallela used tempera, which dries matte and chalky rather than glossy like oil, and kept the forms simple. That helps the scene feel like something from the other side of death, while the mother herself is painted more naturally. Many people read it as a picture of a mother's love."
+        },
+        {
+          "h": "Look for",
+          "p": "Notice the mother's face and hands: they are the most lifelike part of the painting. Then look at the dark water and the stylised, matte surfaces around her, and see how different they feel."
+        }
+      ],
+      "source": {
+        "title": "Wikimedia Commons (Ateneum Art Museum, inv. A I 640)",
+        "url": "https://commons.wikimedia.org/wiki/File:Akseli_Gallen-Kallela_-_Lemmink%C3%A4isen_%C3%A4iti_-_A_I_640_-_Finnish_National_Gallery.jpg"
+      }
+    },
     {
       "date": "2026-11-24",
       "title": "The Gulf Stream",
