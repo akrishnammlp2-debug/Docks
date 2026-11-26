@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -270,6 +270,66 @@
    "ot": "KHSBGEC",
    "procedure": "Upper GI endoscopy",
    "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-01",
+   "date": "2026-11-27",
+   "order": 1,
+   "time": "05:30",
+   "ot": "KHSB-OR1",
+   "procedure": "Incisional hernia repair",
+   "unit": "SUR004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-02",
+   "date": "2026-11-27",
+   "order": 2,
+   "time": "09:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Septoplasty",
+   "unit": "ENT001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-03",
+   "date": "2026-11-27",
+   "order": 3,
+   "time": "08:30",
+   "ot": "KHSB-OR2",
+   "procedure": "Myringoplasty / type I tympanoplasty",
+   "unit": "ENT001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-04",
+   "date": "2026-11-27",
+   "order": 4,
+   "time": "08:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Robotic surgery (complex)",
+   "unit": "SUO001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-05",
+   "date": "2026-11-27",
+   "order": 5,
+   "time": "09:00",
+   "ot": "khsbcathLab",
+   "procedure": "Balloon-occluded retrograde transvenous obliteration (BRTO)",
+   "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-27-06",
+   "date": "2026-11-27",
+   "order": 6,
+   "time": "14:00",
+   "ot": "khsbcathLab",
+   "procedure": "Stenting",
+   "unit": "RADIVR",
    "status": "Approved"
   }
  ]
