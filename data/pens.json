@@ -1,0 +1,4 @@
+{
+  "rule": "Her fountain pens (Off duty › Pen shelf). Each pen: id, name, colour (body hex), trim (hex), nib ('fine'|'medium'|'broad'|''), ink (name or ''), inkHex, note. Drawn by penSVG() in index.html from her photo. Ink stays '' until she says.",
+  "pens": []
+}
