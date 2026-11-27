@@ -6363,7 +6363,7 @@ function mergePrivate(prev, data) {
   if (data.cat) next.cat = data.cat;
   if (data.personal) next.personal = data.personal;
   if (data.gcal) next.gcal = data.gcal;
-  if (data.money) next.money = data.money;
+  if (data.money) next.money = { ...(cur.money || {}), ...data.money }; /* two locked files with different keys: money (invest, spend, notes) and money-live (cards, bills, months, updated), refreshed every other day */
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
   if (data.thesisSeq) next.thesisSeq = data.thesisSeq;
   if (data.thesis) next.thesis = { ...(cur.thesis || {}), ...data.thesis }; /* thesis names: never pruned */
