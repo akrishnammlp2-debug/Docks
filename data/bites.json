@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-27",
  "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
  "cats": [
   "Drugs",
@@ -4112,6 +4112,152 @@
    ],
    "created": "2026-11-24",
    "updated": "2026-11-24",
+   "seen": 1
+  },
+  {
+   "id": "anaesthesia-for-oesophagectomy",
+   "cat": "Other",
+   "title": "Anaesthesia for oesophagectomy (open, laparoscopic, robotic)",
+   "aliases": [
+    "esophagectomy",
+    "oesophagectomy",
+    "Ivor Lewis",
+    "McKeown",
+    "transhiatal oesophagectomy",
+    "MIE",
+    "RAMIE",
+    "robotic oesophagectomy",
+    "oesophageal cancer surgery"
+   ],
+   "summary": "Oesophagectomy is a long two- or three-cavity operation (abdomen, chest ± neck) in often malnourished patients, many after chemoradiotherapy. Morbidity is high (up to ~60%), mainly pneumonia, anastomotic leak and AF. The anaesthetic aims are aspiration-safe induction, good lung isolation and protective one-lung ventilation, careful (not excessive) fluids with a well-perfused gastric conduit, and strong analgesia so the patient can breathe, cough and mobilise. Minimally invasive and robotic approaches reduce lung complications but add capnothorax/pneumoperitoneum, prone or fixed positioning and very long cases.",
+   "sections": [
+    {
+     "h": "Surgical approaches & what they mean for you",
+     "rows": [
+      [
+       "Ivor Lewis (2-stage)",
+       "Laparotomy/laparoscopy + right thoracotomy/thoracoscopy, anastomosis in the chest. Needs OLV (isolate right lung); left lateral position for chest phase."
+      ],
+      [
+       "McKeown (3-stage)",
+       "Right chest first, then abdomen + left neck incision, anastomosis in the neck. Position changes; keep the left neck free (CVC on the right IJ)."
+      ],
+      [
+       "Transhiatal",
+       "Abdomen + neck, blunt mediastinal dissection by hand, no thoracotomy, usually no OLV. Watch for sudden hypotension (heart compressed), arrhythmias, pneumothorax, tracheal tear."
+      ],
+      [
+       "Hybrid",
+       "Laparoscopic abdomen + open chest (MIRO trial: fewer major complications than open)."
+      ],
+      [
+       "Totally MIE",
+       "Thoracoscopic (lateral or prone) + laparoscopic phases; CO2 in the chest (capnothorax ~6–8 mmHg) and abdomen (~12–15 mmHg)."
+      ],
+      [
+       "RAMIE (robotic)",
+       "Same phases with the robot docked; longest cases, no access to patient during docking."
+      ]
+     ]
+    },
+    {
+     "h": "Pre-op assessment & optimisation",
+     "items": [
+      "Dysphagia, weight loss, low albumin: nutrition (oral supplements / feeding jejunostomy); treat as aspiration risk.",
+      "Neoadjuvant therapy: radiation lung injury, carboplatin/paclitaxel or 5-FU (coronary spasm) and cisplatin (kidney) effects; check counts, renal function, ECG/echo as needed.",
+      "Smoking and alcohol: COPD, cardiomyopathy, withdrawal, liver disease.",
+      "Functional capacity: CPET where available (low anaerobic threshold / VO2peak = higher risk); PFTs, ABG if lung disease.",
+      "Prehabilitation (exercise, breathing training), stop smoking, correct anaemia; follow the ERAS pathway."
+     ]
+    },
+    {
+     "h": "Induction, airway & lines",
+     "items": [
+      "Aspiration risk: head-up, RSI or modified RSI; suction ready; NG/oesophageal contents may be retained.",
+      "Lung isolation: left-sided DLT is standard (right lung down for surgery); bronchial blocker if difficult airway; confirm position with fibreoptic and recheck after every position change.",
+      "Some prone thoracoscopic MIE is done with two-lung low-VT ventilation + capnothorax collapsing the lung.",
+      "Arterial line, CVC (right IJ in McKeown), cardiac output/GDFT monitor, temperature, urine output, ≥2 large-bore IV lines, cross-match.",
+      "Thoracic epidural (≈T5–T8) placed before induction when used.",
+      "NG tube is positioned/withdrawn only on the surgeon's instruction (risk of stapling it in)."
+     ]
+    },
+    {
+     "h": "Intra-op management",
+     "rows": [
+      [
+       "OLV ventilation",
+       "VT ~4–6 mL/kg PBW, PEEP ~5, plateau <25–30, driving pressure low, lowest FiO2 for SpO2 >92%, recruit before & after OLV, permissive hypercapnia."
+      ],
+      [
+       "Hypoxia on OLV",
+       "FiO2 1.0, check DLT with scope, recruit/PEEP to ventilated lung, suction; CPAP to the collapsed lung often not possible in thoracoscopy, so ask surgeon for a pause/two-lung breaths."
+      ],
+      [
+       "Fluids",
+       "Goal-directed, near-zero balance; excess fluid → lung injury and conduit/anastomotic oedema; treat epidural/vasodilator hypotension with vasopressor rather than litres of fluid."
+      ],
+      [
+       "Conduit perfusion",
+       "Keep MAP within ~20% of baseline (≥65), good CO, normal Hb, avoid hypothermia and hypocapnia."
+      ],
+      [
+       "Thoracoscopic/prone phase",
+       "Capnothorax → ↓ venous return, ↑ CO2; prone: pressure points, eyes, tube displacement."
+      ],
+      [
+       "Laparoscopic phase",
+       "Reverse Trendelenburg + pneumoperitoneum → ↓ preload, ↑ airway pressure; CO2 may track through the hiatus causing capnothorax/surgical emphysema."
+      ],
+      [
+       "Robotic phase",
+       "Fixed table, arms tucked, airway far away: deep NMB (patient movement can tear tissue), secure everything before docking, rehearse emergency undocking, check nerves and eyes."
+      ],
+      [
+       "Mediastinal events",
+       "Bleeding (azygos, aorta), arrhythmia from handling, tracheobronchial injury (leak on DLT), contralateral pneumothorax."
+      ]
+     ]
+    },
+    {
+     "h": "Analgesia & post-op care",
+     "items": [
+      "Open/hybrid: thoracic epidural is the classic gold standard; less pain, earlier extubation, fewer lung complications in meta-analyses; but more hypotension/vasopressor use and catheter problems.",
+      "MIE/RAMIE: paravertebral catheter (can be placed under thoracoscopic view) or erector spinae catheter are common alternatives + multimodal (paracetamol, ± ketamine/lidocaine, local wound infiltration). Robotic patients tend to have less pain.",
+      "Aim for extubation at the end of surgery if warm, stable and pain-free; ICU/HDU care, 30–45° head-up, NG on drainage.",
+      "Avoid aggressive mask/NIV pressure and blind NG passage over a fresh anastomosis unless discussed with the surgeon.",
+      "Complications: pneumonia/aspiration, ARDS, anastomotic leak (new AF, fever, sepsis can be the first sign), conduit necrosis, chylothorax, recurrent laryngeal nerve palsy (hoarseness, aspiration).",
+      "Early mobilisation, chest physiotherapy, early enteral feeding (jejunostomy), VTE prophylaxis."
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Compare open vs MIE vs robotic: TIME trial (MIE vs open) and ROBOT trial (RAMIE vs open) both showed fewer pulmonary complications with minimally invasive surgery.",
+      "Transhiatal = no OLV but beware cardiac compression hypotension and pneumothorax during blunt dissection.",
+      "Left DLT for right thoracotomy; recheck after turning lateral or prone.",
+      "Three 'P's of outcome: Protective ventilation, Proper (restrictive, goal-directed) fluids, Pain control.",
+      "New AF after day 2 = look for anastomotic leak.",
+      "A patient who has had an oesophagectomy carries lifelong aspiration risk for future anaesthetics: induce semi-sitting, RSI."
+     ]
+    }
+   ],
+   "pearl": "Every oesophagectomy is a full stomach going in and a fragile anastomosis coming out: aspiration-safe induction, protective OLV, no fluid overload, and treat post-op AF as a leak until proven otherwise.",
+   "refs": [
+    {
+     "title": "Deana C et al. Peri-operative approach to esophagectomy: a narrative review from the anesthesiological standpoint. J Thorac Dis 2021",
+     "url": "https://doi.org/10.21037/jtd-21-940"
+    },
+    {
+     "title": "Low DE et al. Guidelines for perioperative care in esophagectomy: ERAS Society recommendations. World J Surg 2019",
+     "url": "https://doi.org/10.1007/s00268-018-4786-4"
+    },
+    {
+     "title": "Feenstra ML et al. Analgesia in esophagectomy: a narrative review. J Thorac Dis 2023",
+     "url": "https://doi.org/10.21037/jtd-23-241"
+    }
+   ],
+   "created": "2026-11-27",
+   "updated": "2026-11-27",
    "seen": 1
   }
  ]

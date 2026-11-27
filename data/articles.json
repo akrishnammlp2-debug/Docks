@@ -1,7 +1,20 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-27",
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
+  {
+   "id": "34795950",
+   "added": "2026-11-27",
+   "topic": "oesophagectomy",
+   "title": "Peri-operative approach to esophagectomy: a narrative review from the anesthesiological standpoint.",
+   "journal": "J Thorac Dis",
+   "year": 2021,
+   "type": "Review",
+   "why": "Free review covering pre-op risk, OLV and protective ventilation, fluids, monitoring and analgesia for open and minimally invasive oesophagectomy.",
+   "doi": "10.21037/jtd-21-940",
+   "pmid": "34795950",
+   "url": "https://doi.org/10.21037/jtd-21-940"
+  },
   {
    "id": "30237589",
    "added": "2026-11-24",
