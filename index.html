@@ -1390,6 +1390,87 @@ body::before{will-change:transform;transform:translateZ(0)}
 .shop-p{flex:none;font-size:13.5px;font-weight:600;color:#2A352F!important}
 .shop-no{display:block;margin-top:8px;font-size:12px;color:#4A564F!important}
 
+/* Money v6.10 (27 Nov 2026): wallet of flip cards, due rings, year calendar, investments, where the money went */
+.mn-sum{display:flex;flex-direction:column;gap:12px;padding:16px!important}
+.mn-sum .mn-top{display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;gap:12px}
+.mn-sum .mn-big{font-family:var(--font-display);font-weight:800;font-size:28px;letter-spacing:-.02em;color:var(--fg);font-variant-numeric:tabular-nums;line-height:1.1}
+.mn-lab{font-size:12.5px;color:var(--fg-3)}
+.mn-next{text-align:right;font-size:13px;color:var(--fg-2)}.mn-next b{display:block;font-size:14.5px;color:var(--fg)}
+.mn-rings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;border-top:1px solid var(--line);padding-top:12px}
+.mn-rg{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;font-size:11.5px;color:var(--fg-2);line-height:1.25;background:none;border:0;padding:0}
+.mn-rg b{font-size:12px;color:var(--fg);font-weight:700}
+.mn-rg .ring .rg-fg{stroke:var(--sec-i,var(--label))}
+.mn-rg .ring.ok .rg-fg{stroke:var(--st-done)}
+.mn-rg .ring.soon .rg-fg{stroke:var(--st-soon)}
+.mn-wallet{position:relative;perspective:1400px;margin:4px auto 6px;max-width:440px}
+.mn-card{position:absolute;left:0;right:0;height:204px;cursor:pointer;transition:transform .55s cubic-bezier(.2,.9,.25,1.12),filter .35s;-webkit-tap-highlight-color:transparent;outline:none}
+.mn-card:focus-visible .mn-face{box-shadow:0 0 0 3px var(--accent)}
+.mn-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.3,1.2,.4,1)}
+.mn-card.open .mn-in{transform:rotateY(180deg)}
+.mn-wallet.focus .mn-card:not(.open){filter:saturate(.55) brightness(.82)}
+.mn-face{position:absolute;inset:0;border-radius:18px;overflow:hidden;color:#fff;padding:16px 18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 14px 28px -14px rgba(40,20,60,.6),inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.1)}
+.mn-face *{color:#fff!important}
+.mn-face::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background:repeating-radial-gradient(circle at 92% 6%,transparent 0 22px,rgba(255,255,255,.07) 22px 23px)}
+.mn-back{transform:rotateY(180deg)}
+.mn-l1 .mn-face{background:radial-gradient(120% 140% at 100% 0%,#c9674f,transparent 55%),linear-gradient(135deg,#5e3787,#a3456c)}
+.mn-l2 .mn-face{background:radial-gradient(120% 140% at 0% 100%,#a8577a,transparent 50%),linear-gradient(140deg,#2f2056,#4f3680 60%,#764380)}
+.mn-l3 .mn-face{background:radial-gradient(130% 120% at 100% 100%,#b8663e,transparent 50%),linear-gradient(135deg,#9a3b45,#b5523f)}
+.mn-l4 .mn-face{background:linear-gradient(150deg,#1f2a4f,#3c3474 55%,#6d4c8f)}
+.mn-row{display:flex;justify-content:space-between;align-items:center;position:relative}
+.mn-bank{font-weight:700;font-size:15px;letter-spacing:.5px}
+.mn-tag{font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(0,0,0,.3);font-weight:700}
+.mn-chiprow{display:flex;align-items:center;gap:10px;margin:24px 0 16px;position:relative}
+.mn-emv{width:42px;height:31px;border-radius:7px;background:linear-gradient(135deg,#fbe7b4,#d9b46a 45%,#f3d58f 60%,#b88f43);box-shadow:inset 0 0 0 1px rgba(120,85,30,.35);position:relative}
+.mn-emv::before{content:"";position:absolute;left:14px;right:14px;top:0;bottom:0;border-left:1px solid rgba(110,75,25,.4);border-right:1px solid rgba(110,75,25,.4)}
+.mn-num{font:600 17px/1 var(--font-mono,ui-monospace),monospace;letter-spacing:3px;position:relative;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+.mn-name{margin-top:12px;font-size:11.5px;letter-spacing:1.2px;font-weight:600;position:relative}
+.mn-hint{position:absolute;left:18px;bottom:12px;font-size:11px;font-weight:600}
+.mn-arcs{position:absolute;right:-16px;bottom:-24px;width:160px;height:160px;opacity:.18}
+.mn-stripe{position:absolute;left:0;right:0;top:14px;height:18px;background:rgba(15,8,25,.5)}
+.mn-bc{position:absolute;left:18px;right:18px;top:42px}
+.mn-bc .ring{position:absolute;right:0;top:-2px}
+.mn-bc .ring .rg-tr{stroke:rgba(255,255,255,.24)}.mn-bc .ring .rg-fg{stroke:#fff}
+.mn-blab{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.mn-amt{font-family:var(--font-display);font-size:27px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+.mn-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;font-size:12px;max-width:calc(100% - 4px)}
+.mn-grid b{display:block;font-size:13.5px}
+.mn-foot{position:absolute;left:18px;right:18px;bottom:11px;font-size:11px;font-weight:600}
+#page .mn-rg .rg-v.stack small{color:var(--fg)!important}
+#page .mn-face small,#page .mn-face em,#page .mn-face b{color:#fff!important}
+#page .mn-donut small{color:var(--fg-2)!important}
+.mn-months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mn-m{position:relative;overflow:hidden;text-align:left;border:1px solid var(--line);border-radius:14px;padding:9px 10px 10px;background:none;color:var(--fg)}
+.mn-m::before{content:"";position:absolute;inset:0;background:var(--sec-i,var(--label));opacity:calc(var(--h)*.2);pointer-events:none}
+.mn-m span{position:relative;display:block}
+.mn-m .mn-mn{font-size:12px;color:var(--fg-3)}.mn-m .mn-mv{font-size:15px;font-weight:700;margin-top:1px;font-variant-numeric:tabular-nums}
+.mn-m .mn-mv.none{font-size:12px;font-weight:500;color:var(--fg-3)}
+.mn-m.sel{border-color:var(--sec-i,var(--label));box-shadow:inset 0 0 0 1px var(--sec-i,var(--label))}
+.mn-bar{position:relative;display:flex;height:5px;border-radius:3px;overflow:hidden;margin-top:7px;background:var(--surface-2)}
+.mn-bar i{display:block;height:100%}
+.mn-keys{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--fg-2);margin:10px 2px 0}
+.mn-dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.mn-det{margin-top:10px;padding:12px 14px!important}
+.mn-det .mn-r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:14px;color:var(--fg)}
+.mn-det .mn-r b{font-variant-numeric:tabular-nums}
+.mn-hd{display:flex;flex-direction:row!important;align-items:center;gap:14px;padding:14px 16px!important}
+.mn-hd .mn-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mn-hd .mn-tx b{font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+.mn-hd .mn-tx span{font-size:13px;color:var(--fg-2)}
+.mn-li{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.mn-li .mn-lt{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.mn-li .mn-lt span{font-size:14px;color:var(--fg)}
+.mn-li .mn-lt em{font-style:normal;font-size:12px;color:var(--fg-3)}
+.mn-li .mn-lb{height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.mn-li .mn-lb i{display:block;height:100%;border-radius:3px}
+.mn-li b{flex:none;font-size:14px;color:var(--fg);font-variant-numeric:tabular-nums}
+.mn-donut{width:var(--sz);height:var(--sz);flex:none;position:relative}
+.mn-donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.mn-donut span{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:14px;color:var(--fg);line-height:1.05}
+.mn-donut small{font-family:var(--font-mono);font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--fg-3)}
+.mn-note{font-size:12.5px;color:var(--fg-3);line-height:1.45;margin:8px 2px 0}
+.mn-warn{font-size:13px;color:var(--fg-2);padding:10px 14px!important;border-left:3px solid var(--st-soon)!important;border-radius:0 12px 12px 0!important}
+@media (prefers-reduced-motion:reduce){.mn-card,.mn-in{transition:none}}
+body.no-anim .mn-card,body.no-anim .mn-in{transition:none}
 /* my orders page v5.21 */
 .shop-page .shop-tabs button{background:var(--blk,#E3EDE1);color:var(--fg)!important;border-color:var(--line)}
 .shop-page .shop-tabs button.on{background:#2B6448;color:#FFFFFF!important;border-color:#2B6448}
@@ -1850,7 +1931,7 @@ body[data-sec="today"]{--sec:var(--t-butter);--sec-i:var(--t-butter-i)}
 body[data-sec="study"],body[data-sec="todos"],body[data-sec="thesis"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
 body[data-sec="calendar"],body[data-sec="advances"],body[data-sec="others"],body[data-sec="music"],body[data-sec="nba"],body[data-sec="dota"]{--sec:var(--t-lav);--sec-i:var(--t-lav-i)}
 body[data-sec="ot"],body[data-sec="roster"],body[data-sec="cases"],body[data-sec="calc"]{--sec:var(--t-sky);--sec-i:var(--t-sky-i)}
-body[data-sec="reminders"],body[data-sec="backup"],body[data-sec="orders"]{--sec:var(--t-rose);--sec-i:var(--t-rose-i)}
+body[data-sec="reminders"],body[data-sec="backup"],body[data-sec="orders"],body[data-sec="money"]{--sec:var(--t-rose);--sec-i:var(--t-rose-i)}
 .lt-wrap{position:relative;isolation:isolate}
 .lt-wrap::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);width:100vw;top:-80px;bottom:-26px;background:linear-gradient(180deg,color-mix(in srgb,var(--sec) 90%,transparent) 0%,color-mix(in srgb,var(--sec) 55%,transparent) 55%,transparent 100%);pointer-events:none}
 @media (prefers-color-scheme:dark){.lt-wrap::before{background:linear-gradient(180deg,color-mix(in srgb,var(--sec) 16%,transparent) 0%,color-mix(in srgb,var(--sec) 7%,transparent) 55%,transparent 100%)}}
@@ -2216,7 +2297,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.09 · Tidier Academics and Calendar';
+const APP_VERSION = '6.10 · Money';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2240,7 +2321,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   calc: 'OT calculators', today: 'Today', study: 'Academics', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders', thesis: 'Thesis'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders', money: 'Money', thesis: 'Thesis'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -3979,6 +4060,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('wrap', '🎁 Inemuri Wrapped', ['From 24 December to 7 January, Today offers your year as swipeable cards: cases and the procedures you did most, your most common anaesthetic, bite-size notes and revisions, thesis patients, viva stories, to-dos, days off Instagram, saved paintings and Fudge\'s collection. Only real counts from the app. Preview it any time from Settings.']),
     it('pens', '🖋️ Fountain pens', ['Off duty has a pen shelf. Send Claude a photo of your pens and each one is drawn there, with its ink once you say which.']),
     it('bkn', '☁️ Backup reminder', ['If your last backup is over 30 days old, Today shows a small reminder with a Back up button. Later hides it for 3 days.']),
+    it('money', '💳 Money', ['Card bills come from your CRED emails and the Wi-Fi bill from Airtel, checked every other day. Each card shows how much is due, the minimum and the due date; tap it to flip. The ring counts the days left to pay.', 'A bill turns Paid when a CRED payment email arrives. You also pay outside CRED, so once the due date passes the bill counts as paid unless you tell Claude it wasn\'t (switch this off in Settings).', 'The year view adds up your card bills and Wi-Fi by bill month. Tap a month to see each card. CRED emails start in May 2026.', 'Investments are your Coin SIP allotments. Where the money went groups your order emails by kind; those purchases are mostly inside the card bills, so they are not added on top. Swiggy, Instamart and Amazon are not in that total yet.', 'Everything here is locked so only your paired devices can open it. The app only shows money; it never moves it.']),
     it('ord', '🛍️ My orders', ['Orders come from your order emails, kept locked so only your paired devices can open them. Refreshed every Sunday evening.'])].join('');
   return `<div class="sec"><details class="set-more sec-fold" data-fold="how"${foldOpen.has('how') ? ' open' : ''}><summary><span class="sm-c">How things work</span><span class="sm-o">Hide how things work</span></summary><div class="card how-c">${body}</div></details></div>`; }
 function pageBackup() {
@@ -4013,6 +4095,7 @@ function pageBackup() {
     <label class="row toggle"><span>Inemuri Wrapped (24 Dec – 7 Jan)</span><input type="checkbox" data-setting="wrapOn" ${S.wrapOn !== false ? 'checked' : ''}></label>
     <button type="button" class="row" data-act="wrap-preview"><span>Preview this year's Wrapped</span>${CHEV}</button>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Money: count a bill as paid once its due date passes (unless you say it wasn't)</span><input type="checkbox" data-setting="moneyAssume" ${S.moneyAssume !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Ask “Did it arrive?” for parcels on or after their expected day</span><input type="checkbox" data-setting="delAskOn" ${S.delAskOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
@@ -4061,7 +4144,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders, thesis: pageThesis };
+const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders, money: pageMoney, thesis: pageThesis };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -4292,6 +4375,117 @@ function shopBody(key) { const S = SHOP().stores || {}; const keys = Object.keys
       <div class="shop-items">${o.items.map(i => `<div class="shop-it"><span class="shop-n">${esc(i.n)}${i.s ? ` <em>${esc(i.s)}</em>` : ''}</span><span class="shop-p">${i.q > 1 ? i.q + ' × ' : ''}${i.p ? inr(i.p) : (i.p === 0 ? 'Free' : '')}</span></div>`).join('')}</div>
       <span class="shop-no">Order ${esc(o.no)}</span></details>`).join('')}`; }
 let shopKey = null;
+/* ---------- Money (v6.10, 27 Nov 2026) ----------
+   Locked private file "money" (tools/lock.mjs): card bills from CRED emails, Airtel Wi-Fi, month totals, Coin SIP allotments and
+   where the money went (purchase emails). Refreshed every other day by a scheduled task. The app only shows money; it never moves it.
+   A bill counts as paid when a payment email was found (paid), when she says it wasn't (notPaid wins), or, with
+   settings.moneyAssume (default on), once its due date has passed. */
+const MONEY = () => (state.private && state.private.money) || null;
+const MN_COL = { 'ICICI ••7006': '#e5795d', 'HDFC ••7396': '#5b3f8c', 'HDFC ••0264': '#c0577f', 'Airtel Wi-Fi': '#6d8fd0' };
+const MN_CAT = ['#9b6fc7', '#e58fb0', '#e5795d', '#6d8fd0', '#d9a445', '#5aa98a', '#c0577f', '#8a8fb0', '#b9845a', '#7aa7c7'];
+const MN_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+let mnOpen = null, mnMonth = null;
+const inr2 = n => '₹' + (+n).toLocaleString('en-IN', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const mnLabel = b => b.last ? b.bank.split(' ')[0] + ' ••' + b.last : b.name;
+function mnStatus(b) {
+  const d = daysUntil(b.due);
+  if (b.paid) return { paid: true, txt: 'Paid ' + mnDay(b.paid), d };
+  if (b.notPaid) return { paid: false, txt: 'Not paid (you said)', d, over: d < 0 };
+  if (state.settings.moneyAssume !== false && d < 0) return { paid: true, assumed: true, txt: 'Paid (assumed)', d };
+  return { paid: false, txt: d < 0 ? 'Overdue' : 'Not paid yet', d, over: d < 0 };
+}
+const mnDay = s => { try { return new Date(s + 'T12:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }); } catch (_) { return s; } };
+function mnRing(b, size) {
+  const st = mnStatus(b), C = 2 * Math.PI * 30;
+  const span = Math.max(1, Math.round((dt(b.due) - dt(b.bill)) / 864e5)), left = Math.max(0, st.d);
+  const frac = st.paid ? 1 : Math.min(1, left / span);
+  const val = st.paid ? '✓' : st.over ? '!' : left, sub = st.paid ? 'paid' : st.over ? 'late' : left === 1 ? 'day' : 'days';
+  return `<div class="ring${st.paid ? ' ok' : st.over ? ' late' : left <= 3 ? ' soon' : ''}" style="--sz:${size}px" role="img" aria-label="${esc(st.paid ? 'Paid' : left + ' days left')}"><svg viewBox="0 0 72 72"><circle class="rg-tr" cx="36" cy="36" r="30"/><circle class="rg-fg" cx="36" cy="36" r="30" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(1)}"/></svg><span class="rg-v stack">${val}<small>${sub}</small></span></div>`;
+}
+const MN_ARCS = '<svg class="mn-arcs" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" aria-hidden="true"><path d="M10 45a57 57 0 0 1 80 0"/><path d="M24 59a37 37 0 0 1 52 0"/><path d="M38 73a17 17 0 0 1 24 0"/><circle cx="50" cy="86" r="4" fill="#fff"/></svg>';
+function mnCard(b, i, wifi) {
+  const st = mnStatus(b);
+  const tag = st.paid ? (st.assumed ? 'Paid · assumed' : 'Paid') : st.over ? 'Overdue' : plural(st.d, 'day') + ' left';
+  const front = wifi
+    ? `<div class="mn-face mn-front"><div class="mn-row"><span class="mn-bank">${esc(b.name)}</span><span class="mn-tag">${tag}</span></div><div style="margin-top:40px;font-size:13px;opacity:.85;position:relative">Home broadband</div><div style="font-size:20px;font-weight:700;position:relative">${esc(b.plan || '')}</div>${MN_ARCS}<span class="mn-hint">Tap to flip</span></div>`
+    : `<div class="mn-face mn-front"><div class="mn-row"><span class="mn-bank">${esc(b.bank)}</span><span class="mn-tag">${tag}</span></div><div class="mn-chiprow"><div class="mn-emv"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 7a7 7 0 0 1 0 10"/><path d="M12 4.5a11 11 0 0 1 0 15"/><path d="M16 2a15 15 0 0 1 0 20"/></svg></div><div class="mn-num">•••• &nbsp;•••• &nbsp;•••• &nbsp;${esc(b.last)}</div><div class="mn-name">${esc((profile().name || 'Apoorva').split(' ')[0].toUpperCase())}</div><span class="mn-hint">Tap to flip</span></div>`;
+  const grid = wifi
+    ? `<div>Pay by<b>${mnDay(b.due)}</b></div><div>After due date<b>${inr2(b.late)}</b></div><div>Bill period<b>${esc(b.period || '')}</b></div><div>Status<b>${esc(st.txt)}</b></div>`
+    : `<div>Minimum due<b>${inr2(b.min)}</b></div><div>${st.paid ? 'Was due' : 'Pay by'}<b>${mnDay(b.due)}</b></div><div>Bill date<b>${mnDay(b.bill)}</b></div><div>Status<b>${esc(st.txt)}</b></div>`;
+  const foot = wifi ? (b.late ? 'Paying on time saves ' + inr2(Math.round((b.late - b.total) * 100) / 100) : '') : 'Pay the full amount to avoid interest · ••' + esc(b.last);
+  return `<div class="mn-card mn-l${wifi ? 4 : b.look || (i % 3) + 1}${mnOpen === b.id ? ' open' : ''}" style="--i:${i}" role="button" tabindex="0" data-act="mn-card" data-id="${esc(b.id)}" aria-pressed="${mnOpen === b.id}" aria-label="${esc(mnLabel(b))}. Tap to flip for the amount due">
+    <div class="mn-in">${front}<div class="mn-face mn-back"><div class="mn-stripe"></div><div class="mn-bc">${mnRing(b, 66)}<div class="mn-blab">${st.paid ? 'Last bill' : wifi ? 'Bill amount' : 'Total due'}</div><div class="mn-amt">${inr2(b.total)}</div><div class="mn-grid">${grid}</div></div><div class="mn-foot">${foot}</div></div></div></div>`;
+}
+function mnWalletPos(n, open) {
+  /* stacked: each card peeks 60px; open: that card at the top, the rest tucked below it */
+  const H = 204, PEEK = 60;
+  return Array.from({ length: n }, (_, i) => open < 0 ? i * PEEK : i === open ? 0 : H + 14 + (i - (i > open ? 1 : 0)) * 12);
+}
+function mnLayout(w) {
+  const cards = [...w.querySelectorAll('.mn-card')], open = cards.findIndex(c => c.classList.contains('open'));
+  const pos = mnWalletPos(cards.length, open);
+  cards.forEach((c, i) => { c.style.transform = `translateY(${pos[i]}px)${open >= 0 && i !== open ? ' scale(.92)' : ''}`; c.style.zIndex = open === i ? 50 : 10 + i; });
+  w.classList.toggle('focus', open >= 0);
+  w.style.height = (open < 0 ? (cards.length - 1) * 60 + 204 : 204 + 14 + (cards.length - 2) * 12 + 204 * .92) + 'px';
+}
+function mnDonut(parts, size, label, sub) {
+  const tot = parts.reduce((s, p) => s + Math.max(0, p.v), 0) || 1, R = 30, C = 2 * Math.PI * R; let off = 0;
+  const segs = parts.filter(p => p.v > 0).map(p => { const len = p.v / tot * C; const s = `<circle cx="36" cy="36" r="${R}" fill="none" stroke="${p.c}" stroke-width="9" stroke-dasharray="${Math.max(0, len - 1.2).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"/>`; off += len; return s; }).join('');
+  return `<div class="mn-donut" style="--sz:${size}px" role="img" aria-label="${esc(label + ' ' + sub)}"><svg viewBox="0 0 72 72"><circle cx="36" cy="36" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="9"/>${segs}</svg><span>${label}<small>${sub}</small></span></div>`;
+}
+function mnMonthDetail(M, key) {
+  const o = M.months[key]; const [y, m] = key.split('-'); const name = new Date(+y, +m - 1, 1).toLocaleDateString('en-IN', { month: 'long' });
+  if (!o) return `<b>${name}</b><div class="mn-note">Bills for ${name} arrive in the middle of the month.</div>`;
+  const t = Object.values(o).reduce((a, b) => a + b, 0);
+  const keys = Object.keys(M.months).sort(), pk = keys[keys.indexOf(key) - 1], po = pk && M.months[pk];
+  const cmp = po && Object.keys(po).length > 1 && Object.keys(o).length > 1 ? (() => { const pt = Object.values(po).reduce((a, b) => a + b, 0); return `<div class="mn-note" style="margin:0 0 4px">${t >= pt ? '▲' : '▼'} ${inr(Math.abs(t - pt))} compared with ${new Date(+y, +pk.slice(5) - 1, 1).toLocaleDateString('en-IN', { month: 'long' })}</div>`; })() : '';
+  return `<div class="mn-r" style="padding-top:0"><b style="font-size:15px">${name}</b><b style="font-size:15px">${inr2(Math.round(t * 100) / 100)}</b></div>${cmp}` + Object.entries(o).sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div class="mn-r"><span><span class="mn-dot" style="background:${MN_COL[n] || '#8a8fb0'}"></span>${esc(n)}</span><b>${inr2(v)}</b></div>`).join('');
+}
+function pageMoney() {
+  const M = MONEY();
+  let h = head('Money', M ? 'Updated ' + mnDay(M.updated) : '', 'Life');
+  if (!M) return h + `<div class="card tb-empty"><span class="tb-empty-i" aria-hidden="true">💳</span><span class="c-t">Nothing here yet</span><span class="c-s">Your card bills, spending and investments appear here once they're synced to this device.</span></div>`;
+  const all = [...(M.cards || []).map(b => ({ ...b })), ...(M.bills || []).map(b => ({ ...b, wifi: true }))];
+  const unpaid = all.filter(b => !mnStatus(b).paid), due = unpaid.reduce((s, b) => s + b.total, 0);
+  const nx = unpaid.slice().sort((a, b) => a.due.localeCompare(b.due))[0];
+  /* 1. this cycle + a ring per bill */
+  h += `<div class="sec"><div class="card mn-sum"><div class="mn-top"><div><span class="mn-lab">Due this cycle</span><div class="mn-big">${inr(due)}</div></div><div class="mn-next">${nx ? 'Next due<b>' + esc(mnLabel(nx)) + ' · ' + mnDay(nx.due) + '</b>' : '<b>All clear 🎉</b>'}</div></div>
+    <div class="mn-rings">${all.map(b => `<button type="button" class="mn-rg" data-act="mn-card" data-id="${esc(b.id)}">${mnRing(b, 54)}<b>${esc(b.wifi ? 'Wi-Fi' : b.bank.split(' ')[0])}</b><span>${b.wifi ? inr(b.total) : '••' + esc(b.last)}</span></button>`).join('')}</div></div></div>`;
+  /* 2. wallet */
+  h += `<div class="sec"><h2 class="sh">Wallet</h2><div class="mn-wallet" id="mn-wallet">${all.map((b, i) => mnCard(b, i, b.wifi)).join('')}</div><p class="mn-note">Tap a card to flip it. The ring counts the days left to pay.</p></div>`;
+  /* 3. the year, month by month */
+  const yr = M.year || +today().slice(0, 4), keys = Array.from({ length: 12 }, (_, i) => yr + '-' + String(i + 1).padStart(2, '0'));
+  const tots = Object.fromEntries(keys.map(k => [k, M.months[k] ? Object.values(M.months[k]).reduce((a, b) => a + b, 0) : 0]));
+  const mx = Math.max(1, ...Object.values(tots)), cur = today().slice(0, 7);
+  const sel = mnMonth && M.months[mnMonth] !== undefined ? mnMonth : (M.months[cur] ? cur : keys.filter(k => M.months[k]).pop());
+  const yTot = Object.values(tots).reduce((a, b) => a + b, 0);
+  h += `<div class="sec"><h2 class="sh">${yr} at a glance</h2><div class="card mn-hd" style="margin-bottom:10px">${mnDonut(Object.keys(MN_COL).map(n => ({ v: keys.reduce((s, k) => s + ((M.months[k] || {})[n] || 0), 0), c: MN_COL[n] })), 76, inr(yTot / 1000) + 'k', 'so far')}<div class="mn-tx"><b>${inr(yTot)}</b><span>Card bills and Wi-Fi, by bill month</span></div></div>
+    <div class="mn-months">${keys.map(k => { const o = M.months[k], t = tots[k], n = o ? Object.keys(o).length : 0;
+      const bar = o ? Object.entries(o).map(([nm, v]) => `<i style="width:${(v / t * 100).toFixed(1)}%;background:${MN_COL[nm] || '#8a8fb0'}"></i>`).join('') : '';
+      return `<button type="button" class="mn-m${k === sel ? ' sel' : ''}" style="--h:${(t / mx).toFixed(2)}" data-act="mn-month" data-id="${k}"><span class="mn-mn">${MN_MON[+k.slice(5) - 1]}</span><span class="mn-mv${o ? '' : ' none'}">${o ? inr(t) : 'Coming up'}</span>${o && n === 1 ? '<span class="mn-mn" style="font-size:11px">Wi-Fi only</span>' : ''}<span class="mn-bar">${bar}</span></button>`; }).join('')}</div>
+    <div class="mn-keys">${Object.entries(MN_COL).map(([n, c]) => `<span><span class="mn-dot" style="background:${c}"></span>${esc(n)}</span>`).join('')}</div>
+    <div class="card mn-det" id="mn-det">${sel ? mnMonthDetail(M, sel) : ''}</div></div>`;
+  /* 4. investments */
+  const I = M.invest || { months: {} }, im = I.months || {}, ik = Object.keys(im).sort();
+  if (ik.length) {
+    const funds = {}; ik.forEach(k => Object.entries(im[k]).forEach(([f, v]) => funds[f] = (funds[f] || 0) + v));
+    const it = Object.values(funds).reduce((a, b) => a + b, 0), last = im[ik[ik.length - 1]], perMonth = Object.values(last).reduce((a, b) => a + b, 0);
+    const fmax = Math.max(...Object.values(funds));
+    const rows = Object.entries(funds).sort((a, b) => b[1] - a[1]).map(([f, v], i) => `<div class="mn-li"><div class="mn-lt"><span>${esc(f)}</span><div class="mn-lb"><i style="width:${(v / fmax * 100).toFixed(1)}%;background:${MN_CAT[i % MN_CAT.length]}"></i></div></div><b>${inr(v)}</b></div>`);
+    h += `<div class="sec"><h2 class="sh">Investments</h2><div class="card mn-hd">${ring(ik.length, 12, 76, 'mn-sip')}<div class="mn-tx"><b>${inr(it)}</b><span>Invested in ${yr} through Coin · ${plural(ik.length, 'month')} of SIPs</span><span>Now ${inr(perMonth)} a month across ${plural(Object.keys(last).length, 'fund')}</span></div></div>
+      <div class="group" style="margin-top:10px">${rows.join('')}</div>${(I.pending || []).map(p => `<div class="card mn-warn" style="margin-top:10px">${esc(MN_MON[+p.month.slice(5) - 1])}: ${esc(p.fund)} ${inr(p.amount)} not counted. ${esc(p.note)}</div>`).join('')}</div>`;
+  }
+  /* 5. where the money went */
+  const S = M.spend;
+  if (S && S.cats && S.cats.length) {
+    const st = S.cats.reduce((a, c) => a + c.amount, 0), cmax = Math.max(...S.cats.map(c => c.amount));
+    const list = S.cats.map((c, i) => `<details class="mn-cat"><summary class="mn-li" style="cursor:pointer;list-style:none"><div class="mn-lt"><span>${esc(c.name)}</span><div class="mn-lb"><i style="width:${(c.amount / cmax * 100).toFixed(1)}%;background:${MN_CAT[i % MN_CAT.length]}"></i></div><em>${esc((c.items || []).slice().sort((a, b) => b.a - a.a).map(x => x.n.replace(/ \(.*\)$/, '')).filter((n, i, A) => A.indexOf(n) === i).slice(0, 3).join(', '))}</em></div><b>${inr(c.amount)}</b></summary><div style="padding:0 14px 8px">${(c.items || []).slice().sort((a, b) => a.d.localeCompare(b.d)).map(x => `<div class="mn-det mn-r" style="padding:4px 0;margin:0;font-size:13px"><span>${esc(mnDay(x.d))} · ${esc(x.n)}</span><b>${inr2(x.a)}</b></div>`).join('')}</div></details>`);
+    h += `<div class="sec"><h2 class="sh">Where the money went</h2><div class="card mn-hd">${mnDonut(S.cats.map((c, i) => ({ v: c.amount, c: MN_CAT[i % MN_CAT.length] })), 76, String(S.cats.length), 'kinds')}<div class="mn-tx"><b>${inr(st)}</b><span>Bought in ${yr}, after refunds</span><span>Mostly inside the card bills above, so not extra</span></div></div>
+      <div class="group" style="margin-top:10px">${moreCut('mncat', list, 5).join('')}${moreBtn('mncat', list.length, 5, 'kind')}</div>
+      ${(S.notCounted || []).length ? `<p class="mn-note">Not in this total: ${esc(S.notCounted.join(' · '))}.</p>` : ''}</div>`;
+  }
+  return h;
+}
 function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0, 4), 'Personal') + `<div class="sec shop-page">${shopBody(shopKey)}</div>`; }
 
 
@@ -4371,7 +4565,7 @@ function render() { try { fudgeCheck(); } catch (_) {} try { addParam(); } catch
   const strips = render.lastTab === tab ? [...pg.querySelectorAll('.strip,.hab-row,.otw')].map(e => e.scrollLeft) : [];
   const tabChanged = render.lastTab !== tab;
   pg.innerHTML = PAGES[tab]();
-  lineIcons(pg); if (tabChanged) { pg.classList.remove('pg-in'); void pg.offsetWidth; pg.classList.add('pg-in'); countUp(pg); }
+  lineIcons(pg); { const mw = $('mn-wallet'); if (mw) { if (tabChanged) mnOpen = null; mw.querySelectorAll('.mn-card').forEach(c => c.classList.toggle('open', c.dataset.id === mnOpen)); mnLayout(mw); } } if (tabChanged) { pg.classList.remove('pg-in'); void pg.offsetWidth; pg.classList.add('pg-in'); countUp(pg); }
   document.body.classList.toggle('no-anim', state.settings.animOn === false);
   { const f = { advances: 'advances', ot: 'ot', nba: 'nba', dota: 'dota', music: 'music', calendar: 'schedule' }[tab], st = f && dataStatus[f], w = pg.querySelector('.lt-wrap'); /* honest freshness label (v5.65) */
     if (st && w && st.at) w.insertAdjacentHTML('beforeend', st.from === 'saved' ? `<span class="fresh off">Offline · saved copy from ${esc(agoT(st.at))}</span>` : `<span class="fresh">Checked ${esc(agoT(st.at))}</span>`);
@@ -4435,6 +4629,7 @@ const MENU_LINE = {
   nba: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12"/>',
   backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
   orders: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 016 0"/>',
+  money: '<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><path d="M7 15h4"/>',
   calc: '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h1M12 12h1M15.5 12h0M8.5 16h1M12 16h1M15.5 16h0"/>',
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
 };
@@ -4459,7 +4654,7 @@ function renderDrawer() {
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar', delAsk().length ? '📦 ' + delAsk().length : '')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
-    <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
+    <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}${item('money', (() => { const M = MONEY(); if (!M) return ''; const n = [...(M.cards || []), ...(M.bills || [])].filter(b => { const st = mnStatus(b); return !st.paid && st.d <= 3; }).length; return n ? n + ' due' : ''; })())}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${fudgeFoot()}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
 }
 function renderBanner() {
@@ -5701,6 +5896,8 @@ document.addEventListener('click', e => {
     case 'th-copy': { const c = (D.thesis && D.thesis.card) || {}; let v = b.dataset.v, l = b.dataset.l || 'Details';
       if (b.dataset.k === 'all') { l = 'Thesis details'; v = ['Title: ' + THESIS_TITLE, 'Principal Investigator: ' + c.name, 'Guide: ' + c.guide, 'Co-guide: ' + c.coguide, 'Institution: ' + c.dept, 'IEC number: ' + c.iec + ' (' + c.iecBody + ', ' + c.iecReg + ')', 'IEC decision: ' + c.decision + ' till ' + fmtD(c.validTill), 'IEC approval date: ' + fmtD(c.approved), 'CTRI number: ' + c.ctri, 'CTRI reference: ' + c.ctriRef].join('\n'); }
       (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(l + ' copied ✓'), () => toast("Couldn't copy here. Select the number and copy it instead.")); break; }
+    case 'mn-card': { const w = $('mn-wallet'); if (!w) break; const was = mnOpen === id; mnOpen = was ? null : id; w.querySelectorAll('.mn-card').forEach(c => { const on = !was && c.dataset.id === id; c.classList.toggle('open', on); c.setAttribute('aria-pressed', on); }); mnLayout(w); if (!was && b.classList.contains('mn-rg')) w.scrollIntoView({ block: 'start', behavior: animOn() ? 'smooth' : 'auto' }); break; }
+    case 'mn-month': { const M = MONEY(); if (!M) break; mnMonth = id; document.querySelectorAll('.mn-m').forEach(x => x.classList.toggle('sel', x.dataset.id === id)); const d = $('mn-det'); if (d) d.innerHTML = mnMonthDetail(M, id); break; }
     case 'th-flip': { const on = !b.classList.contains('flip'); b.classList.toggle('flip', on); b.setAttribute('aria-pressed', on); break; }
     case 'th-day': { const y0 = window.scrollY; thSel = b.dataset.k; render(); window.scrollTo(0, y0); const el = document.querySelector('.th-dayinfo'); if (el) { const rc = el.getBoundingClientRect(); if (rc.top > innerHeight - 120) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } break; }
     case 'th-month': { const y0 = window.scrollY; thView.m += +b.dataset.d; if (thView.m < 0) { thView.m = 11; thView.y--; } if (thView.m > 11) { thView.m = 0; thView.y++; } render(); window.scrollTo(0, y0); break; }
@@ -6166,6 +6363,7 @@ function mergePrivate(prev, data) {
   if (data.cat) next.cat = data.cat;
   if (data.personal) next.personal = data.personal;
   if (data.gcal) next.gcal = data.gcal;
+  if (data.money) next.money = data.money;
   if (data.shop) next.shop = { ...(cur.shop || {}), ...data.shop, stores: { ...((cur.shop || {}).stores || {}), ...(data.shop.stores || {}) } };
   if (data.thesisSeq) next.thesisSeq = data.thesisSeq;
   if (data.thesis) next.thesis = { ...(cur.thesis || {}), ...data.thesis }; /* thesis names: never pruned */

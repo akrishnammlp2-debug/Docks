@@ -24,6 +24,7 @@
   "cases.enc.json",
   "catfood.enc.json",
   "gcal.enc.json",
+  "money.enc.json",
   "orders-amazon.enc.json",
   "orders.enc.json",
   "personal.enc.json",
@@ -41,5 +42,5 @@
   "ot-2026-11-27.enc.json",
   "ot-2026-11-28.enc.json"
  ],
- "updated": "2026-11-27T12:31:07.836Z"
+ "updated": "2026-11-27T13:35:06.289Z"
 }
