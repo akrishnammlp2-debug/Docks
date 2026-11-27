@@ -1,6 +1,6 @@
 {
  "updated": "2026-11-27",
- "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry.",
+ "note": "Revision notes from Apoorva's academic questions, written in plain words by Claude, in the same detail as the Topics notes (summary, sections, exam points, references). One entry per topic; repeated questions update the same entry. ECG notes may have `figs` (pictures shown under the summary): {case: <data/ecg.json id>, strip?: true} draws that card, {draw: {leads, twelve?}} draws a custom strip or 12-lead, {img: {file, by, what}} shows a real tracing from Wikimedia Commons (only files that exist there with a matching description).",
  "cats": [
   "Drugs",
   "Ventilation",
@@ -1840,7 +1840,29 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 72,
+        "n": "II"
+       }
+      ],
+      "twelve": {}
+     },
+     "cap": "Normal sinus rhythm, drawn: PR 160 ms, QRS 90 ms, QT 380 ms at 72/min"
+    },
+    {
+     "img": {
+      "file": "12 lead ECG of a 26 year old male.jpg",
+      "by": "MoodyGroove",
+      "what": "normal 12-lead, 26-year-old man"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-axis",
@@ -1967,7 +1989,31 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 70,
+        "n": "II"
+       }
+      ],
+      "twelve": {
+       "pat": "lafb"
+      }
+     },
+     "cap": "LAFB, drawn: I and aVL positive (qR), II, III and aVF negative (rS) = left axis"
+    },
+    {
+     "img": {
+      "file": "Bifascicular block ECG.png",
+      "by": "Steven Fruitsmaak",
+      "what": "RBBB + LAFB, axis −45°"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-lvh",
@@ -2082,7 +2128,31 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 68,
+        "n": "II"
+       }
+      ],
+      "twelve": {
+       "pat": "lvh"
+      }
+     },
+     "cap": "LVH, drawn: S in V1 22 mm + R in V5 28 mm = 50 mm (Sokolow-Lyon ≥ 35), strain in V5–V6, I, aVL"
+    },
+    {
+     "img": {
+      "file": "Left ventricular hypertrophy with secondary repolarization.jpg",
+      "by": "James Heilman, MD",
+      "what": "LVH with secondary repolarisation (strain) changes"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-rvh",
@@ -2157,7 +2227,24 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 84,
+        "n": "II"
+       }
+      ],
+      "twelve": {
+       "pat": "rvh"
+      }
+     },
+     "cap": "RVH, drawn: right axis, dominant R in V1 with strain (ST depression, T inversion V1–V3), deep S in V5–V6, tall P in II"
+    }
+   ]
   },
   {
    "id": "ecg-atrial-enlargement",
@@ -2219,7 +2306,42 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "dur": 4000,
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 72,
+        "n": "II",
+        "lab": "II · P pulmonale",
+        "p": 0.3,
+        "pw": 20,
+        "pr": 170
+       },
+       {
+        "r": "sinus",
+        "rate": 72,
+        "n": "II",
+        "lab": "II · P mitrale",
+        "p": 0.13,
+        "pb": 1,
+        "pr": 210
+       }
+      ]
+     },
+     "cap": "Drawn: tall peaked P (> 2.5 mm) vs broad notched P (> 120 ms)"
+    },
+    {
+     "img": {
+      "file": "E000734 (CardioNetworks ECGpedia).jpg",
+      "by": "CardioNetworks ECGpedia",
+      "what": "Ebstein's anomaly: tall P waves in the inferior leads (> 2 mm in II)"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-stemi-criteria",
@@ -2332,7 +2454,72 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 90,
+        "n": "II"
+       }
+      ],
+      "twelve": {
+       "V1": {
+        "st": 0.15
+       },
+       "V2": {
+        "R": 0.2,
+        "st": 0.35,
+        "t": 0.6
+       },
+       "V3": {
+        "R": 0.4,
+        "st": 0.4,
+        "t": 0.65
+       },
+       "V4": {
+        "st": 0.3,
+        "t": 0.55
+       },
+       "I": {
+        "st": 0.1
+       },
+       "aVL": {
+        "st": 0.12,
+        "t": 0.2
+       },
+       "II": {
+        "st": -0.05
+       },
+       "III": {
+        "st": -0.15,
+        "t": -0.1
+       },
+       "aVF": {
+        "st": -0.12,
+        "t": 0.05
+       },
+       "aVR": {
+        "st": -0.05
+       }
+      }
+     },
+     "cap": "Anterior STEMI, drawn: ST elevation V1–V4 (+ I, aVL), reciprocal depression in III and aVF"
+    },
+    {
+     "case": "stemi-inf",
+     "cap": "Inferior STEMI (ECG card): ST elevation II, III, aVF, reciprocal in aVL"
+    },
+    {
+     "img": {
+      "file": "12 Lead EKG ST Elevation tracing only.jpg",
+      "by": "Displaced (Wikimedia Commons)",
+      "what": "anterior STEMI with tachycardia"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-stemi-equivalents",
@@ -2438,7 +2625,46 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "case": "stemi-post",
+     "cap": "Posterior MI (ECG card): ST depression and tall R in V1–V3 = mirror image of posterior ST elevation"
+    },
+    {
+     "draw": {
+      "dur": 4000,
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 80,
+        "n": "V3",
+        "lab": "V3 · de Winter",
+        "st": -0.2,
+        "stc": true,
+        "t": 0.95,
+        "tw": 40
+       },
+       {
+        "r": "sinus",
+        "rate": 70,
+        "n": "V2",
+        "lab": "V2 · Wellens type B",
+        "t": -0.6,
+        "tw": 50
+       }
+      ]
+     },
+     "cap": "Drawn: upsloping ST depression into tall T (de Winter) and deep symmetrical T inversion (Wellens B)"
+    },
+    {
+     "img": {
+      "file": "Wellensekg.jpg",
+      "by": "Wikimedia Commons contributor",
+      "what": "Wellens' pattern in the anterior leads"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-bundle-branch-blocks",
@@ -2519,7 +2745,31 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "case": "lbbb",
+     "cap": "LBBB (ECG card): QRS 150 ms, deep S in V1, broad notched R in V6, I, aVL, discordant ST–T"
+    },
+    {
+     "case": "rbbb",
+     "cap": "RBBB (ECG card): rsR' in V1, wide slurred S in I and V6"
+    },
+    {
+     "img": {
+      "file": "Cardiogram indicating right bundle branch block.jpg",
+      "by": "James Heilman, MD",
+      "what": "RBBB"
+     }
+    },
+    {
+     "img": {
+      "file": "Left bundle branch block supraventricular extrasystole.jpg",
+      "by": "Steven Fruitsmaak",
+      "what": "LBBB"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-vt-vs-svt",
@@ -2616,7 +2866,31 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "case": "vt",
+     "cap": "VT (ECG card): broad (170 ms), regular, same shape every beat"
+    },
+    {
+     "case": "svt",
+     "cap": "SVT (ECG card): narrow, regular, no visible P waves"
+    },
+    {
+     "img": {
+      "file": "Lead II rhythm ventricular tachycardia Vtach VT.JPG",
+      "by": "Glenlarson",
+      "what": "monomorphic VT, lead II"
+     }
+    },
+    {
+     "img": {
+      "file": "ECG AVNRT 181 bpm.jpg",
+      "by": "Ewingdo",
+      "what": "AVNRT at 181/min"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-pericarditis",
@@ -2702,7 +2976,48 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "draw": {
+      "leads": [
+       {
+        "r": "sinus",
+        "rate": 96,
+        "n": "II"
+       }
+      ],
+      "twelve": {
+       "all": {
+        "st": 0.15,
+        "prd": 0.07
+       },
+       "aVR": {
+        "prd": -0.07,
+        "t": -0.25
+       },
+       "V1": {
+        "st": 0.03,
+        "prd": 0
+       },
+       "aVL": {
+        "st": 0.05
+       },
+       "III": {
+        "st": 0.08
+       }
+      }
+     },
+     "cap": "Acute pericarditis, drawn: widespread concave ST elevation with PR depression; aVR shows ST depression and PR elevation"
+    },
+    {
+     "img": {
+      "file": "PericarditisECG.JPG",
+      "by": "James Heilman, MD",
+      "what": "pericarditis: ST elevation in many leads, reciprocal ST depression in aVR"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-electrolytes-hypothermia",
@@ -2799,7 +3114,43 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "case": "hyperk",
+     "strip": true,
+     "cap": "Hyperkalaemia (ECG card strip): peaked T, flat broad P, wide QRS"
+    },
+    {
+     "case": "hypok",
+     "strip": true,
+     "cap": "Hypokalaemia (ECG card strip): ST depression, flat T, prominent U"
+    },
+    {
+     "case": "hypoca",
+     "strip": true,
+     "cap": "Hypocalcaemia (ECG card strip): long flat ST, so a long QT"
+    },
+    {
+     "case": "hypotherm",
+     "strip": true,
+     "cap": "Hypothermia (ECG card strip): bradycardia, Osborn J waves, shivering baseline"
+    },
+    {
+     "img": {
+      "file": "Hyperkalemia ECG.jpg",
+      "by": "Dr Michael-Joseph F. Agbayani & Dr Eddieson Gonzales",
+      "what": "K⁺ 8.2 mmol/L: peaked T waves"
+     }
+    },
+    {
+     "img": {
+      "file": "LowKECG.JPG",
+      "by": "James Heilman, MD",
+      "what": "K⁺ 1.1: ST depression, inverted T, large U waves"
+     }
+    }
+   ]
   },
   {
    "id": "ecg-pre-excitation-channelopathies",
@@ -2879,7 +3230,39 @@
    ],
    "created": "2026-11-23",
    "updated": "2026-11-23",
-   "seen": 1
+   "seen": 1,
+   "figs": [
+    {
+     "case": "wpw",
+     "cap": "WPW (ECG card): short PR, delta waves, broad QRS"
+    },
+    {
+     "case": "brugada",
+     "strip": true,
+     "cap": "Brugada type 1 (ECG card strip): coved ST elevation ≥ 2 mm into a negative T in V1–V2"
+    },
+    {
+     "img": {
+      "file": "WPW09.JPG",
+      "by": "James Heilman, MD",
+      "what": "WPW: delta waves and short PR"
+     }
+    },
+    {
+     "img": {
+      "file": "Brugada syndrome ECGs.jpg",
+      "by": "PeaBrainC",
+      "what": "type 1 Brugada pattern in V1–V3"
+     }
+    },
+    {
+     "img": {
+      "file": "Long QT syndrome type 1.jpg",
+      "by": "PeaBrainC",
+      "what": "LQT1 pattern with the QT measured"
+     }
+    }
+   ]
   },
   {
    "id": "abg-normal-values",

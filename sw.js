@@ -1,8 +1,9 @@
 // Inemuri (formerly Study Desk / Docks) offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v183';
+const CACHE = 'study-desk-v184';
 const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
 const PIC_DAYS = 3, PIC_MAX = 80;
+const ECGP = 'inemuri-ecg-pics'; // real ECG tracings (Wikimedia Commons, ?ecg=1): kept with no expiry so flashcards and ECG notes work offline
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png', './img/side-sky.jpg'];
 
 self.addEventListener('install', e => {
@@ -12,7 +13,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== PICS).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== PICS && k !== ECGP).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -32,10 +33,20 @@ async function picture(req) {
   } catch (err) { if (hit) return hit; throw err; }
 }
 
+async function ecgPic(req) {
+  const c = await caches.open(ECGP);
+  const hit = await c.match(req.url);
+  if (hit) return hit;
+  const res = await fetch(req);
+  if (res.ok || res.type === 'opaque') c.put(req.url, res.clone());
+  return res;
+}
+
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  if (isPic(url) && url.searchParams.get('ecg') === '1') { e.respondWith(ecgPic(req)); return; }
   if (isPic(url)) { e.respondWith(picture(req)); return; }
   if (url.origin !== location.origin) return;
   if (url.pathname.includes('/data/')) return; // always straight to the network

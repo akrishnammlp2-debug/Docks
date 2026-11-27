@@ -1,5 +1,5 @@
 {
- "about": "ECG vignettes for the daily flashcard (Academics and Today). Strips are drawn by the app from the 'leads' settings. Every fact was checked against the source named in 'src' (Nov 2026). Add cases at the end; never remove (academic data).",
+ "about": "ECG vignettes for the daily flashcard (Academics and Today). Strips are drawn by the app from the 'leads' settings. Every fact was checked against the source named in 'src' (Nov 2026). Add cases at the end; never remove (academic data). Since 27 Nov 2026 each case also has `twelve` (12-lead drawing settings: pat = lbbb/rbbb/vent/wpw, all = every lead, or per-lead changes; see ecg12Leads in index.html) and, where a free-to-use one exists, `img` (a real tracing on Wikimedia Commons: file, by, what). Never invent a file name; only use files found on Commons with a matching description.",
  "cases": [
   {
    "id": "af-rvr",
@@ -28,7 +28,13 @@
     "If stable: control the rate (a beta-blocker if EF > 40%; amiodarone or digoxin if in heart failure)"
    ],
    "pearl": "New AF during surgery usually has a cause. Check K⁺, Mg²⁺, fluid status and depth of anaesthesia before reaching for drugs.",
-   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL ECG library"
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL ECG library",
+   "twelve": {},
+   "img": {
+    "file": "ECG Atrial Fibrillation.jpg",
+    "by": "Ewingdo",
+    "what": "atrial fibrillation at 132/min"
+   }
   },
   {
    "id": "flutter",
@@ -58,7 +64,13 @@
     "Unstable: synchronised DC shock"
    ],
    "pearl": "A regular narrow tachycardia at exactly 150 is flutter with 2:1 block until proven otherwise. After oesophagectomy, a new atrial arrhythmia can be the first sign of an anastomotic leak.",
-   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL atrial flutter"
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; LITFL atrial flutter",
+   "twelve": {},
+   "img": {
+    "file": "AtrialFlutter12.JPG",
+    "by": "James Heilman, MD",
+    "what": "12-lead atrial flutter"
+   }
   },
   {
    "id": "svt",
@@ -88,7 +100,13 @@
     "Unstable: synchronised DC shock"
    ],
    "pearl": "Warn her that adenosine causes a few seconds of chest tightness and flushing. Give it fast through a large cannula with a quick flush.",
-   "src": "RCUK Adult tachyarrhythmia algorithm 2025"
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025",
+   "twelve": {},
+   "img": {
+    "file": "ECG AVNRT 181 bpm.jpg",
+    "by": "Ewingdo",
+    "what": "AVNRT at 181/min; small retrograde P waves after the QRS"
+   }
   },
   {
    "id": "brady-spinal",
@@ -115,7 +133,13 @@
     "Check the block height and keep an eye on her breathing"
    ],
    "pearl": "A block reaching T1–T4 takes out the cardioaccelerator fibres, so bradycardia plus hypotension means a high block.",
-   "src": "RCUK Adult bradyarrhythmia algorithm 2025; International consensus on hypotension at spinal caesarean (Anaesthesia 2018)"
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025; International consensus on hypotension at spinal caesarean (Anaesthesia 2018)",
+   "twelve": {},
+   "img": {
+    "file": "ECG Sinus Bradycardia 43 bpm.jpg",
+    "by": "Ewingdo",
+    "what": "sinus bradycardia at 43/min"
+   }
   },
   {
    "id": "avb1",
@@ -143,7 +167,13 @@
     "Fine to proceed"
    ],
    "pearl": "Count the PR in small squares: more than 5 small squares (200 ms) is first-degree block.",
-   "src": "LITFL first-degree AV block"
+   "src": "LITFL first-degree AV block",
+   "twelve": {},
+   "img": {
+    "file": "21 (CardioNetworks ECGpedia).jpg",
+    "by": "CardioNetworks ECGpedia",
+    "what": "first-degree AV block with left anterior fascicular block"
+   }
   },
   {
    "id": "wenck",
@@ -176,7 +206,13 @@
     "No treatment if he is well; atropine if he becomes symptomatic"
    ],
    "pearl": "Mobitz I sits in the AV node and usually responds to atropine; Mobitz II sits below it and carries a risk of asystole.",
-   "src": "LITFL AV block; RCUK Adult bradyarrhythmia algorithm 2025"
+   "src": "LITFL AV block; RCUK Adult bradyarrhythmia algorithm 2025",
+   "twelve": {},
+   "img": {
+    "file": "Type I A-V block 5-to-4 Wenckebach periods.png",
+    "by": "Jer5150",
+    "what": "5:4 Wenckebach periods in an acute inferior MI"
+   }
   },
   {
    "id": "mobitz2",
@@ -211,7 +247,15 @@
     "Pads on and pacing ready if surgery cannot wait; atropine often does not work"
    ],
    "pearl": "Constant PR with a sudden dropped beat = Mobitz II. Dizzy spells plus Mobitz II = needs a pacemaker.",
-   "src": "RCUK Adult bradyarrhythmia algorithm 2025; LITFL AV block"
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025; LITFL AV block",
+   "twelve": {
+    "pat": "rbbb"
+   },
+   "img": {
+    "file": "Sinus rhythm with 3-to-2 and 2-to-1 Type II A-V block.png",
+    "by": "Jer5150",
+    "what": "Mobitz II with 3:2 and 2:1 block, plus RBBB"
+   }
   },
   {
    "id": "chb",
@@ -245,7 +289,15 @@
     "Transvenous pacing before the surgery"
    ],
    "pearl": "March out the P waves with the edge of a paper: they keep their own rhythm and walk through the QRS complexes.",
-   "src": "RCUK Adult bradyarrhythmia algorithm 2025"
+   "src": "RCUK Adult bradyarrhythmia algorithm 2025",
+   "twelve": {
+    "pat": "vent"
+   },
+   "img": {
+    "file": "3rd degree heart block.PNG",
+    "by": "Wikimedia Commons contributor",
+    "what": "complete heart block; arrows mark P waves and QRS"
+   }
   },
   {
    "id": "vt",
@@ -280,7 +332,15 @@
     "Check K⁺ and Mg²⁺"
    ],
    "pearl": "A regular broad-complex tachycardia in someone with heart disease is VT until proven otherwise.",
-   "src": "RCUK Adult tachyarrhythmia algorithm 2025; RCUK ALS 2025"
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025; RCUK ALS 2025",
+   "twelve": {
+    "pat": "vent"
+   },
+   "img": {
+    "file": "Lead II rhythm ventricular tachycardia Vtach VT.JPG",
+    "by": "Glenlarson",
+    "what": "monomorphic VT, lead II"
+   }
   },
   {
    "id": "tdp",
@@ -312,7 +372,13 @@
     "No pulse: defibrillate and follow ALS"
    ],
    "pearl": "Many antiemetics, antipsychotics and antibiotics lengthen QT. Check the QTc before stacking them.",
-   "src": "RCUK Adult tachyarrhythmia algorithm 2025"
+   "src": "RCUK Adult tachyarrhythmia algorithm 2025",
+   "twelve": {},
+   "img": {
+    "file": "12leadTorsade (CardioNetworks ECGpedia).jpg",
+    "by": "CardioNetworks ECGpedia",
+    "what": "torsades de pointes, 12-lead"
+   }
   },
   {
    "id": "vf",
@@ -338,7 +404,13 @@
     "Work through the 4 Hs and 4 Ts; in a TURP add fluid absorption with hyponatraemia"
    ],
    "pearl": "Check the monitor leads and the patient together: loose electrodes can mimic VF, but a pulseless patient never lies.",
-   "src": "RCUK Adult ALS algorithm 2025"
+   "src": "RCUK Adult ALS algorithm 2025",
+   "twelve": {},
+   "img": {
+    "file": "Lead II rhythm generated ventricular fibrilation VF.JPG",
+    "by": "Glenlarson",
+    "what": "VF from a rhythm simulator, lead II"
+   }
   },
   {
    "id": "hyperk",
@@ -375,7 +447,47 @@
     "Remove K⁺: dialysis. Postpone the case; no suxamethonium"
    ],
    "pearl": "Calcium gluconate 10 mL is only a third of the calcium in 10 mL of calcium chloride: give 30 mL of gluconate.",
-   "src": "UK Kidney Association hyperkalaemia guideline; MHRA Drug Safety Update on calcium salts; LITFL hyperkalaemia"
+   "src": "UK Kidney Association hyperkalaemia guideline; MHRA Drug Safety Update on calcium salts; LITFL hyperkalaemia",
+   "twelve": {
+    "I": {
+     "t": 0.55
+    },
+    "III": {
+     "t": 0.5
+    },
+    "aVR": {
+     "t": -0.5
+    },
+    "aVL": {
+     "t": 0.3
+    },
+    "aVF": {
+     "t": 0.7
+    },
+    "V1": {
+     "t": 0.7
+    },
+    "V2": {
+     "t": 1.3
+    },
+    "V3": {
+     "t": 1.35
+    },
+    "V4": {
+     "t": 1.2
+    },
+    "V5": {
+     "t": 0.9
+    },
+    "V6": {
+     "t": 0.7
+    }
+   },
+   "img": {
+    "file": "Hyperkalemia ECG.jpg",
+    "by": "Dr Michael-Joseph F. Agbayani & Dr Eddieson Gonzales",
+    "what": "K⁺ 8.2 mmol/L in kidney disease: peaked T waves"
+   }
   },
   {
    "id": "hypok",
@@ -410,7 +522,34 @@
     "Watch for ectopics and arrhythmias"
    ],
    "pearl": "ECG changes usually appear only once K⁺ is below about 2.7–3.0 mmol/L, often with low magnesium too.",
-   "src": "LITFL hypokalaemia; ECGpedia electrolyte disorders"
+   "src": "LITFL hypokalaemia; ECGpedia electrolyte disorders",
+   "twelve": {
+    "all": {
+     "st": -0.07,
+     "t": 0.08,
+     "u": 0.15
+    },
+    "V1": {
+     "st": -0.03,
+     "t": 0.05
+    },
+    "V2": {
+     "u": 0.3
+    },
+    "V3": {
+     "u": 0.28
+    },
+    "aVR": {
+     "st": 0.05,
+     "t": -0.06,
+     "u": -0.08
+    }
+   },
+   "img": {
+    "file": "LowKECG.JPG",
+    "by": "James Heilman, MD",
+    "what": "K⁺ 1.1: ST depression, inverted T, large U waves"
+   }
   },
   {
    "id": "hypoca",
@@ -440,7 +579,8 @@
     "Correct low magnesium too"
    ],
    "pearl": "After thyroidectomy, think of the parathyroids. It is the ST segment that stretches, not the T wave.",
-   "src": "ECGpedia electrolyte disorders; LITFL hypocalcaemia"
+   "src": "ECGpedia electrolyte disorders; LITFL hypocalcaemia",
+   "twelve": {}
   },
   {
    "id": "wpw",
@@ -473,7 +613,15 @@
     "Avoid AV-node blockers (adenosine, verapamil, digoxin, beta-blockers) in pre-excited AF: they speed conduction down the accessory pathway"
    ],
    "pearl": "Short PR + delta wave + palpitations = WPW syndrome. Without symptoms it is called a WPW pattern.",
-   "src": "LITFL pre-excitation syndromes; RCUK Adult tachyarrhythmia algorithm 2025"
+   "src": "LITFL pre-excitation syndromes; RCUK Adult tachyarrhythmia algorithm 2025",
+   "twelve": {
+    "pat": "wpw"
+   },
+   "img": {
+    "file": "WPW09.JPG",
+    "by": "James Heilman, MD",
+    "what": "WPW: delta waves and short PR"
+   }
   },
   {
    "id": "brugada",
@@ -525,7 +673,17 @@
     "An ICD is the definitive treatment"
    ],
    "pearl": "Only the coved (type 1) pattern is diagnostic, and only with a clinical feature such as syncope or a family history of sudden death.",
-   "src": "LITFL Brugada syndrome"
+   "src": "LITFL Brugada syndrome",
+   "twelve": {
+    "V3": {
+     "st": 0.1
+    }
+   },
+   "img": {
+    "file": "Brugada syndrome ECGs.jpg",
+    "by": "PeaBrainC",
+    "what": "type 1 Brugada pattern in V1–V3"
+   }
   },
   {
    "id": "stemi-inf",
@@ -570,7 +728,28 @@
     "Right ventricular infarction makes her preload-dependent: give fluid, avoid nitrates"
    ],
    "pearl": "With an inferior STEMI, always look at V1–V3 for posterior extension and at V4R for the right ventricle.",
-   "src": "LITFL inferior STEMI; LITFL posterior MI"
+   "src": "LITFL inferior STEMI; LITFL posterior MI",
+   "twelve": {
+    "aVF": {
+     "st": 0.3,
+     "t": 0.42
+    },
+    "I": {
+     "st": -0.08,
+     "t": 0.1
+    },
+    "aVR": {
+     "st": -0.05
+    },
+    "V2": {
+     "st": -0.05
+    }
+   },
+   "img": {
+    "file": "ECG 001.jpg",
+    "by": "Patho (Wikimedia Commons)",
+    "what": "acute inferior STEMI: ST elevation in II, III, aVF"
+   }
   },
   {
    "id": "stemi-post",
@@ -612,7 +791,19 @@
     "Treat as a STEMI equivalent: emergency reperfusion"
    ],
    "pearl": "Turn the ECG upside down: the ST depression becomes ST elevation and the tall R becomes a Q wave.",
-   "src": "LITFL posterior myocardial infarction"
+   "src": "LITFL posterior myocardial infarction",
+   "twelve": {
+    "V1": {
+     "shape": "Rs",
+     "R": 0.8,
+     "S": 0.6,
+     "st": -0.25,
+     "t": 0.3
+    },
+    "V4": {
+     "st": -0.12
+    }
+   }
   },
   {
    "id": "pe",
@@ -654,7 +845,40 @@
     "Anticoagulate; thrombolysis if shocked (massive PE)"
    ],
    "pearl": "S1Q3T3 is specific but not sensitive: a normal ECG never rules out PE.",
-   "src": "LITFL pulmonary embolism ECG; WikEM ECGs by diagnosis"
+   "src": "LITFL pulmonary embolism ECG; WikEM ECGs by diagnosis",
+   "twelve": {
+    "aVF": {
+     "Q": 0.1,
+     "R": 0.6,
+     "S": 0.1,
+     "t": -0.1
+    },
+    "II": {
+     "t": 0.15
+    },
+    "aVL": {
+     "R": 0.2,
+     "S": 0.45,
+     "t": 0.05
+    },
+    "V1": {
+     "t": -0.25
+    },
+    "V2": {
+     "t": -0.3
+    },
+    "V3": {
+     "t": -0.2
+    },
+    "V4": {
+     "t": -0.1
+    }
+   },
+   "img": {
+    "file": "Pulm embolism.jpg",
+    "by": "R.W. Koster (ECGpedia)",
+    "what": "PE: deep S in I, Q and inverted T in III"
+   }
   },
   {
    "id": "lbbb",
@@ -698,7 +922,15 @@
     "LBBB makes ST changes hard to read during surgery"
    ],
    "pearl": "A pulmonary artery catheter can bruise the right bundle; with an existing LBBB that can cause complete heart block, so have pacing ready.",
-   "src": "LITFL LBBB; MSD Manual bundle branch block"
+   "src": "LITFL LBBB; MSD Manual bundle branch block",
+   "twelve": {
+    "pat": "lbbb"
+   },
+   "img": {
+    "file": "Left bundle branch block supraventricular extrasystole.jpg",
+    "by": "Steven Fruitsmaak",
+    "what": "LBBB with supraventricular ectopics"
+   }
   },
   {
    "id": "rbbb",
@@ -740,7 +972,15 @@
     "A new RBBB with symptoms: think of PE or anterior ischaemia"
    ],
    "pearl": "RBBB: the M is in V1. LBBB: the M is in V6.",
-   "src": "MSD Manual bundle branch block; 2-Minute Medicine BBB criteria"
+   "src": "MSD Manual bundle branch block; 2-Minute Medicine BBB criteria",
+   "twelve": {
+    "pat": "rbbb"
+   },
+   "img": {
+    "file": "Cardiogram indicating right bundle branch block.jpg",
+    "by": "James Heilman, MD",
+    "what": "RBBB"
+   }
   },
   {
    "id": "paced",
@@ -774,7 +1014,15 @@
     "A magnet usually gives fixed-rate pacing in pacemakers, but the response varies by model; ICDs need shocks turned off"
    ],
    "pearl": "She has complete heart block underneath: if diathermy inhibits the pacemaker, she may have no rhythm at all.",
-   "src": "British Heart Rhythm Society CIED guideline (Anaesthesia 2022); NHS GGC perioperative CIED guideline"
+   "src": "British Heart Rhythm Society CIED guideline (Anaesthesia 2022); NHS GGC perioperative CIED guideline",
+   "twelve": {
+    "pat": "vent"
+   },
+   "img": {
+    "file": "E00031141 (CardioNetworks ECGpedia).jpg",
+    "by": "CardioNetworks ECGpedia",
+    "what": "ventricular pacing (with 1:1 retrograde conduction)"
+   }
   },
   {
    "id": "hypotherm",
@@ -808,7 +1056,45 @@
     "Drugs and relaxants last longer; check K⁺ and glucose as you warm"
    ],
    "pearl": "The size of the Osborn wave roughly follows how cold the patient is.",
-   "src": "LITFL hypothermia; LITFL Osborn wave"
+   "src": "LITFL hypothermia; LITFL Osborn wave",
+   "twelve": {
+    "I": {
+     "j": 0.2
+    },
+    "II": {
+     "j": 0.38
+    },
+    "III": {
+     "j": 0.3
+    },
+    "aVR": {
+     "j": -0.2
+    },
+    "aVL": {
+     "j": 0.1
+    },
+    "aVF": {
+     "j": 0.35
+    },
+    "V1": {
+     "j": 0.1
+    },
+    "V2": {
+     "j": 0.2
+    },
+    "V3": {
+     "j": 0.3
+    },
+    "V4": {
+     "j": 0.4
+    },
+    "V5": {
+     "j": 0.42
+    },
+    "V6": {
+     "j": 0.35
+    }
+   }
   },
   {
    "id": "junctional",
@@ -835,7 +1121,13 @@
     "If BP falls (loss of the atrial kick): lighten the volatile, give an anticholinergic"
    ],
    "pearl": "Junctional rhythm loses the atrial kick, which matters most in a stiff heart (aortic stenosis, LVH).",
-   "src": "LITFL junctional rhythms"
+   "src": "LITFL junctional rhythms",
+   "twelve": {},
+   "img": {
+    "file": "ECG of Junctional Rhythm.png",
+    "by": "Dhaval Desai, MD, MPH (via NLM)",
+    "what": "junctional rhythm"
+   }
   }
  ]
 }

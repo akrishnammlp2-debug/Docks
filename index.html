@@ -1791,6 +1791,13 @@ a.dota-n .r-main{gap:3px}
 .ecg-tr{fill:none;stroke:#1d1517;stroke-width:.42;stroke-linejoin:round;stroke-linecap:round}.ecg-sp{stroke:#1d1517;stroke-width:.3}
 .ecg-l{font:600 3.6px -apple-system,system-ui,sans-serif;fill:#6b2f3a}
 .ecg-cap{margin:2px 0 0;font-size:11px;color:var(--fg-2)}
+.ecg-cap a{color:inherit;text-decoration:underline}
+.ecg-tabs{margin:2px 0 4px}
+#sheet .ecg-tabs{background:#E9D6DD!important}#sheet .ecg-tabs button{background:transparent!important;color:#3B2A31!important}#sheet .ecg-tabs button[aria-pressed="true"]{background:#FFFFFF!important;color:#5B2A86!important}
+.ecg-imgw{background:#fff}.ecg-imgw img{display:block;width:100%;min-width:680px;height:auto}
+.ecg-real{margin:0}.ecg-miss-t{display:none;margin:4px 0;font-size:13px;color:var(--fg-2)}.ecg-real.ecg-miss .ecg-imgw{display:none}.ecg-real.ecg-miss .ecg-miss-t{display:block}
+.ecg-figs{display:flex!important;flex-direction:column;gap:10px;margin:8px 0 12px}.ecg-figs summary{display:flex;justify-content:space-between;align-items:baseline;gap:8px;cursor:pointer;list-style:none}.ecg-figs summary::-webkit-details-marker{display:none}.ecg-figs summary span{font-size:12px;color:var(--fg-2)}
+.ecg-fig{display:flex;flex-direction:column;gap:4px}.ecg-fig-t{font-size:13px}
 @media (prefers-color-scheme:dark){.ecg-bg{fill:#2A2124}.ecg-g1{stroke:#46303A}.ecg-g5{stroke:#6E4452}.ecg-tr,.ecg-sp{stroke:#F7EEF0}.ecg-l{fill:#F2C6D0}}
 .fc-stem{margin:0;font-size:15px;line-height:1.4;color:var(--fg)}
 .fc-q{font-size:16px;line-height:1.3}
@@ -2186,7 +2193,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.05 · Inemuri Wrapped';
+const APP_VERSION = '6.06 · ECG pictures';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2320,7 +2327,7 @@ async function loadData(manual) {
       try { localStorage.setItem('studydesk.data.' + f, JSON.stringify({ at: nowISO(), data: j })); } catch (_) {}
     } catch (e) { failed++; if (dataStatus[f].from === 'network') dataStatus[f].from = 'saved'; }
   }));
-  render(); setTimeout(mediaScanDumps, 1200); setTimeout(mediaRetry, 2500); if (window.requestIdleCallback) requestIdleCallback(warmPictures, { timeout: 3000 }); else setTimeout(warmPictures, 1500);
+  render(); setTimeout(mediaScanDumps, 1200); setTimeout(mediaRetry, 2500); if (window.requestIdleCallback) requestIdleCallback(warmPictures, { timeout: 3000 }); else setTimeout(warmPictures, 1500); setTimeout(ecgWarm, 6000);
   if (manual) toast(failed ? "Couldn't reach GitHub. Showing the last saved copy." : 'Up to date ✓');
 }
 const CASES = () => (D.cases && D.cases.items) || [];
@@ -3845,7 +3852,7 @@ function howSection() { const P = state.private || {}; const it = (k, t, lines) 
     it('thesis', '🧪 Thesis tracker', ['Send Claude your urology list in chat (say “urology list”, separate from the OT list). Claude picks every case with TURP in it (not TURBT) and adds it here with the date and all its details.', 'Each case gets the next number from your random sequence (dashed box = waiting). Mark it Recruited or Not recruited; once recruited, mark Done or Not done in OT.', 'A number is used up only when the case is recruited and done (green box). Recruited but not done in OT: the case comes off the list (kept under the Not done filter, tap again to undo) and its number passes to the next patient. Not recruited cases get no number.', 'The ring counts patients recruited and done out of the whole sequence, including the ones before the tracker. The sequence and names stay locked to your paired devices. Thesis cases are never removed.', 'Marking Not recruited or Not done asks for a reason (you can skip it and add it later from the Reason column). The reasons feed the CONSORT counts under the list. Export list for Excel saves every case with its number, outcome and reason as a file Excel opens.', 'Recruitment calendar: each month shows your TURP cases as coloured dots (green = recruited and done, blue = recruited and still to mark, amber = not decided, red = not done in OT, grey = not recruited). Days with a recruited patient get a soft green circle. Tap a day to see that day\'s patients just below the calendar.', 'Thesis card (bottom of the Cases tab): your name, thesis title and guides. Tap it to flip for the IEC number, CTRI numbers, approval dates and the next IEC continuation date. ⧉ copies a single number; Copy all thesis details copies everything.', 'Review of literature (second tab): papers checked on PubMed, grouped by topic, each with what it found and where to use it in your thesis. Mark papers read and tick the writing steps as you go. A reminder on Today shows when a TURP case today or tomorrow still needs marking (switch it off in Settings).']),
     it('plant', '🌻 Habit sunflower', ['A day counts when you do at least 75% of that day\u2019s habits. Every-few-days habits (like watering plants) only count when you do them, never against you.', 'Each good day grows your sunflower: seed, sprout, leaves, a bushy plant, a sunflower bud, and a full sunflower after 21 good days. Then a new seed starts. Missed days never make it wilt; it just waits.']),
     it('prep', '📖 Prep for these cases', ['Under the OT list, cases are grouped by type (laparoscopy, TURP, shoulder, IR and so on). Tap one for the key anaesthetic points, your matching bite-size notes and a verified article.', 'The points are short revision notes, not a protocol.']),
-    it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette with a drawn strip and one ABG. Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
+    it('flash', '🫀 ECG & ABG flashcards', ['Every day: one ECG vignette and one ABG. Each ECG card has three views at the top: a drawn 12-lead (all 12 leads drawn from the same beats, plus a 10 s lead II strip), the short strip, and a real tracing of a similar case from Wikimedia Commons (credited under the picture). The ECG Bite-size notes have a "See it on an ECG" box with the same kinds of pictures. Real pictures need the internet the first time; the app then keeps them for offline (switch both in Settings).', 'ECG + ABG: Read it, then tap to reveal. ABGs open one step at a time: pH, primary disorder, compensation, anion gap (corrected for albumin), delta ratio, oxygenation, then the diagnosis.', 'Got it brings the card back after 4, 10, 25 and then 60 days; Again brings it back in 2 days. ABG numbers are freshly made each time and always obey Henderson–Hasselbalch. Another ABG (in Academics) gives extra practice.', 'Each card names the source its facts were checked against. They are teaching cards, not a protocol.']),
     it('viva', '🎤 Viva round', ['Five flashcards from the “Points for the exam / viva” in your bite-size notes. Say the points out loud, tap to check, then Knew it or Again tomorrow. It shares the same spacing as the daily bite revision.']),
     it('emap', '🗺️ Exam map', ['One ring per exam area. It counts your bite-size notes (done once revised), your study topics (done once studied) and textbook chapters (done once ticked) in that area. Empty areas show “nothing yet”, so the thin spots stand out.']),
     it('quiet', '🌙 Quiet morning', ['If the roster shows you on duty yesterday, Today stays quiet until 2 PM: only reminders that are due, cat food if due, and a running study timer. Everything else waits under More today. Turn it off for the day from the moon line, or switch it off in Settings.']),
@@ -3947,6 +3954,8 @@ function pageBackup() {
     <label class="row toggle"><span>Exam map in Academics</span><input type="checkbox" data-setting="examMapOn" ${S.examMapOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Daily bite revision on Today (3 notes a day)</span><input type="checkbox" data-setting="biteRevOn" ${S.biteRevOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Daily ECG + ABG flashcards (Today and Academics)</span><input type="checkbox" data-setting="flashOn" ${S.flashOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Real ECG pictures (flashcards and ECG notes)</span><input type="checkbox" data-setting="ecgReal" ${S.ecgReal !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Keep real ECG pictures on this device for offline</span><input type="checkbox" data-setting="ecgPics" ${S.ecgPics !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Sunday round-up of your week on Today</span><input type="checkbox" data-setting="weekOn" ${S.weekOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup reminder on Today after 30 days</span><input type="checkbox" data-setting="bkNudgeOn" ${S.bkNudgeOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Backup dot in the menu (orange = no backup this week)</span><input type="checkbox" data-setting="backupLine" ${S.backupLine ? 'checked' : ''}></label>`, 8)}
@@ -4457,11 +4466,12 @@ const QRS_SHAPES = { /* [position as fraction of QRS width, sd fraction, mV] */
 };
 function ecgV(t, ev, L) {
   let v = 0; const w = L.qrs || 90, qt = L.qt || 380;
-  for (const p of ev.P) if (Math.abs(t - p.c) < 120) v += fcG(t, p.c, L.pw || 22, p.a);
+  for (const p of ev.P) if (Math.abs(t - p.c) < 120) v += L.pb ? fcG(t, p.c - 22, 15, p.a * 0.85) + fcG(t, p.c + 22, 15, p.a * 0.9) : fcG(t, p.c, L.pw || 22, p.a);
   for (const t0 of ev.B) { const d = t - t0; if (d < -200 || d > qt + 260) continue;
     const comps = L.shape ? QRS_SHAPES[L.shape](L) : [[0.12, 0.06, -(L.Q ?? 0.08)], [0.42, 0.11, L.R ?? 1.1], [0.72, 0.09, -(L.S ?? 0.25)]];
     for (const [f, s, a] of comps) v += fcG(d, w * f, w * s, a);
-    if (L.dl) v += 0.3 * (1 / (1 + Math.exp(-(d + L.dl * 0.55) / (L.dl / 7)))) * (1 - 1 / (1 + Math.exp(-(d - w * 0.5) / 6)));
+    if (L.prd && ev.P.length) v += fcG(d, -48, 26, -L.prd);
+    if (L.dl) v += 0.3 * (L.dla ?? 1) * (1 / (1 + Math.exp(-(d + L.dl * 0.55) / (L.dl / 7)))) * (1 - 1 / (1 + Math.exp(-(d - w * 0.5) / 6)));
     const J = w, tc = qt - (L.tw || 45) * 1.9, sig = x => 1 / (1 + Math.exp(-x));
     if (L.st) v += L.stc ? (d > J - 6 ? L.st * Math.exp(-Math.max(0, d - J) / 170) * sig((d - J + 4) / 3) : 0) : L.st * sig((d - J + 4) / 4) * (1 - sig((d - tc) / 22));
     v += fcG(d, tc, L.pk ? 26 : (L.tw || 45), L.t ?? 0.3);
@@ -4469,10 +4479,11 @@ function ecgV(t, ev, L) {
     if (L.j) v += fcG(d, J + 12, 13, L.j);
   }
   const s = t / 1000;
-  if (L.r === 'af') v += 0.05 * Math.sin(2 * Math.PI * 6.3 * s) + 0.035 * Math.sin(2 * Math.PI * 8.9 * s + 1.3) + 0.03 * Math.sin(2 * Math.PI * 5.1 * s + 2.1);
-  if (L.r === 'flutter') { const f = ((t / (60000 / (L.arate || 300))) % 1); v += -0.4 * (f < 0.78 ? f / 0.78 : (1 - f) / 0.22) + 0.2; }
-  if (L.r === 'vf') { const e = 0.35 + 0.25 * Math.sin(2 * Math.PI * 0.45 * s + 0.6); v += e * (Math.sin(2 * Math.PI * 4.6 * s) + 0.6 * Math.sin(2 * Math.PI * 6.7 * s + 1.1) + 0.4 * Math.sin(2 * Math.PI * 3.3 * s + 2.4)); }
-  if (L.r === 'tdp' && t > (L.from || 1500)) { const x = (t - (L.from || 1500)) / 1000; const e = 0.2 + 0.8 * Math.abs(Math.sin(Math.PI * x / 1.6)); const c = Math.sin(2 * Math.PI * 4 * x); v += e * Math.sign(c) * Math.pow(Math.abs(c), 0.6); }
+  const am = L.am ?? 1, vm = L.vm ?? 1, vp = L.vp || 0;
+  if (L.r === 'af') v += am * (0.05 * Math.sin(2 * Math.PI * 6.3 * s) + 0.035 * Math.sin(2 * Math.PI * 8.9 * s + 1.3) + 0.03 * Math.sin(2 * Math.PI * 5.1 * s + 2.1));
+  if (L.r === 'flutter') { const f = ((t / (60000 / (L.arate || 300))) % 1); v += am * (-0.4 * (f < 0.78 ? f / 0.78 : (1 - f) / 0.22) + 0.2); }
+  if (L.r === 'vf') { const e = 0.35 + 0.25 * Math.sin(2 * Math.PI * 0.45 * s + 0.6); v += vm * e * (Math.sin(2 * Math.PI * 4.6 * s + vp) + 0.6 * Math.sin(2 * Math.PI * 6.7 * s + 1.1 + vp * 1.7) + 0.4 * Math.sin(2 * Math.PI * 3.3 * s + 2.4 - vp)); }
+  if (L.r === 'tdp' && t > (L.from || 1500)) { const x = (t - (L.from || 1500)) / 1000; const e = 0.2 + 0.8 * Math.abs(Math.sin(Math.PI * x / 1.6)); const c = Math.sin(2 * Math.PI * 4 * x); v += vm * e * Math.sign(c) * Math.pow(Math.abs(c), 0.6); }
   if (L.shiver) v += 0.016 * Math.sin(2 * Math.PI * 23 * s) + 0.012 * Math.sin(2 * Math.PI * 31 * s + 0.7);
   return v;
 }
@@ -4481,12 +4492,121 @@ function ecgSVG(card) {
   const rows = leads.map((L, i) => { const ev = ecgEvents(L, dur, rnd), y0 = i * H + 19; let d = '';
     for (let t = 0; t <= dur; t += 4) { const y = Math.max(i * H + 1, Math.min(i * H + H - 1, y0 - ecgV(t, ev, L) * 10)); d += (t ? 'L' : 'M') + (t / 40).toFixed(2) + ' ' + y.toFixed(2); }
     const sp = L.r === 'paced' ? ev.B.map(t0 => `<path class="ecg-sp" d="M${((t0 - 6) / 40).toFixed(2)} ${y0 + 2}V${y0 - 13}"/>`).join('') : '';
-    return `<text class="ecg-l" x="2" y="${i * H + 5.5}">${esc(L.n || 'II')}</text><path class="ecg-tr" d="${d}"/>${sp}`; }).join('');
+    return `<text class="ecg-l" x="2" y="${i * H + 5.5}">${esc(L.lab || L.n || 'II')}</text><path class="ecg-tr" d="${d}"/>${sp}`; }).join('');
   const h = leads.length * H;
   return `<div class="ecg-wrap"><svg class="ecg" viewBox="0 0 ${mm} ${h}" style="min-width:${Math.round(mm * 3.4)}px" role="img" aria-label="ECG strip, leads ${esc(leads.map(l => l.n || 'II').join(', '))}">
     <defs><pattern id="eg1" width="1" height="1" patternUnits="userSpaceOnUse"><path d="M1 0V1H0" class="ecg-g1"/></pattern><pattern id="eg5" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="url(#eg1)"/><path d="M5 0V5H0" class="ecg-g5"/></pattern></defs>
     <rect width="${mm}" height="${h}" class="ecg-bg"/><rect width="${mm}" height="${h}" fill="url(#eg5)"/>${rows}</svg></div><p class="ecg-cap">25 mm/s · 10 mm/mV · ${(dur / 1000)} s${(card.leads || []).length > 1 ? ' · leads drawn one under the other, not at the same moment' : ''} · drawn for teaching, not a real tracing</p>`;
 }
+/* ---- v6.06 (27 Nov 2026): 12-lead drawing + real tracings for ECG flashcards and ECG Bite-size notes ----
+   One set of beats is made for the whole 10 s and every lead is drawn from those same beats, so the
+   12 leads are simultaneous like a real machine printout. Each lead starts from a normal-adult shape (NORM12),
+   then a pattern (PAT12: lbbb, rbbb, vent, wpw, lafb, lvh, rvh), then the card's own `twelve` changes, then any
+   lead the card already draws in `leads`, then the rhythm settings of the card's first lead. */
+const L12 = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6'];
+const NORM12 = {
+  I: { p: .08, Q: .05, R: .7, S: .1, t: .25, am: .3, vm: .6, vp: .4 },
+  II: { p: .15, Q: .06, R: 1.1, S: .2, t: .3, am: 1, vm: 1, vp: 0 },
+  III: { p: .06, Q: .05, R: .5, S: .25, t: .12, am: .9, vm: .8, vp: -.5 },
+  aVR: { p: -.1, Q: 0, R: .12, S: .75, t: -.25, am: -.6, vm: -.7, vp: .2 },
+  aVL: { p: .04, Q: .04, R: .35, S: .25, t: .1, am: -.2, vm: -.5, vp: .9 },
+  aVF: { p: .1, Q: .05, R: .8, S: .2, t: .2, am: 1, vm: .9, vp: -.2 },
+  V1: { p: .07, shape: 'rS', S: 1.0, t: .1, am: -.9, vm: -.9, vp: 1.3 },
+  V2: { p: .08, Q: 0, R: .35, S: 1.4, t: .45, am: .4, vm: 1.2, vp: 1.8 },
+  V3: { p: .08, Q: 0, R: .7, S: .9, t: .4, am: .25, vm: 1.3, vp: 2.2 },
+  V4: { p: .08, Q: .03, R: 1.2, S: .5, t: .35, am: .2, vm: 1.2, vp: 2.6 },
+  V5: { p: .08, Q: .08, R: 1.3, S: .25, t: .3, am: .2, vm: 1, vp: 3 },
+  V6: { p: .08, Q: .07, R: 1.0, S: .15, t: .25, am: .2, vm: .8, vp: 3.4 }
+};
+const PAT12 = {
+  lbbb: { I: { shape: 'mR', R: .8, st: -.06, t: -.2 }, II: { shape: 'Rs', R: .6, S: .2, t: .1 }, III: { shape: 'rS', S: .6, st: .05, t: .1 }, aVR: { shape: 'qs', S: .8, st: .05, t: .25 },
+    aVL: { shape: 'mR', R: .7, st: -.06, t: -.2 }, aVF: { shape: 'Rs', R: .3, S: .3, t: .05 }, V1: { shape: 'rS', S: 1.5, st: .12, t: .35 }, V2: { shape: 'rS', S: 2.0, st: .18, t: .45 },
+    V3: { shape: 'rS', S: 1.6, st: .15, t: .4 }, V4: { shape: 'rS', S: .9, st: .08, t: .25 }, V5: { shape: 'mR', R: 1.0, st: -.08, t: -.25 }, V6: { shape: 'mR', R: 1.0, st: -.1, t: -.3 } },
+  rbbb: { I: { shape: 'Rsw', R: .9, S: .4, t: .2 }, II: { shape: 'Rsw', R: 1.0, S: .3, t: .25 }, III: { shape: 'Rsw', R: .5, S: .25, t: .1 }, aVR: { shape: 'rsr', S: .7, rp: .4, t: -.2 },
+    aVL: { shape: 'Rsw', R: .4, S: .3, t: .1 }, aVF: { shape: 'Rsw', R: .8, S: .3, t: .2 }, V1: { shape: 'rsr', rp: .9, S: .5, t: -.2 }, V2: { shape: 'rsr', rp: .7, S: .7, t: -.1 },
+    V3: { shape: 'Rsw', R: .7, S: .6, t: .3 }, V4: { shape: 'Rsw', R: 1.1, S: .5, t: .3 }, V5: { shape: 'Rsw', R: 1.2, S: .45, t: .3 }, V6: { shape: 'Rsw', R: 1.0, S: .4, t: .25 } },
+  /* broad ventricular complexes with an LBBB shape and an inferior axis (VT from the RV outflow, a broad escape, RV septal pacing) */
+  vent: { I: { shape: 'Rs', R: .3, S: .3, t: 0 }, II: { shape: 'vt', R: 1.2, S: .3, t: -.35 }, III: { shape: 'vt', R: 1.1, S: .3, t: -.3 }, aVR: { shape: 'qs', S: .9, t: .3 },
+    aVL: { shape: 'qs', S: .7, t: .3 }, aVF: { shape: 'vt', R: 1.15, S: .3, t: -.32 }, V1: { shape: 'qs', S: 1.4, t: .4 }, V2: { shape: 'qs', S: 1.8, t: .5 }, V3: { shape: 'rS', S: 1.5, t: .4 },
+    V4: { shape: 'rS', S: .9, t: .2 }, V5: { shape: 'mR', R: 1.0, t: -.3 }, V6: { shape: 'mR', R: 1.0, t: -.3 } },
+  wpw: { I: { Q: 0, t: .12 }, II: { Q: 0 }, III: { Q: 0, dla: -.5, R: .3, S: .4, t: .15 }, aVR: { dla: -1, t: -.15 }, aVL: { Q: 0, t: .05 }, aVF: { Q: 0, dla: .3, t: .12 },
+    V1: { shape: null, Q: 0, R: .5, S: .8, dla: .6, t: .05 }, V2: { dla: 1, t: .2 }, V3: { dla: 1.2, t: .2 }, V4: { Q: 0, dla: 1.2, t: .15 }, V5: { Q: 0, dla: 1.1, t: .12 }, V6: { Q: 0, dla: 1, t: .1 } },
+  lafb: { I: { Q: .1, R: .75, S: 0 }, II: { Q: 0, R: .35, S: .7 }, III: { Q: 0, R: .2, S: 1.0, t: .05 }, aVR: { R: .25, S: .4 }, aVL: { Q: .1, R: .95, S: 0, t: .15 }, aVF: { Q: 0, R: .25, S: .85, t: .1 } },
+  lvh: { I: { R: 1.2, st: -.05, t: -.15 }, II: { R: 1.2 }, aVL: { R: 1.3, S: .1, st: -.06, t: -.2 }, V1: { S: 2.2 }, V2: { R: .3, S: 2.6, st: .1 }, V3: { R: .6, S: 1.5, st: .05 },
+    V4: { R: 2.0, S: .4, st: -.05, t: -.1 }, V5: { Q: .1, R: 2.8, S: .1, st: -.1, t: -.3 }, V6: { R: 2.2, S: .05, st: -.1, t: -.25 } },
+  rvh: { I: { Q: 0, R: .2, S: .7 }, II: { R: .9, p: .25 }, III: { Q: 0, R: 1.1, S: .1 }, aVR: { R: .4, S: .4 }, aVL: { Q: 0, R: .1, S: .6 }, aVF: { R: 1.0 },
+    V1: { shape: 'Rs', R: 1.1, S: .2, st: -.08, t: -.25 }, V2: { shape: 'Rs', R: 1.0, S: .4, st: -.06, t: -.25 }, V3: { R: .8, S: .8, t: -.15 }, V4: { R: .7, S: .9 }, V5: { Q: 0, R: .5, S: .8 }, V6: { Q: 0, R: .4, S: .7 } }
+};
+const RHY_KEYS = ['r', 'rate', 'arate', 'ratio', 'seq', 'vrate', 'off', 'jit', 'pr', 'qrs', 'qt', 'from', 'retro', 'shiver', 'pw', 'tw', 'pk', 'dl'];
+function ecg12Leads(card) {
+  const tw = card.twelve || {}, base = (card.leads || [])[0] || { n: 'II', r: 'sinus', rate: 72 }, rhy = {};
+  RHY_KEYS.forEach(k => { if (base[k] !== undefined) rhy[k] = base[k]; });
+  Object.assign(rhy, tw.rhy || {});
+  const pS = base.p != null && NORM12[base.n] && NORM12[base.n].p ? base.p / NORM12[base.n].p : 1;
+  return L12.map(n => { const L = { ...NORM12[n] }; L.p *= pS;
+    const pat = tw.pat && PAT12[tw.pat]; if (pat && pat[n]) Object.assign(L, pat[n]);
+    if (tw.all) Object.assign(L, tw.all);
+    if (n === 'aVR' && tw.all && tw.all.st) L.st = -tw.all.st; /* aVR mirrors diffuse ST changes */
+    if (tw[n]) Object.assign(L, tw[n]);
+    const g = (card.leads || []).find(x => x.n === n); if (g) Object.assign(L, g);
+    Object.assign(L, rhy, { n }); if (!L.shape) delete L.shape; return L; });
+}
+function ecg12SVG(card, opt) {
+  const o = opt || {}, dur = 10000, colMs = 2500, H = 32, top = 6, rnd = fcRng(card.id || 'ecg12');
+  const leads = ecg12Leads(card), by = Object.fromEntries(leads.map(L => [L.n, L])), base = (card.leads || [])[0] || {};
+  const rl = by[(card.twelve && card.twelve.strip) || 'II'];
+  const ev = ecgEvents(rl, dur, rnd);
+  const evFor = L => ({ B: ev.B, P: ev.P.map(p => ({ c: p.c, a: p.a * (L.p / (rl.p || 0.15)) })) });
+  const EV = Object.fromEntries(leads.map(L => [L.n, evFor(L)]));
+  const rows = [['I', 'aVR', 'V1', 'V4'], ['II', 'aVL', 'V2', 'V5'], ['III', 'aVF', 'V3', 'V6']];
+  let out = '';
+  const trace = (ri, pick) => { const y0 = top + ri * H + 17; let d = '', last = null;
+    for (let t = 0; t <= dur; t += 4) { const L = pick(t); const y = y0 - ecgV(t, EV[L.n], L) * 10;
+      d += (L !== last ? 'M' : 'L') + (t / 40).toFixed(2) + ' ' + y.toFixed(2); last = L; }
+    return `<path class="ecg-tr" d="${d}"/>`; };
+  rows.forEach((names, ri) => { out += trace(ri, t => by[names[Math.min(3, Math.floor(t / colMs))]]);
+    names.forEach((n, ci) => { const x = ci * colMs / 40; out += `<text class="ecg-l" x="${x + 1.5}" y="${top + ri * H + 5}">${n}</text>`;
+      if (ci) out += `<path class="ecg-sp" d="M${x} ${top + ri * H + 12}V${top + ri * H + 22}"/>`; }); });
+  out += trace(3, () => rl) + `<text class="ecg-l" x="1.5" y="${top + 3 * H + 5}">${esc(rl.n)}</text>`;
+  if (rl.r === 'paced') for (let ri = 0; ri < 4; ri++) out += ev.B.map(t0 => { const y0 = top + ri * H + 17; return `<path class="ecg-sp" d="M${((t0 - 6) / 40).toFixed(2)} ${y0 + 2}V${y0 - 11}"/>`; }).join('');
+  const mm = dur / 40, h = top + 4 * H + 2;
+  return `<div class="ecg-wrap"><svg class="ecg" viewBox="0 0 ${mm} ${h}" style="min-width:${Math.round(mm * 3.4)}px" role="img" aria-label="Drawn 12-lead ECG with a lead ${esc(rl.n)} rhythm strip">
+    <defs><pattern id="eg1" width="1" height="1" patternUnits="userSpaceOnUse"><path d="M1 0V1H0" class="ecg-g1"/></pattern><pattern id="eg5" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="url(#eg1)"/><path d="M5 0V5H0" class="ecg-g5"/></pattern></defs>
+    <rect width="${mm}" height="${h}" class="ecg-bg"/><rect width="${mm}" height="${h}" fill="url(#eg5)"/>${out}</svg></div>${o.cap === false ? '' : `<p class="ecg-cap">12-lead · 25 mm/s · 10 mm/mV · 2.5 s per lead, lead ${esc(rl.n)} strip 10 s · swipe sideways · drawn for teaching, not a real tracing</p>`}`;
+}
+/* Real tracings: openly licensed pictures on Wikimedia Commons. The phone loads each one once and keeps it (sw.js, ecg cache). */
+const ecgImgUrl = im => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(im.file.replace(/ /g, '_')) + '?width=1200&ecg=1';
+function ecgImg(im, showWhat) {
+  if (!im || !im.file) return '';
+  const page = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(im.file.replace(/ /g, '_'));
+  return `<figure class="ecg-real"><div class="ecg-wrap ecg-imgw"><img src="${esc(ecgImgUrl(im))}" alt="Real ECG tracing" loading="lazy" decoding="async" data-ecgimg></div>
+    <p class="ecg-miss-t">Couldn't load this picture. It needs the internet the first time; after that it stays on your phone.</p>
+    <figcaption class="ecg-cap">Real tracing${showWhat && im.what ? ' · ' + esc(im.what) : ''} · ${esc(im.by || 'Wikimedia Commons contributor')} · <a href="${esc(page)}" target="_blank" rel="noopener">Wikimedia Commons</a>, free licence (see page)</figcaption></figure>`;
+}
+if (typeof document !== 'undefined') document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.hasAttribute('data-ecgimg')) { const f = t.closest('figure'); if (f) f.classList.add('ecg-miss'); } }, true);
+/* figures inside ECG Bite-size notes: { case:'<ecg id>' } | { draw:{ leads, twelve?, dur? } } | { img:{ file, by, what } }, each with an optional cap */
+function ecgFig(f) {
+  if (!f) return '';
+  let body = '';
+  if (f.img) body = ecgImg(f.img, true);
+  else if (f.case) { const c = ECGS().find(x => x.id === f.case); if (!c) return ''; body = f.strip ? ecgSVG(c) : ecg12SVG(c); }
+  else if (f.draw) body = f.draw.twelve ? ecg12SVG({ id: f.id || 'fig', ...f.draw }) : ecgSVG({ id: f.id || 'fig', ...f.draw });
+  return body ? `<div class="ecg-fig">${f.cap ? `<b class="ecg-fig-t">${esc(f.cap)}</b>` : ''}${body}</div>` : '';
+}
+function ecgFigs(b) {
+  const F = ((b && b.figs) || []).filter(f => !(f.img && state.settings.ecgReal === false)); if (!F.length) return '';
+  return `<details class="card ecg-figs" open><summary><b>〰️ See it on an ECG</b><span>${F.length} picture${F.length > 1 ? 's' : ''}</span></summary>${F.map(ecgFig).join('')}</details>`;
+}
+/* keep every real ECG picture on the phone for offline use: fetched once through the service worker, then served from its ecg cache */
+function ecgWarm() {
+  if (state.settings.ecgPics === false || !navigator.onLine || !('serviceWorker' in navigator) || !navigator.serviceWorker.controller) return;
+  const U = [...new Set([...ECGS().map(c => c.img), ...BITES().flatMap(b => (b.figs || []).map(f => f.img))].filter(x => x && x.file).map(ecgImgUrl))];
+  let done = {}; try { done = JSON.parse(localStorage.getItem('inemuri.ecgwarm') || '{}'); } catch (_) {}
+  const todo = U.filter(u => !done[u]); if (!todo.length) return;
+  (async () => { for (const u of todo) { try { await fetch(u, { mode: 'no-cors' }); done[u] = 1; } catch (_) { break; } }
+    try { localStorage.setItem('inemuri.ecgwarm', JSON.stringify(done)); } catch (_) {} })();
+}
+
 
 /* ---- ABG: bedside rules ---- */
 const HH = (h, c) => 6.1 + Math.log10(h / (0.03 * c)); /* r1 (1 decimal) is shared from above */
@@ -4647,7 +4767,7 @@ function flashCard() { if (state.settings.flashOn === false) return ''; const d 
 function flashSection() { if (state.settings.flashOn === false) return ''; const E = ECGS(); const seen = fcSeen('ecg'), aS = fcSeen('abg');
   const d = fcDay();
   let h = `<div class="sec"><h2 class="sh"><span>🫀 ECG &amp; ABG</span><span>${seen}/${E.length} ECGs · ${aS}/${ABG_SC.length} ABG types seen</span></h2>`;
-  h += `<div class="fc-pair"><button type="button" class="card calc-link" data-act="fc-ecg" data-id="${esc(d.ecg || '')}" data-daily="1"><span class="cat-due-i" aria-hidden="true">〰️</span><span class="cat-tx"><b>ECG of the day</b><span>${d.ecg && fcDone('ecg', d.ecg) ? 'Done ✓' : 'Vignette + strip'}</span></span></button>
+  h += `<div class="fc-pair"><button type="button" class="card calc-link" data-act="fc-ecg" data-id="${esc(d.ecg || '')}" data-daily="1"><span class="cat-due-i" aria-hidden="true">〰️</span><span class="cat-tx"><b>ECG of the day</b><span>${d.ecg && fcDone('ecg', d.ecg) ? 'Done ✓' : 'Vignette + 12-lead'}</span></span></button>
     <button type="button" class="card calc-link" data-act="fc-abg" data-id="${esc(d.abg)}" data-daily="1"><span class="cat-due-i" aria-hidden="true">🩸</span><span class="cat-tx"><b>ABG of the day</b><span>${fcDone('abg', d.abg) ? 'Done ✓' : 'Work it out step by step'}</span></span></button></div>`;
   h += `<button type="button" class="btn ghost wide" data-act="fc-abg-extra">🩸 Another ABG (fresh numbers)</button>`;
   if (E.length) { const L = E.slice().sort((a, b) => (fcRec('ecg', a.id) ? 1 : 0) - (fcRec('ecg', b.id) ? 1 : 0));
@@ -4661,15 +4781,19 @@ function fcMark(ok) { if (!fc) return; const { k, id } = fc; const t = today(); 
   fc = null; closeSheet(); commit(ok ? 'Got it ✓ · back in ' + plural(gap, 'day') : 'It will come back in 2 days 🔁'); }
 const fcBtns = () => `<div class="btns brev-b" style="flex-direction:row"><button class="btn" type="button" data-act="fc-mark" data-ok="1">Got it</button><button class="btn ghost" type="button" data-act="fc-mark" data-ok="0">Again</button></div>`;
 function fcEcgSheet() { const c = ECGS().find(x => x.id === fc.id); if (!c) { toast('That ECG is not in the app yet. Pull down to refresh.'); fc = null; return; }
-  const open = fc.step > 0;
+  const open = fc.step > 0, keep = open || fc.keep; fc.keep = false;
+  const views = [['12', '12-lead'], ['strip', 'Strip'], ...(c.img && state.settings.ecgReal !== false ? [['real', 'Real ECG']] : [])];
+  const v = views.some(x => x[0] === fc.view) ? fc.view : '12';
+  const pic = v === 'strip' ? ecgSVG(c) : v === 'real' ? ecgImg(c.img, open) + (open ? '' : '<p class="ecg-cap">A real tracing of a similar case, not this patient.</p>') : ecg12SVG(c);
   openSheet(`<div class="sheet-in fc-sheet">${sheetHead(fc.daily ? 'ECG of the day' : 'ECG')}
-    <div class="card fc-card"><span class="bite-cat">〰️ ${esc(c.cat || 'ECG')}</span><p class="fc-stem">${esc(c.vignette)}</p>${ecgSVG(c)}<b class="fc-q">${esc(c.q || 'What is the rhythm, and what will you do?')}</b></div>
+    <div class="card fc-card"><span class="bite-cat">〰️ ${esc(c.cat || 'ECG')}</span><p class="fc-stem">${esc(c.vignette)}</p>
+      <div class="seg ecg-tabs" role="group" aria-label="ECG view">${views.map(([k, l]) => `<button type="button" data-act="fc-view" data-v="${k}" aria-pressed="${k === v}">${l}</button>`).join('')}</div>${pic}<b class="fc-q">${esc(c.q || 'What is the rhythm, and what will you do?')}</b></div>
     ${open ? `<div class="card fc-ans"><span class="c-lab">Answer</span><b class="fc-dx">${esc(c.title)}</b>
       ${(c.findings || []).length ? `<h4>On the strip</h4><ul class="note-ul">${c.findings.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       ${(c.manage || []).length ? `<h4>What to do</h4><ul class="note-ul">${c.manage.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       ${c.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(c.pearl)}</span></div>` : ''}
       ${c.src ? `<p class="fc-src">Checked against: ${esc(c.src)}</p>` : ''}</div>${fcBtns()}` : `<button class="btn wide" type="button" data-act="fc-step">Show the answer</button>`}
-    <p class="foot">Teaching cards, not a protocol. Follow your department's practice.</p></div>`, fc.step > 0); }
+    <p class="foot">Teaching cards, not a protocol. Follow your department's practice.</p></div>`, keep); }
 function fcAbgSheet() { const sc = ABG_SC.find(s => s.id === fc.id); const made = sc && abgMake(sc, fc.seed);
   if (!made) { toast("Couldn't make this ABG. Try another."); fc = null; return; }
   const { v, R } = made; const S = R.S; const n = Math.min(fc.step, S.length + 1);
@@ -5364,6 +5488,7 @@ document.addEventListener('click', e => {
     case 'fc-abg': fc = { k: 'abg', id, daily: !!b.dataset.daily, step: 0, seed: fcDay().seed }; fcShow(); break;
     case 'fc-abg-extra': { const sc = ABG_SC[Math.floor(Math.random() * ABG_SC.length)]; fc = { k: 'abg', id: sc.id, daily: false, step: 0, seed: 'x' + Date.now() }; fcShow(); break; }
     case 'fc-step': if (fc) { fc.step++; fcShow(); } break;
+    case 'fc-view': if (fc && fc.k === 'ecg') { fc.view = b.dataset.v; fc.keep = true; fcEcgSheet(); } break;
     case 'fc-all': if (fc) { fc.step = 99; fcShow(); } break;
     case 'fc-mark': fcMark(b.dataset.ok === '1'); break;
     case 'brev-ok': biteRevMark(id, true); break;
@@ -6078,7 +6203,8 @@ function biteSheet(id, rev) {
   const b = BITES().find(x => x.id === id); if (!b) return;
   openSheet(`<div class="sheet-in note"><div class="sheet-head"><span></span><h2>${esc(b.cat)}</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <h3 class="bite-t">${esc(b.title)}</h3>
-    ${b.sections ? noteBody(b) : `<ul class="note-ul">${(b.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>${b.refs && b.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${b.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}`}
+    ${b.figs && b.figs.length ? (b.summary ? `<p class="note-sum">${esc(b.summary)}</p>` : '') + ecgFigs(b) : ''}
+    ${b.sections ? noteBody(b.figs && b.figs.length ? { ...b, summary: '' } : b) : `<ul class="note-ul">${(b.points || []).map(p => `<li>${esc(p)}</li>`).join('')}</ul>${b.refs && b.refs.length ? `<h3 class="sh">References</h3><ol class="note-refs">${b.refs.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></li>`).join('')}</ol>` : ''}`}
     ${b.pearl ? `<div class="bite-pearl"><b>Remember</b><span>${esc(b.pearl)}</span></div>` : ''}
     ${rev ? `<div class="btns brev-b"><button class="btn" type="button" data-act="brev-ok" data-id="${esc(b.id)}">Got it</button><button class="btn ghost" type="button" data-act="brev-again" data-id="${esc(b.id)}">Again tomorrow</button></div>` : ''}
     <p class="foot">Added ${esc(dShort(b.created || b.updated))}${b.updated && b.updated !== b.created ? ' · updated ' + esc(dShort(b.updated)) : ''}${b.seen > 1 ? ' · asked ' + b.seen + ' times' : ''}. Written in plain words for revision; check references for detail.</p></div>`);
