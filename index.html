@@ -1349,6 +1349,12 @@ body::before{will-change:transform;transform:translateZ(0)}
 .cat-tx b{font-size:15.5px;color:var(--fg)!important}.cat-tx span{font-size:13.5px;color:var(--fg-2)!important}
 .cat-due{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;width:100%;padding:12px 14px!important;border:1.5px solid #B5782A!important}
 .cat-due-i{font-size:26px;line-height:1}
+.del-card{display:block!important}.del-card .c-lab{display:block;margin-bottom:6px}.del-g{background:transparent!important;box-shadow:none!important;border:0!important;margin:0}
+.del-ask{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0!important}.del-ask .cat-tx{flex:1;min-width:150px}.del-b{display:flex;gap:6px;margin-left:auto}.del-b .btn{min-height:34px;padding:6px 12px}
+.del-chip{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;border-radius:14px;background:var(--tile);color:var(--fg);font:inherit;font-weight:600;text-align:left}.del-chip .lv-chev{margin-left:auto}
+.del-dot,.tb-dot{width:8px;height:8px;border-radius:50%;background:var(--st-soon,#D98A2B);box-shadow:0 0 0 3px color-mix(in srgb,var(--st-soon,#D98A2B) 25%,transparent);flex:none}
+.tb-i{position:relative}.tb-dot{position:absolute;top:9px;left:calc(50% + 9px)}
+.t-paused .t-min{opacity:.7}
 .cat-row{display:flex;align-items:center;gap:10px;width:100%}
 .cat-badge{flex:none;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--blk-2,#D6E4D3);color:var(--fg)!important}
 .cat-row.soon .cat-badge{background:#8A4B10;color:#FFFFFF!important}
@@ -2193,7 +2199,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.06 · ECG pictures';
+const APP_VERSION = '6.07 · Pause timer, parcel check';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2250,7 +2256,7 @@ const byId = (arr, id) => arr.find(x => x.id === id);
 /* ---------- personal data (on this phone) ---------- */
 const banners = { save: null, info: null };
 function blank() {
-  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {}, vstory: {}, presenting: {}, presPrep: {}, portfolio: {}, penDone: {}, packs: {},
+  return { version: 2, subjects: [], topics: [], log: [], todos: [], events: [], otDone: {}, private: null, reminders: [], remDone: {}, remSeeded: {}, profile: {}, loc: null, weather: null, advSeen: '', advSaved: {}, bookDone: {}, myCases: {}, habits: null, habitDone: {}, dumps: [], groceries: null, loveMine: {}, catOrdered: {}, attDone: {}, media: [], upWatch: {}, biteRev: {}, flash: {}, fcPicks: {}, fcDay: null, thesisRec: {}, thesisDone: {}, thesisNo: {}, thesisWhy: {}, thesisRead: {}, thesisSteps: {}, catCare: {}, pcDone: {}, crSeen: {}, artFav: {}, vstory: {}, presenting: {}, presPrep: {}, portfolio: {}, penDone: {}, packs: {}, delSt: {},
     settings: { weatherOn: true, backupLine: true, myName: '', countdownOn: true, attOn: true, readOn: true, examLabel: 'MD final exams', examDate: '2027-12-20', igOn: true, igSince: '2026-11-06', revisionsOn: true, intervals: [1, 3, 7, 14, 30] },
     meta: { lastExport: null, created: nowISO() } };
 }
@@ -2259,7 +2265,7 @@ function normalise(s) {
   const n = { version: 2, subjects: s.subjects || [], topics: s.topics || [], log: s.log || [], todos: s.todos || [],
     events: s.events || [], otDone: s.otDone || {}, private: s.private || null,
     reminders: s.reminders || [], remDone: s.remDone || {}, remSeeded: s.remSeeded || {}, profile: s.profile || {}, loc: s.loc || null, weather: s.weather || null, advSeen: s.advSeen || '', advSaved: s.advSaved || {}, bookDone: s.bookDone || {}, myCases: s.myCases || {}, habits: Array.isArray(s.habits) ? s.habits : null, habitDone: s.habitDone || {}, sync: s.sync || null, active: s.active || null,
-    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, vstory: s.vstory || {}, presenting: s.presenting || {}, presPrep: s.presPrep || {}, portfolio: s.portfolio || {}, penDone: s.penDone || {}, packs: s.packs || {}, thesisSteps: s.thesisSteps || {},
+    dumps: Array.isArray(s.dumps) ? s.dumps : [], groceries: Array.isArray(s.groceries) ? s.groceries : null, loveMine: s.loveMine || {}, catOrdered: s.catOrdered || {}, attDone: s.attDone || {}, media: Array.isArray(s.media) ? s.media : [], upWatch: s.upWatch || {}, biteRev: s.biteRev || {}, flash: s.flash && typeof s.flash === 'object' ? s.flash : {}, fcPicks: s.fcPicks && typeof s.fcPicks === 'object' ? s.fcPicks : {}, fcDay: s.fcDay || null, thesisRec: s.thesisRec || {}, thesisDone: s.thesisDone || {}, thesisNo: s.thesisNo || {}, thesisWhy: s.thesisWhy || {}, thesisRead: s.thesisRead || {}, catCare: s.catCare || {}, pcDone: s.pcDone || {}, crSeen: s.crSeen || {}, artFav: s.artFav || {}, vstory: s.vstory || {}, presenting: s.presenting || {}, presPrep: s.presPrep || {}, portfolio: s.portfolio || {}, penDone: s.penDone || {}, packs: s.packs || {}, delSt: s.delSt || {}, thesisSteps: s.thesisSteps || {},
     settings: { ...b.settings, ...(s.settings || {}) }, meta: { ...b.meta, ...(s.meta || {}) } };
   /* v5.50: she has been off Instagram since 6 Nov, not 13 Nov. Corrected once; a date she picks herself afterwards is left alone. */
   /* v5.97: Fudge's care dates as she told Claude on 26 Nov 2026 (vaccine a year ago, deworming 6 months ago; grooming counted from that day). Seeded once. */
@@ -2877,6 +2883,7 @@ function pageToday() {
   add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
   add(catTodayCard(), 56);
+  add(delAskCard('today'), by({ evening: 91, night: 85, all: 76 }));
   add(thesisTodayCard(), by({ morning: 86, day: 80, evening: 78, night: 60, all: 70 }));
   add(battCard(), battLow() || state.settings.battAlways ? 78 : -1); /* full levels only when something is low; otherwise under More today */
   add(bkNudge(), 30);
@@ -2922,12 +2929,16 @@ function subjectStats(sid) {
   const withPages = ts.filter(x => x.total); const done = withPages.reduce((a, x) => a + Math.min(x.page, x.total), 0), tot = withPages.reduce((a, x) => a + x.total, 0);
   return { mins: ts.reduce((a, x) => a + x.mins, 0), sessions: ts.reduce((a, x) => a + x.sessions, 0), pct: tot ? Math.round(done / tot * 100) : null, done, tot };
 }
-const activeMins = () => state.active ? Math.max(0, Math.round((Date.now() - new Date(state.active.start)) / 60e3)) : 0;
+/* pause / resume (Apoorva, 27 Nov 2026): pausedAt = when paused, pausedMs = time already spent paused */
+const activeMins = () => { const a = state.active; if (!a) return 0; const end = a.pausedAt ? new Date(a.pausedAt) : Date.now(); return Math.max(0, Math.round((end - new Date(a.start) - (a.pausedMs || 0)) / 60e3)); };
+function pauseActive() { const a = state.active; if (!a || a.pausedAt) return; a.pausedAt = nowISO(); }
+function resumeActive() { const a = state.active; if (!a || !a.pausedAt) return; a.pausedMs = (a.pausedMs || 0) + Math.max(0, Date.now() - new Date(a.pausedAt)); delete a.pausedAt; }
 function timerCard() {
   if (!state.active) return '';
   const t = byId(state.topics, state.active.topicId); if (!t) return '';
-  return `<div class="card hero"><span class="c-lab">Studying now</span><div class="timer"><span class="t-min">⏱ ${fmtMins(activeMins())}</span><span class="c-s" style="flex:1;min-width:0">${esc(t.name)}</span></div>
-    <div class="btns" style="flex-direction:row;margin-top:4px"><button class="btn small" type="button" data-act="finish-open" style="background:var(--on-label);color:var(--label)">Finish &amp; log</button>${t.link ? `<a class="btn small ghost" href="${esc(t.link)}" style="text-decoration:none">Open notes</a>` : ''}</div></div>`;
+  const P = !!state.active.pausedAt;
+  return `<div class="card hero${P ? ' t-paused' : ''}"><span class="c-lab">${P ? 'Paused · ' + new Date(state.active.pausedAt).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' }) : 'Studying now'}</span><div class="timer"><span class="t-min">${P ? '⏸' : '⏱'} ${fmtMins(activeMins())}</span><span class="c-s" style="flex:1;min-width:0">${esc(t.name)}</span></div>
+    <div class="btns" style="flex-direction:row;margin-top:4px;flex-wrap:wrap"><button class="btn small" type="button" data-act="${P ? 'timer-resume' : 'timer-pause'}" style="background:var(--on-label);color:var(--label)">${P ? '▶ Resume' : '⏸ Pause'}</button><button class="btn small ghost" type="button" data-act="finish-open">Finish &amp; log</button>${t.link ? `<a class="btn small ghost" href="${esc(t.link)}" style="text-decoration:none">Open notes</a>` : ''}</div></div>`;
 }
 function pageStudy() {
   const due = dueTopics(); const wk = addDays(today(), -6);
@@ -3000,6 +3011,7 @@ function pageCalendar() {
   let h = head('Calendar', '', calMode === 'personal' ? 'Birthdays, travel, deliveries & festivals' : 'Classes, cases & duties');
   h += `<div class="sec cal-mode"><div class="seg"><button type="button" data-act="cal-mode" data-m="academic" aria-pressed="${calMode !== 'personal'}">Academic</button><button type="button" data-act="cal-mode" data-m="personal" aria-pressed="${calMode === 'personal'}">Personal</button></div></div>`;
   if (calMode === 'personal') return h + personalCal();
+  { const A = delAsk(); if (A.length) h += `<div class="sec"><button type="button" class="del-chip" data-act="cal-mode" data-m="personal"><span class="del-dot" aria-hidden="true"></span>📦 ${A.length === 1 ? 'Did your parcel arrive?' : A.length + ' parcels to check'}<span class="lv-chev" aria-hidden="true">›</span></button></div>`; }
   const offset = (new Date(y, m, 1).getDay() + 6) % 7; const last = new Date(y, m + 1, 0).getDate();
   let g = ['M','T','W','T','F','S','S'].map(d => `<div class="dw">${d}</div>`).join('');
   for (let i = 0; i < offset; i++) g += '<div></div>';
@@ -3070,7 +3082,14 @@ function allDeliveries() { const dv = ((PERS().deliveries) || []).slice(); const
   const seen = new Set(dv.filter(x => x.status !== 'delivered').map(x => key(x.store, x.date)));
   Object.values(S).forEach(st => (st.orders || []).forEach(o => { if (o.delivered || !o.eta || o.eta < addDays(today(), -3)) return; if (seen.has(key(st.name, o.eta))) return; seen.add(key(st.name, o.eta));
     const its = o.items || []; const n = String((its[0] || {}).n || 'Parcel'); dv.push({ date: o.eta, store: st.name, what: (n.length > 60 ? n.slice(0, 58) + '…' : n) + (its.length > 1 ? ' + ' + (its.length - 1) + ' more' : ''), status: o.status || 'shipped' }); }));
-  return dv; }
+  const D = state.delSt || {}; return dv.map(x => ({ ...x, k: delKey(x) })).filter(x => !String(D[x.k] || '').startsWith('y|')); }
+/* "Did it arrive?" (Apoorva, 27 Nov 2026): on or after its expected day, a parcel not yet marked delivered asks her. Arrived → off every list; Not yet → asks again tomorrow. Stored in state.delSt (synced). */
+function delKey(x) { return (String(x.store || '').toLowerCase().replace(/[^a-z]/g, '') + '|' + (x.date || '') + '|' + String(x.what || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40)); }
+function delAsk() { if (state.settings.delAskOn === false) return []; const t = today(), D = state.delSt || {};
+  return allDeliveries().filter(x => x.status !== 'delivered' && x.date && x.date <= t && D[x.k] !== 'n|' + t); }
+function delAskRows(x) { const n = dIn(x.date); return `<div class="row del-ask"><span class="pc-e" aria-hidden="true">📦</span><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.store ? ' · ' : ''}${n === 0 ? 'due today' : 'was due ' + esc(inWords(n))}</span></span><span class="del-b"><button type="button" class="btn small" data-act="del-got" data-k="${esc(x.k)}">Arrived</button><button type="button" class="btn small ghost" data-act="del-not" data-k="${esc(x.k)}">Not yet</button></span></div>`; }
+function delAskCard(where) { const A = delAsk(); if (!A.length) return '';
+  return `<div class="sec"><div class="card cat-due del-card"><span class="c-lab">📦 Did ${A.length > 1 ? 'these' : 'it'} arrive?</span><div class="group del-g">${moreCut('delask|' + where, A, 3).map(delAskRows).join('')}${moreBtn('delask|' + where, A.length, 3, 'parcel')}</div></div></div>`; }
 /* Google Calendar (birthdays and your own events), copied in locked by the calendar job */
 const GCAL = () => { const g = (state.private && state.private.gcal) || {}; return { birthdays: g.birthdays || [], events: g.events || [] }; };
 function bdays() { const t = today(), y = +t.slice(0, 4);
@@ -3090,7 +3109,7 @@ function personalCal() { const t = today(); const P = PERS(); const tr = P.trave
   GCAL().events.filter(x => x.date >= t && dIn(x.date) <= 60).forEach(x => soon.push({ d: x.date, e: '📅', t: x.title, s: [x.time, x.cal].filter(Boolean).join(' · '), k: 'gcal' }));
   soon.sort((a, b) => a.d.localeCompare(b.d));
   const row = x => `<div class="row pc-row pc-${x.k}"><span class="pc-e" aria-hidden="true">${esc(x.e)}</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${esc(pDate(x.d))}${x.s ? ' · ' + esc(x.s) : ''}</span></span><span class="pc-when">${esc(inWords(dIn(x.d)))}</span></div>`;
-  let h = `<div class="sec"><h2 class="sh">Coming up</h2>${soon.length ? `<div class="group">${soon.map(row).join('')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>'}</div>`;
+  let h = delAskCard('cal') + `<div class="sec"><h2 class="sh">Coming up</h2>${soon.length ? `<div class="group">${soon.map(row).join('')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>'}</div>`;
   h += `<div class="sec"><h2 class="sh">📦 On the way</h2>${dv.filter(x => x.status !== 'delivered').length ? `<div class="group">${dv.filter(x => x.status !== 'delivered').map(x => `<div class="row pc-row"><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.date ? ' · expected ' + esc(pDate(x.date)) : ''}${x.status ? ' · ' + esc(x.status) : ''}</span></span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">Nothing on its way right now. Shipments from your email and your scanned orders show up here.</span></div>'}</div>`;
   const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
@@ -3929,6 +3948,7 @@ function pageBackup() {
     <button type="button" class="row" data-act="wrap-preview"><span>Preview this year's Wrapped</span>${CHEV}</button>
     <label class="row toggle"><span>Pen shelf in Off duty</span><input type="checkbox" data-setting="pensOn" ${S.pensOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Fudge's care reminders (deworming, vet check, grooming)</span><input type="checkbox" data-setting="careOn" ${S.careOn !== false ? 'checked' : ''}></label>
+    <label class="row toggle"><span>Ask “Did it arrive?” for parcels on or after their expected day</span><input type="checkbox" data-setting="delAskOn" ${S.delAskOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Wide layout on big screens (laptop: two columns, no bottom tab bar)</span><input type="checkbox" data-setting="wideOn" ${S.wideOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Animations (off also when iPhone Reduce Motion is on)</span><input type="checkbox" data-setting="animOn" ${S.animOn !== false ? 'checked' : ''}></label>
     <label class="row toggle"><span>Habit plant (grows on days you do 75% of your habits)</span><input type="checkbox" data-setting="plantOn" ${S.plantOn !== false ? 'checked' : ''}></label>
@@ -4326,9 +4346,9 @@ function iconSheet() {
   return h + '</div>';
 }
 function renderTabbar() {
-  const tk = tab + '|' + iconPackId() + '|' + !!D.icons;
+  const nd = delAsk().length; const tk = tab + '|' + iconPackId() + '|' + !!D.icons + '|' + nd;
   if (renderTabbar.t === tk) return; renderTabbar.t = tk;
-  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab || (k === 'others' && isOff(tab)) ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco(k)}</svg><span>${label}</span></button>`;
+  const b = (k, label) => `<button type="button" class="tb-i" data-act="tab" data-tab="${k}"${k === tab || (k === 'others' && isOff(tab)) ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco(k)}</svg>${k === 'calendar' && nd ? `<i class="tb-dot" role="img" aria-label="${nd === 1 ? 'A parcel to check' : nd + ' parcels to check'}"></i>` : ''}<span>${label}</span></button>`;
   $('tabbar').innerHTML = b('ot', 'OT list') + b('study', 'Academics') +
     `<button type="button" class="tb-home" data-act="tab" data-tab="today" aria-label="Home"${tab === 'today' ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${tbIco('today')}</svg></button>` +
     b('calendar', 'Calendar') + b('others', 'Off duty');
@@ -4371,7 +4391,7 @@ function renderDrawer() {
     ${lines.length ? `<div class="prof-l">${lines.map(l => `<div class="pl">${l[0]}<span>${esc(l[1])}</span></div>`).join('')}</div>` : ''}
     <button class="btn ghost" type="button" data-act="prof-edit">Edit profile</button></div>
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
-    <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar')}${item('advances', advNew() ? advNew() + ' new' : '')}
+    <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar', delAsk().length ? '📦 ' + delAsk().length : '')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
     <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${fudgeFoot()}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
@@ -5368,6 +5388,7 @@ function finishSheet() {
     <label class="row field"><span class="f-l">Up to page</span><input name="page" type="number" min="0" max="5000" inputmode="numeric" placeholder="${q.total ? 'of ' + q.total + (q.page ? ', last ' + q.page : '') : (q.page ? 'last: ' + q.page : 'optional')}" data-autofocus></label></div>
     <input class="tin" name="note" maxlength="140" placeholder="One-line note (optional)">
     <button class="btn wide" type="submit">Log session</button></form>
+    ${a.pausedAt ? '' : '<button class="btn ghost wide" type="button" data-act="timer-pause">⏸ Pause instead, finish later</button>'}
     <button class="btn danger wide" type="button" data-act="finish-discard">Discard this session</button>`);
   focusFirst();
 }
@@ -5680,11 +5701,15 @@ document.addEventListener('click', e => {
     case 'study-now': {
       const t = byId(state.topics, id); if (!t) return;
       if (state.active && state.active.topicId !== id && !confirm('You are already timing “' + ((byId(state.topics, state.active.topicId) || {}).name || 'another topic') + '”. Switch to this topic? (That session is not logged.)')) return;
-      state.active = { topicId: id, start: state.active && state.active.topicId === id ? state.active.start : nowISO() }; closeSheet(); save(); render();
+      if (state.active && state.active.topicId === id) resumeActive(); else state.active = { topicId: id, start: nowISO() }; closeSheet(); save(); render();
       if (t.link) { toast('Timer started. Opening GoodNotes…'); setTimeout(() => { location.href = t.link; }, 400); }
       else toast('Timer started. Open your notes in GoodNotes, then come back here.');
       break; }
     case 'finish-open': finishSheet(); break;
+    case 'del-got': { const k = b.dataset.k; state.delSt = { ...(state.delSt || {}), [k]: 'y|' + today() }; commit('Delivered ✓ Taken off the list'); break; }
+    case 'del-not': { const k = b.dataset.k; state.delSt = { ...(state.delSt || {}), [k]: 'n|' + today() }; commit('Okay, I’ll ask again tomorrow'); break; }
+    case 'timer-pause': pauseActive(); if (sheetOpen()) closeSheet(); commit('Paused. Resume whenever you’re back'); break;
+    case 'timer-resume': resumeActive(); commit('Timer running again'); break;
     case 'finish-discard': if (!confirm('Discard this study session? Nothing will be logged.')) return; state.active = null; closeSheet(); commit('Session discarded'); break;
     case 'log-any': {
       const known = new Set(state.subjects.map(x => x.id));
@@ -5866,7 +5891,7 @@ document.addEventListener('change', e => {
    The access key is typed into this device only (never in code or chat) and is limited to the sync repository. */
 const SYNC_TOKEN_KEY = 'studydesk.synctoken', SYNC_REPO_KEY = 'studydesk.syncrepo';
 const syncCfg = () => { try { return { token: localStorage.getItem(SYNC_TOKEN_KEY) || '', repo: localStorage.getItem(SYNC_REPO_KEY) || 'akrishnammlp2-debug/docks-sync' }; } catch (_) { return { token: '', repo: '' }; } };
-const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav', 'vstory', 'presenting', 'presPrep', 'portfolio', 'penDone', 'packs'], SYNC_OBJ = ['settings', 'profile'];
+const SYNC_ARR = ['subjects', 'topics', 'log', 'todos', 'events', 'reminders', 'habits', 'dumps', 'media', 'groceries'], SYNC_MAP = ['otDone', 'remDone', 'advSaved', 'remSeeded', 'bookDone', 'myCases', 'habitDone', 'loveMine', 'catOrdered', 'attDone', 'upWatch', 'biteRev', 'flash', 'fcPicks', 'thesisRec', 'thesisDone', 'thesisNo', 'thesisWhy', 'thesisRead', 'thesisSteps', 'catCare', 'pcDone', 'crSeen', 'artFav', 'vstory', 'presenting', 'presPrep', 'portfolio', 'penDone', 'packs', 'delSt'], SYNC_OBJ = ['settings', 'profile'];
 function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); }
 function syncRecords() {
   const r = {};
@@ -6399,7 +6424,7 @@ renderBanner(); render(); igCheck(); checkPersist(); loadData(false); setTimeout
   document.addEventListener('touchend', e => { if (!from) return; const t = e.changedTouches[0]; const dx = t.clientX - x0, dy = Math.abs(t.clientY - y0);
     if (dy < 60) { if (from === 'edge' && dx > 60) openDrawer(); if (from === 'drawer' && dx < -60) closeDrawer(); } from = null; }, { passive: true });
 })();
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.active && activeMins() >= 1 && !sheetOpen()) setTimeout(finishSheet, 600); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.active && !state.active.pausedAt && activeMins() >= 1 && !sheetOpen()) setTimeout(finishSheet, 600); });
 let attHr = new Date().getHours(); setInterval(() => { const hr = new Date().getHours(); if (hr !== attHr) { attHr = hr; if (tab === 'today' && !sheetOpen()) { render(); igCheck(); } } }, 60e3);
 setInterval(() => { if (state.active && !sheetOpen() && (tab === 'study' || tab === 'today')) render(); }, 60e3);
 window.addEventListener('hashchange', () => { const k = location.hash.slice(1); if (SECS[k] && k !== tab) { tab = k; closeDrawer(); render(); window.scrollTo(0, 0); } });

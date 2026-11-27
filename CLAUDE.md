@@ -35,6 +35,7 @@ It is built only for her and will never be monetised.
 
 ## Deliveries (26 Nov 2026)
 - **Any delivery found anywhere goes on the calendar.** Whenever an order is scanned from any store (Amazon, Nykaa, email, anything new) and it is not delivered yet, save its expected date as `eta` (YYYY-MM-DD) and `status` on the order in My orders (`shop.stores.<store>.orders[]`). `allDeliveries()` in index.html merges these with the email deliveries for the Personal calendar's "On the way" list and the "📦 Arriving today" reminder; it skips duplicates (same store + same date). Once an order is delivered, set `delivered` so it drops off.
+- **"Did it arrive?" (v6.07, 27 Nov 2026):** on or after a parcel's expected day the app asks her (Today card, top of Personal calendar, chip on Academic calendar, dot on the Calendar tab, count in the side menu). Arrived → `state.delSt[key] = 'y|date'` and it leaves every list; Not yet → asks again tomorrow. Keys come from `delKey()` (store + date + item). Switch: `settings.delAskOn`.
 - **Amazon:** scan the Amazon.in website in her Chrome (Claude in Chrome), never Gmail. The account is Jesal's (shared); "her orders" are those shipped/delivered to Apoorva Krishna. Lock them with `node tools/lock.mjs lock <plain.json> orders-amazon` (`shop.stores.amazon`), keeping every order from this year.
 
 ## Privacy
@@ -66,6 +67,9 @@ It is built only for her and will never be monetised.
 - **ECG & ABG flashcards** (v5.79): one ECG + one ABG a day on Today and in Academics. ECG cases live in `data/ecg.json` (vignette, drawn strip settings in `leads`, findings, management, pearl, `src`); check every fact against the named source before adding, never remove cases. ABGs are generated from `ABG_SC` in index.html and explained by `abgRead()`; after changing either, run `node tools/flash_test.mjs`.
 - **ECG pictures (v6.06, 27 Nov 2026):** every ECG card has three views: drawn 12-lead (`ecg12SVG`, settings in the case's `twelve`: `pat` lbbb/rbbb/vent/wpw/lafb/lvh/rvh, `all`, or per-lead changes; all leads come from the same beats), the short strip, and a real tracing (`img`: {file, by, what}) from Wikimedia Commons. ECG Bite-size notes have `figs` ({case}, {case, strip:true}, {draw:{leads, twelve?}}, {img}) shown in a "See it on an ECG" box. Only use Commons files found by search with a matching description; never invent a file name. Real pictures are kept offline by sw.js (`inemuri-ecg-pics`, URLs end `&ecg=1`). Any new ECG card or ECG bite should get a `twelve` and, if one exists, an `img`/`figs`; check the drawing by eye before pushing.
 - **Academic schedule** (`data/schedule.json`): whenever sessions are added, every session that has a topic gets a `read` list of 1–3 verified articles (BJA Education preferred). Skip sessions with no topic (Clancon, OSCE, open journal club). See the `rule` field in that file.
+
+## Study timer (v6.07)
+- Sessions can be paused and resumed: `state.active.pausedAt` / `pausedMs`; `activeMins()` leaves out paused time. A paused timer never auto-opens the Finish sheet.
 
 ## Added 26 Nov 2026 (v5.97–6.05)
 - **Drug doses by weight** (`DOSE_TBL` / `DOSE_SRC` in index.html, OT calculators): every number is from its listed source (SmPC/FDA label, RCUK, AAGBI, MHAUS, BJA Educ). Never change a dose, max or concentration without re-checking the source and re-running a 70 kg adult, 120 kg obese, 20 kg child and 8 kg infant.
