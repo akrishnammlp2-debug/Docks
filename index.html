@@ -1474,6 +1474,20 @@ body.no-anim .mn-card,body.no-anim .mn-in{transition:none}
 .moneybtn{position:relative}
 .money-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--st-soon);box-shadow:0 0 0 2px var(--bg,#fff)}
 .moneybtn[aria-current="page"]{color:var(--sec-i,var(--accent))}
+.mn-pick{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.mn-pick .mn-pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mn-pick .mn-pt span{font-size:14px;color:var(--fg);font-weight:600}
+.mn-pick .mn-pt em{font-style:normal;font-size:12.5px;color:var(--fg-2);line-height:1.35}
+.mn-chip{flex:none;font-size:11.5px;font-weight:700;padding:5px 9px;border-radius:8px;color:#fff!important;white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+.mn-chip.mn-l1{background:linear-gradient(135deg,#5e3787,#a3456c)}.mn-chip.mn-l2{background:linear-gradient(140deg,#2f2056,#4f3680)}.mn-chip.mn-l3{background:linear-gradient(135deg,#9a3b45,#b5523f)}
+#page .mn-chip{color:#fff!important}
+.mn-q{width:100%}
+.mn-cgb{padding:2px 14px 12px}
+.mn-cgb ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--fg-2);line-height:1.5}
+.mn-rate{display:flex;gap:10px;padding:4px 0;font-size:13px;color:var(--fg-2);line-height:1.4}
+.mn-rate b{flex:none;min-width:44px;color:var(--fg);font-variant-numeric:tabular-nums}
+.mn-cg[open] .lv-chev{transform:rotate(90deg)}
+.mn-best{position:absolute;left:18px;right:18px;bottom:12px;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* my orders page v5.21 */
 .shop-page .shop-tabs button{background:var(--blk,#E3EDE1);color:var(--fg)!important;border-color:var(--line)}
 .shop-page .shop-tabs button.on{background:#2B6448;color:#FFFFFF!important;border-color:#2B6448}
@@ -4411,7 +4425,7 @@ function mnCard(b, i, wifi) {
   const tag = st.paid ? (st.assumed ? 'Paid · assumed' : 'Paid') : st.over ? 'Overdue' : plural(st.d, 'day') + ' left';
   const front = wifi
     ? `<div class="mn-face mn-front"><div class="mn-row"><span class="mn-bank">${esc(b.name)}</span><span class="mn-tag">${tag}</span></div><div style="margin-top:40px;font-size:13px;opacity:.85;position:relative">Home broadband</div><div style="font-size:20px;font-weight:700;position:relative">${esc(b.plan || '')}</div>${MN_ARCS}<span class="mn-hint">Tap to flip</span></div>`
-    : `<div class="mn-face mn-front"><div class="mn-row"><span class="mn-bank">${esc(b.bank)}</span><span class="mn-tag">${tag}</span></div><div class="mn-chiprow"><div class="mn-emv"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 7a7 7 0 0 1 0 10"/><path d="M12 4.5a11 11 0 0 1 0 15"/><path d="M16 2a15 15 0 0 1 0 20"/></svg></div><div class="mn-num">•••• &nbsp;•••• &nbsp;•••• &nbsp;${esc(b.last)}</div><div class="mn-name">${esc((profile().name || 'Apoorva').split(' ')[0].toUpperCase())}</div><span class="mn-hint">Tap to flip</span></div>`;
+    : `<div class="mn-face mn-front"><div class="mn-row"><span class="mn-bank">${esc(b.bank)}</span><span class="mn-tag">${tag}</span></div><div class="mn-chiprow"><div class="mn-emv"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 7a7 7 0 0 1 0 10"/><path d="M12 4.5a11 11 0 0 1 0 15"/><path d="M16 2a15 15 0 0 1 0 20"/></svg></div><div class="mn-num">•••• &nbsp;•••• &nbsp;•••• &nbsp;${esc(b.last)}</div><div class="mn-name">${esc((profile().name || 'Apoorva').split(' ')[0].toUpperCase())}</div>${b.kind && CARD_GUIDE[b.kind] ? `<span class="mn-best">${esc(CARD_GUIDE[b.kind].name)} · best for ${esc(CARD_GUIDE[b.kind].best)}</span>` : '<span class="mn-hint">Tap to flip</span>'}</div>`;
   const grid = wifi
     ? `<div>Pay by<b>${mnDay(b.due)}</b></div><div>After due date<b>${inr2(b.late)}</b></div><div>Bill period<b>${esc(b.period || '')}</b></div><div>Status<b>${esc(st.txt)}</b></div>`
     : `<div>Minimum due<b>${inr2(b.min)}</b></div><div>${st.paid ? 'Was due' : 'Pay by'}<b>${mnDay(b.due)}</b></div><div>Bill date<b>${mnDay(b.bill)}</b></div><div>Status<b>${esc(st.txt)}</b></div>`;
@@ -4456,6 +4470,7 @@ function pageMoney() {
     <div class="mn-rings">${all.map(b => `<button type="button" class="mn-rg" data-act="mn-card" data-id="${esc(b.id)}">${mnRing(b, 54)}<b>${esc(b.wifi ? 'Wi-Fi' : b.bank.split(' ')[0])}</b><span>${b.wifi ? inr(b.total) : '••' + esc(b.last)}</span></button>`).join('')}</div></div></div>`;
   /* 2. wallet */
   h += `<div class="sec"><h2 class="sh">Wallet</h2><div class="mn-wallet" id="mn-wallet">${all.map((b, i) => mnCard(b, i, b.wifi)).join('')}</div><p class="mn-note">Tap a card to flip it. The ring counts the days left to pay.</p></div>`;
+  h += whichCardSec();
   /* 3. the year, month by month */
   const yr = M.year || +today().slice(0, 4), keys = Array.from({ length: 12 }, (_, i) => yr + '-' + String(i + 1).padStart(2, '0'));
   const tots = Object.fromEntries(keys.map(k => [k, M.months[k] ? Object.values(M.months[k]).reduce((a, b) => a + b, 0) : 0]));
@@ -4489,6 +4504,58 @@ function pageMoney() {
   }
   return h;
 }
+/* Which card where (v6.11, 27 Nov 2026). Benefits checked on the banks' own pages on 27 Nov 2026 (links in CARD_GUIDE.src).
+   Picks go by real value: Millennia CashPoint = ₹1; HDFC UPI RuPay CashPoint = ₹0.25; ICICI Reward Point ≈ ₹0.25.
+   A card's `kind` comes from the locked money-live file (millennia / upi-rupay / coral). */
+const CARD_GUIDE = {
+  millennia: { name: 'HDFC Millennia', net: 'Visa', look: 2, best: 'Amazon · Swiggy · Myntra',
+    rates: [['5%', 'Amazon, Flipkart, Myntra, Tata CLiQ, Swiggy, Zomato, Uber rides, BookMyShow, Sony LIV, Cult.fit (up to 1,000 CashPoints a month, so about ₹20,000 of spending there)'], ['1%', 'everything else (another 1,000 CashPoints a month)'], ['0', 'wallet loads, Easy EMI, education fees']],
+    perks: ['1 CashPoint = ₹1 off your bill (redeem up to 3,000 a month, minimum 500)', '₹1,000 voucher or a lounge visit when you spend ₹1 lakh in a quarter', 'Fuel surcharge waived at any pump (₹400–5,000, up to ₹250 a cycle)', '10% extra off Swiggy Dineout with code HDFCCARDS', 'Fee ₹1,000 + GST, waived if you spend ₹1 lakh in the year'],
+    src: [['HDFC Millennia page', 'https://hdfc.bank.in/credit-cards/millennia-credit-card'], ['HDFC Millennia FAQ (caps)', 'https://hdfcbank.com/content/api/contentstream-id/723fb80a-2dde-42a3-9793-7ae1be57c87f/ef2bb403-39aa-46ae-aa45-bcd1ac8a538b']] },
+  'upi-rupay': { name: 'HDFC UPI RuPay', net: 'RuPay · UPI', look: 1, best: 'UPI scan & pay',
+    rates: [['3%', 'groceries, supermarkets, dining, PayZapp (PayZapp becomes pharmacy from 1 Jan 2027)'], ['2%', 'utility bills'], ['1%', 'everything else'], ['0', 'fuel, rent, government, wallets and vouchers, EMI, SmartBuy']],
+    perks: ['Works on UPI: link it in GPay, PhonePe or PayZapp and pay any QR code', '1 CashPoint = only ₹0.25, so 3% is really about 0.75% (500 CashPoints a month in each group)', 'Minimum ₹100 a payment to earn', 'Fee ₹99 + GST, waived if you spend ₹25,000 in the year'],
+    src: [['HDFC UPI RuPay page', 'https://hdfc.bank.in/credit-cards/hdfc-bank-upi-rupay-credit-card']] },
+  coral: { name: 'ICICI Coral', net: 'Visa', look: 3, best: 'HPCL fuel · movie offer',
+    rates: [['2 pts', 'per ₹100 on most spends (about 0.5%)'], ['1 pt', 'per ₹100 on utilities and insurance'], ['0', 'fuel']],
+    perks: ['25% off BookMyShow and INOX tickets (up to ₹100, twice a month) only if you spent ₹25,000 on Coral last quarter', 'One airport lounge visit a quarter if you spent ₹75,000 last quarter', '1% fuel surcharge waived at HPCL pumps on ICICI machines (₹400–4,000)', 'Bonus 2,000 points at ₹2 lakh a year, then 1,000 per extra ₹1 lakh', 'Fee ₹500 + GST, waived if you spend ₹1.5 lakh in the year'],
+    src: [['ICICI Coral page', 'https://www.icici.bank.in/personal-banking/cards/credit-card/coral-card']] }
+};
+const CARD_PICKS = [
+  ['Amazon, Flipkart, Myntra, Tata CLiQ', 'millennia', '5% back', 'shop online shopping'],
+  ['Swiggy & Zomato food delivery', 'millennia', '5% back (also 10% extra on Swiggy Dineout with HDFCCARDS)', 'food dining'],
+  ['Local shops, canteen, autos (UPI QR)', 'upi-rupay', 'the only card that works on UPI; about 0.75% on food & groceries, 0.25% on the rest', 'upi scan pay grocery'],
+  ['Nykaa', 'millennia', '1% back, the best of your three', 'shop beauty'],
+  ['HPCL petrol pump', 'coral', '1% surcharge waived on ICICI machines; no points on fuel', 'fuel petrol'],
+  ['After ₹20,000 a month on the 5% shops', 'coral', 'Millennia stops paying on those once its 1,000 CashPoints are used; Coral still gives about 0.5%', 'tip cap limit'],
+  ['Swiggy Instamart', 'millennia', 'at least 1%; 5% only if HDFC counts it as Swiggy (check your statement)', 'food grocery'],
+  ['Uber rides', 'millennia', '5% back (rides only)', 'travel cab'],
+  ['BookMyShow', 'millennia', "5% back; Coral's 25% off only if you spent ₹25,000 on Coral last quarter", 'fun movie'],
+  ['Sony LIV, Cult.fit', 'millennia', '5% back', 'fun gym'],
+  ['Other online shops (DailyObjects, Knya, The Stack…)', 'millennia', '1% back', 'shop'],
+  ['Steam / Dota 2', 'millennia', '1% back', 'fun games'],
+  ['Apple, Google & YouTube subscriptions', 'millennia', '1% back', 'subs'],
+  ['Airtel Wi-Fi bill', 'millennia', '1% back (RuPay gives about 0.5%)', 'bills utility'],
+  ['Restaurants and supermarkets that take cards', 'millennia', "1% back (RuPay's 3% is really about 0.75%)", 'food dining grocery'],
+  ['Small restaurants & tea stalls (UPI QR)', 'upi-rupay', 'about 0.75% back on UPI', 'upi food'],
+  ['Pharmacy', 'millennia', '1% back', 'health medicine'],
+  ['Other petrol pumps', 'millennia', '1% surcharge waived at any pump', 'fuel petrol']
+];
+const cardKind = id => { const M = MONEY(); const c = M && (M.cards || []).find(x => x.id === id); return c && c.kind; };
+const cardFor = kind => { const M = MONEY(); return M && (M.cards || []).find(c => c.kind === kind); };
+function cardChip(kind) { const g = CARD_GUIDE[kind] || {}; const c = cardFor(kind); return `<span class="mn-chip mn-l${g.look || 1}">${esc(g.name || kind)}${c ? ' ••' + esc(c.last) : ''}</span>`; }
+function pickRow(p) { return `<div class="mn-pick" data-q="${esc((p[0] + ' ' + (CARD_GUIDE[p[1]] || {}).name + ' ' + p[3]).toLowerCase())}"><div class="mn-pt"><span>${esc(p[0])}</span><em>${esc(p[2])}</em></div>${cardChip(p[1])}</div>`; }
+function whichCardSec() {
+  const M = MONEY(); if (!M || !(M.cards || []).some(c => c.kind)) return '';
+  const rows = CARD_PICKS.map(pickRow);
+  const guide = Object.entries(CARD_GUIDE).filter(([k]) => cardFor(k)).map(([k, g]) => `<details class="mn-cg"><summary class="mn-pick" style="cursor:pointer;list-style:none"><div class="mn-pt"><span>${esc(g.name)} ••${esc(cardFor(k).last)}</span><em>${esc(g.net)} · best for ${esc(g.best)}</em></div><span class="lv-chev" aria-hidden="true">›</span></summary><div class="mn-cgb">${g.rates.map(r => `<div class="mn-rate"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join('')}<ul>${g.perks.map(x => `<li>${esc(x)}</li>`).join('')}</ul><p class="mn-note" style="margin:6px 0 0">Checked on the bank's site, 27 Nov 2026: ${g.src.map(s => `<a href="${esc(s[1])}" target="_blank" rel="noopener">${esc(s[0])}</a>`).join(' · ')}</p></div></details>`).join('');
+  return `<div class="sec"><h2 class="sh">Which card?</h2><input class="tin mn-q" type="search" id="mn-q" enterkeyhint="search" placeholder="Swiggy, Nykaa, petrol…" autocomplete="off" aria-label="Which card for a shop">
+    <div class="group" id="mn-picks" style="margin-top:8px">${moreCut('mnpick', rows, 6).join('')}${moreBtn('mnpick', rows.length, 6, 'place')}</div><p class="mn-note" id="mn-pick-none" hidden>Not in the list. Online: HDFC Millennia (1%). Paying by UPI QR: HDFC UPI RuPay.</p>
+    <div class="group" style="margin-top:10px">${guide}</div><p class="mn-note">Cashback rules change; the bank's page has the final word.</p></div>`;
+}
+function mnPickFilter(q) { const box = $('mn-picks'); if (!box) return; q = q.trim().toLowerCase();
+  if (!q) { box.innerHTML = (() => { const rows = CARD_PICKS.map(pickRow); return moreCut('mnpick', rows, 6).join('') + moreBtn('mnpick', rows.length, 6, 'place'); })(); $('mn-pick-none').hidden = true; return; }
+  const hits = CARD_PICKS.filter(p => (p[0] + ' ' + (CARD_GUIDE[p[1]] || {}).name + ' ' + p[3]).toLowerCase().includes(q)); box.innerHTML = hits.map(pickRow).join(''); $('mn-pick-none').hidden = !!hits.length; }
 function pageOrders() { return head('My orders', 'Ordered in ' + today().slice(0, 4), 'Personal') + `<div class="sec shop-page">${shopBody(shopKey)}</div>`; }
 
 
@@ -4683,6 +4750,7 @@ function openDrawer() { if (render.drawerStale !== false) { renderDrawer(); rend
 function closeDrawer() { $('drawer').classList.remove('open'); $('dscrim').classList.remove('open'); pinPage(false, 'drawer'); }
 
 /* ---------- settings search (v5.65): hides what doesn't match, opens folds that hold a match ---------- */
+document.addEventListener('input', e => { if (e.target.id === 'mn-q') mnPickFilter(e.target.value); });
 document.addEventListener('input', e => { if (e.target.id !== 'set-q') return; const q = e.target.value.trim().toLowerCase(); const pg = $('page');
   const C = [...pg.querySelectorAll('.group > .row, .group > label, details.in-how, .sec > .card')].filter(el => !el.closest('.set-qw'));
   const secs = [...pg.querySelectorAll('.sec')].filter(el => !el.classList.contains('set-qw'));
@@ -5694,6 +5762,7 @@ function renderSearch(q) {
   const chap = []; BOOKS().forEach(b => b.chapters.forEach(c => { if (hit(c.title, c.part, b.title)) chap.push(row(`data-act="book-open" data-id="${esc(b.id)}"`, c.n + '. ' + c.title, [b.title, state.bookDone[b.id + '|' + c.n] ? 'Done ✓' : ''].filter(Boolean).join(' · '))); }));
   add('Textbook chapters', chap);
   add('My cases', MC_LIST().filter(c => hit(c.procedure, c.diagnosis, c.dept, c.loc, c.mgmt, c.faculty, c.uhid, c.details)).map(c => row(`data-act="mc-open" data-id="${esc(c.id)}"`, c.procedure, [c.mgmt, c.faculty, mcStatus(c).t].filter(Boolean).join(' · '), dShort(c.date))));
+  { const M = MONEY(); if (M && (M.cards || []).some(c => c.kind)) add('Which card?', CARD_PICKS.filter(p => hit(p[0], p[3])).map(p => row(`data-act="tab" data-tab="money"`, p[0], 'Pay with ' + (CARD_GUIDE[p[1]] || {}).name + (cardFor(p[1]) ? ' ••' + cardFor(p[1]).last : '') + ' · ' + p[2]))); }
   add('Reminders', state.reminders.filter(r => hit(r.title, remRule(r))).map(r => row(`data-act="rem-edit" data-id="${r.id}"`, r.title, remRule(r))));
   add('New advances', ADV().filter(a => hit(a.title, a.summary, a.why, a.journal, ...(a.tags || []))).map(a => row(`data-act="goto" data-tab="advances"`, a.title, [a.journal, a.type].filter(Boolean).join(' · '))));
   add('To-do', state.todos.filter(t => hit(t.text)).map(t => row(`data-act="goto" data-tab="todos"`, t.text, t.done ? 'Done' : 'Open')));
