@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "note": "OT list without patient names, ages or sex.",
  "items": [
   {
@@ -330,6 +330,96 @@
    "ot": "khsbcathLab",
    "procedure": "Stenting",
    "unit": "RADIVR",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-01",
+   "date": "2026-11-28",
+   "order": 1,
+   "time": "06:00",
+   "ot": "KHSB-OR1",
+   "procedure": "Rotator cuff repair",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-02",
+   "date": "2026-11-28",
+   "order": 2,
+   "time": "08:30",
+   "ot": "KHSB-OR1",
+   "procedure": "ACL / PCL reconstruction with meniscal balancing",
+   "unit": "ORT004",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-03",
+   "date": "2026-11-28",
+   "order": 3,
+   "time": "07:00",
+   "ot": "KHSB-OR2",
+   "procedure": "Total knee replacement",
+   "unit": "ORT003",
+   "status": "Approved · moved from 08:30 to 7 am at surgeon's request"
+  },
+  {
+   "id": "2026-11-28-04",
+   "date": "2026-11-28",
+   "order": 4,
+   "time": "09:00",
+   "ot": "KHSB-OR3",
+   "procedure": "Debridement and suturing (complex)",
+   "unit": "SUO002",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-05",
+   "date": "2026-11-28",
+   "order": 5,
+   "time": "07:00",
+   "ot": "KHSB-OR4",
+   "procedure": "TURP (complex)",
+   "unit": "URO002",
+   "status": "Approved · moved from 06:00 to 7 am"
+  },
+  {
+   "id": "2026-11-28-06",
+   "date": "2026-11-28",
+   "order": 6,
+   "time": "07:30",
+   "ot": "KHSB-OR4",
+   "procedure": "TURBT (complex)",
+   "unit": "URO002",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-07",
+   "date": "2026-11-28",
+   "order": 7,
+   "time": "09:00",
+   "ot": "KHSB-OR4",
+   "procedure": "Laparoscopic appendicectomy",
+   "unit": "PDS003",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-08",
+   "date": "2026-11-28",
+   "order": 8,
+   "time": "07:30",
+   "ot": "KHSBGEC",
+   "procedure": "Colonoscopy",
+   "unit": "GEC001",
+   "status": "Approved"
+  },
+  {
+   "id": "2026-11-28-09",
+   "date": "2026-11-28",
+   "order": 9,
+   "time": "09:30",
+   "ot": "KHSBGEC",
+   "procedure": "Colonoscopy",
+   "unit": "GEC001",
    "status": "Approved"
   }
  ]
