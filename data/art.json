@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-26",
-    "title": "Under the Wave off Kanagawa (The Great Wave)",
-    "artist": "Katsushika Hokusai",
-    "artistLife": "Japanese, 1760–1849",
-    "year": "c. 1830–32",
-    "medium": "Woodblock print; ink and colour on paper",
-    "size": "25.7 × 37.9 cm (about the size of a sheet of landscape-format notepaper)",
-    "where": "The Metropolitan Museum of Art, New York",
-    "movement": "Edo period, ukiyo-e",
-    "fame": "famous",
+    "date": "2026-11-27",
+    "title": "Moonlit Night on the Dnieper",
+    "artist": "Arkhip Kuindzhi",
+    "artistLife": "Ukrainian-born Russian-Empire painter of Greek descent, 1841–1910",
+    "year": "1880",
+    "medium": "Oil on canvas",
+    "size": "105 × 144 cm (a little wider than a standard door is tall)",
+    "where": "State Russian Museum, Saint Petersburg",
+    "movement": "Russian realism / Luminism, Peredvizhniki (the Wanderers)",
+    "fame": "hidden gem",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Great_Wave_off_Kanagawa2.jpg",
-      "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
-      "focus": "center 40%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg",
+      "credit": "State Russian Museum, public domain (image: Wikimedia Commons)",
+      "focus": "center 55%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A huge blue wave curls up like a claw over three small boats, with the tiny, calm shape of Mount Fuji sitting far away beneath it. The foam breaks into little white fingers that seem to reach for the boats. It is technically a print rather than a painting, made from carved wooden blocks."
+        "p": "A full moon hangs in a deep blue-green sky over a wide river at night. Its light lays a bright, silvery path across the water, and a few small huts glow faintly on the bank. The horizon sits very low, so most of the picture is sky and the quiet feels enormous."
       },
       {
         "h": "The artist",
-        "p": "Hokusai worked for more than seventy years, making woodblock designs, illustrated books and paintings. He was around 70 when this print appeared, and he kept improving until the end of his long life. He is said to have hoped to get even better if he lived to be a hundred."
+        "p": "Arkhip Kuindzhi was born in 1841 near Mariupol, on the Sea of Azov, into a Greek family, and was orphaned as a small child. He worked odd jobs, went to Feodosia as a teenager to learn from the famous sea painter Aivazovsky, and later taught himself in Saint Petersburg. He became a leading figure among the Wanderers, and later a professor who taught Nicholas Roerich and Arkady Rylov among others."
       },
       {
         "h": "The time",
-        "p": "Japan in the early 1830s was in the Edo period, a long era of peace in which townspeople in cities like Edo (now Tokyo) had money to spend on art and travel. Prints were affordable, and views of famous places were popular. The Great Wave is one of the Thirty-six Views of Mount Fuji, a series made at this time."
+        "p": "Russia in 1880 had a lively public for art, and the Wanderers were taking exhibitions out of the academy and to ordinary audiences. Kuindzhi was curious about light and colour and was friends with the chemist Dmitri Mendeleev. He even opened his studio on Sundays so visitors could watch him work. The Grand Duke Konstantin Konstantinovich bought this painting before the public had seen it."
       },
       {
         "h": "What's special",
-        "p": "The series is known for its blues. Prussian blue, a new pigment then imported from Europe, was fashionable, and scientific tests found it was used together with traditional indigo to make the shades of the sea. Hokusai also plays with perspective: the giant wave dominates, and mighty Fuji looks small. The Met keeps rotating its impressions out of view to protect them from fading."
+        "p": "Kuindzhi shows it alone in a one-picture exhibition in Saint Petersburg, which was unusual then. The windows were curtained and one lamp was aimed at the canvas, and crowds queued to go in. Some visitors suspected a hidden lamp behind the picture, because the moonlight seemed to glow. The effect comes from his skill with tone, the dark surroundings making the bright moon and water look lit from within."
       },
       {
         "h": "Look for",
-        "p": "Find tiny Fuji under the wave's arch. Then look at the boats and the foam's finger-like tips, and notice how the curve of the wave echoes Fuji's shape."
+        "p": "Follow the bright path on the water back to the moon, and notice how much sky there is compared with land. Then find the tiny glowing huts on the far bank and the dark, cool greens that make the light seem brighter."
       }
     ],
     "source": {
-      "title": "The Metropolitan Museum of Art",
-      "url": "https://www.metmuseum.org/art/collection/search/45434"
+      "title": "Wikimedia Commons file page (State Russian Museum collection)",
+      "url": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg"
     }
   },
   "history": [
+    {
+      "date": "2026-11-26",
+      "title": "Under the Wave off Kanagawa (The Great Wave)",
+      "artist": "Katsushika Hokusai",
+      "artistLife": "Japanese, 1760–1849",
+      "year": "c. 1830–32",
+      "medium": "Woodblock print; ink and colour on paper",
+      "size": "25.7 × 37.9 cm (about the size of a sheet of landscape-format notepaper)",
+      "where": "The Metropolitan Museum of Art, New York",
+      "movement": "Edo period, ukiyo-e",
+      "fame": "famous",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Great_Wave_off_Kanagawa2.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Great_Wave_off_Kanagawa2.jpg",
+        "credit": "The Metropolitan Museum of Art, public domain (image: Wikimedia Commons)",
+        "focus": "center 40%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A huge blue wave curls up like a claw over three small boats, with the tiny, calm shape of Mount Fuji sitting far away beneath it. The foam breaks into little white fingers that seem to reach for the boats. It is technically a print rather than a painting, made from carved wooden blocks."
+        },
+        {
+          "h": "The artist",
+          "p": "Hokusai worked for more than seventy years, making woodblock designs, illustrated books and paintings. He was around 70 when this print appeared, and he kept improving until the end of his long life. He is said to have hoped to get even better if he lived to be a hundred."
+        },
+        {
+          "h": "The time",
+          "p": "Japan in the early 1830s was in the Edo period, a long era of peace in which townspeople in cities like Edo (now Tokyo) had money to spend on art and travel. Prints were affordable, and views of famous places were popular. The Great Wave is one of the Thirty-six Views of Mount Fuji, a series made at this time."
+        },
+        {
+          "h": "What's special",
+          "p": "The series is known for its blues. Prussian blue, a new pigment then imported from Europe, was fashionable, and scientific tests found it was used together with traditional indigo to make the shades of the sea. Hokusai also plays with perspective: the giant wave dominates, and mighty Fuji looks small. The Met keeps rotating its impressions out of view to protect them from fading."
+        },
+        {
+          "h": "Look for",
+          "p": "Find tiny Fuji under the wave's arch. Then look at the boats and the foam's finger-like tips, and notice how the curve of the wave echoes Fuji's shape."
+        }
+      ],
+      "source": {
+        "title": "The Metropolitan Museum of Art",
+        "url": "https://www.metmuseum.org/art/collection/search/45434"
+      }
+    },
     {
       "date": "2026-11-25",
       "title": "Lemminkäinen's Mother",
