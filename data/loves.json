@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,23 +64,40 @@
     }
   ],
   "today": {
-    "date": "2026-11-26",
-    "topic": "finance",
-    "topicName": "Personal finance",
-    "kind": "article",
-    "title": "Tulip mania may not have been the crash we think",
-    "text": "The famous tale of Dutch tulip mania in 1637, with sailors jailed for eating a bulb and fortunes lost overnight, mostly traces back to Charles Mackay's 1841 book. Historian Anne Goldgar searched the Dutch records and said she could not find anyone who went bankrupt. Not many people were involved, and the economic fallout was small. When buyers refused to honour their contracts, the courts would not step in, so trust in the market fell apart without a wider collapse. Some of the scary stories may even come from pamphlets written by worried Dutch moralists.",
+    "date": "2026-11-27",
+    "topic": "fountain-pens",
+    "topicName": "Fountain pens",
+    "kind": "fact",
+    "title": "Your pen's \"iridium\" tip probably has no iridium",
+    "text": "Early gold nibs were tipped with a natural ore of iridium and osmium. An analysis of a 1918 Waterman tip found 54% iridium and 44% osmium. Within a few years makers moved to engineered alloys: a Sheaffer tip from about 1919 held just 7.7% iridium, with tungsten and nickel making up most of it. Modern nib tips generally contain little or no iridium, and Pelikan has said its tips are a tungsten and ruthenium alloy. The word 'iridium' simply stuck, because the industry kept using it long after the metal left the recipe.",
     "source": {
-      "title": "Smithsonian Magazine: There Never Was Real Tulip Fever",
-      "url": "https://www.smithsonianmag.com/history/there-never-was-real-tulip-fever-180964915/"
+      "title": "Nibs.com: Where's the Iridium?",
+      "url": "https://www.nibs.com/article4.html"
     },
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Semper_Augustus_Tulip_17th_century.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Semper_Augustus_Tulip_17th_century.jpg",
-      "credit": "Unknown 17th-century artist, public domain (Wikimedia Commons)"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Two-Tone_Fountain_Pen_Nib-Plum.jpg?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Two-Tone_Fountain_Pen_Nib-Plum.jpg",
+      "credit": "Plum, free licence (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-26",
+      "topic": "finance",
+      "topicName": "Personal finance",
+      "kind": "article",
+      "title": "Tulip mania may not have been the crash we think",
+      "text": "The famous tale of Dutch tulip mania in 1637, with sailors jailed for eating a bulb and fortunes lost overnight, mostly traces back to Charles Mackay's 1841 book. Historian Anne Goldgar searched the Dutch records and said she could not find anyone who went bankrupt. Not many people were involved, and the economic fallout was small. When buyers refused to honour their contracts, the courts would not step in, so trust in the market fell apart without a wider collapse. Some of the scary stories may even come from pamphlets written by worried Dutch moralists.",
+      "source": {
+        "title": "Smithsonian Magazine: There Never Was Real Tulip Fever",
+        "url": "https://www.smithsonianmag.com/history/there-never-was-real-tulip-fever-180964915/"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Semper_Augustus_Tulip_17th_century.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:Semper_Augustus_Tulip_17th_century.jpg",
+        "credit": "Unknown 17th-century artist, public domain (Wikimedia Commons)"
+      }
+    },
     {
       "date": "2026-11-25",
       "topic": "superheroes",
