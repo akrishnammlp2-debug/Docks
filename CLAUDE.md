@@ -78,3 +78,8 @@ It is built only for her and will never be monetised.
 - Her NBA team is the **Philadelphia 76ers**: schedule fetched from ESPN on pull-to-refresh only.
 - Weekly scheduled task "Inemuri: weekly Drive backup" uploads the encrypted sync + data/private files to Drive › Inemuri backups (keeps 8).
 - Fudge is **male** ("he").
+
+## Tidier Academics and Calendar (v6.09, 27 Nov 2026)
+- Academics has three tabs (`acadTab`, saved in localStorage): **Today** (timer, Ready to revise, ECG/ABG of the day, table viva, Log a session), **Library** (search, Subjects, Bite-size, Textbooks, Topics & PDFs, Articles, ECG & ABG), **Progress** (Last 7 days, Road to MD, Exam map, Viva stories, Portfolio).
+- Library/Progress sections are one-row folds (`afold(key, title, html, meta)`; open state saved in `studydesk.afold`). New Academics sections go in a fold on the right tab, not stacked on the page. Link straight to one with `data-act="goto" data-tab="study" data-at="library:bites"`.
+- Personal calendar is one "Coming up" list with filter chips (`pcFilter`): next 2 weeks first, the rest under More; Travel & packing, All birthdays and All festivals sit in folds below. Academic calendar's "All of <month>" is a fold.

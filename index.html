@@ -1403,6 +1403,23 @@ body::before{will-change:transform;transform:translateZ(0)}
 
 /* personal calendar + festive look v5.22 */
 .cal-mode{margin-bottom:4px}
+.afold{padding:0!important;margin-bottom:10px;overflow:hidden}
+.afold>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;min-height:52px}
+.afold>summary::-webkit-details-marker{display:none}
+.af-t{flex:1;font-size:16px;font-weight:600;color:var(--fg)!important}
+.af-m{font-size:12.5px;font-weight:600;color:var(--fg-3)!important;text-align:right}
+.afold[open]>summary .lv-chev{transform:rotate(90deg)}
+.afold[open]>summary{border-bottom:1px solid var(--line)}
+.af-b{padding:10px 12px 4px}
+.af-b>.sec{margin-top:0}
+.af-b>.sec>h2.sh:first-child:not(:has(button)){display:none}
+.af-b>.sec>h2.sh:first-child:has(button)>span:first-child{visibility:hidden}
+.af-search{flex-direction:row!important;align-items:center;gap:10px;color:var(--fg-3)!important;font-size:15px;text-align:left;width:100%}
+.af-search svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2}
+.pc-chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.pc-chips::-webkit-scrollbar{display:none}
+.pc-chips button{flex:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:13.5px;font-weight:600;color:var(--fg-2)!important;background:transparent}
+.pc-chips button[aria-pressed="true"]{background:var(--surface-2);color:var(--accent)!important;border-color:var(--accent)}
 .pc-row{display:flex;align-items:center;gap:10px}
 .pc-e{flex:none;width:30px;font-size:21px;text-align:center;line-height:1}
 .pc-when{flex:none;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--blk-2,#D6E4D3);color:var(--fg)!important}
@@ -2199,7 +2216,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.08 · Sessions named after the website';
+const APP_VERSION = '6.09 · Tidier Academics and Calendar';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2954,51 +2971,76 @@ function timerCard() {
   return `<div class="card hero${P ? ' t-paused' : ''}"><span class="c-lab">${P ? 'Paused · ' + new Date(state.active.pausedAt).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' }) : 'Studying now'}${t.link ? ' · ' + esc(siteName(t.link)) : ''}</span><div class="timer"><span class="t-min">${P ? '⏸' : '⏱'} ${fmtMins(activeMins())}</span><span class="c-s" style="flex:1;min-width:0">${esc(t.name)}</span></div>
     <div class="btns" style="flex-direction:row;margin-top:4px;flex-wrap:wrap"><button class="btn small" type="button" data-act="${P ? 'timer-resume' : 'timer-pause'}" style="background:var(--on-label);color:var(--label)">${P ? '▶ Resume' : '⏸ Pause'}</button><button class="btn small ghost" type="button" data-act="finish-open">Finish &amp; log</button>${t.link ? `<a class="btn small ghost" href="${esc(t.link)}"${isGNLink(t.link) ? '' : ' target="_blank" rel="noopener"'} style="text-decoration:none">Open ${esc(siteName(t.link))}</a>` : ''}</div></div>`;
 }
+/* Academics in three tabs (v6.09, 27 Nov 2026): Today = do now, Library = read, Progress = how it's going. Sections fold to one row. */
+let acadTab = (() => { try { return localStorage.getItem('studydesk.acadTab') || 'today'; } catch (_) { return 'today'; } })();
+const aFold = new Set((() => { try { return JSON.parse(localStorage.getItem('studydesk.afold') || '[]'); } catch (_) { return []; } })());
+const aFoldSave = () => { try { localStorage.setItem('studydesk.afold', JSON.stringify([...aFold])); } catch (_) {} };
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.afold) { d.open ? aFold.add(d.dataset.afold) : aFold.delete(d.dataset.afold); aFoldSave(); } }, true);
+function afold(key, title, html, meta) { if (!html) return '';
+  if (meta === undefined) { const m = html.match(/<h2 class="sh"><span>[^<]*<\/span><span>([^<]*)<\/span>/); meta = m ? m[1] : ''; }
+  return `<details class="afold card" data-afold="${key}"${aFold.has(key) ? ' open' : ''}><summary><span class="af-t">${title}</span>${meta ? `<span class="af-m">${esc(meta)}</span>` : ''}<span class="lv-chev" aria-hidden="true">›</span></summary><div class="af-b">${html}</div></details>`; }
+function studySubjects() { let out = '';
+  if (!state.subjects.length) {
+    out += `<div class="sec"><div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No subjects yet</span><span class="c-s">Start with one, for example “Cardiac” or “Regional”.</span><button class="btn" type="button" data-act="add-subject" style="margin-top:8px">Add a subject</button></div>`;
+    return out + `</div>`;
+  }
+  out += `<div class="sec"><h2 class="sh">Subjects</h2>`;
+  for (const sb of state.subjects) {
+    const ts = state.topics.filter(t => t.subjectId === sb.id); const open = !collapsed.has(sb.id); const x = subjectStats(sb.id);
+    out += `<div class="group" style="margin-bottom:10px"><div class="rowwrap"><button class="row" type="button" data-act="toggle-subject" data-id="${sb.id}">${x.pct !== null ? miniRing(x.pct) : `<span class="spec">${esc(sb.name.slice(0, 2))}</span>`}<span class="r-main"><span class="r-t" style="font-weight:600">${esc(sb.name)}</span><span class="r-s">${plural(ts.length, 'topic')}${x.mins ? ' · ' + fmtMins(x.mins) : ''}${x.tot ? ' · ' + x.done + '/' + x.tot + ' pages' : ''}</span></span><span class="muted">${open ? '▾' : '▸'}</span></button><button class="xbtn" type="button" data-act="edit-subject" data-id="${sb.id}" aria-label="Edit subject">⋯</button></div>`;
+    if (open) {
+      const showAll = ts.length <= 3 || moreTopics.has(sb.id);
+      out += (showAll ? ts : ts.slice(0, 3)).map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
+        return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}">${q.pct !== null ? miniRing(q.pct) : ''}<span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${[q.total ? q.page + '/' + q.total + ' pages' : '', q.mins ? fmtMins(q.mins) : '', st].filter(Boolean).map(esc).join(' · ')}</span></span></button><button class="btn small ghost" style="margin-right:10px" type="button" data-act="study-now" data-id="${t.id}" aria-label="Study ${esc(t.name)} now">▶</button></div>`; }).join('');
+      if (ts.length > 3) out += `<button class="row more-row" type="button" data-act="more-topics" data-id="${sb.id}">${showAll ? 'Show less ▴' : 'More · ' + plural(ts.length - 3, 'topic') + ' ▾'}</button>`;
+      out += `<button class="row" type="button" data-act="add-topic" data-id="${sb.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
+    }
+    out += `</div>`;
+  }
+  out += `<button class="btn ghost wide" type="button" data-act="add-subject">+ Add subject</button></div>`;
+  return out;
+}
 function pageStudy() {
   const due = dueTopics(); const wk = addDays(today(), -6);
   const W = state.log.filter(l => dayOf(l.date) >= wk);
   let h = head('Academics', `${BOOKS().length ? plural(BOOKS().length, 'textbook') + ' · ' : ''}${pdfList && pdfList.length ? plural(pdfList.length, 'PDF') + ' · ' : ''}${state.settings.revisionsOn && due.length ? due.length + ' ready to revise' : 'Read, tick, revise'}`);
-  h += timerCard();
-  h += planSection();
-  h += stationCard();
-  h += examMapSection();
-  h += vsSection();
-  h += pfSection();
-  h += booksSection();
-  h += bitesSection();
-  h += flashSection();
-  h += articlesSection();
-  h += pdfSection();
+  const T = acadTab === 'library' || acadTab === 'progress' ? acadTab : 'today';
+  h += `<div class="sec cal-mode"><div class="seg">${[['today', 'Today'], ['library', 'Library'], ['progress', 'Progress']].map(([k, l]) => `<button type="button" data-act="acad-tab" data-m="${k}" aria-pressed="${T === k}">${l}</button>`).join('')}</div></div>`;
+  let w = ''; let r = '';
   {
-    h += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
+    w += `<div class="card"><div class="c-top"><span class="c-lab">Last 7 days</span><button class="link" type="button" data-act="log-any" style="font-size:15px;padding:0">+ Log a session</button></div>
       <div class="stats wk3" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat('Time', fmtMins(W.reduce((a, l) => a + (+l.mins || 0), 0)), '')}${stat('Sessions', W.length, '')}${stat('Topics', new Set(W.map(l => l.topicId)).size, '')}</div>
       ${state.subjects.length ? `<div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">${state.subjects.map(sb => { const x = subjectStats(sb.id);
         return `<div class="prow"><span>${esc(sb.name)}</span><div class="track"><div class="fill" style="width:${x.pct || 0}%"></div></div><span class="v">${x.pct === null ? fmtMins(x.mins) : x.pct + '%'}</span></div>`; }).join('')}</div>` : ''}</div>`;
   }
   if (due.length) {
-    h += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${moreCut('revise', due, 3).map(({ t, st }) => {
+    r += `<div class="sec"><h2 class="sh">Ready to revise</h2><div class="group">${moreCut('revise', due, 3).map(({ t, st }) => {
       const s = byId(state.subjects, t.subjectId);
       return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}"><span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${esc(s ? s.name : '')} · revision ${st.step} of ${state.settings.intervals.length} · last studied ${ago(st.last + 'T12:00:00')}</span></span></button><button class="btn small ghost" style="margin-right:12px" type="button" data-act="study-now" data-id="${t.id}">▶ Study</button></div>`;
     }).join('')}${moreBtn('revise', due.length, 3, 'topic')}</div></div>`;
   }
-  if (!state.subjects.length) {
-    h += `<div class="card" style="align-items:center;text-align:center;padding:28px 16px"><span class="c-t">No subjects yet</span><span class="c-s">Start with one, for example “Cardiac” or “Regional”.</span><button class="btn" type="button" data-act="add-subject" style="margin-top:8px">Add a subject</button></div>`;
+  if (T === 'today') {
+    const body = timerCard() + r + flashCard() + stationCard();
+    h += body || `<div class="card"><div class="nap">${AWAKE_CAT}<span class="c-s">Nothing waiting right now. Pick something from the Library when you feel like it.</span></div></div>`;
+    h += `<div class="sec"><button class="btn ghost wide" type="button" data-act="log-any">+ Log a session</button></div>`;
     return h;
   }
-  h += `<div class="sec"><h2 class="sh">Subjects</h2>`;
-  for (const sb of state.subjects) {
-    const ts = state.topics.filter(t => t.subjectId === sb.id); const open = !collapsed.has(sb.id); const x = subjectStats(sb.id);
-    h += `<div class="group" style="margin-bottom:10px"><div class="rowwrap"><button class="row" type="button" data-act="toggle-subject" data-id="${sb.id}">${x.pct !== null ? miniRing(x.pct) : `<span class="spec">${esc(sb.name.slice(0, 2))}</span>`}<span class="r-main"><span class="r-t" style="font-weight:600">${esc(sb.name)}</span><span class="r-s">${plural(ts.length, 'topic')}${x.mins ? ' · ' + fmtMins(x.mins) : ''}${x.tot ? ' · ' + x.done + '/' + x.tot + ' pages' : ''}</span></span><span class="muted">${open ? '▾' : '▸'}</span></button><button class="xbtn" type="button" data-act="edit-subject" data-id="${sb.id}" aria-label="Edit subject">⋯</button></div>`;
-    if (open) {
-      const showAll = ts.length <= 3 || moreTopics.has(sb.id);
-      h += (showAll ? ts : ts.slice(0, 3)).map(t => { const q = topicStats(t); const st = state.settings.revisionsOn ? statusLine(revStatus(t)) : (q.last ? 'Last studied ' + ago(q.last) : 'Not studied yet');
-        return `<div class="rowwrap"><button class="row" type="button" data-act="open-topic" data-id="${t.id}">${q.pct !== null ? miniRing(q.pct) : ''}<span class="r-main"><span class="r-t">${esc(t.name)}</span><span class="r-s">${[q.total ? q.page + '/' + q.total + ' pages' : '', q.mins ? fmtMins(q.mins) : '', st].filter(Boolean).map(esc).join(' · ')}</span></span></button><button class="btn small ghost" style="margin-right:10px" type="button" data-act="study-now" data-id="${t.id}" aria-label="Study ${esc(t.name)} now">▶</button></div>`; }).join('');
-      if (ts.length > 3) h += `<button class="row more-row" type="button" data-act="more-topics" data-id="${sb.id}">${showAll ? 'Show less ▴' : 'More · ' + plural(ts.length - 3, 'topic') + ' ▾'}</button>`;
-      h += `<button class="row" type="button" data-act="add-topic" data-id="${sb.id}" style="color:var(--accent);font-weight:600">+ Add topic</button>`;
-    }
-    h += `</div>`;
+  if (T === 'library') {
+    h += `<div class="sec"><button type="button" class="card af-search" data-act="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Search notes, PDFs, chapters, topics…</span></button></div>`;
+    const nT = state.topics.length;
+    h += afold('subjects', '📚 Subjects', studySubjects(), state.subjects.length ? plural(state.subjects.length, 'subject') + ' · ' + plural(nT, 'topic') : '');
+    h += afold('bites', '🍪 Bite-size', bitesSection());
+    h += afold('books', '📖 Textbooks', booksSection(), BOOKS().length ? plural(BOOKS().length, 'book') : '');
+    h += afold('pdfs', '📄 Topics & PDFs', pdfSection(), pdfList && pdfList.length ? plural(pdfList.length, 'PDF') : '');
+    h += afold('arts', '📰 Articles', articlesSection());
+    h += afold('flash', '🫀 ECG & ABG', flashSection(), ECGS().length ? plural(ECGS().length, 'ECG') : '');
+    return h;
   }
-  h += `<button class="btn ghost wide" type="button" data-act="add-subject">+ Add subject</button></div>`;
+  h += w;
+  h += afold('plan', '🗓️ Road to MD', planSection());
+  h += afold('emap', '🗺️ Exam map', examMapSection());
+  h += afold('vs', '⭐ Viva stories', vsSection(), VS().length ? String(VS().length) : '');
+  h += afold('pf', '🎓 Portfolio', pfSection(), PF().length ? String(PF().length) : '');
   return h;
 }
 function miniRing(pct) {
@@ -3019,6 +3061,7 @@ function pageTodos() {
   return h;
 }
 
+let pcFilter = (() => { try { return localStorage.getItem('studydesk.pcFilter') || 'all'; } catch (_) { return 'all'; } })();
 let calMode = (() => { try { return localStorage.getItem('studydesk.calMode') || 'academic'; } catch (_) { return 'academic'; } })();
 function pageCalendar() {
   const { y, m } = view; const t = today();
@@ -3039,7 +3082,7 @@ function pageCalendar() {
   const its = itemsFor(sel);
   h += `<div class="sec w2-side"><h2 class="sh">${sel === t ? 'Today · ' : ''}${esc(dLong(sel))}</h2><div class="group">${its.length ? its.map(i => rowHTML(i)).join('') : '<button class="row empty" type="button" data-act="add">Nothing on this day. Tap to add an entry.</button>'}</div></div></div>`;
   const all = []; for (let d = 1; d <= last; d++) itemsFor(`${y}-${pad(m + 1)}-${pad(d)}`).forEach(i => all.push(i));
-  h += `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? moreCut('month|' + y + m, all, 5).map(i => rowHTML(i, true)).join('') + moreBtn('month|' + y + m, all.length, 5, 'item') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`;
+  h += afold('cal-month', `All of ${MONTHS[m]}`, `<div class="sec"><h2 class="sh">All of ${MONTHS[m]}</h2><div class="group">${all.length ? moreCut('month|' + y + m, all, 5).map(i => rowHTML(i, true)).join('') + moreBtn('month|' + y + m, all.length, 5, 'item') : `<div class="row empty">Nothing scheduled for ${MONTHS[m]} yet.</div>`}</div></div>`, all.length ? plural(all.length, 'item') : 'nothing yet');
   return h;
 }
 
@@ -3123,14 +3166,23 @@ function personalCal() { const t = today(); const P = PERS(); const tr = P.trave
   GCAL().events.filter(x => x.date >= t && dIn(x.date) <= 60).forEach(x => soon.push({ d: x.date, e: '📅', t: x.title, s: [x.time, x.cal].filter(Boolean).join(' · '), k: 'gcal' }));
   soon.sort((a, b) => a.d.localeCompare(b.d));
   const row = x => `<div class="row pc-row pc-${x.k}"><span class="pc-e" aria-hidden="true">${esc(x.e)}</span><span class="cat-tx"><b>${esc(x.t)}</b><span>${esc(pDate(x.d))}${x.s ? ' · ' + esc(x.s) : ''}</span></span><span class="pc-when">${esc(inWords(dIn(x.d)))}</span></div>`;
-  let h = delAskCard('cal') + `<div class="sec"><h2 class="sh">Coming up</h2>${soon.length ? `<div class="group">${soon.map(row).join('')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>'}</div>`;
-  h += `<div class="sec"><h2 class="sh">📦 On the way</h2>${dv.filter(x => x.status !== 'delivered').length ? `<div class="group">${dv.filter(x => x.status !== 'delivered').map(x => `<div class="row pc-row"><span class="cat-tx"><b>${esc(x.what || 'Parcel')}</b><span>${esc(x.store || '')}${x.date ? ' · expected ' + esc(pDate(x.date)) : ''}${x.status ? ' · ' + esc(x.status) : ''}</span></span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">Nothing on its way right now. Shipments from your email and your scanned orders show up here.</span></div>'}</div>`;
+  /* v6.09: one dated list with filter chips; next 2 weeks first, the rest under More; full lists folded below */
+  const CH = [['all', 'All'], ['bday', '🎂'], ['parcel', '📦'], ['trip', '🧳'], ['fest', '🎉'], ['cat', '🐈'], ['gcal', '📅']].filter(([k]) => k === 'all' || soon.some(x => x.k === k));
+  const F = CH.some(([k]) => k === pcFilter) ? pcFilter : 'all';
+  const L = F === 'all' ? soon : soon.filter(x => x.k === F);
+  const n14 = Math.max(3, L.filter(x => dIn(x.d) <= 14).length);
+  let h = delAskCard('cal') + `<div class="sec"><h2 class="sh"><span>Coming up</span><span>${L.length ? plural(L.length, 'thing') + ' · 2 months' : ''}</span></h2>`;
+  if (CH.length > 2) h += `<div class="pc-chips" role="group" aria-label="Show only">${CH.map(([k, l]) => `<button type="button" data-act="pc-filter" data-k="${k}" aria-pressed="${F === k}">${l}</button>`).join('')}</div>`;
+  h += L.length ? `<div class="group">${moreCut('pc|' + F, L, n14).map(row).join('')}${moreBtn('pc|' + F, L.length, n14, 'later thing')}</div>` : '<div class="card"><span class="c-s">Nothing in the next two months.</span></div>';
+  h += `</div><div class="sec">`;
   const yr = t.slice(0, 4); const trips = tr.filter(x => x.date.startsWith(yr) || x.date >= t).sort((a, b) => a.date.localeCompare(b.date));
-  h += `<div class="sec"><h2 class="sh">🧳 Travel in ${yr}</h2>${trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>'}</div>`;
-  h += packSection();
-  { const B = bdays(); h += `<div class="sec"><h2 class="sh"><span>🎂 Birthdays</span><span>${B.length ? plural(B.length, 'person') : ''}</span></h2>${B.length ? `<div class="group">${moreCut('bdays', B, 4).map(b => `<div class="row pc-row pc-bday"><span class="pc-e" aria-hidden="true">🎂</span><span class="cat-tx"><b>${esc(b.name)}</b><span>${esc(pDate(b.d))}</span></span><span class="pc-when">${esc(inWords(dIn(b.d)))}</span></div>`).join('')}${moreBtn('bdays', B.length, 4, 'birthday')}</div>` : '<div class="card"><span class="c-s">Birthdays from your Google Calendar show up here.</span></div>'}</div>`; }
+  const tripsH = trips.length ? `<div class="group">${trips.map(x => `<div class="row pc-row${x.date < t ? ' pc-past' : ''}"><span class="pc-e" aria-hidden="true">${MODE_EMO[x.mode] || '🧳'}</span><span class="cat-tx"><b>${esc(x.from)} → ${esc(x.to)}</b><span>${esc(pDate(x.date))}${x.dep ? ' · ' + esc(x.dep) : ''}${x.arr ? ' → ' + esc(x.arr) : ''}</span><span>${esc(x.detail || '')}</span></span><span class="pc-when">${x.date < t ? 'done' : esc(inWords(dIn(x.date)))}</span></div>`).join('')}</div>` : '<div class="card"><span class="c-s">No trips found in your email this year.</span></div>';
+  h += afold('pc-trips', '🧳 Travel & packing', `<div class="sec">${tripsH}</div>` + packSection(), trips.length ? plural(trips.length, 'trip') + ' in ' + yr : '');
+  { const B = bdays(); h += afold('pc-bdays', '🎂 All birthdays', B.length ? `<div class="sec"><div class="group">${B.map(b => `<div class="row pc-row pc-bday"><span class="pc-e" aria-hidden="true">🎂</span><span class="cat-tx"><b>${esc(b.name)}</b><span>${esc(pDate(b.d))}</span></span><span class="pc-when">${esc(inWords(dIn(b.d)))}</span></div>`).join('')}</div></div>` : '<div class="sec"><div class="card"><span class="c-s">Birthdays from your Google Calendar show up here.</span></div></div>', B.length ? plural(B.length, 'person') : ''); }
   const months = {}; FESTS().filter(f => dIn(f.date) >= 0).forEach(f => { const k = f.date.slice(0, 7); (months[k] = months[k] || []).push(f); });
-  h += `<div class="sec"><h2 class="sh">🎉 Festivals & holidays</h2>${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === t.slice(0, 7) || k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}</div>`;
+  const nF = Object.values(months).reduce((a, m) => a + m.length, 0);
+  h += afold('pc-fests', '🎉 All festivals & holidays', `<div class="sec">${Object.keys(months).sort().map(k => `<details class="card pc-month"${k === Object.keys(months).sort()[0] ? ' open' : ''}><summary><b>${new Date(k + '-15T12:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</b><span class="pc-n">${months[k].length}</span><span class="lv-chev" aria-hidden="true">›</span></summary>${months[k].map(f => `<div class="pc-f"><span class="pc-e" aria-hidden="true">${esc(f.emoji || '🎉')}</span><span class="cat-tx"><b>${esc(f.name)}</b><span>${esc(pDate(f.date))}</span></span>${f.holiday ? '<span class="pc-hol">Holiday</span>' : ''}</div>`).join('')}</details>`).join('')}</div>`, nF ? plural(nF, 'day') : '');
+  h += `</div>`;
   return h; }
 
 /* ---------- Festive look: follows the next festival automatically ---------- */
@@ -4901,7 +4953,7 @@ const PC_BITS = [['sleep', '😴', 'Sleep'], ['eat', '🍲', 'Eat'], ['water', '
 function pcCard() { const d = (state.pcDone || {})[today()] || {}; const all = PC_BITS.every(b => d[b[0]]);
   return `<div class="sec"><div class="card pc-card"><div class="pc-top">${NAP_CAT}<span class="cat-tx"><b>${all ? 'All three done. Proud of you 💛' : 'Rest first. Everything else can wait.'}</b><span>The rest of Today is tucked under More today.</span></span></div>
     <div class="pc-row">${PC_BITS.map(([k, e, l]) => `<button type="button" class="pc-b${d[k] ? ' on' : ''}" data-act="pc-tick" data-id="${k}" aria-pressed="${!!d[k]}"><span aria-hidden="true">${d[k] ? '✓' : e}</span>${l}</button>`).join('')}</div>
-    <span class="c-m">One tiny thing, only if you feel like it: <button type="button" class="link" data-act="goto" data-tab="study">read one bite-size note</button></span></div></div>`; }
+    <span class="c-m">One tiny thing, only if you feel like it: <button type="button" class="link" data-act="goto" data-tab="study" data-at="library:bites">read one bite-size note</button></span></div></div>`; }
 function pcChip() { if (state.settings.pcOn === false) return ''; const hr = new Date().getHours(); if (hr < 5 || hr >= 18) return '';
   return `<div class="igp-w"><button type="button" class="quiet-p pc-chip" data-act="quiet-on" aria-label="Turn on post-call mode until midnight">🌙 Post-call</button></div>`; }
 
@@ -5485,7 +5537,7 @@ document.addEventListener('click', e => {
   { const ae = document.activeElement; if (ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && $('page').contains(ae) && !(ae.form && ae.form.contains(b))) ae.blur(); render.pending && render(); }
   const id = b.dataset.id;
   switch (b.dataset.act) {
-    case 'tab': case 'goto': closeSheet(); goTab(b.dataset.tab); break;
+    case 'tab': case 'goto': closeSheet(); if (b.dataset.at) { const [tb, f] = b.dataset.at.split(':'); if (b.dataset.tab === 'study') { acadTab = tb; if (f) { aFold.add(f); aFoldSave(); } } } goTab(b.dataset.tab); break;
     case 'drawer': openDrawer(); break;
     case 'drawerclose': closeDrawer(); break;
     case 'close': closeSheet(); break;
@@ -5563,6 +5615,8 @@ document.addEventListener('click', e => {
     case 'day': sel = b.dataset.k; render(); break;
     case 'month': view.m += +b.dataset.d; if (view.m < 0) { view.m = 11; view.y--; } if (view.m > 11) { view.m = 0; view.y++; } render(); break;
     case 'rmode': rmode = b.dataset.m; render(); break;
+    case 'acad-tab': acadTab = b.dataset.m; try { localStorage.setItem('studydesk.acadTab', acadTab); } catch (_) {} render(); window.scrollTo(0, 0); break;
+    case 'pc-filter': pcFilter = b.dataset.k; try { localStorage.setItem('studydesk.pcFilter', pcFilter); } catch (_) {} render(); break;
     case 'cal-mode': calMode = b.dataset.m; try { localStorage.setItem('studydesk.calMode', calMode); } catch (_) {} render(); break;
     case 'nsub': nbaSub = b.dataset.s; render(); break;
     case 'nday': nbaDay = b.dataset.d; render(); break;
