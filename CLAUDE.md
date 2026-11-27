@@ -70,6 +70,7 @@ It is built only for her and will never be monetised.
 
 ## Study timer (v6.07)
 - Sessions can be paused and resumed: `state.active.pausedAt` / `pausedMs`; `activeMins()` leaves out paused time. A paused timer never auto-opens the Finish sheet.
+- **Website sessions (v6.08, 27 Nov 2026):** a topic's `link` can be GoodNotes or any website. `siteName(link)` names it (GoodNotes for goodnotes:// or goodnotes.com; otherwise `SITE_NAMES` or the domain). Never label a web session "GoodNotes". Log entries save `src` (the site name). A link pasted into "Something else" in Log a session becomes a topic named after the site under subject "Websites".
 
 ## Added 26 Nov 2026 (v5.97–6.05)
 - **Drug doses by weight** (`DOSE_TBL` / `DOSE_SRC` in index.html, OT calculators): every number is from its listed source (SmPC/FDA label, RCUK, AAGBI, MHAUS, BJA Educ). Never change a dose, max or concentration without re-checking the source and re-running a 70 kg adult, 120 kg obese, 20 kg child and 8 kg infant.
