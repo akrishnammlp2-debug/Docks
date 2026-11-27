@@ -4689,6 +4689,141 @@
    "created": "2026-11-27",
    "updated": "2026-11-27",
    "seen": 2
+  },
+  {
+   "id": "phenylephrine",
+   "cat": "Drugs",
+   "title": "Phenylephrine",
+   "aliases": [
+    "PE",
+    "neosynephrine",
+    "Biorphen",
+    "Vazculep",
+    "phenyl",
+    "alpha-1 agonist"
+   ],
+   "summary": "Phenylephrine is a synthetic, direct-acting, almost pure alpha-1 agonist. It raises BP by constricting arterioles and veins (higher SVR and better venous return) with little or no direct beta effect, so heart rate usually falls by baroreflex. It is the first-line vasopressor for spinal hypotension at caesarean section and a common short-acting pressor for vasodilatory hypotension under anaesthesia.",
+   "sections": [
+    {
+     "h": "Mechanism",
+     "items": [
+      "Direct alpha-1 agonist: Gq → phospholipase C → IP3/DAG → Ca²⁺ rise → smooth muscle contraction",
+      "Arterial constriction raises SVR, SBP, DBP and MAP; venoconstriction mobilises venous blood, raising preload",
+      "Minimal/no beta activity → no direct inotropy or chronotropy",
+      "Reflex bradycardia via baroreceptors as MAP rises; cardiac output can fall",
+      "Constricts most beds incl. renal, splanchnic, hepatic; not a catecholamine, so not broken down by COMT"
+     ]
+    },
+    {
+     "h": "Preparation",
+     "rows": [
+      [
+       "Vial",
+       "10 mg/mL – must be diluted"
+      ],
+      [
+       "Bolus 100 mcg/mL",
+       "10 mg (1 mL) in 100 mL total (add to 99 mL NS/D5)"
+      ],
+      [
+       "Infusion 20 mcg/mL (label)",
+       "10 mg in 500 mL NS/D5"
+      ],
+      [
+       "Syringe pump option",
+       "100 mcg/mL (10 mg in 100 mL, or 5 mg in 50 mL) – 15–30 mL/h = 25–50 mcg/min"
+      ],
+      [
+       "Stability (diluted)",
+       "≤4 h at room temp, ≤24 h refrigerated"
+      ]
+     ]
+    },
+    {
+     "h": "Doses",
+     "rows": [
+      [
+       "IV bolus (adult, anaesthesia)",
+       "50–100 mcg typical, repeat every 1–2 min to effect (label range 40–250 mcg; UK SmPC: single bolus ≤100 mcg)"
+      ],
+      [
+       "Infusion – perioperative",
+       "0.5–1.4 mcg/kg/min (FDA label), i.e. about 25–100 mcg/min"
+      ],
+      [
+       "Infusion – septic/vasodilatory shock",
+       "0.5–6 mcg/kg/min; little extra effect above 6"
+      ],
+      [
+       "Caesarean (consensus)",
+       "Prophylactic infusion 25–50 mcg/min started right after spinal; rescue bolus 100 mcg; titrate in 5–10 mL/h steps (of 100 mcg/mL)"
+      ],
+      [
+       "IM / SC (older use)",
+       "2–5 mg"
+      ]
+     ]
+    },
+    {
+     "h": "Onset, duration, kinetics",
+     "items": [
+      "IV onset within about 1 min",
+      "Bolus effect lasts up to ~20 min",
+      "Effective half-life on infusion ≈5 min, so it titrates well",
+      "Metabolised by MAO (liver, gut) – not COMT"
+     ]
+    },
+    {
+     "h": "Uses",
+     "items": [
+      "Spinal/epidural hypotension, especially at caesarean (first line)",
+      "Vasodilatory hypotension under GA (propofol, volatile)",
+      "Lesions where a rise in afterload helps: HOCM/LVOT obstruction, aortic stenosis, TOF hypercyanotic spell",
+      "Septic shock (second-line; noradrenaline preferred)",
+      "Mydriatic eye drops, nasal decongestant, priapism (intracavernosal)"
+     ]
+    },
+    {
+     "h": "Side effects and cautions",
+     "items": [
+      "Reflex bradycardia (treat with ephedrine if BP also low, or atropine/glycopyrrolate if HR <60 with low BP)",
+      "Hypertension, AV block, arrhythmias, myocardial ischaemia",
+      "Reduced CO – caution in poor LV function, AR/MR (afterload rise worsens regurgitation)",
+      "Extravasation → skin necrosis",
+      "Contains sodium metabisulfite",
+      "Exaggerated response with MAOIs, TCAs, beta-blockers, oxytocics/ergots; blunted by alpha-blockers",
+      "Lower doses in ESRD; higher may be needed in liver disease and acidosis"
+     ]
+    },
+    {
+     "h": "Points for the exam / viva",
+     "items": [
+      "Phenylephrine vs ephedrine at CS: phenylephrine gives better fetal pH/base excess; ephedrine crosses placenta and raises fetal metabolism",
+      "Target: keep SBP ≥90% of baseline, treat if <80%",
+      "Phenylephrine vs noradrenaline: noradrenaline keeps HR and CO better; ~ 100 mcg phenylephrine ≈ 8 mcg noradrenaline (roughly 12:1 potency)",
+      "Prophylactic infusion beats reactive boluses for BP control and nausea/vomiting",
+      "Watch HR as a proxy for cardiac output on infusion"
+     ]
+    }
+   ],
+   "pearl": "Pure alpha-1: BP up, HR down — at caesarean start 25–50 mcg/min right after the spinal and keep SBP ≥90% of baseline.",
+   "refs": [
+    {
+     "title": "Kinsella SM et al. International consensus statement on the management of hypotension with vasopressors during caesarean section under spinal anaesthesia. Anaesthesia 2018",
+     "url": "https://doi.org/10.1111/anae.14080"
+    },
+    {
+     "title": "Bower JR, Kinsella SM. Preventing and treating hypotension during spinal anaesthesia for caesarean section. BJA Educ 2020",
+     "url": "https://doi.org/10.1016/j.bjae.2020.08.001"
+    },
+    {
+     "title": "Phenylephrine hydrochloride injection – FDA prescribing information (DailyMed)",
+     "url": "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=phenylephrine+hydrochloride+injection"
+    }
+   ],
+   "created": "2026-11-27",
+   "updated": "2026-11-27",
+   "seen": 1
   }
  ]
 }

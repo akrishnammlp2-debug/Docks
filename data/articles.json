@@ -3,6 +3,19 @@
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
   {
+   "id": "29090733",
+   "added": "2026-11-27",
+   "topic": "phenylephrine",
+   "title": "International consensus statement on the management of hypotension with vasopressors during caesarean section under spinal anaesthesia",
+   "journal": "Anaesthesia",
+   "year": 2018,
+   "type": "Guideline",
+   "why": "The standard reference for phenylephrine at caesarean: infusion rates, bolus doses, BP targets and handling bradycardia.",
+   "doi": "10.1111/anae.14080",
+   "pmid": "29090733",
+   "url": "https://doi.org/10.1111/anae.14080"
+  },
+  {
    "id": "31080666",
    "added": "2026-11-27",
    "topic": "AF after oesophagectomy",
