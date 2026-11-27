@@ -3,6 +3,19 @@
  "note": "One good article (PubMed, BJA and similar) for each academic question Apoorva asks Claude. Kept for 7 days, then removed.",
  "items": [
   {
+   "id": "31080666",
+   "added": "2026-11-27",
+   "topic": "AF after oesophagectomy",
+   "title": "New-onset atrial fibrillation after esophagectomy for cancer.",
+   "journal": "J Thorac Dis",
+   "year": 2019,
+   "type": "Review",
+   "why": "Short free review on why AF happens after oesophagectomy, its link with leak and pneumonia, and how to work it up.",
+   "doi": "10.21037/jtd.2019.02.03",
+   "pmid": "31080666",
+   "url": "https://doi.org/10.21037/jtd.2019.02.03"
+  },
+  {
    "id": "34795950",
    "added": "2026-11-27",
    "topic": "oesophagectomy",
