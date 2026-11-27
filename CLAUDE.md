@@ -89,4 +89,5 @@ It is built only for her and will never be monetised.
 - Two locked files, merged on the phone (different keys, so order doesn't matter): `money` = invest, spend, notes (refreshed only when she asks); `money-live` = updated, year, cards, bills, months (rebuilt every other day by the scheduled task "Inemuri: Money refresh", change-checked with data/private/money-live.hash).
 - Sources: CRED emails (bills, "bill is due", "payment successful", including the Promotions tab), Airtel ebill, Coin allotment reports, order/Razorpay/Apple/Google receipts. Never invent a figure; never store full card or account numbers.
 - She also pays outside CRED: with `settings.moneyAssume` (default on) a bill counts as paid once its due date passes, unless she says it wasn't (`notPaid`).
+- Top bar: wallet icon (`#nb-money`) next to search opens Money from any page; an amber dot shows when a bill is unpaid and due within 3 days (27 Nov 2026).
 - Look: wallet of flip cards (tap to flip, ring = days left), a ring per bill in the summary, year month grid (tap a month), investments ring (SIP months of 12), donut for where the money went. The app never moves money.
