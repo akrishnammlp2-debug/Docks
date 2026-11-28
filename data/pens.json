@@ -1,5 +1,5 @@
 {
-  "rule": "Her fountain pens (Off duty › Pen shelf). Each pen: id, name, colour (body hex), trim (hex), nib ('fine'|'medium'|'broad'|''), ink (name or ''), inkHex, note, optional clip (false = no clip) and band (cap ring hex, defaults to trim). Drawn by penSVG() in index.html from her photo. Ink stays '' until she says.",
+  "rule": "Her fountain pens (Off duty › Pen shelf). Each pen: id, name, colour (body hex), trim (hex), nib ('fine'|'medium'|'broad'|''), ink (name or ''), inkHex, note, optional body (barrel hex when it differs from the cap), clip (false = no clip) and band (cap ring hex, defaults to trim). Drawn by penSVG() in index.html from her photo. Ink stays '' until she says.",
   "pens": [
     {
       "id": "kaweco-perkeo-teal",
@@ -12,6 +12,19 @@
       "ink": "Turquoise",
       "inkHex": "#1F8C9C",
       "note": "Breezy Teal. Her first pen on the shelf (28 Nov 2026)."
+    },
+    {
+      "id": "pilot-kakuno-yellow",
+      "name": "Pilot Kakuno",
+      "colour": "#F1D45A",
+      "body": "#EFEDE6",
+      "trim": "#C9CED2",
+      "band": "#F1D45A",
+      "clip": false,
+      "nib": "",
+      "ink": "Choco Brown",
+      "inkHex": "#5C3A28",
+      "note": "Soft yellow cap, white hexagonal barrel, no clip; smiley face on the nib (28 Nov 2026)."
     }
   ]
 }
