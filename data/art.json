@@ -1,53 +1,99 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "note": "Off duty > Painting of the day. One public-domain painting a day, famous or little-known, with open-access museum images. Written daily by the scheduled task.",
   "today": {
-    "date": "2026-11-27",
-    "title": "Moonlit Night on the Dnieper",
-    "artist": "Arkhip Kuindzhi",
-    "artistLife": "Ukrainian-born Russian-Empire painter of Greek descent, 1841–1910",
-    "year": "1880",
+    "date": "2026-11-28",
+    "title": "Arrangement in Grey and Black No. 1 (Whistler's Mother)",
+    "artist": "James McNeill Whistler",
+    "artistLife": "American, 1834–1903",
+    "year": "1871",
     "medium": "Oil on canvas",
-    "size": "105 × 144 cm (a little wider than a standard door is tall)",
-    "where": "State Russian Museum, Saint Petersburg",
-    "movement": "Russian realism / Luminism, Peredvizhniki (the Wanderers)",
-    "fame": "hidden gem",
+    "size": "144.3 × 162.4 cm (a little taller than a typical adult, so she is almost life-size)",
+    "where": "Musée d'Orsay, Paris",
+    "movement": "Aestheticism (art for art's sake), American in London",
+    "fame": "famous",
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=1200",
-      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=300",
-      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=2400",
-      "page": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg",
-      "credit": "State Russian Museum, public domain (image: Wikimedia Commons)",
-      "focus": "center 55%"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Whistlers_Mother_high_res.jpg?width=1200",
+      "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Whistlers_Mother_high_res.jpg?width=300",
+      "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Whistlers_Mother_high_res.jpg?width=2400",
+      "page": "https://commons.wikimedia.org/wiki/File:Whistlers_Mother_high_res.jpg",
+      "credit": "Musée d'Orsay, public domain (image: Wikimedia Commons)",
+      "focus": "center 30%"
     },
     "sections": [
       {
         "h": "The painting",
-        "p": "A full moon hangs in a deep blue-green sky over a wide river at night. Its light lays a bright, silvery path across the water, and a few small huts glow faintly on the bank. The horizon sits very low, so most of the picture is sky and the quiet feels enormous."
+        "p": "An elderly woman in black, with a white lace cap, sits very still in profile, her hands folded in her lap. She faces a plain grey wall that has one dark picture frame and a curtain beside her. The shapes are simple and balanced, and the colours are almost all greys and blacks. It feels calm, a little sad, and very quiet."
       },
       {
         "h": "The artist",
-        "p": "Arkhip Kuindzhi was born in 1841 near Mariupol, on the Sea of Azov, into a Greek family, and was orphaned as a small child. He worked odd jobs, went to Feodosia as a teenager to learn from the famous sea painter Aivazovsky, and later taught himself in Saint Petersburg. He became a leading figure among the Wanderers, and later a professor who taught Nicholas Roerich and Arkady Rylov among others."
+        "p": "James McNeill Whistler was born in Lowell, Massachusetts, in 1834. He studied in Paris and moved to London in 1859. He was famous for his sharp wit as much as for his painting. The sitter is his mother, Anna, who was about 67 and had come to live with him in London. She wears black and her wedding ring, long after her husband's death."
       },
       {
         "h": "The time",
-        "p": "Russia in 1880 had a lively public for art, and the Wanderers were taking exhibitions out of the academy and to ordinary audiences. Kuindzhi was curious about light and colour and was friends with the chemist Dmitri Mendeleev. He even opened his studio on Sundays so visitors could watch him work. The Grand Duke Konstantin Konstantinovich bought this painting before the public had seen it."
+        "p": "In the 1870s, many Victorian viewers expected paintings to tell a story or teach a moral. Whistler wanted to show that a picture could be about shapes, tones and harmony, as music is. That is why he called it an 'Arrangement', not a portrait. The Royal Academy in London showed it in 1872. Critics were puzzled by its pose, its bare design and its almost grey-only palette."
       },
       {
         "h": "What's special",
-        "p": "Kuindzhi shows it alone in a one-picture exhibition in Saint Petersburg, which was unusual then. The windows were curtained and one lamp was aimed at the canvas, and crowds queued to go in. Some visitors suspected a hidden lamp behind the picture, because the moonlight seemed to glow. The effect comes from his skill with tone, the dark surroundings making the bright moon and water look lit from within."
+        "p": "Whistler used a tight range of muted tones and a strong grid of horizontals and verticals, so the figure feels part of the design. Reports differ on why she is seated: one says a model cancelled and Anna sat in, another that she grew too tired to stand. Whistler later said that, for the public, it should not matter who the sitter was. Yet it became an icon of motherhood. In 1891 the French state bought it, and Britannica calls it one of the most recognised paintings in the world."
       },
       {
         "h": "Look for",
-        "p": "Follow the bright path on the water back to the moon, and notice how much sky there is compared with land. Then find the tiny glowing huts on the far bank and the dark, cool greens that make the light seem brighter."
+        "p": "Notice how the dark frame on the wall and the curtain line up with her profile. Then spot the single butterfly-like monogram, Whistler's signature, at the top left. See how the white of her cap and hands is the brightest note in the whole picture."
       }
     ],
     "source": {
-      "title": "Wikimedia Commons file page (State Russian Museum collection)",
-      "url": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg"
+      "title": "Musée d'Orsay",
+      "url": "https://www.musee-orsay.fr/en/artworks/974"
     }
   },
   "history": [
+    {
+      "date": "2026-11-27",
+      "title": "Moonlit Night on the Dnieper",
+      "artist": "Arkhip Kuindzhi",
+      "artistLife": "Ukrainian-born Russian-Empire painter of Greek descent, 1841–1910",
+      "year": "1880",
+      "medium": "Oil on canvas",
+      "size": "105 × 144 cm (a little wider than a standard door is tall)",
+      "where": "State Russian Museum, Saint Petersburg",
+      "movement": "Russian realism / Luminism, Peredvizhniki (the Wanderers)",
+      "fame": "hidden gem",
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=1200",
+        "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=300",
+        "full": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg?width=2400",
+        "page": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg",
+        "credit": "State Russian Museum, public domain (image: Wikimedia Commons)",
+        "focus": "center 55%"
+      },
+      "sections": [
+        {
+          "h": "The painting",
+          "p": "A full moon hangs in a deep blue-green sky over a wide river at night. Its light lays a bright, silvery path across the water, and a few small huts glow faintly on the bank. The horizon sits very low, so most of the picture is sky and the quiet feels enormous."
+        },
+        {
+          "h": "The artist",
+          "p": "Arkhip Kuindzhi was born in 1841 near Mariupol, on the Sea of Azov, into a Greek family, and was orphaned as a small child. He worked odd jobs, went to Feodosia as a teenager to learn from the famous sea painter Aivazovsky, and later taught himself in Saint Petersburg. He became a leading figure among the Wanderers, and later a professor who taught Nicholas Roerich and Arkady Rylov among others."
+        },
+        {
+          "h": "The time",
+          "p": "Russia in 1880 had a lively public for art, and the Wanderers were taking exhibitions out of the academy and to ordinary audiences. Kuindzhi was curious about light and colour and was friends with the chemist Dmitri Mendeleev. He even opened his studio on Sundays so visitors could watch him work. The Grand Duke Konstantin Konstantinovich bought this painting before the public had seen it."
+        },
+        {
+          "h": "What's special",
+          "p": "Kuindzhi shows it alone in a one-picture exhibition in Saint Petersburg, which was unusual then. The windows were curtained and one lamp was aimed at the canvas, and crowds queued to go in. Some visitors suspected a hidden lamp behind the picture, because the moonlight seemed to glow. The effect comes from his skill with tone, the dark surroundings making the bright moon and water look lit from within."
+        },
+        {
+          "h": "Look for",
+          "p": "Follow the bright path on the water back to the moon, and notice how much sky there is compared with land. Then find the tiny glowing huts on the far bank and the dark, cool greens that make the light seem brighter."
+        }
+      ],
+      "source": {
+        "title": "Wikimedia Commons file page (State Russian Museum collection)",
+        "url": "https://commons.wikimedia.org/wiki/File:Kuindzhi_Moonlit_night_on_the_Dnieper_1880_grm_x2.jpg"
+      }
+    },
     {
       "date": "2026-11-26",
       "title": "Under the Wave off Kanagawa (The Great Wave)",
