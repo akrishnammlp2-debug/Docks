@@ -1,6 +1,6 @@
 // Inemuri (formerly Study Desk / Docks) offline support. Bump CACHE whenever index.html, icons or manifest change.
 // The data folder is NOT cached here: the app keeps its own saved copy of each data file.
-const CACHE = 'study-desk-v194';
+const CACHE = 'study-desk-v195';
 const PICS = 'study-desk-pics'; // Off duty pictures (Wikimedia), kept a few days so they open instantly
 const PIC_DAYS = 3, PIC_MAX = 80;
 const ECGP = 'inemuri-ecg-pics'; // real ECG tracings (Wikimedia Commons, ?ecg=1): kept with no expiry so flashcards and ECG notes work offline
