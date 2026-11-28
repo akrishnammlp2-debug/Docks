@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "note": "Off duty > Things I love. One fact or article a day from a random topic. Written daily by the scheduled task.",
   "topics": [
     {
@@ -64,23 +64,40 @@
     }
   ],
   "today": {
-    "date": "2026-11-27",
-    "topic": "fountain-pens",
-    "topicName": "Fountain pens",
-    "kind": "fact",
-    "title": "Your pen's \"iridium\" tip probably has no iridium",
-    "text": "Early gold nibs were tipped with a natural ore of iridium and osmium. An analysis of a 1918 Waterman tip found 54% iridium and 44% osmium. Within a few years makers moved to engineered alloys: a Sheaffer tip from about 1919 held just 7.7% iridium, with tungsten and nickel making up most of it. Modern nib tips generally contain little or no iridium, and Pelikan has said its tips are a tungsten and ruthenium alloy. The word 'iridium' simply stuck, because the industry kept using it long after the metal left the recipe.",
+    "date": "2026-11-28",
+    "topic": "nasa",
+    "topicName": "NASA & space",
+    "kind": "article",
+    "title": "Hera has found the crater NASA's DART left on an asteroid moon",
+    "text": "Four years after NASA's DART probe slammed into the little asteroid moon Dimorphos at about 13,600 mph, ESA's Hera spacecraft has arrived to look at the damage up close. Hera is now roughly 30 km away and sees a crater almost as big as the moon itself, one that has flattened a side that used to be rounded. The crash shortened Dimorphos's orbit around its parent asteroid by about 33 minutes, far more than predicted. Hera has also spotted hundreds of boulders nobody knew about, and two tiny CubeSats are due to be released in January.",
     "source": {
-      "title": "Nibs.com: Where's the Iridium?",
-      "url": "https://www.nibs.com/article4.html"
+      "title": "New images reveal stadium-size crater left by humanity's first planetary defense test (CNN via KSL)",
+      "url": "https://www.ksl.com/article/51648123/new-images-reveal-stadium-size-crater-left-by-humanitys-first-planetary-defense-test"
     },
     "image": {
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Two-Tone_Fountain_Pen_Nib-Plum.jpg?width=1200",
-      "page": "https://commons.wikimedia.org/wiki/File:Two-Tone_Fountain_Pen_Nib-Plum.jpg",
-      "credit": "Plum, free licence (Wikimedia Commons)"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Last_image_showing_all_of_Dimorphos_by_DART.png?width=1200",
+      "page": "https://commons.wikimedia.org/wiki/File:Last_image_showing_all_of_Dimorphos_by_DART.png",
+      "credit": "NASA/Johns Hopkins APL, public domain (Wikimedia Commons)"
     }
   },
   "history": [
+    {
+      "date": "2026-11-27",
+      "topic": "fountain-pens",
+      "topicName": "Fountain pens",
+      "kind": "fact",
+      "title": "Your pen's \"iridium\" tip probably has no iridium",
+      "text": "Early gold nibs were tipped with a natural ore of iridium and osmium. An analysis of a 1918 Waterman tip found 54% iridium and 44% osmium. Within a few years makers moved to engineered alloys: a Sheaffer tip from about 1919 held just 7.7% iridium, with tungsten and nickel making up most of it. Modern nib tips generally contain little or no iridium, and Pelikan has said its tips are a tungsten and ruthenium alloy. The word 'iridium' simply stuck, because the industry kept using it long after the metal left the recipe.",
+      "source": {
+        "title": "Nibs.com: Where's the Iridium?",
+        "url": "https://www.nibs.com/article4.html"
+      },
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Two-Tone_Fountain_Pen_Nib-Plum.jpg?width=1200",
+        "page": "https://commons.wikimedia.org/wiki/File:Two-Tone_Fountain_Pen_Nib-Plum.jpg",
+        "credit": "Plum, free licence (Wikimedia Commons)"
+      }
+    },
     {
       "date": "2026-11-26",
       "topic": "finance",
