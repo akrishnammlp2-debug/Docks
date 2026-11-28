@@ -1,5 +1,5 @@
 {
-  "rule": "Her fountain pens (Off duty › Pen shelf). Each pen: id, name, colour (body hex), trim (hex), nib ('fine'|'medium'|'broad'|''), ink (name or ''), inkHex, note, optional body (barrel hex when it differs from the cap), clip (false = no clip) and band (cap ring hex, defaults to trim). Drawn by penSVG() in index.html from her photo. Ink stays '' until she says.",
+  "rule": "Her fountain pens (Off duty › Pen shelf). Each pen: id, name, colour (body hex), trim (hex), nib ('fine'|'medium'|'broad'|''), ink (name or ''), inkHex, note, optional body (barrel hex when it differs from the cap), clip (false = no clip) and band (cap ring hex, defaults to trim). Drawn by penSVG() in index.html from her photo. Ink stays '' until she says. Optional facts: up to 3 short facts (about 70 characters each), checked against sources; shown when she taps the pen to flip it.",
   "pens": [
     {
       "id": "kaweco-perkeo-teal",
@@ -11,7 +11,12 @@
       "nib": "fine",
       "ink": "Turquoise",
       "inkHex": "#1F8C9C",
-      "note": "Breezy Teal. Her first pen on the shelf (28 Nov 2026)."
+      "note": "Breezy Teal. Her first pen on the shelf (28 Nov 2026).",
+      "facts": [
+        "The Perkeo name goes back to about 1900, when it was an eyedropper pen.",
+        "Kaweco began in 1883 as the Heidelberg fountain pen factory.",
+        "Its cap has 8 sides and its barrel has 16."
+      ]
     },
     {
       "id": "pilot-kakuno-yellow",
@@ -24,7 +29,12 @@
       "nib": "",
       "ink": "Choco Brown",
       "inkHex": "#5C3A28",
-      "note": "Soft yellow cap, white hexagonal barrel, no clip; smiley face on the nib (28 Nov 2026)."
+      "note": "Soft yellow cap, white hexagonal barrel, no clip; smiley face on the nib (28 Nov 2026).",
+      "facts": [
+        "“Kakuno” means “to write” in Japanese.",
+        "The smiley face on the nib shows which way up to hold it.",
+        "White-barrel Kakunos have a winking face; it’s hexagonal so it won’t roll."
+      ]
     }
   ]
 }

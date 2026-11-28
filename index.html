@@ -2317,6 +2317,17 @@ body.wide .wrap-s{flex-basis:60%}
 .pen-empty .cat-tx{margin-left:8px}
 .pen-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
 .pen-card{flex:none;width:118px;display:flex!important;flex-direction:column;align-items:center;gap:4px;text-align:center}
+/* v6.14 pen cards flip to show a few checked facts (28 Nov 2026) */
+.pen-flip{flex:none;width:118px;padding:0;border:0;background:none;font:inherit;color:inherit;perspective:900px;cursor:pointer;transition:width .45s cubic-bezier(.2,.7,.2,1);-webkit-tap-highlight-color:transparent}
+.pen-flip.flip{width:232px}
+.pen-in{position:relative;display:grid;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d;height:100%}
+.pen-flip.flip .pen-in{transform:rotateY(180deg)}
+.pen-flip .pen-card{grid-area:1/1;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pen-back{position:absolute!important;inset:0;transform:rotateY(180deg);align-items:stretch!important;text-align:left!important;overflow:auto;padding:12px 14px!important}
+.pen-back b{font-size:14px}
+.pen-back ul{margin:2px 0 0;padding-left:16px;display:flex;flex-direction:column;gap:5px;font-size:12px;line-height:1.35;color:var(--fg)}
+.pen-back .c-m{margin-top:auto;font-size:11px}
+body.no-anim .pen-flip,body.no-anim .pen-in{transition:none}
 .pen-svg{width:30px;height:120px;flex:none}
 .pen-g{transform-origin:20px 150px;animation:penSway 3.2s ease-in-out var(--d,0s) 2}
 .pen-ink{animation:penInk 2.4s ease-in-out var(--d,0s) 2}
@@ -4274,7 +4285,9 @@ function penSVG(p, i) { const c = p.colour || '#3B3552', tr = p.trim || '#D9B26A
 function penShelf() { if (state.settings.pensOn === false) return ''; const P = PENS();
   let h = `<div class="sec"><div class="cf-head"><h2 class="sh">🖋️ Pen shelf</h2>${P.length ? `<span class="c-m">${plural(P.length, 'pen')}</span>` : ''}</div>`;
   if (!P.length) return h + `<div class="card pen-empty">${penSVG({ colour: '#7A5C8E', trim: '#D9B26A' }, 0)}${penSVG({ colour: '#C9577A', trim: '#E8D3A0' }, 1)}${penSVG({ colour: '#2F3A57', trim: '#C8C8D0' }, 2)}<span class="cat-tx"><b>Your pens will live here</b><span>Send Claude a photo of all of them. Each one gets drawn here, and its ink added when you say.</span></span></div></div>`;
-  return h + `<div class="pen-row">${P.map((p, i) => `<div class="card pen-card">${penSVG(p, i)}<b>${esc(p.name)}</b><span class="c-m">${p.ink ? esc(p.ink) : 'Ink: not set yet'}${p.nib ? ' · ' + esc(p.nib) + ' nib' : ''}</span></div>`).join('')}</div></div>`; }
+  return h + `<div class="pen-row">${P.map((p, i) => { const F = (p.facts || []).slice(0, 3), front = `<div class="card pen-card">${penSVG(p, i)}<b>${esc(p.name)}</b><span class="c-m">${p.ink ? esc(p.ink) : 'Ink: not set yet'}${p.nib ? ' · ' + esc(p.nib) + ' nib' : ''}</span></div>`;
+    if (!F.length) return front;
+    return `<button type="button" class="pen-flip" data-act="pen-flip" aria-pressed="false" aria-label="${esc(p.name)}. Tap to flip for a few facts"><div class="pen-in">${front}<div class="card pen-card pen-back"><b>${esc(p.name)}</b><ul>${F.map(f => `<li>${esc(f)}</li>`).join('')}</ul><span class="c-m">Tap to flip back</span></div></div></button>`; }).join('')}</div></div>`; }
 /* ---------- Off duty: my year in stories (books, movies, series, games) ---------- */
 const MEDIA_TYPES = [['book', '📚', 'Books', 'Reading', 'Read'], ['movie', '🎬', 'Movies', 'Watching', 'Watched'], ['series', '📺', 'Series', 'Watching', 'Watched'], ['game', '🎮', 'Games', 'Playing', 'Played']];
 const MT = k => MEDIA_TYPES.find(t => t[0] === k) || MEDIA_TYPES[1];
@@ -6076,6 +6089,7 @@ document.addEventListener('click', e => {
       (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(l + ' copied ✓'), () => toast("Couldn't copy here. Select the number and copy it instead.")); break; }
     case 'mn-card': { const w = $('mn-wallet'); if (!w) break; const was = mnOpen === id; mnOpen = was ? null : id; w.querySelectorAll('.mn-card').forEach(c => { const on = !was && c.dataset.id === id; c.classList.toggle('open', on); c.setAttribute('aria-pressed', on); }); mnLayout(w); if (!was && b.classList.contains('mn-rg')) w.scrollIntoView({ block: 'start', behavior: animOn() ? 'smooth' : 'auto' }); break; }
     case 'mn-month': { const M = MONEY(); if (!M) break; mnMonth = id; document.querySelectorAll('.mn-m').forEach(x => x.classList.toggle('sel', x.dataset.id === id)); const d = $('mn-det'); if (d) d.innerHTML = mnMonthDetail(M, id); break; }
+    case 'pen-flip': { const on = !b.classList.contains('flip'); b.classList.toggle('flip', on); b.setAttribute('aria-pressed', on); if (on) setTimeout(() => b.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: animOn() ? 'smooth' : 'auto' }), 460); break; }
     case 'th-flip': { const on = !b.classList.contains('flip'); b.classList.toggle('flip', on); b.setAttribute('aria-pressed', on); break; }
     case 'th-day': { const y0 = window.scrollY; thSel = b.dataset.k; render(); window.scrollTo(0, y0); const el = document.querySelector('.th-dayinfo'); if (el) { const rc = el.getBoundingClientRect(); if (rc.top > innerHeight - 120) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } break; }
     case 'th-month': { const y0 = window.scrollY; thView.m += +b.dataset.d; if (thView.m < 0) { thView.m = 11; thView.y--; } if (thView.m > 11) { thView.m = 0; thView.y++; } render(); window.scrollTo(0, y0); break; }
