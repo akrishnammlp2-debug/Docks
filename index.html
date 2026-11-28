@@ -1968,7 +1968,7 @@ a.dota-n .r-main{gap:3px}
 /* 2: each section carries its colour from the side menu */
 body{--sec:var(--t-sage);--sec-i:var(--t-sage-i)}
 body[data-sec="today"]{--sec:var(--t-butter);--sec-i:var(--t-butter-i)}
-body[data-sec="study"],body[data-sec="todos"],body[data-sec="thesis"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
+body[data-sec="study"],body[data-sec="todos"],body[data-sec="thesis"],body[data-sec="fudge"]{--sec:var(--t-peach);--sec-i:var(--t-peach-i)}
 body[data-sec="calendar"],body[data-sec="advances"],body[data-sec="others"],body[data-sec="music"],body[data-sec="nba"],body[data-sec="dota"]{--sec:var(--t-lav);--sec-i:var(--t-lav-i)}
 body[data-sec="ot"],body[data-sec="roster"],body[data-sec="cases"],body[data-sec="calc"]{--sec:var(--t-sky);--sec-i:var(--t-sky-i)}
 body[data-sec="reminders"],body[data-sec="backup"],body[data-sec="orders"],body[data-sec="money"]{--sec:var(--t-rose);--sec-i:var(--t-rose-i)}
@@ -2250,6 +2250,21 @@ body.wide .gal-grid{grid-template-columns:repeat(5,1fr)}
 .fudge-hero{display:flex;align-items:center;gap:12px}
 .fudge-row{display:flex;align-items:center;gap:12px}.fudge-row.off .cat-tx span{color:var(--fg-2)}
 .fudge-e{font-size:22px;width:30px;text-align:center}
+/* v6.14 Fudge page */
+.fdg-hero{display:flex;flex-direction:row;align-items:center;gap:14px}.fdg-hero .nap-cat{width:84px;height:auto;flex:none}
+.fdg-grid{display:grid;gap:12px}
+.fdg-food.soon{border-color:var(--st-soon)}
+.fdg-btn{width:100%;margin-top:6px}
+.fdg-done{display:block;margin-top:6px;font-weight:700;color:var(--st-done)}
+.fdg-hist summary{cursor:pointer;color:var(--fg-2);font-size:13px;margin-top:8px}
+.fdg-care .cat-tx{flex:1}.fdg-care.soon b{color:var(--st-over)}
+.fdg-seg{margin-top:10px}
+body.wide .fdg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* v6.14 laptop Today: two steady columns */
+.now-wide{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}
+.nw-col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.nw-col>*{margin:0!important}
+.nw-col .gtiles{margin:0}
 .dose-g{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);padding-top:14px!important}
 .dose-r{display:block!important}
 .dose-r summary{display:flex;align-items:center;gap:10px;list-style:none;cursor:pointer}.dose-r summary::-webkit-details-marker{display:none}
@@ -2337,7 +2352,7 @@ body.no-anim .pen-g,body.no-anim .pen-ink{animation:none}
 <div class="reader" id="reader" hidden></div>
 <script>
 'use strict';
-const APP_VERSION = '6.11 · Money';
+const APP_VERSION = '6.14 · Fudge';
 const KEY = 'studydesk.v1';
 const DATA_FILES = ['cases', 'schedule', 'ot', 'nba', 'advances', 'books', 'topics', 'music', 'bites', 'loves', 'art', 'festivals', 'icons', 'upcoming', 'dota', 'articles', 'caseprep', 'ecg', 'thesis', 'thesis-rol', 'pens', 'history', 'stations', 'examplan', 'heroes'];
 
@@ -2361,7 +2376,7 @@ const svg = k => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}
 const CHEV = '<svg class="chev" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5l5 5-5 5"/></svg>';
 const SECS = {
   calc: 'OT calculators', today: 'Today', study: 'Academics', todos: 'To-do', calendar: 'Calendar', ot: 'OT list',
-  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders', money: 'Money', thesis: 'Thesis'
+  roster: 'Duty roster', cases: 'SLCM cases', nba: 'NBA', dota: 'Dota 2', music: 'Music', advances: 'New advances', reminders: 'Reminders', backup: 'Backup & settings', others: 'Off duty', orders: 'My orders', money: 'Money', thesis: 'Thesis', fudge: 'Fudge'
 };
 const DOCK = ['today', 'study', 'todos', 'calendar', 'ot'];
 const DOCK_LABEL = { today: 'Today', study: 'Study', todos: 'To-do', calendar: 'Acad', ot: 'OT' };
@@ -2994,7 +3009,7 @@ function pageToday() {
      Cards with nothing to say return '' and never take space. */
   const hr = new Date().getHours(); const ph2 = hr < 5 ? 'night' : hr < 12 ? 'morning' : hr < 17 ? 'day' : 'evening';
   const by = o => o[ph2] ?? o.all ?? 50;
-  const C = []; const add = (html, score) => { if (html) C.push({ html, score }); };
+  const C = []; const add = (html, score, side) => { if (html) C.push({ html, score, side: !!side }); }; /* side: goes in the narrow right column on a laptop (v6.14) */
   const siren = todoSiren();
   const S0 = state.settings || {}; const up = SCHED().filter(x => x.date >= t).sort((a, b) => a.date.localeCompare(b.date))[0];
   let upHTML = '';
@@ -3009,22 +3024,22 @@ function pageToday() {
   add(attCard(), by({ morning: 94, day: 90, all: 70 }));
   add(habitCard(), by({ morning: 92, evening: 86, night: 84, day: 40 }));
   add(biteRevCard(), by({ evening: 89, night: 70, day: 66, morning: 46 }));
-  add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }));
+  add(flashCard(), by({ evening: 82, night: 64, day: 63, morning: 48 }), 1);
   add(siren, 64);
   add(presCard(), by({ morning: 92, evening: 88, all: 80 }));
   add(pfTodayCard(), 64);
-  add(penPrompt(), by({ evening: 62, all: 48 }));
+  add(penPrompt(), by({ evening: 62, all: 48 }), 1);
   add(wrapToday(), 95);
-  { const g = sixersNext()[0]; const hh = g ? (new Date(g.start).getTime() - Date.now()) / 3600e3 : 99; add(sixersCard(), hh < 6 ? 86 : by({ morning: 70, all: 55 })); }
-  add(heroToday(), 52);
-  add(histToday(), by({ morning: 58, all: 50 }));
+  { const g = sixersNext()[0]; const hh = g ? (new Date(g.start).getTime() - Date.now()) / 3600e3 : 99; add(sixersCard(), hh < 6 ? 86 : by({ morning: 70, all: 55 }), 1); }
+  add(heroToday(), 52, 1);
+  add(histToday(), by({ morning: 58, all: 50 }), 1);
   add(caseReadCard(), by({ evening: 87, night: 80, all: 60 }));
   add(weekCard(), by({ evening: 90, night: 76, morning: 80, all: 72 }));
-  add(catTodayCard(), 56);
-  add(delAskCard('today'), by({ evening: 91, night: 85, all: 76 }));
+  add(catTodayCard(), 56, 1);
+  add(delAskCard('today'), by({ evening: 91, night: 85, all: 76 }), 1);
   add(thesisTodayCard(), by({ morning: 86, day: 80, evening: 78, night: 60, all: 70 }));
-  add(battCard(), battLow() || state.settings.battAlways ? 78 : -1); /* full levels only when something is low; otherwise under More today */
-  add(bkNudge(), 30);
+  add(battCard(), battLow() || state.settings.battAlways ? 78 : -1, 1); /* full levels only when something is low; otherwise under More today */
+  add(bkNudge(), 30, 1);
   // glance tiles: one block, no repeats of what a card above already says
   const T = [];
   if (S.countdownOn && S.examDate && daysUntil(S.examDate) >= 0) { const n = daysUntil(S.examDate); T.push(gTile('backup', 'lav', '🎓', n === 0 ? 'Today' : `<span data-count="${n}">${n}</span>`, n === 0 ? esc(S.examLabel || 'Exam') : 'days to ' + esc(S.examLabel || 'exam')).replace('class="gt"', 'class="gt gt-wide"')); }
@@ -3038,7 +3053,7 @@ function pageToday() {
   const open = state.todos.filter(x => !x.done).length; if (open && !siren) T.push(gTile('todos', 'butter', '✓', open, open === 1 ? 'open task' : 'open tasks'));
   const unsynced = toSyncCount(); if (unsynced) T.push(gTile('cases', 'butter', '📋', unsynced, '<span class="tosync">cases to sync</span>'));
   { const half = T.filter(x => !x.includes('gt-wide')); if (half.length % 2) { const i = T.lastIndexOf(half[half.length - 1]); T[i] = T[i].replace('class="gt"', 'class="gt gt-wide"'); } } /* tidy 2-column grid: a lone last chip spans the row */
-  if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }));
+  if (T.length) add(`<div class="gtiles">${T.join('')}</div>`, by({ day: 70, all: 58 }), 1);
   if (items.length) add(`<div class="sec"><h2 class="sh">On today</h2><div class="group">${moreCut('ontoday', items, 4).map(i => rowHTML(i)).join('')}${moreBtn('ontoday', items.length, 4, 'item')}</div></div>`, by({ morning: 93, night: 40, all: 68 }));
   const Q = quietNow(); /* after a night duty: only what is truly due shows; the rest waits under More today */
   if (Q && Q.pc) { const tm = timerCard(); C.forEach(c => { if (c.html !== tm) c.score = -1; }); C.push({ html: pcCard(), score: 200 }); h += quietPill(Q); }
@@ -3047,6 +3062,14 @@ function pageToday() {
   const cap = Math.max(2, Math.min(12, +S.homeCap || 5));
   const ranked = C.map((c, i) => ({ ...c, i })).sort((a, b) => b.score - a.score || a.i - b.i);
   const pos = ranked.filter(c => c.score >= 0); const shown = pos.slice(0, pos.length === cap + 1 ? cap + 1 : cap), rest = ranked.filter(c => !shown.includes(c)); /* never hide just one card */
+  if (isWide()) { /* v6.14 laptop: two steady columns (main jobs left, small glance cards right) instead of a balanced flow that shuffles cards around; "More today" opens into the same columns */
+    const openM = moreOpen.has('home'); const list = openM ? [...shown, ...rest.filter(c => c.score >= 0 || c.html).sort((a, b) => a.i - b.i).filter(c => !shown.includes(c))] : shown;
+    let L = list.filter(c => !c.side), R = list.filter(c => c.side);
+    if (!R.length && L.length > 1) R = L.splice(Math.ceil(L.length / 2)); if (!L.length && R.length > 1) L = R.splice(0, Math.ceil(R.length / 2));
+    h += `<div class="now-wide"><div class="nw-col nw-main">${L.map(c => c.html).join('')}</div><div class="nw-col nw-side">${R.map(c => c.html).join('')}</div></div>`;
+    if (rest.length) h += `<div class="sec home-more"><button type="button" class="btn ghost wide more-row" data-act="more" data-k="home">${openM ? 'Show less ▴' : 'More today · ' + rest.length + ' ▾'}</button></div>`;
+    if (!shown.length) h += `<div class="card">${napLine('All quiet. Nothing needs you right now.')}</div>`;
+    return h + `<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p>`; }
   h += `<div class="now-stack">${shown.map(c => c.html).join('')}</div>`;
   if (rest.length) { const openM = moreOpen.has('home');
     h += `<div class="sec home-more"><button type="button" class="btn ghost wide more-row" data-act="more" data-k="home">${openM ? 'Show less ▴' : 'More today · ' + rest.length + ' ▾'}</button></div>`;
@@ -3390,6 +3413,35 @@ function catSheet(keep) { const F = catFoods();
         <div class="cat-hist"><span class="cat-hh">Orders</span>${i.all.slice(0, 8).map(d => `<span>${catDate(d)} ${d.slice(0, 4)}${d === (state.catOrdered || {})[f.id] ? ' · marked in Inemuri' : ''}</span>`).join('')}</div></div>`; }).join('')}
     <a class="btn ghost cat-amz" href="https://www.amazon.in/gp/buyagain" target="_blank" rel="noopener">Reorder on Amazon (Buy Again) ↗</a>
     <p class="foot">Orders come from the Amazon account (scanned ${esc(catDate(((state.private || {}).cat || {}).scanned || today()))}). Inemuri reminds you on Today when fewer than ${CAT_WARN} days are left. Say "check cat food" to Claude to re-scan Amazon.</p></div>`, keep); }
+/* v6.14 Fudge's own page (side menu › Life › Fudge, or tap sleeping Fudge at the foot of the menu): order buttons first, then care, then his collection */
+const catSheetOpen = () => { const sh = $('sheet'); return !!sh && sh.classList.contains('open') && sh.innerHTML.includes('His food'); };
+const fudgeDueN = () => catFoods().filter(f => { const i = catInfo(f); return i && i.soon; }).length + careDue().length;
+function pageFudge() {
+  const F = catFoods(); const due = fudgeDueN();
+  let h = head('Fudge', due ? plural(due, 'thing') + ' due soon' : 'All good for now', 'Life');
+  h += `<div class="sec"><div class="card fdg-hero">${AWAKE_CAT}<span class="cat-tx"><b>Fudge</b><span>Hazelnut Persian · ${F.length ? F.map(f => esc(f.kind === 'wet' ? 'wet' : 'dry') + ' food ' + (catInfo(f) ? catWhen(catInfo(f)) : '')).join(' · ') : 'his food list appears once it syncs'}</span></span></div></div>`;
+  /* 1. food: one big order button per food, always visible */
+  const orderRow = f => { const i = catInfo(f); const mine = (state.catOrdered || {})[f.id] === today();
+    return `<div class="card fdg-food${i && i.soon ? ' soon' : ''}"><div class="lv-top"><span class="lv-chip">${f.kind === 'wet' ? '🥫 Wet food' : '🥣 Dry food'}</span><span class="lv-kind">${i ? esc(i.every) : ''}</span></div>
+      <b class="lv-t">${esc(f.name)}</b>${f.product ? `<span class="cat-prod">${esc(f.product)}</span>` : ''}
+      <p class="lv-x">${!i ? 'No orders found yet.' : mine ? `Ordered today. Next order around <b>${catDate(i.next)}</b>.` : i.soon ? `<b>Reorder ${catWhen(i)}</b> (${catDate(i.next)}).` : `Last ordered ${catDate(i.last)}. Next around <b>${catDate(i.next)}</b>, ${catWhen(i)}.`}</p>
+      ${mine ? `<span class="fdg-done">✓ Marked as ordered today</span>` : `<button type="button" class="btn fdg-btn" data-act="cat-ordered" data-id="${esc(f.id)}">I ordered ${f.kind === 'wet' ? 'wet' : 'dry'} food today</button>`}
+      ${i ? `<details class="fdg-hist"><summary>Past orders (${i.all.length})</summary><div class="cat-hist">${i.all.slice(0, 8).map(d => `<span>${catDate(d)} ${d.slice(0, 4)}${d === (state.catOrdered || {})[f.id] ? ' · marked in Inemuri' : ''}</span>`).join('')}</div></details>` : ''}</div>`; };
+  const foods = F.slice().sort((a, b) => (a.kind === 'dry' ? 0 : 1) - (b.kind === 'dry' ? 0 : 1));
+  h += `<div class="sec"><h2 class="sh">His food</h2>${foods.length ? `<div class="fdg-grid">${foods.map(orderRow).join('')}</div>`
+    : `<div class="card"><span class="c-t">His food list hasn't reached this device yet</span><span class="c-s">It comes with your private files. Open Inemuri on your iPhone once, then tap Sync now here.</span><div class="btns"><button type="button" class="btn small" data-act="sync-now">Sync now</button></div></div>`}
+    <a class="btn ghost wide cat-amz" href="https://www.amazon.in/gp/buyagain" target="_blank" rel="noopener">Reorder on Amazon (Buy Again) ↗</a></div>`;
+  /* 2. care */
+  if (state.settings.careOn !== false) { const ge = +state.settings.groomEvery || 14;
+    const rows = CAT_CARE.map(c => { const i = careInfo(c); if (!i) return '';
+      return `<div class="row fdg-care${i.soon ? ' soon' : ''}"><span class="fudge-e" aria-hidden="true">${c.ico}</span><span class="cat-tx"><b>${esc(c.name)}</b><span>Last ${catDate(i.last)} ${i.last.slice(0, 4)} · ${i.soon ? careWhen(i) : 'next ' + catDate(i.next)}${c.id === 'groom' ? ' · ' + (ge === 7 ? 'every week' : 'every 2 weeks') : ''}</span></span><button type="button" class="btn small cat-btn" data-act="care-done" data-id="${c.id}">Done today</button></div>`; }).join('');
+    if (rows) h += `<div class="sec"><h2 class="sh">His care</h2><div class="group">${rows}</div><div class="care-seg fdg-seg">${[[7, 'Groom every week'], [14, 'Groom every 2 weeks']].map(([n, l]) => `<button type="button" data-act="groom-every" data-id="${n}" class="${ge === n ? 'on' : ''}">${l}</button>`).join('')}</div></div>`; }
+  /* 3. collection */
+  if (state.settings.fudgeOn !== false) { const g = fudgeHas();
+    const fi = FUDGE_ITEMS.slice().sort((x, y) => (g[y.id] ? 1 : 0) - (g[x.id] ? 1 : 0));
+    h += `<div class="sec"><h2 class="sh">His collection</h2><div class="group">${moreCut('fudgec', fi, 3).map(it => { let v = 0; try { v = it.n(); } catch (_) {} const on = !!g[it.id];
+      return `<div class="row fudge-row${on ? '' : ' off'}"><span class="fudge-e" aria-hidden="true">${on ? it.e : '❔'}</span><span class="cat-tx"><b>${on ? esc(it.name[0].toUpperCase() + it.name.slice(1)) : 'Something at ' + esc(it.at)}</b><span>${on ? 'Found ' + catDate(g[it.id]) + ' · ' + esc(it.at) : Math.min(v, it.need) + ' of ' + it.need}</span></span></div>`; }).join('')}${moreBtn('fudgec', fi.length, 3, 'milestone')}</div></div>`; }
+  return h; }
 function pageReminders() {
   const att = remAttention().length;
   let h = head('Reminders', state.reminders.length ? (att ? plural(att, 'reminder') + ' need attention' : 'All on track') : '', 'Daily');
@@ -4185,7 +4237,7 @@ function pageBackup() {
 }
 
 /* ---------- render ---------- */
-const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders, money: pageMoney, thesis: pageThesis };
+const PAGES = { calc: pageCalc, advances: pageAdvances, reminders: pageReminders, today: pageToday, study: pageStudy, todos: pageTodos, calendar: pageCalendar, ot: pageOt, roster: pageRoster, cases: pageCases, nba: pageNba, dota: pageDota, music: pageMusic, backup: pageBackup, others: pageOthers, orders: pageOrders, money: pageMoney, thesis: pageThesis, fudge: pageFudge };
 /* ---------- Off duty: things I love (daily fact) ---------- */
 const LOVES = () => D.loves || {};
 function loveTopics() { const mine = state.loveMine || {}; const pub = (LOVES().topics || []).filter(t => !(mine[t.id] && mine[t.id].hide));
@@ -4752,10 +4804,11 @@ const MENU_LINE = {
   backup: '<path d="M7 18h10a4 4 0 00.6-8A6 6 0 006.2 9.2 4.4 4.4 0 007 18z"/><path d="M12 15v-5M9.8 12.2L12 10l2.2 2.2"/>',
   orders: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 016 0"/>',
   money: '<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><path d="M7 15h4"/>',
+  fudge: '<path d="M5 10.5V4.5l4 3.2h6l4-3.2v6"/><path d="M5 10.5c0 5 3.2 8.5 7 8.5s7-3.5 7-8.5"/><path d="M9.5 12.5h.01M14.5 12.5h.01"/><path d="M11 15h2l-1 1z"/>',
   calc: '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h1M12 12h1M15.5 12h0M8.5 16h1M12 16h1M15.5 16h0"/>',
   others: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'
 };
-const MENU_EMOJI = { today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', dota: '⚔️', backup: '☁️' };
+const MENU_EMOJI = { fudge: '🐈', today: '☀️', reminders: '🔔', study: '📚', todos: '✅', calendar: '📅', advances: '📰', ot: '🩺', roster: '🕒', cases: '📋', music: '🎵', nba: '🏀', dota: '⚔️', backup: '☁️' };
 function renderDrawer() {
   const P = profile(); const due = dueTopics().length; const open = state.todos.filter(t => !t.done).length;
   const le = state.meta.lastExport;
@@ -4776,7 +4829,7 @@ function renderDrawer() {
     <nav class="dnav"><p class="sh">Daily</p>${item('today')}${item('todos', open ? open + ' open' : '')}
     <p class="sh">Learning</p>${item('study', due ? due + ' due' : '')}${item('thesis', thToDo() ? thToDo() + ' to do' : '')}${item('calendar', delAsk().length ? '📦 ' + delAsk().length : '')}${item('advances', advNew() ? advNew() + ' new' : '')}
     <p class="sh">Hospital</p>${item('ot', OTL().length ? String(otRows(otDefaultDay() || '').length) : '')}${item('cases', toSyncCount() ? toSyncCount() + ' to sync' : '')}${item('roster')}${item('calc')}
-    <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('orders')}${item('money', (() => { const M = MONEY(); if (!M) return ''; const n = [...(M.cards || []), ...(M.bills || [])].filter(b => { const st = mnStatus(b); return !st.paid && st.d <= 3; }).length; return n ? n + ' due' : ''; })())}
+    <p class="sh">Life</p>${item('others', dotaLive().length ? 'live' : '')}${item('reminders', remAttention().length ? remAttention().length + ' due' : '')}${item('fudge', fudgeDueN() ? fudgeDueN() + ' due' : '')}${item('orders')}${item('money', (() => { const M = MONEY(); if (!M) return ''; const n = [...(M.cards || []), ...(M.bills || [])].filter(b => { const st = mnStatus(b); return !st.paid && st.d <= 3; }).length; return n ? n + ' due' : ''; })())}
     <p class="sh">App</p>${item('backup', state.settings.backupLine ? { dot: le && Date.now() - new Date(le) < 7 * 864e5 ? 'ok' : 'warn', label: le ? 'Last backup ' + ago(le) : 'No backup yet' } : '')}</nav><div class="d-foot"><svg class="d-moon" viewBox="0 0 60 26" aria-hidden="true"><path d="M33 3a10 10 0 1 0 9 14 8 8 0 1 1-9-14z"/><circle cx="12" cy="9" r="1.2"/><circle cx="50" cy="6" r="1"/><circle cx="21" cy="20" r=".9"/><circle cx="55" cy="19" r="1.3"/></svg>${fudgeFoot()}<p class="appver">Inemuri · version ${esc(APP_VERSION)}</p></div>`;
 }
 function renderBanner() {
@@ -5389,7 +5442,7 @@ function fudgeCheck() { if (state.settings.fudgeOn === false) return; const got 
   FUDGE_ITEMS.forEach(it => { if (!got[it.id]) { let v = 0; try { v = it.n(); } catch (_) {} if (v >= it.need) { got[it.id] = today(); nw = it; } } });
   if (nw) { state.settings.fudgeGot = got; save(); setTimeout(() => toast(`Fudge found ${nw.name} ${nw.e}`), 900); } }
 function fudgeFoot() { if (state.settings.fudgeOn === false) return NAP_CAT; const g = fudgeHas(); const have = FUDGE_ITEMS.filter(i => g[i.id]);
-  return `<button type="button" class="fudge-foot" data-act="fudge-open" aria-label="Fudge's collection">${NAP_CAT}${have.length ? `<span class="fudge-items" aria-hidden="true">${have.map(i => i.e).join('')}</span>` : ''}</button>`; }
+  return `<button type="button" class="fudge-foot" data-act="tab" data-tab="fudge" aria-label="Fudge: his food, care and collection">${NAP_CAT}${have.length ? `<span class="fudge-items" aria-hidden="true">${have.map(i => i.e).join('')}</span>` : ''}</button>`; }
 function fudgeSheet() { const g = fudgeHas();
   openSheet(`<div class="sheet-in"><div class="sheet-head"><span></span><h2>Fudge's collection</h2><button type="button" class="link strong" data-act="close">Done</button></div>
     <div class="card fudge-hero">${NAP_CAT}<span class="c-s">He collects a small thing each time you reach a milestone.</span></div>
@@ -5968,7 +6021,7 @@ document.addEventListener('click', e => {
     case 'dump-bought': { dumpSet(id, { bought: nowISO() }); commit('Bought ✓', () => { dumpSet(id, { bought: null }); commit(); dumpRefresh(); }); dumpRefresh(); break; }
     case 'dump-tobuy': { const d = DUMPS().find(x => x.id === id); if (d) { dumpSet(id, { cat: 'buy', text: parseBuy(d.text) || d.text }); commit('Moved to your shopping cart 🛒'); dumpRefresh(); } break; }
     case 'dump-todo': { const d = DUMPS().find(x => x.id === id); if (d) { state.todos.push({ id: uid(), text: d.text, done: false, created: nowISO(), doneAt: null }); dumpSet(id, { deleted: true }); commit('Moved to to-dos ✓'); dumpRefresh(); } break; }
-    case 'cat-open': catSheet(); break;
+    case 'cat-open': goTab('fudge'); break;
     case 'ig-open': igSheet(); break;
     case 'ig-badge': igSheet(+id); break;
     case 'shop-open': shopKey = id; if (tab === 'orders') render(); else goTab('orders'); break;
@@ -5993,9 +6046,10 @@ document.addEventListener('click', e => {
     case 'media-back': mediaSheet(b.dataset.id); break;
     case 'media-del': { const m = (state.media || []).find(x => x.id === b.dataset.id); if (!m) break; state.media = state.media.filter(x => x.id !== m.id); closeSheet(); commit('Removed “' + m.title + '”'); break; }
     case 'att-done': state.attDone = { ...(state.attDone || {}), [today()]: nowISO() }; commit('Attendance done ✓'); break;
-    case 'care-done': { state.catCare = { ...(state.catCare || {}), [id]: today() }; commit('Done ✓ Good boy, Fudge'); catSheet(true); break; }
-    case 'groom-every': { state.settings.groomEvery = +id; commit('Grooming every ' + (+id === 7 ? 'week' : '2 weeks')); catSheet(true); break; }
-    case 'cat-ordered': { state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; commit('Marked as ordered ✓'); catSheet(true); break; }
+    case 'care-done': { state.catCare = { ...(state.catCare || {}), [id]: today() }; commit('Done ✓ Good boy, Fudge'); if (catSheetOpen()) catSheet(true); break; }
+    case 'groom-every': { state.settings.groomEvery = +id; commit('Grooming every ' + (+id === 7 ? 'week' : '2 weeks')); if (catSheetOpen()) catSheet(true); break; }
+    case 'cat-ordered': { const prev = (state.catOrdered || {})[id]; state.catOrdered = { ...(state.catOrdered || {}), [id]: today() }; const f = catFoods().find(x => x.id === id);
+      commit((f && f.kind === 'dry' ? 'Dry food' : f && f.kind === 'wet' ? 'Wet food' : 'Food') + ' marked as ordered today ✓', () => { const m = { ...(state.catOrdered || {}) }; if (prev) m[id] = prev; else delete m[id]; state.catOrdered = m; commit('Undone'); }); if (catSheetOpen()) catSheet(true); break; }
     case 'art-open': artSheet(0); break;
     case 'cr-open': state.crSeen = { ...(state.crSeen || {}), [today()]: 1 }; commit(); prepSheet(id); break;
     case 'art-fav': { const A = ART(); const all = [A.today, ...(A.history || [])].filter(Boolean); const a = all.find(x => x.date === id) || (state.artFav || {})[id]; if (!a) break;
@@ -6755,19 +6809,28 @@ async function privateSync(manual) {
     const r = await fetch('data/private/index.json?t=' + Date.now(), { cache: 'no-store' });
     if (r.status === 404) { syncState = { status: 'waiting', msg: "No locked files on the website yet. Send this phone's code to Claude." }; return; }
     if (!r.ok) throw new Error('HTTP ' + r.status);
-    const idx = await r.json(); let merged = null, opened = 0, missing = 0;
+    const idx = await r.json(); let merged = null, opened = 0, missing = 0, shared = 0;
+    /* v6.14 hand-on: files locked before a device was paired (e.g. the laptop) can't be opened there. A device that CAN open them
+       re-locks a copy for every paired device into the private sync repository (relock/<file>); the newer device picks that copy up.
+       Only when sync is set up; the copy is tied to the original file's lock time, so a stale copy is never used. */
+    const cfg = syncCfg(); let paired = null;
+    if (cfg.token) { try { const dr = await fetch('keys/devices.json?t=' + Date.now(), { cache: 'no-store' }); paired = dr.ok ? await dr.json() : null; } catch (_) {} }
     for (const f of (idx.files || [])) {
       const er = await fetch('data/private/' + encodeURIComponent(f) + '?t=' + Date.now(), { cache: 'no-store' });
       if (!er.ok) throw new Error(f + ': HTTP ' + er.status);
-      const out = await openEnvelope(await er.json());
+      const env = await er.json();
+      let out = await openEnvelope(env);
+      if (out.missing && cfg.token) { try { const rr = await gh(cfg, '/contents/relock/' + encodeURIComponent(f));
+        if (rr.ok) { const box = JSON.parse(b64utf8((await rr.json()).content || '')); if (box.src === env.created) { const o2 = await openEnvelope(box.env); if (!o2.missing) { out = o2; shared++; } } } } catch (_) {} }
       if (out.missing) { missing++; continue; }
       merged = mergePrivate(merged, out.data); opened++;
+      if (paired && paired.some(d => !(env.recipients || []).some(x => x.kid === d.kid))) { try { await relockShare(cfg, f, env, out.data, paired); } catch (_) {} }
     }
     if (!opened) { syncState = { status: 'waiting', msg: "This phone's code isn't in the locked files yet. Send it to Claude." }; return; }
     const prev = state.private;
     state.private = { ...merged, synced: true }; seedReminders();
     if (!save()) { state.private = prev; syncState = { status: 'error', msg: "Opened the locked files but couldn't save them on this phone." }; return; }
-    syncState = { status: 'ok', at: nowISO(), msg: missing ? missing + ' older file(s) were locked before this phone was paired and were skipped.' : '' };
+    syncState = { status: 'ok', at: nowISO(), msg: missing ? missing + ' older file(s) were locked before this device was paired. Open Inemuri on your iPhone once (with sync on) and it will share them here.' : shared ? plural(shared, 'older file') + ' shared from your other devices ✓' : '' };
     if (manual) toast('Private data synced ✓');
   } catch (e) {
     const offline = e instanceof TypeError || !navigator.onLine;
@@ -6775,6 +6838,14 @@ async function privateSync(manual) {
     if (manual) toast(offline ? 'No connection. Showing saved copy.' : "Couldn't sync. See Backup & settings.");
   } finally { syncing = false; render(); }
 }
+const relockDone = {};
+async function relockShare(cfg, f, env, data, paired) { /* re-lock one private file for every paired device (private sync repo only) */
+  const key = f + '|' + env.created + '|' + paired.map(d => d.kid).join(','); if (relockDone[key]) return;
+  const path = '/contents/relock/' + encodeURIComponent(f); const cr = await gh(cfg, path); let sha;
+  if (cr.ok) { const j = await cr.json(); sha = j.sha; try { const box = JSON.parse(b64utf8(j.content || '')); if (box.src === env.created && paired.every(d => (box.env.recipients || []).some(x => x.kid === d.kid))) { relockDone[key] = 1; return; } } catch (_) {} }
+  const box = { v: 1, src: env.created, by: device.kid, at: nowISO(), env: await sealEnvelope(data, paired) };
+  const pr = await gh(cfg, path, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'share ' + f, content: utf8b64(JSON.stringify(box)), sha }) });
+  if (pr.ok) relockDone[key] = 1; }
 async function copyCode() {
   try { await navigator.clipboard.writeText(pairCode()); toast('Code copied ✓'); }
   catch (_) { const el = $('paircode'); if (el) { const rg = document.createRange(); rg.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(rg); } toast('Select the code and copy it'); }
